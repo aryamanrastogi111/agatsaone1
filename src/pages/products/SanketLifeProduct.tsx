@@ -35,7 +35,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import sanketlifeHeroV2 from "@/assets/sanketlife-device-app.png";
 import sanketlifeGallery from "@/assets/sanketlife-2.0-display.png";
 import sanketlifeHand from "@/assets/sanketlife-hand.jpg";
-import sanketlife2Product from "@/assets/sanketlife-2-product.jpg";
+import sanketlife2Product from "@/assets/sanketlife-2-product-new.jpg";
 import sanketlifeProplus from "@/assets/sanketlife-proplus.jpg";
 import sanketlifeCombo from "@/assets/sanketlife-combo.png";
 import sanketlifeComparison from "@/assets/sanketlife-comparison.png";
