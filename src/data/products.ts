@@ -1,6 +1,7 @@
 import sanketlifeCardImg from "@/assets/sanketlife-card.jpg";
 import rhythmCardImg from "@/assets/rhythm-card.jpg";
 import zluCardImg from "@/assets/zlu-card.png";
+import corebalanceCardImg from "@/assets/corebalance-card.png";
 
 export interface Product {
   id: string;
@@ -91,7 +92,7 @@ export const products: Product[] = [
       "Track muscle, fat & water",
       "Suitable for home & clinic"
     ],
-    image: "https://www.agatsaone.com/cdn/shop/files/CoreBalance.png?v=1700000000",
+    image: corebalanceCardImg,
     category: "weight",
     isExternal: false,
     link: "/products/corebalance",
