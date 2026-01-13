@@ -579,7 +579,7 @@ const ZluProduct = () => {
             
             <div className="bg-background border border-cyan-100 rounded-2xl p-8 mb-8">
               <motion.img
-                src={zluHero}
+                src={zluDevice}
                 alt="Zlu"
                 className="h-32 object-contain mx-auto mb-6"
                 initial={{ opacity: 0, y: 10 }}
