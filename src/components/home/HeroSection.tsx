@@ -48,11 +48,11 @@ const heroProducts = [
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-background py-12 lg:py-20">
+    <section className="relative overflow-x-hidden bg-background py-12 lg:py-20">
       {/* Multi-layer background depth system */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Primary radial gradient - centered behind carousel */}
-        <div className="absolute top-1/2 right-0 lg:right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-primary/8 via-primary/3 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-1/2 right-0 lg:right-1/4 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gradient-radial from-primary/8 via-primary/3 to-transparent rounded-full blur-3xl" />
         
         {/* Secondary directional gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-primary/5" />
@@ -64,12 +64,12 @@ export function HeroSection() {
         <motion.div
           animate={{ y: [-20, 20, -20], x: [-10, 10, -10] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-20 right-20 w-32 h-32 bg-primary/6 rounded-full blur-3xl"
+          className="absolute top-20 right-4 md:right-20 w-20 md:w-32 h-20 md:h-32 bg-primary/6 rounded-full blur-3xl"
         />
         <motion.div
           animate={{ y: [15, -15, 15], x: [5, -5, 5] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-32 left-10 w-48 h-48 bg-primary/4 rounded-full blur-3xl"
+          className="absolute bottom-32 left-4 md:left-10 w-32 md:w-48 h-32 md:h-48 bg-primary/4 rounded-full blur-3xl"
         />
         <motion.div
           animate={{ y: [-10, 10, -10] }}
@@ -103,7 +103,7 @@ export function HeroSection() {
       {/* Subtle texture overlay */}
       <div className="absolute inset-0 hero-texture pointer-events-none" />
 
-      <div className="container relative z-10">
+      <div className="container relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <motion.div
@@ -116,7 +116,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
             >
               Health monitoring{" "}
               <span className="text-primary relative">
