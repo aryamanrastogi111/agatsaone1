@@ -4,7 +4,7 @@ import agatsaLogo from "@/assets/agatsa-logo.png";
 
 const productLinks = [
   { label: "SanketLife", href: "https://sanketlife.com", external: true },
-  { label: "EasyTouch Rhythm", href: "https://easytouchrhythm.com", external: true },
+  { label: "EasyTouch Rhythm", href: "/products/easytouch-rhythm" },
   { label: "Zlu – Sleep Aid", href: "/products/zlu" },
   { label: "CoreBalance BMI", href: "/products/corebalance" },
 ];

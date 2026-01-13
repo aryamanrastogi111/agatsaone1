@@ -51,8 +51,9 @@ export const products: Product[] = [
     ],
     image: rhythmCardImg,
     category: "wellness",
-    isExternal: true,
-    link: "https://easytouchrhythm.com",
+    isExternal: false,
+    link: "/products/easytouch-rhythm",
+    price: "₹4,999",
     features: [
       "Water-resistant design",
       "7-day battery life",
