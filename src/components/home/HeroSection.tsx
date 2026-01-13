@@ -4,14 +4,13 @@ import { Button } from "@/components/ui/button";
 
 import sanketLifeImg from "@/assets/sanket-life.png";
 import zluImg from "@/assets/zlu.webp";
-import coreBalanceImg from "@/assets/core-balance.png";
 import spandanProImg from "@/assets/spandan-pro.png";
 
 const heroProducts = [
   { id: "sanketlife", name: "SanketLife", image: sanketLifeImg },
   { id: "easytouch-rhythm", name: "EasyTouch Rhythm", image: spandanProImg },
   { id: "zlu", name: "Zlu", image: zluImg },
-  { id: "corebalance", name: "CoreBalance", image: coreBalanceImg },
+  { id: "corebalance", name: "CoreBalance", image: "/placeholder.svg" },
 ];
 
 export function HeroSection() {
