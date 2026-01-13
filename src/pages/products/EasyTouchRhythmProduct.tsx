@@ -414,11 +414,11 @@ const EasyTouchRhythmProduct = () => {
             <AnimatedSection key={i} className="mb-24 last:mb-0">
               <div className={`grid lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
                 <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className="overflow-hidden rounded-2xl">
+                  <div className="overflow-hidden rounded-2xl bg-muted/30">
                     <motion.img
                       src={images.rhythms[i].src}
                       alt={rhythm.name}
-                      className="w-full aspect-[4/3] object-cover"
+                      className="w-full h-auto object-contain"
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.6 }}
                     />
