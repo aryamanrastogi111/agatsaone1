@@ -372,11 +372,11 @@ const EasyTouchRhythmProduct = () => {
                 {images.appScreens.map((screen, i) => (
                   <CarouselItem key={i} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                     <div className="bg-card border rounded-2xl overflow-hidden group hover:shadow-xl transition-shadow">
-                      <div className="bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center py-6 px-4">
+                      <div className="aspect-[9/16] bg-gradient-to-br from-gray-900 to-gray-800 p-4">
                         <img
                           src={screen.src}
                           alt={screen.title}
-                          className="w-full max-h-[320px] object-contain"
+                          className="w-full h-full object-contain"
                         />
                       </div>
                       <div className="p-4">
