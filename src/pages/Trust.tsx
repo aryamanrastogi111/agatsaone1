@@ -14,8 +14,6 @@ const awards = [
 ];
 
 const certifications = [
-  { name: "CE Certified", description: "European Conformity", details: "Meets EU health, safety, and environmental requirements" },
-  { name: "FDA Registered", description: "US Food & Drug Administration", details: "Registered as a medical device in the United States" },
   { name: "ISO 13485:2016", description: "Medical Device Quality", details: "Certified quality management system for medical devices" },
   { name: "BIS Approved", description: "Bureau of Indian Standards", details: "Meets Indian safety and quality standards" },
   { name: "CDSCO Licensed", description: "Central Drugs Standard Control", details: "Licensed for manufacture and sale in India" },

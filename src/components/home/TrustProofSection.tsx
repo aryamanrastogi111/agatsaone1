@@ -8,10 +8,10 @@ const awards = [
 ];
 
 const certifications = [
-  { name: "CE Certified", description: "European Conformity" },
-  { name: "FDA Registered", description: "US Food & Drug Administration" },
   { name: "ISO 13485", description: "Medical Device Quality" },
   { name: "BIS Approved", description: "Bureau of Indian Standards" },
+  { name: "CDSCO Licensed", description: "Central Drugs Standard Control" },
+  { name: "ISO 9001:2015", description: "Quality Management" },
 ];
 
 const testimonials = [
