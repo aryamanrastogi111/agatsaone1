@@ -368,8 +368,8 @@ const Support = () => {
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground">Email</h3>
-                    <a href="mailto:support@agatsa.com" className="text-primary hover:underline">
-                      support@agatsa.com
+                    <a href="mailto:care@agatsa.com" className="text-primary hover:underline">
+                      care@agatsa.com
                     </a>
                     <p className="text-sm text-muted-foreground">
                       We respond within 24 hours
@@ -383,8 +383,8 @@ const Support = () => {
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground">Phone</h3>
-                    <a href="tel:+911234567890" className="text-primary hover:underline">
-                      +91 123 456 7890
+                    <a href="tel:08069289999" className="text-primary hover:underline">
+                      08069289999
                     </a>
                     <p className="text-sm text-muted-foreground">
                       Mon-Sat, 9 AM - 6 PM IST
@@ -398,8 +398,8 @@ const Support = () => {
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground">WhatsApp</h3>
-                    <a href="https://wa.me/911234567890" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                      +91 123 456 7890
+                    <a href="https://wa.me/918069289999" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      08069289999
                     </a>
                     <p className="text-sm text-muted-foreground">
                       Quick responses during business hours
