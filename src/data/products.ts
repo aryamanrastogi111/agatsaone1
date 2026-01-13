@@ -97,7 +97,7 @@ export const products: Product[] = [
     category: "weight",
     isExternal: false,
     link: "/products/corebalance",
-    price: "₹6,999",
+    price: "₹1,999",
     features: [
       "10+ body metrics",
       "Multi-user profiles",
