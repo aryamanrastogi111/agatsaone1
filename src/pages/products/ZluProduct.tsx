@@ -7,6 +7,7 @@ import { useRef, useEffect, useState } from "react";
 import zluHero from "@/assets/zlu-hero.png";
 import zluDevice from "@/assets/zlu-device.webp";
 import zluLifestyle from "@/assets/zlu-lifestyle.png";
+import zluTravel from "@/assets/zlu-travel.png";
 
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
@@ -345,23 +346,13 @@ const ZluProduct = () => {
             <AnimatedSection className="order-1 lg:order-2">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-200/30 via-transparent to-cyan-100/20 rounded-3xl blur-2xl" />
-                <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 border border-slate-700">
-                  {/* Airplane window mockup */}
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-3 h-3 rounded-full bg-cyan-400/60" />
-                    <div className="w-3 h-3 rounded-full bg-cyan-400/40" />
-                    <div className="w-3 h-3 rounded-full bg-cyan-400/20" />
-                  </div>
-                  <div className="bg-slate-700/50 rounded-2xl p-6 text-center">
-                    <img
-                      src={zluDevice}
-                      alt="Zlu for travel"
-                      className="w-32 h-32 object-contain mx-auto mb-4"
-                      onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
-                    />
-                    <p className="text-cyan-300 text-sm font-medium">Compact & Portable</p>
-                    <p className="text-slate-400 text-xs mt-1">Fits in your carry-on</p>
-                  </div>
+                <div className="relative rounded-3xl overflow-hidden border border-cyan-100">
+                  <img
+                    src={zluTravel}
+                    alt="Man sleeping peacefully on airplane with Zlu nearby"
+                    className="w-full h-auto object-cover"
+                    onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                  />
                 </div>
               </div>
             </AnimatedSection>
