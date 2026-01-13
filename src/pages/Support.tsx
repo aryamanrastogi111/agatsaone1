@@ -47,7 +47,12 @@ const solutions = [
       "Peace of mind for you and your family",
       "Track trends over time to catch issues early"
     ],
-    products: ["SanketLife", "EasyTouch Rhythm", "Zlu – Sleep Aid", "CoreBalance BMI"],
+    products: [
+      { name: "SanketLife", link: "/products/sanketlife" },
+      { name: "EasyTouch Rhythm", link: "/products/easytouch-rhythm" },
+      { name: "Zlu – Sleep Aid", link: "/products/zlu" },
+      { name: "CoreBalance BMI", link: "/products/corebalance" }
+    ],
     cta: "Explore Home Products",
     link: "/products"
   },
@@ -63,7 +68,11 @@ const solutions = [
       "Digital records for easy documentation",
       "Cost-effective compared to traditional equipment"
     ],
-    products: ["SanketLife Pro", "CoreBalance Clinical", "Multi-device licensing"],
+    products: [
+      { name: "SanketLife Pro", link: "/products/sanketlife" },
+      { name: "CoreBalance Clinical", link: "/products/corebalance" },
+      { name: "Multi-device licensing", link: "/support#contact" }
+    ],
     cta: "Request Demo",
     link: "/support#contact"
   },
@@ -79,7 +88,11 @@ const solutions = [
       "Employee health analytics dashboard",
       "Dedicated support and training"
     ],
-    products: ["Custom device bundles", "Health screening camps", "API integration"],
+    products: [
+      { name: "Custom device bundles", link: "/support#contact" },
+      { name: "Health screening camps", link: "/support#contact" },
+      { name: "API integration", link: "/support#contact" }
+    ],
     cta: "Contact Sales",
     link: "/support#contact"
   }
@@ -220,15 +233,16 @@ const Support = () => {
                       </h3>
                       <div className="space-y-3">
                         {solution.products.map((product, i) => (
-                          <div
+                          <Link
                             key={i}
-                            className="bg-background rounded-xl p-4 flex items-center justify-between group hover:shadow-md transition-shadow"
+                            to={product.link}
+                            className="bg-background rounded-xl p-4 flex items-center justify-between group hover:shadow-md transition-shadow cursor-pointer block"
                           >
                             <span className="font-medium text-foreground">
-                              {product}
+                              {product.name}
                             </span>
                             <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                          </div>
+                          </Link>
                         ))}
                       </div>
                     </div>
