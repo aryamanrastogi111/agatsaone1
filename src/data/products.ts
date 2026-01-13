@@ -1,4 +1,5 @@
 import sanketlifeCardImg from "@/assets/sanketlife-card.jpg";
+import rhythmCardImg from "@/assets/rhythm-card.jpg";
 
 export interface Product {
   id: string;
@@ -46,7 +47,7 @@ export const products: Product[] = [
       "Sleep quality tracking",
       "Activity & step counting"
     ],
-    image: "https://www.agatsaone.com/cdn/shop/files/ETR_Band.png?v=1700000000",
+    image: rhythmCardImg,
     category: "wellness",
     isExternal: true,
     link: "https://easytouchrhythm.com",
