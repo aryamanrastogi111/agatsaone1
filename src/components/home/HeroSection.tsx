@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
+import zluHeroImg from "@/assets/zlu-hero.png";
+
 const heroProducts = [
   { id: "sanketlife", name: "SanketLife", image: "/placeholder.svg" },
   { id: "easytouch-rhythm", name: "EasyTouch Rhythm", image: "/placeholder.svg" },
-  { id: "zlu", name: "Zlu", image: "/placeholder.svg" },
+  { id: "zlu", name: "Zlu", image: zluHeroImg },
   { id: "corebalance", name: "CoreBalance", image: "/placeholder.svg" },
 ];
 
