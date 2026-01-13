@@ -73,7 +73,7 @@ const Products = () => {
                   className="group"
                 >
                   <div className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-300 h-full flex flex-col">
-                    <div className="aspect-[4/3] bg-muted/30 p-8 flex items-center justify-center relative">
+                    <div className="aspect-[4/3] bg-gradient-to-br from-muted/60 via-muted/30 to-background/40 p-4 md:p-6 flex items-center justify-center relative">
                       <div className="absolute top-4 left-4 flex items-center gap-2 bg-background/80 backdrop-blur-sm rounded-full px-3 py-1">
                         <Icon className="h-4 w-4 text-primary" />
                         <span className="text-xs font-medium text-foreground capitalize">
@@ -85,7 +85,8 @@ const Products = () => {
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="max-h-48 object-contain group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        className="w-full h-full max-h-64 md:max-h-72 object-contain drop-shadow-2xl brightness-110 contrast-110 group-hover:scale-105 transition-transform duration-300"
                         onError={(e) => {
                           e.currentTarget.src = "/placeholder.svg";
                         }}

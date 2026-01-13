@@ -36,13 +36,14 @@ export function ProductsPortfolioSection() {
               className="group"
             >
               <div className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-2xl hover:border-primary/20 transition-all duration-500">
-                <div className="aspect-[3/4] bg-gradient-to-br from-muted/50 to-muted/30 relative overflow-hidden">
+                <div className="aspect-[3/4] bg-gradient-to-br from-muted/60 via-muted/30 to-background/40 relative overflow-hidden">
                   {/* Animated background pattern */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.05)_0%,transparent_70%)]" />
                   <motion.img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-contain relative z-10 p-4"
+                    loading="lazy"
+                    className="w-full h-full object-contain relative z-10 p-4 drop-shadow-2xl brightness-110 contrast-110"
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     onError={(e) => {
