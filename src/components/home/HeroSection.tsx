@@ -78,65 +78,99 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Product Collage */}
+          {/* Product Showcase - Premium Layout */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="relative"
           >
-            <div className="relative w-full aspect-square max-w-lg mx-auto">
-              {/* Background circles */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-accent to-transparent rounded-full"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 0.5 }}
-                transition={{ duration: 1, delay: 0.5 }}
-              />
-              <motion.div
-                className="absolute inset-8 border-2 border-primary/10 rounded-full"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.7 }}
-              />
+            <div className="relative w-full aspect-[4/3] max-w-xl mx-auto">
+              {/* Central cyan glow */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-64 h-64 bg-primary/15 rounded-full blur-3xl" />
+              </div>
+              
+              {/* Secondary ambient glow */}
+              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-400/10 rounded-full blur-2xl" />
+              <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
 
-              {/* Floating products */}
-              {heroProducts.map((product, index) => {
-                const positions = [
-                  "top-0 left-1/4 w-32 h-32 md:w-40 md:h-40",
-                  "top-1/4 right-0 w-28 h-28 md:w-36 md:h-36",
-                  "bottom-1/4 left-0 w-24 h-24 md:w-32 md:h-32",
-                  "bottom-0 right-1/4 w-28 h-28 md:w-36 md:h-36",
-                ];
-                return (
-                  <motion.div
-                    key={product.id}
-                    animate={{ 
-                      y: [0, -12, 0],
-                      rotate: [0, index % 2 === 0 ? 2 : -2, 0]
-                    }}
-                    transition={{
-                      duration: 3 + index * 0.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    whileHover={{ scale: 1.1, zIndex: 10 }}
-                    className={`absolute ${positions[index]} cursor-pointer`}
-                  >
-                    <motion.img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-contain drop-shadow-xl transition-all duration-300"
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.5 + index * 0.15, duration: 0.5 }}
-                      onError={(e) => {
-                        e.currentTarget.src = "/placeholder.svg";
-                      }}
+              {/* Product Grid - Balanced Asymmetric Layout */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                {/* Top Row */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="absolute top-4 left-[15%] w-28 h-28 md:w-36 md:h-36"
+                  style={{ transform: "perspective(500px) rotateY(-5deg)" }}
+                >
+                  <div className="relative w-full h-full rounded-2xl bg-white shadow-[0_20px_50px_-15px_rgba(0,0,0,0.15)] p-3 border border-gray-100/50">
+                    <img
+                      src={sanketLifeImg}
+                      alt="SanketLife Device"
+                      className="w-full h-full object-contain"
+                      onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
                     />
-                  </motion.div>
-                );
-              })}
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.6 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="absolute top-8 right-[10%] w-32 h-32 md:w-40 md:h-40"
+                  style={{ transform: "perspective(500px) rotateY(5deg)" }}
+                >
+                  <div className="relative w-full h-full rounded-2xl bg-white shadow-[0_25px_60px_-20px_rgba(0,0,0,0.18)] p-3 border border-gray-100/50">
+                    <img
+                      src={spandanProImg}
+                      alt="EasyTouch Rhythm"
+                      className="w-full h-full object-contain"
+                      onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Bottom Row */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, duration: 0.6 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="absolute bottom-8 left-[8%] w-30 h-30 md:w-38 md:h-38"
+                  style={{ transform: "perspective(500px) rotateY(-3deg) rotateX(2deg)" }}
+                >
+                  <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-2xl bg-white shadow-[0_22px_55px_-18px_rgba(0,0,0,0.16)] p-3 border border-gray-100/50">
+                    <img
+                      src={zluImg}
+                      alt="Zlu Sleep Aid"
+                      className="w-full h-full object-contain"
+                      onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                    />
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.6 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="absolute bottom-4 right-[15%] w-28 h-28 md:w-36 md:h-36"
+                  style={{ transform: "perspective(500px) rotateY(4deg) rotateX(3deg)" }}
+                >
+                  <div className="relative w-full h-full rounded-2xl bg-white shadow-[0_20px_50px_-15px_rgba(0,0,0,0.15)] p-3 border border-gray-100/50">
+                    <img
+                      src={coreBalanceImg}
+                      alt="CoreBalance BMI Scale"
+                      className="w-full h-full object-contain"
+                      onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                    />
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </motion.div>
         </div>
