@@ -110,11 +110,11 @@ export function AwardsSection() {
                 whileHover={{ scale: 1.03, y: -4 }}
                 className="group relative"
               >
-                <div className="aspect-[4/3] bg-muted/30 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-border/50 group-hover:border-primary/20">
+                <div className="aspect-[4/3] bg-muted/30 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-border/50 group-hover:border-primary/20 flex items-center justify-center p-2">
                   <img
                     src={award.image}
                     alt={award.name}
-                    className="w-full h-full object-cover transition-all duration-300"
+                    className="w-full h-full object-contain transition-all duration-300"
                     onError={(e) => {
                       e.currentTarget.src = "/placeholder.svg";
                     }}
