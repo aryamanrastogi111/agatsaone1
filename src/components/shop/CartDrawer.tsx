@@ -11,43 +11,74 @@ import {
 } from "@/components/ui/sheet";
 import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
-// Shopify checkout subdomain (must be pointed to Shopify via CNAME)
-const SHOPIFY_CHECKOUT_DOMAIN = "shop.agatsaone.com";
+import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 import { toast } from "sonner";
+
+// Shopify checkout subdomain (must be pointed to Shopify via CNAME + have TLS ready)
+const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  
-  const { 
-    items, 
-    isLoading, 
-    updateQuantity, 
-    removeItem, 
+
+  const {
+    items,
+    isLoading,
+    updateQuantity,
+    removeItem,
     createCheckout,
-    clearCart
+    clearCart,
   } = useCartStore();
-  
+
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
+  const totalPrice = items.reduce(
+    (sum, item) => sum + parseFloat(item.price.amount) * item.quantity,
+    0
+  );
 
   const handleCheckout = async () => {
     try {
       const url = await createCheckout();
-      console.log("[CartDrawer] Generated checkout URL:", url);
 
       if (!url) {
         toast.error("Failed to create checkout. Please try again.");
         return;
       }
 
-      // Force the checkout URL onto shop.agatsaone.com (Shopify subdomain)
+      // While TLS is provisioning, the custom subdomain can intermittently fail.
+      // Use myshopify.com as a guaranteed fallback.
       const normalized = new URL(url);
       normalized.protocol = "https:";
-      normalized.host = SHOPIFY_CHECKOUT_DOMAIN;
+      normalized.searchParams.set("channel", "online_store");
+
+      const tryPreferred = new URL(normalized.toString());
+      tryPreferred.host = PREFERRED_CHECKOUT_DOMAIN;
+
+      // IMPORTANT: open checkout in a new tab (avoids SPA navigation/404 if it fails)
+      const opened = window.open(tryPreferred.toString(), "_blank", "noopener,noreferrer");
+
+      if (!opened) {
+        toast.error("Popup blocked", {
+          description: "Please allow popups, then try checkout again.",
+        });
+        return;
+      }
+
+      // If the preferred domain is still not ready, user can manually use fallback.
+      // (We keep current tab intact either way.)
+      const fallback = new URL(normalized.toString());
+      fallback.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
+
+      toast.message("Checkout opened in a new tab", {
+        description:
+          "If it fails while TLS is provisioning, click 'Use fallback' to open the myshopify.com checkout.",
+        action: {
+          label: "Use fallback",
+          onClick: () => window.open(fallback.toString(), "_blank", "noopener,noreferrer"),
+        },
+      });
 
       clearCart();
       setIsOpen(false);
-      window.location.assign(normalized.toString());
     } catch (error) {
       console.error("Checkout failed:", error);
       toast.error("Checkout failed. Please try again.");
