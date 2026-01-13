@@ -36,14 +36,14 @@ export function ProductsPortfolioSection() {
               className="group"
             >
               <div className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-2xl hover:border-primary/20 transition-all duration-500">
-                <div className="aspect-[4/3] bg-gradient-to-br from-muted/50 to-muted/30 p-8 flex items-center justify-center relative overflow-hidden">
+                <div className="aspect-[4/3] bg-gradient-to-br from-muted/50 to-muted/30 relative overflow-hidden">
                   {/* Animated background pattern */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.05)_0%,transparent_70%)]" />
                   <motion.img
                     src={product.image}
                     alt={product.name}
-                    className="max-h-48 object-contain relative z-10"
-                    whileHover={{ scale: 1.08, rotate: 2 }}
+                    className="w-full h-full object-cover relative z-10"
+                    whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     onError={(e) => {
                       e.currentTarget.src = "/placeholder.svg";
