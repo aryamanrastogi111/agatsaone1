@@ -43,7 +43,7 @@ export function ProductsPortfolioSection() {
                     src={product.image}
                     alt={product.name}
                     loading="lazy"
-                    className="w-full h-full object-contain relative z-10 p-4 drop-shadow-2xl brightness-110 contrast-110"
+                    className="w-[92%] h-[92%] mx-auto my-auto object-contain relative z-10 drop-shadow-2xl"
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     onError={(e) => {
