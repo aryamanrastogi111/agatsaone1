@@ -14,6 +14,7 @@ import Compare from "./pages/Compare";
 import ZluProduct from "./pages/products/ZluProduct";
 import CoreBalanceProduct from "./pages/products/CoreBalanceProduct";
 import EasyTouchRhythmProduct from "./pages/products/EasyTouchRhythmProduct";
+import SanketLifeProduct from "./pages/products/SanketLifeProduct";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/products/zlu" element={<ZluProduct />} />
           <Route path="/products/corebalance" element={<CoreBalanceProduct />} />
           <Route path="/products/easytouch-rhythm" element={<EasyTouchRhythmProduct />} />
+          <Route path="/products/sanketlife" element={<SanketLifeProduct />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/trust" element={<Trust />} />
           <Route path="/about" element={<About />} />
