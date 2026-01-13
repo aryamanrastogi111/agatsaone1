@@ -30,14 +30,23 @@ export const CartDrawer = () => {
   const handleCheckout = async () => {
     try {
       const checkoutUrl = await createCheckout();
-      if (checkoutUrl) {
-        clearCart();
-        setIsOpen(false);
-        // Direct navigation - works on all devices without popup blockers
-        window.location.href = checkoutUrl;
-      } else {
+      console.log("[CartDrawer] checkoutUrl:", checkoutUrl);
+
+      if (!checkoutUrl) {
         toast.error("Failed to create checkout. Please try again.");
+        return;
       }
+
+      // Safety: ensure we got an absolute Shopify URL (not '/something' which would 404 on our site)
+      if (!/^https?:\/\//i.test(checkoutUrl)) {
+        console.error("[CartDrawer] Invalid checkout URL (expected absolute URL):", checkoutUrl);
+        toast.error("Checkout link invalid. Please try again.");
+        return;
+      }
+
+      clearCart();
+      setIsOpen(false);
+      window.location.assign(checkoutUrl);
     } catch (error) {
       console.error('Checkout failed:', error);
       toast.error("Checkout failed. Please try again.");
