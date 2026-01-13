@@ -1,7 +1,18 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { products } from "@/data/products";
+
+import sanketLifeImg from "@/assets/sanket-life.png";
+import zluImg from "@/assets/zlu.webp";
+import coreBalanceImg from "@/assets/core-balance.jpg";
+import spandanProImg from "@/assets/spandan-pro.png";
+
+const heroProducts = [
+  { id: "sanketlife", name: "SanketLife", image: sanketLifeImg },
+  { id: "easytouch-rhythm", name: "EasyTouch Rhythm", image: spandanProImg },
+  { id: "zlu", name: "Zlu", image: zluImg },
+  { id: "corebalance", name: "CoreBalance", image: coreBalanceImg },
+];
 
 export function HeroSection() {
   return (
@@ -90,7 +101,7 @@ export function HeroSection() {
               />
 
               {/* Floating products */}
-              {products.map((product, index) => {
+              {heroProducts.map((product, index) => {
                 const positions = [
                   "top-0 left-1/4 w-32 h-32 md:w-40 md:h-40",
                   "top-1/4 right-0 w-28 h-28 md:w-36 md:h-36",
