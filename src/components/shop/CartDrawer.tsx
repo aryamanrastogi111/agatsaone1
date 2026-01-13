@@ -44,17 +44,20 @@ export const CartDrawer = () => {
         return;
       }
 
-      // While TLS is provisioning, the custom subdomain can intermittently fail.
-      // Use myshopify.com as a guaranteed fallback.
+      // While TLS is provisioning, the custom subdomain can be blocked/refuse connections.
+      // So we default to the guaranteed working *.myshopify.com checkout.
       const normalized = new URL(url);
       normalized.protocol = "https:";
       normalized.searchParams.set("channel", "online_store");
 
-      const tryPreferred = new URL(normalized.toString());
-      tryPreferred.host = PREFERRED_CHECKOUT_DOMAIN;
+      const fallback = new URL(normalized.toString());
+      fallback.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
 
-      // IMPORTANT: open checkout in a new tab (avoids SPA navigation/404 if it fails)
-      const opened = window.open(tryPreferred.toString(), "_blank", "noopener,noreferrer");
+      // Optional: once TLS becomes "Connected", you can switch to the preferred domain.
+      const preferred = new URL(normalized.toString());
+      preferred.host = PREFERRED_CHECKOUT_DOMAIN;
+
+      const opened = window.open(fallback.toString(), "_blank", "noopener,noreferrer");
 
       if (!opened) {
         toast.error("Popup blocked", {
@@ -63,17 +66,12 @@ export const CartDrawer = () => {
         return;
       }
 
-      // If the preferred domain is still not ready, user can manually use fallback.
-      // (We keep current tab intact either way.)
-      const fallback = new URL(normalized.toString());
-      fallback.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
-
       toast.message("Checkout opened in a new tab", {
         description:
-          "If it fails while TLS is provisioning, click 'Use fallback' to open the myshopify.com checkout.",
+          "TLS for shop.agatsaone.com is still provisioning—using the safe myshopify.com checkout for now.",
         action: {
-          label: "Use fallback",
-          onClick: () => window.open(fallback.toString(), "_blank", "noopener,noreferrer"),
+          label: "Try shop domain",
+          onClick: () => window.open(preferred.toString(), "_blank", "noopener,noreferrer"),
         },
       });
 
