@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -77,6 +77,36 @@ const rhythmDescriptions = [
     insight: "Understanding your metabolic rhythm helps you eat in harmony with your body—not against it.",
   },
 ];
+
+// Counting number animation component
+const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const [displayValue, setDisplayValue] = useState(0);
+  
+  useEffect(() => {
+    if (isInView) {
+      const timeout = setTimeout(() => {
+        const controls = animate(0, value, {
+          duration: 1.5,
+          ease: "easeOut",
+          onUpdate: (latest) => {
+            setDisplayValue(Math.round(latest));
+          },
+        });
+        return () => controls.stop();
+      }, delay * 1000);
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [isInView, value, delay]);
+  
+  return (
+    <span ref={ref} className={className}>
+      {displayValue}
+    </span>
+  );
+};
 
 const AnimatedSection = ({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => {
   const ref = useRef(null);
@@ -329,15 +359,11 @@ const EasyTouchRhythmProduct = () => {
                   }}
                   viewport={{ once: true }}
                 >
-                  <motion.span 
+                  <CountingNumber 
+                    value={score.value} 
+                    delay={i * 0.15 + 0.6}
                     className="text-2xl font-bold text-white"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: i * 0.15 + 0.6, duration: 0.3 }}
-                    viewport={{ once: true }}
-                  >
-                    {score.value}
-                  </motion.span>
+                  />
                   
                   {/* Animated ring */}
                   <motion.div
