@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import zluHero from "@/assets/zlu-hero.png";
+import zluDevice from "@/assets/zlu-device.webp";
 
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
@@ -152,7 +153,7 @@ const ZluProduct = () => {
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-200/40 via-transparent to-cyan-100/30 rounded-3xl blur-3xl" />
                 <motion.img
-                  src={zluHero}
+                  src={zluDevice}
                   alt="Zlu Sleep Aid Device"
                   className="relative w-full max-w-md mx-auto animate-drift"
                   onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
