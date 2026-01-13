@@ -38,26 +38,8 @@ export function Header() {
           </motion.div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              className={cn(
-                "text-sm font-medium transition-colors relative py-1 link-underline",
-                location.pathname === item.href
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-primary"
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Product Quick Links */}
-        <div className="hidden md:flex items-center gap-2">
+        {/* Product Quick Links - First */}
+        <div className="hidden md:flex items-center gap-1">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <Button asChild variant="ghost" size="sm" className="text-cyan-600 hover:text-cyan-700 hover:bg-cyan-50 gap-1.5">
               <Link to="/products/zlu">
@@ -82,7 +64,28 @@ export function Header() {
               </Link>
             </Button>
           </motion.div>
-          <div className="w-px h-6 bg-border mx-1" />
+        </div>
+
+        {/* Desktop Navigation - Second */}
+        <nav className="hidden md:flex items-center gap-6">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              to={item.href}
+              className={cn(
+                "text-sm font-medium transition-colors relative py-1 link-underline",
+                location.pathname === item.href
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-primary"
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* CTA Button - Last */}
+        <div className="hidden md:flex items-center">
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button asChild size="sm" className="btn-glow">
               <Link to="/device-finder">Find Your Device</Link>
