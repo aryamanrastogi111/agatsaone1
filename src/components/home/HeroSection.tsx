@@ -48,7 +48,7 @@ const heroProducts = [
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-x-hidden bg-background py-12 lg:py-20">
+    <section className="relative overflow-x-hidden bg-background pt-12 pb-24 lg:py-20">
       {/* Multi-layer background depth system */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Primary radial gradient - centered behind carousel */}
@@ -184,7 +184,7 @@ export function HeroSection() {
                   stopOnInteraction: true,
                 }),
               ]}
-              className="w-full max-w-md mx-auto relative"
+              className="w-full max-w-sm sm:max-w-md mx-auto relative px-6 sm:px-10"
             >
               <CarouselContent>
                 {heroProducts.map((product) => (
@@ -194,11 +194,11 @@ export function HeroSection() {
                         {/* Cyan rim light effect */}
                         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/10" />
                         <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-                        
+
                         {/* Decorative circles with enhanced glow */}
                         <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/15 rounded-full blur-2xl" />
                         <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/8 rounded-full blur-xl" />
-                        
+
                         {/* Subtle inner glow */}
                         <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-white/10 rounded-2xl" />
 
@@ -206,11 +206,12 @@ export function HeroSection() {
                         <div className="relative aspect-square flex items-center justify-center mb-4">
                           {/* Cyan reflection glow beneath product */}
                           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-primary/20 blur-xl rounded-full" />
-                          
+
                           <img
                             src={product.image}
                             alt={product.name}
                             className="w-full h-full object-contain drop-shadow-[0_20px_40px_rgba(0,186,199,0.2)] group-hover:scale-105 group-hover:rotate-1 transition-all duration-500"
+                            loading="lazy"
                           />
                         </div>
 
@@ -232,9 +233,9 @@ export function HeroSection() {
                 ))}
               </CarouselContent>
 
-              {/* Navigation buttons */}
-              <CarouselPrevious className="left-0 lg:-left-4 bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground" />
-              <CarouselNext className="right-0 lg:-right-4 bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground" />
+              {/* Navigation buttons (kept inside padded area so mobile never overflows) */}
+              <CarouselPrevious className="left-2 bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground" />
+              <CarouselNext className="right-2 bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground" />
             </Carousel>
 
             {/* Dots indicator hint */}
