@@ -123,17 +123,24 @@ export function HeroSection() {
                     whileHover={{ scale: 1.1, zIndex: 10 }}
                     className={`absolute ${positions[index]} cursor-pointer`}
                   >
-                    <motion.img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-contain drop-shadow-xl transition-all duration-300"
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.5 + index * 0.15, duration: 0.5 }}
-                      onError={(e) => {
-                        e.currentTarget.src = "/placeholder.svg";
-                      }}
-                    />
+                    <motion.div
+                      className="w-full h-full relative"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl scale-75 opacity-60" />
+                      <motion.img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-contain drop-shadow-2xl relative z-10"
+                        style={{ filter: "drop-shadow(0 8px 24px hsl(var(--primary) / 0.3))" }}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.5 + index * 0.15, duration: 0.5 }}
+                        onError={(e) => {
+                          e.currentTarget.src = "/placeholder.svg";
+                        }}
+                      />
+                    </motion.div>
                   </motion.div>
                 );
               })}
