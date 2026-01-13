@@ -323,11 +323,11 @@ const EasyTouchRhythmProduct = () => {
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {[
-              { name: "Rhythm Score", value: 78, color: "from-primary to-cyan-400" },
-              { name: "Kinetic", value: 82, color: "from-green-500 to-emerald-400" },
-              { name: "Metabolic", value: 71, color: "from-orange-500 to-amber-400" },
-              { name: "Nervous", value: 85, color: "from-purple-500 to-violet-400" },
-              { name: "Circadian", value: 74, color: "from-blue-500 to-sky-400" },
+              { name: "Rhythm Score", value: 78, color: "from-primary to-cyan-400", anchorId: "five-rhythms" },
+              { name: "Kinetic", value: 82, color: "from-green-500 to-emerald-400", anchorId: "rhythm-kinetic" },
+              { name: "Metabolic", value: 71, color: "from-orange-500 to-amber-400", anchorId: "rhythm-metabolic" },
+              { name: "Nervous", value: 85, color: "from-purple-500 to-violet-400", anchorId: "rhythm-nervous" },
+              { name: "Circadian", value: 74, color: "from-blue-500 to-sky-400", anchorId: "rhythm-circadian" },
             ].map((score, i) => (
               <motion.div
                 key={i}
@@ -345,7 +345,13 @@ const EasyTouchRhythmProduct = () => {
                   y: -10,
                   transition: { duration: 0.2 }
                 }}
-                className="bg-card border rounded-2xl p-6 text-center hover:shadow-xl transition-shadow cursor-pointer"
+                onClick={() => {
+                  document.getElementById(score.anchorId)?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                  });
+                }}
+                className="bg-card border rounded-2xl p-6 text-center hover:shadow-xl transition-shadow cursor-pointer group"
               >
                 <motion.div 
                   className={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br ${score.color} flex items-center justify-center relative`}
@@ -380,7 +386,7 @@ const EasyTouchRhythmProduct = () => {
                   />
                 </motion.div>
                 <motion.h3 
-                  className="font-semibold text-foreground"
+                  className="font-semibold text-foreground group-hover:text-primary transition-colors"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   transition={{ delay: i * 0.15 + 0.4, duration: 0.3 }}
@@ -388,6 +394,9 @@ const EasyTouchRhythmProduct = () => {
                 >
                   {score.name}
                 </motion.h3>
+                <span className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity mt-1 block">
+                  Click to learn more
+                </span>
               </motion.div>
             ))}
           </div>
