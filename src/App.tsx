@@ -13,6 +13,7 @@ import DeviceFinder from "./pages/DeviceFinder";
 import Compare from "./pages/Compare";
 import ZluProduct from "./pages/products/ZluProduct";
 import CoreBalanceProduct from "./pages/products/CoreBalanceProduct";
+import EasyTouchRhythmProduct from "./pages/products/EasyTouchRhythmProduct";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/products" element={<Products />} />
           <Route path="/products/zlu" element={<ZluProduct />} />
           <Route path="/products/corebalance" element={<CoreBalanceProduct />} />
+          <Route path="/products/easytouch-rhythm" element={<EasyTouchRhythmProduct />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/trust" element={<Trust />} />
           <Route path="/about" element={<About />} />
