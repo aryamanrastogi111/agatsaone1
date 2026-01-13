@@ -10,7 +10,7 @@ import { Layout } from "@/components/layout";
 const faqs = [
   {
     question: "How accurate are Agatsa devices?",
-    answer: "Our devices are designed to meet medical-grade accuracy standards. SanketLife, for example, has been clinically validated to match the accuracy of traditional 12-lead ECG machines. All our devices undergo rigorous testing and are certified by international regulatory bodies like CE and FDA."
+    answer: "Our devices are designed to meet medical-grade accuracy standards. SanketLife, for example, has been clinically validated to match the accuracy of traditional 12-lead ECG machines. All our devices undergo rigorous testing and are certified by regulatory bodies including ISO 13485, BIS, and CDSCO."
   },
   {
     question: "Do I need a prescription to buy these devices?",

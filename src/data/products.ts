@@ -34,7 +34,7 @@ export const products: Product[] = [
     link: "https://sanketlife.com",
     features: [
       "Medical-grade accuracy",
-      "FDA & CE certified",
+      "Clinically validated",
       "No gels or wires needed",
       "Works with iOS & Android"
     ]

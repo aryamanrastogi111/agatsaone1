@@ -30,8 +30,8 @@ const values = [
 const milestones = [
   { year: "2016", event: "Agatsa founded with a vision to democratize health monitoring" },
   { year: "2017", event: "Launched SanketLife, India's first pocket ECG device" },
-  { year: "2018", event: "Received CE certification for European markets" },
-  { year: "2019", event: "FDA registration completed for US market" },
+  { year: "2018", event: "Received ISO 13485 certification for medical devices" },
+  { year: "2019", event: "CDSCO licensing completed for Indian market" },
   { year: "2020", event: "Crossed 100,000+ users across India" },
   { year: "2021", event: "Launched EasyTouch Rhythm wellness band" },
   { year: "2022", event: "Introduced Zlu Sleep Aid and CoreBalance BMI" },
