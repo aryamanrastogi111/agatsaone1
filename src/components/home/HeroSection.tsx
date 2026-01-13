@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 
 import zluHeroImg from "@/assets/zlu-hero.png";
 import corebalanceHeroImg from "@/assets/corebalance-hero.png";
+import sanketlifeHeroImg from "@/assets/sanketlife-hero.png";
 
 const heroProducts = [
-  { id: "sanketlife", name: "SanketLife", image: "/placeholder.svg" },
+  { id: "sanketlife", name: "SanketLife", image: sanketlifeHeroImg },
   { id: "easytouch-rhythm", name: "EasyTouch Rhythm", image: "/placeholder.svg" },
   { id: "zlu", name: "Zlu", image: zluHeroImg },
   { id: "corebalance", name: "CoreBalance", image: corebalanceHeroImg },
