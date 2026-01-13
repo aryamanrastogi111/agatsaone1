@@ -16,7 +16,7 @@ const heroProducts = [
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-background py-20 lg:py-32">
+    <section className="relative overflow-hidden bg-background py-12 lg:py-20">
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-accent/30 via-transparent to-transparent pointer-events-none" />
       
@@ -85,7 +85,7 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="relative"
           >
-            <div className="relative w-full aspect-square max-w-lg mx-auto">
+            <div className="relative w-full aspect-[4/3] max-w-md mx-auto">
               {/* Background circles */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-br from-accent to-transparent rounded-full"
