@@ -543,7 +543,197 @@ const EasyTouchRhythmProduct = () => {
         </div>
       </section>
 
-      {/* Section 10: Trust & Awards */}
+      {/* Section 10: Comparison Table */}
+      <section className="py-24 lg:py-32 bg-background">
+        <div className="container">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              How EasyTouch Rhythm Compares
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              See why EasyTouch Rhythm offers a fundamentally different approach to health monitoring
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr>
+                    <th className="text-left p-4 bg-muted/50 rounded-tl-xl font-semibold text-foreground min-w-[200px]">
+                      Feature
+                    </th>
+                    <th className="p-4 bg-primary text-primary-foreground font-semibold min-w-[180px]">
+                      <div className="flex flex-col items-center gap-1">
+                        <span className="text-lg">EasyTouch Rhythm</span>
+                        <span className="text-xs font-normal opacity-80">₹4,999</span>
+                      </div>
+                    </th>
+                    <th className="p-4 bg-muted/50 font-semibold text-muted-foreground min-w-[140px]">
+                      Apple Watch
+                    </th>
+                    <th className="p-4 bg-muted/50 font-semibold text-muted-foreground min-w-[140px]">
+                      Fitbit
+                    </th>
+                    <th className="p-4 bg-muted/50 rounded-tr-xl font-semibold text-muted-foreground min-w-[140px]">
+                      Oura Ring
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    {
+                      feature: "Five Rhythm Analysis",
+                      rhythm: true,
+                      apple: false,
+                      fitbit: false,
+                      oura: false,
+                      highlight: true,
+                    },
+                    {
+                      feature: "Unified Rhythm Score",
+                      rhythm: true,
+                      apple: false,
+                      fitbit: false,
+                      oura: false,
+                      highlight: true,
+                    },
+                    {
+                      feature: "Personalized Meal Insights",
+                      rhythm: true,
+                      apple: false,
+                      fitbit: false,
+                      oura: false,
+                      highlight: true,
+                    },
+                    {
+                      feature: "Heart Rate Monitoring",
+                      rhythm: true,
+                      apple: true,
+                      fitbit: true,
+                      oura: true,
+                    },
+                    {
+                      feature: "Sleep Tracking",
+                      rhythm: true,
+                      apple: true,
+                      fitbit: true,
+                      oura: true,
+                    },
+                    {
+                      feature: "Blood Oxygen (SpO2)",
+                      rhythm: true,
+                      apple: true,
+                      fitbit: true,
+                      oura: true,
+                    },
+                    {
+                      feature: "Stress Detection",
+                      rhythm: true,
+                      apple: true,
+                      fitbit: true,
+                      oura: true,
+                    },
+                    {
+                      feature: "Circadian Rhythm Tracking",
+                      rhythm: true,
+                      apple: false,
+                      fitbit: false,
+                      oura: true,
+                      highlight: true,
+                    },
+                    {
+                      feature: "Metabolic Insights",
+                      rhythm: true,
+                      apple: false,
+                      fitbit: false,
+                      oura: false,
+                      highlight: true,
+                    },
+                    {
+                      feature: "Cognitive Rhythm Analysis",
+                      rhythm: true,
+                      apple: false,
+                      fitbit: false,
+                      oura: false,
+                      highlight: true,
+                    },
+                    {
+                      feature: "No Subscription Required",
+                      rhythm: true,
+                      apple: true,
+                      fitbit: false,
+                      oura: false,
+                      highlight: true,
+                    },
+                    {
+                      feature: "Made in India",
+                      rhythm: true,
+                      apple: false,
+                      fitbit: false,
+                      oura: false,
+                    },
+                  ].map((row, i) => (
+                    <tr 
+                      key={i} 
+                      className={`border-b border-border/50 ${row.highlight ? 'bg-primary/5' : ''}`}
+                    >
+                      <td className="p-4 text-foreground font-medium">
+                        {row.feature}
+                        {row.highlight && (
+                          <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-primary/20 text-primary">
+                            Unique
+                          </span>
+                        )}
+                      </td>
+                      <td className="p-4 text-center bg-primary/10">
+                        {row.rhythm ? (
+                          <Check className="h-5 w-5 text-primary mx-auto" />
+                        ) : (
+                          <span className="text-muted-foreground">—</span>
+                        )}
+                      </td>
+                      <td className="p-4 text-center">
+                        {row.apple ? (
+                          <Check className="h-5 w-5 text-muted-foreground mx-auto" />
+                        ) : (
+                          <span className="text-muted-foreground">—</span>
+                        )}
+                      </td>
+                      <td className="p-4 text-center">
+                        {row.fitbit ? (
+                          <Check className="h-5 w-5 text-muted-foreground mx-auto" />
+                        ) : (
+                          <span className="text-muted-foreground">—</span>
+                        )}
+                      </td>
+                      <td className="p-4 text-center">
+                        {row.oura ? (
+                          <Check className="h-5 w-5 text-muted-foreground mx-auto" />
+                        ) : (
+                          <span className="text-muted-foreground">—</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <p className="text-sm text-muted-foreground mb-6">
+                * Comparison based on publicly available product specifications as of 2024
+              </p>
+              <Button size="lg" className="gap-2">
+                Choose EasyTouch Rhythm
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Section 11: Trust & Awards */}
       <section className="py-24 lg:py-32 bg-background">
         <div className="container">
           <AnimatedSection className="text-center mb-16">
