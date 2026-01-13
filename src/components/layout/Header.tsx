@@ -56,8 +56,13 @@ export function Header() {
           ))}
         </nav>
 
-        {/* CTA Button */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* CTA Buttons */}
+        <div className="hidden md:flex items-center gap-3">
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button asChild variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">
+              <Link to="/products/easytouch-rhythm">Explore EasyTouch Rhythm</Link>
+            </Button>
+          </motion.div>
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button asChild className="btn-glow">
               <Link to="/device-finder">Find the right device</Link>
@@ -133,7 +138,19 @@ export function Header() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.25 }}
+                className="pt-2"
+              >
+                <Button asChild variant="outline" className="w-full border-primary/50 text-primary">
+                  <Link to="/products/easytouch-rhythm" onClick={() => setMobileMenuOpen(false)}>
+                    Explore EasyTouch Rhythm
+                  </Link>
+                </Button>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35 }}
                 className="pt-2"
               >
                 <Button asChild className="w-full">

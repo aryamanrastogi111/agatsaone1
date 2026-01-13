@@ -103,7 +103,7 @@ export function ProductsPortfolioSection() {
                         to={product.link}
                         className="flex items-center justify-center gap-2"
                       >
-                        Learn more
+                        {product.id === "easytouch-rhythm" ? "Explore EasyTouch Rhythm" : "Learn more"}
                         <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
