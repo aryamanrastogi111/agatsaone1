@@ -30,8 +30,8 @@ export const products: Product[] = [
     ],
     image: sanketlifeCardImg,
     category: "heart",
-    isExternal: true,
-    link: "https://sanketlife.com",
+    isExternal: false,
+    link: "/products/sanketlife",
     features: [
       "Medical-grade accuracy",
       "Clinically validated",
