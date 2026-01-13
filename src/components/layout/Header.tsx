@@ -99,14 +99,6 @@ export function Header() {
           ))}
         </nav>
 
-        {/* CTA Button - Last */}
-        <div className="hidden md:flex items-center">
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button asChild size="sm" className="btn-glow">
-              <Link to="/device-finder">Find Your Device</Link>
-            </Button>
-          </motion.div>
-        </div>
 
         {/* Mobile Menu Button */}
         <motion.button
