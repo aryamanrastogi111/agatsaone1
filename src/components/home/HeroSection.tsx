@@ -3,12 +3,13 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 import zluHeroImg from "@/assets/zlu-hero.png";
+import corebalanceHeroImg from "@/assets/corebalance-hero.png";
 
 const heroProducts = [
   { id: "sanketlife", name: "SanketLife", image: "/placeholder.svg" },
   { id: "easytouch-rhythm", name: "EasyTouch Rhythm", image: "/placeholder.svg" },
   { id: "zlu", name: "Zlu", image: zluHeroImg },
-  { id: "corebalance", name: "CoreBalance", image: "/placeholder.svg" },
+  { id: "corebalance", name: "CoreBalance", image: corebalanceHeroImg },
 ];
 
 export function HeroSection() {
@@ -100,10 +101,10 @@ export function HeroSection() {
               {/* Floating products */}
               {heroProducts.map((product, index) => {
                 const positions = [
-                  "top-0 left-1/4 w-32 h-32 md:w-40 md:h-40",
-                  "top-1/4 right-0 w-28 h-28 md:w-36 md:h-36",
-                  "top-1/2 -left-8 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64",
-                  "bottom-0 right-1/4 w-28 h-28 md:w-36 md:h-36",
+                  "-top-4 left-1/3 w-36 h-36 md:w-44 md:h-44",
+                  "top-1/3 -right-4 w-36 h-36 md:w-44 md:h-44",
+                  "top-1/3 -left-8 w-44 h-44 md:w-56 md:h-56",
+                  "-bottom-4 left-1/3 w-40 h-40 md:w-48 md:h-48",
                 ];
                 return (
                   <motion.div
