@@ -1,4 +1,5 @@
 export { HeroSection } from "./HeroSection";
+export { AwardsSection } from "./AwardsSection";
 export { ChooseByNeedSection } from "./ChooseByNeedSection";
 export { ProductsPortfolioSection } from "./ProductsPortfolioSection";
 export { WhyAgatsaSection } from "./WhyAgatsaSection";

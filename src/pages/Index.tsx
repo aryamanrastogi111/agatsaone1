@@ -4,6 +4,7 @@ import {
   ChooseByNeedSection,
   ProductsPortfolioSection,
   WhyAgatsaSection,
+  AwardsSection,
   TrustProofSection,
   FinalCTASection,
 } from "@/components/home";
@@ -15,6 +16,7 @@ const Index = () => {
       <ChooseByNeedSection />
       <ProductsPortfolioSection />
       <WhyAgatsaSection />
+      <AwardsSection />
       <TrustProofSection />
       <FinalCTASection />
     </Layout>
