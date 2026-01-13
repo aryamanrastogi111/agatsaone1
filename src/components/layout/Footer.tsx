@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import agatsaLogo from "@/assets/agatsa-logo.png";
 
 const productLinks = [
-  { label: "SanketLife", href: "https://sanketlife.com", external: true },
+  { label: "SanketLife", href: "/products/sanketlife" },
   { label: "EasyTouch Rhythm", href: "/products/easytouch-rhythm" },
   { label: "Zlu – Sleep Aid", href: "/products/zlu" },
   { label: "CoreBalance BMI", href: "/products/corebalance" },
@@ -67,23 +67,12 @@ export const Footer = forwardRef<HTMLElement>((_, ref) => {
             <ul className="space-y-3 text-sm">
               {productLinks.map((link) => (
                 <li key={link.label}>
-                  {link.external ? (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-secondary-foreground/80 hover:text-primary transition-colors"
-                    >
-                      {link.label} ↗
-                    </a>
-                  ) : (
-                    <Link
-                      to={link.href}
-                      className="text-secondary-foreground/80 hover:text-primary transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  )}
+                  <Link
+                    to={link.href}
+                    className="text-secondary-foreground/80 hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
