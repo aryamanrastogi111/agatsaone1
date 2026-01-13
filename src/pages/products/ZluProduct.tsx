@@ -294,7 +294,81 @@ const ZluProduct = () => {
         </div>
       </section>
 
-      {/* Section 5: Use Cases */}
+      {/* Section 5: Travel Section */}
+      <section className="py-24 lg:py-32 bg-background overflow-hidden">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <AnimatedSection className="order-2 lg:order-1">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-100 text-cyan-700 text-sm font-medium mb-6">
+                <Plane className="h-4 w-4" />
+                Travel Ready
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+                Rest Easier, Wherever You Go
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                Unfamiliar beds. Different time zones. The anxiety of sleeping somewhere new. 
+                Travel often means restless nights—but it doesn't have to.
+              </p>
+              <p className="text-lg text-foreground mb-8">
+                Zlu's compact design fits in your carry-on, your hotel nightstand, 
+                or even your seat pocket on a flight. Bring your calm with you.
+              </p>
+              
+              <div className="space-y-4">
+                {[
+                  { title: "On Flights", desc: "Tuck it in your seat pocket for long-haul rest" },
+                  { title: "In Hotels", desc: "Familiar support in unfamiliar rooms" },
+                  { title: "Visiting Family", desc: "Sleep well even in guest beds" },
+                  { title: "Business Trips", desc: "Stay sharp with better rest on the road" },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-start gap-3"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-cyan-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="h-3.5 w-3.5 text-cyan-600" />
+                    </div>
+                    <div>
+                      <span className="font-medium text-foreground">{item.title}</span>
+                      <span className="text-muted-foreground"> — {item.desc}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection className="order-1 lg:order-2">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-200/30 via-transparent to-cyan-100/20 rounded-3xl blur-2xl" />
+                <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 border border-slate-700">
+                  {/* Airplane window mockup */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-3 h-3 rounded-full bg-cyan-400/60" />
+                    <div className="w-3 h-3 rounded-full bg-cyan-400/40" />
+                    <div className="w-3 h-3 rounded-full bg-cyan-400/20" />
+                  </div>
+                  <div className="bg-slate-700/50 rounded-2xl p-6 text-center">
+                    <img
+                      src={zluDevice}
+                      alt="Zlu for travel"
+                      className="w-32 h-32 object-contain mx-auto mb-4"
+                      onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                    />
+                    <p className="text-cyan-300 text-sm font-medium">Compact & Portable</p>
+                    <p className="text-slate-400 text-xs mt-1">Fits in your carry-on</p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
       <section className="py-24 lg:py-32 bg-background">
         <div className="container">
           <AnimatedSection className="text-center mb-16">
