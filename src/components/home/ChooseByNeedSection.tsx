@@ -8,8 +8,7 @@ const categories = [
     icon: Heart,
     title: "Heart Health",
     description: "Monitor your cardiac health with medical-grade ECG technology",
-    link: "https://sanketlife.com",
-    external: true,
+    link: "/products/sanketlife",
     product: "SanketLife",
     color: "text-red-500",
     bgColor: "bg-red-50",
@@ -80,65 +79,34 @@ export function ChooseByNeedSection() {
                 whileHover={{ y: -8 }}
                 className="group"
               >
-                {category.external ? (
-                  <a href={category.link} target="_blank" rel="noopener noreferrer" className="block h-full">
-                    <div className="bg-card rounded-xl p-6 h-full border border-border shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
-                      <motion.div
-                        className={cn(
-                          "w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300",
-                          category.bgColor,
-                          category.hoverBg
-                        )}
-                        whileHover={{ rotate: [0, -10, 10, 0] }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <Icon className={cn("h-7 w-7", category.color)} />
-                      </motion.div>
-                      <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                        {category.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                        {category.description}
-                      </p>
-                      <p className="text-xs text-primary font-medium mb-4">
-                        Recommended: {category.product}
-                      </p>
-                      <div className="flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
-                        Learn more
-                        <ArrowRight className="h-4 w-4" />
-                      </div>
+                <Link to={category.link} className="block h-full">
+                  <div className="bg-card rounded-xl p-6 h-full border border-border shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
+                    <motion.div
+                      className={cn(
+                        "w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300",
+                        category.bgColor,
+                        category.hoverBg
+                      )}
+                      whileHover={{ rotate: [0, -10, 10, 0] }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <Icon className={cn("h-7 w-7", category.color)} />
+                    </motion.div>
+                    <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                      {category.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                      {category.description}
+                    </p>
+                    <p className="text-xs text-primary font-medium mb-4">
+                      Recommended: {category.product}
+                    </p>
+                    <div className="flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
+                      Learn more
+                      <ArrowRight className="h-4 w-4" />
                     </div>
-                  </a>
-                ) : (
-                  <Link to={category.link} className="block h-full">
-                    <div className="bg-card rounded-xl p-6 h-full border border-border shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
-                      <motion.div
-                        className={cn(
-                          "w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300",
-                          category.bgColor,
-                          category.hoverBg
-                        )}
-                        whileHover={{ rotate: [0, -10, 10, 0] }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <Icon className={cn("h-7 w-7", category.color)} />
-                      </motion.div>
-                      <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                        {category.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                        {category.description}
-                      </p>
-                      <p className="text-xs text-primary font-medium mb-4">
-                        Recommended: {category.product}
-                      </p>
-                      <div className="flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
-                        Learn more
-                        <ArrowRight className="h-4 w-4" />
-                      </div>
-                    </div>
-                  </Link>
-                )}
+                  </div>
+                </Link>
               </motion.div>
             );
           })}
