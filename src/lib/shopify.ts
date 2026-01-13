@@ -274,12 +274,19 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
     }
 
     const cart = cartData.data.cartCreate.cart;
-    
+
     if (!cart.checkoutUrl) {
       throw new Error('No checkout URL returned from Shopify');
     }
 
-    const url = new URL(cart.checkoutUrl);
+    // Shopify can return either an absolute URL or a relative path (e.g. /cart/c/...).
+    // If it's relative and we navigate to it, the browser will resolve it against our own domain and hit 404.
+    const rawCheckoutUrl: string = cart.checkoutUrl;
+    const absoluteCheckoutUrl = /^https?:\/\//i.test(rawCheckoutUrl)
+      ? rawCheckoutUrl
+      : `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}${rawCheckoutUrl}`;
+
+    const url = new URL(absoluteCheckoutUrl);
     url.searchParams.set('channel', 'online_store');
     return url.toString();
   } catch (error) {
