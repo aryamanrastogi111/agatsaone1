@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Moon, Scale, Activity } from "lucide-react";
+import { Menu, X, Moon, Scale, Activity, Home } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -40,6 +40,15 @@ export function Header() {
 
         {/* Product Quick Links - First */}
         <div className="hidden md:flex items-center gap-1">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+            <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground hover:bg-muted gap-1.5">
+              <Link to="/">
+                <Home className="h-3.5 w-3.5" />
+                Home
+              </Link>
+            </Button>
+          </motion.div>
+          <div className="w-px h-4 bg-border" />
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <Button asChild variant="ghost" size="sm" className="text-cyan-600 hover:text-cyan-700 hover:bg-cyan-50 gap-1.5">
               <Link to="/products/zlu">
