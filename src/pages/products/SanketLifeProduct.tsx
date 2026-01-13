@@ -730,22 +730,13 @@ const SanketLifeProduct = () => {
                   <tr className="border-b border-border">
                     <th className="text-left py-4 px-4 text-muted-foreground font-medium">Feature</th>
                     <th className="py-4 px-4">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src={sanketlifeComparison} alt="SanketLife" className="w-16 h-16 object-contain" />
-                        <span className="text-cyan-600 font-semibold">SanketLife</span>
-                      </div>
+                      <span className="text-cyan-600 font-semibold">SanketLife</span>
                     </th>
                     <th className="py-4 px-4">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src={hospitalEcg} alt="Hospital ECG" className="w-16 h-16 object-contain" />
-                        <span className="text-foreground font-medium">Hospital ECG</span>
-                      </div>
+                      <span className="text-foreground font-medium">Hospital ECG</span>
                     </th>
                     <th className="py-4 px-4">
-                      <div className="flex flex-col items-center gap-2">
-                        <img src={smartwatchComparison} alt="Smartwatch" className="w-16 h-16 object-contain" />
-                        <span className="text-foreground font-medium">Smartwatch</span>
-                      </div>
+                      <span className="text-foreground font-medium">Smartwatch</span>
                     </th>
                     <th className="py-4 px-4 text-foreground font-medium">Other Home 12-Lead</th>
                   </tr>
