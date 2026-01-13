@@ -102,7 +102,7 @@ export function HeroSection() {
                 const positions = [
                   "top-0 left-1/4 w-32 h-32 md:w-40 md:h-40",
                   "top-1/4 right-0 w-28 h-28 md:w-36 md:h-36",
-                  "bottom-1/4 left-0 w-48 h-48 md:w-64 md:h-64",
+                  "top-1/2 -left-8 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64",
                   "bottom-0 right-1/4 w-28 h-28 md:w-36 md:h-36",
                 ];
                 return (
