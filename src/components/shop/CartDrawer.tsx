@@ -46,13 +46,19 @@ export const CartDrawer = () => {
         return;
       }
 
-      // Use custom domain now that TLS is connected
-      const normalized = new URL(url);
-      normalized.protocol = "https:";
-      normalized.host = PREFERRED_CHECKOUT_DOMAIN;
-      normalized.searchParams.set("channel", "online_store");
+      // NOTE: If the custom domain is still intermittently blocked/refuses connection,
+      // the *.myshopify.com checkout is the most reliable.
+      const base = new URL(url);
+      base.protocol = "https:";
+      base.searchParams.set("channel", "online_store");
 
-      const checkoutUrl = normalized.toString();
+      const safeUrl = new URL(base.toString());
+      safeUrl.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
+
+      const preferredUrl = new URL(base.toString());
+      preferredUrl.host = PREFERRED_CHECKOUT_DOMAIN;
+
+      const checkoutUrl = safeUrl.toString();
 
       clearCart();
       setIsOpen(false);
@@ -63,11 +69,20 @@ export const CartDrawer = () => {
         window.location.href = checkoutUrl;
       } else {
         const opened = window.open(checkoutUrl, "_blank", "noopener,noreferrer");
-        if (!opened) {
-          // Fallback if popup still blocked on desktop
-          window.location.href = checkoutUrl;
-        }
+        if (!opened) window.location.href = checkoutUrl;
       }
+
+      toast.message("Opening Shopify checkout", {
+        description: "Using the reliable myshopify.com domain. If your custom domain is working, you can try it.",
+        action: {
+          label: "Try shop.agatsaone.com",
+          onClick: () => {
+            const target = preferredUrl.toString();
+            if (isMobile) window.location.href = target;
+            else window.open(target, "_blank", "noopener,noreferrer");
+          },
+        },
+      });
     } catch (error) {
       console.error("Checkout failed:", error);
       toast.error("Checkout failed. Please try again.");
