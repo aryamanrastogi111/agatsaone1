@@ -13,12 +13,14 @@ import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide
 import { useCartStore } from "@/stores/cartStore";
 import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Shopify checkout subdomain (must be pointed to Shopify via CNAME + have TLS ready)
-const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
+// const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   const {
     items,
@@ -44,39 +46,28 @@ export const CartDrawer = () => {
         return;
       }
 
-      // While TLS is provisioning, the custom subdomain can be blocked/refuse connections.
-      // So we default to the guaranteed working *.myshopify.com checkout.
+      // Use guaranteed working *.myshopify.com checkout while TLS provisions for custom domain
       const normalized = new URL(url);
       normalized.protocol = "https:";
+      normalized.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
       normalized.searchParams.set("channel", "online_store");
 
-      const fallback = new URL(normalized.toString());
-      fallback.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
-
-      // Optional: once TLS becomes "Connected", you can switch to the preferred domain.
-      const preferred = new URL(normalized.toString());
-      preferred.host = PREFERRED_CHECKOUT_DOMAIN;
-
-      const opened = window.open(fallback.toString(), "_blank", "noopener,noreferrer");
-
-      if (!opened) {
-        toast.error("Popup blocked", {
-          description: "Please allow popups, then try checkout again.",
-        });
-        return;
-      }
-
-      toast.message("Checkout opened in a new tab", {
-        description:
-          "TLS for shop.agatsaone.com is still provisioning—using the safe myshopify.com checkout for now.",
-        action: {
-          label: "Try shop domain",
-          onClick: () => window.open(preferred.toString(), "_blank", "noopener,noreferrer"),
-        },
-      });
+      const checkoutUrl = normalized.toString();
 
       clearCart();
       setIsOpen(false);
+
+      // On mobile, navigate directly (popups are blocked after async calls)
+      // On desktop, open in new tab for better UX
+      if (isMobile) {
+        window.location.href = checkoutUrl;
+      } else {
+        const opened = window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+        if (!opened) {
+          // Fallback if popup still blocked on desktop
+          window.location.href = checkoutUrl;
+        }
+      }
     } catch (error) {
       console.error("Checkout failed:", error);
       toast.error("Checkout failed. Please try again.");
