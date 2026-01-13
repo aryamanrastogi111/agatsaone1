@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/sheet";
 import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
-import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
+// Shopify checkout subdomain (must be pointed to Shopify via CNAME)
+const SHOPIFY_CHECKOUT_DOMAIN = "shop.agatsaone.com";
 import { toast } from "sonner";
 
 export const CartDrawer = () => {
@@ -39,11 +40,10 @@ export const CartDrawer = () => {
         return;
       }
 
-      // Extra safety: force the checkout URL onto the *.myshopify.com domain
-      // (some stores return a primary domain like www.agatsaone.com which is THIS site).
+      // Force the checkout URL onto shop.agatsaone.com (Shopify subdomain)
       const normalized = new URL(url);
       normalized.protocol = "https:";
-      normalized.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
+      normalized.host = SHOPIFY_CHECKOUT_DOMAIN;
 
       clearCart();
       setIsOpen(false);
