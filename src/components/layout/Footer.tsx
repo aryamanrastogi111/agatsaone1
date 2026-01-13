@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
+import agatsaLogo from "@/assets/agatsa-logo.png";
 
 const productLinks = [
   { label: "SanketLife", href: "https://sanketlife.com", external: true },
@@ -36,9 +37,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">A</span>
-              </div>
+              <img src={agatsaLogo} alt="Agatsa" className="h-8 w-8 object-contain" />
               <span className="font-semibold text-xl">Agatsa</span>
             </div>
             <p className="text-secondary-foreground/80 text-sm mb-6 max-w-sm">

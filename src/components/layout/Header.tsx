@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import agatsaLogo from "@/assets/agatsa-logo.png";
 
 const navItems = [
   { label: "Products", href: "/products" },
@@ -32,9 +33,7 @@ export function Header() {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2"
           >
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center transition-shadow duration-300 group-hover:shadow-lg group-hover:shadow-primary/30">
-              <span className="text-primary-foreground font-bold text-lg">A</span>
-            </div>
+            <img src={agatsaLogo} alt="Agatsa" className="h-8 w-8 object-contain" />
             <span className="font-semibold text-xl text-foreground">Agatsa</span>
           </motion.div>
         </Link>
