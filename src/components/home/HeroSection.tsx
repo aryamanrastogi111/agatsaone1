@@ -104,9 +104,9 @@ export function HeroSection() {
               {heroProducts.map((product, index) => {
                 const positions = [
                   "top-0 left-1/4 w-32 h-32 md:w-40 md:h-40",
-                  "top-1/2 right-4 md:right-8 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80",
-                  "bottom-1/4 left-0 w-32 h-32 md:w-40 md:h-40",
-                  "bottom-0 left-1/3 w-32 h-32 md:w-40 md:h-40",
+                  "top-1/4 right-0 w-28 h-28 md:w-36 md:h-36",
+                  "bottom-1/4 left-0 w-24 h-24 md:w-32 md:h-32",
+                  "bottom-0 right-1/4 w-28 h-28 md:w-36 md:h-36",
                 ];
                 return (
                   <motion.div
@@ -123,24 +123,17 @@ export function HeroSection() {
                     whileHover={{ scale: 1.1, zIndex: 10 }}
                     className={`absolute ${positions[index]} cursor-pointer`}
                   >
-                    <motion.div
-                      className="w-full h-full relative"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl scale-75 opacity-60" />
-                      <motion.img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-contain drop-shadow-2xl relative z-10"
-                        style={{ filter: "drop-shadow(0 8px 24px hsl(var(--primary) / 0.3))" }}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.5 + index * 0.15, duration: 0.5 }}
-                        onError={(e) => {
-                          e.currentTarget.src = "/placeholder.svg";
-                        }}
-                      />
-                    </motion.div>
+                    <motion.img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-contain drop-shadow-xl transition-all duration-300"
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5 + index * 0.15, duration: 0.5 }}
+                      onError={(e) => {
+                        e.currentTarget.src = "/placeholder.svg";
+                      }}
+                    />
                   </motion.div>
                 );
               })}
