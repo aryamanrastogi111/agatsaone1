@@ -103,7 +103,7 @@ export function ProductsPortfolioSection() {
                         to={product.link}
                         className="flex items-center justify-center gap-2"
                       >
-                        {product.id === "sanketlife" ? "Explore SanketLife" : product.id === "easytouch-rhythm" ? "Explore EasyTouch Rhythm" : product.id === "zlu" ? "Explore Zlu" : "Learn more"}
+                        {product.id === "sanketlife" ? "Explore SanketLife" : product.id === "easytouch-rhythm" ? "Explore EasyTouch Rhythm" : product.id === "zlu" ? "Explore Zlu" : product.id === "corebalance" ? "Explore CoreBalance" : "Learn more"}
                         <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
