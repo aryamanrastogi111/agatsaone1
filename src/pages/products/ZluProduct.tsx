@@ -6,6 +6,7 @@ import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import zluHero from "@/assets/zlu-hero.png";
 import zluDevice from "@/assets/zlu-device.webp";
+import zluLifestyle from "@/assets/zlu-lifestyle.png";
 
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
@@ -279,11 +280,11 @@ const ZluProduct = () => {
             <AnimatedSection>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-100/50 to-transparent rounded-3xl blur-2xl" />
-                <div className="relative bg-gradient-to-br from-cyan-50 to-white rounded-3xl p-8 border border-cyan-100">
+                <div className="relative bg-gradient-to-br from-cyan-50 to-white rounded-3xl overflow-hidden border border-cyan-100">
                   <img
-                    src={zluHero}
-                    alt="Zlu Device"
-                    className="w-full max-w-xs mx-auto animate-breathe"
+                    src={zluLifestyle}
+                    alt="Woman sleeping peacefully with Zlu nearby"
+                    className="w-full h-auto object-cover"
                     onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
                   />
                 </div>
