@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Scale, Activity } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -56,16 +56,36 @@ export function Header() {
           ))}
         </nav>
 
-        {/* CTA Buttons */}
-        <div className="hidden md:flex items-center gap-3">
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button asChild variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">
-              <Link to="/products/easytouch-rhythm">Explore EasyTouch Rhythm</Link>
+        {/* Product Quick Links */}
+        <div className="hidden md:flex items-center gap-2">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+            <Button asChild variant="ghost" size="sm" className="text-cyan-600 hover:text-cyan-700 hover:bg-cyan-50 gap-1.5">
+              <Link to="/products/zlu">
+                <Moon className="h-3.5 w-3.5" />
+                Zlu
+              </Link>
             </Button>
           </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+            <Button asChild variant="ghost" size="sm" className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 gap-1.5">
+              <Link to="/products/corebalance">
+                <Scale className="h-3.5 w-3.5" />
+                CoreBalance
+              </Link>
+            </Button>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+            <Button asChild variant="ghost" size="sm" className="text-primary hover:text-primary hover:bg-primary/10 gap-1.5">
+              <Link to="/products/easytouch-rhythm">
+                <Activity className="h-3.5 w-3.5" />
+                Rhythm
+              </Link>
+            </Button>
+          </motion.div>
+          <div className="w-px h-6 bg-border mx-1" />
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button asChild className="btn-glow">
-              <Link to="/device-finder">Find the right device</Link>
+            <Button asChild size="sm" className="btn-glow">
+              <Link to="/device-finder">Find Your Device</Link>
             </Button>
           </motion.div>
         </div>
@@ -135,27 +155,61 @@ export function Header() {
                   </Link>
                 </motion.div>
               ))}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25 }}
-                className="pt-2"
-              >
-                <Button asChild variant="outline" className="w-full border-primary/50 text-primary">
-                  <Link to="/products/easytouch-rhythm" onClick={() => setMobileMenuOpen(false)}>
-                    Explore EasyTouch Rhythm
+              {/* Product Quick Links in Mobile */}
+              <div className="flex flex-col gap-2 pt-2 border-t border-border mt-2">
+                <p className="text-xs text-muted-foreground px-4 pt-2">Quick Access</p>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.25 }}
+                >
+                  <Link
+                    to="/products/zlu"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-cyan-600 hover:bg-cyan-50 transition-colors"
+                  >
+                    <Moon className="h-4 w-4" />
+                    Zlu – Sleep Aid
                   </Link>
-                </Button>
-              </motion.div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <Link
+                    to="/products/corebalance"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-emerald-600 hover:bg-emerald-50 transition-colors"
+                  >
+                    <Scale className="h-4 w-4" />
+                    CoreBalance BMI
+                  </Link>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.35 }}
+                >
+                  <Link
+                    to="/products/easytouch-rhythm"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-primary hover:bg-primary/10 transition-colors"
+                  >
+                    <Activity className="h-4 w-4" />
+                    EasyTouch Rhythm
+                  </Link>
+                </motion.div>
+              </div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35 }}
-                className="pt-2"
+                transition={{ delay: 0.4 }}
+                className="pt-4"
               >
                 <Button asChild className="w-full">
                   <Link to="/device-finder" onClick={() => setMobileMenuOpen(false)}>
-                    Find the right device
+                    Find Your Device
                   </Link>
                 </Button>
               </motion.div>
