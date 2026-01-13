@@ -6,6 +6,10 @@ import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import corebalanceHero from "@/assets/corebalance-hero.png";
 import corebalanceCard from "@/assets/corebalance-card.png";
+import appMuscle from "@/assets/corebalance-app-muscle.png";
+import appComposition from "@/assets/corebalance-app-composition.png";
+import appBmi from "@/assets/corebalance-app-bmi.png";
+import appMetrics from "@/assets/corebalance-app-metrics.png";
 
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
@@ -296,6 +300,79 @@ const CoreBalanceProduct = () => {
               View All Metrics
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Section: App Insights Showcase */}
+      <section className="py-24 lg:py-32 bg-background overflow-hidden">
+        <div className="container">
+          <AnimatedSection className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium mb-6">
+              <Activity className="h-4 w-4" />
+              Smart App Insights
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Your Body, Visualized
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              The CoreBalance app transforms complex data into beautiful, easy-to-understand insights
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { 
+                image: appMuscle, 
+                title: "Muscle Mass Analysis", 
+                description: "See muscle distribution across your body with detailed breakdowns"
+              },
+              { 
+                image: appComposition, 
+                title: "Body Composition", 
+                description: "Track weight, fat, water, protein, and bone mass at a glance"
+              },
+              { 
+                image: appBmi, 
+                title: "BMI Tracking", 
+                description: "Visual BMI scale shows where you stand with healthy weight targets"
+              },
+              { 
+                image: appMetrics, 
+                title: "Detailed Metrics", 
+                description: "Compare your measurements against healthy reference ranges"
+              },
+            ].map((screen, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group"
+              >
+                <div className="relative rounded-2xl overflow-hidden border border-emerald-100 bg-slate-900 shadow-xl hover:shadow-2xl transition-all">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
+                  <img
+                    src={screen.image}
+                    alt={screen.title}
+                    className="w-full h-auto object-cover"
+                    onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                  />
+                </div>
+                <div className="mt-4 text-center">
+                  <h3 className="font-semibold text-foreground mb-1">{screen.title}</h3>
+                  <p className="text-sm text-muted-foreground">{screen.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          <AnimatedSection className="mt-12 text-center">
+            <p className="text-lg text-muted-foreground italic">
+              All insights sync instantly to your smartphone via Bluetooth
+            </p>
           </AnimatedSection>
         </div>
       </section>
