@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Moon, Scale, Activity, Home } from "lucide-react";
+import { Menu, X, Moon, Scale, Activity, Home, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -70,6 +70,14 @@ export function Header() {
               <Link to="/products/easytouch-rhythm">
                 <Activity className="h-3.5 w-3.5" />
                 Rhythm
+              </Link>
+            </Button>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+            <Button asChild variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50 gap-1.5">
+              <Link to="/products/sanketlife">
+                <Heart className="h-3.5 w-3.5" />
+                SanketLife
               </Link>
             </Button>
           </motion.div>
@@ -210,6 +218,20 @@ export function Header() {
                   >
                     <Activity className="h-4 w-4" />
                     EasyTouch Rhythm
+                  </Link>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <Link
+                    to="/products/sanketlife"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+                  >
+                    <Heart className="h-4 w-4" />
+                    SanketLife ECG
                   </Link>
                 </motion.div>
               </div>
