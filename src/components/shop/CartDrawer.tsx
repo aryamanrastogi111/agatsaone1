@@ -15,8 +15,8 @@ import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// Shopify checkout subdomain (must be pointed to Shopify via CNAME + have TLS ready)
-// const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
+// Shopify checkout subdomain (TLS is now Connected)
+const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,10 +46,10 @@ export const CartDrawer = () => {
         return;
       }
 
-      // Use guaranteed working *.myshopify.com checkout while TLS provisions for custom domain
+      // Use custom domain now that TLS is connected
       const normalized = new URL(url);
       normalized.protocol = "https:";
-      normalized.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
+      normalized.host = PREFERRED_CHECKOUT_DOMAIN;
       normalized.searchParams.set("channel", "online_store");
 
       const checkoutUrl = normalized.toString();
