@@ -323,11 +323,11 @@ const EasyTouchRhythmProduct = () => {
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {[
-              { name: "Rhythm Score", value: 78, color: "from-primary to-cyan-400", anchorId: "five-rhythms" },
-              { name: "Kinetic", value: 82, color: "from-green-500 to-emerald-400", anchorId: "rhythm-kinetic" },
-              { name: "Metabolic", value: 71, color: "from-orange-500 to-amber-400", anchorId: "rhythm-metabolic" },
-              { name: "Nervous", value: 85, color: "from-purple-500 to-violet-400", anchorId: "rhythm-nervous" },
-              { name: "Circadian", value: 74, color: "from-blue-500 to-sky-400", anchorId: "rhythm-circadian" },
+              { name: "Rhythm Score", value: 78, color: "from-amber-400 via-yellow-500 to-orange-500", anchorId: "five-rhythms", isMain: true },
+              { name: "Kinetic", value: 82, color: "from-orange-500 to-amber-400", anchorId: "rhythm-kinetic" },
+              { name: "Metabolic", value: 71, color: "from-blue-500 to-cyan-400", anchorId: "rhythm-metabolic" },
+              { name: "Nervous", value: 85, color: "from-blue-600 to-sky-400", anchorId: "rhythm-nervous" },
+              { name: "Circadian", value: 74, color: "from-green-500 to-emerald-400", anchorId: "rhythm-circadian" },
             ].map((score, i) => (
               <motion.div
                 key={i}
@@ -351,10 +351,18 @@ const EasyTouchRhythmProduct = () => {
                     block: 'center'
                   });
                 }}
-                className="bg-card border rounded-2xl p-6 text-center hover:shadow-xl transition-shadow cursor-pointer group"
+                className={`bg-card border rounded-2xl p-6 text-center hover:shadow-xl transition-shadow cursor-pointer group ${
+                  score.isMain ? 'ring-2 ring-amber-400/50 shadow-lg shadow-amber-500/20 relative overflow-hidden' : ''
+                }`}
               >
+                {/* Gold shimmer effect for main score */}
+                {score.isMain && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/10 to-transparent -translate-x-full animate-[shimmer_3s_infinite]" />
+                )}
                 <motion.div 
-                  className={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br ${score.color} flex items-center justify-center relative`}
+                  className={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br ${score.color} flex items-center justify-center relative ${
+                    score.isMain ? 'w-24 h-24 ring-4 ring-amber-300/30' : ''
+                  }`}
                   initial={{ rotate: -180, scale: 0 }}
                   whileInView={{ rotate: 0, scale: 1 }}
                   transition={{ 
