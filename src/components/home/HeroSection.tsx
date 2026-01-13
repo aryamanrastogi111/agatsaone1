@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 import zluHeroImg from "@/assets/zlu-hero.png";
 import corebalanceHeroImg from "@/assets/corebalance-hero.png";
@@ -8,10 +16,34 @@ import sanketlifeHeroImg from "@/assets/sanketlife-hero.png";
 import easytouchHeroImg from "@/assets/easytouch-hero.webp";
 
 const heroProducts = [
-  { id: "sanketlife", name: "SanketLife", image: sanketlifeHeroImg },
-  { id: "easytouch-rhythm", name: "EasyTouch Rhythm", image: easytouchHeroImg },
-  { id: "zlu", name: "Zlu", image: zluHeroImg },
-  { id: "corebalance", name: "CoreBalance", image: corebalanceHeroImg },
+  {
+    id: "sanketlife",
+    name: "SanketLife",
+    image: sanketlifeHeroImg,
+    tagline: "Pocket ECG Monitor",
+    description: "Capture medical-grade ECG readings anytime, anywhere with this compact heart monitoring device.",
+  },
+  {
+    id: "easytouch-rhythm",
+    name: "EasyTouch Rhythm",
+    image: easytouchHeroImg,
+    tagline: "Smart Blood Glucose Monitor",
+    description: "Accurate, fast blood glucose testing with Bluetooth connectivity and smart app integration.",
+  },
+  {
+    id: "zlu",
+    name: "Zlu",
+    image: zluHeroImg,
+    tagline: "Wireless Vital Signs Monitor",
+    description: "Monitor SpO2, heart rate, and sleep patterns with clinical-grade precision from your wrist.",
+  },
+  {
+    id: "corebalance",
+    name: "CoreBalance",
+    image: corebalanceHeroImg,
+    tagline: "Smart Body Composition Scale",
+    description: "Track weight, BMI, muscle mass, and body fat with advanced bioelectrical impedance analysis.",
+  },
 ];
 
 export function HeroSection() {
@@ -19,7 +51,7 @@ export function HeroSection() {
     <section className="relative overflow-hidden bg-background py-12 lg:py-20">
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-accent/30 via-transparent to-transparent pointer-events-none" />
-      
+
       <div className="container relative">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
@@ -64,7 +96,9 @@ export function HeroSection() {
               <Button asChild size="lg" className="text-base btn-glow group">
                 <Link to="/products" className="flex items-center gap-2">
                   Explore Products
-                  <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
+                  <span className="inline-block group-hover:translate-x-1 transition-transform">
+                    →
+                  </span>
                 </Link>
               </Button>
               <Button
@@ -78,62 +112,75 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Product Showcase - Orbital Layout */}
+          {/* Product Carousel */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="relative"
           >
-            <div className="relative w-full aspect-[4/3] max-w-md mx-auto">
-              {/* Background circles */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-accent to-transparent rounded-full"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 0.5 }}
-                transition={{ duration: 1, delay: 0.5 }}
-              />
-              <motion.div
-                className="absolute inset-8 border-2 border-primary/10 rounded-full"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.7 }}
-              />
+            <Carousel
+              opts={{
+                align: "center",
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 4000,
+                  stopOnInteraction: true,
+                }),
+              ]}
+              className="w-full max-w-md mx-auto"
+            >
+              <CarouselContent>
+                {heroProducts.map((product) => (
+                  <CarouselItem key={product.id}>
+                    <Link to={`/products/${product.id}`} className="block group">
+                      <div className="relative bg-gradient-to-br from-accent/50 to-accent/20 rounded-2xl p-6 overflow-hidden">
+                        {/* Decorative circles */}
+                        <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
+                        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/5 rounded-full blur-xl" />
 
-              {/* Floating products */}
-              {heroProducts.map((product, index) => {
-                const positions = [
-                  "-top-4 left-1/3 w-36 h-36 md:w-44 md:h-44",
-                  "top-1/3 -right-4 w-36 h-36 md:w-44 md:h-44",
-                  "top-1/3 -left-8 w-44 h-44 md:w-56 md:h-56",
-                  "-bottom-4 left-1/3 w-40 h-40 md:w-48 md:h-48",
-                ];
-                return (
-                  <motion.div
-                    key={product.id}
-                    animate={{ 
-                      y: [0, -12, 0],
-                      rotate: [0, index % 2 === 0 ? 2 : -2, 0]
-                    }}
-                    transition={{
-                      duration: 3 + index * 0.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    whileHover={{ scale: 1.1, zIndex: 10 }}
-                    className={`absolute ${positions[index]} cursor-pointer`}
-                  >
-                    <motion.img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-contain drop-shadow-xl transition-all duration-300"
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.5 + index * 0.15, duration: 0.5 }}
-                    />
-                  </motion.div>
-                );
-              })}
+                        {/* Product image */}
+                        <div className="relative aspect-square flex items-center justify-center mb-4">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+
+                        {/* Product info */}
+                        <div className="text-center space-y-2">
+                          <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
+                            {product.tagline}
+                          </span>
+                          <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                            {product.name}
+                          </h3>
+                          <p className="text-sm text-muted-foreground leading-relaxed">
+                            {product.description}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+
+              {/* Navigation buttons */}
+              <CarouselPrevious className="left-0 lg:-left-4 bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground" />
+              <CarouselNext className="right-0 lg:-right-4 bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground" />
+            </Carousel>
+
+            {/* Dots indicator hint */}
+            <div className="flex justify-center gap-2 mt-4">
+              {heroProducts.map((_, index) => (
+                <div
+                  key={index}
+                  className="w-2 h-2 rounded-full bg-primary/30"
+                />
+              ))}
             </div>
           </motion.div>
         </div>
