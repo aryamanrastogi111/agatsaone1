@@ -448,25 +448,16 @@ const SanketLifeProduct = () => {
               </p>
             </div>
             
-            {/* Video Placeholder */}
+            {/* YouTube Video Embed */}
             <div className="max-w-3xl mx-auto mb-16">
               <div className="relative aspect-video bg-muted rounded-2xl overflow-hidden border border-border shadow-lg">
-                <img
-                  src={sanketlifeHand}
-                  alt="How to use SanketLife"
-                  className="w-full h-full object-cover"
-                  onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                <iframe
+                  src="https://www.youtube.com/embed/qAZYI6VCq0Q"
+                  title="How to Use Agatsa SanketLife 2.0 | Step-by-Step ECG Device Guide for Home Use"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full h-full"
                 />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                  <a
-                    href="https://www.youtube.com/watch?v=qAZYI6VCq0Q"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-20 h-20 rounded-full bg-cyan-600 flex items-center justify-center hover:bg-cyan-700 transition-colors shadow-xl"
-                  >
-                    <Play className="h-8 w-8 text-white ml-1" />
-                  </a>
-                </div>
               </div>
             </div>
             
