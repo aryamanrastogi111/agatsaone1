@@ -102,12 +102,11 @@ export function HeroSection() {
 
               {/* Floating products */}
               {heroProducts.map((product, index) => {
-                // Positions around the circular ring: top, right, bottom, left
                 const positions = [
-                  "top-0 left-1/2 -translate-x-1/2 w-28 h-28 md:w-36 md:h-36", // Top center
-                  "top-1/2 -right-4 md:right-0 -translate-y-1/2 w-44 h-44 md:w-56 md:h-56", // Right center (band - larger)
-                  "bottom-0 left-1/2 -translate-x-1/2 w-32 h-32 md:w-40 md:h-40", // Bottom center (BMI)
-                  "-left-4 md:left-0 top-1/2 -translate-y-1/2 w-28 h-28 md:w-36 md:h-36", // Left center
+                  "top-0 left-1/4 w-32 h-32 md:w-40 md:h-40",
+                  "top-1/2 right-4 md:right-8 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80",
+                  "bottom-1/4 left-0 w-32 h-32 md:w-40 md:h-40",
+                  "bottom-0 left-1/3 w-32 h-32 md:w-40 md:h-40",
                 ];
                 return (
                   <motion.div
