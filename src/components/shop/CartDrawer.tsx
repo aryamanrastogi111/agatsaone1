@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/sheet";
 import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
+import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 import { toast } from "sonner";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const linkRef = useRef<HTMLAnchorElement>(null);
   
   const { 
     items, 
@@ -33,25 +33,23 @@ export const CartDrawer = () => {
     try {
       const url = await createCheckout();
       console.log("[CartDrawer] Generated checkout URL:", url);
-      
+
       if (!url) {
         toast.error("Failed to create checkout. Please try again.");
         return;
       }
 
+      // Extra safety: force the checkout URL onto the *.myshopify.com domain
+      // (some stores return a primary domain like www.agatsaone.com which is THIS site).
+      const normalized = new URL(url);
+      normalized.protocol = "https:";
+      normalized.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
+
       clearCart();
       setIsOpen(false);
-      
-      // Use hidden anchor click for reliable navigation on all devices
-      if (linkRef.current) {
-        linkRef.current.href = url;
-        linkRef.current.click();
-      } else {
-        // Fallback
-        window.location.href = url;
-      }
+      window.location.assign(normalized.toString());
     } catch (error) {
-      console.error('Checkout failed:', error);
+      console.error("Checkout failed:", error);
       toast.error("Checkout failed. Please try again.");
     }
   };
@@ -64,11 +62,7 @@ export const CartDrawer = () => {
   };
 
   return (
-    <>
-      {/* Hidden anchor for reliable navigation */}
-      <a ref={linkRef} href="#" className="hidden" aria-hidden="true" />
-      
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="relative">
             <ShoppingCart className="h-5 w-5" />
@@ -194,6 +188,5 @@ export const CartDrawer = () => {
           </div>
         </SheetContent>
       </Sheet>
-    </>
-  );
+    );
 };
