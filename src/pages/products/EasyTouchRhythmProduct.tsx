@@ -762,31 +762,6 @@ const EasyTouchRhythmProduct = () => {
             </div>
           </AnimatedSection>
           
-          {/* Company Story */}
-          <AnimatedSection>
-            <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-              <div>
-                <img
-                  src={images.productsLineup}
-                  alt="Agatsa Products"
-                  className="w-full rounded-2xl"
-                />
-              </div>
-              <div>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                  Agatsa has been at the forefront of personal health technology since 2016. 
-                  What started as a mission to bring ECG monitoring to every home has evolved 
-                  into a comprehensive health ecosystem.
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  EasyTouch Rhythm represents the culmination of a decade of learning—from 
-                  millions of data points, thousands of user conversations, and a relentless 
-                  pursuit of understanding what truly matters for long-term health.
-                </p>
-              </div>
-            </div>
-          </AnimatedSection>
-          
           {/* Awards Carousel */}
           <AnimatedSection>
             <h3 className="text-xl font-semibold text-foreground text-center mb-8">Recognition & Awards</h3>
