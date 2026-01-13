@@ -6,32 +6,33 @@ import easytouchHeroImg from "@/assets/easytouch-hero.webp";
 import zluHeroImg from "@/assets/zlu-hero.png";
 import corebalanceHeroImg from "@/assets/corebalance-hero.png";
 
-// Awards/certifications data - using placeholder logos that will be monochrome
+// Import award images
+import awardAegisImg from "@/assets/award-aegis-grahambell.png";
+import awardBioIndiaImg from "@/assets/award-bio-india.jpg";
+import awardIgpImg from "@/assets/award-igp.jpg";
+import awardMashelkarImg from "@/assets/award-anjani-mashelkar.png";
+
+// Awards data with imported images
 const awards = [
   {
-    id: "ce",
-    name: "CE Certified",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/CE_marking_logo.svg/120px-CE_marking_logo.svg.png",
+    id: "aegis-grahambell",
+    name: "Aegis Graham Bell Award",
+    image: awardAegisImg,
   },
   {
-    id: "fda",
-    name: "FDA Cleared",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Seal_of_the_United_States_Food_and_Drug_Administration.svg/120px-Seal_of_the_United_States_Food_and_Drug_Administration.svg.png",
+    id: "bio-india",
+    name: "Global Bio-India Award",
+    image: awardBioIndiaImg,
   },
   {
-    id: "iso",
-    name: "ISO 13485",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/ISO_Logo_%28Red_square%29.svg/120px-ISO_Logo_%28Red_square%29.svg.png",
+    id: "igp",
+    name: "India Innovation Growth Programme",
+    image: awardIgpImg,
   },
   {
-    id: "startup-india",
-    name: "Startup India",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Startup_India.svg/200px-Startup_India.svg.png",
-  },
-  {
-    id: "make-in-india",
-    name: "Make in India",
-    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/Make_In_India.svg/200px-Make_In_India.svg.png",
+    id: "anjani-mashelkar",
+    name: "Anjani Mashelkar Prize",
+    image: awardMashelkarImg,
   },
 ];
 
@@ -98,31 +99,31 @@ export function AwardsSection() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mb-20"
         >
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 lg:gap-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {awards.map((award, index) => (
               <motion.div
                 key={award.id}
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ scale: 1.03, y: -4 }}
                 className="group relative"
               >
-                <div className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center p-3 rounded-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/10 group-hover:bg-accent/30">
+                <div className="aspect-[4/3] bg-muted/30 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-border/50 group-hover:border-primary/20">
                   <img
-                    src={award.logo}
+                    src={award.image}
                     alt={award.name}
-                    className="w-full h-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    className="w-full h-full object-cover transition-all duration-300"
                     onError={(e) => {
                       e.currentTarget.src = "/placeholder.svg";
                     }}
                   />
                 </div>
-                {/* Tooltip */}
-                <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                {/* Award name label */}
+                <p className="text-center text-sm font-medium text-foreground mt-3 group-hover:text-primary transition-colors">
                   {award.name}
-                </span>
+                </p>
               </motion.div>
             ))}
           </div>
