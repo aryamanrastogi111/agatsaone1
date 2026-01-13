@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Moon, Scale, Activity, Home, Heart } from "lucide-react";
+import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -102,13 +102,15 @@ export function Header() {
         </nav>
 
 
-        {/* Mobile Menu Button */}
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          className="md:hidden p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
+        {/* Mobile Menu Button + Cart */}
+        <div className="md:hidden flex items-center gap-2">
+          <CartDrawer />
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className="p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
           <AnimatePresence mode="wait">
             {mobileMenuOpen ? (
               <motion.div
@@ -133,6 +135,7 @@ export function Header() {
             )}
           </AnimatePresence>
         </motion.button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -146,12 +149,33 @@ export function Header() {
             className="md:hidden border-t border-border bg-background overflow-hidden"
           >
             <nav className="container py-4 flex flex-col gap-2">
+              {/* Home Link */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0 }}
+              >
+                <Link
+                  to="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg transition-colors",
+                    location.pathname === "/"
+                      ? "text-primary bg-accent"
+                      : "text-muted-foreground hover:text-primary hover:bg-muted"
+                  )}
+                >
+                  <Home className="h-4 w-4" />
+                  Home
+                </Link>
+              </motion.div>
+              
               {navItems.map((item, index) => (
                 <motion.div
                   key={item.href}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
+                  transition={{ delay: (index + 1) * 0.05 }}
                 >
                   <Link
                     to={item.href}
