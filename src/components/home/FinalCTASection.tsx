@@ -1,11 +1,12 @@
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle } from "lucide-react";
 
-export function FinalCTASection() {
+export const FinalCTASection = forwardRef<HTMLElement>((_, ref) => {
   return (
-    <section className="py-20 bg-muted/30 overflow-hidden">
+    <section ref={ref} className="py-20 bg-muted/30 overflow-hidden">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -75,4 +76,6 @@ export function FinalCTASection() {
       </div>
     </section>
   );
-}
+});
+
+FinalCTASection.displayName = "FinalCTASection";

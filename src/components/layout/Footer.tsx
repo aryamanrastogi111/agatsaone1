@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
 import agatsaLogo from "@/assets/agatsa-logo.png";
@@ -11,8 +12,7 @@ const productLinks = [
 
 const companyLinks = [
   { label: "About Us", href: "/about" },
-  { label: "Trust & Certifications", href: "/trust" },
-  { label: "Solutions", href: "/solutions" },
+  { label: "Certifications", href: "/about#certifications" },
   { label: "Careers", href: "/about#careers" },
 ];
 
@@ -29,7 +29,7 @@ const legalLinks = [
   { label: "Return Policy", href: "/returns" },
 ];
 
-export function Footer() {
+export const Footer = forwardRef<HTMLElement>((_, ref) => {
   return (
     <footer className="bg-secondary text-secondary-foreground">
       <div className="container py-16">
@@ -144,4 +144,6 @@ export function Footer() {
       </div>
     </footer>
   );
-}
+});
+
+Footer.displayName = "Footer";
