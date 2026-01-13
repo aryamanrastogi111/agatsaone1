@@ -78,99 +78,94 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Product Showcase - Premium Layout */}
+          {/* Product Showcase - Layered Diagonal Cascade */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="relative"
           >
-            <div className="relative w-full aspect-[4/3] max-w-xl mx-auto">
-              {/* Central cyan glow */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-64 h-64 bg-primary/15 rounded-full blur-3xl" />
-              </div>
-              
-              {/* Secondary ambient glow */}
-              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-400/10 rounded-full blur-2xl" />
-              <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
+            <div className="relative w-full h-[420px] md:h-[480px] max-w-xl mx-auto">
+              {/* Ambient glow layers */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-radial from-primary/20 via-primary/5 to-transparent rounded-full blur-2xl" />
+              <div className="absolute bottom-10 right-10 w-24 h-24 bg-cyan-400/15 rounded-full blur-xl" />
+              <div className="absolute top-10 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl" />
 
-              {/* Product Grid - Balanced Asymmetric Layout */}
-              <div className="relative w-full h-full flex items-center justify-center">
-                {/* Top Row */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="absolute top-4 left-[15%] w-28 h-28 md:w-36 md:h-36"
-                  style={{ transform: "perspective(500px) rotateY(-5deg)" }}
+              {/* Back layer - CoreBalance (largest, back) */}
+              <motion.div
+                initial={{ opacity: 0, x: 50, y: 30 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.7 }}
+                whileHover={{ scale: 1.04, zIndex: 50 }}
+                className="absolute bottom-6 right-4 md:right-8 z-10"
+              >
+                <div 
+                  className="w-36 h-36 md:w-44 md:h-44 rounded-3xl bg-white/95 backdrop-blur-sm p-4 border border-white/60"
+                  style={{ 
+                    boxShadow: "0 35px 60px -20px rgba(0,0,0,0.2), 0 10px 20px -10px rgba(0,180,216,0.1)",
+                    transform: "perspective(800px) rotateX(5deg) rotateY(-8deg)"
+                  }}
                 >
-                  <div className="relative w-full h-full rounded-2xl bg-white shadow-[0_20px_50px_-15px_rgba(0,0,0,0.15)] p-3 border border-gray-100/50">
-                    <img
-                      src={sanketLifeImg}
-                      alt="SanketLife Device"
-                      className="w-full h-full object-contain"
-                      onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
-                    />
-                  </div>
-                </motion.div>
+                  <img src={coreBalanceImg} alt="CoreBalance" className="w-full h-full object-contain" onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }} />
+                </div>
+              </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="absolute top-8 right-[10%] w-32 h-32 md:w-40 md:h-40"
-                  style={{ transform: "perspective(500px) rotateY(5deg)" }}
+              {/* Mid-back layer - Zlu */}
+              <motion.div
+                initial={{ opacity: 0, x: -40, y: 20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.7 }}
+                whileHover={{ scale: 1.06, zIndex: 50 }}
+                className="absolute bottom-20 left-4 md:left-10 z-20"
+              >
+                <div 
+                  className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-white/95 backdrop-blur-sm p-4 border border-white/60"
+                  style={{ 
+                    boxShadow: "0 30px 50px -15px rgba(0,0,0,0.18), 0 8px 16px -8px rgba(0,180,216,0.12)",
+                    transform: "perspective(800px) rotateX(3deg) rotateY(6deg)"
+                  }}
                 >
-                  <div className="relative w-full h-full rounded-2xl bg-white shadow-[0_25px_60px_-20px_rgba(0,0,0,0.18)] p-3 border border-gray-100/50">
-                    <img
-                      src={spandanProImg}
-                      alt="EasyTouch Rhythm"
-                      className="w-full h-full object-contain"
-                      onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
-                    />
-                  </div>
-                </motion.div>
+                  <img src={zluImg} alt="Zlu Sleep Aid" className="w-full h-full object-contain" onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }} />
+                </div>
+              </motion.div>
 
-                {/* Bottom Row */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7, duration: 0.6 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="absolute bottom-8 left-[8%] w-30 h-30 md:w-38 md:h-38"
-                  style={{ transform: "perspective(500px) rotateY(-3deg) rotateX(2deg)" }}
+              {/* Mid-front layer - EasyTouch Rhythm */}
+              <motion.div
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.7 }}
+                whileHover={{ scale: 1.06, zIndex: 50 }}
+                className="absolute top-8 right-8 md:right-16 z-30"
+              >
+                <div 
+                  className="w-34 h-34 md:w-42 md:h-42 rounded-3xl bg-white/95 backdrop-blur-sm p-4 border border-white/60"
+                  style={{ 
+                    boxShadow: "0 28px 45px -12px rgba(0,0,0,0.17), 0 6px 14px -6px rgba(0,180,216,0.1)",
+                    transform: "perspective(800px) rotateX(-4deg) rotateY(-5deg)"
+                  }}
                 >
-                  <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-2xl bg-white shadow-[0_22px_55px_-18px_rgba(0,0,0,0.16)] p-3 border border-gray-100/50">
-                    <img
-                      src={zluImg}
-                      alt="Zlu Sleep Aid"
-                      className="w-full h-full object-contain"
-                      onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
-                    />
-                  </div>
-                </motion.div>
+                  <img src={spandanProImg} alt="EasyTouch Rhythm" className="w-36 h-36 object-contain" onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }} />
+                </div>
+              </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="absolute bottom-4 right-[15%] w-28 h-28 md:w-36 md:h-36"
-                  style={{ transform: "perspective(500px) rotateY(4deg) rotateX(3deg)" }}
+              {/* Front layer - SanketLife (hero position, front-center) */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.8, duration: 0.7 }}
+                whileHover={{ scale: 1.08, zIndex: 50 }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40"
+              >
+                <div 
+                  className="w-40 h-40 md:w-48 md:h-48 rounded-3xl bg-white p-5 border border-white/80"
+                  style={{ 
+                    boxShadow: "0 40px 70px -25px rgba(0,0,0,0.25), 0 15px 30px -15px rgba(0,180,216,0.15), inset 0 1px 0 rgba(255,255,255,0.8)",
+                    transform: "perspective(800px) rotateX(2deg)"
+                  }}
                 >
-                  <div className="relative w-full h-full rounded-2xl bg-white shadow-[0_20px_50px_-15px_rgba(0,0,0,0.15)] p-3 border border-gray-100/50">
-                    <img
-                      src={coreBalanceImg}
-                      alt="CoreBalance BMI Scale"
-                      className="w-full h-full object-contain"
-                      onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
-                    />
-                  </div>
-                </motion.div>
-              </div>
+                  <img src={sanketLifeImg} alt="SanketLife Device" className="w-full h-full object-contain" onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }} />
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
