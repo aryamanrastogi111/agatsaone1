@@ -24,12 +24,14 @@ import {
   Star,
   ChevronRight,
   BadgeCheck,
-  ExternalLink
+  ExternalLink,
+  Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 
 // Image imports
 import sanketlifeHeroV2 from "@/assets/sanketlife-device-app.png";
@@ -252,6 +254,18 @@ const testimonials = [
 ];
 
 const SanketLifeProduct = () => {
+  const { products: shopifyProducts, loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const [addingToCart, setAddingToCart] = useState(false);
+
+  const handleAddToCart = async (searchTitle: string) => {
+    const product = findProductByTitle(searchTitle);
+    if (product) {
+      setAddingToCart(true);
+      addToCart(product);
+      setTimeout(() => setAddingToCart(false), 500);
+    }
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -293,12 +307,21 @@ const SanketLifeProduct = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button size="lg" className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700 text-white">
-                  <ShoppingCart className="h-5 w-5" />
-                  Buy Now — ₹4,999
+                <Button 
+                  size="lg" 
+                  className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700 text-white"
+                  onClick={() => handleAddToCart("Sanket life 2.0")}
+                  disabled={addingToCart || loading}
+                >
+                  {addingToCart ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="h-5 w-5" />
+                  )}
+                  Add to Cart — ₹4,999
                 </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-cyan-200 text-cyan-700 hover:bg-cyan-50">
-                  View All Products
+                <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-cyan-200 text-cyan-700 hover:bg-cyan-50" asChild>
+                  <Link to="/products">View All Products</Link>
                 </Button>
               </div>
               
@@ -911,9 +934,18 @@ const SanketLifeProduct = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-                <Button size="lg" className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700 text-white">
-                  <ShoppingCart className="h-5 w-5" />
-                  Buy SanketLife 2.0 — ₹4,999
+                <Button 
+                  size="lg" 
+                  className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700 text-white"
+                  onClick={() => handleAddToCart("Sanket life 2.0")}
+                  disabled={addingToCart || loading}
+                >
+                  {addingToCart ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="h-5 w-5" />
+                  )}
+                  Add to Cart — ₹4,999
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-cyan-200 text-cyan-700 hover:bg-cyan-50 gap-2">
                   <Phone className="h-5 w-5" />

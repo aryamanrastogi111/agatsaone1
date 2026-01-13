@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
-import { Check, ShoppingCart, Scale, Activity, Droplets, Zap, Heart, TrendingUp, Users, Home, Dumbbell, Building2, Shield, ArrowRight, Star, Truck, ShieldCheck } from "lucide-react";
+import { Check, ShoppingCart, Scale, Activity, Droplets, Zap, Heart, TrendingUp, Users, Home, Dumbbell, Building2, Shield, ArrowRight, Star, Truck, ShieldCheck, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
@@ -10,6 +10,7 @@ import appMuscle from "@/assets/corebalance-app-muscle.png";
 import appComposition from "@/assets/corebalance-app-composition.png";
 import appBmi from "@/assets/corebalance-app-bmi.png";
 import appMetrics from "@/assets/corebalance-app-metrics.png";
+import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
@@ -121,6 +122,18 @@ const testimonials = [
 ];
 
 const CoreBalanceProduct = () => {
+  const { loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const [addingToCart, setAddingToCart] = useState(false);
+
+  const handleAddToCart = async () => {
+    const product = findProductByTitle("CoreBalance");
+    if (product) {
+      setAddingToCart(true);
+      addToCart(product);
+      setTimeout(() => setAddingToCart(false), 500);
+    }
+  };
+
   return (
     <Layout>
       {/* Section 1: Hero Introduction */}
@@ -151,8 +164,17 @@ const CoreBalanceProduct = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button size="lg" className="text-lg px-8 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700">
-                  <ShoppingCart className="h-5 w-5" />
+                <Button 
+                  size="lg" 
+                  className="text-lg px-8 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700"
+                  onClick={handleAddToCart}
+                  disabled={addingToCart || loading}
+                >
+                  {addingToCart ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="h-5 w-5" />
+                  )}
                   Add to Cart — ₹6,999
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-emerald-200 hover:bg-emerald-50">
