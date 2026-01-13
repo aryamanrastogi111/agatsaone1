@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, MessageCircle, ChevronDown, ChevronUp, Shield, Package, RefreshCw, Home } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle, ChevronDown, ChevronUp, Shield, Package, RefreshCw, Home, HomeIcon, Building2, Briefcase, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -34,6 +34,70 @@ const faqs = [
   },
 ];
 
+const solutions = [
+  {
+    id: "home",
+    icon: HomeIcon,
+    title: "For Home Users",
+    subtitle: "Personal Health Monitoring",
+    description: "Take charge of your health from the comfort of your home. Our devices are designed to be easy to use, with clear results you can understand and share with your doctor.",
+    benefits: [
+      "Monitor your health daily without clinic visits",
+      "Easy-to-read reports you can share with doctors",
+      "Peace of mind for you and your family",
+      "Track trends over time to catch issues early"
+    ],
+    products: ["SanketLife", "EasyTouch Rhythm", "Zlu – Sleep Aid", "CoreBalance BMI"],
+    cta: "Explore Home Products",
+    link: "/products"
+  },
+  {
+    id: "clinics",
+    icon: Building2,
+    title: "For Clinics & Hospitals",
+    subtitle: "Healthcare Facility Integration",
+    description: "Enhance your practice with medical-grade monitoring devices that integrate seamlessly into your workflow. Provide better care with accurate, instant results.",
+    benefits: [
+      "Medical-grade accuracy certified for clinical use",
+      "Quick screening for high patient volumes",
+      "Digital records for easy documentation",
+      "Cost-effective compared to traditional equipment"
+    ],
+    products: ["SanketLife Pro", "CoreBalance Clinical", "Multi-device licensing"],
+    cta: "Request Demo",
+    link: "/support#contact"
+  },
+  {
+    id: "enterprise",
+    icon: Briefcase,
+    title: "For Enterprises",
+    subtitle: "Corporate Wellness Programs",
+    description: "Invest in your team's health with comprehensive wellness solutions. Our enterprise packages help you build a healthier, more productive workforce.",
+    benefits: [
+      "Bulk device procurement with volume discounts",
+      "Custom wellness program design",
+      "Employee health analytics dashboard",
+      "Dedicated support and training"
+    ],
+    products: ["Custom device bundles", "Health screening camps", "API integration"],
+    cta: "Contact Sales",
+    link: "/support#contact"
+  }
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+};
+
 const Support = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formData, setFormData] = useState({
@@ -46,7 +110,6 @@ const Support = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic would go here
     console.log("Form submitted:", formData);
     alert("Thank you for your message! We'll get back to you within 24 hours.");
     setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
@@ -79,8 +142,106 @@ const Support = () => {
         </div>
       </section>
 
+      {/* Solutions Section */}
+      <section id="solutions" className="py-16 bg-background">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Solutions for Everyone
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Whether you're monitoring your health at home, running a clinic,
+              or building a corporate wellness program — we have solutions
+              tailored for you.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="space-y-16"
+          >
+            {solutions.map((solution, index) => {
+              const Icon = solution.icon;
+              const isReversed = index % 2 === 1;
+
+              return (
+                <motion.div
+                  key={solution.id}
+                  id={solution.id}
+                  variants={itemVariants}
+                  className={`grid lg:grid-cols-2 gap-12 items-center ${
+                    isReversed ? "lg:flex-row-reverse" : ""
+                  }`}
+                >
+                  <div className={isReversed ? "lg:order-2" : ""}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center">
+                        <Icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-primary font-medium">
+                          {solution.subtitle}
+                        </p>
+                        <h2 className="text-3xl font-bold text-foreground">
+                          {solution.title}
+                        </h2>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground text-lg mb-6">
+                      {solution.description}
+                    </p>
+                    <ul className="space-y-3 mb-8">
+                      {solution.benefits.map((benefit, i) => (
+                        <li key={i} className="flex items-start gap-3">
+                          <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                          <span className="text-foreground">{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Button asChild size="lg">
+                      <Link to={solution.link} className="flex items-center gap-2">
+                        {solution.cta}
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                  <div className={`${isReversed ? "lg:order-1" : ""}`}>
+                    <div className="bg-muted/50 rounded-2xl p-8">
+                      <h3 className="text-lg font-semibold text-foreground mb-4">
+                        Recommended Products
+                      </h3>
+                      <div className="space-y-3">
+                        {solution.products.map((product, i) => (
+                          <div
+                            key={i}
+                            className="bg-background rounded-xl p-4 flex items-center justify-between group hover:shadow-md transition-shadow"
+                          >
+                            <span className="font-medium text-foreground">
+                              {product}
+                            </span>
+                            <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
       {/* Quick Links */}
-      <section className="py-12 bg-background">
+      <section className="py-12 bg-muted/30">
         <div className="container">
           <div className="grid md:grid-cols-3 gap-6">
             <motion.div
@@ -134,7 +295,7 @@ const Support = () => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-16 bg-muted/30">
+      <section id="faq" className="py-16 bg-background">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -183,7 +344,7 @@ const Support = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-16 bg-background">
+      <section id="contact" className="py-16 bg-muted/30">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Info */}
@@ -344,7 +505,7 @@ const Support = () => {
       </section>
 
       {/* Warranty Section */}
-      <section id="warranty" className="py-16 bg-muted/30">
+      <section id="warranty" className="py-16 bg-background">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

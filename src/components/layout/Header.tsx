@@ -8,8 +8,6 @@ import agatsaLogo from "@/assets/agatsa-logo.png";
 
 const navItems = [
   { label: "Products", href: "/products" },
-  { label: "Solutions", href: "/solutions" },
-  { label: "Trust", href: "/trust" },
   { label: "About", href: "/about" },
   { label: "Support", href: "/support" },
 ];

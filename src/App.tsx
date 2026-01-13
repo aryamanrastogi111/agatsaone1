@@ -2,11 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
-import Solutions from "./pages/Solutions";
-import Trust from "./pages/Trust";
 import About from "./pages/About";
 import Support from "./pages/Support";
 import DeviceFinder from "./pages/DeviceFinder";
@@ -32,12 +30,13 @@ const App = () => (
           <Route path="/products/corebalance" element={<CoreBalanceProduct />} />
           <Route path="/products/easytouch-rhythm" element={<EasyTouchRhythmProduct />} />
           <Route path="/products/sanketlife" element={<SanketLifeProduct />} />
-          <Route path="/solutions" element={<Solutions />} />
-          <Route path="/trust" element={<Trust />} />
           <Route path="/about" element={<About />} />
           <Route path="/support" element={<Support />} />
           <Route path="/device-finder" element={<DeviceFinder />} />
           <Route path="/device-finder/compare" element={<Compare />} />
+          {/* Redirects for old routes */}
+          <Route path="/solutions" element={<Navigate to="/support#solutions" replace />} />
+          <Route path="/trust" element={<Navigate to="/about" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
