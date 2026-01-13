@@ -1,0 +1,682 @@
+import { Link } from "react-router-dom";
+import { motion, useInView } from "framer-motion";
+import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Layout } from "@/components/layout";
+import { useRef } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
+// Image assets from shop.myeasytouch.com
+const images = {
+  heroband: "https://shop.myeasytouch.com/assets/band-hero-new-eJqxalsU.png",
+  productHero2: "https://shop.myeasytouch.com/assets/product-hero-2-DZLGq91o.png",
+  mealLoggingApp: "https://shop.myeasytouch.com/assets/meal-logging-app-g1XWheXS.png",
+  productsLineup: "https://shop.myeasytouch.com/assets/products-lineup-CWziGlGu.png",
+  appScreens: [
+    { src: "https://shop.myeasytouch.com/assets/app-screen-home-uielQm0f.png", title: "Home Dashboard", desc: "Your daily health overview at a glance" },
+    { src: "https://shop.myeasytouch.com/assets/app-screen-metrics-BdPzDSNV.png", title: "Health Metrics", desc: "Track all your vital signs in one place" },
+    { src: "https://shop.myeasytouch.com/assets/app-screen-longevity-9eIZHtjV.png", title: "Longevity Goal", desc: "Set and achieve your wellness targets" },
+    { src: "https://shop.myeasytouch.com/assets/app-screen-vitals-DYJ6mWkw.png", title: "Quick Vitals", desc: "Instant access to your key health data" },
+    { src: "https://shop.myeasytouch.com/assets/app-screen-rhythm-matrix-BnPda25G.png", title: "Rhythm Matrix", desc: "See how your rhythms interconnect" },
+    { src: "https://shop.myeasytouch.com/assets/app-screen-plan-actual-BEThdkNf.png", title: "Plan vs Actual", desc: "Compare your goals with reality" },
+    { src: "https://shop.myeasytouch.com/assets/app-screen-bio-correlations-CcciHraG.png", title: "Bio-Correlations", desc: "Discover patterns in your health data" },
+    { src: "https://shop.myeasytouch.com/assets/app-screen-metabolic-BRSh33fq.png", title: "Metabolic Rhythm", desc: "Understand your energy patterns" },
+    { src: "https://shop.myeasytouch.com/assets/app-screen-meal-analysis-CwE5CQ4g.png", title: "Meal Analysis", desc: "See how food affects your body" },
+    { src: "https://shop.myeasytouch.com/assets/app-screen-circulatory-C1TfLPJM.png", title: "Circulatory Rhythm", desc: "Monitor your heart health trends" },
+  ],
+  rhythms: [
+    { src: "https://shop.myeasytouch.com/assets/rhythm-nervous-system-DGXl7tAO.jpg", name: "Nervous System", subtitle: "Your Calm & Stress Balance" },
+    { src: "https://shop.myeasytouch.com/assets/rhythm-kinetic-BoyGbY5f.jpg", name: "Kinetic", subtitle: "Your Movement Patterns" },
+    { src: "https://shop.myeasytouch.com/assets/rhythm-circadian-DkBrPuU8.jpg", name: "Circadian", subtitle: "Your Sleep & Wake Cycle" },
+    { src: "https://shop.myeasytouch.com/assets/rhythm-circulatory-BQr9OeIQ.jpg", name: "Circulatory", subtitle: "Your Heart & Vascular Health" },
+    { src: "https://shop.myeasytouch.com/assets/rhythm-metabolic-D7eO7vXC.jpg", name: "Metabolic", subtitle: "Your Energy & Nutrition" },
+  ],
+  awards: [
+    { src: "https://shop.myeasytouch.com/assets/award-ceremony-D4dsQIqC.png", name: "Anjani Mashelkar Prize" },
+    { src: "https://shop.myeasytouch.com/assets/award-amiia-2015-DbpJ5eCx.jpg", name: "AMIIA Winner 2015" },
+    { src: "https://shop.myeasytouch.com/assets/award-10000-startups-n0jyIGYc.jpg", name: "10,000 Startups" },
+    { src: "https://shop.myeasytouch.com/assets/award-medtech-expo-2023-DlkOCdHR.jpg", name: "MedTech Expo 2023" },
+  ],
+};
+
+const rhythmDescriptions = [
+  {
+    name: "Nervous System",
+    subtitle: "Your Calm & Stress Balance",
+    description: "Your nervous system orchestrates how you respond to the world around you. EasyTouch Rhythm tracks your Heart Rate Variability (HRV) to reveal the delicate balance between your sympathetic (fight-or-flight) and parasympathetic (rest-and-digest) systems.",
+    insight: "When this rhythm is balanced, you feel centered, focused, and resilient. When it's strained, even small stressors can feel overwhelming.",
+  },
+  {
+    name: "Kinetic",
+    subtitle: "Your Movement Patterns",
+    description: "Movement is medicine—but only when it matches your body's current capacity. Your Kinetic rhythm reveals not just how much you move, but whether that movement is helping or hurting your overall balance.",
+    insight: "The right movement at the right time energizes you. The wrong movement, even if 'healthy,' can exhaust instead of strengthen.",
+  },
+  {
+    name: "Circadian",
+    subtitle: "Your Sleep & Wake Cycle",
+    description: "Your circadian rhythm is your body's master clock, governing when you feel alert, when you feel tired, and how restorative your sleep truly is. It's not just about hours—it's about alignment.",
+    insight: "When your circadian rhythm is in sync, you wake refreshed and wind down naturally. When it's disrupted, no amount of sleep feels like enough.",
+  },
+  {
+    name: "Circulatory",
+    subtitle: "Your Heart & Vascular Health",
+    description: "Your circulatory system is the highway that delivers oxygen, nutrients, and vitality to every cell. EasyTouch Rhythm monitors your heart rate patterns, blood pressure trends, and vascular efficiency.",
+    insight: "A healthy circulatory rhythm means steady energy throughout the day. Imbalances often show up as afternoon crashes or morning sluggishness.",
+  },
+  {
+    name: "Metabolic",
+    subtitle: "Your Energy & Nutrition",
+    description: "Your metabolic rhythm reflects how your body processes food, generates energy, and maintains balance. It's influenced by what you eat, when you eat, and how your body uniquely responds.",
+    insight: "Understanding your metabolic rhythm helps you eat in harmony with your body—not against it.",
+  },
+];
+
+const AnimatedSection = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const EasyTouchRhythmProduct = () => {
+  return (
+    <Layout>
+      {/* Section 1: Hero Introduction */}
+      <section className="min-h-[90vh] flex items-center bg-background py-16 lg:py-24">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="order-2 lg:order-1"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                Introducing EasyTouch Rhythm™
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+                I finally understand why my{" "}
+                <span className="text-primary">body feels</span>{" "}
+                the way it does.
+              </h1>
+              
+              <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+                EasyTouch Rhythm doesn't just track your health—it reveals the hidden patterns 
+                that explain your energy, your fatigue, your clarity, and your calm.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <Button size="lg" className="text-lg px-8 py-6 gap-2">
+                  <ShoppingCart className="h-5 w-5" />
+                  Add to Cart — ₹4,999
+                </Button>
+                <Button variant="outline" size="lg" className="text-lg px-8 py-6">
+                  Watch Demo
+                  <Play className="h-5 w-5 ml-2" />
+                </Button>
+              </div>
+              
+              <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Truck className="h-4 w-4 text-primary" />
+                  Free Shipping
+                </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-primary" />
+                  30-Day Returns
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="order-1 lg:order-2 relative"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-primary/10 rounded-3xl blur-3xl" />
+                <img
+                  src={images.heroband}
+                  alt="EasyTouch Rhythm Band"
+                  className="relative w-full max-w-lg mx-auto"
+                />
+              </div>
+              
+              {/* Floating Price Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="absolute -bottom-4 right-4 lg:right-0 bg-card border rounded-2xl p-4 shadow-lg"
+              >
+                <div className="text-xs text-primary font-medium mb-1">Introductory Offer</div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-bold text-foreground">₹4,999</span>
+                  <span className="text-sm text-muted-foreground line-through">₹7,999</span>
+                </div>
+                <div className="text-xs text-orange-600 mt-1">Only 4 left in stock!</div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 2: Problem Statement */}
+      <section className="py-24 lg:py-32 bg-muted/30">
+        <div className="container max-w-4xl">
+          <AnimatedSection>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-center mb-12 leading-tight">
+              Your body is talking.{" "}
+              <span className="text-muted-foreground">Most wearables just record it.</span>
+            </h2>
+            
+            <div className="space-y-4 text-lg md:text-xl text-muted-foreground text-center mb-12">
+              <p>You slept less. You sat too long. You ate late. You skipped your walk.</p>
+              <p>These choices compound—quietly, invisibly—until one day you wonder:</p>
+              <p className="text-foreground font-medium italic">"Why do I feel so tired?"</p>
+            </div>
+            
+            <div className="bg-background rounded-2xl p-8 border">
+              <p className="text-xl md:text-2xl text-center font-medium text-foreground">
+                Most devices show <span className="text-muted-foreground">numbers</span>.
+                <br />
+                EasyTouch Rhythm shows <span className="text-primary">impact</span>.
+              </p>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Section 3: How It Works */}
+      <section className="py-24 lg:py-32 bg-background">
+        <div className="container">
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Three Steps to Understanding
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                A gentle, continuous process that works in the background of your life
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+              {[
+                {
+                  step: "01",
+                  title: "Sense",
+                  description: "Your body's rhythms are continuously understood—heart rate variability, movement patterns, sleep quality, and more.",
+                },
+                {
+                  step: "02",
+                  title: "Interpret",
+                  description: "Rhythm scores translate raw data into meaningful insights. Not just what happened, but what it means for you.",
+                },
+                {
+                  step: "03",
+                  title: "Adjust",
+                  description: "Small daily nudges help you correct strain before it becomes a problem. Gentle guidance, never pressure.",
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.2 }}
+                  viewport={{ once: true }}
+                  className="text-center"
+                >
+                  <div className="text-6xl font-bold text-primary/20 mb-4">{item.step}</div>
+                  <h3 className="text-2xl font-bold text-foreground mb-3">{item.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                </motion.div>
+              ))}
+            </div>
+            
+            <p className="text-center text-lg text-muted-foreground mt-12 italic">
+              No alarms. No pressure. Just quiet intelligence in the background.
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Section 4: Rhythm Score System */}
+      <section className="py-24 lg:py-32 bg-gradient-to-b from-primary/5 to-background">
+        <div className="container">
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Your Daily Balance Score
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Five interconnected rhythms that reveal the complete picture of your health
+              </p>
+            </div>
+            
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              {[
+                { name: "Rhythm Score", value: 78, color: "from-primary to-cyan-400" },
+                { name: "Kinetic", value: 82, color: "from-green-500 to-emerald-400" },
+                { name: "Metabolic", value: 71, color: "from-orange-500 to-amber-400" },
+                { name: "Nervous", value: 85, color: "from-purple-500 to-violet-400" },
+                { name: "Circadian", value: 74, color: "from-blue-500 to-sky-400" },
+              ].map((score, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-card border rounded-2xl p-6 text-center hover:shadow-lg transition-shadow"
+                >
+                  <div className={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br ${score.color} flex items-center justify-center`}>
+                    <span className="text-2xl font-bold text-white">{score.value}</span>
+                  </div>
+                  <h3 className="font-semibold text-foreground">{score.name}</h3>
+                </motion.div>
+              ))}
+            </div>
+            
+            <div className="mt-12 bg-card border rounded-2xl p-8 max-w-3xl mx-auto">
+              <p className="text-lg text-center text-muted-foreground leading-relaxed">
+                Your <span className="text-foreground font-medium">Rhythm Score</span> is a single number 
+                that reflects your body's overall balance. It's calculated from five interconnected rhythms, 
+                each revealing a different aspect of your health. When they're in harmony, you feel it. 
+                When they're not, EasyTouch Rhythm helps you understand why.
+              </p>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Section 5: Benefits */}
+      <section className="py-24 lg:py-32 bg-background">
+        <div className="container max-w-4xl">
+          <AnimatedSection>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">
+              Why People Choose EasyTouch Rhythm
+            </h2>
+            
+            <div className="space-y-6">
+              {[
+                "Understand fatigue beyond sleep hours",
+                "See how food timing affects your energy",
+                "Recognize stress before it shows physically",
+                "Balance movement and recovery",
+                "Avoid overdoing 'healthy' habits",
+              ].map((benefit, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-muted/50 transition-colors"
+                >
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Check className="h-5 w-5 text-primary" />
+                  </div>
+                  <span className="text-lg md:text-xl text-foreground">{benefit}</span>
+                </motion.div>
+              ))}
+            </div>
+            
+            <p className="text-xl text-center text-primary font-medium mt-12">
+              This is how long-term health actually works.
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Section 6: App Experience Carousel */}
+      <section className="py-24 lg:py-32 bg-muted/30 overflow-hidden">
+        <div className="container">
+          <AnimatedSection>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                The EasyTouch Rhythm App
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Beautiful insights, always at your fingertips
+              </p>
+            </div>
+            
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full max-w-6xl mx-auto"
+            >
+              <CarouselContent className="-ml-4">
+                {images.appScreens.map((screen, i) => (
+                  <CarouselItem key={i} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                    <div className="bg-card border rounded-2xl overflow-hidden group hover:shadow-xl transition-shadow">
+                      <div className="aspect-[9/16] bg-gradient-to-br from-gray-900 to-gray-800 p-4">
+                        <img
+                          src={screen.src}
+                          alt={screen.title}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-foreground mb-1">{screen.title}</h3>
+                        <p className="text-sm text-muted-foreground">{screen.desc}</p>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden lg:flex -left-12" />
+              <CarouselNext className="hidden lg:flex -right-12" />
+            </Carousel>
+            
+            <p className="text-center text-sm text-muted-foreground mt-8">
+              Swipe to explore more screens →
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Section 7: Five Rhythms Deep Dive */}
+      <section className="py-24 lg:py-32 bg-background">
+        <div className="container">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              The Five Rhythms
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Your body operates in interconnected rhythms. Understanding them is the key to lasting wellness.
+            </p>
+          </AnimatedSection>
+          
+          {rhythmDescriptions.map((rhythm, i) => (
+            <AnimatedSection key={i} className="mb-24 last:mb-0">
+              <div className={`grid lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+                <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
+                  <div className="overflow-hidden rounded-2xl">
+                    <motion.img
+                      src={images.rhythms[i].src}
+                      alt={rhythm.name}
+                      className="w-full aspect-[4/3] object-cover"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.6 }}
+                    />
+                  </div>
+                </div>
+                <div className={i % 2 === 1 ? 'lg:order-1' : ''}>
+                  <div className="text-primary font-medium mb-2">{rhythm.subtitle}</div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                    {rhythm.name}
+                  </h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+                    {rhythm.description}
+                  </p>
+                  <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
+                    <p className="text-foreground italic">{rhythm.insight}</p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </section>
+
+      {/* Section 8: Movement Story */}
+      <section className="relative py-32 lg:py-48 overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={images.productHero2}
+            alt="Person wearing EasyTouch Rhythm"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
+        </div>
+        
+        <div className="container relative">
+          <AnimatedSection className="max-w-xl">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
+              Your Body Speaks When You Move
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6">
+              Movement is more than exercise. It's a conversation between you and your body. 
+              EasyTouch Rhythm listens—and translates.
+            </p>
+            <p className="text-lg text-foreground font-medium mb-8">
+              Movement done at the wrong time can exhaust instead of strengthen.
+            </p>
+            <Button variant="outline" size="lg" className="gap-2">
+              Understand Your Kinetic Rhythm
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Section 9: Meal Logging */}
+      <section className="py-24 lg:py-32 bg-muted/30">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <AnimatedSection>
+              <div className="text-primary font-medium mb-2">Meal Insights</div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+                Meal Logging That Understands Your Body
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                Forget calorie counting. Forget macro tracking. EasyTouch Rhythm focuses on 
+                what actually matters: how food affects <em>you</em>.
+              </p>
+              
+              <ul className="space-y-4 mb-8">
+                {[
+                  "No calorie counting required",
+                  "No macro targets to hit",
+                  "No food guilt or restrictions",
+                  "Just honest feedback about your body's response",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span className="text-foreground">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              
+              <Button variant="outline" className="gap-2">
+                <Play className="h-4 w-4" />
+                See How Meal Insights Work
+              </Button>
+            </AnimatedSection>
+            
+            <AnimatedSection>
+              <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8">
+                <img
+                  src={images.mealLoggingApp}
+                  alt="Meal Logging Feature"
+                  className="w-full max-w-sm mx-auto"
+                />
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 10: Trust & Awards */}
+      <section className="py-24 lg:py-32 bg-background">
+        <div className="container">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              A Decade Of Smart Innovations
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Trusted by over 500,000 users worldwide
+            </p>
+          </AnimatedSection>
+          
+          {/* Stats */}
+          <AnimatedSection>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+              {[
+                { value: "500K+", label: "Lives Impacted" },
+                { value: "10+", label: "Years of Innovation" },
+                { value: "50+", label: "Countries Reached" },
+                { value: "15+", label: "Awards Won" },
+              ].map((stat, i) => (
+                <div key={i} className="text-center p-6 bg-card border rounded-2xl">
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{stat.value}</div>
+                  <div className="text-muted-foreground">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </AnimatedSection>
+          
+          {/* Company Story */}
+          <AnimatedSection>
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+              <div>
+                <img
+                  src={images.productsLineup}
+                  alt="Agatsa Products"
+                  className="w-full rounded-2xl"
+                />
+              </div>
+              <div>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+                  Agatsa has been at the forefront of personal health technology since 2016. 
+                  What started as a mission to bring ECG monitoring to every home has evolved 
+                  into a comprehensive health ecosystem.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  EasyTouch Rhythm represents the culmination of a decade of learning—from 
+                  millions of data points, thousands of user conversations, and a relentless 
+                  pursuit of understanding what truly matters for long-term health.
+                </p>
+              </div>
+            </div>
+          </AnimatedSection>
+          
+          {/* Awards Carousel */}
+          <AnimatedSection>
+            <h3 className="text-xl font-semibold text-foreground text-center mb-8">Recognition & Awards</h3>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+              {images.awards.map((award, i) => (
+                <div key={i} className="bg-card border rounded-xl overflow-hidden">
+                  <img
+                    src={award.src}
+                    alt={award.name}
+                    className="w-full aspect-video object-cover"
+                  />
+                  <div className="p-3 text-center">
+                    <span className="text-sm font-medium text-foreground">{award.name}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </AnimatedSection>
+          
+          {/* Testimonials */}
+          <AnimatedSection className="mt-16">
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  quote: "For the first time, I understand why some days feel harder than others. It's not just sleep—it's everything working together.",
+                  name: "Priya S.",
+                  title: "Working Professional",
+                },
+                {
+                  quote: "I stopped chasing arbitrary fitness goals. Now I move in rhythm with my body, and I've never felt better.",
+                  name: "Rahul M.",
+                  title: "Fitness Enthusiast",
+                },
+                {
+                  quote: "The meal insights changed how I think about food. It's not about restriction—it's about understanding.",
+                  name: "Ananya K.",
+                  title: "Health-Conscious Mom",
+                },
+              ].map((testimonial, i) => (
+                <div key={i} className="bg-card border rounded-2xl p-6">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="h-4 w-4 fill-primary text-primary" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground mb-4 italic">"{testimonial.quote}"</p>
+                  <div>
+                    <div className="font-semibold text-foreground">{testimonial.name}</div>
+                    <div className="text-sm text-muted-foreground">{testimonial.title}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Section 11: Final CTA */}
+      <section className="py-24 lg:py-32 bg-gradient-to-b from-primary/5 to-primary/10">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+              Ready to understand your body?
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Join thousands who have discovered the power of rhythm-based health insights.
+            </p>
+            
+            <div className="bg-card border rounded-2xl p-8 mb-8">
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <span className="text-4xl font-bold text-foreground">₹4,999</span>
+                <span className="text-xl text-muted-foreground line-through">₹7,999</span>
+                <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
+                  Save ₹3,000
+                </span>
+              </div>
+              <p className="text-orange-600 text-sm mb-6">Limited stock – Only 4 units left!</p>
+              
+              <Button size="lg" className="text-lg px-12 py-6 gap-2 w-full sm:w-auto">
+                <ShoppingCart className="h-5 w-5" />
+                Add to Cart
+              </Button>
+              
+              <div className="flex items-center justify-center gap-6 mt-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Truck className="h-4 w-4" />
+                  Free Shipping
+                </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4" />
+                  30-Day Money Back
+                </div>
+              </div>
+            </div>
+            
+            <p className="text-sm text-muted-foreground">
+              Questions? <Link to="/support#contact" className="text-primary hover:underline">Contact our team</Link>
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+    </Layout>
+  );
+};
+
+export default EasyTouchRhythmProduct;
