@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, MessageCircle, ChevronDown, ChevronUp, Shield, Package, RefreshCw } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle, ChevronDown, ChevronUp, Shield, Package, RefreshCw, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -62,6 +63,11 @@ const Support = () => {
             transition={{ duration: 0.5 }}
             className="text-center max-w-3xl mx-auto"
           >
+            <Button asChild variant="ghost" size="sm" className="mb-6">
+              <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
+                <Home className="h-4 w-4" /> Back to Home
+              </Link>
+            </Button>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               How Can We Help?
             </h1>

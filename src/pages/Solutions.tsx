@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Home, Building2, Briefcase, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Home as HomeIcon, Building2, Briefcase, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 
 const solutions = [
   {
     id: "home",
-    icon: Home,
+    icon: HomeIcon,
     title: "For Home Users",
     subtitle: "Personal Health Monitoring",
     description: "Take charge of your health from the comfort of your home. Our devices are designed to be easy to use, with clear results you can understand and share with your doctor.",
@@ -80,6 +80,11 @@ const Solutions = () => {
             transition={{ duration: 0.5 }}
             className="text-center max-w-3xl mx-auto"
           >
+            <Button asChild variant="ghost" size="sm" className="mb-6">
+              <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
+                <HomeIcon className="h-4 w-4" /> Back to Home
+              </Link>
+            </Button>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               Solutions for Everyone
             </h1>
