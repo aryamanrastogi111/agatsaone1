@@ -104,7 +104,7 @@ export function HeroSection() {
               {heroProducts.map((product, index) => {
                 const positions = [
                   "top-0 left-1/4 w-32 h-32 md:w-40 md:h-40",
-                  "top-0 right-0 w-64 h-64 md:w-80 md:h-80",
+                  "top-1/2 -right-4 md:right-0 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80",
                   "bottom-1/4 left-0 w-32 h-32 md:w-40 md:h-40",
                   "bottom-0 left-1/3 w-32 h-32 md:w-40 md:h-40",
                 ];
