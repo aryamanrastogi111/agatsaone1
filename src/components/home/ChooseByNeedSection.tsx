@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Heart, Activity, Moon, Scale, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const categories = [
@@ -13,6 +12,7 @@ const categories = [
     product: "SanketLife",
     color: "text-red-500",
     bgColor: "bg-red-50",
+    hoverBg: "group-hover:bg-red-100",
   },
   {
     icon: Activity,
@@ -22,6 +22,7 @@ const categories = [
     product: "EasyTouch Rhythm",
     color: "text-primary",
     bgColor: "bg-accent",
+    hoverBg: "group-hover:bg-primary/20",
   },
   {
     icon: Moon,
@@ -31,6 +32,7 @@ const categories = [
     product: "Zlu – Sleep Aid",
     color: "text-indigo-500",
     bgColor: "bg-indigo-50",
+    hoverBg: "group-hover:bg-indigo-100",
   },
   {
     icon: Scale,
@@ -40,23 +42,9 @@ const categories = [
     product: "CoreBalance BMI",
     color: "text-emerald-500",
     bgColor: "bg-emerald-50",
+    hoverBg: "group-hover:bg-emerald-100",
   },
 ];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
 
 export function ChooseByNeedSection() {
   return (
@@ -65,8 +53,8 @@ export function ChooseByNeedSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -78,54 +66,51 @@ export function ChooseByNeedSection() {
           </p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {categories.map((category) => {
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {categories.map((category, index) => {
             const Icon = category.icon;
             return (
               <motion.div
                 key={category.title}
-                variants={itemVariants}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -8 }}
                 className="group"
               >
-                <div className="bg-card rounded-xl p-6 h-full border border-border shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300">
-                  <div
-                    className={cn(
-                      "w-14 h-14 rounded-xl flex items-center justify-center mb-5",
-                      category.bgColor
-                    )}
-                  >
-                    <Icon className={cn("h-7 w-7", category.color)} />
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">
-                    {category.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                    {category.description}
-                  </p>
-                  <p className="text-xs text-primary font-medium mb-4">
-                    Recommended: {category.product}
-                  </p>
-                  <Button
-                    asChild
-                    variant="ghost"
-                    className="p-0 h-auto text-primary hover:text-primary/80 hover:bg-transparent group-hover:translate-x-1 transition-transform"
-                  >
-                    <Link to={category.link} className="flex items-center gap-2">
+                <Link to={category.link} className="block h-full">
+                  <div className="bg-card rounded-xl p-6 h-full border border-border shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-300">
+                    <motion.div
+                      className={cn(
+                        "w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300",
+                        category.bgColor,
+                        category.hoverBg
+                      )}
+                      whileHover={{ rotate: [0, -10, 10, 0] }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <Icon className={cn("h-7 w-7", category.color)} />
+                    </motion.div>
+                    <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                      {category.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                      {category.description}
+                    </p>
+                    <p className="text-xs text-primary font-medium mb-4">
+                      Recommended: {category.product}
+                    </p>
+                    <div className="flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
                       Learn more
                       <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
+                    </div>
+                  </div>
+                </Link>
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
