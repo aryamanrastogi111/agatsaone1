@@ -1,3 +1,5 @@
+import sanketlifeCardImg from "@/assets/sanketlife-card.jpg";
+
 export interface Product {
   id: string;
   name: string;
@@ -23,7 +25,7 @@ export const products: Product[] = [
       "Instant PDF reports via smartphone",
       "Doctor-shareable records"
     ],
-    image: "https://www.agatsaone.com/cdn/shop/files/SanketLifeDevice2.png?v=1700000000",
+    image: sanketlifeCardImg,
     category: "heart",
     isExternal: true,
     link: "https://sanketlife.com",
