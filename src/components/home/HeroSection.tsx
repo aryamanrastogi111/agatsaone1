@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 import sanketLifeImg from "@/assets/sanket-life.png";
 import zluImg from "@/assets/zlu.webp";
-import coreBalanceImg from "@/assets/core-balance.jpg";
+import coreBalanceImg from "@/assets/core-balance.png";
 import spandanProImg from "@/assets/spandan-pro.png";
 
 const heroProducts = [
