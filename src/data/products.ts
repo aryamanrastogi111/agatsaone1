@@ -1,5 +1,6 @@
 import sanketlifeCardImg from "@/assets/sanketlife-card.jpg";
 import rhythmCardImg from "@/assets/rhythm-card.jpg";
+import zluCardImg from "@/assets/zlu-card.png";
 
 export interface Product {
   id: string;
@@ -68,7 +69,7 @@ export const products: Product[] = [
       "Gentle, natural sleep induction",
       "Perfect for nightly routines"
     ],
-    image: "https://www.agatsaone.com/cdn/shop/files/ZluDevice.png?v=1700000000",
+    image: zluCardImg,
     category: "sleep",
     isExternal: false,
     link: "/products/zlu",
