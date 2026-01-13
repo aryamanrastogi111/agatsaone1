@@ -25,7 +25,7 @@ const heroProducts = [
   },
   {
     id: "easytouch-rhythm",
-    name: "Easytouch Rhythm",
+    name: "Zlu",
     image: easytouchHeroImg,
     tagline: "Smart Blood Glucose Monitor",
     description: "Accurate, fast blood glucose testing with Bluetooth connectivity and smart app integration.",
