@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -15,6 +15,8 @@ import { toast } from "sonner";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const linkRef = useRef<HTMLAnchorElement>(null);
+  
   const { 
     items, 
     isLoading, 
@@ -29,24 +31,25 @@ export const CartDrawer = () => {
 
   const handleCheckout = async () => {
     try {
-      const checkoutUrl = await createCheckout();
-      console.log("[CartDrawer] checkoutUrl:", checkoutUrl);
-
-      if (!checkoutUrl) {
+      const url = await createCheckout();
+      console.log("[CartDrawer] Generated checkout URL:", url);
+      
+      if (!url) {
         toast.error("Failed to create checkout. Please try again.");
-        return;
-      }
-
-      // Safety: ensure we got an absolute Shopify URL (not '/something' which would 404 on our site)
-      if (!/^https?:\/\//i.test(checkoutUrl)) {
-        console.error("[CartDrawer] Invalid checkout URL (expected absolute URL):", checkoutUrl);
-        toast.error("Checkout link invalid. Please try again.");
         return;
       }
 
       clearCart();
       setIsOpen(false);
-      window.location.assign(checkoutUrl);
+      
+      // Use hidden anchor click for reliable navigation on all devices
+      if (linkRef.current) {
+        linkRef.current.href = url;
+        linkRef.current.click();
+      } else {
+        // Fallback
+        window.location.href = url;
+      }
     } catch (error) {
       console.error('Checkout failed:', error);
       toast.error("Checkout failed. Please try again.");
@@ -61,131 +64,136 @@ export const CartDrawer = () => {
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="relative">
-          <ShoppingCart className="h-5 w-5" />
-          {totalItems > 0 && (
-            <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-primary text-primary-foreground">
-              {totalItems}
-            </Badge>
-          )}
-        </Button>
-      </SheetTrigger>
+    <>
+      {/* Hidden anchor for reliable navigation */}
+      <a ref={linkRef} href="#" className="hidden" aria-hidden="true" />
       
-      <SheetContent className="w-full sm:max-w-lg flex flex-col h-full">
-        <SheetHeader className="flex-shrink-0">
-          <SheetTitle>Shopping Cart</SheetTitle>
-          <SheetDescription>
-            {totalItems === 0 ? "Your cart is empty" : `${totalItems} item${totalItems !== 1 ? 's' : ''} in your cart`}
-          </SheetDescription>
-        </SheetHeader>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetTrigger asChild>
+          <Button variant="outline" size="icon" className="relative">
+            <ShoppingCart className="h-5 w-5" />
+            {totalItems > 0 && (
+              <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-primary text-primary-foreground">
+                {totalItems}
+              </Badge>
+            )}
+          </Button>
+        </SheetTrigger>
         
-        <div className="flex flex-col flex-1 pt-6 min-h-0">
-          {items.length === 0 ? (
-            <div className="flex-1 flex items-center justify-center">
-              <div className="text-center">
-                <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">Your cart is empty</p>
-                <p className="text-sm text-muted-foreground mt-2">Add some products to get started</p>
+        <SheetContent className="w-full sm:max-w-lg flex flex-col h-full">
+          <SheetHeader className="flex-shrink-0">
+            <SheetTitle>Shopping Cart</SheetTitle>
+            <SheetDescription>
+              {totalItems === 0 ? "Your cart is empty" : `${totalItems} item${totalItems !== 1 ? 's' : ''} in your cart`}
+            </SheetDescription>
+          </SheetHeader>
+          
+          <div className="flex flex-col flex-1 pt-6 min-h-0">
+            {items.length === 0 ? (
+              <div className="flex-1 flex items-center justify-center">
+                <div className="text-center">
+                  <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">Your cart is empty</p>
+                  <p className="text-sm text-muted-foreground mt-2">Add some products to get started</p>
+                </div>
               </div>
-            </div>
-          ) : (
-            <>
-              {/* Scrollable items area */}
-              <div className="flex-1 overflow-y-auto pr-2 min-h-0">
-                <div className="space-y-4">
-                  {items.map((item) => (
-                    <div key={item.variantId} className="flex gap-4 p-3 bg-muted/30 rounded-lg">
-                      <div className="w-16 h-16 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
-                        {item.product.node.images?.edges?.[0]?.node && (
-                          <img
-                            src={item.product.node.images.edges[0].node.url}
-                            alt={item.product.node.title}
-                            className="w-full h-full object-cover"
-                          />
-                        )}
-                      </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-sm truncate">{item.product.node.title}</h4>
-                        {item.variantTitle !== "Default Title" && (
-                          <p className="text-xs text-muted-foreground">
-                            {item.variantTitle}
-                          </p>
-                        )}
-                        <p className="font-semibold text-sm mt-1">
-                          {formatPrice(item.price.amount, item.price.currencyCode)}
-                        </p>
-                      </div>
-                      
-                      <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 text-destructive hover:text-destructive"
-                          onClick={() => removeItem(item.variantId)}
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
+            ) : (
+              <>
+                {/* Scrollable items area */}
+                <div className="flex-1 overflow-y-auto pr-2 min-h-0">
+                  <div className="space-y-4">
+                    {items.map((item) => (
+                      <div key={item.variantId} className="flex gap-4 p-3 bg-muted/30 rounded-lg">
+                        <div className="w-16 h-16 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
+                          {item.product.node.images?.edges?.[0]?.node && (
+                            <img
+                              src={item.product.node.images.edges[0].node.url}
+                              alt={item.product.node.title}
+                              className="w-full h-full object-cover"
+                            />
+                          )}
+                        </div>
                         
-                        <div className="flex items-center gap-1">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-sm truncate">{item.product.node.title}</h4>
+                          {item.variantTitle !== "Default Title" && (
+                            <p className="text-xs text-muted-foreground">
+                              {item.variantTitle}
+                            </p>
+                          )}
+                          <p className="font-semibold text-sm mt-1">
+                            {formatPrice(item.price.amount, item.price.currencyCode)}
+                          </p>
+                        </div>
+                        
+                        <div className="flex flex-col items-end gap-2 flex-shrink-0">
                           <Button
-                            variant="outline"
+                            variant="ghost"
                             size="icon"
-                            className="h-6 w-6"
-                            onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
+                            className="h-6 w-6 text-destructive hover:text-destructive"
+                            onClick={() => removeItem(item.variantId)}
                           >
-                            <Minus className="h-3 w-3" />
+                            <Trash2 className="h-3 w-3" />
                           </Button>
-                          <span className="w-8 text-center text-sm">{item.quantity}</span>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-6 w-6"
-                            onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                          >
-                            <Plus className="h-3 w-3" />
-                          </Button>
+                          
+                          <div className="flex items-center gap-1">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-6 w-6"
+                              onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="w-8 text-center text-sm">{item.quantity}</span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-6 w-6"
+                              onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Fixed checkout section */}
-              <div className="flex-shrink-0 space-y-4 pt-4 border-t bg-background">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-semibold">Total</span>
-                  <span className="text-xl font-bold">
-                    {formatPrice(totalPrice.toString(), items[0]?.price.currencyCode || 'INR')}
-                  </span>
+                    ))}
+                  </div>
                 </div>
                 
-                <Button 
-                  onClick={handleCheckout}
-                  className="w-full" 
-                  size="lg"
-                  disabled={items.length === 0 || isLoading}
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Creating Checkout...
-                    </>
-                  ) : (
-                    <>
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Proceed to Checkout
-                    </>
-                  )}
-                </Button>
-              </div>
-            </>
-          )}
-        </div>
-      </SheetContent>
-    </Sheet>
+                {/* Fixed checkout section */}
+                <div className="flex-shrink-0 space-y-4 pt-4 border-t bg-background">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-semibold">Total</span>
+                    <span className="text-xl font-bold">
+                      {formatPrice(totalPrice.toString(), items[0]?.price.currencyCode || 'INR')}
+                    </span>
+                  </div>
+                  
+                  <Button 
+                    onClick={handleCheckout}
+                    className="w-full" 
+                    size="lg"
+                    disabled={items.length === 0 || isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Creating Checkout...
+                      </>
+                    ) : (
+                      <>
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Proceed to Checkout
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
+    </>
   );
 };
