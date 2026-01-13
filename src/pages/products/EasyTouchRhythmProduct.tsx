@@ -78,13 +78,14 @@ const rhythmDescriptions = [
   },
 ];
 
-const AnimatedSection = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
+const AnimatedSection = ({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   
   return (
     <motion.div
       ref={ref}
+      id={id}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -399,9 +400,9 @@ const EasyTouchRhythmProduct = () => {
       </section>
 
       {/* Section 7: Five Rhythms Deep Dive */}
-      <section className="py-24 lg:py-32 bg-background">
+      <section id="five-rhythms" className="py-24 lg:py-32 bg-background">
         <div className="container">
-          <AnimatedSection className="text-center mb-16">
+          <AnimatedSection className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               The Five Rhythms
             </h2>
@@ -410,8 +411,30 @@ const EasyTouchRhythmProduct = () => {
             </p>
           </AnimatedSection>
           
+          {/* Anchor Navigation */}
+          <div className="sticky top-20 z-40 mb-16">
+            <nav className="flex flex-wrap justify-center gap-2 md:gap-4 bg-background/95 backdrop-blur-sm py-4 px-4 rounded-full border border-border/50 shadow-lg max-w-fit mx-auto">
+              {rhythmDescriptions.map((rhythm, i) => (
+                <a
+                  key={i}
+                  href={`#rhythm-${rhythm.name.toLowerCase()}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById(`rhythm-${rhythm.name.toLowerCase()}`)?.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'center'
+                    });
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full transition-all duration-300"
+                >
+                  {rhythm.name}
+                </a>
+              ))}
+            </nav>
+          </div>
+          
           {rhythmDescriptions.map((rhythm, i) => (
-            <AnimatedSection key={i} className="mb-24 last:mb-0">
+            <AnimatedSection key={i} id={`rhythm-${rhythm.name.toLowerCase()}`} className="mb-24 last:mb-0 scroll-mt-40">
               <div className={`grid lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
                 <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
                   <div className="overflow-hidden rounded-2xl bg-muted/30">
