@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
-import { Check, ShoppingCart, Moon, Plane, BedDouble, Building, Shield, Leaf, ArrowRight, Star, Truck, ShieldCheck, Scale } from "lucide-react";
+import { Check, ShoppingCart, Moon, Plane, BedDouble, Building, Shield, Leaf, ArrowRight, Star, Truck, ShieldCheck, Scale, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import zluHero from "@/assets/zlu-hero.png";
 import zluDevice from "@/assets/zlu-device.webp";
 import zluLifestyle from "@/assets/zlu-lifestyle.png";
 import zluTravel from "@/assets/zlu-travel.png";
+import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
@@ -96,6 +97,18 @@ const safetyPoints = [
 ];
 
 const ZluProduct = () => {
+  const { loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const [addingToCart, setAddingToCart] = useState(false);
+
+  const handleAddToCart = async () => {
+    const product = findProductByTitle("Zlu");
+    if (product) {
+      setAddingToCart(true);
+      addToCart(product);
+      setTimeout(() => setAddingToCart(false), 500);
+    }
+  };
+
   return (
     <Layout>
       {/* Section 1: Hero Introduction */}
@@ -125,9 +138,18 @@ const ZluProduct = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button size="lg" className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700">
-                  <ShoppingCart className="h-5 w-5" />
-                  Buy Zlu — ₹4,999
+                <Button 
+                  size="lg" 
+                  className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
+                  onClick={handleAddToCart}
+                  disabled={addingToCart || loading}
+                >
+                  {addingToCart ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="h-5 w-5" />
+                  )}
+                  Add to Cart — ₹4,999
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-cyan-200 text-cyan-700 hover:bg-cyan-50">
                   Learn How It Works

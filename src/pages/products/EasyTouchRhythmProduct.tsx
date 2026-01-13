@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
-import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, ArrowRight } from "lucide-react";
+import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
+import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 import {
   Carousel,
   CarouselContent,
@@ -127,6 +128,18 @@ const AnimatedSection = ({ children, className = "", id }: { children: React.Rea
 };
 
 const EasyTouchRhythmProduct = () => {
+  const { loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const [addingToCart, setAddingToCart] = useState(false);
+
+  const handleAddToCart = async () => {
+    const product = findProductByTitle("EasyTouch Rhythm");
+    if (product) {
+      setAddingToCart(true);
+      addToCart(product);
+      setTimeout(() => setAddingToCart(false), 500);
+    }
+  };
+
   return (
     <Layout>
       {/* Section 1: Hero Introduction */}
@@ -156,8 +169,17 @@ const EasyTouchRhythmProduct = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button size="lg" className="text-lg px-8 py-6 gap-2">
-                  <ShoppingCart className="h-5 w-5" />
+                <Button 
+                  size="lg" 
+                  className="text-lg px-8 py-6 gap-2"
+                  onClick={handleAddToCart}
+                  disabled={addingToCart || loading}
+                >
+                  {addingToCart ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="h-5 w-5" />
+                  )}
                   Add to Cart — ₹4,999
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg px-8 py-6">

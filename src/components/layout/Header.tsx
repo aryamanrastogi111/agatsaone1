@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import agatsaLogo from "@/assets/agatsa-logo.png";
+import { CartDrawer } from "@/components/shop/CartDrawer";
 
 const navItems = [
   { label: "Products", href: "/products" },
@@ -97,6 +98,7 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <CartDrawer />
         </nav>
 
 
