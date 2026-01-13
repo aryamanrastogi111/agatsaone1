@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
-import { Check, ShoppingCart, Moon, Plane, BedDouble, Building, Shield, Leaf, ArrowRight, Star, Truck, ShieldCheck } from "lucide-react";
+import { Check, ShoppingCart, Moon, Plane, BedDouble, Building, Shield, Leaf, ArrowRight, Star, Truck, ShieldCheck, Scale } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
@@ -354,6 +354,67 @@ const ZluProduct = () => {
                     onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
                   />
                 </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Section: BMI & Weight Management */}
+      <section className="py-24 lg:py-32 bg-gradient-to-b from-background to-emerald-50/20 overflow-hidden">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <AnimatedSection>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-200/30 via-transparent to-emerald-100/20 rounded-3xl blur-2xl" />
+                <div className="relative rounded-3xl overflow-hidden border border-emerald-100">
+                  <img
+                    src={zluLifestyle}
+                    alt="Zlu supporting wellness and healthy lifestyle"
+                    className="w-full h-auto object-cover"
+                    onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+                  />
+                </div>
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium mb-6">
+                <Scale className="h-4 w-4" />
+                Wellness Support
+              </div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+                Sleep Better,<br />
+                <span className="text-emerald-600">Live Lighter</span>
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                Quality sleep is the foundation of healthy weight management. When you rest deeply, your body regulates hormones that control hunger, metabolism, and energy—naturally supporting your wellness goals.
+              </p>
+              
+              <div className="space-y-4">
+                {[
+                  { title: "Metabolism Support", desc: "Quality sleep helps regulate metabolic function" },
+                  { title: "Appetite Balance", desc: "Better rest supports healthy hunger hormones" },
+                  { title: "Energy for Activity", desc: "Wake up refreshed with motivation to move" },
+                  { title: "Recovery & Repair", desc: "Support your body's natural healing processes" },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-start gap-3"
+                  >
+                    <div className="mt-1 w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                      <Check className="h-3 w-3 text-emerald-600" />
+                    </div>
+                    <div>
+                      <span className="font-semibold text-foreground">{item.title}</span>
+                      <span className="text-muted-foreground"> — {item.desc}</span>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </AnimatedSection>
           </div>
