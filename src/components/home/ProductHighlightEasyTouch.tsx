@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Activity, Moon, Footprints } from "lucide-react";
+import { ArrowRight, Brain, Zap, Sun, Heart, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import easytouchImg from "@/assets/easytouch-rhythm-new.png";
 
 export function ProductHighlightEasyTouch() {
   const features = [
-    { icon: Activity, text: "Continuous heart rate monitoring" },
-    { icon: Moon, text: "Sleep quality tracking" },
-    { icon: Footprints, text: "Activity & step counting" },
+    { icon: Brain, text: "5 Body Rhythms tracking (Nervous, Kinetic, Circadian, Circulatory, Metabolic)" },
+    { icon: Zap, text: "Reveals hidden patterns behind your energy & fatigue" },
+    { icon: Flame, text: "Daily Rhythm Score with personalized insights" },
   ];
 
   return (
@@ -38,16 +38,16 @@ export function ProductHighlightEasyTouch() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
-              Daily Wellness
+              Body Rhythm Intelligence
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               EasyTouch Rhythm
             </h2>
             <p className="text-xl text-primary font-medium mb-4">
-              Wellness on Your Wrist
+              Understand Why Your Body Feels the Way It Does
             </p>
             <p className="text-muted-foreground text-lg mb-6">
-              A smart health band that tracks your vitals 24/7, helping you stay on top of your daily wellness with real-time insights and alerts.
+              More than a fitness tracker — EasyTouch Rhythm reveals the hidden patterns behind your energy, fatigue, clarity, and calm by tracking 5 interconnected body rhythms.
             </p>
 
             <div className="space-y-4 mb-8">
@@ -60,7 +60,7 @@ export function ProductHighlightEasyTouch() {
                   transition={{ delay: index * 0.1 }}
                   className="flex items-center gap-3"
                 >
-                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
                     <feature.icon className="h-5 w-5 text-blue-600" />
                   </div>
                   <span className="text-foreground font-medium">{feature.text}</span>
