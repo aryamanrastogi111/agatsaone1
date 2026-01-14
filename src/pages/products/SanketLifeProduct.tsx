@@ -960,7 +960,7 @@ const SanketLifeProduct = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <RefreshCw className="h-4 w-4 text-cyan-600" />
-                  30-Day Money-Back Guarantee
+                  7-Day Returns (Mfg. Defects)
                 </div>
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-cyan-600" />

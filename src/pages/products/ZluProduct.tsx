@@ -163,7 +163,7 @@ const ZluProduct = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-cyan-600" />
-                  30-Day Returns
+                  7-Day Returns (Mfg. Defects)
                 </div>
               </div>
             </motion.div>
@@ -692,7 +692,7 @@ const ZluProduct = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-cyan-600" />
-                  30-Day Money Back
+                  7-Day Returns (Mfg. Defects)
                 </div>
               </div>
             </div>
