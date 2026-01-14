@@ -29,8 +29,8 @@ const heroProducts = [
     id: "zlu",
     name: "Zlu",
     image: easytouchHeroImg,
-    tagline: "Smart Blood Glucose Monitor",
-    description: "Accurate, fast blood glucose testing with Bluetooth connectivity and smart app integration.",
+    tagline: "Natural Sleep Aid Device",
+    description: "Drug-free sleep support that helps you achieve deeper, more restful sleep naturally.",
   },
   {
     id: "easytouch-rhythm",
