@@ -184,22 +184,22 @@ const Support = () => {
             {solutions.map((solution, index) => {
               const Icon = solution.icon;
               const isReversed = index % 2 === 1;
-
+              const isEnterprise = solution.id === "enterprise";
               return (
                 <motion.div
                   key={solution.id}
                   id={solution.id}
                   variants={itemVariants}
-                  className={`grid lg:grid-cols-2 gap-12 items-center ${
-                    isReversed ? "lg:flex-row-reverse" : ""
+                  className={`${isEnterprise ? "max-w-2xl mx-auto" : "grid lg:grid-cols-2 gap-12 items-center"} ${
+                    isReversed && !isEnterprise ? "lg:flex-row-reverse" : ""
                   }`}
                 >
-                  <div className={isReversed ? "lg:order-2" : ""}>
-                    <div className="flex items-center gap-3 mb-4">
+                  <div className={isReversed && !isEnterprise ? "lg:order-2" : ""}>
+                    <div className={`flex items-center gap-3 mb-4 ${isEnterprise ? "justify-center" : ""}`}>
                       <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center">
                         <Icon className="h-6 w-6 text-primary" />
                       </div>
-                      <div>
+                      <div className={isEnterprise ? "text-center" : ""}>
                         <p className="text-sm text-primary font-medium">
                           {solution.subtitle}
                         </p>
@@ -208,10 +208,10 @@ const Support = () => {
                         </h2>
                       </div>
                     </div>
-                    <p className="text-muted-foreground text-lg mb-6">
+                    <p className={`text-muted-foreground text-lg mb-6 ${isEnterprise ? "text-center" : ""}`}>
                       {solution.description}
                     </p>
-                    <ul className="space-y-3 mb-8">
+                    <ul className={`space-y-3 mb-8 ${isEnterprise ? "max-w-md mx-auto" : ""}`}>
                       {solution.benefits.map((benefit, i) => (
                         <li key={i} className="flex items-start gap-3">
                           <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
@@ -219,34 +219,38 @@ const Support = () => {
                         </li>
                       ))}
                     </ul>
-                    <Button asChild size="lg">
-                      <Link to={solution.link} className="flex items-center gap-2">
-                        {solution.cta}
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                  <div className={`${isReversed ? "lg:order-1" : ""}`}>
-                    <div className="bg-muted/50 rounded-2xl p-8">
-                      <h3 className="text-lg font-semibold text-foreground mb-4">
-                        Recommended Products
-                      </h3>
-                      <div className="space-y-3">
-                        {solution.products.map((product, i) => (
-                          <Link
-                            key={i}
-                            to={product.link}
-                            className="bg-background rounded-xl p-4 flex items-center justify-between group hover:shadow-md transition-shadow cursor-pointer block"
-                          >
-                            <span className="font-medium text-foreground">
-                              {product.name}
-                            </span>
-                            <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                          </Link>
-                        ))}
-                      </div>
+                    <div className={isEnterprise ? "text-center" : ""}>
+                      <Button asChild size="lg">
+                        <Link to={solution.link} className="flex items-center gap-2">
+                          {solution.cta}
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </Button>
                     </div>
                   </div>
+                  {!isEnterprise && (
+                    <div className={`${isReversed ? "lg:order-1" : ""}`}>
+                      <div className="bg-muted/50 rounded-2xl p-8">
+                        <h3 className="text-lg font-semibold text-foreground mb-4">
+                          Recommended Products
+                        </h3>
+                        <div className="space-y-3">
+                          {solution.products.map((product, i) => (
+                            <Link
+                              key={i}
+                              to={product.link}
+                              className="bg-background rounded-xl p-4 flex items-center justify-between group hover:shadow-md transition-shadow cursor-pointer block"
+                            >
+                              <span className="font-medium text-foreground">
+                                {product.name}
+                              </span>
+                              <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               );
             })}
