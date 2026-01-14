@@ -387,96 +387,90 @@ export const CartDrawer = () => {
                             </p>
                           </div>
                         )}
-                        <div className="space-y-4">
-                          {recommendedProducts.map((product) => {
+                        <div className="space-y-3">
+                          {recommendedProducts.slice(0, 2).map((product) => {
                             const variant = product.node.variants.edges[0]?.node;
                             const image = product.node.images?.edges?.[0]?.node;
                             const price = variant ? parseFloat(variant.price.amount) : 0;
                             const discountedPrice = price * 0.90;
-                            const savings = price - discountedPrice;
                             const details = getProductDetails(product.node.title);
                             
                             return (
-                              <div key={product.node.id} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
-                                {/* Badge header */}
-                                {details.badge && (
-                                  <div className="bg-primary px-3 py-1">
-                                    <span className="text-[10px] font-bold text-primary-foreground uppercase tracking-wider">
-                                      {details.badge}
-                                    </span>
+                              <div key={product.node.id} className="bg-card border border-border rounded-lg overflow-hidden shadow-sm">
+                                <div className="flex">
+                                  {/* Product image */}
+                                  <div className="relative w-24 h-24 bg-gradient-to-br from-muted/50 to-muted flex-shrink-0">
+                                    {image && (
+                                      <img
+                                        src={image.url}
+                                        alt={product.node.title}
+                                        className="w-full h-full object-contain p-2"
+                                      />
+                                    )}
+                                    {details.badge && (
+                                      <div className="absolute top-1 left-1 bg-primary text-primary-foreground text-[8px] font-bold px-1.5 py-0.5 rounded">
+                                        {details.badge}
+                                      </div>
+                                    )}
                                   </div>
-                                )}
-                                
-                                {/* Product image */}
-                                <div className="relative h-32 bg-gradient-to-br from-muted/50 to-muted">
-                                  {image && (
-                                    <img
-                                      src={image.url}
-                                      alt={product.node.title}
-                                      className="w-full h-full object-contain p-4"
-                                    />
-                                  )}
-                                  {/* Savings badge */}
-                                  <div className="absolute top-2 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full">
-                                    Save {formatPrice(savings, variant?.price.currencyCode || 'INR')}
+                                  
+                                  {/* Content */}
+                                  <div className="flex-1 p-3 flex flex-col justify-between">
+                                    <div>
+                                      <h4 className="font-bold text-xs leading-tight line-clamp-1">{product.node.title}</h4>
+                                      <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-1">
+                                        {details.brief}
+                                      </p>
+                                      {/* Features - show first 2 */}
+                                      <div className="flex flex-wrap gap-1 mt-1.5">
+                                        {details.highlights.slice(0, 2).map((h, idx) => (
+                                          <span key={idx} className="text-[9px] text-muted-foreground">
+                                            ✓ {h}
+                                          </span>
+                                        ))}
+                                      </div>
+                                    </div>
+                                    
+                                    {/* Price row */}
+                                    {variant && (
+                                      <div className="flex items-center gap-1.5 mt-2">
+                                        <span className="text-sm font-bold text-foreground">
+                                          {formatPrice(discountedPrice, variant.price.currencyCode)}
+                                        </span>
+                                        <span className="text-[10px] text-muted-foreground line-through">
+                                          {formatPrice(variant.price.amount, variant.price.currencyCode)}
+                                        </span>
+                                        <span className="text-[9px] font-semibold text-green-600 bg-green-500/10 px-1 py-0.5 rounded">
+                                          -10%
+                                        </span>
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                                 
-                                {/* Content */}
-                                <div className="p-4">
-                                  <h4 className="font-bold text-sm mb-1">{product.node.title}</h4>
-                                  <p className="text-xs text-muted-foreground mb-3">
-                                    {details.brief}
-                                  </p>
-                                  
-                                  {/* Features list */}
-                                  <ul className="space-y-1.5 mb-4">
-                                    {details.highlights.map((highlight, idx) => (
-                                      <li key={idx} className="flex items-center gap-2 text-xs">
-                                        <span className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                          <span className="text-primary text-[10px]">✓</span>
-                                        </span>
-                                        <span className="text-foreground">{highlight}</span>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                  
-                                  {/* Price */}
-                                  {variant && (
-                                    <div className="flex items-baseline gap-2 mb-4">
-                                      <span className="text-xl font-bold text-foreground">
-                                        {formatPrice(discountedPrice, variant.price.currencyCode)}
-                                      </span>
-                                      <span className="text-sm text-muted-foreground line-through">
-                                        {formatPrice(variant.price.amount, variant.price.currencyCode)}
-                                      </span>
-                                      <span className="text-xs font-semibold text-green-600 bg-green-500/10 px-2 py-0.5 rounded">
-                                        10% OFF
-                                      </span>
-                                    </div>
-                                  )}
-                                  
-                                  {/* Action buttons */}
-                                  <div className="flex gap-2">
+                                {/* Action buttons */}
+                                <div className="flex gap-2 px-3 pb-3">
+                                  <Button
+                                    size="sm"
+                                    className="flex-1 h-8 text-xs"
+                                    onClick={() => handleAddRecommended(product)}
+                                  >
+                                    <ShoppingCart className="h-3 w-3 mr-1.5" />
+                                    Add to Cart
+                                  </Button>
+                                  <Link 
+                                    to={getProductRoute(product.node.handle)}
+                                    onClick={() => setIsOpen(false)}
+                                  >
                                     <Button
-                                      className="flex-1 h-10"
-                                      onClick={() => handleAddRecommended(product)}
+                                      size="sm"
+                                      variant="outline"
+                                      className="h-8 px-3 text-xs"
                                     >
-                                      <ShoppingCart className="h-4 w-4 mr-2" />
-                                      Add to Cart
+                                      <Info className="h-3 w-3 mr-1" />
+                                      Details
                                     </Button>
-                                    <Link 
-                                      to={getProductRoute(product.node.handle)}
-                                      onClick={() => setIsOpen(false)}
-                                    >
-                                      <Button
-                                        variant="outline"
-                                        className="h-10 px-4"
-                                      >
-                                        <Info className="h-4 w-4" />
-                                      </Button>
-                                    </Link>
-                                  </div>
+                                  </Link>
                                 </div>
                               </div>
                             );
