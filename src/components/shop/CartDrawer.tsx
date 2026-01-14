@@ -372,39 +372,59 @@ export const CartDrawer = () => {
                             const discountedPrice = price * 0.90;
                             
                             return (
-                              <div key={product.node.id} className="flex items-center gap-3 p-3 bg-gradient-to-r from-primary/5 to-transparent rounded-lg border border-primary/10">
-                                <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
-                                  {image && (
-                                    <img
-                                      src={image.url}
-                                      alt={product.node.title}
-                                      className="w-full h-full object-cover"
-                                    />
-                                  )}
+                              <div key={product.node.id} className="p-3 bg-gradient-to-r from-primary/5 to-transparent rounded-lg border border-primary/10">
+                                <div className="flex items-center gap-3">
+                                  <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
+                                    {image && (
+                                      <img
+                                        src={image.url}
+                                        alt={product.node.title}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    )}
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <h4 className="font-medium text-xs truncate">{product.node.title}</h4>
+                                    <p className="text-[10px] text-muted-foreground truncate">
+                                      {getProductBrief(product.node.title)}
+                                    </p>
+                                    {variant && (
+                                      <div className="flex items-center gap-1.5 mt-0.5">
+                                        <span className="text-[10px] text-muted-foreground line-through">
+                                          {formatPrice(variant.price.amount, variant.price.currencyCode)}
+                                        </span>
+                                        <span className="text-xs font-semibold text-green-600">
+                                          {formatPrice(discountedPrice, variant.price.currencyCode)}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                  <h4 className="font-medium text-xs truncate">{product.node.title}</h4>
-                                  <p className="text-[10px] text-muted-foreground truncate">
-                                    {getProductBrief(product.node.title)}
-                                  </p>
-                                  {variant && (
-                                    <div className="flex items-center gap-1.5 mt-0.5">
-                                      <span className="text-[10px] text-muted-foreground line-through">
-                                        {formatPrice(variant.price.amount, variant.price.currencyCode)}
-                                      </span>
-                                      <span className="text-xs font-semibold text-green-600">
-                                        {formatPrice(discountedPrice, variant.price.currencyCode)}
-                                      </span>
-                                    </div>
-                                  )}
+                                {/* Action buttons */}
+                                <div className="flex items-center gap-2 mt-3">
+                                  <Button
+                                    size="sm"
+                                    className="flex-1 h-8 text-xs"
+                                    onClick={() => handleAddRecommended(product)}
+                                  >
+                                    <Plus className="h-3 w-3 mr-1" />
+                                    Add to Cart
+                                  </Button>
+                                  <Link 
+                                    to={getProductRoute(product.node.handle)}
+                                    onClick={() => setIsOpen(false)}
+                                    className="flex-1"
+                                  >
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      className="w-full h-8 text-xs"
+                                    >
+                                      <Info className="h-3 w-3 mr-1" />
+                                      Learn More
+                                    </Button>
+                                  </Link>
                                 </div>
-                                <Button
-                                  size="sm"
-                                  className="flex-shrink-0 h-8 text-xs"
-                                  onClick={() => handleAddRecommended(product)}
-                                >
-                                  Add
-                                </Button>
                               </div>
                             );
                           })}
