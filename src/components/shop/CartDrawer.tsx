@@ -131,8 +131,7 @@ export const CartDrawer = () => {
       if (variantId && cartVariantIds.includes(variantId)) return false;
       if (excludedProducts.some((excluded) => title.includes(excluded))) return false;
       return true;
-    })
-    .slice(0, 2) as typeof products;
+    }) as typeof products; // Show ALL available cross-sell products, not just 2
 
   // If EasyTouch Rhythm still doesn't exist in Shopify (not published to the Storefront channel),
   // we show a “View details” card so it’s visible in the drawer.
@@ -395,29 +394,32 @@ export const CartDrawer = () => {
                             </div>
                             
                             <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                              {/* Delete button - more visible */}
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-6 w-6 text-destructive hover:text-destructive"
+                                className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
                                 onClick={() => removeItem(item.variantId)}
+                                aria-label="Remove item"
                               >
-                                <Trash2 className="h-3 w-3" />
+                                <Trash2 className="h-4 w-4" />
                               </Button>
                               
+                              {/* Quantity controls */}
                               <div className="flex items-center gap-1">
                                 <Button
                                   variant="outline"
                                   size="icon"
-                                  className="h-6 w-6"
+                                  className="h-7 w-7"
                                   onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
                                 >
                                   <Minus className="h-3 w-3" />
                                 </Button>
-                                <span className="w-8 text-center text-sm">{item.quantity}</span>
+                                <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
                                 <Button
                                   variant="outline"
                                   size="icon"
-                                  className="h-6 w-6"
+                                  className="h-7 w-7"
                                   onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
                                 >
                                   <Plus className="h-3 w-3" />
