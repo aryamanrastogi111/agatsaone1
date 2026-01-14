@@ -83,36 +83,70 @@ const TermsOfService = () => {
                 </div>
               </motion.div>
 
-              {/* Wellness Disclaimer */}
+              {/* Product Classification & Disclaimer */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 className="mb-12"
               >
-                <h2 className="text-2xl font-bold text-foreground mb-4">Wellness Disclaimer</h2>
-                <div className="bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 rounded-xl p-6">
-                  <p className="text-muted-foreground mb-4 font-semibold">
-                    Agatsa products are intended for <strong className="text-foreground">health awareness and monitoring purposes only</strong>.
+                <h2 className="text-2xl font-bold text-foreground mb-4">Product Classification & Disclaimer</h2>
+                
+                {/* Medical Device - SanketLife */}
+                <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 mb-4">
+                  <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <span className="w-2 h-2 bg-primary rounded-full"></span>
+                    Medical Device – SanketLife
+                  </h3>
+                  <p className="text-muted-foreground mb-3">
+                    <strong className="text-foreground">SanketLife</strong> is a certified medical device intended for ECG monitoring and cardiac health assessment.
                   </p>
-                  <ul className="space-y-3 text-muted-foreground">
+                  <ul className="space-y-2 text-muted-foreground">
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-1">•</span>
-                      <span>Our devices provide wellness insights and are <strong>not</strong> medical diagnostic tools</span>
+                      <span className="text-primary mt-1">•</span>
+                      <span>Designed to provide clinically relevant ECG readings</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-1">•</span>
-                      <span>Readings and data should <strong>not</strong> be used as a substitute for professional medical advice, diagnosis, or treatment</span>
+                      <span className="text-primary mt-1">•</span>
+                      <span>Should be used in conjunction with professional medical guidance</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-1">•</span>
-                      <span>Always consult with qualified healthcare professionals for medical concerns</span>
+                      <span className="text-primary mt-1">•</span>
+                      <span>Readings should be shared with healthcare professionals for proper interpretation</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-500 mt-1">•</span>
+                      <span className="text-primary mt-1">•</span>
                       <span>In case of emergency, contact emergency services immediately—do not rely solely on device readings</span>
                     </li>
                   </ul>
+                </div>
+
+                {/* Wellness Devices */}
+                <div className="bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 rounded-xl p-6">
+                  <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <span className="w-2 h-2 bg-amber-500 rounded-full"></span>
+                    Wellness Devices – CoreBalance BMI, EasyTouch Rhythm, Zlu Sleep Aid
+                  </h3>
+                  <p className="text-muted-foreground mb-3">
+                    The following products are <strong className="text-foreground">wellness devices</strong> intended for health awareness and monitoring purposes only:
+                  </p>
+                  <ul className="space-y-2 text-muted-foreground mb-4">
+                    <li className="flex items-start gap-2">
+                      <span className="text-amber-500 mt-1">•</span>
+                      <span><strong>CoreBalance BMI</strong> – Body composition and BMI tracking</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-amber-500 mt-1">•</span>
+                      <span><strong>EasyTouch Rhythm</strong> – Heart rate and rhythm monitoring</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-amber-500 mt-1">•</span>
+                      <span><strong>Zlu Sleep Aid</strong> – Sleep quality tracking and improvement</span>
+                    </li>
+                  </ul>
+                  <p className="text-sm text-muted-foreground italic">
+                    These wellness devices are <strong>not</strong> medical diagnostic tools and should <strong>not</strong> be used as a substitute for professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare professionals for medical concerns.
+                  </p>
                 </div>
               </motion.div>
 
