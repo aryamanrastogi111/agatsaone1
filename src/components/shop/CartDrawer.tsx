@@ -314,27 +314,49 @@ export const CartDrawer = () => {
                         );
                       })}
 
-                      {fallbackToShow.map((fallback) => (
-                        <div key={fallback.key} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
-                          <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
-                            <img
-                              src={fallback.imageUrl}
-                              alt={fallback.title}
-                              className="w-full h-full object-contain p-1"
-                              loading="lazy"
-                            />
+                      {fallbackToShow.map((fallback) => {
+                        const shopifyProduct = products.find((p) => p.node.handle === fallback.handle);
+                        return (
+                          <div key={fallback.key} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
+                            <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
+                              <img
+                                src={fallback.imageUrl}
+                                alt={fallback.title}
+                                className="w-full h-full object-contain p-1"
+                                loading="lazy"
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-medium text-xs truncate">{fallback.title}</h4>
+                              {shopifyProduct && (
+                                <p className="text-xs font-semibold text-primary">
+                                  {formatPrice(
+                                    shopifyProduct.node.variants.edges[0]?.node.price.amount || "0",
+                                    shopifyProduct.node.variants.edges[0]?.node.price.currencyCode || "INR"
+                                  )}
+                                </p>
+                              )}
+                            </div>
+                            <div className="flex gap-1.5">
+                              {shopifyProduct && (
+                                <Button
+                                  size="sm"
+                                  className="h-8 px-2 text-xs"
+                                  onClick={() => handleAddRecommended(shopifyProduct)}
+                                >
+                                  <ShoppingCart className="h-3 w-3 mr-1" />
+                                  Add
+                                </Button>
+                              )}
+                              <Link to={fallback.link} onClick={() => setIsOpen(false)}>
+                                <Button size="sm" variant="outline" className="h-8 px-2 text-xs">
+                                  Explore
+                                </Button>
+                              </Link>
+                            </div>
                           </div>
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-medium text-xs truncate">{fallback.title}</h4>
-                            <p className="text-xs text-muted-foreground">View details</p>
-                          </div>
-                          <Link to={fallback.link} onClick={() => setIsOpen(false)}>
-                            <Button size="sm" variant="outline" className="h-8 text-xs">
-                              Details
-                            </Button>
-                          </Link>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -560,35 +582,51 @@ export const CartDrawer = () => {
                             );
                           })}
 
-                          {fallbackToShow.map((fallback) => (
-                            <div key={fallback.key} className="bg-card border border-border rounded-lg overflow-hidden shadow-sm">
-                              <div className="flex">
-                                <div className="relative w-24 h-24 bg-gradient-to-br from-muted/50 to-muted flex-shrink-0">
-                                  <img
-                                    src={fallback.imageUrl}
-                                    alt={fallback.title}
-                                    className="w-full h-full object-contain p-2"
-                                    loading="lazy"
-                                  />
-                                </div>
-                                <div className="flex-1 p-3 flex flex-col justify-between">
-                                  <div>
-                                    <h4 className="font-bold text-xs leading-tight line-clamp-1">{fallback.title}</h4>
-                                    <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-1">View details</p>
+                          {fallbackToShow.map((fallback) => {
+                            const shopifyProduct = products.find((p) => p.node.handle === fallback.handle);
+                            const details = getProductDetails(fallback.title);
+                            return (
+                              <div key={fallback.key} className="bg-card border border-border rounded-lg overflow-hidden shadow-sm">
+                                <div className="flex">
+                                  <div className="relative w-24 h-24 bg-gradient-to-br from-muted/50 to-muted flex-shrink-0">
+                                    <img
+                                      src={fallback.imageUrl}
+                                      alt={fallback.title}
+                                      className="w-full h-full object-contain p-2"
+                                      loading="lazy"
+                                    />
                                   </div>
-                                  <p className="text-[10px] text-muted-foreground mt-2">Not available for checkout yet</p>
+                                  <div className="flex-1 p-3 flex flex-col justify-between">
+                                    <div>
+                                      <h4 className="font-bold text-xs leading-tight line-clamp-1">{fallback.title}</h4>
+                                      <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-1">{details.brief}</p>
+                                    </div>
+                                    {shopifyProduct && (
+                                      <p className="text-sm font-bold text-foreground mt-1">
+                                        {formatPrice(
+                                          shopifyProduct.node.variants.edges[0]?.node.price.amount || "0",
+                                          shopifyProduct.node.variants.edges[0]?.node.price.currencyCode || "INR"
+                                        )}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="flex gap-2 px-3 pb-3">
+                                  {shopifyProduct && (
+                                    <Button size="sm" className="h-8 px-3 text-xs" onClick={() => handleAddRecommended(shopifyProduct)}>
+                                      <ShoppingCart className="h-3 w-3 mr-1.5" />
+                                      Add
+                                    </Button>
+                                  )}
+                                  <Link to={fallback.link} onClick={() => setIsOpen(false)}>
+                                    <Button size="sm" variant="outline" className="h-8 px-3 text-xs">
+                                      Explore More
+                                    </Button>
+                                  </Link>
                                 </div>
                               </div>
-                              <div className="flex gap-2 px-3 pb-3">
-                                <Link to={fallback.link} onClick={() => setIsOpen(false)} className="w-full">
-                                  <Button size="sm" variant="outline" className="w-full h-8 text-xs">
-                                    <Info className="h-3 w-3 mr-1" />
-                                    View Details
-                                  </Button>
-                                </Link>
-                              </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       </div>
                     )}
