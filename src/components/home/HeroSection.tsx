@@ -223,264 +223,205 @@ export function HeroSection() {
       </section>
 
       {/* ===== DESKTOP HERO (hidden lg:block) ===== */}
-      <section className="hidden lg:block relative overflow-x-hidden bg-background pt-12 pb-24 lg:py-20">
-        {/* Multi-layer background depth system */}
+      <section className="hidden lg:flex relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-background via-background to-accent/20">
+        {/* Dynamic background elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Primary radial gradient - centered behind carousel */}
-          <div className="absolute top-1/2 right-0 lg:right-1/4 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gradient-radial from-primary/8 via-primary/3 to-transparent rounded-full blur-3xl" />
-          
-          {/* Secondary directional gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-primary/5" />
-          
-          {/* Subtle light ray effect */}
-          <div className="absolute top-0 left-1/4 w-1/2 h-full bg-gradient-to-br from-white/3 via-transparent to-transparent transform -skew-x-12" />
-          
-          {/* Animated floating orbs for depth */}
+          {/* Large gradient orb */}
           <motion.div
-            animate={{ y: [-20, 20, -20], x: [-10, 10, -10] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-20 right-4 md:right-20 w-20 md:w-32 h-20 md:h-32 bg-primary/6 rounded-full blur-3xl"
+            animate={{ 
+              scale: [1, 1.1, 1],
+              rotate: [0, 5, 0],
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] bg-gradient-radial from-primary/15 via-primary/5 to-transparent rounded-full blur-3xl"
           />
-          <motion.div
-            animate={{ y: [15, -15, 15], x: [5, -5, 5] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute bottom-32 left-4 md:left-10 w-32 md:w-48 h-32 md:h-48 bg-primary/4 rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{ y: [-10, 10, -10] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-            className="absolute top-1/3 left-1/3 w-24 h-24 bg-accent/10 rounded-full blur-2xl"
-          />
-        </div>
-
-        {/* Ecosystem context - faint product silhouettes */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Wearable band silhouette - top right */}
-          <motion.div
-            animate={{ y: [-5, 5, -5] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-10 right-10 lg:right-32 w-20 h-40 opacity-[0.04]"
-          >
-            <div className="w-full h-full bg-gradient-to-b from-primary via-primary/60 to-transparent rounded-full blur-xl" />
-          </motion.div>
           
-          {/* BMI scale silhouette - bottom left */}
-          <div className="absolute -bottom-8 -left-8 w-36 h-12 opacity-[0.03]">
-            <div className="w-full h-full bg-gradient-to-r from-transparent via-primary to-transparent rounded-lg blur-lg" />
-          </div>
+          {/* Secondary orb */}
+          <motion.div
+            animate={{ 
+              scale: [1.1, 1, 1.1],
+              x: [-20, 20, -20],
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] bg-gradient-radial from-cyan-500/10 via-primary/5 to-transparent rounded-full blur-3xl"
+          />
           
-          {/* Abstract medical device - far right */}
-          <div className="absolute top-1/2 -right-16 w-24 h-32 opacity-[0.05] hidden lg:block">
-            <div className="w-full h-full bg-gradient-to-bl from-primary via-primary/40 to-transparent rounded-2xl blur-xl" />
-          </div>
-        </div>
-
-        {/* Subtle texture overlay */}
-        <div className="absolute inset-0 hero-texture pointer-events-none" />
-
-        <div className="container relative z-10 px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Text Content */}
+          {/* Floating particles */}
+          {[...Array(6)].map((_, i) => (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              key={i}
+              animate={{ 
+                y: [-20, 20, -20],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{ 
+                duration: 4 + i, 
+                repeat: Infinity, 
+                ease: "easeInOut",
+                delay: i * 0.5,
+              }}
+              className="absolute w-2 h-2 bg-primary/40 rounded-full blur-sm"
+              style={{
+                top: `${15 + i * 15}%`,
+                left: `${10 + i * 15}%`,
+              }}
+            />
+          ))}
+          
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,186,199,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,186,199,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
+        </div>
+
+        <div className="container relative z-10 px-8 py-16 flex flex-col justify-center">
+          {/* Top section - Hero text */}
+          <div className="max-w-4xl mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-center lg:text-left"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6"
             >
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
-              >
-                {/* Animated text with staggered letters */}
-                <span className="inline-block overflow-hidden">
-                  {"Health monitoring".split("").map((char, i) => (
-                    <motion.span
-                      key={i}
-                      initial={{ y: 50, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{
-                        duration: 0.4,
-                        delay: 0.1 + i * 0.03,
-                        ease: [0.215, 0.61, 0.355, 1],
-                      }}
-                      className="inline-block"
-                    >
-                      {char === " " ? "\u00A0" : char}
-                    </motion.span>
-                  ))}
-                </span>{" "}
-                <span className="relative inline-block">
-                  {/* Gradient text with shimmer */}
-                  <motion.span
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.6 }}
-                    className="relative inline-block bg-gradient-to-r from-primary via-cyan-400 to-primary bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite] bg-clip-text text-transparent"
-                  >
-                    made simple.
-                  </motion.span>
-                  
-                  {/* Animated underline with glow */}
-                  <motion.span
-                    className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-primary via-cyan-400 to-primary rounded-full shadow-[0_0_20px_rgba(0,186,199,0.5)]"
-                    initial={{ scaleX: 0, opacity: 0 }}
-                    animate={{ scaleX: 1, opacity: 1 }}
-                    transition={{ delay: 0.9, duration: 0.8, ease: "easeOut" }}
-                  />
-                  
-                  {/* Sparkle effects */}
-                  <motion.span
-                    className="absolute -top-2 -right-4 w-3 h-3 bg-primary rounded-full"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ 
-                      scale: [0, 1.2, 0],
-                      opacity: [0, 1, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      delay: 1.2,
-                      repeat: Infinity,
-                      repeatDelay: 3,
-                    }}
-                  />
-                  <motion.span
-                    className="absolute top-1/2 -left-3 w-2 h-2 bg-cyan-400 rounded-full"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ 
-                      scale: [0, 1, 0],
-                      opacity: [0, 0.8, 0],
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      delay: 1.8,
-                      repeat: Infinity,
-                      repeatDelay: 4,
-                    }}
-                  />
-                </span>
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0"
-              >
-                Smart, non-invasive health devices designed to help you understand
-                your body better — at home and on the go.
-              </motion.p>
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-              >
-                <Button asChild size="lg" className="text-base btn-glow group">
-                  <Link to="/products" className="flex items-center gap-2">
-                    Explore Products
-                    <span className="inline-block group-hover:translate-x-1 transition-transform">
-                      →
-                    </span>
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="text-base border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                >
-                  <Link to="/device-finder">Find the right device</Link>
-                </Button>
-              </motion.div>
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-sm font-semibold text-primary tracking-wide uppercase">Award-Winning Health Technology</span>
             </motion.div>
-
-            {/* Product Carousel */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative"
+            
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-6xl xl:text-7xl font-bold text-foreground leading-[1.1] mb-6"
             >
-              {/* Glow effect behind carousel */}
-              <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-primary/5 to-transparent blur-2xl scale-110" />
-              
-              <Carousel
-                opts={{
-                  align: "center",
-                  loop: true,
-                }}
-                plugins={[
-                  Autoplay({
-                    delay: 4000,
-                    stopOnInteraction: true,
-                  }),
-                ]}
-                className="w-full max-w-sm sm:max-w-md mx-auto relative px-6 sm:px-10"
+              <span className="block">Take Control of</span>
+              <span className="relative inline-block">
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="bg-gradient-to-r from-primary via-cyan-400 to-primary bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite] bg-clip-text text-transparent"
+                >
+                  Your Health
+                </motion.span>
+                <motion.span
+                  className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-primary via-cyan-400 to-primary rounded-full"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 0.7, duration: 0.6, ease: "easeOut" }}
+                />
+              </span>
+            </motion.h1>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-xl text-muted-foreground max-w-2xl mb-8"
+            >
+              Professional-grade health monitoring devices designed for everyday use. 
+              Track ECG, blood glucose, body rhythms, and body composition — all from the comfort of home.
+            </motion.p>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="flex items-center gap-4"
+            >
+              <Button asChild size="lg" className="text-base h-14 px-8 btn-glow group">
+                <Link to="/products" className="flex items-center gap-2">
+                  Explore All Products
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="text-base h-14 px-8 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground"
               >
-                <CarouselContent>
-                  {heroProducts.map((product) => (
-                    <CarouselItem key={product.id}>
-                      <Link to={`/products/${product.id}`} className="block group">
-                        <div className="relative bg-gradient-to-br from-white/80 to-accent/30 dark:from-accent/40 dark:to-accent/20 backdrop-blur-sm rounded-2xl p-6 overflow-hidden border border-white/30 dark:border-primary/10 shadow-[0_25px_60px_-15px_rgba(0,186,199,0.15),0_10px_30px_-5px_rgba(0,0,0,0.08)]">
-                          {/* Cyan rim light effect */}
-                          <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/10" />
-                          <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-
-                          {/* Decorative circles with enhanced glow */}
-                          <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/15 rounded-full blur-2xl" />
-                          <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/8 rounded-full blur-xl" />
-
-                          {/* Subtle inner glow */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-white/10 rounded-2xl" />
-
-                          {/* Product image with enhanced styling */}
-                          <div className="relative aspect-square flex items-center justify-center mb-4">
-                            {/* Cyan reflection glow beneath product */}
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-primary/20 blur-xl rounded-full" />
-
-                            <img
-                              src={product.image}
-                              alt={product.name}
-                              className="w-full h-full object-contain drop-shadow-[0_20px_40px_rgba(0,186,199,0.2)] group-hover:scale-105 group-hover:rotate-1 transition-all duration-500"
-                              loading="lazy"
-                            />
-                          </div>
-
-                          {/* Product info */}
-                          <div className="relative text-center space-y-2">
-                            <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
-                              {product.tagline}
-                            </span>
-                            <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                              {product.name}
-                            </h3>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                              {product.description}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-
-                {/* Navigation buttons (kept inside padded area so mobile never overflows) */}
-                <CarouselPrevious className="left-2 bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground" />
-                <CarouselNext className="right-2 bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground" />
-              </Carousel>
-
-              {/* Dots indicator hint */}
-              <div className="flex justify-center gap-2 mt-4">
-                {heroProducts.map((_, index) => (
-                  <div
-                    key={index}
-                    className="w-2 h-2 rounded-full bg-primary/30"
-                  />
-                ))}
-              </div>
+                <Link to="/device-finder">Find Your Device</Link>
+              </Button>
             </motion.div>
           </div>
+
+          {/* Products Grid - All 4 products displayed */}
+          <div className="grid grid-cols-4 gap-6">
+            {heroProducts.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
+              >
+                <Link 
+                  to={`/products/${product.id}`} 
+                  className="group block relative bg-gradient-to-br from-white/80 to-accent/40 dark:from-accent/30 dark:to-accent/10 backdrop-blur-xl rounded-3xl p-6 border border-white/50 dark:border-primary/20 shadow-[0_20px_60px_-15px_rgba(0,186,199,0.15)] hover:shadow-[0_30px_80px_-15px_rgba(0,186,199,0.25)] transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+                >
+                  {/* Hover glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+                  
+                  {/* Top accent line */}
+                  <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+                  
+                  {/* Product image */}
+                  <div className="relative aspect-square mb-4 flex items-center justify-center">
+                    {/* Glow under product */}
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-primary/20 blur-2xl rounded-full opacity-60 group-hover:opacity-100 transition-opacity" />
+                    
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-contain drop-shadow-[0_15px_35px_rgba(0,186,199,0.2)] group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+                  
+                  {/* Product info */}
+                  <div className="relative text-center">
+                    <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full mb-2 tracking-wide uppercase">
+                      {product.tagline}
+                    </span>
+                    <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors mb-1">
+                      {product.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+                      {product.description}
+                    </p>
+                  </div>
+                  
+                  {/* View link */}
+                  <div className="relative mt-4 flex justify-center">
+                    <span className="inline-flex items-center gap-1.5 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                      Learn More
+                      <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Trust indicators */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1 }}
+            className="mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground"
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              <span>Medical Grade Accuracy</span>
+            </div>
+            <div className="h-4 w-px bg-border" />
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full" />
+              <span>100,000+ Happy Users</span>
+            </div>
+            <div className="h-4 w-px bg-border" />
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-cyan-400 rounded-full" />
+              <span>Award Winning Technology</span>
+            </div>
+          </motion.div>
         </div>
       </section>
     </>
