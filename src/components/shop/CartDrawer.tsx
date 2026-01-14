@@ -545,9 +545,9 @@ export const CartDrawer = () => {
                                 </div>
 
                                 <div className="flex gap-2 px-3 pb-3">
-                                  <Button size="sm" className="flex-1 h-8 text-xs" onClick={() => handleAddRecommended(product)}>
+                                  <Button size="sm" className="h-8 px-3 text-xs" onClick={() => handleAddRecommended(product)}>
                                     <ShoppingCart className="h-3 w-3 mr-1.5" />
-                                    Add to Cart
+                                    Add
                                   </Button>
                                   <Link to={getProductRoute(product.node.handle)} onClick={() => setIsOpen(false)}>
                                     <Button size="sm" variant="outline" className="h-8 px-3 text-xs">
