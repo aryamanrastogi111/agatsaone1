@@ -151,9 +151,6 @@ const ZluProduct = () => {
                   )}
                   Add to Cart — ₹4,999
                 </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-cyan-200 text-cyan-700 hover:bg-cyan-50">
-                  Learn How It Works
-                </Button>
               </div>
               
               <div className="flex items-center gap-6 text-sm text-muted-foreground">

@@ -177,10 +177,6 @@ const CoreBalanceProduct = () => {
                   )}
                   Add to Cart — ₹1,999
                 </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-emerald-200 hover:bg-emerald-50">
-                  Learn More
-                  <ArrowRight className="h-5 w-5 ml-2" />
-                </Button>
               </div>
               
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
