@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Activity, Moon, Footprints } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import easytouchImg from "@/assets/easytouch-hero.webp";
+import easytouchImg from "@/assets/easytouch-rhythm-new.png";
 
 export function ProductHighlightEasyTouch() {
   const features = [
