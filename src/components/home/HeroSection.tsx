@@ -15,6 +15,7 @@ import zluHeroImg from "@/assets/zlu-hero.png";
 import corebalanceHeroImg from "@/assets/corebalance-hero.png";
 import sanketlifeHeroImg from "@/assets/sanketlife-hero.png";
 import easytouchHeroImg from "@/assets/easytouch-hero.webp";
+import agatsaProductsFamily from "@/assets/agatsa-products-family.png";
 
 const heroProducts = [
   {
@@ -273,73 +274,93 @@ export function HeroSection() {
         </div>
 
         <div className="container relative z-10 px-8 py-16 flex flex-col justify-center">
-          {/* Top section - Hero text */}
-          <div className="max-w-4xl mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6"
-            >
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-primary tracking-wide uppercase">Award-Winning Health Technology</span>
-            </motion.div>
-            
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-6xl xl:text-7xl font-bold text-foreground leading-[1.1] mb-6"
-            >
-              <span className="block">Take Control of</span>
-              <span className="relative inline-block">
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="bg-gradient-to-r from-primary via-cyan-400 to-primary bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite] bg-clip-text text-transparent"
-                >
-                  Your Health
-                </motion.span>
-                <motion.span
-                  className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-primary via-cyan-400 to-primary rounded-full"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.7, duration: 0.6, ease: "easeOut" }}
-                />
-              </span>
-            </motion.h1>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-xl text-muted-foreground max-w-2xl mb-8"
-            >
-              Professional-grade health monitoring devices designed for everyday use. 
-              Track ECG, blood glucose, body rhythms, and body composition — all from the comfort of home.
-            </motion.p>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex items-center gap-4"
-            >
-              <Button asChild size="lg" className="text-base h-14 px-8 btn-glow group">
-                <Link to="/products" className="flex items-center gap-2">
-                  Explore All Products
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="text-base h-14 px-8 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground"
+          {/* Top section - Hero text + Product Family Image */}
+          <div className="flex items-center gap-12 mb-16">
+            {/* Left - Text Content */}
+            <div className="flex-1 max-w-2xl">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6"
               >
-                <Link to="/device-finder">Find Your Device</Link>
-              </Button>
+                <Sparkles className="w-4 h-4 text-primary" />
+                <span className="text-sm font-semibold text-primary tracking-wide uppercase">Award-Winning Health Technology</span>
+              </motion.div>
+              
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-5xl xl:text-6xl font-bold text-foreground leading-[1.1] mb-6"
+              >
+                <span className="block">Take Control of</span>
+                <span className="relative inline-block">
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    className="bg-gradient-to-r from-primary via-cyan-400 to-primary bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite] bg-clip-text text-transparent"
+                  >
+                    Your Health
+                  </motion.span>
+                  <motion.span
+                    className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-primary via-cyan-400 to-primary rounded-full"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ delay: 0.7, duration: 0.6, ease: "easeOut" }}
+                  />
+                </span>
+              </motion.h1>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-lg text-muted-foreground max-w-xl mb-8"
+              >
+                Professional-grade health monitoring devices designed for everyday use. 
+                Track ECG, blood glucose, body rhythms, and body composition — all from the comfort of home.
+              </motion.p>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="flex items-center gap-4"
+              >
+                <Button asChild size="lg" className="text-base h-14 px-8 btn-glow group">
+                  <Link to="/products" className="flex items-center gap-2">
+                    Explore All Products
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="text-base h-14 px-8 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground"
+                >
+                  <Link to="/device-finder">Find Your Device</Link>
+                </Button>
+              </motion.div>
+            </div>
+            
+            {/* Right - Product Family Image (Square) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, x: 50 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="flex-shrink-0"
+            >
+              <div className="w-[420px] h-[420px] xl:w-[480px] xl:h-[480px] relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-cyan-500/20 rounded-3xl blur-2xl" />
+                <img 
+                  src={agatsaProductsFamily}
+                  alt="Agatsa Health Devices - Complete Product Family"
+                  className="relative w-full h-full object-cover rounded-3xl shadow-2xl border border-white/10"
+                />
+              </div>
             </motion.div>
           </div>
 
