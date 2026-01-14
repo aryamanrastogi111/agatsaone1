@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import {
   Carousel,
   CarouselContent,
@@ -1006,6 +1007,13 @@ const EasyTouchRhythmProduct = () => {
           </AnimatedSection>
         </div>
       </section>
+      <StickyAddToCart
+        productName="EasyTouch Rhythm"
+        price="₹4,999"
+        onAddToCart={handleAddToCart}
+        isLoading={loading}
+        themeColor="primary"
+      />
     </Layout>
   );
 };

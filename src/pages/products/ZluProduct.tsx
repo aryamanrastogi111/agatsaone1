@@ -9,7 +9,7 @@ import zluDevice from "@/assets/zlu-device.webp";
 import zluLifestyle from "@/assets/zlu-lifestyle.png";
 import zluTravel from "@/assets/zlu-travel.png";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
-
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
   const ref = useRef(null);
@@ -700,6 +700,13 @@ const ZluProduct = () => {
           </AnimatedSection>
         </div>
       </section>
+      <StickyAddToCart
+        productName="Zlu Sleep Aid"
+        price="₹4,999"
+        onAddToCart={handleAddToCart}
+        isLoading={loading}
+        themeColor="cyan"
+      />
     </Layout>
   );
 };

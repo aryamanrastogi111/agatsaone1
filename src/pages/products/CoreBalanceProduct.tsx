@@ -11,6 +11,7 @@ import appComposition from "@/assets/corebalance-app-composition.png";
 import appBmi from "@/assets/corebalance-app-bmi.png";
 import appMetrics from "@/assets/corebalance-app-metrics.png";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
@@ -670,6 +671,13 @@ const CoreBalanceProduct = () => {
           </AnimatedSection>
         </div>
       </section>
+      <StickyAddToCart
+        productName="CoreBalance BMI Scale"
+        price="₹1,999"
+        onAddToCart={handleAddToCart}
+        isLoading={loading}
+        themeColor="emerald"
+      />
     </Layout>
   );
 };
