@@ -175,7 +175,7 @@ const CoreBalanceProduct = () => {
                   ) : (
                     <ShoppingCart className="h-5 w-5" />
                   )}
-                  Add to Cart — ₹6,999
+                  Add to Cart — ₹1,999
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-emerald-200 hover:bg-emerald-50">
                   Learn More
