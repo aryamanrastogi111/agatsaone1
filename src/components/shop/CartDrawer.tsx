@@ -108,14 +108,26 @@ export const CartDrawer = () => {
   const discountAmount = subtotal * discountRate;
   const totalPrice = subtotal - discountAmount;
 
-  // Get recommended products (products not in cart)
+  // Products to exclude from cross-sell (not on website)
+  const excludedProducts = [
+    "agatsa wellness",
+    "health 360",
+    "heli band",
+  ];
+
+  // Get recommended products (products not in cart, excluding unwanted ones)
   const cartVariantIds = items.map(item => item.variantId);
   const recommendedProducts = products
     .filter(product => {
       const variantId = product.node.variants.edges[0]?.node.id;
-      return !cartVariantIds.includes(variantId);
+      const title = product.node.title.toLowerCase();
+      // Exclude products already in cart
+      if (cartVariantIds.includes(variantId)) return false;
+      // Exclude products not on the website
+      if (excludedProducts.some(excluded => title.includes(excluded))) return false;
+      return true;
     })
-    .slice(0, 3);
+    .slice(0, 2);
 
   const handleCheckout = async () => {
     try {
