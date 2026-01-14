@@ -41,7 +41,9 @@ const milestones = [
 
 const team = [
   { name: "Rahul Rastogi", role: "Founder & CEO", bio: "IIT Delhi graduate with 15+ years in medical devices" },
-  { name: "Neha Rastogi", role: "Founder & COO", bio: "Operations leader driving Agatsa's growth and excellence" },
+  { name: "Dr. Priya Mehta", role: "Chief Medical Officer", bio: "Cardiologist with expertise in preventive healthcare" },
+  { name: "Vikram Sharma", role: "CTO", bio: "Former Google engineer specializing in health tech" },
+  { name: "Anita Krishnamurthy", role: "Head of Product", bio: "Product leader with experience at Philips Healthcare" },
 ];
 
 const awards = [
