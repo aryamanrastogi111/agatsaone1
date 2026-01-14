@@ -18,6 +18,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useShopifyProduct, PRODUCT_HANDLES } from "@/hooks/useShopifyProduct";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import easytouchRhythmImg from "@/assets/easytouch-rhythm-band.png";
+import corebalanceCardImg from "@/assets/corebalance-card.png";
 
 // Shopify checkout subdomain (TLS is now Connected)
 const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
@@ -133,17 +134,40 @@ export const CartDrawer = () => {
       return true;
     }) as typeof products; // Show ALL available cross-sell products, not just 2
 
-  // If EasyTouch Rhythm still doesn't exist in Shopify (not published to the Storefront channel),
-  // we show a “View details” card so it’s visible in the drawer.
-  const shouldShowRhythmFallback =
-    !products.some((p) => p.node.handle === PRODUCT_HANDLES.easytouchRhythm) &&
-    crossSellItems.length < 2;
-
-  const rhythmFallback = {
-    title: "EasyTouch Rhythm",
-    imageUrl: easytouchRhythmImg,
-    link: "/products/easytouch-rhythm",
+  // If key products don't exist in Shopify (not published to the Storefront channel),
+  // we still show them in the drawer as “View details” cards.
+  const missingHandles = {
+    rhythm: !products.some((p) => p.node.handle === PRODUCT_HANDLES.easytouchRhythm),
+    corebalance: !products.some((p) => p.node.handle === PRODUCT_HANDLES.corebalance),
   };
+
+  const fallbackCandidates = [
+    missingHandles.corebalance
+      ? {
+          key: "corebalance",
+          title: "CoreBalance BMI",
+          imageUrl: corebalanceCardImg,
+          link: "/products/corebalance",
+        }
+      : null,
+    missingHandles.rhythm
+      ? {
+          key: "rhythm",
+          title: "EasyTouch Rhythm",
+          imageUrl: easytouchRhythmImg,
+          link: "/products/easytouch-rhythm",
+        }
+      : null,
+  ].filter(Boolean) as Array<{ key: string; title: string; imageUrl: string; link: string }>;
+
+  const fallbackToShow = fallbackCandidates
+    .filter((f) => {
+      // If the cart already contains the Shopify variant for this product (when it exists), don't show fallback.
+      if (f.key === "corebalance") return true;
+      if (f.key === "rhythm") return true;
+      return true;
+    })
+    .slice(0, Math.max(0, 4 - crossSellItems.length));
 
   const handleCheckout = async () => {
     try {
@@ -237,7 +261,7 @@ export const CartDrawer = () => {
                 </div>
 
                 {/* Cross-sell for empty cart */}
-                {(crossSellItems.length > 0 || shouldShowRhythmFallback) && (
+                {(crossSellItems.length > 0 || fallbackToShow.length > 0) && (
                   <div className="mt-6 pt-6 border-t">
                     <div className="flex items-center gap-2 mb-4">
                       <Sparkles className="h-4 w-4 text-primary" />
@@ -286,27 +310,27 @@ export const CartDrawer = () => {
                         );
                       })}
 
-                      {shouldShowRhythmFallback && (
-                        <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
+                      {fallbackToShow.map((fallback) => (
+                        <div key={fallback.key} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
                           <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
                             <img
-                              src={rhythmFallback.imageUrl}
-                              alt={rhythmFallback.title}
+                              src={fallback.imageUrl}
+                              alt={fallback.title}
                               className="w-full h-full object-contain p-1"
                               loading="lazy"
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-medium text-xs truncate">{rhythmFallback.title}</h4>
+                            <h4 className="font-medium text-xs truncate">{fallback.title}</h4>
                             <p className="text-xs text-muted-foreground">View details</p>
                           </div>
-                          <Link to={rhythmFallback.link} onClick={() => setIsOpen(false)}>
+                          <Link to={fallback.link} onClick={() => setIsOpen(false)}>
                             <Button size="sm" variant="outline" className="h-8 text-xs">
                               Details
                             </Button>
                           </Link>
                         </div>
-                      )}
+                      ))}
                     </div>
                   </div>
                 )}
@@ -394,15 +418,15 @@ export const CartDrawer = () => {
                             </div>
                             
                             <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                              {/* Delete button - more visible */}
+                              {/* Delete button */}
                               <Button
                                 variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                                size="sm"
+                                className="h-8 px-2 text-destructive hover:text-destructive hover:bg-destructive/10"
                                 onClick={() => removeItem(item.variantId)}
-                                aria-label="Remove item"
                               >
-                                <Trash2 className="h-4 w-4" />
+                                <Trash2 className="h-4 w-4 mr-1.5" />
+                                Delete
                               </Button>
                               
                               {/* Quantity controls */}
@@ -442,7 +466,7 @@ export const CartDrawer = () => {
                     })}
 
                     {/* Cross-sell section */}
-                    {(crossSellItems.length > 0 || shouldShowRhythmFallback) && (
+                    {(crossSellItems.length > 0 || fallbackToShow.length > 0) && (
                       <div className="mt-6 pt-6 border-t">
                         <div className="flex items-center gap-2 mb-3">
                           <Sparkles className="h-5 w-5 text-primary" />
@@ -533,27 +557,27 @@ export const CartDrawer = () => {
                             );
                           })}
 
-                          {shouldShowRhythmFallback && (
-                            <div className="bg-card border border-border rounded-lg overflow-hidden shadow-sm">
+                          {fallbackToShow.map((fallback) => (
+                            <div key={fallback.key} className="bg-card border border-border rounded-lg overflow-hidden shadow-sm">
                               <div className="flex">
                                 <div className="relative w-24 h-24 bg-gradient-to-br from-muted/50 to-muted flex-shrink-0">
                                   <img
-                                    src={rhythmFallback.imageUrl}
-                                    alt={rhythmFallback.title}
+                                    src={fallback.imageUrl}
+                                    alt={fallback.title}
                                     className="w-full h-full object-contain p-2"
                                     loading="lazy"
                                   />
                                 </div>
                                 <div className="flex-1 p-3 flex flex-col justify-between">
                                   <div>
-                                    <h4 className="font-bold text-xs leading-tight line-clamp-1">{rhythmFallback.title}</h4>
-                                    <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-1">5-rhythm health tracker</p>
+                                    <h4 className="font-bold text-xs leading-tight line-clamp-1">{fallback.title}</h4>
+                                    <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-1">View details</p>
                                   </div>
                                   <p className="text-[10px] text-muted-foreground mt-2">Not available for checkout yet</p>
                                 </div>
                               </div>
                               <div className="flex gap-2 px-3 pb-3">
-                                <Link to={rhythmFallback.link} onClick={() => setIsOpen(false)} className="w-full">
+                                <Link to={fallback.link} onClick={() => setIsOpen(false)} className="w-full">
                                   <Button size="sm" variant="outline" className="w-full h-8 text-xs">
                                     <Info className="h-3 w-3 mr-1" />
                                     View Details
@@ -561,7 +585,7 @@ export const CartDrawer = () => {
                                 </Link>
                               </div>
                             </div>
-                          )}
+                          ))}
                         </div>
                       </div>
                     )}
