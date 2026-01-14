@@ -445,16 +445,15 @@ export const CartDrawer = () => {
                             </div>
                           </div>
                           
-                          {/* Remove button - full width for visibility */}
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="mt-3 w-full h-8 text-destructive border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
-                            onClick={() => removeItem(item.variantId)}
-                          >
-                            <Trash2 className="h-4 w-4 mr-2" />
-                            Remove from Cart
-                          </Button>
+                            {/* Remove button - bin icon */}
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-destructive hover:bg-destructive/10"
+                              onClick={() => removeItem(item.variantId)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           
                           {/* Learn More button */}
                           <Link 
