@@ -32,6 +32,7 @@ import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 
 // Image imports
 import sanketlifeHeroV2 from "@/assets/sanketlife-device-app.png";
@@ -1036,6 +1037,13 @@ const SanketLifeProduct = () => {
           </AnimatedSection>
         </div>
       </section>
+      <StickyAddToCart
+        productName="SanketLife 2.0"
+        price="₹4,999"
+        onAddToCart={() => handleAddToCart("Sanket life 2.0")}
+        isLoading={loading}
+        themeColor="cyan"
+      />
     </Layout>
   );
 };
