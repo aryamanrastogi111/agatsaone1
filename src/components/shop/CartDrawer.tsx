@@ -36,6 +36,8 @@ const PRODUCT_ROUTES: Record<string, string> = {
 const PRODUCT_IMAGE_OVERRIDES: Record<string, string> = {
   "easytouch": easytouchRhythmImg,
   "rhythm": easytouchRhythmImg,
+  "corebalance": corebalanceCardImg,
+  "bmi": corebalanceCardImg,
 };
 
 // Detailed product info for cross-sell
@@ -148,6 +150,7 @@ export const CartDrawer = () => {
           title: "CoreBalance BMI",
           imageUrl: corebalanceCardImg,
           link: "/products/corebalance",
+          handle: PRODUCT_HANDLES.corebalance,
         }
       : null,
     missingHandles.rhythm
@@ -156,9 +159,10 @@ export const CartDrawer = () => {
           title: "EasyTouch Rhythm",
           imageUrl: easytouchRhythmImg,
           link: "/products/easytouch-rhythm",
+          handle: PRODUCT_HANDLES.easytouchRhythm,
         }
       : null,
-  ].filter(Boolean) as Array<{ key: string; title: string; imageUrl: string; link: string }>;
+  ].filter(Boolean) as Array<{ key: string; title: string; imageUrl: string; link: string; handle: string }>;
 
   const fallbackToShow = fallbackCandidates
     .filter((f) => {
@@ -417,18 +421,7 @@ export const CartDrawer = () => {
                               </div>
                             </div>
                             
-                            <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                              {/* Delete button */}
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-8 px-2 text-destructive hover:text-destructive hover:bg-destructive/10"
-                                onClick={() => removeItem(item.variantId)}
-                              >
-                                <Trash2 className="h-4 w-4 mr-1.5" />
-                                Delete
-                              </Button>
-                              
+                            <div className="flex flex-col items-end gap-3 flex-shrink-0">
                               {/* Quantity controls */}
                               <div className="flex items-center gap-1">
                                 <Button
@@ -451,6 +444,17 @@ export const CartDrawer = () => {
                               </div>
                             </div>
                           </div>
+                          
+                          {/* Remove button - full width for visibility */}
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="mt-3 w-full h-8 text-destructive border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
+                            onClick={() => removeItem(item.variantId)}
+                          >
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Remove from Cart
+                          </Button>
                           
                           {/* Learn More button */}
                           <Link 
