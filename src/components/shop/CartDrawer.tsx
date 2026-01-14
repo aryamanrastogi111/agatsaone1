@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useShopifyProduct, PRODUCT_HANDLES } from "@/hooks/useShopifyProduct";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import easytouchRhythmImg from "@/assets/easytouch-rhythm-band.png";
 
 // Shopify checkout subdomain (TLS is now Connected)
 const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
@@ -28,6 +29,12 @@ const PRODUCT_ROUTES: Record<string, string> = {
   [PRODUCT_HANDLES.zlu]: "/products/zlu",
   [PRODUCT_HANDLES.corebalance]: "/products/corebalance",
   [PRODUCT_HANDLES.easytouchRhythm]: "/products/easytouch-rhythm",
+};
+
+// Local image overrides for cross-sell products
+const PRODUCT_IMAGE_OVERRIDES: Record<string, string> = {
+  "easytouch": easytouchRhythmImg,
+  "rhythm": easytouchRhythmImg,
 };
 
 // Detailed product info for cross-sell
@@ -390,19 +397,26 @@ export const CartDrawer = () => {
                         <div className="space-y-3">
                           {recommendedProducts.slice(0, 2).map((product) => {
                             const variant = product.node.variants.edges[0]?.node;
-                            const image = product.node.images?.edges?.[0]?.node;
+                            const shopifyImage = product.node.images?.edges?.[0]?.node;
                             const price = variant ? parseFloat(variant.price.amount) : 0;
                             const discountedPrice = price * 0.90;
                             const details = getProductDetails(product.node.title);
+                            
+                            // Check for local image override
+                            const lowerTitle = product.node.title.toLowerCase();
+                            const localImage = Object.entries(PRODUCT_IMAGE_OVERRIDES).find(
+                              ([key]) => lowerTitle.includes(key)
+                            )?.[1];
+                            const displayImage = localImage || shopifyImage?.url;
                             
                             return (
                               <div key={product.node.id} className="bg-card border border-border rounded-lg overflow-hidden shadow-sm">
                                 <div className="flex">
                                   {/* Product image */}
                                   <div className="relative w-24 h-24 bg-gradient-to-br from-muted/50 to-muted flex-shrink-0">
-                                    {image && (
+                                    {displayImage && (
                                       <img
-                                        src={image.url}
+                                        src={displayImage}
                                         alt={product.node.title}
                                         className="w-full h-full object-contain p-2"
                                       />
