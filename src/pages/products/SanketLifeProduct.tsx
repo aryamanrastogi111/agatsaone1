@@ -33,6 +33,7 @@ import { useRef, useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 
 // Image imports
 import sanketlifeHeroV2 from "@/assets/sanketlife-device-app.png";
@@ -325,6 +326,8 @@ const SanketLifeProduct = () => {
                   <Link to="/products">View All Products</Link>
                 </Button>
               </div>
+              
+              <MultiProductDiscountBanner variant="compact" className="mb-6" />
               
               {/* Stats Row */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-border">

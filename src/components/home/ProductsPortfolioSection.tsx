@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { products } from "@/data/products";
+import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 
 export function ProductsPortfolioSection() {
   return (
@@ -114,12 +115,15 @@ export function ProductsPortfolioSection() {
           ))}
         </div>
 
+        {/* Multi-Product Discount Banner */}
+        <MultiProductDiscountBanner className="mt-12" />
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-center mt-12"
+          className="text-center mt-8"
         >
           <Button asChild variant="outline" size="lg" className="group">
             <Link to="/products" className="flex items-center gap-2">

@@ -4,6 +4,7 @@ import { ExternalLink, ArrowRight, Heart, Activity, Moon, Scale, Home } from "lu
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { products } from "@/data/products";
+import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 
 const categoryIcons = {
   heart: Heart,
@@ -50,6 +51,8 @@ const Products = () => {
               each designed with medical-grade precision for home and
               professional use.
             </p>
+            
+            <MultiProductDiscountBanner variant="compact" className="mt-6 max-w-md mx-auto" />
           </motion.div>
         </div>
       </section>

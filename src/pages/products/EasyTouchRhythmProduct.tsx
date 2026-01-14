@@ -6,6 +6,7 @@ import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import {
   Carousel,
   CarouselContent,
@@ -204,6 +205,8 @@ const EasyTouchRhythmProduct = () => {
                   7-Day Returns (Mfg. Defects)
                 </div>
               </div>
+              
+              <MultiProductDiscountBanner variant="compact" className="mt-4" />
             </motion.div>
             
             <motion.div
