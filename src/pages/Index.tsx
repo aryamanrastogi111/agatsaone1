@@ -3,6 +3,10 @@ import {
   HeroSection,
   ChooseByNeedSection,
   ProductsPortfolioSection,
+  ProductHighlightSanketLife,
+  ProductHighlightEasyTouch,
+  ProductHighlightZlu,
+  ProductHighlightCoreBalance,
   WhyAgatsaSection,
   AwardsSection,
   TrustProofSection,
@@ -15,6 +19,10 @@ const Index = () => {
       <HeroSection />
       <ChooseByNeedSection />
       <ProductsPortfolioSection />
+      <ProductHighlightSanketLife />
+      <ProductHighlightEasyTouch />
+      <ProductHighlightZlu />
+      <ProductHighlightCoreBalance />
       <WhyAgatsaSection />
       <AwardsSection />
       <TrustProofSection />
