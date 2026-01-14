@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Moon, Leaf, Battery } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import zluImg from "@/assets/zlu-hero.png";
+import zluImg from "@/assets/zlu-device-new.webp";
 
 export function ProductHighlightZlu() {
   const features = [
