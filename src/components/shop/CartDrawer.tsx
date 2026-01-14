@@ -109,25 +109,42 @@ export const CartDrawer = () => {
   const totalPrice = subtotal - discountAmount;
 
   // Products to exclude from cross-sell (not on website)
-  const excludedProducts = [
-    "agatsa wellness",
-    "health 360",
-    "heli band",
+  const excludedProducts = ["agatsa wellness", "health 360", "heli band"];
+
+  // Cross-sell: always prefer a curated set so key products (like EasyTouch Rhythm)
+  // show up even if Shopify's listing query returns a subset.
+  const cartVariantIds = items.map((item) => item.variantId);
+
+  const curatedHandles = [
+    PRODUCT_HANDLES.easytouchRhythm,
+    PRODUCT_HANDLES.zlu,
+    PRODUCT_HANDLES.corebalance,
+    PRODUCT_HANDLES.sanketlife,
   ];
 
-  // Get recommended products (products not in cart, excluding unwanted ones)
-  const cartVariantIds = items.map(item => item.variantId);
-  const recommendedProducts = products
-    .filter(product => {
-      const variantId = product.node.variants.edges[0]?.node.id;
-      const title = product.node.title.toLowerCase();
-      // Exclude products already in cart
-      if (cartVariantIds.includes(variantId)) return false;
-      // Exclude products not on the website
-      if (excludedProducts.some(excluded => title.includes(excluded))) return false;
+  const crossSellItems = curatedHandles
+    .map((handle) => products.find((p) => p.node.handle === handle))
+    .filter(Boolean)
+    .filter((product) => {
+      const variantId = product!.node.variants.edges[0]?.node.id;
+      const title = product!.node.title.toLowerCase();
+      if (variantId && cartVariantIds.includes(variantId)) return false;
+      if (excludedProducts.some((excluded) => title.includes(excluded))) return false;
       return true;
     })
-    .slice(0, 2);
+    .slice(0, 2) as typeof products;
+
+  // If EasyTouch Rhythm still doesn't exist in Shopify (not published to the Storefront channel),
+  // we show a “View details” card so it’s visible in the drawer.
+  const shouldShowRhythmFallback =
+    !products.some((p) => p.node.handle === PRODUCT_HANDLES.easytouchRhythm) &&
+    crossSellItems.length < 2;
+
+  const rhythmFallback = {
+    title: "EasyTouch Rhythm",
+    imageUrl: easytouchRhythmImg,
+    link: "/products/easytouch-rhythm",
+  };
 
   const handleCheckout = async () => {
     try {
@@ -221,24 +238,32 @@ export const CartDrawer = () => {
                 </div>
 
                 {/* Cross-sell for empty cart */}
-                {recommendedProducts.length > 0 && (
+                {(crossSellItems.length > 0 || shouldShowRhythmFallback) && (
                   <div className="mt-6 pt-6 border-t">
                     <div className="flex items-center gap-2 mb-4">
                       <Sparkles className="h-4 w-4 text-primary" />
                       <h3 className="font-semibold text-sm">Products You Might Like</h3>
                     </div>
                     <div className="space-y-3">
-                      {recommendedProducts.map((product) => {
+                      {crossSellItems.map((product) => {
                         const variant = product.node.variants.edges[0]?.node;
-                        const image = product.node.images?.edges?.[0]?.node;
+                        const shopifyImage = product.node.images?.edges?.[0]?.node;
+
+                        const lowerTitle = product.node.title.toLowerCase();
+                        const localImage = Object.entries(PRODUCT_IMAGE_OVERRIDES).find(([key]) =>
+                          lowerTitle.includes(key)
+                        )?.[1];
+                        const displayImage = localImage || shopifyImage?.url;
+
                         return (
                           <div key={product.node.id} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
                             <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
-                              {image && (
+                              {displayImage && (
                                 <img
-                                  src={image.url}
+                                  src={displayImage}
                                   alt={product.node.title}
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain p-1"
+                                  loading="lazy"
                                 />
                               )}
                             </div>
@@ -261,6 +286,28 @@ export const CartDrawer = () => {
                           </div>
                         );
                       })}
+
+                      {shouldShowRhythmFallback && (
+                        <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
+                          <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
+                            <img
+                              src={rhythmFallback.imageUrl}
+                              alt={rhythmFallback.title}
+                              className="w-full h-full object-contain p-1"
+                              loading="lazy"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-xs truncate">{rhythmFallback.title}</h4>
+                            <p className="text-xs text-muted-foreground">View details</p>
+                          </div>
+                          <Link to={rhythmFallback.link} onClick={() => setIsOpen(false)}>
+                            <Button size="sm" variant="outline" className="h-8 text-xs">
+                              Details
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -393,7 +440,7 @@ export const CartDrawer = () => {
                     })}
 
                     {/* Cross-sell section */}
-                    {recommendedProducts.length > 0 && (
+                    {(crossSellItems.length > 0 || shouldShowRhythmFallback) && (
                       <div className="mt-6 pt-6 border-t">
                         <div className="flex items-center gap-2 mb-3">
                           <Sparkles className="h-5 w-5 text-primary" />
@@ -407,30 +454,29 @@ export const CartDrawer = () => {
                           </div>
                         )}
                         <div className="space-y-3">
-                          {recommendedProducts.slice(0, 2).map((product) => {
+                          {crossSellItems.map((product) => {
                             const variant = product.node.variants.edges[0]?.node;
                             const shopifyImage = product.node.images?.edges?.[0]?.node;
                             const price = variant ? parseFloat(variant.price.amount) : 0;
-                            const discountedPrice = price * 0.90;
+                            const discountedPrice = price * 0.9;
                             const details = getProductDetails(product.node.title);
-                            
-                            // Check for local image override
+
                             const lowerTitle = product.node.title.toLowerCase();
-                            const localImage = Object.entries(PRODUCT_IMAGE_OVERRIDES).find(
-                              ([key]) => lowerTitle.includes(key)
+                            const localImage = Object.entries(PRODUCT_IMAGE_OVERRIDES).find(([key]) =>
+                              lowerTitle.includes(key)
                             )?.[1];
                             const displayImage = localImage || shopifyImage?.url;
-                            
+
                             return (
                               <div key={product.node.id} className="bg-card border border-border rounded-lg overflow-hidden shadow-sm">
                                 <div className="flex">
-                                  {/* Product image */}
                                   <div className="relative w-24 h-24 bg-gradient-to-br from-muted/50 to-muted flex-shrink-0">
                                     {displayImage && (
                                       <img
                                         src={displayImage}
                                         alt={product.node.title}
                                         className="w-full h-full object-contain p-2"
+                                        loading="lazy"
                                       />
                                     )}
                                     {details.badge && (
@@ -439,15 +485,11 @@ export const CartDrawer = () => {
                                       </div>
                                     )}
                                   </div>
-                                  
-                                  {/* Content */}
+
                                   <div className="flex-1 p-3 flex flex-col justify-between">
                                     <div>
                                       <h4 className="font-bold text-xs leading-tight line-clamp-1">{product.node.title}</h4>
-                                      <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-1">
-                                        {details.brief}
-                                      </p>
-                                      {/* Features - show first 2 */}
+                                      <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-1">{details.brief}</p>
                                       <div className="flex flex-wrap gap-1 mt-1.5">
                                         {details.highlights.slice(0, 2).map((h, idx) => (
                                           <span key={idx} className="text-[9px] text-muted-foreground">
@@ -456,8 +498,7 @@ export const CartDrawer = () => {
                                         ))}
                                       </div>
                                     </div>
-                                    
-                                    {/* Price row */}
+
                                     {variant && (
                                       <div className="flex items-center gap-1.5 mt-2">
                                         <span className="text-sm font-bold text-foreground">
@@ -473,26 +514,14 @@ export const CartDrawer = () => {
                                     )}
                                   </div>
                                 </div>
-                                
-                                {/* Action buttons */}
+
                                 <div className="flex gap-2 px-3 pb-3">
-                                  <Button
-                                    size="sm"
-                                    className="flex-1 h-8 text-xs"
-                                    onClick={() => handleAddRecommended(product)}
-                                  >
+                                  <Button size="sm" className="flex-1 h-8 text-xs" onClick={() => handleAddRecommended(product)}>
                                     <ShoppingCart className="h-3 w-3 mr-1.5" />
                                     Add to Cart
                                   </Button>
-                                  <Link 
-                                    to={getProductRoute(product.node.handle)}
-                                    onClick={() => setIsOpen(false)}
-                                  >
-                                    <Button
-                                      size="sm"
-                                      variant="outline"
-                                      className="h-8 px-3 text-xs"
-                                    >
+                                  <Link to={getProductRoute(product.node.handle)} onClick={() => setIsOpen(false)}>
+                                    <Button size="sm" variant="outline" className="h-8 px-3 text-xs">
                                       <Info className="h-3 w-3 mr-1" />
                                       Details
                                     </Button>
@@ -501,6 +530,36 @@ export const CartDrawer = () => {
                               </div>
                             );
                           })}
+
+                          {shouldShowRhythmFallback && (
+                            <div className="bg-card border border-border rounded-lg overflow-hidden shadow-sm">
+                              <div className="flex">
+                                <div className="relative w-24 h-24 bg-gradient-to-br from-muted/50 to-muted flex-shrink-0">
+                                  <img
+                                    src={rhythmFallback.imageUrl}
+                                    alt={rhythmFallback.title}
+                                    className="w-full h-full object-contain p-2"
+                                    loading="lazy"
+                                  />
+                                </div>
+                                <div className="flex-1 p-3 flex flex-col justify-between">
+                                  <div>
+                                    <h4 className="font-bold text-xs leading-tight line-clamp-1">{rhythmFallback.title}</h4>
+                                    <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-1">5-rhythm health tracker</p>
+                                  </div>
+                                  <p className="text-[10px] text-muted-foreground mt-2">Not available for checkout yet</p>
+                                </div>
+                              </div>
+                              <div className="flex gap-2 px-3 pb-3">
+                                <Link to={rhythmFallback.link} onClick={() => setIsOpen(false)} className="w-full">
+                                  <Button size="sm" variant="outline" className="w-full h-8 text-xs">
+                                    <Info className="h-3 w-3 mr-1" />
+                                    View Details
+                                  </Button>
+                                </Link>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
