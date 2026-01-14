@@ -70,6 +70,6 @@ export const PRODUCT_HANDLES = {
   sanketlife: 'sanket-life-2-0-portable-ecg-machine-12-lead-ecg-device',
   sanketlifeProPlus: 'sanketlife-pro',
   zlu: 'the-zlu-sleep-aid-device-restful-sleep-without-medicine',
-  corebalance: 'agatsa-corebalance-advance-bmi-analyzer',
+  corebalance: 'corebalance',
   easytouchRhythm: 'easytouch-rhythm',
 };
