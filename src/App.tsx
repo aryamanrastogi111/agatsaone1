@@ -15,6 +15,10 @@ import CoreBalanceProduct from "./pages/products/CoreBalanceProduct";
 import EasyTouchRhythmProduct from "./pages/products/EasyTouchRhythmProduct";
 import SanketLifeProduct from "./pages/products/SanketLifeProduct";
 import NotFound from "./pages/NotFound";
+import ShippingPolicy from "./pages/ShippingPolicy";
+import ReturnPolicy from "./pages/ReturnPolicy";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +40,10 @@ const App = () => (
           <Route path="/support" element={<Support />} />
           <Route path="/device-finder" element={<DeviceFinder />} />
           <Route path="/device-finder/compare" element={<Compare />} />
+          <Route path="/shipping-policy" element={<ShippingPolicy />} />
+          <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
           {/* Redirects for old routes */}
           <Route path="/solutions" element={<Navigate to="/support#solutions" replace />} />
           <Route path="/trust" element={<Navigate to="/about" replace />} />
