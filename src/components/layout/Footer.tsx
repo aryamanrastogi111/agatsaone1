@@ -23,17 +23,18 @@ const supportLinks = [
   { label: "Warranty", href: "/support#warranty" },
 ];
 
-const legalLinks = [
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms of Service", href: "/terms" },
-  { label: "Return Policy", href: "/returns" },
+const policyLinks = [
+  { label: "Shipping Policy", href: "/shipping-policy" },
+  { label: "Return & Refund Policy", href: "/return-policy" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: "/terms-of-service" },
 ];
 
 export const Footer = forwardRef<HTMLElement>((_, ref) => {
   return (
     <footer className="bg-secondary text-secondary-foreground">
       <div className="container py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
@@ -111,6 +112,23 @@ export const Footer = forwardRef<HTMLElement>((_, ref) => {
               ))}
             </ul>
           </div>
+
+          {/* Policies */}
+          <div>
+            <h4 className="font-semibold mb-4">Policies</h4>
+            <ul className="space-y-3 text-sm">
+              {policyLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    to={link.href}
+                    className="text-secondary-foreground/80 hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Bottom Bar */}
@@ -118,8 +136,8 @@ export const Footer = forwardRef<HTMLElement>((_, ref) => {
           <p className="text-sm text-secondary-foreground/60">
             © {new Date().getFullYear()} Agatsa. All rights reserved.
           </p>
-          <div className="flex gap-6 text-sm">
-            {legalLinks.map((link) => (
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm">
+            {policyLinks.map((link) => (
               <Link
                 key={link.label}
                 to={link.href}
