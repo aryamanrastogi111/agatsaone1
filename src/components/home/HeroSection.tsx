@@ -258,14 +258,71 @@ export function HeroSection() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
               >
-                Health monitoring{" "}
-                <span className="text-primary relative">
-                  made simple.
+                {/* Animated text with staggered letters */}
+                <span className="inline-block overflow-hidden">
+                  {"Health monitoring".split("").map((char, i) => (
+                    <motion.span
+                      key={i}
+                      initial={{ y: 50, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.1 + i * 0.03,
+                        ease: [0.215, 0.61, 0.355, 1],
+                      }}
+                      className="inline-block"
+                    >
+                      {char === " " ? "\u00A0" : char}
+                    </motion.span>
+                  ))}
+                </span>{" "}
+                <span className="relative inline-block">
+                  {/* Gradient text with shimmer */}
                   <motion.span
-                    className="absolute -bottom-2 left-0 w-full h-1 bg-primary/30 rounded-full"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ delay: 0.8, duration: 0.6 }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.6 }}
+                    className="relative inline-block bg-gradient-to-r from-primary via-cyan-400 to-primary bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite] bg-clip-text text-transparent"
+                  >
+                    made simple.
+                  </motion.span>
+                  
+                  {/* Animated underline with glow */}
+                  <motion.span
+                    className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-primary via-cyan-400 to-primary rounded-full shadow-[0_0_20px_rgba(0,186,199,0.5)]"
+                    initial={{ scaleX: 0, opacity: 0 }}
+                    animate={{ scaleX: 1, opacity: 1 }}
+                    transition={{ delay: 0.9, duration: 0.8, ease: "easeOut" }}
+                  />
+                  
+                  {/* Sparkle effects */}
+                  <motion.span
+                    className="absolute -top-2 -right-4 w-3 h-3 bg-primary rounded-full"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ 
+                      scale: [0, 1.2, 0],
+                      opacity: [0, 1, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      delay: 1.2,
+                      repeat: Infinity,
+                      repeatDelay: 3,
+                    }}
+                  />
+                  <motion.span
+                    className="absolute top-1/2 -left-3 w-2 h-2 bg-cyan-400 rounded-full"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ 
+                      scale: [0, 1, 0],
+                      opacity: [0, 0.8, 0],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      delay: 1.8,
+                      repeat: Infinity,
+                      repeatDelay: 4,
+                    }}
                   />
                 </span>
               </motion.h1>
