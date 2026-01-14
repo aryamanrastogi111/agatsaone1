@@ -376,96 +376,107 @@ export const CartDrawer = () => {
                     {/* Cross-sell section */}
                     {recommendedProducts.length > 0 && (
                       <div className="mt-6 pt-6 border-t">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Sparkles className="h-4 w-4 text-primary" />
-                          <h3 className="font-semibold text-sm">You Might Also Like</h3>
+                        <div className="flex items-center gap-2 mb-3">
+                          <Sparkles className="h-5 w-5 text-primary" />
+                          <h3 className="font-bold text-base">Complete Your Health Kit</h3>
                         </div>
                         {!hasMultipleProducts && (
-                          <p className="text-xs text-muted-foreground mb-3">
-                            Add another product and get 10% off your entire order!
-                          </p>
+                          <div className="mb-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+                            <p className="text-sm font-medium text-green-700 dark:text-green-400">
+                              🎁 Add any product below and get <span className="font-bold">10% OFF</span> your entire order!
+                            </p>
+                          </div>
                         )}
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                           {recommendedProducts.map((product) => {
                             const variant = product.node.variants.edges[0]?.node;
                             const image = product.node.images?.edges?.[0]?.node;
                             const price = variant ? parseFloat(variant.price.amount) : 0;
                             const discountedPrice = price * 0.90;
+                            const savings = price - discountedPrice;
                             const details = getProductDetails(product.node.title);
                             
                             return (
-                              <div key={product.node.id} className="p-3 bg-gradient-to-r from-primary/5 to-transparent rounded-lg border border-primary/10">
-                                {/* Badge */}
+                              <div key={product.node.id} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
+                                {/* Badge header */}
                                 {details.badge && (
-                                  <div className="mb-2">
-                                    <span className="inline-block px-2 py-0.5 bg-primary text-primary-foreground text-[9px] font-bold rounded-full uppercase tracking-wide">
+                                  <div className="bg-primary px-3 py-1">
+                                    <span className="text-[10px] font-bold text-primary-foreground uppercase tracking-wider">
                                       {details.badge}
                                     </span>
                                   </div>
                                 )}
                                 
-                                <div className="flex items-start gap-3">
-                                  <div className="w-14 h-14 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
-                                    {image && (
-                                      <img
-                                        src={image.url}
-                                        alt={product.node.title}
-                                        className="w-full h-full object-cover"
-                                      />
-                                    )}
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <h4 className="font-semibold text-sm leading-tight">{product.node.title}</h4>
-                                    <p className="text-[11px] text-muted-foreground mt-0.5">
-                                      {details.brief}
-                                    </p>
-                                    {variant && (
-                                      <div className="flex items-center gap-1.5 mt-1">
-                                        <span className="text-xs text-muted-foreground line-through">
-                                          {formatPrice(variant.price.amount, variant.price.currencyCode)}
-                                        </span>
-                                        <span className="text-sm font-bold text-green-600">
-                                          {formatPrice(discountedPrice, variant.price.currencyCode)}
-                                        </span>
-                                      </div>
-                                    )}
+                                {/* Product image */}
+                                <div className="relative h-32 bg-gradient-to-br from-muted/50 to-muted">
+                                  {image && (
+                                    <img
+                                      src={image.url}
+                                      alt={product.node.title}
+                                      className="w-full h-full object-contain p-4"
+                                    />
+                                  )}
+                                  {/* Savings badge */}
+                                  <div className="absolute top-2 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full">
+                                    Save {formatPrice(savings, variant?.price.currencyCode || 'INR')}
                                   </div>
                                 </div>
                                 
-                                {/* Key highlights */}
-                                <div className="mt-2 flex flex-wrap gap-1">
-                                  {details.highlights.map((highlight, idx) => (
-                                    <span 
-                                      key={idx}
-                                      className="inline-flex items-center text-[9px] px-1.5 py-0.5 bg-muted rounded text-muted-foreground"
-                                    >
-                                      ✓ {highlight}
-                                    </span>
-                                  ))}
-                                </div>
-                                
-                                {/* Action buttons */}
-                                <div className="flex items-center gap-2 mt-3">
-                                  <Button
-                                    size="sm"
-                                    className="flex-1 h-8 text-xs"
-                                    onClick={() => handleAddRecommended(product)}
-                                  >
-                                    <Plus className="h-3 w-3 mr-1" />
-                                    Add to Cart
-                                  </Button>
-                                  <Link 
-                                    to={getProductRoute(product.node.handle)}
-                                    onClick={() => setIsOpen(false)}
-                                  >
+                                {/* Content */}
+                                <div className="p-4">
+                                  <h4 className="font-bold text-sm mb-1">{product.node.title}</h4>
+                                  <p className="text-xs text-muted-foreground mb-3">
+                                    {details.brief}
+                                  </p>
+                                  
+                                  {/* Features list */}
+                                  <ul className="space-y-1.5 mb-4">
+                                    {details.highlights.map((highlight, idx) => (
+                                      <li key={idx} className="flex items-center gap-2 text-xs">
+                                        <span className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                          <span className="text-primary text-[10px]">✓</span>
+                                        </span>
+                                        <span className="text-foreground">{highlight}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                  
+                                  {/* Price */}
+                                  {variant && (
+                                    <div className="flex items-baseline gap-2 mb-4">
+                                      <span className="text-xl font-bold text-foreground">
+                                        {formatPrice(discountedPrice, variant.price.currencyCode)}
+                                      </span>
+                                      <span className="text-sm text-muted-foreground line-through">
+                                        {formatPrice(variant.price.amount, variant.price.currencyCode)}
+                                      </span>
+                                      <span className="text-xs font-semibold text-green-600 bg-green-500/10 px-2 py-0.5 rounded">
+                                        10% OFF
+                                      </span>
+                                    </div>
+                                  )}
+                                  
+                                  {/* Action buttons */}
+                                  <div className="flex gap-2">
                                     <Button
-                                      size="sm"
-                                      variant="outline"
-                                      className="h-8 text-xs px-3"
+                                      className="flex-1 h-10"
+                                      onClick={() => handleAddRecommended(product)}
                                     >
-                                      Details
+                                      <ShoppingCart className="h-4 w-4 mr-2" />
+                                      Add to Cart
                                     </Button>
-                                  </Link>
+                                    <Link 
+                                      to={getProductRoute(product.node.handle)}
+                                      onClick={() => setIsOpen(false)}
+                                    >
+                                      <Button
+                                        variant="outline"
+                                        className="h-10 px-4"
+                                      >
+                                        <Info className="h-4 w-4" />
+                                      </Button>
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
                             );
