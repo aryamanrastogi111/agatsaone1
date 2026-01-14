@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -9,16 +10,46 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Sparkles } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Sparkles, Tag, Info } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { useShopifyProduct, PRODUCT_HANDLES } from "@/hooks/useShopifyProduct";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Shopify checkout subdomain (TLS is now Connected)
 const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
+
+// Product handle to route mapping
+const PRODUCT_ROUTES: Record<string, string> = {
+  [PRODUCT_HANDLES.sanketlife]: "/products/sanketlife",
+  [PRODUCT_HANDLES.sanketlifeProPlus]: "/products/sanketlife",
+  [PRODUCT_HANDLES.zlu]: "/products/zlu",
+  [PRODUCT_HANDLES.corebalance]: "/products/corebalance",
+  [PRODUCT_HANDLES.easytouchRhythm]: "/products/easytouch-rhythm",
+};
+
+// Brief product descriptions
+const PRODUCT_BRIEFS: Record<string, string> = {
+  "sanket": "Portable 12-lead ECG device for heart monitoring",
+  "zlu": "Non-invasive sleep aid for natural, restful sleep",
+  "corebalance": "Advanced body composition & BMI analyzer",
+  "easytouch": "Smart health band tracking 5 body rhythms",
+  "rhythm": "Smart health band tracking 5 body rhythms",
+};
+
+const getProductBrief = (title: string): string => {
+  const lowerTitle = title.toLowerCase();
+  for (const [key, brief] of Object.entries(PRODUCT_BRIEFS)) {
+    if (lowerTitle.includes(key)) return brief;
+  }
+  return "Premium health monitoring device";
+};
+
+const getProductRoute = (handle: string): string => {
+  return PRODUCT_ROUTES[handle] || "/products";
+};
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,10 +66,19 @@ export const CartDrawer = () => {
   } = useCartStore();
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce(
+  
+  // Count unique products in cart
+  const uniqueProductCount = items.length;
+  const hasMultipleProducts = uniqueProductCount >= 2;
+  const discountRate = hasMultipleProducts ? 0.10 : 0;
+  
+  // Calculate prices with discount
+  const subtotal = items.reduce(
     (sum, item) => sum + parseFloat(item.price.amount) * item.quantity,
     0
   );
+  const discountAmount = subtotal * discountRate;
+  const totalPrice = subtotal - discountAmount;
 
   // Get recommended products (products not in cart)
   const cartVariantIds = items.map(item => item.variantId);
@@ -58,8 +98,6 @@ export const CartDrawer = () => {
         return;
       }
 
-      // NOTE: If the custom domain is still intermittently blocked/refuses connection,
-      // the *.myshopify.com checkout is the most reliable.
       const base = new URL(url);
       base.protocol = "https:";
       base.searchParams.set("channel", "online_store");
@@ -75,8 +113,6 @@ export const CartDrawer = () => {
       clearCart();
       setIsOpen(false);
 
-      // On mobile, navigate directly (popups are blocked after async calls)
-      // On desktop, open in new tab for better UX
       if (isMobile) {
         window.location.href = checkoutUrl;
       } else {
@@ -85,7 +121,7 @@ export const CartDrawer = () => {
       }
 
       toast.message("Opening Shopify checkout", {
-        description: "Using the reliable myshopify.com domain. If your custom domain is working, you can try it.",
+        description: "Using the reliable myshopify.com domain.",
         action: {
           label: "Try shop.agatsaone.com",
           onClick: () => {
@@ -101,11 +137,11 @@ export const CartDrawer = () => {
     }
   };
 
-  const formatPrice = (amount: string, currencyCode: string) => {
+  const formatPrice = (amount: string | number, currencyCode: string) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: currencyCode,
-    }).format(parseFloat(amount));
+    }).format(typeof amount === 'string' ? parseFloat(amount) : amount);
   };
 
   const handleAddRecommended = (product: typeof products[0]) => {
@@ -191,77 +227,150 @@ export const CartDrawer = () => {
               </div>
             ) : (
               <>
+                {/* Multi-product discount banner */}
+                {!hasMultipleProducts && uniqueProductCount === 1 && (
+                  <div className="mx-6 mt-4 p-3 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg">
+                    <div className="flex items-start gap-2">
+                      <Tag className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-green-700 dark:text-green-400">
+                          Add 1 more product & save 10%!
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          Buy 2+ products and get 10% off your entire order
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {hasMultipleProducts && (
+                  <div className="mx-6 mt-4 p-3 bg-gradient-to-r from-green-500/15 to-emerald-500/15 border border-green-500/30 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <Tag className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <p className="text-sm font-medium text-green-700 dark:text-green-400">
+                        🎉 10% Multi-Product Discount Applied! You save {formatPrice(discountAmount, items[0]?.price.currencyCode || 'INR')}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 {/* Scrollable items area */}
                 <ScrollArea className="flex-1 px-6">
                   <div className="space-y-4 py-4">
-                    {items.map((item) => (
-                      <div key={item.variantId} className="flex gap-4 p-3 bg-muted/30 rounded-lg">
-                        <div className="w-16 h-16 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
-                          {item.product.node.images?.edges?.[0]?.node && (
-                            <img
-                              src={item.product.node.images.edges[0].node.url}
-                              alt={item.product.node.title}
-                              className="w-full h-full object-cover"
-                            />
-                          )}
-                        </div>
-                        
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-medium text-sm truncate">{item.product.node.title}</h4>
-                          {item.variantTitle !== "Default Title" && (
-                            <p className="text-xs text-muted-foreground">
-                              {item.variantTitle}
-                            </p>
-                          )}
-                          <p className="font-semibold text-sm mt-1">
-                            {formatPrice(item.price.amount, item.price.currencyCode)}
-                          </p>
-                        </div>
-                        
-                        <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-6 w-6 text-destructive hover:text-destructive"
-                            onClick={() => removeItem(item.variantId)}
-                          >
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
-                          
-                          <div className="flex items-center gap-1">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="h-6 w-6"
-                              onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                            >
-                              <Minus className="h-3 w-3" />
-                            </Button>
-                            <span className="w-8 text-center text-sm">{item.quantity}</span>
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="h-6 w-6"
-                              onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                            >
-                              <Plus className="h-3 w-3" />
-                            </Button>
+                    {items.map((item) => {
+                      const itemTotal = parseFloat(item.price.amount) * item.quantity;
+                      const itemDiscount = hasMultipleProducts ? itemTotal * 0.10 : 0;
+                      const itemFinalPrice = itemTotal - itemDiscount;
+                      
+                      return (
+                        <div key={item.variantId} className="p-3 bg-muted/30 rounded-lg">
+                          <div className="flex gap-4">
+                            <div className="w-16 h-16 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
+                              {item.product.node.images?.edges?.[0]?.node && (
+                                <img
+                                  src={item.product.node.images.edges[0].node.url}
+                                  alt={item.product.node.title}
+                                  className="w-full h-full object-cover"
+                                />
+                              )}
+                            </div>
+                            
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-medium text-sm truncate">{item.product.node.title}</h4>
+                              {item.variantTitle !== "Default Title" && (
+                                <p className="text-xs text-muted-foreground">
+                                  {item.variantTitle}
+                                </p>
+                              )}
+                              {/* Brief product description */}
+                              <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
+                                {getProductBrief(item.product.node.title)}
+                              </p>
+                              
+                              {/* Price with discount */}
+                              <div className="flex items-center gap-2 mt-1">
+                                {hasMultipleProducts ? (
+                                  <>
+                                    <span className="text-xs text-muted-foreground line-through">
+                                      {formatPrice(itemTotal, item.price.currencyCode)}
+                                    </span>
+                                    <span className="font-semibold text-sm text-green-600">
+                                      {formatPrice(itemFinalPrice, item.price.currencyCode)}
+                                    </span>
+                                  </>
+                                ) : (
+                                  <span className="font-semibold text-sm">
+                                    {formatPrice(itemTotal, item.price.currencyCode)}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            
+                            <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-6 w-6 text-destructive hover:text-destructive"
+                                onClick={() => removeItem(item.variantId)}
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                              
+                              <div className="flex items-center gap-1">
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  className="h-6 w-6"
+                                  onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
+                                >
+                                  <Minus className="h-3 w-3" />
+                                </Button>
+                                <span className="w-8 text-center text-sm">{item.quantity}</span>
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  className="h-6 w-6"
+                                  onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
+                                >
+                                  <Plus className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            </div>
                           </div>
+                          
+                          {/* Learn More button */}
+                          <Link 
+                            to={getProductRoute(item.product.node.handle)}
+                            onClick={() => setIsOpen(false)}
+                            className="mt-2 flex items-center gap-1 text-xs text-primary hover:underline"
+                          >
+                            <Info className="h-3 w-3" />
+                            Learn more about this product
+                          </Link>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
 
                     {/* Cross-sell section */}
                     {recommendedProducts.length > 0 && (
                       <div className="mt-6 pt-6 border-t">
-                        <div className="flex items-center gap-2 mb-4">
+                        <div className="flex items-center gap-2 mb-2">
                           <Sparkles className="h-4 w-4 text-primary" />
                           <h3 className="font-semibold text-sm">You Might Also Like</h3>
                         </div>
+                        {!hasMultipleProducts && (
+                          <p className="text-xs text-muted-foreground mb-3">
+                            Add another product and get 10% off your entire order!
+                          </p>
+                        )}
                         <div className="space-y-3">
                           {recommendedProducts.map((product) => {
                             const variant = product.node.variants.edges[0]?.node;
                             const image = product.node.images?.edges?.[0]?.node;
+                            const price = variant ? parseFloat(variant.price.amount) : 0;
+                            const discountedPrice = price * 0.90;
+                            
                             return (
                               <div key={product.node.id} className="flex items-center gap-3 p-3 bg-gradient-to-r from-primary/5 to-transparent rounded-lg border border-primary/10">
                                 <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
@@ -275,10 +384,18 @@ export const CartDrawer = () => {
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <h4 className="font-medium text-xs truncate">{product.node.title}</h4>
+                                  <p className="text-[10px] text-muted-foreground truncate">
+                                    {getProductBrief(product.node.title)}
+                                  </p>
                                   {variant && (
-                                    <p className="text-xs font-semibold text-primary">
-                                      {formatPrice(variant.price.amount, variant.price.currencyCode)}
-                                    </p>
+                                    <div className="flex items-center gap-1.5 mt-0.5">
+                                      <span className="text-[10px] text-muted-foreground line-through">
+                                        {formatPrice(variant.price.amount, variant.price.currencyCode)}
+                                      </span>
+                                      <span className="text-xs font-semibold text-green-600">
+                                        {formatPrice(discountedPrice, variant.price.currencyCode)}
+                                      </span>
+                                    </div>
                                   )}
                                 </div>
                                 <Button
@@ -298,11 +415,27 @@ export const CartDrawer = () => {
                 </ScrollArea>
                 
                 {/* Fixed checkout section */}
-                <div className="flex-shrink-0 space-y-4 p-6 pt-4 border-t bg-background">
+                <div className="flex-shrink-0 space-y-3 p-6 pt-4 border-t bg-background">
+                  {hasMultipleProducts && (
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-muted-foreground">Subtotal</span>
+                      <span className="text-muted-foreground line-through">
+                        {formatPrice(subtotal, items[0]?.price.currencyCode || 'INR')}
+                      </span>
+                    </div>
+                  )}
+                  {hasMultipleProducts && (
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-green-600">Multi-Product Discount</span>
+                      <span className="text-green-600 font-medium">
+                        -{formatPrice(discountAmount, items[0]?.price.currencyCode || 'INR')}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold">Total</span>
                     <span className="text-xl font-bold">
-                      {formatPrice(totalPrice.toString(), items[0]?.price.currencyCode || 'INR')}
+                      {formatPrice(totalPrice, items[0]?.price.currencyCode || 'INR')}
                     </span>
                   </div>
                   
