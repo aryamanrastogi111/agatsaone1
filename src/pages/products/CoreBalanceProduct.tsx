@@ -12,6 +12,7 @@ import appBmi from "@/assets/corebalance-app-bmi.png";
 import appMetrics from "@/assets/corebalance-app-metrics.png";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
@@ -190,6 +191,8 @@ const CoreBalanceProduct = () => {
                   1-Year Warranty
                 </div>
               </div>
+              
+              <MultiProductDiscountBanner variant="compact" className="mt-4" />
             </motion.div>
             
             <motion.div

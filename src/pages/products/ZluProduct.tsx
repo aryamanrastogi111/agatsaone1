@@ -10,6 +10,7 @@ import zluLifestyle from "@/assets/zlu-lifestyle.png";
 import zluTravel from "@/assets/zlu-travel.png";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
   const ref = useRef(null);
@@ -163,6 +164,8 @@ const ZluProduct = () => {
                   7-Day Returns (Mfg. Defects)
                 </div>
               </div>
+              
+              <MultiProductDiscountBanner variant="compact" className="mt-4" />
             </motion.div>
             
             <motion.div
