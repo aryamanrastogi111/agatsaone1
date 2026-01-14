@@ -9,11 +9,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Sparkles } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Shopify checkout subdomain (TLS is now Connected)
 const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
@@ -21,6 +23,7 @@ const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
+  const { products, addToCart } = useShopifyProduct();
 
   const {
     items,
@@ -36,6 +39,15 @@ export const CartDrawer = () => {
     (sum, item) => sum + parseFloat(item.price.amount) * item.quantity,
     0
   );
+
+  // Get recommended products (products not in cart)
+  const cartVariantIds = items.map(item => item.variantId);
+  const recommendedProducts = products
+    .filter(product => {
+      const variantId = product.node.variants.edges[0]?.node.id;
+      return !cartVariantIds.includes(variantId);
+    })
+    .slice(0, 3);
 
   const handleCheckout = async () => {
     try {
@@ -96,6 +108,10 @@ export const CartDrawer = () => {
     }).format(parseFloat(amount));
   };
 
+  const handleAddRecommended = (product: typeof products[0]) => {
+    addToCart(product, 1);
+  };
+
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
@@ -109,28 +125,75 @@ export const CartDrawer = () => {
           </Button>
         </SheetTrigger>
         
-        <SheetContent className="w-full sm:max-w-lg flex flex-col h-full">
-          <SheetHeader className="flex-shrink-0">
+        <SheetContent className="w-full sm:max-w-lg flex flex-col h-full p-0">
+          <SheetHeader className="flex-shrink-0 p-6 pb-0">
             <SheetTitle>Shopping Cart</SheetTitle>
             <SheetDescription>
               {totalItems === 0 ? "Your cart is empty" : `${totalItems} item${totalItems !== 1 ? 's' : ''} in your cart`}
             </SheetDescription>
           </SheetHeader>
           
-          <div className="flex flex-col flex-1 pt-6 min-h-0">
+          <div className="flex flex-col flex-1 min-h-0">
             {items.length === 0 ? (
-              <div className="flex-1 flex items-center justify-center">
-                <div className="text-center">
-                  <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">Your cart is empty</p>
-                  <p className="text-sm text-muted-foreground mt-2">Add some products to get started</p>
+              <div className="flex-1 flex flex-col p-6">
+                <div className="flex-1 flex items-center justify-center">
+                  <div className="text-center">
+                    <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                    <p className="text-muted-foreground">Your cart is empty</p>
+                    <p className="text-sm text-muted-foreground mt-2">Add some products to get started</p>
+                  </div>
                 </div>
+
+                {/* Cross-sell for empty cart */}
+                {recommendedProducts.length > 0 && (
+                  <div className="mt-6 pt-6 border-t">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Sparkles className="h-4 w-4 text-primary" />
+                      <h3 className="font-semibold text-sm">Products You Might Like</h3>
+                    </div>
+                    <div className="space-y-3">
+                      {recommendedProducts.map((product) => {
+                        const variant = product.node.variants.edges[0]?.node;
+                        const image = product.node.images?.edges?.[0]?.node;
+                        return (
+                          <div key={product.node.id} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
+                            <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
+                              {image && (
+                                <img
+                                  src={image.url}
+                                  alt={product.node.title}
+                                  className="w-full h-full object-cover"
+                                />
+                              )}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-medium text-xs truncate">{product.node.title}</h4>
+                              {variant && (
+                                <p className="text-xs font-semibold text-primary">
+                                  {formatPrice(variant.price.amount, variant.price.currencyCode)}
+                                </p>
+                              )}
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="flex-shrink-0 h-8 text-xs"
+                              onClick={() => handleAddRecommended(product)}
+                            >
+                              Add
+                            </Button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <>
                 {/* Scrollable items area */}
-                <div className="flex-1 overflow-y-auto pr-2 min-h-0">
-                  <div className="space-y-4">
+                <ScrollArea className="flex-1 px-6">
+                  <div className="space-y-4 py-4">
                     {items.map((item) => (
                       <div key={item.variantId} className="flex gap-4 p-3 bg-muted/30 rounded-lg">
                         <div className="w-16 h-16 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
@@ -187,11 +250,55 @@ export const CartDrawer = () => {
                         </div>
                       </div>
                     ))}
+
+                    {/* Cross-sell section */}
+                    {recommendedProducts.length > 0 && (
+                      <div className="mt-6 pt-6 border-t">
+                        <div className="flex items-center gap-2 mb-4">
+                          <Sparkles className="h-4 w-4 text-primary" />
+                          <h3 className="font-semibold text-sm">You Might Also Like</h3>
+                        </div>
+                        <div className="space-y-3">
+                          {recommendedProducts.map((product) => {
+                            const variant = product.node.variants.edges[0]?.node;
+                            const image = product.node.images?.edges?.[0]?.node;
+                            return (
+                              <div key={product.node.id} className="flex items-center gap-3 p-3 bg-gradient-to-r from-primary/5 to-transparent rounded-lg border border-primary/10">
+                                <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
+                                  {image && (
+                                    <img
+                                      src={image.url}
+                                      alt={product.node.title}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  )}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-medium text-xs truncate">{product.node.title}</h4>
+                                  {variant && (
+                                    <p className="text-xs font-semibold text-primary">
+                                      {formatPrice(variant.price.amount, variant.price.currencyCode)}
+                                    </p>
+                                  )}
+                                </div>
+                                <Button
+                                  size="sm"
+                                  className="flex-shrink-0 h-8 text-xs"
+                                  onClick={() => handleAddRecommended(product)}
+                                >
+                                  Add
+                                </Button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
+                </ScrollArea>
                 
                 {/* Fixed checkout section */}
-                <div className="flex-shrink-0 space-y-4 pt-4 border-t bg-background">
+                <div className="flex-shrink-0 space-y-4 p-6 pt-4 border-t bg-background">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold">Total</span>
                     <span className="text-xl font-bold">
