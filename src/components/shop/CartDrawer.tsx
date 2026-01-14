@@ -338,16 +338,23 @@ export const CartDrawer = () => {
                               )}
                             </div>
                             <div className="flex gap-1.5">
-                              {shopifyProduct && (
-                                <Button
-                                  size="sm"
-                                  className="h-8 px-2 text-xs"
-                                  onClick={() => handleAddRecommended(shopifyProduct)}
-                                >
-                                  <ShoppingCart className="h-3 w-3 mr-1" />
-                                  Add
-                                </Button>
-                              )}
+                              <Button
+                                size="sm"
+                                className="h-8 px-2 text-xs"
+                                onClick={() => {
+                                  if (shopifyProduct) {
+                                    handleAddRecommended(shopifyProduct);
+                                  } else {
+                                    toast.info(`${fallback.title} coming soon!`, {
+                                      description: "This product will be available for purchase shortly.",
+                                      position: "top-center",
+                                    });
+                                  }
+                                }}
+                              >
+                                <ShoppingCart className="h-3 w-3 mr-1" />
+                                Add
+                              </Button>
                               <Link to={fallback.link} onClick={() => setIsOpen(false)}>
                                 <Button size="sm" variant="outline" className="h-8 px-2 text-xs">
                                   Explore
@@ -612,12 +619,23 @@ export const CartDrawer = () => {
                                   </div>
                                 </div>
                                 <div className="flex gap-2 px-3 pb-3">
-                                  {shopifyProduct && (
-                                    <Button size="sm" className="h-8 px-3 text-xs" onClick={() => handleAddRecommended(shopifyProduct)}>
-                                      <ShoppingCart className="h-3 w-3 mr-1.5" />
-                                      Add
-                                    </Button>
-                                  )}
+                                  <Button
+                                    size="sm"
+                                    className="h-8 px-3 text-xs"
+                                    onClick={() => {
+                                      if (shopifyProduct) {
+                                        handleAddRecommended(shopifyProduct);
+                                      } else {
+                                        toast.info(`${fallback.title} coming soon!`, {
+                                          description: "This product will be available for purchase shortly.",
+                                          position: "top-center",
+                                        });
+                                      }
+                                    }}
+                                  >
+                                    <ShoppingCart className="h-3 w-3 mr-1.5" />
+                                    Add
+                                  </Button>
                                   <Link to={fallback.link} onClick={() => setIsOpen(false)}>
                                     <Button size="sm" variant="outline" className="h-8 px-3 text-xs">
                                       Explore More
