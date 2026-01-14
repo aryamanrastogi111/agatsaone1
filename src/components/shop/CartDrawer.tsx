@@ -30,21 +30,42 @@ const PRODUCT_ROUTES: Record<string, string> = {
   [PRODUCT_HANDLES.easytouchRhythm]: "/products/easytouch-rhythm",
 };
 
-// Brief product descriptions
-const PRODUCT_BRIEFS: Record<string, string> = {
-  "sanket": "Portable 12-lead ECG device for heart monitoring",
-  "zlu": "Non-invasive sleep aid for natural, restful sleep",
-  "corebalance": "Advanced body composition & BMI analyzer",
-  "easytouch": "Smart health band tracking 5 body rhythms",
-  "rhythm": "Smart health band tracking 5 body rhythms",
+// Detailed product info for cross-sell
+const PRODUCT_DETAILS: Record<string, { brief: string; highlights: string[]; badge?: string }> = {
+  "sanket": {
+    brief: "Portable 12-lead ECG device",
+    highlights: ["Medical-grade accuracy", "Instant PDF reports", "No wires or gels"],
+    badge: "Best Seller",
+  },
+  "zlu": {
+    brief: "Drug-free sleep aid device",
+    highlights: ["Fall asleep in 20 mins", "No side effects", "Clinically tested"],
+    badge: "New",
+  },
+  "corebalance": {
+    brief: "Smart body composition scale",
+    highlights: ["10+ body metrics", "Track muscle & fat", "App connected"],
+  },
+  "easytouch": {
+    brief: "5-rhythm health tracker",
+    highlights: ["Daily rhythm score", "Energy pattern insights", "24/7 monitoring"],
+  },
+  "rhythm": {
+    brief: "5-rhythm health tracker",
+    highlights: ["Daily rhythm score", "Energy pattern insights", "24/7 monitoring"],
+  },
+};
+
+const getProductDetails = (title: string): { brief: string; highlights: string[]; badge?: string } => {
+  const lowerTitle = title.toLowerCase();
+  for (const [key, details] of Object.entries(PRODUCT_DETAILS)) {
+    if (lowerTitle.includes(key)) return details;
+  }
+  return { brief: "Premium health device", highlights: ["Award-winning technology", "Easy to use"] };
 };
 
 const getProductBrief = (title: string): string => {
-  const lowerTitle = title.toLowerCase();
-  for (const [key, brief] of Object.entries(PRODUCT_BRIEFS)) {
-    if (lowerTitle.includes(key)) return brief;
-  }
-  return "Premium health monitoring device";
+  return getProductDetails(title).brief;
 };
 
 const getProductRoute = (handle: string): string => {
@@ -370,11 +391,21 @@ export const CartDrawer = () => {
                             const image = product.node.images?.edges?.[0]?.node;
                             const price = variant ? parseFloat(variant.price.amount) : 0;
                             const discountedPrice = price * 0.90;
+                            const details = getProductDetails(product.node.title);
                             
                             return (
                               <div key={product.node.id} className="p-3 bg-gradient-to-r from-primary/5 to-transparent rounded-lg border border-primary/10">
-                                <div className="flex items-center gap-3">
-                                  <div className="w-12 h-12 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
+                                {/* Badge */}
+                                {details.badge && (
+                                  <div className="mb-2">
+                                    <span className="inline-block px-2 py-0.5 bg-primary text-primary-foreground text-[9px] font-bold rounded-full uppercase tracking-wide">
+                                      {details.badge}
+                                    </span>
+                                  </div>
+                                )}
+                                
+                                <div className="flex items-start gap-3">
+                                  <div className="w-14 h-14 bg-secondary/20 rounded-md overflow-hidden flex-shrink-0">
                                     {image && (
                                       <img
                                         src={image.url}
@@ -384,31 +415,44 @@ export const CartDrawer = () => {
                                     )}
                                   </div>
                                   <div className="flex-1 min-w-0">
-                                    <h4 className="font-medium text-xs truncate">{product.node.title}</h4>
-                                    <p className="text-[10px] text-muted-foreground truncate">
-                                      {getProductBrief(product.node.title)}
+                                    <h4 className="font-semibold text-sm leading-tight">{product.node.title}</h4>
+                                    <p className="text-[11px] text-muted-foreground mt-0.5">
+                                      {details.brief}
                                     </p>
                                     {variant && (
-                                      <div className="flex items-center gap-1.5 mt-0.5">
-                                        <span className="text-[10px] text-muted-foreground line-through">
+                                      <div className="flex items-center gap-1.5 mt-1">
+                                        <span className="text-xs text-muted-foreground line-through">
                                           {formatPrice(variant.price.amount, variant.price.currencyCode)}
                                         </span>
-                                        <span className="text-xs font-semibold text-green-600">
+                                        <span className="text-sm font-bold text-green-600">
                                           {formatPrice(discountedPrice, variant.price.currencyCode)}
                                         </span>
                                       </div>
                                     )}
                                   </div>
                                 </div>
+                                
+                                {/* Key highlights */}
+                                <div className="mt-2 flex flex-wrap gap-1">
+                                  {details.highlights.map((highlight, idx) => (
+                                    <span 
+                                      key={idx}
+                                      className="inline-flex items-center text-[9px] px-1.5 py-0.5 bg-muted rounded text-muted-foreground"
+                                    >
+                                      ✓ {highlight}
+                                    </span>
+                                  ))}
+                                </div>
+                                
                                 {/* Action buttons */}
-                                <div className="flex items-center gap-1.5 mt-3">
+                                <div className="flex items-center gap-2 mt-3">
                                   <Button
                                     size="sm"
-                                    className="h-7 text-[10px] px-2"
+                                    className="flex-1 h-8 text-xs"
                                     onClick={() => handleAddRecommended(product)}
                                   >
-                                    <Plus className="h-3 w-3 mr-0.5" />
-                                    Add
+                                    <Plus className="h-3 w-3 mr-1" />
+                                    Add to Cart
                                   </Button>
                                   <Link 
                                     to={getProductRoute(product.node.handle)}
@@ -417,10 +461,9 @@ export const CartDrawer = () => {
                                     <Button
                                       size="sm"
                                       variant="outline"
-                                      className="h-7 text-[10px] px-2"
+                                      className="h-8 text-xs px-3"
                                     >
-                                      <Info className="h-3 w-3 mr-0.5" />
-                                      Learn More
+                                      Details
                                     </Button>
                                   </Link>
                                 </div>
