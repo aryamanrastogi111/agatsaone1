@@ -79,13 +79,48 @@ export function HeroSection() {
           </motion.div>
           
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
             className="text-4xl font-bold text-foreground leading-tight"
           >
-            Your Health,{" "}
-            <span className="text-primary">Simplified</span>
+            {/* Staggered letter animation */}
+            <span className="inline-block overflow-hidden">
+              {"Your Health,".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ y: 40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{
+                    duration: 0.35,
+                    delay: 0.15 + i * 0.025,
+                    ease: [0.215, 0.61, 0.355, 1],
+                  }}
+                  className="inline-block"
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </span>{" "}
+            <span className="relative inline-block">
+              {/* Gradient shimmer text */}
+              <motion.span
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.5 }}
+                className="relative inline-block bg-gradient-to-r from-primary via-cyan-400 to-primary bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite] bg-clip-text text-transparent"
+              >
+                Simplified
+              </motion.span>
+              
+              {/* Glowing underline */}
+              <motion.span
+                className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-primary via-cyan-400 to-primary rounded-full shadow-[0_0_15px_rgba(0,186,199,0.4)]"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ delay: 0.7, duration: 0.6, ease: "easeOut" }}
+              />
+            </span>
           </motion.h1>
         </div>
 
