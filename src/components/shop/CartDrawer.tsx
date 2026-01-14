@@ -401,26 +401,25 @@ export const CartDrawer = () => {
                                   </div>
                                 </div>
                                 {/* Action buttons */}
-                                <div className="flex items-center gap-2 mt-3">
+                                <div className="flex items-center gap-1.5 mt-3">
                                   <Button
                                     size="sm"
-                                    className="flex-1 h-8 text-xs"
+                                    className="h-7 text-[10px] px-2"
                                     onClick={() => handleAddRecommended(product)}
                                   >
-                                    <Plus className="h-3 w-3 mr-1" />
-                                    Add to Cart
+                                    <Plus className="h-3 w-3 mr-0.5" />
+                                    Add
                                   </Button>
                                   <Link 
                                     to={getProductRoute(product.node.handle)}
                                     onClick={() => setIsOpen(false)}
-                                    className="flex-1"
                                   >
                                     <Button
                                       size="sm"
                                       variant="outline"
-                                      className="w-full h-8 text-xs"
+                                      className="h-7 text-[10px] px-2"
                                     >
-                                      <Info className="h-3 w-3 mr-1" />
+                                      <Info className="h-3 w-3 mr-0.5" />
                                       Learn More
                                     </Button>
                                   </Link>
