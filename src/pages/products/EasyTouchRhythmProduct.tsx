@@ -255,7 +255,7 @@ const EasyTouchRhythmProduct = () => {
       </section>
 
       {/* Section 2: Problem Statement */}
-      <section className="relative py-24 lg:py-32 overflow-hidden">
+      <section className="relative py-24 lg:py-32 min-h-[560px] lg:min-h-[640px] overflow-hidden flex items-center">
         {/* Faded background image */}
         <div className="absolute inset-0">
           <img
