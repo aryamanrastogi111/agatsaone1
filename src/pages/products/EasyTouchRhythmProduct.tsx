@@ -19,6 +19,7 @@ import kineticTrendsImg from "@/assets/easytouch-kinetic-trends.png";
 import mealLoadImg from "@/assets/easytouch-meal-load.png";
 import mealTimelineImg from "@/assets/easytouch-meal-timeline.png";
 import mealAftermathImg from "@/assets/easytouch-meal-aftermath.png";
+import mealLifestyleImg from "@/assets/easytouch-meal-lifestyle.jpg";
 
 // Image assets from shop.myeasytouch.com
 const images = {
@@ -678,8 +679,17 @@ const EasyTouchRhythmProduct = () => {
       </section>
 
       {/* Section 9: Meal Logging */}
-      <section className="py-24 lg:py-32 bg-muted/30">
-        <div className="container">
+      <section className="relative py-32 lg:py-48 overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={mealLifestyleImg}
+            alt="Woman enjoying a meal while wearing EasyTouch Rhythm"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-l from-background via-background/80 to-transparent" />
+        </div>
+        
+        <div className="container relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection>
               <div className="text-primary font-medium mb-2">Meal Insights</div>
