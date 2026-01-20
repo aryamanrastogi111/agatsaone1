@@ -6,6 +6,7 @@ import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { FomoCounter } from "@/components/shop/FomoCounter";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import {
   Carousel,
@@ -247,7 +248,7 @@ const EasyTouchRhythmProduct = () => {
                   <span className="text-2xl font-bold text-foreground">₹4,999</span>
                   <span className="text-sm text-muted-foreground line-through">₹7,999</span>
                 </div>
-                <div className="text-xs text-orange-600 mt-1">Only 4 left in stock!</div>
+                <FomoCounter productHandle="easytouch-rhythm" lowStockThreshold={20} className="mt-2" />
               </motion.div>
             </motion.div>
           </div>
