@@ -219,6 +219,30 @@ const EasyTouchRhythmProduct = () => {
               </div>
               
               <MultiProductDiscountBanner variant="compact" className="mt-4" />
+              
+              {/* Bonus Offer Section */}
+              <div className="mt-4 space-y-3">
+                <div className="text-xs text-muted-foreground text-center">also</div>
+                
+                <div className="bg-orange-50 dark:bg-orange-950/30 rounded-xl p-3 border border-orange-200 dark:border-orange-800/50">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-base">🍴</span>
+                    <span className="text-sm font-medium text-foreground">Detailed Meal Logging</span>
+                    <span className="text-xs text-muted-foreground line-through">₹1,200/yr</span>
+                    <span className="text-sm font-bold text-emerald-600">FREE</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-200 dark:bg-orange-800 text-orange-700 dark:text-orange-200 font-medium">Limited Time</span>
+                  </div>
+                </div>
+                
+                {/* FOMO Counter */}
+                <FomoCounter productHandle="easytouch-rhythm" lowStockThreshold={20} className="justify-center" />
+                
+                {/* Delivery Estimate */}
+                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                  <span>📦</span>
+                  <span>Delivers by <span className="font-medium text-foreground">Fri, Jan 24</span></span>
+                </div>
+              </div>
             </motion.div>
             
             <motion.div
@@ -241,36 +265,12 @@ const EasyTouchRhythmProduct = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="absolute -bottom-4 right-4 lg:right-0 bg-card border rounded-2xl p-5 shadow-lg min-w-[280px]"
+                className="absolute -bottom-4 right-4 lg:right-0 bg-card border rounded-2xl p-4 shadow-lg"
               >
-                <div className="text-xs text-amber-500 font-semibold mb-2 flex items-center gap-1">
-                  <span>✨</span> INTRODUCTORY OFFER
-                </div>
-                <div className="flex items-baseline gap-2 mb-1">
+                <div className="text-xs text-primary font-medium mb-1">Introductory Offer</div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-bold text-foreground">₹4,999</span>
                   <span className="text-sm text-muted-foreground line-through">₹7,999</span>
-                  <span className="text-2xl font-bold text-primary">₹4,999</span>
-                </div>
-                
-                <div className="text-xs text-muted-foreground text-center mb-3">also</div>
-                
-                {/* Bonus Offer */}
-                <div className="bg-orange-50 dark:bg-orange-950/30 rounded-xl p-3 mb-3 border border-orange-200 dark:border-orange-800/50">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-base">🍴</span>
-                    <span className="text-sm font-medium text-foreground">Detailed Meal Logging</span>
-                    <span className="text-xs text-muted-foreground line-through">₹1,200/yr</span>
-                    <span className="text-sm font-bold text-emerald-600">FREE</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-200 dark:bg-orange-800 text-orange-700 dark:text-orange-200 font-medium">Limited Time</span>
-                  </div>
-                </div>
-                
-                {/* FOMO Counter */}
-                <FomoCounter productHandle="easytouch-rhythm" lowStockThreshold={20} className="justify-center mb-2" />
-                
-                {/* Delivery Estimate */}
-                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                  <span>📦</span>
-                  <span>Delivers by <span className="font-medium text-foreground">Fri, Jan 24</span></span>
                 </div>
               </motion.div>
             </motion.div>
