@@ -255,8 +255,18 @@ const EasyTouchRhythmProduct = () => {
       </section>
 
       {/* Section 2: Problem Statement */}
-      <section className="py-24 lg:py-32 bg-muted/30">
-        <div className="container max-w-4xl">
+      <section className="relative py-24 lg:py-32 overflow-hidden">
+        {/* Faded background image */}
+        <div className="absolute inset-0">
+          <img
+            src={fitnessBgImg}
+            alt=""
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+        </div>
+        
+        <div className="container max-w-4xl relative">
           <AnimatedSection>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-center mb-12 leading-tight">
               Your body is talking.{" "}
