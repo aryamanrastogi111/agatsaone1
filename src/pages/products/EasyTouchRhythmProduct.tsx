@@ -615,8 +615,17 @@ const EasyTouchRhythmProduct = () => {
       </section>
 
       {/* Section 8: Movement Story */}
-      <section className="py-24 lg:py-32 bg-muted/30">
-        <div className="container">
+      <section className="relative py-32 lg:py-48 overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={images.productHero2}
+            alt="Person wearing EasyTouch Rhythm"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
+        </div>
+        
+        <div className="container relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection className="order-2 lg:order-1">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
