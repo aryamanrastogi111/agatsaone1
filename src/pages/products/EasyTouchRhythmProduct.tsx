@@ -14,6 +14,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import kineticFlowImg from "@/assets/easytouch-kinetic-flow.png";
+import kineticTrendsImg from "@/assets/easytouch-kinetic-trends.png";
 
 // Image assets from shop.myeasytouch.com
 const images = {
@@ -613,33 +615,53 @@ const EasyTouchRhythmProduct = () => {
       </section>
 
       {/* Section 8: Movement Story */}
-      <section className="relative py-32 lg:py-48 overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={images.productHero2}
-            alt="Person wearing EasyTouch Rhythm"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-        </div>
-        
-        <div className="container relative">
-          <AnimatedSection className="max-w-xl">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
-              Your Body Speaks When You Move
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6">
-              Movement is more than exercise. It's a conversation between you and your body. 
-              EasyTouch Rhythm listens—and translates.
-            </p>
-            <p className="text-lg text-foreground font-medium mb-8">
-              Movement done at the wrong time can exhaust instead of strengthen.
-            </p>
-            <Button variant="outline" size="lg" className="gap-2">
-              Understand Your Kinetic Rhythm
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </AnimatedSection>
+      <section className="py-24 lg:py-32 bg-muted/30">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <AnimatedSection className="order-2 lg:order-1">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
+                Your Body Speaks When You Move
+              </h2>
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6">
+                Movement is more than exercise. It's a conversation between you and your body. 
+                EasyTouch Rhythm listens—and translates.
+              </p>
+              <p className="text-lg text-foreground font-medium mb-8">
+                Movement done at the wrong time can exhaust instead of strengthen.
+              </p>
+              <Button variant="outline" size="lg" className="gap-2">
+                Understand Your Kinetic Rhythm
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </AnimatedSection>
+
+            <AnimatedSection className="order-1 lg:order-2">
+              <Carousel className="w-full max-w-sm mx-auto">
+                <CarouselContent>
+                  <CarouselItem>
+                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-4 shadow-2xl">
+                      <img 
+                        src={kineticFlowImg} 
+                        alt="Kinetic & Fuel Dashboard - Balanced Flow" 
+                        className="w-full rounded-2xl"
+                      />
+                    </div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-4 shadow-2xl">
+                      <img 
+                        src={kineticTrendsImg} 
+                        alt="7-Day Activity Trends" 
+                        className="w-full rounded-2xl"
+                      />
+                    </div>
+                  </CarouselItem>
+                </CarouselContent>
+                <CarouselPrevious className="-left-4 lg:-left-6" />
+                <CarouselNext className="-right-4 lg:-right-6" />
+              </Carousel>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 
