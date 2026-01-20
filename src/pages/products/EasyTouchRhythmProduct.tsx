@@ -705,10 +705,17 @@ const EasyTouchRhythmProduct = () => {
                 ))}
               </ul>
               
-              <Button variant="outline" className="gap-2">
-                <Play className="h-4 w-4" />
-                See How Meal Insights Work
-              </Button>
+              <div className="rounded-xl overflow-hidden shadow-lg max-w-xs">
+                <iframe
+                  width="280"
+                  height="158"
+                  src="https://www.youtube.com/embed/NIAIfnCV4Io"
+                  title="Meal Insights Demo"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full aspect-video"
+                />
+              </div>
             </AnimatedSection>
             
             <AnimatedSection>
