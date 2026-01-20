@@ -754,6 +754,15 @@ const EasyTouchRhythmProduct = () => {
                   <CarouselItem>
                     <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-4 shadow-2xl">
                       <img 
+                        src={mealAftermathImg} 
+                        alt="Metabolic Aftermath Insights" 
+                        className="w-full rounded-2xl"
+                      />
+                    </div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-4 shadow-2xl">
+                      <img 
                         src={mealLoadImg} 
                         alt="Live Meal Load Dashboard" 
                         className="w-full rounded-2xl"
@@ -765,15 +774,6 @@ const EasyTouchRhythmProduct = () => {
                       <img 
                         src={mealTimelineImg} 
                         alt="12-hour Meal Load Timeline" 
-                        className="w-full rounded-2xl"
-                      />
-                    </div>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-4 shadow-2xl">
-                      <img 
-                        src={mealAftermathImg} 
-                        alt="Metabolic Aftermath Insights" 
                         className="w-full rounded-2xl"
                       />
                     </div>
