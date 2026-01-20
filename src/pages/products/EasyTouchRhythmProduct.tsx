@@ -1020,30 +1020,44 @@ const EasyTouchRhythmProduct = () => {
             </div>
           </AnimatedSection>
           
-          {/* Testimonials */}
+          {/* Testimonials Preview */}
           <AnimatedSection className="mt-16">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-semibold text-foreground">Customer Reviews</h3>
+              <Button 
+                variant="outline" 
+                onClick={() => document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' })}
+                className="gap-2"
+              >
+                View All Reviews
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
             <div className="grid md:grid-cols-3 gap-6">
               {[
                 {
                   quote: "For the first time, I understand why some days feel harder than others. It's not just sleep—it's everything working together.",
                   name: "Priya S.",
                   title: "Working Professional",
+                  stars: 5,
                 },
                 {
                   quote: "I stopped chasing arbitrary fitness goals. Now I move in rhythm with my body, and I've never felt better.",
                   name: "Rahul M.",
                   title: "Fitness Enthusiast",
+                  stars: 5,
                 },
                 {
                   quote: "The meal insights changed how I think about food. It's not about restriction—it's about understanding.",
                   name: "Ananya K.",
                   title: "Health-Conscious Mom",
+                  stars: 5,
                 },
               ].map((testimonial, i) => (
                 <div key={i} className="bg-card border rounded-2xl p-6">
                   <div className="flex gap-1 mb-4">
                     {[...Array(5)].map((_, j) => (
-                      <Star key={j} className="h-4 w-4 fill-primary text-primary" />
+                      <Star key={j} className={`h-4 w-4 ${j < testimonial.stars ? 'fill-primary text-primary' : 'text-muted-foreground'}`} />
                     ))}
                   </div>
                   <p className="text-muted-foreground mb-4 italic">"{testimonial.quote}"</p>
@@ -1055,6 +1069,71 @@ const EasyTouchRhythmProduct = () => {
               ))}
             </div>
           </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section id="reviews-section" className="py-24 lg:py-32 bg-muted/30">
+        <div className="container">
+          <AnimatedSection className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              What Our Customers Say
+            </h2>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                ))}
+              </div>
+              <span className="text-lg font-semibold text-foreground">4.8</span>
+              <span className="text-muted-foreground">based on 20 reviews</span>
+            </div>
+          </AnimatedSection>
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[
+              { quote: "For the first time, I understand why some days feel harder than others. It's not just sleep—it's everything working together.", name: "Priya S.", title: "Working Professional", stars: 5 },
+              { quote: "I stopped chasing arbitrary fitness goals. Now I move in rhythm with my body, and I've never felt better.", name: "Rahul M.", title: "Fitness Enthusiast", stars: 5 },
+              { quote: "The meal insights changed how I think about food. It's not about restriction—it's about understanding.", name: "Ananya K.", title: "Health-Conscious Mom", stars: 5 },
+              { quote: "Amazing product! The rhythm score helps me plan my day better. Only wish the battery lasted a bit longer.", name: "Vikram T.", title: "Software Engineer", stars: 4 },
+              { quote: "My doctor was impressed with the data I could share from my band. It's like having a health assistant on my wrist.", name: "Sunita R.", title: "Retired Teacher", stars: 5 },
+              { quote: "The stress tracking feature helped me identify triggers I never knew about. Life-changing!", name: "Aditya P.", title: "Startup Founder", stars: 5 },
+              { quote: "Good product overall. The app could use some improvements but the hardware is solid.", name: "Meera J.", title: "Graphic Designer", stars: 4 },
+              { quote: "I've tried many fitness bands, but this is the first one that actually helps me understand my body.", name: "Karthik N.", title: "Marathon Runner", stars: 5 },
+              { quote: "The circadian rhythm tracking improved my sleep quality within weeks. Highly recommend!", name: "Deepa M.", title: "Night Shift Nurse", stars: 5 },
+              { quote: "Love how it tracks my nervous system balance. Perfect for managing work stress.", name: "Arjun S.", title: "Investment Banker", stars: 5 },
+              { quote: "Great value for money. Does everything a premium band does at half the price.", name: "Pooja V.", title: "College Student", stars: 4 },
+              { quote: "The metabolic insights helped me lose 8 kgs in 3 months without any crash diets.", name: "Ramesh K.", title: "Business Owner", stars: 5 },
+              { quote: "Comfortable to wear all day and the battery lasts almost a week. Very happy!", name: "Sneha L.", title: "Yoga Instructor", stars: 5 },
+              { quote: "App syncing could be faster, but the insights are worth the wait. Great product!", name: "Nikhil G.", title: "Data Analyst", stars: 4 },
+              { quote: "Bought one for my parents too. The health alerts gave us peace of mind.", name: "Kavitha R.", title: "IT Manager", stars: 5 },
+              { quote: "The daily rhythm score is addictive! I check it every morning to plan my day.", name: "Sanjay D.", title: "Sales Executive", stars: 5 },
+              { quote: "Finally a health device made in India that rivals international brands. Proud to wear it!", name: "Lakshmi B.", title: "Government Officer", stars: 5 },
+              { quote: "Wish it had more color options, but functionality is excellent. Gets the job done.", name: "Amit H.", title: "Freelance Writer", stars: 4 },
+              { quote: "Customer support was helpful when I had setup issues. Great after-sales service.", name: "Rekha P.", title: "Homemaker", stars: 5 },
+              { quote: "The kinetic rhythm feature helped me optimize my workout timing. No more burnouts!", name: "Varun C.", title: "Gym Trainer", stars: 5 },
+            ].map((review, i) => (
+              <motion.div 
+                key={i} 
+                className="bg-card border rounded-2xl p-5"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex gap-1 mb-3">
+                  {[...Array(5)].map((_, j) => (
+                    <Star key={j} className={`h-4 w-4 ${j < review.stars ? 'fill-primary text-primary' : 'text-muted-foreground'}`} />
+                  ))}
+                </div>
+                <p className="text-muted-foreground mb-4 text-sm italic">"{review.quote}"</p>
+                <div>
+                  <div className="font-semibold text-foreground text-sm">{review.name}</div>
+                  <div className="text-xs text-muted-foreground">{review.title}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
