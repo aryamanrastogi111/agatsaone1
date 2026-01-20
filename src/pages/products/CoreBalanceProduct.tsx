@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { addBusinessDays, format } from "date-fns";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
 import { Check, ShoppingCart, Scale, Activity, Droplets, Zap, Heart, TrendingUp, Users, Home, Dumbbell, Building2, Shield, ArrowRight, Star, Truck, ShieldCheck, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import appMetrics from "@/assets/corebalance-app-metrics.png";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
+import { FomoCounter } from "@/components/shop/FomoCounter";
 
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
@@ -193,6 +195,29 @@ const CoreBalanceProduct = () => {
               </div>
               
               <MultiProductDiscountBanner variant="compact" className="mt-4" />
+              
+              {/* Bonus Offer Section */}
+              <div className="mt-4 space-y-3">
+                <div className="text-xs text-muted-foreground text-center">also</div>
+                
+                <div className="bg-emerald-50 dark:bg-emerald-950/30 rounded-xl p-3 border border-emerald-200 dark:border-emerald-800/50">
+                  <div className="flex items-center justify-center gap-2 flex-wrap">
+                    <span className="text-base">⚖️</span>
+                    <span className="text-sm font-medium text-foreground">10+ Body Metrics</span>
+                    <span className="text-sm font-bold text-emerald-600">FREE App</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-emerald-800 text-emerald-700 dark:text-emerald-200 font-medium">Limited Time</span>
+                  </div>
+                </div>
+                
+                {/* FOMO Counter */}
+                <FomoCounter productHandle="corebalance" lowStockThreshold={20} className="justify-center" />
+                
+                {/* Delivery Estimate */}
+                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                  <span>📦</span>
+                  <span>Delivers by <span className="font-medium text-foreground">{format(addBusinessDays(new Date(), 3), "EEE, MMM d")}</span></span>
+                </div>
+              </div>
             </motion.div>
             
             <motion.div
