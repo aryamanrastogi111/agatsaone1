@@ -257,11 +257,12 @@ const EasyTouchRhythmProduct = () => {
       {/* Section 2: Problem Statement */}
       <section className="relative py-24 lg:py-32 min-h-[560px] lg:min-h-[640px] overflow-hidden flex items-center">
         {/* Faded background image */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 w-full h-full">
           <img
             src={fitnessBgImg}
             alt=""
-            className="w-full h-full object-cover opacity-40"
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
+            style={{ minWidth: '100%', minHeight: '100%' }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background/70" />
         </div>
