@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { addBusinessDays, format } from "date-fns";
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -240,7 +241,7 @@ const EasyTouchRhythmProduct = () => {
                 {/* Delivery Estimate */}
                 <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                   <span>📦</span>
-                  <span>Delivers by <span className="font-medium text-foreground">Fri, Jan 24</span></span>
+                  <span>Delivers by <span className="font-medium text-foreground">{format(addBusinessDays(new Date(), 3), "EEE, MMM d")}</span></span>
                 </div>
               </div>
             </motion.div>
