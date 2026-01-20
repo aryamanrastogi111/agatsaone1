@@ -691,7 +691,7 @@ const EasyTouchRhythmProduct = () => {
         
         <div className="container relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <AnimatedSection>
+            <AnimatedSection className="bg-background/80 backdrop-blur-sm rounded-2xl p-6 lg:p-8">
               <div className="text-primary font-medium mb-2">Meal Insights</div>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                 Meal Logging That Understands Your Body
