@@ -1096,14 +1096,14 @@ const EasyTouchRhythmProduct = () => {
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[
-              { quote: "For the first time, I understand why some days feel harder than others. It's not just sleep—it's everything working together.", name: "Priya S.", title: "Working Professional", stars: 5, image: reviewImg1 },
-              { quote: "I stopped chasing arbitrary fitness goals. Now I move in rhythm with my body, and I've never felt better.", name: "Rahul M.", title: "Fitness Enthusiast", stars: 5, image: reviewImg2 },
+              { quote: "For the first time, I understand why some days feel harder than others. It's not just sleep—it's everything working together.", name: "Priya S.", title: "Working Professional", stars: 5, image: reviewImg4 },
+              { quote: "I stopped chasing arbitrary fitness goals. Now I move in rhythm with my body, and I've never felt better.", name: "Rahul M.", title: "Fitness Enthusiast", stars: 5, image: reviewImg1 },
               { quote: "The meal insights changed how I think about food. It's not about restriction—it's about understanding.", name: "Ananya K.", title: "Health-Conscious Mom", stars: 5 },
-              { quote: "Amazing product! The rhythm score helps me plan my day better. Only wish the battery lasted a bit longer.", name: "Vikram T.", title: "Software Engineer", stars: 4 },
-              { quote: "My doctor was impressed with the data I could share from my band. It's like having a health assistant on my wrist.", name: "Sunita R.", title: "Retired Teacher", stars: 5, image: reviewImg3 },
-              { quote: "The stress tracking feature helped me identify triggers I never knew about. Life-changing!", name: "Aditya P.", title: "Startup Founder", stars: 5 },
+              { quote: "Amazing product! The rhythm score helps me plan my day better. Only wish the battery lasted a bit longer.", name: "Vikram T.", title: "Software Engineer", stars: 4, image: reviewImg2 },
+              { quote: "My doctor was impressed with the data I could share from my band. It's like having a health assistant on my wrist.", name: "Sunita R.", title: "Retired Teacher", stars: 5 },
+              { quote: "The stress tracking feature helped me identify triggers I never knew about. Life-changing!", name: "Aditya P.", title: "Startup Founder", stars: 5, image: reviewImg3 },
               { quote: "Good product overall. The app could use some improvements but the hardware is solid.", name: "Meera J.", title: "Graphic Designer", stars: 4 },
-              { quote: "I've tried many fitness bands, but this is the first one that actually helps me understand my body.", name: "Karthik N.", title: "Marathon Runner", stars: 5, image: reviewImg4 },
+              { quote: "I've tried many fitness bands, but this is the first one that actually helps me understand my body.", name: "Karthik N.", title: "Marathon Runner", stars: 5 },
               { quote: "The circadian rhythm tracking improved my sleep quality within weeks. Highly recommend!", name: "Deepa M.", title: "Night Shift Nurse", stars: 5 },
               { quote: "Love how it tracks my nervous system balance. Perfect for managing work stress.", name: "Arjun S.", title: "Investment Banker", stars: 5 },
               { quote: "Great value for money. Does everything a premium band does at half the price.", name: "Pooja V.", title: "College Student", stars: 4 },
