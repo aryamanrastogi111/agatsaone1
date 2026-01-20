@@ -339,8 +339,7 @@ const SanketLifeProduct = () => {
                   <div className="flex items-center justify-center gap-2 flex-wrap">
                     <span className="text-base">❤️</span>
                     <span className="text-sm font-medium text-foreground">₹0 cost per ECG</span>
-                    <span className="text-sm font-bold text-emerald-600">FREE Forever</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-200 dark:bg-cyan-800 text-cyan-700 dark:text-cyan-200 font-medium">Unlimited</span>
+                    <span className="text-sm font-bold text-emerald-600">FREE</span>
                   </div>
                   <div className="text-[10px] text-muted-foreground text-center mt-1">*T&C apply</div>
                 </div>
