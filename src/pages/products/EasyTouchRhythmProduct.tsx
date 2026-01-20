@@ -16,6 +16,9 @@ import {
 } from "@/components/ui/carousel";
 import kineticFlowImg from "@/assets/easytouch-kinetic-flow.png";
 import kineticTrendsImg from "@/assets/easytouch-kinetic-trends.png";
+import mealLoadImg from "@/assets/easytouch-meal-load.png";
+import mealTimelineImg from "@/assets/easytouch-meal-timeline.png";
+import mealAftermathImg from "@/assets/easytouch-meal-aftermath.png";
 
 // Image assets from shop.myeasytouch.com
 const images = {
@@ -709,13 +712,48 @@ const EasyTouchRhythmProduct = () => {
             </AnimatedSection>
             
             <AnimatedSection>
-              <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8">
-                <img
-                  src={images.mealLoggingApp}
-                  alt="Meal Logging Feature"
-                  className="w-full max-w-sm mx-auto"
-                />
-              </div>
+              <Carousel className="w-full max-w-sm mx-auto">
+                <CarouselContent>
+                  <CarouselItem>
+                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-4 shadow-2xl">
+                      <img 
+                        src={images.mealLoggingApp} 
+                        alt="Meal Logging Feature" 
+                        className="w-full rounded-2xl"
+                      />
+                    </div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-4 shadow-2xl">
+                      <img 
+                        src={mealLoadImg} 
+                        alt="Live Meal Load Dashboard" 
+                        className="w-full rounded-2xl"
+                      />
+                    </div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-4 shadow-2xl">
+                      <img 
+                        src={mealTimelineImg} 
+                        alt="12-hour Meal Load Timeline" 
+                        className="w-full rounded-2xl"
+                      />
+                    </div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-4 shadow-2xl">
+                      <img 
+                        src={mealAftermathImg} 
+                        alt="Metabolic Aftermath Insights" 
+                        className="w-full rounded-2xl"
+                      />
+                    </div>
+                  </CarouselItem>
+                </CarouselContent>
+                <CarouselPrevious className="-left-4 lg:-left-6" />
+                <CarouselNext className="-right-4 lg:-right-6" />
+              </Carousel>
             </AnimatedSection>
           </div>
         </div>
