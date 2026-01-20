@@ -686,7 +686,7 @@ const EasyTouchRhythmProduct = () => {
             alt="Woman enjoying a meal while wearing EasyTouch Rhythm"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-l from-background via-background/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
         </div>
         
         <div className="container relative">
