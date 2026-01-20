@@ -178,7 +178,6 @@ const ZluProduct = () => {
                     <span className="text-base">🌙</span>
                     <span className="text-sm font-medium text-foreground">Natural Sleep Support</span>
                     <span className="text-sm font-bold text-emerald-600">No Medicine</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-200 dark:bg-cyan-800 text-cyan-700 dark:text-cyan-200 font-medium">Limited Time</span>
                   </div>
                 </div>
                 

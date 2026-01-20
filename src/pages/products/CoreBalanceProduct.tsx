@@ -205,7 +205,6 @@ const CoreBalanceProduct = () => {
                     <span className="text-base">⚖️</span>
                     <span className="text-sm font-medium text-foreground">10+ Body Metrics</span>
                     <span className="text-sm font-bold text-emerald-600">FREE App</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-emerald-800 text-emerald-700 dark:text-emerald-200 font-medium">Limited Time</span>
                   </div>
                 </div>
                 
