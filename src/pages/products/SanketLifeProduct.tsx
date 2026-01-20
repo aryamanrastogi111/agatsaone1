@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { addBusinessDays, format } from "date-fns";
 import { motion, useInView, animate } from "framer-motion";
 import { 
   Heart, 
@@ -34,6 +35,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
+import { FomoCounter } from "@/components/shop/FomoCounter";
 
 // Image imports
 import sanketlifeHeroV2 from "@/assets/sanketlife-device-app.png";
@@ -327,7 +329,31 @@ const SanketLifeProduct = () => {
                 </Button>
               </div>
               
-              <MultiProductDiscountBanner variant="compact" className="mb-6" />
+              <MultiProductDiscountBanner variant="compact" className="mb-4" />
+              
+              {/* Bonus Offer Section */}
+              <div className="space-y-3 mb-6">
+                <div className="text-xs text-muted-foreground text-center">also</div>
+                
+                <div className="bg-cyan-50 dark:bg-cyan-950/30 rounded-xl p-3 border border-cyan-200 dark:border-cyan-800/50">
+                  <div className="flex items-center justify-center gap-2 flex-wrap">
+                    <span className="text-base">❤️</span>
+                    <span className="text-sm font-medium text-foreground">₹0 cost per ECG</span>
+                    <span className="text-sm font-bold text-emerald-600">FREE Forever</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-200 dark:bg-cyan-800 text-cyan-700 dark:text-cyan-200 font-medium">Unlimited</span>
+                  </div>
+                  <div className="text-[10px] text-muted-foreground text-center mt-1">*T&C apply</div>
+                </div>
+                
+                {/* FOMO Counter */}
+                <FomoCounter productHandle="sanket-life-2-0-portable-ecg-machine-12-lead-ecg-device" lowStockThreshold={20} className="justify-center" />
+                
+                {/* Delivery Estimate */}
+                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                  <span>📦</span>
+                  <span>Delivers by <span className="font-medium text-foreground">{format(addBusinessDays(new Date(), 3), "EEE, MMM d")}</span></span>
+                </div>
+              </div>
               
               {/* Stats Row */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-border">
