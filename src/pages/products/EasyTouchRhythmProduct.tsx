@@ -19,7 +19,8 @@ import kineticTrendsImg from "@/assets/easytouch-kinetic-trends.png";
 import mealLoadImg from "@/assets/easytouch-meal-load.png";
 import mealTimelineImg from "@/assets/easytouch-meal-timeline.png";
 import mealAftermathImg from "@/assets/easytouch-meal-aftermath.png";
-import mealLifestyleImg from "@/assets/easytouch-meal-lifestyle.jpg";
+import fitnessBgImg from "@/assets/easytouch-fitness-bg.png";
+import mealBgImg from "@/assets/easytouch-meal-bg.png";
 import reviewImg1 from "@/assets/review-image-1.png";
 import reviewImg2 from "@/assets/review-image-2.png";
 import reviewImg3 from "@/assets/review-image-3.png";
@@ -626,8 +627,8 @@ const EasyTouchRhythmProduct = () => {
       <section className="relative py-32 lg:py-48 overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src={images.productHero2}
-            alt="Person wearing EasyTouch Rhythm"
+            src={fitnessBgImg}
+            alt="Rock climbing with EasyTouch Rhythm"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
@@ -686,8 +687,8 @@ const EasyTouchRhythmProduct = () => {
       <section className="relative py-32 lg:py-48 overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src={mealLifestyleImg}
-            alt="Woman enjoying a meal while wearing EasyTouch Rhythm"
+            src={mealBgImg}
+            alt="Woman preparing salad while wearing EasyTouch Rhythm"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
