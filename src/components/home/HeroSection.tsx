@@ -78,8 +78,8 @@ export function HeroSection() {
             className="text-center mb-6"
           >
             <h1 className="text-3xl font-bold text-foreground leading-tight mb-3">
-              Take charge of your{" "}
-              <span className="text-primary">health</span>
+              Health monitoring,{" "}
+              <span className="text-primary">reimagined.</span>
             </h1>
             <p className="text-muted-foreground text-sm">
               Professional monitoring. Zero hassle.
@@ -214,8 +214,8 @@ export function HeroSection() {
                 </span>
                 
                 <h1 className="text-5xl xl:text-6xl font-bold text-foreground leading-[1.1]">
-                  Hospital-grade health monitoring,{" "}
-                  <span className="text-primary">at home</span>
+                  Health monitoring,{" "}
+                  <span className="text-primary">reimagined.</span>
                 </h1>
                 
                 <p className="text-lg text-muted-foreground max-w-lg">
