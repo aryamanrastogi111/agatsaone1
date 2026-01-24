@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { RepublicDaySaleBadge, isSaleActive } from "@/components/sale";
 
 import zluHeroImg from "@/assets/zlu-hero.png";
 import corebalanceHeroImg from "@/assets/corebalance-hero.png";
@@ -150,6 +151,11 @@ export function HeroSection() {
                   >
                     <Link to={`/products/${product.id}`} className="block group">
                       <div className="relative mx-2 bg-gradient-to-br from-white/90 to-accent/40 dark:from-accent/30 dark:to-accent/10 backdrop-blur-xl rounded-3xl p-5 border border-white/50 dark:border-primary/20 shadow-[0_30px_80px_-20px_rgba(0,186,199,0.25)]">
+                        {/* Sale badge for EasyTouch Rhythm */}
+                        {product.id === "easytouch-rhythm" && isSaleActive() && (
+                          <RepublicDaySaleBadge size="sm" className="absolute top-3 right-3 z-10" />
+                        )}
+                        
                         {/* Glow ring */}
                         <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-primary/20" />
                         <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
@@ -181,7 +187,7 @@ export function HeroSection() {
                         {/* View button */}
                         <div className="mt-4 flex justify-center">
                           <span className="inline-flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
-                            View Product
+                            {product.id === "easytouch-rhythm" && isSaleActive() ? "Grab 10% OFF" : "View Product"}
                             <ArrowRight className="w-4 h-4" />
                           </span>
                         </div>
@@ -377,6 +383,11 @@ export function HeroSection() {
                   to={`/products/${product.id}`} 
                   className="group block relative bg-gradient-to-br from-white/80 to-accent/40 dark:from-accent/30 dark:to-accent/10 backdrop-blur-xl rounded-3xl p-6 border border-white/50 dark:border-primary/20 shadow-[0_20px_60px_-15px_rgba(0,186,199,0.15)] hover:shadow-[0_30px_80px_-15px_rgba(0,186,199,0.25)] transition-all duration-500 hover:-translate-y-2 overflow-hidden"
                 >
+                  {/* Sale badge for EasyTouch Rhythm */}
+                  {product.id === "easytouch-rhythm" && isSaleActive() && (
+                    <RepublicDaySaleBadge size="sm" className="absolute top-3 right-3 z-10" />
+                  )}
+                  
                   {/* Hover glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
                   
@@ -412,7 +423,7 @@ export function HeroSection() {
                   {/* View link */}
                   <div className="relative mt-4 flex justify-center">
                     <span className="inline-flex items-center gap-1.5 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                      Learn More
+                      {product.id === "easytouch-rhythm" && isSaleActive() ? "Grab 10% OFF" : "Learn More"}
                       <ArrowRight className="w-4 h-4" />
                     </span>
                   </div>
