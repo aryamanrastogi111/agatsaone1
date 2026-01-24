@@ -23,7 +23,6 @@ const heroProducts = [
     tagline: "Pocket ECG",
     benefit: "Detect heart issues early",
     icon: Heart,
-    color: "from-red-500/20 to-rose-500/10",
   },
   {
     id: "easytouch-rhythm",
@@ -32,7 +31,6 @@ const heroProducts = [
     tagline: "5 Body Rhythms",
     benefit: "Track glucose & vitals",
     icon: Activity,
-    color: "from-primary/20 to-cyan-500/10",
   },
   {
     id: "zlu",
@@ -41,7 +39,6 @@ const heroProducts = [
     tagline: "Sleep Device",
     benefit: "Better sleep, naturally",
     icon: Moon,
-    color: "from-indigo-500/20 to-purple-500/10",
   },
   {
     id: "corebalance",
@@ -50,7 +47,6 @@ const heroProducts = [
     tagline: "Body Scale",
     benefit: "Know your body metrics",
     icon: Scale,
-    color: "from-emerald-500/20 to-teal-500/10",
   },
 ];
 
@@ -105,7 +101,7 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Product cards carousel */}
+        {/* Product cards carousel - Premium glass cards */}
         <div className="flex-1 relative z-10 flex items-center pb-4">
           <Carousel
             opts={{ align: "start", loop: true }}
@@ -114,48 +110,45 @@ export function HeroSection() {
           >
             <CarouselContent className="-ml-3 px-5">
               {heroProducts.map((product, index) => (
-                <CarouselItem key={product.id} className="pl-3 basis-[75%]">
+                <CarouselItem key={product.id} className="pl-3 basis-[80%]">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 * index }}
                   >
                     <Link to={`/products/${product.id}`} className="block group">
-                      <div className={`relative rounded-2xl p-4 bg-gradient-to-br ${product.color} border border-border/50 overflow-hidden`}>
+                      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white to-muted/30 dark:from-muted/20 dark:to-background border border-border/40 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.1)]">
                         {/* Sale badge */}
                         {product.id === "easytouch-rhythm" && isSaleActive() && (
-                          <RepublicDaySaleBadge size="sm" className="absolute top-2 right-2 z-10" />
+                          <RepublicDaySaleBadge size="sm" className="absolute top-3 right-3 z-10" />
                         )}
                         
-                        {/* Product image */}
-                        <div className="aspect-square mb-3 flex items-center justify-center">
+                        {/* Product image with premium backdrop */}
+                        <div className="relative aspect-[4/3] p-6 flex items-center justify-center bg-gradient-to-b from-transparent to-muted/20">
+                          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
                           <img
                             src={product.image}
                             alt={product.name}
-                            className="w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-300"
+                            className="relative w-full h-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
                           />
                         </div>
 
-                        {/* Info */}
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <product.icon className="w-4 h-4 text-primary" />
-                            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                              {product.tagline}
-                            </span>
+                        {/* Info bar */}
+                        <div className="px-5 py-4 border-t border-border/30 bg-background/80 backdrop-blur-sm">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-0.5">
+                                {product.tagline}
+                              </p>
+                              <h3 className="font-semibold text-foreground">
+                                {product.name}
+                              </h3>
+                            </div>
+                            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors">
+                              <ChevronRight className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
+                            </div>
                           </div>
-                          <h3 className="font-bold text-foreground text-lg">
-                            {product.name}
-                          </h3>
-                          <p className="text-sm text-primary font-medium">
-                            {product.benefit}
-                          </p>
-                        </div>
-
-                        {/* Arrow */}
-                        <div className="absolute bottom-4 right-4">
-                          <ChevronRight className="w-5 h-5 text-primary group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
                     </Link>
@@ -189,16 +182,16 @@ export function HeroSection() {
       <section className="hidden lg:block relative min-h-[92vh] overflow-hidden bg-background">
         {/* Background elements */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent" />
+          <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-muted/30 to-transparent" />
           <motion.div
-            animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px]"
+            animate={{ scale: [1, 1.05, 1], opacity: [0.2, 0.3, 0.2] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/3 right-1/3 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[120px]"
           />
         </div>
 
         <div className="container relative z-10 h-full min-h-[92vh] flex items-center">
-          <div className="grid grid-cols-2 gap-16 items-center w-full py-16">
+          <div className="grid grid-cols-2 gap-20 items-center w-full py-16">
             
             {/* LEFT: Text content */}
             <div className="space-y-8">
@@ -267,69 +260,110 @@ export function HeroSection() {
               </motion.div>
             </div>
 
-            {/* RIGHT: Product grid */}
+            {/* RIGHT: Premium floating product showcase */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative"
+              className="relative h-[600px]"
             >
-              <div className="grid grid-cols-2 gap-5">
-                {heroProducts.map((product, index) => (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
-                    whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                  >
-                    <Link
-                      to={`/products/${product.id}`}
-                      className="group block relative"
-                    >
-                      <div className={`relative rounded-2xl p-5 bg-gradient-to-br ${product.color} border border-border/50 hover:border-primary/30 transition-all duration-300 overflow-hidden`}>
-                        {/* Sale badge */}
-                        {product.id === "easytouch-rhythm" && isSaleActive() && (
-                          <RepublicDaySaleBadge size="sm" className="absolute top-3 right-3 z-10" />
-                        )}
-                        
-                        {/* Product image */}
-                        <div className="aspect-square mb-4 flex items-center justify-center">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-full object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-500"
-                            loading="lazy"
-                          />
-                        </div>
-
-                        {/* Product info */}
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <product.icon className="w-4 h-4 text-primary" />
-                            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                              {product.tagline}
-                            </span>
-                          </div>
-                          <h3 className="font-bold text-foreground text-lg group-hover:text-primary transition-colors">
-                            {product.name}
-                          </h3>
-                          <p className="text-sm text-muted-foreground">
-                            {product.benefit}
+              {/* Main featured product - larger, centered */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] z-20"
+              >
+                <Link to="/products/sanketlife" className="block group">
+                  <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white via-white to-muted/20 dark:from-muted/30 dark:via-muted/20 dark:to-background border border-border/50 shadow-[0_25px_80px_-20px_rgba(0,186,199,0.25),0_10px_30px_-10px_rgba(0,0,0,0.1)]">
+                    {/* Glow effect */}
+                    <div className="absolute -inset-px bg-gradient-to-br from-primary/20 via-transparent to-primary/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* Image area */}
+                    <div className="relative aspect-square p-8 flex items-center justify-center">
+                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/8 via-transparent to-transparent" />
+                      <motion.img
+                        src={sanketlifeHeroImg}
+                        alt="SanketLife"
+                        className="relative w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(0,186,199,0.2)]"
+                        whileHover={{ scale: 1.05, rotate: 2 }}
+                        transition={{ duration: 0.4 }}
+                      />
+                    </div>
+                    
+                    {/* Info */}
+                    <div className="px-6 py-5 border-t border-border/30 bg-gradient-to-b from-background/90 to-background backdrop-blur-sm">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-xs text-primary font-medium uppercase tracking-wider mb-1">
+                            Pocket ECG
                           </p>
+                          <h3 className="text-xl font-bold text-foreground">
+                            SanketLife
+                          </h3>
                         </div>
-
-                        {/* Hover arrow */}
-                        <div className="absolute bottom-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                            <ArrowRight className="w-4 h-4 text-primary-foreground" />
-                          </div>
+                        <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform">
+                          <ArrowRight className="w-5 h-5 text-primary-foreground" />
                         </div>
                       </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+
+              {/* Floating product cards - positioned around the main one */}
+              {[
+                { product: heroProducts[1], position: "top-4 right-4", delay: 0.5 },
+                { product: heroProducts[2], position: "bottom-8 left-0", delay: 0.6 },
+                { product: heroProducts[3], position: "bottom-4 right-8", delay: 0.7 },
+              ].map(({ product, position, delay }, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay }}
+                  whileHover={{ y: -8, scale: 1.02, zIndex: 30 }}
+                  className={`absolute ${position} w-[200px] z-10`}
+                >
+                  <Link to={`/products/${product.id}`} className="block group">
+                    <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-white to-muted/20 dark:from-muted/20 dark:to-background border border-border/40 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_-15px_rgba(0,186,199,0.2)] transition-shadow duration-300">
+                      {/* Sale badge */}
+                      {product.id === "easytouch-rhythm" && isSaleActive() && (
+                        <RepublicDaySaleBadge size="sm" className="absolute top-2 right-2 z-10" />
+                      )}
+                      
+                      {/* Image */}
+                      <div className="aspect-square p-4 flex items-center justify-center bg-gradient-to-b from-transparent to-muted/10">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      </div>
+                      
+                      {/* Info bar */}
+                      <div className="px-4 py-3 border-t border-border/30 bg-background/80 backdrop-blur-sm">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
+                              {product.tagline}
+                            </p>
+                            <h3 className="text-sm font-semibold text-foreground">
+                              {product.name}
+                            </h3>
+                          </div>
+                          <product.icon className="w-4 h-4 text-primary" />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+
+              {/* Decorative elements */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-dashed border-primary/10 rounded-full pointer-events-none" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-dashed border-primary/5 rounded-full pointer-events-none" />
             </motion.div>
           </div>
         </div>
