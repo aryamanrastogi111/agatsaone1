@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { addBusinessDays, format } from "date-fns";
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
-import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
+import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, ArrowRight, Loader2, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
@@ -9,6 +9,13 @@ import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { FomoCounter } from "@/components/shop/FomoCounter";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
+import { 
+  CountdownTimer, 
+  CouponCodeBox, 
+  RepublicDaySaleBadge, 
+  isSaleActive, 
+  SALE_CODE 
+} from "@/components/sale";
 import {
   Carousel,
   CarouselContent,
@@ -16,6 +23,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import kineticFlowImg from "@/assets/easytouch-kinetic-flow.png";
 import kineticTrendsImg from "@/assets/easytouch-kinetic-trends.png";
 import mealLoadImg from "@/assets/easytouch-meal-load.png";
@@ -27,6 +40,8 @@ import reviewImg1 from "@/assets/review-image-1.png";
 import reviewImg2 from "@/assets/review-image-2.png";
 import reviewImg3 from "@/assets/review-image-3.png";
 import reviewImg4 from "@/assets/review-image-4.png";
+import republicDayHeroBanner from "@/assets/republic-day-banner-hero.jpeg";
+import republicDayOfferBanner from "@/assets/republic-day-banner-offer.jpeg";
 
 // Image assets from shop.myeasytouch.com
 const images = {
@@ -157,6 +172,73 @@ const EasyTouchRhythmProduct = () => {
 
   return (
     <Layout>
+      {/* Republic Day Hero Banner Section */}
+      {isSaleActive() && (
+        <section className="relative overflow-hidden">
+          <div className="relative">
+            <img 
+              src={republicDayHeroBanner} 
+              alt="Republic Day Sale - 10% OFF EasyTouch Rhythm" 
+              className="w-full h-auto object-cover"
+            />
+            {/* Overlay for better text readability on mobile */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent md:hidden" />
+            
+            {/* Mobile CTA overlay */}
+            <div className="absolute bottom-4 left-4 right-4 md:hidden">
+              <div className="flex flex-col gap-2">
+                <CouponCodeBox variant="compact" />
+                <Button 
+                  size="lg" 
+                  className="w-full gap-2"
+                  onClick={handleAddToCart}
+                  disabled={addingToCart || loading}
+                >
+                  {addingToCart ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="h-5 w-5" />
+                  )}
+                  Grab Yours — ₹4,499
+                </Button>
+              </div>
+            </div>
+          </div>
+          
+          {/* Desktop countdown below banner */}
+          <div className="hidden md:block bg-gradient-to-r from-orange-500/5 via-background to-green-600/5 border-b">
+            <div className="container py-4">
+              <div className="flex items-center justify-center gap-8">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🇮🇳</span>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Republic Day Sale</p>
+                    <p className="font-bold text-foreground">10% OFF with code <span className="text-primary">{SALE_CODE}</span></p>
+                  </div>
+                </div>
+                <div className="w-px h-10 bg-border" />
+                <CountdownTimer variant="compact" />
+                <div className="w-px h-10 bg-border" />
+                <CouponCodeBox variant="compact" />
+                <Button 
+                  size="lg" 
+                  className="gap-2"
+                  onClick={handleAddToCart}
+                  disabled={addingToCart || loading}
+                >
+                  {addingToCart ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="h-5 w-5" />
+                  )}
+                  Grab Yours — ₹4,499
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Section 1: Hero Introduction */}
       <section className="min-h-[90vh] flex items-center bg-background py-16 lg:py-24">
         <div className="container">
@@ -195,7 +277,11 @@ const EasyTouchRhythmProduct = () => {
                   ) : (
                     <ShoppingCart className="h-5 w-5" />
                   )}
-                  Add to Cart — ₹4,999
+                  {isSaleActive() ? (
+                    <>Add to Cart — <span className="line-through text-primary-foreground/60 mr-1">₹4,999</span> ₹4,499</>
+                  ) : (
+                    "Add to Cart — ₹4,999"
+                  )}
                 </Button>
                 <Button 
                   variant="outline" 
@@ -207,6 +293,18 @@ const EasyTouchRhythmProduct = () => {
                   <Play className="h-5 w-5 ml-2" />
                 </Button>
               </div>
+              
+              {/* Republic Day Offer Inline */}
+              {isSaleActive() && (
+                <div className="bg-gradient-to-r from-orange-500/10 via-background to-green-600/10 border border-primary/20 rounded-xl p-4 mb-4">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="text-lg">🇮🇳</span>
+                    <span className="font-medium text-foreground">Republic Day Discount Active</span>
+                    <CouponCodeBox variant="inline" />
+                  </div>
+                  <CountdownTimer variant="compact" className="mt-3" />
+                </div>
+              )}
               
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
@@ -253,6 +351,10 @@ const EasyTouchRhythmProduct = () => {
               className="order-1 lg:order-2 relative"
             >
               <div className="relative">
+                {/* Sale Badge */}
+                {isSaleActive() && (
+                  <RepublicDaySaleBadge className="absolute -top-2 -right-2 z-10" />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-primary/10 rounded-3xl blur-3xl" />
                 <img
                   src={images.heroband}
@@ -268,16 +370,91 @@ const EasyTouchRhythmProduct = () => {
                 transition={{ delay: 0.6 }}
                 className="absolute -bottom-4 right-4 lg:right-0 bg-card border rounded-2xl p-4 shadow-lg"
               >
-                <div className="text-xs text-primary font-medium mb-1">Introductory Offer</div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-foreground">₹4,999</span>
-                  <span className="text-sm text-muted-foreground line-through">₹7,999</span>
-                </div>
+                {isSaleActive() ? (
+                  <>
+                    <div className="text-xs text-primary font-medium mb-1">🇮🇳 Republic Day Offer</div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl font-bold text-foreground">₹4,499</span>
+                      <span className="text-sm text-muted-foreground line-through">₹4,999</span>
+                    </div>
+                    <p className="text-[10px] text-muted-foreground mt-1">Use code {SALE_CODE}</p>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-xs text-primary font-medium mb-1">Introductory Offer</div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl font-bold text-foreground">₹4,999</span>
+                      <span className="text-sm text-muted-foreground line-through">₹7,999</span>
+                    </div>
+                  </>
+                )}
               </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
+
+      {/* Republic Day Special Offer Section */}
+      {isSaleActive() && (
+        <section className="py-16 bg-gradient-to-br from-orange-500/5 via-background to-green-600/5">
+          <div className="container">
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              {/* Offer Banner Image */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                <img 
+                  src={republicDayOfferBanner} 
+                  alt="Republic Day Special - 10% OFF" 
+                  className="w-full rounded-2xl shadow-xl"
+                />
+              </motion.div>
+              
+              {/* Offer Details */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="text-center lg:text-left"
+              >
+                <div className="inline-flex items-center gap-2 mb-4">
+                  <span className="text-3xl">🇮🇳</span>
+                  <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Republic Day Special</span>
+                </div>
+                
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+                  BIG <span className="text-primary">10% OFF</span>
+                </h2>
+                
+                <p className="text-lg text-muted-foreground mb-6">
+                  Limited units. Limited time. Offer ends soon.
+                </p>
+                
+                <CouponCodeBox variant="card" className="mb-6" />
+                
+                <CountdownTimer variant="full" className="mb-8" />
+                
+                <Button 
+                  size="lg" 
+                  className="text-lg px-10 py-6 gap-2"
+                  onClick={handleAddToCart}
+                  disabled={addingToCart || loading}
+                >
+                  {addingToCart ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="h-5 w-5" />
+                  )}
+                  Claim Republic Offer — ₹4,499
+                </Button>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Section 2: Problem Statement */}
       <section className="py-24 lg:py-32 bg-muted/30">
@@ -1172,6 +1349,74 @@ const EasyTouchRhythmProduct = () => {
         </div>
       </section>
 
+      {/* Republic Day Sale FAQ Section */}
+      {isSaleActive() && (
+        <section className="py-16 bg-background">
+          <div className="container max-w-3xl">
+            <AnimatedSection className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 mb-4">
+                <HelpCircle className="h-5 w-5 text-primary" />
+                <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Sale FAQ</span>
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                Republic Day Offer Questions
+              </h2>
+            </AnimatedSection>
+            
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="how-to-apply">
+                <AccordionTrigger className="text-left">
+                  How do I apply the coupon code?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground">
+                    Simply enter the code <span className="font-mono font-bold text-primary">{SALE_CODE}</span> at checkout. 
+                    The 10% discount will be automatically applied to your EasyTouch Rhythm purchase. 
+                    You can copy the code using any of the copy buttons on this page.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="valid-products">
+                <AccordionTrigger className="text-left">
+                  Is this offer valid only for EasyTouch Rhythm?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground">
+                    Yes, the Republic Day 10% OFF offer with code <span className="font-mono font-bold text-primary">{SALE_CODE}</span> is 
+                    exclusively valid for EasyTouch Rhythm. Other Agatsa products are not included in this promotion.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="offer-duration">
+                <AccordionTrigger className="text-left">
+                  Till when is the offer active?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground">
+                    The Republic Day offer is valid until <span className="font-bold text-foreground">January 26, 2026 at 11:59 PM IST</span>. 
+                    After this time, the coupon code will no longer work. We recommend placing your order soon to avoid missing out!
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="combine-offers">
+                <AccordionTrigger className="text-left">
+                  Can I combine this with other offers?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-muted-foreground">
+                    The Republic Day discount cannot be combined with other coupon codes. However, you still get 
+                    free shipping and the bonus meal logging feature (worth ₹1,200/year) included with your purchase.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </section>
+      )}
+
       {/* Section 11: Final CTA */}
       <section className="py-24 lg:py-32 bg-gradient-to-b from-primary/5 to-primary/10">
         <div className="container">
@@ -1184,19 +1429,55 @@ const EasyTouchRhythmProduct = () => {
             </p>
             
             <div className="bg-card border rounded-2xl p-8 mb-8">
-              <div className="flex items-center justify-center gap-4 mb-4">
-                <span className="text-4xl font-bold text-foreground">₹4,999</span>
-                <span className="text-xl text-muted-foreground line-through">₹7,999</span>
-                <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                  Save ₹3,000
-                </span>
-              </div>
-              <p className="text-orange-600 text-sm mb-6">Limited stock – Only 4 units left!</p>
+              {/* Republic Day Sale Pricing */}
+              {isSaleActive() ? (
+                <>
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <span className="text-lg">🇮🇳</span>
+                    <span className="text-sm font-medium text-primary">Republic Day Discount Active</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-4 mb-2">
+                    <span className="text-4xl font-bold text-foreground">₹4,499</span>
+                    <span className="text-xl text-muted-foreground line-through">₹4,999</span>
+                    <span className="bg-gradient-to-r from-orange-500 to-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      10% OFF
+                    </span>
+                  </div>
+                  <CouponCodeBox variant="compact" className="justify-center mb-4" />
+                  <CountdownTimer variant="compact" className="justify-center mb-6" />
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <span className="text-4xl font-bold text-foreground">₹4,999</span>
+                    <span className="text-xl text-muted-foreground line-through">₹7,999</span>
+                    <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
+                      Save ₹3,000
+                    </span>
+                  </div>
+                  <p className="text-orange-600 text-sm mb-6">Limited stock – Only 4 units left!</p>
+                </>
+              )}
               
-              <Button size="lg" className="text-lg px-12 py-6 gap-2 w-full sm:w-auto">
-                <ShoppingCart className="h-5 w-5" />
-                Add to Cart
+              <Button 
+                size="lg" 
+                className="text-lg px-12 py-6 gap-2 w-full sm:w-auto"
+                onClick={handleAddToCart}
+                disabled={addingToCart || loading}
+              >
+                {addingToCart ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <ShoppingCart className="h-5 w-5" />
+                )}
+                {isSaleActive() ? "Grab Yours — ₹4,499" : "Add to Cart"}
               </Button>
+              
+              {isSaleActive() && (
+                <p className="text-sm text-muted-foreground mt-4">
+                  Offer expires Jan 26 — order today!
+                </p>
+              )}
               
               <div className="flex items-center justify-center gap-6 mt-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
@@ -1218,7 +1499,7 @@ const EasyTouchRhythmProduct = () => {
       </section>
       <StickyAddToCart
         productName="EasyTouch Rhythm"
-        price="₹4,999"
+        price={isSaleActive() ? "₹4,499 (10% OFF)" : "₹4,999"}
         onAddToCart={handleAddToCart}
         isLoading={loading}
         themeColor="primary"

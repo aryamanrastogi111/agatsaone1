@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Brain, Zap, Sun, Heart, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { RepublicDaySaleBadge, CountdownTimer, CouponCodeBox, isSaleActive, SALE_CODE } from "@/components/sale";
 import easytouchImg from "@/assets/easytouch-rhythm-new.png";
 
 export function ProductHighlightEasyTouch() {
@@ -22,6 +23,10 @@ export function ProductHighlightEasyTouch() {
             transition={{ duration: 0.6 }}
           >
             <div className="relative">
+              {/* Sale Badge */}
+              {isSaleActive() && (
+                <RepublicDaySaleBadge className="absolute -top-4 left-4 z-10" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-200/50 to-blue-100/30 rounded-3xl blur-3xl" />
               <img
                 src={easytouchImg}
@@ -68,14 +73,37 @@ export function ProductHighlightEasyTouch() {
               ))}
             </div>
 
+            {/* Republic Day Sale Section */}
+            {isSaleActive() && (
+              <div className="bg-gradient-to-r from-orange-500/10 via-background to-green-600/10 border border-primary/20 rounded-xl p-4 mb-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-lg">🇮🇳</span>
+                  <span className="text-sm font-medium text-foreground">Republic Day Special — 10% OFF</span>
+                </div>
+                <div className="flex items-center gap-3 flex-wrap">
+                  <CouponCodeBox variant="inline" />
+                  <CountdownTimer variant="compact" />
+                </div>
+              </div>
+            )}
+
             <div className="flex flex-wrap gap-4 items-center">
               <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
                 <Link to="/products/easytouch-rhythm" className="flex items-center gap-2">
-                  Explore EasyTouch Rhythm
+                  {isSaleActive() ? "Grab 10% OFF" : "Explore EasyTouch Rhythm"}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <span className="text-2xl font-bold text-foreground">₹4,999</span>
+              <div className="flex items-center gap-2">
+                {isSaleActive() ? (
+                  <>
+                    <span className="text-xl text-muted-foreground line-through">₹4,999</span>
+                    <span className="text-2xl font-bold text-foreground">₹4,499</span>
+                  </>
+                ) : (
+                  <span className="text-2xl font-bold text-foreground">₹4,999</span>
+                )}
+              </div>
             </div>
           </motion.div>
         </div>
