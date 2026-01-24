@@ -239,6 +239,25 @@ const CART_CREATE_MUTATION = `
   }
 `;
 
+// Check if sale is active and get discount code
+function getActiveDiscountCode(): string | null {
+  // Republic Day Sale: active until Jan 26, 2026 midnight IST
+  const saleEndDate = new Date('2026-01-26T23:59:59+05:30');
+  const now = new Date();
+  if (now <= saleEndDate) {
+    return 'REPUBLIC10';
+  }
+  return null;
+}
+
+// Check if cart has eligible products for the discount
+function hasEligibleProducts(items: CartItem[]): boolean {
+  return items.some(item => 
+    item.product.node.handle === 'easytouch-rhythm' || 
+    item.product.node.title.toLowerCase().includes('easytouch rhythm')
+  );
+}
+
 export interface CartItem {
   product: ShopifyProduct;
   variantId: string;
@@ -261,9 +280,14 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
       merchandiseId: item.variantId,
     }));
 
+    // Auto-apply discount code if sale is active and cart has eligible products
+    const discountCode = getActiveDiscountCode();
+    const shouldApplyDiscount = discountCode && hasEligibleProducts(items);
+
     const cartData = await storefrontApiRequest(CART_CREATE_MUTATION, {
       input: {
         lines,
+        ...(shouldApplyDiscount && { discountCodes: [discountCode] }),
       },
     });
 
