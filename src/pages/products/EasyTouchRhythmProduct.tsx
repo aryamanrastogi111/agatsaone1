@@ -212,7 +212,9 @@ const EasyTouchRhythmProduct = () => {
                   ) : (
                     <ShoppingCart className="h-5 w-5" />
                   )}
-                  <span className="hidden sm:inline">Grab Yours —</span> ₹4,499
+                  <span className="hidden sm:inline">Grab Yours —</span>
+                  <span className="line-through text-primary-foreground/60">₹4,999</span>
+                  <span className="font-bold">₹4,499</span>
                 </Button>
               </div>
             </div>
