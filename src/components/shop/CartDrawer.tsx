@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Sparkles, Tag, Info } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, Sparkles, Tag, Info, Percent } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 import { toast } from "sonner";
@@ -19,6 +19,7 @@ import { useShopifyProduct, PRODUCT_HANDLES } from "@/hooks/useShopifyProduct";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import easytouchRhythmImg from "@/assets/easytouch-rhythm-band.png";
 import corebalanceCardImg from "@/assets/corebalance-card.png";
+import { isSaleActive, SALE_CODE, SALE_DISCOUNT_PERCENT } from "@/components/sale";
 
 // Shopify checkout subdomain (TLS is now Connected)
 const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
@@ -101,15 +102,37 @@ export const CartDrawer = () => {
   // Count unique products in cart
   const uniqueProductCount = items.length;
   const hasMultipleProducts = uniqueProductCount >= 2;
-  const discountRate = hasMultipleProducts ? 0.10 : 0;
+  const multiProductDiscountRate = hasMultipleProducts ? 0.10 : 0;
   
-  // Calculate prices with discount
+  // Check for Republic Day sale on EasyTouch Rhythm
+  const saleActive = isSaleActive();
+  const isEasyTouchRhythm = (handle: string) => handle === PRODUCT_HANDLES.easytouchRhythm;
+  
+  // Calculate prices with both discounts
   const subtotal = items.reduce(
     (sum, item) => sum + parseFloat(item.price.amount) * item.quantity,
     0
   );
-  const discountAmount = subtotal * discountRate;
-  const totalPrice = subtotal - discountAmount;
+  
+  // Republic Day discount only applies to EasyTouch Rhythm
+  const republicDayDiscount = saleActive
+    ? items.reduce((sum, item) => {
+        if (isEasyTouchRhythm(item.product.node.handle)) {
+          return sum + parseFloat(item.price.amount) * item.quantity * (SALE_DISCOUNT_PERCENT / 100);
+        }
+        return sum;
+      }, 0)
+    : 0;
+  
+  // Multi-product discount applies to remaining amount after Republic Day discount
+  const afterRepublicDiscount = subtotal - republicDayDiscount;
+  const multiProductDiscount = afterRepublicDiscount * multiProductDiscountRate;
+  
+  const totalDiscount = republicDayDiscount + multiProductDiscount;
+  const totalPrice = subtotal - totalDiscount;
+  
+  // Check if cart has EasyTouch Rhythm for showing sale badge
+  const hasEasyTouchInCart = items.some(item => isEasyTouchRhythm(item.product.node.handle));
 
   // Products to exclude from cross-sell (not on website)
   const excludedProducts = ["agatsa wellness", "health 360", "heli band"];
@@ -392,7 +415,19 @@ export const CartDrawer = () => {
                     <div className="flex items-center gap-2">
                       <Tag className="h-4 w-4 text-green-600 flex-shrink-0" />
                       <p className="text-sm font-medium text-green-700 dark:text-green-400">
-                        🎉 10% Multi-Product Discount Applied! You save {formatPrice(discountAmount, items[0]?.price.currencyCode || 'INR')}
+                        🎉 10% Multi-Product Discount Applied! You save {formatPrice(multiProductDiscount, items[0]?.price.currencyCode || 'INR')}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Republic Day Sale Banner for EasyTouch Rhythm */}
+                {saleActive && hasEasyTouchInCart && (
+                  <div className="mx-6 mt-4 p-3 bg-gradient-to-r from-orange-500/10 via-background to-green-600/10 border border-primary/20 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <Percent className="h-4 w-4 text-primary flex-shrink-0" />
+                      <p className="text-sm font-medium text-foreground">
+                        🇮🇳 Republic Day Sale: <span className="text-primary">{SALE_CODE}</span> applied! You save {formatPrice(republicDayDiscount, items[0]?.price.currencyCode || 'INR')}
                       </p>
                     </div>
                   </div>
@@ -403,8 +438,11 @@ export const CartDrawer = () => {
                   <div className="space-y-4 py-4">
                     {items.map((item) => {
                       const itemTotal = parseFloat(item.price.amount) * item.quantity;
-                      const itemDiscount = hasMultipleProducts ? itemTotal * 0.10 : 0;
-                      const itemFinalPrice = itemTotal - itemDiscount;
+                      const isItemEasyTouch = isEasyTouchRhythm(item.product.node.handle);
+                      const itemRepublicDiscount = saleActive && isItemEasyTouch ? itemTotal * (SALE_DISCOUNT_PERCENT / 100) : 0;
+                      const afterItemRepublicDiscount = itemTotal - itemRepublicDiscount;
+                      const itemMultiDiscount = hasMultipleProducts ? afterItemRepublicDiscount * 0.10 : 0;
+                      const itemFinalPrice = itemTotal - itemRepublicDiscount - itemMultiDiscount;
                       
                       return (
                         <div key={item.variantId} className="p-3 bg-muted/30 rounded-lg">
@@ -653,7 +691,7 @@ export const CartDrawer = () => {
                 
                 {/* Fixed checkout section */}
                 <div className="flex-shrink-0 space-y-3 p-6 pt-4 border-t bg-background">
-                  {hasMultipleProducts && (
+                  {(hasMultipleProducts || (saleActive && hasEasyTouchInCart)) && (
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-muted-foreground">Subtotal</span>
                       <span className="text-muted-foreground line-through">
@@ -661,11 +699,19 @@ export const CartDrawer = () => {
                       </span>
                     </div>
                   )}
+                  {saleActive && hasEasyTouchInCart && republicDayDiscount > 0 && (
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-primary">Republic Day ({SALE_CODE})</span>
+                      <span className="text-primary font-medium">
+                        -{formatPrice(republicDayDiscount, items[0]?.price.currencyCode || 'INR')}
+                      </span>
+                    </div>
+                  )}
                   {hasMultipleProducts && (
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-green-600">Multi-Product Discount</span>
                       <span className="text-green-600 font-medium">
-                        -{formatPrice(discountAmount, items[0]?.price.currencyCode || 'INR')}
+                        -{formatPrice(multiProductDiscount, items[0]?.price.currencyCode || 'INR')}
                       </span>
                     </div>
                   )}
