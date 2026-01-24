@@ -172,54 +172,35 @@ const EasyTouchRhythmProduct = () => {
 
   return (
     <Layout>
-      {/* Republic Day Hero Banner Section */}
+      {/* Republic Day Sale Strip - Compact Banner */}
       {isSaleActive() && (
-        <section className="relative overflow-hidden">
-          <div className="relative">
-            <img 
-              src={republicDayHeroBanner} 
-              alt="Republic Day Sale - 10% OFF EasyTouch Rhythm" 
-              className="w-full h-auto object-cover"
-            />
-            {/* Overlay for better text readability on mobile */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent md:hidden" />
-            
-            {/* Mobile CTA overlay */}
-            <div className="absolute bottom-4 left-4 right-4 md:hidden">
-              <div className="flex flex-col gap-2">
-                <CouponCodeBox variant="compact" />
-                <Button 
-                  size="lg" 
-                  className="w-full gap-2"
-                  onClick={handleAddToCart}
-                  disabled={addingToCart || loading}
-                >
-                  {addingToCart ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <ShoppingCart className="h-5 w-5" />
-                  )}
-                  Grab Yours — ₹4,499
-                </Button>
-              </div>
-            </div>
-          </div>
-          
-          {/* Desktop countdown below banner */}
-          <div className="hidden md:block bg-gradient-to-r from-orange-500/5 via-background to-green-600/5 border-b">
-            <div className="container py-4">
-              <div className="flex items-center justify-center gap-8">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🇮🇳</span>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Republic Day Sale</p>
-                    <p className="font-bold text-foreground">10% OFF with code <span className="text-primary">{SALE_CODE}</span></p>
+        <section className="bg-gradient-to-r from-orange-500/10 via-background to-green-600/10 border-b">
+          <div className="container py-4 md:py-5">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              {/* Left: Sale info with small banner image */}
+              <div className="flex items-center gap-4">
+                <img 
+                  src={republicDayHeroBanner} 
+                  alt="Republic Day Sale" 
+                  className="hidden sm:block w-24 h-16 md:w-32 md:h-20 object-cover rounded-lg shadow-md"
+                />
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xl">🇮🇳</span>
+                    <span className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Republic Day Sale</span>
+                  </div>
+                  <p className="text-lg md:text-xl font-bold text-foreground">
+                    <span className="text-primary">10% OFF</span> EasyTouch Rhythm
+                  </p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <CouponCodeBox variant="inline" />
                   </div>
                 </div>
-                <div className="w-px h-10 bg-border" />
-                <CountdownTimer variant="compact" />
-                <div className="w-px h-10 bg-border" />
-                <CouponCodeBox variant="compact" />
+              </div>
+              
+              {/* Right: Countdown and CTA */}
+              <div className="flex items-center gap-4 flex-wrap">
+                <CountdownTimer variant="compact" className="hidden md:flex" />
                 <Button 
                   size="lg" 
                   className="gap-2"
@@ -231,9 +212,14 @@ const EasyTouchRhythmProduct = () => {
                   ) : (
                     <ShoppingCart className="h-5 w-5" />
                   )}
-                  Grab Yours — ₹4,499
+                  <span className="hidden sm:inline">Grab Yours —</span> ₹4,499
                 </Button>
               </div>
+            </div>
+            
+            {/* Mobile countdown */}
+            <div className="md:hidden mt-3">
+              <CountdownTimer variant="compact" />
             </div>
           </div>
         </section>
