@@ -227,36 +227,69 @@ const EasyTouchRhythmProduct = () => {
         </section>
       )}
 
-      {/* Section 1: Hero Introduction */}
-      <section className="min-h-[90vh] flex items-center bg-background py-16 lg:py-24">
-        <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Section 1: Hero Introduction - Premium Redesign */}
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+        {/* Dynamic background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
+        
+        {/* Decorative elements */}
+        <motion.div
+          animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"
+        />
+        
+        <div className="container relative z-10 py-16 lg:py-24">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            
+            {/* LEFT: Content */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
               className="order-2 lg:order-1"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+                </span>
                 Introducing EasyTouch Rhythm™
-              </div>
+              </motion.div>
               
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+              {/* Headline */}
+              <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-foreground leading-[1.1] mb-6">
                 I finally understand why my{" "}
-                <span className="text-primary">body feels</span>{" "}
+                <span className="relative inline-block">
+                  <span className="text-primary">body feels</span>
+                  <motion.span
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ delay: 0.8, duration: 0.5 }}
+                    className="absolute -bottom-1 left-0 w-full h-1 bg-primary/30 rounded-full origin-left"
+                  />
+                </span>{" "}
                 the way it does.
               </h1>
               
-              <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+              {/* Subtext */}
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 max-w-xl">
                 EasyTouch Rhythm doesn't just track your health—it reveals the hidden patterns 
                 that explain your energy, your fatigue, your clarity, and your calm.
               </p>
               
+              {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Button 
                   size="lg" 
-                  className="text-lg px-8 py-6 gap-2"
+                  className="text-lg h-14 px-8 gap-2 shadow-lg shadow-primary/20"
                   onClick={handleAddToCart}
                   disabled={addingToCart || loading}
                 >
@@ -266,7 +299,7 @@ const EasyTouchRhythmProduct = () => {
                     <ShoppingCart className="h-5 w-5" />
                   )}
                   {isSaleActive() ? (
-                    <>Add to Cart — <span className="line-through text-primary-foreground/60 mr-1">₹4,999</span> ₹4,499</>
+                    <>Add to Cart — <span className="line-through text-primary-foreground/60 ml-1">₹4,999</span> <span className="ml-1">₹4,499</span></>
                   ) : (
                     "Add to Cart — ₹4,999"
                   )}
@@ -274,111 +307,164 @@ const EasyTouchRhythmProduct = () => {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="text-lg px-8 py-6"
+                  className="text-lg h-14 px-8 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground"
                   onClick={() => window.open("https://www.youtube.com/watch?v=j8QwXnQwozg", "_blank", "noopener,noreferrer")}
                 >
+                  <Play className="h-5 w-5 mr-2" />
                   Watch Demo
-                  <Play className="h-5 w-5 ml-2" />
                 </Button>
               </div>
               
-              {/* Republic Day Offer Inline */}
+              {/* Republic Day Offer */}
               {isSaleActive() && (
-                <div className="bg-gradient-to-r from-orange-500/10 via-background to-green-600/10 border border-primary/20 rounded-xl p-4 mb-4">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <span className="text-lg">🇮🇳</span>
-                    <span className="font-medium text-foreground">Republic Day Discount Active</span>
-                    <CouponCodeBox variant="inline" />
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="relative overflow-hidden rounded-2xl border border-primary/20 p-4 mb-6"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-transparent to-green-600/10" />
+                  <div className="relative flex items-center justify-between flex-wrap gap-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">🇮🇳</span>
+                      <div>
+                        <p className="font-semibold text-foreground">Republic Day Sale Active</p>
+                        <p className="text-sm text-muted-foreground">Use code <span className="font-mono font-bold text-primary">{SALE_CODE}</span></p>
+                      </div>
+                    </div>
+                    <CountdownTimer variant="compact" />
                   </div>
-                  <CountdownTimer variant="compact" className="mt-3" />
-                </div>
+                </motion.div>
               )}
               
+              {/* Trust badges */}
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
-                  <Truck className="h-4 w-4 text-primary" />
-                  Free Shipping
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Truck className="h-4 w-4 text-primary" />
+                  </div>
+                  <span>Free Shipping</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-primary" />
-                  7-Day Returns (Mfg. Defects)
-                </div>
-              </div>
-              
-              <MultiProductDiscountBanner variant="compact" className="mt-4" />
-              
-              {/* Bonus Offer Section */}
-              <div className="mt-4 space-y-3">
-                <div className="text-xs text-muted-foreground text-center">also</div>
-                
-                <div className="bg-orange-50 dark:bg-orange-950/30 rounded-xl p-3 border border-orange-200 dark:border-orange-800/50">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-base">🍴</span>
-                    <span className="text-sm font-medium text-foreground">Detailed Meal Logging</span>
-                    <span className="text-xs text-muted-foreground line-through">₹1,200/yr</span>
-                    <span className="text-sm font-bold text-emerald-600">FREE</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-200 dark:bg-orange-800 text-orange-700 dark:text-orange-200 font-medium">Limited Time</span>
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <ShieldCheck className="h-4 w-4 text-primary" />
                   </div>
-                </div>
-                
-                {/* FOMO Counter */}
-                <FomoCounter productHandle="easytouch-rhythm" lowStockThreshold={20} className="justify-center" />
-                
-                {/* Delivery Estimate */}
-                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                  <span>📦</span>
-                  <span>Delivers by <span className="font-medium text-foreground">{format(addBusinessDays(new Date(), 3), "EEE, MMM d")}</span></span>
+                  <span>7-Day Returns</span>
                 </div>
               </div>
             </motion.div>
             
+            {/* RIGHT: Product showcase */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
               className="order-1 lg:order-2 relative"
             >
-              <div className="relative">
-                {/* Sale Badge */}
+              <div className="relative max-w-lg mx-auto">
+                {/* Sale badge */}
                 {isSaleActive() && (
-                  <RepublicDaySaleBadge className="absolute -top-2 -right-2 z-10" />
+                  <RepublicDaySaleBadge size="md" className="absolute -top-4 -right-4 z-20" />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-primary/10 rounded-3xl blur-3xl" />
-                <img
-                  src={images.heroband}
-                  alt="EasyTouch Rhythm Band"
-                  className="relative w-full max-w-lg mx-auto"
-                />
+                
+                {/* Glowing backdrop */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/5 to-transparent rounded-full blur-3xl scale-110" />
+                
+                {/* Circular container */}
+                <div className="relative">
+                  {/* Outer ring */}
+                  <div className="absolute inset-0 rounded-full border border-dashed border-primary/20" style={{ transform: 'scale(1.15)' }} />
+                  
+                  {/* Product image */}
+                  <motion.img
+                    src={images.heroband}
+                    alt="EasyTouch Rhythm Band"
+                    className="relative w-full drop-shadow-[0_30px_60px_rgba(0,186,199,0.3)]"
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                </div>
+                
+                {/* Floating info cards */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="absolute top-1/4 -left-4 lg:-left-12 bg-background/90 backdrop-blur-md border border-border/50 rounded-xl p-3 shadow-xl"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-lg">🫀</span>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Tracks</p>
+                      <p className="font-semibold text-foreground">5 Body Rhythms</p>
+                    </div>
+                  </div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1 }}
+                  className="absolute bottom-1/4 -right-4 lg:-right-12 bg-background/90 backdrop-blur-md border border-border/50 rounded-xl p-3 shadow-xl"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                      <span className="text-lg">📊</span>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Daily</p>
+                      <p className="font-semibold text-foreground">Rhythm Score</p>
+                    </div>
+                  </div>
+                </motion.div>
+                
+                {/* Price card */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-background border border-border rounded-2xl px-6 py-4 shadow-xl"
+                >
+                  {isSaleActive() ? (
+                    <div className="text-center">
+                      <div className="text-xs text-primary font-medium mb-1">🇮🇳 Republic Day Price</div>
+                      <div className="flex items-baseline justify-center gap-2">
+                        <span className="text-3xl font-bold text-foreground">₹4,499</span>
+                        <span className="text-sm text-muted-foreground line-through">₹4,999</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <div className="text-xs text-primary font-medium mb-1">Introductory Price</div>
+                      <div className="flex items-baseline justify-center gap-2">
+                        <span className="text-3xl font-bold text-foreground">₹4,999</span>
+                        <span className="text-sm text-muted-foreground line-through">₹7,999</span>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
               </div>
-              
-              {/* Floating Price Card */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="absolute -bottom-4 right-4 lg:right-0 bg-card border rounded-2xl p-4 shadow-lg"
-              >
-                {isSaleActive() ? (
-                  <>
-                    <div className="text-xs text-primary font-medium mb-1">🇮🇳 Republic Day Offer</div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-foreground">₹4,499</span>
-                      <span className="text-sm text-muted-foreground line-through">₹4,999</span>
-                    </div>
-                    <p className="text-[10px] text-muted-foreground mt-1">Use code {SALE_CODE}</p>
-                  </>
-                ) : (
-                  <>
-                    <div className="text-xs text-primary font-medium mb-1">Introductory Offer</div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-foreground">₹4,999</span>
-                      <span className="text-sm text-muted-foreground line-through">₹7,999</span>
-                    </div>
-                  </>
-                )}
-              </motion.div>
             </motion.div>
           </div>
+          
+          {/* Bottom info strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="mt-16 lg:mt-20"
+          >
+            <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-12">
+              <MultiProductDiscountBanner variant="inline" />
+              <FomoCounter productHandle="easytouch-rhythm" lowStockThreshold={20} />
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span>📦</span>
+                <span>Delivers by <span className="font-medium text-foreground">{format(addBusinessDays(new Date(), 3), "EEE, MMM d")}</span></span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
