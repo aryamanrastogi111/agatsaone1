@@ -29,7 +29,7 @@ const heroProducts = [
   {
     id: "easytouch-rhythm",
     name: "EasyTouch Rhythm",
-    image: easytouchHeroImg,
+    image: zluHeroImg,
     tagline: "5 Body Rhythms",
     benefit: "Track glucose & vitals",
     icon: Activity,
@@ -38,7 +38,7 @@ const heroProducts = [
   {
     id: "zlu",
     name: "Zlu",
-    image: zluHeroImg,
+    image: easytouchHeroImg,
     tagline: "Sleep Device",
     benefit: "Better sleep, naturally",
     icon: Moon,
@@ -201,7 +201,7 @@ export function HeroSection() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.8 }}
-              className={`absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l ${activeProduct.accent} to-transparent`}
+              className={`absolute inset-0 bg-gradient-to-r ${activeProduct.accent}`}
             />
           </AnimatePresence>
           <motion.div
