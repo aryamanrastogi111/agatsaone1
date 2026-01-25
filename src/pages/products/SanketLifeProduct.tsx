@@ -227,7 +227,6 @@ const comparisonFeatures = [
   { feature: "Instant Results", sanketlife: true, hospital: false, smartwatch: true, others: true },
   { feature: "Doctor Sharing", sanketlife: true, hospital: true, smartwatch: "Limited", others: "Limited" },
   { feature: "Portability", sanketlife: true, hospital: false, smartwatch: true, others: true },
-  { feature: "Cost per ECG", sanketlife: "₹0", hospital: "₹500-2000", smartwatch: "N/A", others: "₹0" },
 ];
 
 const testimonials = [
