@@ -20,6 +20,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import easytouchRhythmImg from "@/assets/easytouch-rhythm-band.png";
 import corebalanceCardImg from "@/assets/corebalance-card.png";
 import { isSaleActive, SALE_CODE, SALE_DISCOUNT_PERCENT } from "@/components/sale";
+import { useFacebookPixel } from "@/hooks/useFacebookPixel";
 
 // Shopify checkout subdomain (TLS is now Connected)
 const PREFERRED_CHECKOUT_DOMAIN = "shop.agatsaone.com";
@@ -87,6 +88,7 @@ export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
   const { products, addToCart } = useShopifyProduct();
+  const { trackInitiateCheckout } = useFacebookPixel();
 
   const {
     items,
@@ -198,6 +200,17 @@ export const CartDrawer = () => {
 
   const handleCheckout = async () => {
     try {
+      // Track InitiateCheckout for Facebook Pixel if EasyTouch Rhythm is in cart
+      if (hasEasyTouchInCart) {
+        const easyTouchItems = items.filter(item => isEasyTouchRhythm(item.product.node.handle));
+        const easyTouchValue = easyTouchItems.reduce(
+          (sum, item) => sum + parseFloat(item.price.amount) * item.quantity,
+          0
+        );
+        const easyTouchQuantity = easyTouchItems.reduce((sum, item) => sum + item.quantity, 0);
+        trackInitiateCheckout(easyTouchValue, easyTouchQuantity);
+      }
+
       const url = await createCheckout();
 
       if (!url) {
