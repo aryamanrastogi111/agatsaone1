@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { useFacebookPixel, useEasyTouchRhythmPixelPageView } from "@/hooks/useFacebookPixel";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { FomoCounter } from "@/components/shop/FomoCounter";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
@@ -160,12 +161,18 @@ const AnimatedSection = ({ children, className = "", id }: { children: React.Rea
 const EasyTouchRhythmProduct = () => {
   const { loading, findProductByTitle, addToCart } = useShopifyProduct();
   const [addingToCart, setAddingToCart] = useState(false);
+  const { trackAddToCart } = useFacebookPixel();
+  
+  // Fire PageView and ViewContent on mount for Facebook Pixel
+  useEasyTouchRhythmPixelPageView();
 
   const handleAddToCart = async () => {
     const product = findProductByTitle("EasyTouch Rhythm");
     if (product) {
       setAddingToCart(true);
       addToCart(product);
+      // Track AddToCart event for Facebook Pixel
+      trackAddToCart(1);
       setTimeout(() => setAddingToCart(false), 500);
     }
   };
