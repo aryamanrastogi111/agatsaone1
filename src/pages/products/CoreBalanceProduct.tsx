@@ -673,7 +673,7 @@ const CoreBalanceProduct = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               />
-              <div className="text-3xl font-bold text-foreground mb-2">₹6,999</div>
+              <div className="text-3xl font-bold text-foreground mb-2">₹1,999</div>
               <p className="text-sm text-muted-foreground mb-6">Includes scale, app access & 1-year warranty</p>
               <Button size="lg" className="text-lg px-10 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700">
                 <ShoppingCart className="h-5 w-5" />
