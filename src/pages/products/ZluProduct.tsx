@@ -699,13 +699,19 @@ const ZluProduct = () => {
                 <span className="text-4xl font-bold text-foreground">₹4,999</span>
               </div>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-                <Button size="lg" className="text-lg px-12 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700 w-full sm:w-auto">
-                  <ShoppingCart className="h-5 w-5" />
+              <div className="flex items-center justify-center mb-6">
+                <Button 
+                  size="lg" 
+                  className="text-lg px-12 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
+                  onClick={handleAddToCart}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="h-5 w-5" />
+                  )}
                   Buy Zlu Now
-                </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-cyan-200 text-cyan-700 hover:bg-cyan-50 w-full sm:w-auto">
-                  <Link to="/support#contact">Contact Us</Link>
                 </Button>
               </div>
               
