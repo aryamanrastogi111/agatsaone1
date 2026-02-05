@@ -82,9 +82,9 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
      await client.connect();
      console.log('Connected to MongoDB');
  
-      // Database names for different data
-      const sanketDb = client.db('Sanket');
-      // sdkUsersKeys is a COLLECTION in the Sanket database, not a separate database
+      // Database names for different data - NOTE: MongoDB is case-sensitive
+      const sanketDb = client.db('sanket');
+      // sdkUsersKeys is a COLLECTION in the sanket database
       const sdkUsersKeysCollection = sanketDb.collection('sdkUsersKeys');
  
      let result: any = {};
