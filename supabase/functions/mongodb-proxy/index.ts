@@ -328,9 +328,16 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
             const clientPhone = client.clientPhone || '';
             const clientKey = client.client_key || '';
             
-            // Get last ECG date from ecgs collection
-            const lastEcg = clientUsername ? await ecgsCollection.findOne(
-              { username: clientUsername },
+            // Query ecgs collection using client_key as the username field
+            // The ecgs collection stores records where username = client_key from sdkUsersKeys
+            const ecgQuery = clientKey ? { username: clientKey } : null;
+            
+            // Count actual ECGs from ecgs collection
+            const actualEcgCount = ecgQuery ? await ecgsCollection.countDocuments(ecgQuery) : 0;
+            
+            // Get last ECG date from ecgs collection using client_key
+            const lastEcg = ecgQuery ? await ecgsCollection.findOne(
+              ecgQuery,
               { sort: { timestamp: -1 } }
             ) : null;
 
@@ -341,7 +348,7 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
               email: clientEmail,
               phone: clientPhone,
               clientKey: clientKey ? `${String(clientKey).slice(0, 12)}...` : 'N/A',
-              totalEcgs: client.totalECGTaken || 0,
+              totalEcgs: actualEcgCount, // Use actual count from ecgs collection
               ecgLimit: client.ECGLimit || 0,
               lastActivity: lastEcg?.timestamp || null,
               updatedAt: client.updated_at || null,
@@ -451,21 +458,22 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
         // Count clients in sdkUsersKeys collection
         const totalClients = await sdkUsersKeysCollection.countDocuments({});
         
-        // Get all usernames from sdkUsersKeys
-        const allClients = await sdkUsersKeysCollection.find({}, { projection: { username: 1, totalECGTaken: 1 } }).toArray();
-        const usernames = allClients.map((c: any) => c.username).filter(Boolean);
+        // Get all client_keys from sdkUsersKeys (client_key is used as username in ecgs collection)
+        const allClients = await sdkUsersKeysCollection.find({}, { projection: { client_key: 1 } }).toArray();
+        const clientKeys = allClients.map((c: any) => c.client_key).filter(Boolean);
         
-        // Sum totalECGTaken from all clients
-        const totalEcgs = allClients.reduce((sum: number, c: any) => sum + (c.totalECGTaken || 0), 0);
+        // Count total ECGs from ecgs collection using client_keys
+        const totalEcgs = await ecgsCollection.countDocuments({
+          username: { $in: clientKeys }
+        });
 
-        // Count this month's ECGs
+        // Count this month's ECGs using client_keys
         const now = new Date();
         const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         const thisMonthEcgs = await ecgsCollection.countDocuments({
-          username: { $in: usernames },
+          username: { $in: clientKeys },
           timestamp: { $gte: startOfMonth }
         });
-
 
         result = {
           totalClients,
