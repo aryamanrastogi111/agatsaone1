@@ -82,22 +82,49 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
      await client.connect();
      console.log('Connected to MongoDB');
  
-     const db = client.db('Sanket');
+      // Database names for different data
+      const sanketDb = client.db('Sanket');
+      const sdkUserKeysDb = client.db('sdkUserKeys');
  
      let result: any = {};
  
      switch (action) {
        case 'get_devices': {
          // First, find the client info from sdkUserKeys using company name or email
-         const sdkUserKeysCollection = db.collection('sdkUserKeys');
+          // sdkUserKeys is a DATABASE, list its collections to find client data
+          const sdkCollections = await sdkUserKeysDb.listCollections().toArray();
+          console.log('Collections in sdkUserKeys DB:', sdkCollections.map(c => c.name));
          
-         // Try to find client by company name or email
-         const clientInfo = await sdkUserKeysCollection.findOne({
+          // Try common collection names for client data
+          let clientInfo = null;
+          const possibleCollections = ['users', 'clients', 'keys', 'sdk_users', 'user_keys'];
+          
+          for (const collName of possibleCollections) {
+            const coll = sdkUserKeysDb.collection(collName);
+            clientInfo = await coll.findOne({
+              $or: [
+                { client_name: { $regex: profile.company_name || '', $options: 'i' } },
+                { email: profile.email },
+                { name: { $regex: profile.company_name || '', $options: 'i' } }
+              ]
+            });
+            if (clientInfo) {
+              console.log(`Found client in collection: ${collName}`);
+              break;
+            }
+          }
+          
+          // Fallback: try the first collection if none of the common names work
+          if (!clientInfo && sdkCollections.length > 0) {
+            const firstColl = sdkUserKeysDb.collection(sdkCollections[0].name);
+            clientInfo = await firstColl.findOne({
            $or: [
              { client_name: { $regex: profile.company_name || '', $options: 'i' } },
-             { email: profile.email }
+                { email: profile.email },
+                { name: { $regex: profile.company_name || '', $options: 'i' } }
            ]
          });
+          }
  
          console.log('Client info found:', clientInfo);
  
@@ -107,7 +134,7 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
          }
  
          // Now fetch ECGs for this client from ecgs collection
-         const ecgsCollection = db.collection('ecgs');
+          const ecgsCollection = sanketDb.collection('ecgs');
          
          // SDK users have usernames containing "sdk" and their client_id
          const clientId = clientInfo.client_id || clientInfo.clientId;
@@ -165,15 +192,22 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
  
        case 'get_recharge_history': {
          // Fetch from sdk_device_plans collection
-         const plansCollection = db.collection('sdk_device_plans');
+          const plansCollection = sanketDb.collection('sdk_device_plans');
          
-         const sdkUserKeysCollection = db.collection('sdkUserKeys');
-         const clientInfo = await sdkUserKeysCollection.findOne({
+          // Find client in sdkUserKeys database
+          const sdkCollections = await sdkUserKeysDb.listCollections().toArray();
+          let clientInfo = null;
+          
+          for (const coll of sdkCollections) {
+            const collection = sdkUserKeysDb.collection(coll.name);
+            clientInfo = await collection.findOne({
            $or: [
              { client_name: { $regex: profile.company_name || '', $options: 'i' } },
              { email: profile.email }
            ]
          });
+            if (clientInfo) break;
+          }
  
          if (!clientInfo) {
            result = { plans: [] };
@@ -201,15 +235,22 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
  
        case 'get_ecg_stats': {
          // Get ECG statistics for the client
-         const ecgsCollection = db.collection('ecgs');
-         const sdkUserKeysCollection = db.collection('sdkUserKeys');
+          const ecgsCollection = sanketDb.collection('ecgs');
          
-         const clientInfo = await sdkUserKeysCollection.findOne({
+          // Find client in sdkUserKeys database
+          const sdkCollections = await sdkUserKeysDb.listCollections().toArray();
+          let clientInfo = null;
+          
+          for (const coll of sdkCollections) {
+            const collection = sdkUserKeysDb.collection(coll.name);
+            clientInfo = await collection.findOne({
            $or: [
              { client_name: { $regex: profile.company_name || '', $options: 'i' } },
              { email: profile.email }
            ]
          });
+            if (clientInfo) break;
+          }
  
          if (!clientInfo) {
            result = { totalEcgs: 0, thisMonth: 0, thisWeek: 0 };
@@ -253,30 +294,25 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
         }
 
         // Debug: List all collections in the database
-        const collections = await db.listCollections().toArray();
-        console.log('Available collections in Sanket DB:', collections.map(c => c.name));
+        const sdkCollections = await sdkUserKeysDb.listCollections().toArray();
+        console.log('Available collections in sdkUserKeys DB:', sdkCollections.map(c => c.name));
 
-        const sdkUserKeysCollection = db.collection('sdkUserKeys');
-        const ecgsCollection = db.collection('ecgs');
+        const ecgsCollection = sanketDb.collection('ecgs');
         
-        // Get all SDK clients
-        const allClients = await sdkUserKeysCollection.find({}).toArray();
-        console.log(`Found ${allClients.length} SDK clients in sdkUserKeys`);
+        // Get all SDK clients from all collections in sdkUserKeys database
+        let allClients: any[] = [];
         
-        // Log first client structure for debugging
-        if (allClients.length > 0) {
-          console.log('Sample client structure:', JSON.stringify(allClients[0], null, 2));
-        } else {
-          // Try alternative collection names
-          const altNames = ['SdkUserKeys', 'sdk_user_keys', 'SDK_USER_KEYS', 'sdkuserkeys'];
-          for (const name of altNames) {
-            const altCollection = db.collection(name);
-            const altCount = await altCollection.countDocuments({});
-            if (altCount > 0) {
-              console.log(`Found ${altCount} documents in alternate collection: ${name}`);
-            }
+        for (const collInfo of sdkCollections) {
+          const coll = sdkUserKeysDb.collection(collInfo.name);
+          const docs = await coll.find({}).toArray();
+          console.log(`Found ${docs.length} documents in collection: ${collInfo.name}`);
+          if (docs.length > 0) {
+            console.log('Sample document structure:', JSON.stringify(docs[0], null, 2));
+            allClients = [...allClients, ...docs];
           }
         }
+        
+        console.log(`Total SDK clients found: ${allClients.length}`);
 
         // Get usage stats for each client
         const clientsWithStats = await Promise.all(
@@ -336,16 +372,22 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
           );
         }
 
-        const sdkUserKeysCollection = db.collection('sdkUserKeys');
-        const ecgsCollection = db.collection('ecgs');
+        const ecgsCollection = sanketDb.collection('ecgs');
         
         // Get client info
-        const clientInfo = await sdkUserKeysCollection.findOne({
+        let clientInfo = null;
+        const sdkCollections = await sdkUserKeysDb.listCollections().toArray();
+        
+        for (const collInfo of sdkCollections) {
+          const coll = sdkUserKeysDb.collection(collInfo.name);
+          clientInfo = await coll.findOne({
           $or: [
             { client_id: clientId },
             { clientId: clientId }
           ]
         });
+          if (clientInfo) break;
+        }
 
         if (!clientInfo) {
           return new Response(
@@ -413,10 +455,16 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
           );
         }
 
-        const sdkUserKeysCollection = db.collection('sdkUserKeys');
-        const ecgsCollection = db.collection('ecgs');
+        const ecgsCollection = sanketDb.collection('ecgs');
         
-        const totalClients = await sdkUserKeysCollection.countDocuments({});
+        // Count clients across all collections in sdkUserKeys database
+        let totalClients = 0;
+        const sdkCollections = await sdkUserKeysDb.listCollections().toArray();
+        for (const collInfo of sdkCollections) {
+          const coll = sdkUserKeysDb.collection(collInfo.name);
+          totalClients += await coll.countDocuments({});
+        }
+        
         const totalEcgs = await ecgsCollection.countDocuments({
           username: { $regex: 'sdk', $options: 'i' }
         });
