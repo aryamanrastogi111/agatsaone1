@@ -10,20 +10,22 @@
  }
  
  export function SDKLayout({ children, requireAdmin = false }: SDKLayoutProps) {
-   const { user, loading, isAdmin } = useAuth();
+  const { user, loading, isAdmin, adminCheckComplete } = useAuth();
    const navigate = useNavigate();
  
    useEffect(() => {
-     if (!loading) {
+    // Wait for both auth loading AND admin check to complete before redirecting
+    if (!loading && adminCheckComplete) {
        if (!user) {
          navigate('/sdk/auth');
        } else if (requireAdmin && !isAdmin) {
          navigate('/sdk/dashboard');
        }
      }
-   }, [user, loading, isAdmin, requireAdmin, navigate]);
+  }, [user, loading, isAdmin, adminCheckComplete, requireAdmin, navigate]);
  
-   if (loading) {
+  // Show loader while auth or admin check is in progress
+  if (loading || (user && !adminCheckComplete)) {
      return (
        <div className="min-h-screen flex items-center justify-center bg-background">
          <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -35,7 +37,7 @@
      return null;
    }
  
-   if (requireAdmin && !isAdmin) {
+  if (requireAdmin && adminCheckComplete && !isAdmin) {
      return null;
    }
  
