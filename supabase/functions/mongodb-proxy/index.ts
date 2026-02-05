@@ -84,7 +84,8 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
  
       // Database names for different data
       const sanketDb = client.db('Sanket');
-      const sdkDb = client.db('sanket-sdk');
+      // sdkUsersKeys is a COLLECTION in the Sanket database, not a separate database
+      const sdkUsersKeysCollection = sanketDb.collection('sdkUsersKeys');
  
      let result: any = {};
  
@@ -145,42 +146,14 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
         }
 
        case 'get_devices': {
-         // First, find the client info from sdkUserKeys using company name or email
-          // sanket-sdk is the DATABASE for SDK client data
-          const sdkCollections = await sdkDb.listCollections().toArray();
-          console.log('Collections in sanket-sdk DB:', sdkCollections.map((c: any) => c.name));
-         
-          // Try common collection names for client data
-          let clientInfo = null;
-          const possibleCollections = ['users', 'clients', 'keys', 'sdk_users', 'user_keys'];
-          
-          for (const collName of possibleCollections) {
-            const coll = sdkDb.collection(collName);
-            clientInfo = await coll.findOne({
-              $or: [
-                { client_name: { $regex: profile.company_name || '', $options: 'i' } },
-                { email: profile.email },
-                { name: { $regex: profile.company_name || '', $options: 'i' } }
-              ]
-            });
-            if (clientInfo) {
-              console.log(`Found client in collection: ${collName}`);
-              break;
-            }
-          }
-          
-          // Fallback: try the first collection if none of the common names work
-          if (!clientInfo && sdkCollections.length > 0) {
-            const firstColl = sdkDb.collection(sdkCollections[0].name);
-            clientInfo = await firstColl.findOne({
+         // Find client info from sdkUsersKeys collection
+         const clientInfo = await sdkUsersKeysCollection.findOne({
            $or: [
-             { client_name: { $regex: profile.company_name || '', $options: 'i' } },
-                { email: profile.email },
-                { name: { $regex: profile.company_name || '', $options: 'i' } }
+             { name: { $regex: profile.company_name || '', $options: 'i' } },
+             { email: profile.email },
+             { username: { $regex: profile.company_name || '', $options: 'i' } }
            ]
          });
-          }
- 
          console.log('Client info found:', clientInfo);
  
          if (!clientInfo) {
@@ -191,10 +164,10 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
          // Now fetch ECGs for this client from ecgs collection
           const ecgsCollection = sanketDb.collection('ecgs');
          
-         // SDK users have usernames containing "sdk" and their client_id
-         const clientId = clientInfo.client_id || clientInfo.clientId;
+         // Use username from sdkUsersKeys to find ECGs
+         const clientUsername = clientInfo.username;
          const query: any = {
-           username: { $regex: `sdk.*${clientId}`, $options: 'i' }
+           username: clientUsername
          };
  
          // Apply additional filters
@@ -238,8 +211,8 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
          result = {
            devices: Array.from(deviceMap.values()),
            clientInfo: {
-             name: clientInfo.client_name,
-             clientId: clientId,
+             name: clientInfo.name,
+             username: clientUsername,
            }
          };
          break;
@@ -249,29 +222,22 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
          // Fetch from sdk_device_plans collection
           const plansCollection = sanketDb.collection('sdk_device_plans');
          
-          // Find client in sanket-sdk database
-          const sdkCollections = await sdkDb.listCollections().toArray();
-          let clientInfo = null;
-          
-          for (const coll of sdkCollections) {
-            const collection = sdkDb.collection(coll.name);
-            clientInfo = await collection.findOne({
-           $or: [
-             { client_name: { $regex: profile.company_name || '', $options: 'i' } },
-             { email: profile.email }
-           ]
-         });
-            if (clientInfo) break;
-          }
+          // Find client in sdkUsersKeys collection
+          const clientInfo = await sdkUsersKeysCollection.findOne({
+            $or: [
+              { name: { $regex: profile.company_name || '', $options: 'i' } },
+              { email: profile.email }
+            ]
+          });
  
          if (!clientInfo) {
            result = { plans: [] };
            break;
          }
  
-         const clientId = clientInfo.client_id || clientInfo.clientId;
+         const clientUsername = clientInfo.username;
          const plans = await plansCollection
-           .find({ client_id: clientId })
+           .find({ username: clientUsername })
            .sort({ created_at: -1 })
            .toArray();
  
@@ -292,30 +258,23 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
          // Get ECG statistics for the client
           const ecgsCollection = sanketDb.collection('ecgs');
          
-          // Find client in sanket-sdk database
-          const sdkCollections = await sdkDb.listCollections().toArray();
-          let clientInfo = null;
-          
-          for (const coll of sdkCollections) {
-            const collection = sdkDb.collection(coll.name);
-            clientInfo = await collection.findOne({
-           $or: [
-             { client_name: { $regex: profile.company_name || '', $options: 'i' } },
-             { email: profile.email }
-           ]
-         });
-            if (clientInfo) break;
-          }
+          // Find client in sdkUsersKeys collection
+          const clientInfo = await sdkUsersKeysCollection.findOne({
+            $or: [
+              { name: { $regex: profile.company_name || '', $options: 'i' } },
+              { email: profile.email }
+            ]
+          });
  
          if (!clientInfo) {
-           result = { totalEcgs: 0, thisMonth: 0, thisWeek: 0 };
+           result = { totalEcgs: 0, thisMonth: 0, thisWeek: 0, ecgLimit: 0 };
            break;
          }
  
-         const clientId = clientInfo.client_id || clientInfo.clientId;
+         const clientUsername = clientInfo.username;
          
          const totalEcgs = await ecgsCollection.countDocuments({
-           username: { $regex: `sdk.*${clientId}`, $options: 'i' }
+           username: clientUsername
          });
  
          const now = new Date();
@@ -324,16 +283,21 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
          startOfWeek.setDate(now.getDate() - now.getDay());
  
          const thisMonth = await ecgsCollection.countDocuments({
-           username: { $regex: `sdk.*${clientId}`, $options: 'i' },
+           username: clientUsername,
            timestamp: { $gte: startOfMonth }
          });
  
          const thisWeek = await ecgsCollection.countDocuments({
-           username: { $regex: `sdk.*${clientId}`, $options: 'i' },
+           username: clientUsername,
            timestamp: { $gte: startOfWeek }
          });
  
-         result = { totalEcgs, thisMonth, thisWeek };
+         result = { 
+           totalEcgs: clientInfo.totalECGTaken || totalEcgs, 
+           thisMonth, 
+           thisWeek,
+           ecgLimit: clientInfo.ECGLimit || 0
+         };
          break;
        }
  
@@ -348,59 +312,40 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
           );
         }
 
-        // Debug: List all collections in the database
-        const sdkCollections = await sdkDb.listCollections().toArray();
-        console.log('Available collections in sanket-sdk DB:', sdkCollections.map((c: any) => c.name));
-
         const ecgsCollection = sanketDb.collection('ecgs');
         
-        // Get all SDK clients from all collections in sanket-sdk database
-        let allClients: any[] = [];
-        
-        for (const collInfo of sdkCollections) {
-          const coll = sdkDb.collection(collInfo.name);
-          const docs = await coll.find({}).toArray();
-          console.log(`Found ${docs.length} documents in collection: ${collInfo.name}`);
-          if (docs.length > 0) {
-            console.log('Sample document structure:', JSON.stringify(docs[0], null, 2));
-            allClients = [...allClients, ...docs];
-          }
-        }
-        
+        // Get all SDK clients from sdkUsersKeys collection
+        const allClients = await sdkUsersKeysCollection.find({}).toArray();
         console.log(`Total SDK clients found: ${allClients.length}`);
 
         // Get usage stats for each client
         const clientsWithStats = await Promise.all(
           allClients.map(async (client: any) => {
-            // Try multiple possible field names for client ID
-            const clientId = client.client_id || client.clientId || client.ClientId || client.id;
-            const clientName = client.client_name || client.clientName || client.ClientName || client.name || client.Name || 'Unknown';
-            const clientEmail = client.email || client.Email || client.mail || '';
-            const clientPhone = client.phone || client.Phone || client.mobile || client.Mobile || '';
-            const clientApiKey = client.api_key || client.apiKey || client.ApiKey || client.key || '';
+            // Use exact field names from sdkUsersKeys collection
+            const clientUsername = client.username || '';
+            const clientName = client.name || 'Unknown';
+            const clientEmail = client.email || '';
+            const clientPhone = client.clientPhone || '';
+            const clientKey = client.client_key || '';
             
-            // Count ECGs for this client
-            const totalEcgs = clientId ? await ecgsCollection.countDocuments({
-              username: { $regex: `sdk.*${clientId}`, $options: 'i' }
-            }) : 0;
-
-            // Get last ECG date
-            const lastEcg = clientId ? await ecgsCollection.findOne(
-              { username: { $regex: `sdk.*${clientId}`, $options: 'i' } },
+            // Get last ECG date from ecgs collection
+            const lastEcg = clientUsername ? await ecgsCollection.findOne(
+              { username: clientUsername },
               { sort: { timestamp: -1 } }
             ) : null;
 
             return {
               id: client._id.toString(),
-              clientId: clientId || 'N/A',
+              username: clientUsername,
               clientName: clientName,
               email: clientEmail,
               phone: clientPhone,
-              apiKey: clientApiKey ? `${String(clientApiKey).slice(0, 8)}...` : 'N/A',
-              totalEcgs,
+              clientKey: clientKey ? `${String(clientKey).slice(0, 12)}...` : 'N/A',
+              totalEcgs: client.totalECGTaken || 0,
+              ecgLimit: client.ECGLimit || 0,
               lastActivity: lastEcg?.timestamp || null,
-              createdAt: client.created_at || client.createdAt || null,
-              status: client.status || 'active',
+              updatedAt: client.updated_at || null,
+              agatsaMobileNo: client.agatsaMobileNo || '',
             };
           })
         );
@@ -419,30 +364,18 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
           );
         }
 
-        const { clientId } = filters || {};
-        if (!clientId) {
+        const { username } = filters || {};
+        if (!username) {
           return new Response(
-            JSON.stringify({ error: 'clientId required' }),
+           JSON.stringify({ error: 'username required' }),
             { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }
 
         const ecgsCollection = sanketDb.collection('ecgs');
         
-        // Get client info
-        let clientInfo = null;
-        const sdkCollections = await sdkDb.listCollections().toArray();
-        
-        for (const collInfo of sdkCollections) {
-          const coll = sdkDb.collection(collInfo.name);
-          clientInfo = await coll.findOne({
-          $or: [
-            { client_id: clientId },
-            { clientId: clientId }
-          ]
-        });
-          if (clientInfo) break;
-        }
+        // Get client info from sdkUsersKeys
+        const clientInfo = await sdkUsersKeysCollection.findOne({ username });
 
         if (!clientInfo) {
           return new Response(
@@ -458,22 +391,22 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
         startOfWeek.setDate(now.getDate() - now.getDay());
 
         const totalEcgs = await ecgsCollection.countDocuments({
-          username: { $regex: `sdk.*${clientId}`, $options: 'i' }
+          username: username
         });
 
         const thisMonth = await ecgsCollection.countDocuments({
-          username: { $regex: `sdk.*${clientId}`, $options: 'i' },
+          username: username,
           timestamp: { $gte: startOfMonth }
         });
 
         const thisWeek = await ecgsCollection.countDocuments({
-          username: { $regex: `sdk.*${clientId}`, $options: 'i' },
+          username: username,
           timestamp: { $gte: startOfWeek }
         });
 
         // Get recent ECGs
         const recentEcgs = await ecgsCollection
-          .find({ username: { $regex: `sdk.*${clientId}`, $options: 'i' } })
+          .find({ username: username })
           .sort({ timestamp: -1 })
           .limit(10)
           .toArray();
@@ -481,15 +414,18 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
         result = {
           client: {
             id: clientInfo._id.toString(),
-            clientId: clientInfo.client_id || clientInfo.clientId,
-            clientName: clientInfo.client_name || clientInfo.name,
+            username: clientInfo.username,
+            clientName: clientInfo.name,
             email: clientInfo.email,
-            phone: clientInfo.phone || clientInfo.mobile,
-            apiKey: clientInfo.api_key,
-            createdAt: clientInfo.created_at || clientInfo.createdAt,
-            status: clientInfo.status || 'active',
+            phone: clientInfo.clientPhone,
+            clientKey: clientInfo.client_key,
+            secretKey: clientInfo.secret_key,
+            totalECGTaken: clientInfo.totalECGTaken,
+            ecgLimit: clientInfo.ECGLimit,
+            agatsaMobileNo: clientInfo.agatsaMobileNo,
+            updatedAt: clientInfo.updated_at,
           },
-          stats: { totalEcgs, thisMonth, thisWeek },
+          stats: { totalEcgs: clientInfo.totalECGTaken || totalEcgs, thisMonth, thisWeek, ecgLimit: clientInfo.ECGLimit },
           recentEcgs: recentEcgs.map((ecg: any) => ({
             id: ecg._id.toString(),
             deviceId: ecg.device_id,
@@ -512,24 +448,24 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
 
         const ecgsCollection = sanketDb.collection('ecgs');
         
-        // Count clients across all collections in sanket-sdk database
-        let totalClients = 0;
-        const sdkCollections = await sdkDb.listCollections().toArray();
-        for (const collInfo of sdkCollections) {
-          const coll = sdkDb.collection(collInfo.name);
-          totalClients += await coll.countDocuments({});
-        }
+        // Count clients in sdkUsersKeys collection
+        const totalClients = await sdkUsersKeysCollection.countDocuments({});
         
-        const totalEcgs = await ecgsCollection.countDocuments({
-          username: { $regex: 'sdk', $options: 'i' }
-        });
+        // Get all usernames from sdkUsersKeys
+        const allClients = await sdkUsersKeysCollection.find({}, { projection: { username: 1, totalECGTaken: 1 } }).toArray();
+        const usernames = allClients.map((c: any) => c.username).filter(Boolean);
+        
+        // Sum totalECGTaken from all clients
+        const totalEcgs = allClients.reduce((sum: number, c: any) => sum + (c.totalECGTaken || 0), 0);
 
+        // Count this month's ECGs
         const now = new Date();
         const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         const thisMonthEcgs = await ecgsCollection.countDocuments({
-          username: { $regex: 'sdk', $options: 'i' },
+          username: { $in: usernames },
           timestamp: { $gte: startOfMonth }
         });
+
 
         result = {
           totalClients,

@@ -23,15 +23,16 @@
  
  interface Client {
    id: string;
-   clientId: string;
+  username: string;
    clientName: string;
    email: string;
    phone: string;
-   apiKey: string;
+  clientKey: string;
    totalEcgs: number;
+  ecgLimit: number;
    lastActivity: string | null;
-   createdAt: string | null;
-   status: string;
+  updatedAt: string | null;
+  agatsaMobileNo: string;
  }
  
  export function AdminClientsTable() {
@@ -52,7 +53,7 @@
            c =>
              c.clientName.toLowerCase().includes(query) ||
              c.email.toLowerCase().includes(query) ||
-             c.clientId.toLowerCase().includes(query)
+            c.username.toLowerCase().includes(query)
          )
        );
      } else {
@@ -86,17 +87,12 @@
      });
    };
  
-   const getStatusBadge = (status: string) => {
-     switch (status) {
-       case 'active':
-         return <Badge className="bg-green-500">Active</Badge>;
-       case 'inactive':
-         return <Badge variant="secondary">Inactive</Badge>;
-       case 'suspended':
-         return <Badge variant="destructive">Suspended</Badge>;
-       default:
-         return <Badge variant="outline">{status}</Badge>;
-     }
+  const getUsageBadge = (totalEcgs: number, ecgLimit: number) => {
+    if (ecgLimit === 0) return <Badge variant="outline">No Limit</Badge>;
+    const usage = (totalEcgs / ecgLimit) * 100;
+    if (usage >= 90) return <Badge variant="destructive">{usage.toFixed(0)}% used</Badge>;
+    if (usage >= 70) return <Badge className="bg-yellow-500">{usage.toFixed(0)}% used</Badge>;
+    return <Badge className="bg-green-500">{usage.toFixed(0)}% used</Badge>;
    };
  
    return (
@@ -134,11 +130,11 @@
                <TableHeader>
                  <TableRow>
                    <TableHead>Client</TableHead>
-                   <TableHead>Client ID</TableHead>
+                  <TableHead>Username</TableHead>
                    <TableHead>Contact</TableHead>
-                   <TableHead className="text-right">ECGs</TableHead>
+                  <TableHead className="text-right">ECGs / Limit</TableHead>
                    <TableHead>Last Activity</TableHead>
-                   <TableHead>Status</TableHead>
+                  <TableHead>Usage</TableHead>
                    <TableHead></TableHead>
                  </TableRow>
                </TableHeader>
@@ -149,12 +145,12 @@
                        <div>
                          <p className="font-medium">{client.clientName}</p>
                          <p className="text-xs text-muted-foreground font-mono">
-                           {client.apiKey}
+                          {client.clientKey}
                          </p>
                        </div>
                      </TableCell>
                      <TableCell className="font-mono text-sm">
-                       {client.clientId}
+                      {client.username}
                      </TableCell>
                      <TableCell>
                        <div className="space-y-1">
@@ -164,16 +160,21 @@
                          {client.phone && (
                            <p className="text-xs text-muted-foreground">{client.phone}</p>
                          )}
+                        {client.agatsaMobileNo && (
+                          <p className="text-xs text-muted-foreground">{client.agatsaMobileNo}</p>
+                        )}
                        </div>
                      </TableCell>
                      <TableCell className="text-right">
                        <div className="flex items-center justify-end gap-1">
                          <Activity className="h-3 w-3 text-muted-foreground" />
-                         <span className="font-medium">{client.totalEcgs.toLocaleString()}</span>
+                        <span className="font-medium">
+                          {client.totalEcgs.toLocaleString()} / {client.ecgLimit.toLocaleString()}
+                        </span>
                        </div>
                      </TableCell>
                      <TableCell>{formatDate(client.lastActivity)}</TableCell>
-                     <TableCell>{getStatusBadge(client.status)}</TableCell>
+                    <TableCell>{getUsageBadge(client.totalEcgs, client.ecgLimit)}</TableCell>
                      <TableCell>
                        {client.email && (
                          <Button
