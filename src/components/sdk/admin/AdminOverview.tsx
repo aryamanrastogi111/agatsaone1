@@ -1,5 +1,6 @@
  import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
- import { Users, Activity, CreditCard, TrendingUp, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Users, Activity, CreditCard, TrendingUp, Loader2, Database } from 'lucide-react';
  import { useEffect, useState } from 'react';
  import { supabase } from '@/integrations/supabase/client';
  
@@ -11,6 +12,12 @@
    totalCreditsIssued: number;
  }
  
+interface DbInfo {
+  name: string;
+  collections: string[];
+  sampleDocFields: string[];
+}
+
  export function AdminOverview() {
    const [stats, setStats] = useState<Stats>({
      totalClients: 0,
@@ -20,6 +27,8 @@
      totalCreditsIssued: 0,
    });
    const [loading, setLoading] = useState(true);
+  const [dbInfo, setDbInfo] = useState<DbInfo[] | null>(null);
+  const [loadingDb, setLoadingDb] = useState(false);
  
    useEffect(() => {
      fetchStats();
@@ -69,6 +78,23 @@
      }
    };
  
+  const fetchDatabaseInfo = async () => {
+    setLoadingDb(true);
+    try {
+      const response = await supabase.functions.invoke('mongodb-proxy', {
+        body: { action: 'admin_list_databases', filters: {} }
+      });
+      
+      if (response.data?.databases) {
+        setDbInfo(response.data.databases);
+      }
+    } catch (error) {
+      console.error('Error fetching database info:', error);
+    } finally {
+      setLoadingDb(false);
+    }
+  };
+
    if (loading) {
      return (
        <div className="flex justify-center py-12">
@@ -134,6 +160,43 @@
            </p>
          </CardContent>
        </Card>
+
+    {/* Database Debug Section */}
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div>
+          <CardTitle className="flex items-center gap-2">
+            <Database className="h-5 w-5" />
+            MongoDB Debug
+          </CardTitle>
+        </div>
+        <Button onClick={fetchDatabaseInfo} disabled={loadingDb} variant="outline" size="sm">
+          {loadingDb ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+          List Databases
+        </Button>
+      </CardHeader>
+      <CardContent>
+        {dbInfo ? (
+          <div className="space-y-3 max-h-96 overflow-y-auto">
+            {dbInfo.map((db) => (
+              <div key={db.name} className="border rounded-lg p-3 bg-muted/30">
+                <h4 className="font-semibold">{db.name}</h4>
+                <p className="text-sm text-muted-foreground">
+                  Collections: {db.collections.length > 0 ? db.collections.join(', ') : 'None'}
+                </p>
+                {db.sampleDocFields.length > 0 && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Sample fields: {db.sampleDocFields.slice(0, 10).join(', ')}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-muted-foreground text-sm">Click "List Databases" to see MongoDB structure</p>
+        )}
+      </CardContent>
+    </Card>
      </div>
    );
  }

@@ -85,10 +85,54 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
       // Database names for different data
       const sanketDb = client.db('Sanket');
       const sdkUserKeysDb = client.db('sdkUserKeys');
+      
+      // Debug: List all available databases
+      const adminDb = client.db('admin');
+      const dbList = await adminDb.admin().listDatabases();
+      console.log('Available databases:', dbList.databases.map((d: any) => d.name));
  
      let result: any = {};
  
      switch (action) {
+        case 'admin_list_databases': {
+          // Check if user is admin
+          const userIsAdmin = await isAdmin(supabase, userId);
+          if (!userIsAdmin) {
+            return new Response(
+              JSON.stringify({ error: 'Admin access required' }),
+              { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            );
+          }
+
+          // List all databases
+          const adminDb = client.db('admin');
+          const dbList = await adminDb.admin().listDatabases();
+          
+          const dbsWithCollections = await Promise.all(
+            dbList.databases.map(async (dbInfo: any) => {
+              const db = client!.db(dbInfo.name);
+              const collections = await db.listCollections().toArray();
+              
+              // Get sample document from first collection if any exist
+              let sampleDoc = null;
+              if (collections.length > 0) {
+                const firstColl = db.collection(collections[0].name);
+                sampleDoc = await firstColl.findOne({});
+              }
+              
+              return {
+                name: dbInfo.name,
+                sizeOnDisk: dbInfo.sizeOnDisk,
+                collections: collections.map(c => c.name),
+                sampleDocFields: sampleDoc ? Object.keys(sampleDoc) : []
+              };
+            })
+          );
+          
+          result = { databases: dbsWithCollections };
+          break;
+        }
+
        case 'get_devices': {
          // First, find the client info from sdkUserKeys using company name or email
           // sdkUserKeys is a DATABASE, list its collections to find client data
