@@ -6,6 +6,17 @@
    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
  };
  
+// Helper to check if user is admin
+async function isAdmin(supabase: any, userId: string): Promise<boolean> {
+  const { data } = await supabase
+    .from('user_roles')
+    .select('role')
+    .eq('user_id', userId)
+    .eq('role', 'admin')
+    .maybeSingle();
+  return !!data;
+}
+
  Deno.serve(async (req) => {
    // Handle CORS preflight
    if (req.method === 'OPTIONS') {
@@ -230,6 +241,177 @@
          break;
        }
  
+      // ===== ADMIN-ONLY ACTIONS =====
+      case 'admin_get_all_clients': {
+        // Check if user is admin
+        const userIsAdmin = await isAdmin(supabase, userId);
+        if (!userIsAdmin) {
+          return new Response(
+            JSON.stringify({ error: 'Admin access required' }),
+            { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        const sdkUserKeysCollection = db.collection('sdkUserKeys');
+        const ecgsCollection = db.collection('ecgs');
+        
+        // Get all SDK clients
+        const allClients = await sdkUserKeysCollection.find({}).toArray();
+        console.log(`Found ${allClients.length} SDK clients`);
+
+        // Get usage stats for each client
+        const clientsWithStats = await Promise.all(
+          allClients.map(async (client: any) => {
+            const clientId = client.client_id || client.clientId;
+            
+            // Count ECGs for this client
+            const totalEcgs = clientId ? await ecgsCollection.countDocuments({
+              username: { $regex: `sdk.*${clientId}`, $options: 'i' }
+            }) : 0;
+
+            // Get last ECG date
+            const lastEcg = clientId ? await ecgsCollection.findOne(
+              { username: { $regex: `sdk.*${clientId}`, $options: 'i' } },
+              { sort: { timestamp: -1 } }
+            ) : null;
+
+            return {
+              id: client._id.toString(),
+              clientId: clientId || 'N/A',
+              clientName: client.client_name || client.name || 'Unknown',
+              email: client.email || '',
+              phone: client.phone || client.mobile || '',
+              apiKey: client.api_key ? `${client.api_key.slice(0, 8)}...` : 'N/A',
+              totalEcgs,
+              lastActivity: lastEcg?.timestamp || null,
+              createdAt: client.created_at || client.createdAt || null,
+              status: client.status || 'active',
+            };
+          })
+        );
+
+        result = { clients: clientsWithStats };
+        break;
+      }
+
+      case 'admin_get_client_details': {
+        // Check if user is admin
+        const userIsAdmin = await isAdmin(supabase, userId);
+        if (!userIsAdmin) {
+          return new Response(
+            JSON.stringify({ error: 'Admin access required' }),
+            { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        const { clientId } = filters || {};
+        if (!clientId) {
+          return new Response(
+            JSON.stringify({ error: 'clientId required' }),
+            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        const sdkUserKeysCollection = db.collection('sdkUserKeys');
+        const ecgsCollection = db.collection('ecgs');
+        
+        // Get client info
+        const clientInfo = await sdkUserKeysCollection.findOne({
+          $or: [
+            { client_id: clientId },
+            { clientId: clientId }
+          ]
+        });
+
+        if (!clientInfo) {
+          return new Response(
+            JSON.stringify({ error: 'Client not found' }),
+            { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        // Get ECG stats
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const startOfWeek = new Date(now);
+        startOfWeek.setDate(now.getDate() - now.getDay());
+
+        const totalEcgs = await ecgsCollection.countDocuments({
+          username: { $regex: `sdk.*${clientId}`, $options: 'i' }
+        });
+
+        const thisMonth = await ecgsCollection.countDocuments({
+          username: { $regex: `sdk.*${clientId}`, $options: 'i' },
+          timestamp: { $gte: startOfMonth }
+        });
+
+        const thisWeek = await ecgsCollection.countDocuments({
+          username: { $regex: `sdk.*${clientId}`, $options: 'i' },
+          timestamp: { $gte: startOfWeek }
+        });
+
+        // Get recent ECGs
+        const recentEcgs = await ecgsCollection
+          .find({ username: { $regex: `sdk.*${clientId}`, $options: 'i' } })
+          .sort({ timestamp: -1 })
+          .limit(10)
+          .toArray();
+
+        result = {
+          client: {
+            id: clientInfo._id.toString(),
+            clientId: clientInfo.client_id || clientInfo.clientId,
+            clientName: clientInfo.client_name || clientInfo.name,
+            email: clientInfo.email,
+            phone: clientInfo.phone || clientInfo.mobile,
+            apiKey: clientInfo.api_key,
+            createdAt: clientInfo.created_at || clientInfo.createdAt,
+            status: clientInfo.status || 'active',
+          },
+          stats: { totalEcgs, thisMonth, thisWeek },
+          recentEcgs: recentEcgs.map((ecg: any) => ({
+            id: ecg._id.toString(),
+            deviceId: ecg.device_id,
+            timestamp: ecg.timestamp,
+            deviceType: ecg.device_type,
+          }))
+        };
+        break;
+      }
+
+      case 'admin_get_usage_summary': {
+        // Check if user is admin
+        const userIsAdmin = await isAdmin(supabase, userId);
+        if (!userIsAdmin) {
+          return new Response(
+            JSON.stringify({ error: 'Admin access required' }),
+            { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        const sdkUserKeysCollection = db.collection('sdkUserKeys');
+        const ecgsCollection = db.collection('ecgs');
+        
+        const totalClients = await sdkUserKeysCollection.countDocuments({});
+        const totalEcgs = await ecgsCollection.countDocuments({
+          username: { $regex: 'sdk', $options: 'i' }
+        });
+
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const thisMonthEcgs = await ecgsCollection.countDocuments({
+          username: { $regex: 'sdk', $options: 'i' },
+          timestamp: { $gte: startOfMonth }
+        });
+
+        result = {
+          totalClients,
+          totalEcgs,
+          thisMonthEcgs,
+        };
+        break;
+      }
+
        default:
          return new Response(
            JSON.stringify({ error: 'Invalid action' }),
