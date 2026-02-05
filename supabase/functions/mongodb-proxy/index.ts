@@ -90,6 +90,36 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
      let result: any = {};
  
      switch (action) {
+        case 'admin_debug_ecgs': {
+          // Check if user is admin
+          const userIsAdmin = await isAdmin(supabase, userId);
+          if (!userIsAdmin) {
+            return new Response(
+              JSON.stringify({ error: 'Admin access required' }),
+              { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            );
+          }
+
+          const ecgsCollection = sanketDb.collection('ecgs');
+          
+          // Get sample of ECGs to see the username pattern
+          const sampleEcgs = await ecgsCollection.find({}, { projection: { username: 1 } }).limit(20).toArray();
+          const sampleUsernames = sampleEcgs.map((e: any) => e.username);
+          
+          // Get all client_keys from sdkUsersKeys
+          const allClients = await sdkUsersKeysCollection.find({}, { projection: { username: 1, client_key: 1 } }).toArray();
+          const clientData = allClients.map((c: any) => ({
+            username: c.username,
+            client_key: c.client_key
+          }));
+          
+          result = { 
+            sampleEcgUsernames: sampleUsernames,
+            clientData: clientData,
+          };
+          break;
+        }
+
         case 'admin_list_databases': {
           // Check if user is admin
           const userIsAdmin = await isAdmin(supabase, userId);
@@ -318,6 +348,13 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
         const allClients = await sdkUsersKeysCollection.find({}).toArray();
         console.log(`Total SDK clients found: ${allClients.length}`);
 
+        // Debug: Get a sample document from ecgs to see the structure
+        const sampleEcg = await ecgsCollection.findOne({});
+        console.log('Sample ECG document fields:', sampleEcg ? Object.keys(sampleEcg) : 'No ECGs found');
+        if (sampleEcg) {
+          console.log('Sample ECG username value:', sampleEcg.username);
+        }
+
         // Get usage stats for each client
         const clientsWithStats = await Promise.all(
           allClients.map(async (client: any) => {
@@ -328,18 +365,35 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
             const clientPhone = client.clientPhone || '';
             const clientKey = client.client_key || '';
             
-            // Query ecgs collection using client_key as the username field
-            // The ecgs collection stores records where username = client_key from sdkUsersKeys
-            const ecgQuery = clientKey ? { username: clientKey } : null;
+            // Try both client_key and username to query ecgs collection
+            // First try with username (from sdkUsersKeys), as that's more likely to match
+            let ecgQuery: any = null;
+            let actualEcgCount = 0;
+            let lastEcg = null;
             
-            // Count actual ECGs from ecgs collection
-            const actualEcgCount = ecgQuery ? await ecgsCollection.countDocuments(ecgQuery) : 0;
+            // Try matching with username first
+            if (clientUsername) {
+              const countByUsername = await ecgsCollection.countDocuments({ username: clientUsername });
+              if (countByUsername > 0) {
+                actualEcgCount = countByUsername;
+                lastEcg = await ecgsCollection.findOne(
+                  { username: clientUsername },
+                  { sort: { timestamp: -1 } }
+                );
+              }
+            }
             
-            // Get last ECG date from ecgs collection using client_key
-            const lastEcg = ecgQuery ? await ecgsCollection.findOne(
-              ecgQuery,
-              { sort: { timestamp: -1 } }
-            ) : null;
+            // If no match with username, try with client_key
+            if (actualEcgCount === 0 && clientKey) {
+              const countByClientKey = await ecgsCollection.countDocuments({ username: clientKey });
+              if (countByClientKey > 0) {
+                actualEcgCount = countByClientKey;
+                lastEcg = await ecgsCollection.findOne(
+                  { username: clientKey },
+                  { sort: { timestamp: -1 } }
+                );
+              }
+            }
 
             return {
               id: client._id.toString(),
@@ -348,7 +402,7 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
               email: clientEmail,
               phone: clientPhone,
               clientKey: clientKey ? `${String(clientKey).slice(0, 12)}...` : 'N/A',
-              totalEcgs: actualEcgCount, // Use actual count from ecgs collection
+              totalEcgs: actualEcgCount,
               ecgLimit: client.ECGLimit || 0,
               lastActivity: lastEcg?.timestamp || null,
               updatedAt: client.updated_at || null,
