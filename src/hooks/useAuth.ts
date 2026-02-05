@@ -9,6 +9,7 @@
    const [session, setSession] = useState<Session | null>(null);
    const [loading, setLoading] = useState(true);
    const [isAdmin, setIsAdmin] = useState(false);
+  const [adminCheckComplete, setAdminCheckComplete] = useState(false);
    const navigate = useNavigate();
  
    useEffect(() => {
@@ -17,7 +18,6 @@
        (event, session) => {
          setSession(session);
          setUser(session?.user ?? null);
-         setLoading(false);
          
          // Check admin role after auth state change
          if (session?.user) {
@@ -26,6 +26,8 @@
            }, 0);
          } else {
            setIsAdmin(false);
+          setAdminCheckComplete(true);
+          setLoading(false);
          }
        }
      );
@@ -34,10 +36,12 @@
      supabase.auth.getSession().then(({ data: { session } }) => {
        setSession(session);
        setUser(session?.user ?? null);
-       setLoading(false);
        
        if (session?.user) {
          checkAdminRole(session.user.id);
+      } else {
+        setAdminCheckComplete(true);
+        setLoading(false);
        }
      });
  
@@ -57,6 +61,9 @@
      } catch (error) {
        console.error('Error checking admin role:', error);
        setIsAdmin(false);
+    } finally {
+      setAdminCheckComplete(true);
+      setLoading(false);
      }
    };
  
@@ -153,6 +160,7 @@
      session,
      loading,
      isAdmin,
+    adminCheckComplete,
      signUp,
      signIn,
      signOut,
