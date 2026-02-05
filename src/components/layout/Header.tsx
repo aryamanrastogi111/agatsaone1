@@ -11,7 +11,7 @@ const navItems = [
   { label: "Products", href: "/products" },
   { label: "About", href: "/about" },
   { label: "Support", href: "/support" },
-   { label: "Developers", href: "/sdk" },
+   { label: "SDK Integration", href: "/sdk" },
 ];
 
 export function Header() {
@@ -265,7 +265,7 @@ export function Header() {
                    className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-violet-600 hover:bg-violet-50 transition-colors"
                  >
                    <Code2 className="h-4 w-4" />
-                   SDK Portal for Developers
+                   SDK Integration
                  </Link>
                </motion.div>
               <motion.div
