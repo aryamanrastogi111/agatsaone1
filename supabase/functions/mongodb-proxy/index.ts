@@ -252,6 +252,10 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
           );
         }
 
+        // Debug: List all collections in the database
+        const collections = await db.listCollections().toArray();
+        console.log('Available collections in Sanket DB:', collections.map(c => c.name));
+
         const sdkUserKeysCollection = db.collection('sdkUserKeys');
         const ecgsCollection = db.collection('ecgs');
         
@@ -262,6 +266,16 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
         // Log first client structure for debugging
         if (allClients.length > 0) {
           console.log('Sample client structure:', JSON.stringify(allClients[0], null, 2));
+        } else {
+          // Try alternative collection names
+          const altNames = ['SdkUserKeys', 'sdk_user_keys', 'SDK_USER_KEYS', 'sdkuserkeys'];
+          for (const name of altNames) {
+            const altCollection = db.collection(name);
+            const altCount = await altCollection.countDocuments({});
+            if (altCount > 0) {
+              console.log(`Found ${altCount} documents in alternate collection: ${name}`);
+            }
+          }
         }
 
         // Get usage stats for each client
