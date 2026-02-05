@@ -1,1 +1,4 @@
-project_id = "wlbzjmaaaaacqeepzuln"
+ project_id = "wlbzjmaaaaacqeepzuln"
+ 
+ [functions.mongodb-proxy]
+ verify_jwt = false

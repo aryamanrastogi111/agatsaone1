@@ -1,4 +1,4 @@
- import { useState } from 'react';
+ import { useState, useEffect } from 'react';
  import { SDKLayout } from '@/components/sdk/SDKLayout';
  import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
  import { Button } from '@/components/ui/button';
@@ -19,39 +19,22 @@
    Heart,
    Scale,
    RefreshCw,
-   Plus
+   Plus,
+   Loader2
  } from 'lucide-react';
+ import { supabase } from '@/integrations/supabase/client';
+ import { toast } from 'sonner';
  
- // Mock data - will be replaced with MongoDB data
- const mockDevices = [
-   {
-     id: '1',
-     serial: 'SL-2024-001234',
-     productType: 'sanketlife',
-     activatedAt: '2024-01-15',
-     ecgCount: 150,
-     lastSync: '2025-02-04T10:30:00Z',
-     status: 'active',
-   },
-   {
-     id: '2',
-     serial: 'CB-2024-005678',
-     productType: 'corebalance',
-     activatedAt: '2024-02-20',
-     ecgCount: 0,
-     lastSync: '2025-02-03T15:45:00Z',
-     status: 'active',
-   },
-   {
-     id: '3',
-     serial: 'SL-2024-009012',
-     productType: 'sanketlife',
-     activatedAt: '2024-03-10',
-     ecgCount: 75,
-     lastSync: '2025-01-28T08:20:00Z',
-     status: 'inactive',
-   },
- ];
+ interface Device {
+   id: string;
+   serial: string;
+   productType: string;
+   activatedAt: string;
+   ecgCount: number;
+   lastSync: string;
+   status: string;
+   username?: string;
+ }
  
  const productTypeConfig = {
    sanketlife: { 
@@ -78,8 +61,42 @@
    const [searchQuery, setSearchQuery] = useState('');
    const [filterType, setFilterType] = useState<string>('all');
    const [loading, setLoading] = useState(false);
+   const [devices, setDevices] = useState<Device[]>([]);
+   const [clientInfo, setClientInfo] = useState<{ name: string; clientId: string } | null>(null);
  
-   const filteredDevices = mockDevices.filter((device) => {
+   useEffect(() => {
+     fetchDevices();
+   }, []);
+ 
+   const fetchDevices = async () => {
+     setLoading(true);
+     try {
+       const { data: { session } } = await supabase.auth.getSession();
+       if (!session) {
+         toast.error('Please log in to view devices');
+         return;
+       }
+ 
+       const { data, error } = await supabase.functions.invoke('mongodb-proxy', {
+         body: {
+           action: 'get_devices',
+           filters: { productType: filterType }
+         }
+       });
+ 
+       if (error) throw error;
+ 
+       setDevices(data.devices || []);
+       setClientInfo(data.clientInfo || null);
+     } catch (error: any) {
+       console.error('Error fetching devices:', error);
+       toast.error(error.message || 'Failed to fetch devices');
+     } finally {
+       setLoading(false);
+     }
+   };
+ 
+   const filteredDevices = devices.filter((device) => {
      const matchesSearch = device.serial.toLowerCase().includes(searchQuery.toLowerCase());
      const matchesFilter = filterType === 'all' || device.productType === filterType;
      return matchesSearch && matchesFilter;
@@ -115,6 +132,11 @@
              <h1 className="text-3xl font-bold">My Devices</h1>
              <p className="text-muted-foreground mt-1">
                View and manage your registered devices
+               {clientInfo && (
+                 <span className="ml-2 text-sm">
+                   • Client: <span className="font-medium">{clientInfo.name}</span>
+                 </span>
+               )}
              </p>
            </div>
            <Button>
@@ -148,8 +170,8 @@
                    <SelectItem value="health360">Health 360</SelectItem>
                  </SelectContent>
                </Select>
-               <Button variant="outline" disabled={loading}>
-                 <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+             <Button variant="outline" disabled={loading} onClick={fetchDevices}>
+               <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
                  Refresh
                </Button>
              </div>
@@ -157,7 +179,17 @@
          </Card>
  
          {/* Devices Grid */}
-         {filteredDevices.length > 0 ? (
+         {loading ? (
+           <Card>
+             <CardContent className="flex flex-col items-center justify-center py-12">
+               <Loader2 className="h-12 w-12 text-muted-foreground mb-4 animate-spin" />
+               <h3 className="text-lg font-medium">Loading devices...</h3>
+               <p className="text-sm text-muted-foreground text-center mt-1">
+                 Fetching data from MongoDB
+               </p>
+             </CardContent>
+           </Card>
+         ) : filteredDevices.length > 0 ? (
            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
              {filteredDevices.map((device) => {
                const config = productTypeConfig[device.productType as keyof typeof productTypeConfig];
