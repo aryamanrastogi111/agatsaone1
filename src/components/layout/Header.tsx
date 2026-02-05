@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart } from "lucide-react";
+ import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart, Code2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,7 @@ const navItems = [
   { label: "Products", href: "/products" },
   { label: "About", href: "/about" },
   { label: "Support", href: "/support" },
+   { label: "Developers", href: "/sdk" },
 ];
 
 export function Header() {
@@ -251,10 +252,26 @@ export function Header() {
                   </Link>
                 </motion.div>
               </div>
+               {/* Developers Link */}
+               <motion.div
+                 initial={{ opacity: 0, x: -20 }}
+                 animate={{ opacity: 1, x: 0 }}
+                 transition={{ delay: 0.45 }}
+                 className="pt-2 border-t border-border mt-2"
+               >
+                 <Link
+                   to="/sdk"
+                   onClick={() => setMobileMenuOpen(false)}
+                   className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-violet-600 hover:bg-violet-50 transition-colors"
+                 >
+                   <Code2 className="h-4 w-4" />
+                   SDK Portal for Developers
+                 </Link>
+               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+                 transition={{ delay: 0.5 }}
                 className="pt-4"
               >
                 <Button asChild className="w-full">
