@@ -13,7 +13,8 @@
    CheckCircle,
    Zap,
    Users,
-   Clock
+   Clock,
+   Settings
  } from 'lucide-react';
  import { Header } from '@/components/layout/Header';
  import { Footer } from '@/components/layout/Footer';
@@ -107,6 +108,16 @@
                    </Link>
                  </Button>
                </div>
+                {/* Temporary Admin Link */}
+                <div className="mt-6 pt-6 border-t border-dashed border-muted-foreground/30">
+                  <Link 
+                    to="/sdk/admin" 
+                    className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Settings className="h-4 w-4" />
+                    Admin Panel (Temporary Access)
+                  </Link>
+                </div>
              </div>
            </div>
          </section>
