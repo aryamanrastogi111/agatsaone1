@@ -257,12 +257,22 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
         
         // Get all SDK clients
         const allClients = await sdkUserKeysCollection.find({}).toArray();
-        console.log(`Found ${allClients.length} SDK clients`);
+        console.log(`Found ${allClients.length} SDK clients in sdkUserKeys`);
+        
+        // Log first client structure for debugging
+        if (allClients.length > 0) {
+          console.log('Sample client structure:', JSON.stringify(allClients[0], null, 2));
+        }
 
         // Get usage stats for each client
         const clientsWithStats = await Promise.all(
           allClients.map(async (client: any) => {
-            const clientId = client.client_id || client.clientId;
+            // Try multiple possible field names for client ID
+            const clientId = client.client_id || client.clientId || client.ClientId || client.id;
+            const clientName = client.client_name || client.clientName || client.ClientName || client.name || client.Name || 'Unknown';
+            const clientEmail = client.email || client.Email || client.mail || '';
+            const clientPhone = client.phone || client.Phone || client.mobile || client.Mobile || '';
+            const clientApiKey = client.api_key || client.apiKey || client.ApiKey || client.key || '';
             
             // Count ECGs for this client
             const totalEcgs = clientId ? await ecgsCollection.countDocuments({
@@ -278,10 +288,10 @@ async function isAdmin(supabase: any, userId: string): Promise<boolean> {
             return {
               id: client._id.toString(),
               clientId: clientId || 'N/A',
-              clientName: client.client_name || client.name || 'Unknown',
-              email: client.email || '',
-              phone: client.phone || client.mobile || '',
-              apiKey: client.api_key ? `${client.api_key.slice(0, 8)}...` : 'N/A',
+              clientName: clientName,
+              email: clientEmail,
+              phone: clientPhone,
+              apiKey: clientApiKey ? `${String(clientApiKey).slice(0, 8)}...` : 'N/A',
               totalEcgs,
               lastActivity: lastEcg?.timestamp || null,
               createdAt: client.created_at || client.createdAt || null,
