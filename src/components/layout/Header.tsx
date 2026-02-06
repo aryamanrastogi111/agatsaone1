@@ -11,7 +11,7 @@ const navItems = [
   { label: "Products", href: "/products" },
   { label: "About", href: "/about" },
   { label: "Support", href: "/support" },
-   { label: "SDK Integration", href: "/sdk" },
+   // { label: "SDK Integration", href: "/sdk" }, // Hidden for now
 ];
 
 export function Header() {
@@ -252,22 +252,23 @@ export function Header() {
                   </Link>
                 </motion.div>
               </div>
-               {/* Developers Link */}
-               <motion.div
-                 initial={{ opacity: 0, x: -20 }}
-                 animate={{ opacity: 1, x: 0 }}
-                 transition={{ delay: 0.45 }}
-                 className="pt-2 border-t border-border mt-2"
-               >
-                 <Link
-                   to="/sdk"
-                   onClick={() => setMobileMenuOpen(false)}
-                   className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-violet-600 hover:bg-violet-50 transition-colors"
-                 >
-                   <Code2 className="h-4 w-4" />
-                   SDK Integration
-                 </Link>
-               </motion.div>
+                {/* SDK Integration link hidden for now
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.45 }}
+                  className="pt-2 border-t border-border mt-2"
+                >
+                  <Link
+                    to="/sdk"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-violet-600 hover:bg-violet-50 transition-colors"
+                  >
+                    <Code2 className="h-4 w-4" />
+                    SDK Integration
+                  </Link>
+                </motion.div>
+                */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
