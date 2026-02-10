@@ -6,6 +6,7 @@ export interface BlogSection {
 
 export interface BlogPost {
   slug: string;
+  image?: string;
   title: string;
   excerpt: string;
   date: string;
@@ -15,9 +16,12 @@ export interface BlogPost {
   ctaLink?: string;
 }
 
+import blogSmartwatchEcg from "@/assets/blog-smartwatch-ecg.png";
+
 export const blogPosts: BlogPost[] = [
   {
     slug: "smartwatch-vs-clinical-ecg",
+    image: blogSmartwatchEcg,
     title: "Why Your Smartwatch Isn't Enough: The Truth About Clinical-Grade Heart Monitoring at Home",
     excerpt: "It feels good when your wrist buzzes to say you've hit 10,000 steps. But there is a dangerous misconception growing: that a fitness tracker is a medical device. It isn't.",
     date: "2026-02-10",
