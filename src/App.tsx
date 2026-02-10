@@ -15,6 +15,8 @@ import CoreBalanceProduct from "./pages/products/CoreBalanceProduct";
 import EasyTouchRhythmProduct from "./pages/products/EasyTouchRhythmProduct";
 import SanketLifeProduct from "./pages/products/SanketLifeProduct";
 import NotFound from "./pages/NotFound";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -49,6 +51,8 @@ const App = () => (
           <Route path="/products/sanketlife" element={<SanketLifeProduct />} />
           <Route path="/about" element={<About />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/device-finder" element={<DeviceFinder />} />
           <Route path="/device-finder/compare" element={<Compare />} />
           <Route path="/shipping-policy" element={<ShippingPolicy />} />

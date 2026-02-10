@@ -10,6 +10,7 @@ import { CartDrawer } from "@/components/shop/CartDrawer";
 const navItems = [
   { label: "Products", href: "/products" },
   { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
   { label: "Support", href: "/support" },
    // { label: "SDK Integration", href: "/sdk" }, // Hidden for now
 ];
