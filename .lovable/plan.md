@@ -1,43 +1,71 @@
 
+# Add Blog Section to the Website
 
-# Fix Search Engine Branding: Show Agatsa Logo Instead of Lovable
-
-## Problem
-When `agatsaone.com` appears in search engine results, it displays the Lovable logo instead of the Agatsa logo. This is because the `index.html` file still has default Lovable branding in several places.
+## Overview
+Create a new Blog section with a dedicated page, a "Blog" link in the header navigation, and populate it with the first article about smartwatch vs clinical-grade heart monitoring.
 
 ## What Will Change
 
-### 1. Add Agatsa Logo to Public Folder
-Copy the Agatsa logo (`src/assets/agatsa-logo.png`) into the `public/` folder as `public/agatsa-favicon.png`. Files in `public/` are served as static assets and can be referenced directly by the browser for favicons.
+### 1. Header Navigation
+Add a "Blog" link to the navigation bar (both desktop and mobile) between "Support" and the hidden SDK link.
 
-### 2. Update Favicon
-Replace the current favicon (which points to a Lovable-hosted image) with the local Agatsa logo:
-- Before: External Google Storage URL (Lovable default image)
-- After: `/agatsa-favicon.png` (your own Agatsa logo)
+### 2. Blog Listing Page (`/blog`)
+A clean, modern blog index page featuring:
+- Hero banner with title "Agatsa Insights" and subtitle
+- Blog post cards in a grid layout showing thumbnail, title, excerpt, date, and read time
+- Each card links to the full article
+- Consistent with the site's white and cyan design language
 
-### 3. Fix Meta Tags
-Update the following meta tags in `index.html`:
-- **Author**: Change from "Lovable" to "Agatsa"
-- **Twitter site**: Change from "@Lovable" to "@aaborz" (or your actual handle)
-- **OG image / Twitter image**: Update to use the Agatsa logo or a proper social sharing image
-- Remove leftover TODO comments from the template
+### 3. Blog Post Page (`/blog/:slug`)
+A dedicated article reader page with:
+- Full-width hero/header area with the post title and metadata (date, read time)
+- Clean, readable typography for the article body
+- A call-to-action at the bottom linking to the SanketLife product page
+- "Back to Blog" navigation
 
-### 4. Replace `public/favicon.ico`
-Replace the existing `public/favicon.ico` with an Agatsa-branded version for browsers that look for the default `favicon.ico` path.
+### 4. First Blog Post Content
+The article "Why Your Smartwatch Isn't Enough: The Truth About Clinical-Grade Heart Monitoring at Home" will be stored as structured data and rendered on the blog post page.
+
+## Files to Create
+- `src/pages/Blog.tsx` -- Blog listing page
+- `src/pages/BlogPost.tsx` -- Individual blog post page
+- `src/data/blogPosts.ts` -- Blog post data (title, slug, content, date, excerpt)
 
 ## Files to Modify
-- `index.html` — Update favicon link, meta author, twitter site, and OG/Twitter images
-- `public/agatsa-favicon.png` — New file (copy of agatsa-logo.png for favicon use)
-
-## Important Note
-After publishing these changes, search engines will take some time (days to weeks) to re-crawl and update their cached favicon/metadata. The fix will be immediate for new visitors, but search result appearances update on the search engine's own schedule.
+- `src/components/layout/Header.tsx` -- Add "Blog" nav item
+- `src/components/layout/Footer.tsx` -- Add Blog link under company links
+- `src/App.tsx` -- Add `/blog` and `/blog/:slug` routes
 
 ## Technical Details
-The key changes in `index.html`:
+
+### Blog data structure (`src/data/blogPosts.ts`)
 ```text
-Line 29: <meta name="author" content="Lovable" />        --> <meta name="author" content="Agatsa" />
-Line 38: <meta name="twitter:site" content="@Lovable" />  --> <meta name="twitter:site" content="@agatsa" />
-Line 44: <link rel="icon" ... href="[lovable-url]">       --> <link rel="icon" ... href="/agatsa-favicon.png">
-Lines 35, 39: og:image / twitter:image                     --> Updated to Agatsa branding image
+{
+  slug: "smartwatch-vs-clinical-ecg",
+  title: "Why Your Smartwatch Isn't Enough...",
+  excerpt: "It feels good when your wrist buzzes...",
+  date: "2026-02-10",
+  readTime: "5 min read",
+  sections: [
+    { type: "paragraph", content: "..." },
+    { type: "heading", content: "..." },
+    { type: "list", items: ["..."] },
+  ]
+}
 ```
 
+### Route additions in `App.tsx`
+```text
+/blog        --> Blog listing page
+/blog/:slug  --> Individual blog post
+```
+
+### Header nav update
+```text
+navItems = [
+  { label: "Products", href: "/products" },
+  { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Support", href: "/support" },
+]
+```
