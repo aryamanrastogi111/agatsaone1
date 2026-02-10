@@ -43,9 +43,13 @@ const Blog = () => {
                 className="group block rounded-2xl border border-border bg-card overflow-hidden hover:shadow-lg transition-shadow"
               >
                 {/* Gradient thumbnail placeholder */}
-                <div className="h-48 bg-gradient-to-br from-cyan-100 to-cyan-50 flex items-center justify-center">
-                  <span className="text-cyan-600/40 text-6xl font-bold">A</span>
-                </div>
+                {post.image ? (
+                  <img src={post.image} alt={post.title} className="h-48 w-full object-cover" />
+                ) : (
+                  <div className="h-48 bg-gradient-to-br from-cyan-100 to-cyan-50 flex items-center justify-center">
+                    <span className="text-cyan-600/40 text-6xl font-bold">A</span>
+                  </div>
+                )}
 
                 <div className="p-6">
                   <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
