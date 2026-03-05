@@ -14,6 +14,7 @@ import ZluProduct from "./pages/products/ZluProduct";
 import CoreBalanceProduct from "./pages/products/CoreBalanceProduct";
 import EasyTouchRhythmProduct from "./pages/products/EasyTouchRhythmProduct";
 import SanketLifeProduct from "./pages/products/SanketLifeProduct";
+import EasyTouchPlusProduct from "./pages/products/EasyTouchPlusProduct";
 import NotFound from "./pages/NotFound";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -60,6 +61,7 @@ const App = () => (
           <Route path="/products/corebalance" element={<CoreBalanceProduct />} />
           <Route path="/products/easytouch-rhythm" element={<EasyTouchRhythmProduct />} />
           <Route path="/products/sanketlife" element={<SanketLifeProduct />} />
+          <Route path="/products/easytouch-plus" element={<EasyTouchPlusProduct />} />
           <Route path="/about" element={<About />} />
           <Route path="/support" element={<Support />} />
           <Route path="/blog" element={<Blog />} />
