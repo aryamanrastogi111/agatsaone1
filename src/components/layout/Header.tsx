@@ -260,6 +260,20 @@ export function Header() {
                     SanketLife ECG
                   </Link>
                 </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.45 }}
+                >
+                  <Link
+                    to="/products/easytouch-plus"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-teal-600 hover:bg-teal-50 transition-colors"
+                  >
+                    <Zap className="h-4 w-4" />
+                    EasyTouch+
+                  </Link>
+                </motion.div>
               </div>
                 {/* SDK Integration link hidden for now
                 <motion.div
