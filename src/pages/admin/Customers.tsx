@@ -33,10 +33,10 @@ export default function Customers() {
       // For each user, get order count + total spent
       const enriched = await Promise.all(
         profiles.map(async (p) => {
-          const { data: orders } = await supabase
+          const { data: orders } = await db
             .from("orders")
             .select("total")
-            .eq("user_id", p.user_id ?? p.id)
+            .eq("user_id", p.id)
             .eq("payment_status", "paid");
 
           return {
