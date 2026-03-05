@@ -137,7 +137,7 @@ export default function EasyTouchPlusProduct() {
               <img
                 src={easytouchPlusHero}
                 alt="EasyTouch+ Sugar Index Device"
-                className="relative w-72 md:w-96 object-contain drop-shadow-2xl"
+                className="relative w-80 md:w-[28rem] object-contain drop-shadow-2xl"
               />
             </div>
           </AnimatedSection>
