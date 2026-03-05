@@ -1,39 +1,71 @@
 
-## Additive changes only — EasyTouchPlusProduct.tsx
+# Add Blog Section to the Website
 
-The current page stays intact. We add 4 new sections/components inline, slotted into the right positions:
+## Overview
+Create a new Blog section with a dedicated page, a "Blog" link in the header navigation, and populate it with the first article about smartwatch vs clinical-grade heart monitoring.
 
-### What to ADD (no existing content removed):
+## What Will Change
 
-**1. New hero headline + subline (replace only the h1/p in section 1)**
-- H1: "Your glucometer tells you a number. EasyTouch+ tells you the story."
-- Sub: "Track your metabolic signal across the 22 hours your glucometer misses — no strips, no pricks."
-- Keep both CTAs, keep visual placeholder
+### 1. Header Navigation
+Add a "Blog" link to the navigation bar (both desktop and mobile) between "Support" and the hidden SDK link.
 
-**2. Insert after section 2 (Problem) — new "The 22-Hour Gap" section**
-A visual day timeline showing:
-- `7am — Glucometer: 118` → EasyTouch+ continuous → `3pm spike caught` → `9pm — Glucometer: 142`
-- Message: "You're blind for 22 hours a day. EasyTouch+ watches the gaps."
+### 2. Blog Listing Page (`/blog`)
+A clean, modern blog index page featuring:
+- Hero banner with title "Agatsa Insights" and subtitle
+- Blog post cards in a grid layout showing thumbnail, title, excerpt, date, and read time
+- Each card links to the full article
+- Consistent with the site's white and cyan design language
 
-**3. Insert after section 4 (How It Works) — new "Calibration Story" section**
-4-step mini-flow: 
-- Take 4 glucometer readings → Pair with EasyTouch+ PPG → Algorithm builds your model → All future readings show "Metabolic Index: 72"
-- Framing: "EasyTouch+ learns YOUR metabolic fingerprint — not an average person's."
-- Metabolic Index mockup: circular badge showing "72 | Elevated Zone"
+### 3. Blog Post Page (`/blog/:slug`)
+A dedicated article reader page with:
+- Full-width hero/header area with the post title and metadata (date, read time)
+- Clean, readable typography for the article body
+- A call-to-action at the bottom linking to the SanketLife product page
+- "Back to Blog" navigation
 
-**4. Insert after section 8 (Credibility) — new "3 Levels of Knowing" section**
-Three cards stacked/horizontal:
-- Level 1: Glucometer → "My sugar is 148 right now" (gray)
-- Level 2: EasyTouch+ → "My signal spikes every day at 3pm" (teal)
-- Level 3: AI → "This pattern will normalise in 11 weeks" (gradient, future state)
+### 4. First Blog Post Content
+The article "Why Your Smartwatch Isn't Enough: The Truth About Clinical-Grade Heart Monitoring at Home" will be stored as structured data and rendered on the blog post page.
 
-**5. Update comparison table (section 9) rows** to the objection-killer version:
-- Without: "Guess how food affects you / ₹50 per glucometer strip / No continuous data / Generic advice"
-- With: "Observe your body's response / ₹0 per EasyTouch+ reading / 22-hour continuous tracking / Calibrated to your body"
+## Files to Create
+- `src/pages/Blog.tsx` -- Blog listing page
+- `src/pages/BlogPost.tsx` -- Individual blog post page
+- `src/data/blogPosts.ts` -- Blog post data (title, slug, content, date, excerpt)
 
-**6. Update disclaimer** to include: "Metabolic Index is a wellness indicator derived from PPG signals and personal calibration data. It is not a substitute for clinical blood glucose measurement."
+## Files to Modify
+- `src/components/layout/Header.tsx` -- Add "Blog" nav item
+- `src/components/layout/Footer.tsx` -- Add Blog link under company links
+- `src/App.tsx` -- Add `/blog` and `/blog/:slug` routes
 
-**7. Update target audience** — add 2 new chips: "Pre-diabetics & Borderline Cases" and "People with Family History of Diabetes"
+## Technical Details
 
-### Files to modify
-- `src/pages/products/EasyTouchPlusProduct.tsx` only — pure additions/small tweaks, no deletions of existing sections
+### Blog data structure (`src/data/blogPosts.ts`)
+```text
+{
+  slug: "smartwatch-vs-clinical-ecg",
+  title: "Why Your Smartwatch Isn't Enough...",
+  excerpt: "It feels good when your wrist buzzes...",
+  date: "2026-02-10",
+  readTime: "5 min read",
+  sections: [
+    { type: "paragraph", content: "..." },
+    { type: "heading", content: "..." },
+    { type: "list", items: ["..."] },
+  ]
+}
+```
+
+### Route additions in `App.tsx`
+```text
+/blog        --> Blog listing page
+/blog/:slug  --> Individual blog post
+```
+
+### Header nav update
+```text
+navItems = [
+  { label: "Products", href: "/products" },
+  { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Support", href: "/support" },
+]
+```
