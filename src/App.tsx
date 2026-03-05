@@ -61,6 +61,7 @@ const App = () => (
           <Route path="/products/corebalance" element={<CoreBalanceProduct />} />
           <Route path="/products/easytouch-rhythm" element={<EasyTouchRhythmProduct />} />
           <Route path="/products/sanketlife" element={<SanketLifeProduct />} />
+          <Route path="/products/easytouch-plus" element={<EasyTouchPlusProduct />} />
           <Route path="/about" element={<About />} />
           <Route path="/support" element={<Support />} />
           <Route path="/blog" element={<Blog />} />
