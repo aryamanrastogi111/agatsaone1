@@ -109,6 +109,8 @@ export default function EasyTouchPlusProduct() {
   const overlayOpacity = useTransform(scrollYProgress, [0.4, 1], [0, 1]);
   // Text moves up as you scroll
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
+  // Fade out the fixed bg container itself at end to avoid flash
+  const fixedBgOpacity = useTransform(scrollYProgress, [0.95, 1], [1, 0]);
 
   return (
     <Layout>
