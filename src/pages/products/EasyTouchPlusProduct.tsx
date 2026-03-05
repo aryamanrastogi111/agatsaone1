@@ -148,7 +148,7 @@ export default function EasyTouchPlusProduct() {
         {/* Text — fixed to viewport center, scrolls away via framer-motion */}
         <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center pointer-events-none" style={{ zIndex: 1 }}>
           <motion.div
-            style={{ y: textY, opacity: textOpacity }}
+            style={{ y: textY }}
             className="container flex flex-col items-center text-center gap-8 pointer-events-auto"
           >
             <span className="inline-flex items-center gap-2 rounded-full bg-teal-400/20 border border-teal-400/30 px-4 py-1.5 text-sm font-medium text-teal-300 mb-2">
