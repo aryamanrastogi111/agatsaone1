@@ -102,43 +102,40 @@ export default function EasyTouchPlusProduct() {
   return (
     <Layout>
       {/* ── 1. HERO ── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-teal-50 via-cyan-50 to-white py-24 md:py-36">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-teal-100/60 blur-3xl" />
-          <div className="absolute bottom-0 -left-20 w-[350px] h-[350px] rounded-full bg-cyan-100/50 blur-3xl" />
+      <section className="relative overflow-hidden py-24 md:py-36 min-h-[80vh] flex items-center">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img
+            src={easytouchPlusHero}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Dark + teal overlay for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
+          <div className="absolute inset-0 bg-teal-950/30" />
         </div>
+
         <div className="container relative z-10 flex flex-col items-center text-center gap-8">
           <AnimatedSection>
-            <span className="inline-flex items-center gap-2 rounded-full bg-teal-100 px-4 py-1.5 text-sm font-medium text-teal-700 mb-2">
+            <span className="inline-flex items-center gap-2 rounded-full bg-teal-400/20 border border-teal-400/30 px-4 py-1.5 text-sm font-medium text-teal-300 mb-2">
               <Zap className="h-3.5 w-3.5" /> Metabolic Wellness Device
             </span>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mt-4 max-w-3xl">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mt-4 max-w-3xl">
               Your glucometer tells you a number.<br className="hidden md:block" />
-              <span className="text-teal-600">EasyTouch+ tells you the story.</span>
+              <span className="text-teal-400">EasyTouch+ tells you the story.</span>
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="mt-6 text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
               Track your metabolic signal across the 22 hours your glucometer misses — no strips, no pricks.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-8 text-base shadow-lg shadow-teal-200">
+              <Button size="lg" className="bg-teal-500 hover:bg-teal-400 text-white rounded-full px-8 text-base shadow-lg shadow-teal-900/50">
                 Start Your Metabolic Discovery
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button size="lg" variant="outline" className="rounded-full px-8 text-base border-teal-200 text-teal-700 hover:bg-teal-50">
+              <Button size="lg" variant="outline" className="rounded-full px-8 text-base border-white/30 text-white hover:bg-white/10">
                 See How It Works
               </Button>
-            </div>
-          </AnimatedSection>
-
-          {/* Product image */}
-          <AnimatedSection delay={0.2} className="mt-12 w-full max-w-lg">
-            <div className="relative mx-auto flex items-center justify-center">
-              <div className="absolute inset-0 rounded-full bg-teal-200/30 blur-3xl scale-75" />
-              <img
-                src={easytouchPlusHero}
-                alt="EasyTouch+ Sugar Index Device"
-                className="relative w-80 md:w-[28rem] object-contain drop-shadow-2xl"
-              />
             </div>
           </AnimatedSection>
         </div>
