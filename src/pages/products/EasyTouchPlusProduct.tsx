@@ -30,6 +30,10 @@ import {
   Coffee,
   Salad,
   Flame,
+  Droplets,
+  Activity,
+  Sparkles,
+  HeartPulse,
 } from "lucide-react";
 
 function AnimatedSection({
