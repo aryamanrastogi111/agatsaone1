@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { addBusinessDays, format } from "date-fns";
-import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, useInView, useMotionValue, useTransform, animate, useScroll } from "framer-motion";
 import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, ArrowRight, Loader2, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
