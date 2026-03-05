@@ -14,6 +14,7 @@ import ZluProduct from "./pages/products/ZluProduct";
 import CoreBalanceProduct from "./pages/products/CoreBalanceProduct";
 import EasyTouchRhythmProduct from "./pages/products/EasyTouchRhythmProduct";
 import SanketLifeProduct from "./pages/products/SanketLifeProduct";
+import EasyTouchPlusProduct from "./pages/products/EasyTouchPlusProduct";
 import NotFound from "./pages/NotFound";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";

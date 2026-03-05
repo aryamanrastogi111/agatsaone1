@@ -1,0 +1,486 @@
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { Layout } from "@/components/layout/Layout";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Zap,
+  Utensils,
+  Moon,
+  Dumbbell,
+  Clock,
+  Brain,
+  Fingerprint,
+  BarChart3,
+  ArrowRight,
+  CheckCircle2,
+  XCircle,
+  Users,
+  Target,
+  Beaker,
+  ShieldCheck,
+  TrendingUp,
+  BatteryCharging,
+  Coffee,
+  Salad,
+  Flame,
+} from "lucide-react";
+
+function AnimatedSection({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const benefits = [
+  { icon: <Coffee className="h-6 w-6" />, title: "Which foods give you energy", desc: "See which meals leave you feeling sharp and focused." },
+  { icon: <Moon className="h-6 w-6" />, title: "Which meals make you sluggish", desc: "Identify foods that drain your energy after eating." },
+  { icon: <Clock className="h-6 w-6" />, title: "How fasting affects your body", desc: "Track how your body responds during fasting windows." },
+  { icon: <Moon className="h-6 w-6" />, title: "How sleep impacts metabolic response", desc: "Understand the connection between rest and metabolism." },
+  { icon: <Dumbbell className="h-6 w-6" />, title: "Your body's reaction to exercise", desc: "See how workouts shift your metabolic signals." },
+];
+
+const audience = [
+  { icon: <Dumbbell className="h-5 w-5" />, label: "Fitness Enthusiasts" },
+  { icon: <Beaker className="h-5 w-5" />, label: "Biohackers" },
+  { icon: <Clock className="h-5 w-5" />, label: "Intermittent Fasters" },
+  { icon: <Salad className="h-5 w-5" />, label: "Diet Optimisers" },
+  { icon: <ShieldCheck className="h-5 w-5" />, label: "Health-Conscious Individuals" },
+];
+
+const faqs = [
+  {
+    q: "Is EasyTouch+ a medical device?",
+    a: "EasyTouch+ is designed for wellness tracking and lifestyle insights and is not intended for medical diagnosis.",
+  },
+  {
+    q: "Can it replace medical tests?",
+    a: "No. It is designed for personal wellness awareness only. Always consult a qualified healthcare professional for medical decisions.",
+  },
+  {
+    q: "How often should I use it?",
+    a: "Many users use it before meals, after meals, and after workouts to observe their body's patterns over time.",
+  },
+  {
+    q: "Does it work with my smartphone?",
+    a: "Yes. EasyTouch+ pairs with the companion mobile app (iOS & Android) to display trends and insights on your dashboard.",
+  },
+];
+
+export default function EasyTouchPlusProduct() {
+  return (
+    <Layout>
+      {/* ── 1. HERO ── */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-teal-50 via-cyan-50 to-white py-24 md:py-36">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-teal-100/60 blur-3xl" />
+          <div className="absolute bottom-0 -left-20 w-[350px] h-[350px] rounded-full bg-cyan-100/50 blur-3xl" />
+        </div>
+        <div className="container relative z-10 flex flex-col items-center text-center gap-8">
+          <AnimatedSection>
+            <span className="inline-flex items-center gap-2 rounded-full bg-teal-100 px-4 py-1.5 text-sm font-medium text-teal-700 mb-2">
+              <Zap className="h-3.5 w-3.5" /> Metabolic Wellness Device
+            </span>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mt-4 max-w-3xl">
+              See How Your Food <br className="hidden md:block" />
+              <span className="text-teal-600">Affects Your Body</span>
+            </h1>
+            <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              Track your body's metabolic response to meals, sleep, and lifestyle habits with a simple finger touch.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-8 text-base shadow-lg shadow-teal-200">
+                Start Your Metabolic Discovery
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button size="lg" variant="outline" className="rounded-full px-8 text-base border-teal-200 text-teal-700 hover:bg-teal-50">
+                See How It Works
+              </Button>
+            </div>
+          </AnimatedSection>
+
+          {/* Product visual placeholder */}
+          <AnimatedSection delay={0.2} className="mt-12 w-full max-w-md">
+            <div className="relative mx-auto w-64 h-64 md:w-80 md:h-80 rounded-3xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center shadow-2xl shadow-teal-200">
+              <Fingerprint className="h-32 w-32 text-white/80" />
+              <div className="absolute -bottom-4 -right-4 w-20 h-20 rounded-2xl bg-white shadow-xl flex items-center justify-center">
+                <BarChart3 className="h-10 w-10 text-teal-600" />
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 2. PROBLEM ── */}
+      <section className="py-24 bg-white">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              Why Does The Same Food Affect <span className="text-teal-600">People Differently?</span>
+            </h2>
+            <p className="mt-4 text-muted-foreground text-lg">
+              Two people eating the same meal can feel completely different afterward. Your body's response is uniquely yours.
+            </p>
+          </AnimatedSection>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { icon: <BatteryCharging className="h-8 w-8 text-teal-600" />, title: "One Feels Energetic", desc: "Their body processes the meal efficiently, providing sustained energy and focus." },
+              { icon: <Moon className="h-8 w-8 text-amber-500" />, title: "One Feels Sleepy", desc: "The same food causes a sluggish, heavy feeling that lasts for hours." },
+              { icon: <Flame className="h-8 w-8 text-orange-500" />, title: "One Feels Hungry Again", desc: "Their body burns through the energy quickly, triggering hunger soon after eating." },
+            ].map((item, i) => (
+              <AnimatedSection key={i} delay={i * 0.1}>
+                <div className="rounded-2xl border border-border bg-card p-8 flex flex-col gap-4 h-full shadow-sm hover:shadow-md transition-shadow">
+                  <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center">
+                    {item.icon}
+                  </div>
+                  <h3 className="font-semibold text-lg text-foreground">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+          <AnimatedSection delay={0.3} className="mt-12 text-center">
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+              Most people never see how their body reacts internally. <strong className="text-foreground">EasyTouch+ changes that.</strong>
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 3. SOLUTION ── */}
+      <section className="py-24 bg-gradient-to-b from-teal-50/60 to-white">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Meet <span className="text-teal-600">EasyTouch+</span></h2>
+            <p className="mt-4 text-muted-foreground text-lg">
+              A wellness device that helps you observe how your body responds to the lifestyle factors that matter most.
+            </p>
+          </AnimatedSection>
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            <AnimatedSection delay={0.1} className="flex-1 flex justify-center">
+              <div className="w-56 h-56 md:w-72 md:h-72 rounded-3xl bg-gradient-to-br from-teal-500 to-cyan-400 flex items-center justify-center shadow-2xl shadow-teal-200/50">
+                <Fingerprint className="h-28 w-28 text-white/90" />
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={0.2} className="flex-1">
+              <div className="grid grid-cols-1 gap-4">
+                {[
+                  { icon: <Utensils className="h-5 w-5" />, label: "Meals & Snacks", color: "text-teal-600" },
+                  { icon: <Moon className="h-5 w-5" />, label: "Sleep Quality", color: "text-indigo-600" },
+                  { icon: <Dumbbell className="h-5 w-5" />, label: "Workouts", color: "text-orange-500" },
+                  { icon: <Clock className="h-5 w-5" />, label: "Fasting Windows", color: "text-amber-500" },
+                  { icon: <Brain className="h-5 w-5" />, label: "Stress & Mood", color: "text-rose-500" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-4 p-4 rounded-xl border border-border bg-white shadow-sm">
+                    <div className={`w-10 h-10 rounded-xl bg-muted flex items-center justify-center ${item.color}`}>
+                      {item.icon}
+                    </div>
+                    <span className="font-medium text-foreground">{item.label}</span>
+                    <CheckCircle2 className="ml-auto h-5 w-5 text-teal-500" />
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. HOW IT WORKS ── */}
+      <section className="py-24 bg-white">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">How It <span className="text-teal-600">Works</span></h2>
+            <p className="mt-4 text-muted-foreground">Three simple steps to metabolic awareness.</p>
+          </AnimatedSection>
+          <div className="grid md:grid-cols-3 gap-8 relative">
+            <div className="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-teal-200 via-teal-400 to-teal-200" />
+            {[
+              { step: "01", icon: <Fingerprint className="h-10 w-10 text-teal-600" />, title: "Place Your Finger", desc: "Insert your finger into EasyTouch+ for a quick reading." },
+              { step: "02", icon: <Zap className="h-10 w-10 text-teal-600" />, title: "Instant Reading", desc: "The device captures wellness signals related to your metabolic response." },
+              { step: "03", icon: <BarChart3 className="h-10 w-10 text-teal-600" />, title: "Track Your Patterns", desc: "View trends over time in the mobile dashboard." },
+            ].map((item, i) => (
+              <AnimatedSection key={i} delay={i * 0.15}>
+                <div className="flex flex-col items-center text-center gap-5 p-8 rounded-2xl bg-card border border-border shadow-sm">
+                  <div className="w-20 h-20 rounded-2xl bg-teal-50 flex items-center justify-center">
+                    {item.icon}
+                  </div>
+                  <span className="text-xs font-bold tracking-widest text-teal-500 uppercase">Step {item.step}</span>
+                  <h3 className="text-xl font-semibold text-foreground">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. BENEFITS ── */}
+      <section className="py-24 bg-gradient-to-b from-white to-teal-50/40">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">What You Can <span className="text-teal-600">Discover</span></h2>
+            <p className="mt-4 text-muted-foreground">Personal insights your body has been waiting to share.</p>
+          </AnimatedSection>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {benefits.map((b, i) => (
+              <AnimatedSection key={i} delay={i * 0.08}>
+                <div className="rounded-2xl border border-border bg-white p-6 flex flex-col gap-4 h-full shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center text-teal-600">
+                    {b.icon}
+                  </div>
+                  <h3 className="font-semibold text-foreground">{b.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+            <AnimatedSection delay={0.4}>
+              <div className="rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-400 p-6 flex flex-col justify-between text-white shadow-lg shadow-teal-200 h-full min-h-[160px]">
+                <TrendingUp className="h-8 w-8 text-white/80" />
+                <p className="text-lg font-semibold mt-4">Personalise your wellness journey, one reading at a time.</p>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. LIFESTYLE EXPERIMENT ── */}
+      <section className="py-24 bg-white">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              Turn Your Body Into A <span className="text-teal-600">Personal Experiment Lab</span>
+            </h2>
+            <p className="mt-4 text-muted-foreground text-lg">
+              Experiment with food and lifestyle choices. Observe. Learn. Optimise.
+            </p>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4">
+              {[
+                { icon: <Utensils className="h-8 w-8 text-teal-600" />, label: "Check Before Meal", sub: "Baseline reading" },
+                { arrow: true },
+                { icon: <Fingerprint className="h-8 w-8 text-teal-600" />, label: "EasyTouch+", sub: "Place finger, get reading" },
+                { arrow: true },
+                { icon: <BarChart3 className="h-8 w-8 text-teal-600" />, label: "Observe Response", sub: "Track in dashboard" },
+              ].map((item: any, i) =>
+                item.arrow ? (
+                  <ArrowRight key={i} className="h-8 w-8 text-teal-300 rotate-0 md:rotate-0 shrink-0" />
+                ) : (
+                  <div key={i} className="flex-1 rounded-2xl border border-border bg-card p-6 flex flex-col items-center gap-3 text-center shadow-sm">
+                    <div className="w-16 h-16 rounded-2xl bg-teal-50 flex items-center justify-center">
+                      {item.icon}
+                    </div>
+                    <p className="font-semibold text-foreground">{item.label}</p>
+                    <p className="text-xs text-muted-foreground">{item.sub}</p>
+                  </div>
+                )
+              )}
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 7. TARGET AUDIENCE ── */}
+      <section className="py-24 bg-gradient-to-b from-teal-50/40 to-white">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Who Is <span className="text-teal-600">EasyTouch+ For</span></h2>
+          </AnimatedSection>
+          <div className="flex flex-wrap justify-center gap-4">
+            {audience.map((a, i) => (
+              <AnimatedSection key={i} delay={i * 0.08}>
+                <div className="flex items-center gap-3 rounded-full border border-teal-200 bg-white px-6 py-3 shadow-sm text-teal-700 font-medium hover:bg-teal-50 transition-colors cursor-default">
+                  {a.icon}
+                  {a.label}
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8. CREDIBILITY ── */}
+      <section className="py-24 bg-white border-y border-border">
+        <div className="container">
+          <AnimatedSection className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
+            <ShieldCheck className="h-14 w-14 text-teal-600" />
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Built By Health Technology <span className="text-teal-600">Innovators</span></h2>
+            <p className="text-muted-foreground text-lg max-w-xl">
+              EasyTouch+ is designed by Agatsa — a team with over a decade of experience building advanced personal health monitoring technology and preventive healthcare devices trusted by thousands.
+            </p>
+            <div className="flex items-center gap-2 mt-2">
+              <Users className="h-5 w-5 text-teal-600" />
+              <span className="text-sm font-medium text-teal-700">Agatsa Medical Technologies</span>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 9. COMPARISON ── */}
+      <section className="py-24 bg-muted/30">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">The <span className="text-teal-600">Difference</span></h2>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <div className="max-w-2xl mx-auto grid grid-cols-2 rounded-2xl overflow-hidden border border-border shadow-md">
+              <div className="bg-muted/60 p-8 flex flex-col gap-6">
+                <h3 className="font-bold text-lg text-muted-foreground text-center">Without EasyTouch+</h3>
+                {[
+                  "Guess how food affects you",
+                  "Follow generic diet advice",
+                  "No metabolic feedback",
+                  "One-size-fits-all approach",
+                ].map((t, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <XCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+                    <span className="text-sm text-muted-foreground">{t}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-teal-600 p-8 flex flex-col gap-6">
+                <h3 className="font-bold text-lg text-white text-center">With EasyTouch+</h3>
+                {[
+                  "Observe your body's response",
+                  "Personalise your diet",
+                  "Track lifestyle trends",
+                  "Data-driven wellness",
+                ].map((t, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-teal-200 shrink-0 mt-0.5" />
+                    <span className="text-sm text-white">{t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 10. EARLY ACCESS ── */}
+      <section className="py-24 bg-gradient-to-br from-teal-600 to-cyan-500 text-white">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-2xl mx-auto flex flex-col items-center gap-6">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-1.5 text-sm font-medium">
+              <Target className="h-3.5 w-3.5" /> Limited Availability
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold">Limited Early Access Batch</h2>
+            <p className="text-white/80 text-lg max-w-xl">
+              The current batch of EasyTouch+ is available for a limited number of early adopters. Don't miss your spot.
+            </p>
+            <Button size="lg" className="mt-4 bg-white text-teal-700 hover:bg-teal-50 rounded-full px-10 text-base font-semibold shadow-lg">
+              Get EasyTouch+
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 11. PRICING ── */}
+      <section className="py-24 bg-white">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Simple, <span className="text-teal-600">Transparent Pricing</span></h2>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <div className="max-w-sm mx-auto rounded-3xl border-2 border-teal-500 bg-white shadow-2xl shadow-teal-100 p-8 flex flex-col items-center gap-6 text-center">
+              <div className="w-20 h-20 rounded-2xl bg-teal-50 flex items-center justify-center">
+                <Fingerprint className="h-10 w-10 text-teal-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-foreground">EasyTouch+ Device</h3>
+              <ul className="flex flex-col gap-3 text-left w-full">
+                {["EasyTouch+ device", "Mobile app access (iOS & Android)", "Lifestyle tracking dashboard", "Free firmware updates"].map((f, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <CheckCircle2 className="h-4 w-4 text-teal-500 shrink-0" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Button size="lg" className="w-full bg-teal-600 hover:bg-teal-700 text-white rounded-full text-base font-semibold mt-2">
+                Order Now
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 12. FAQ ── */}
+      <section className="py-24 bg-muted/30">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked <span className="text-teal-600">Questions</span></h2>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <div className="max-w-2xl mx-auto">
+              <Accordion type="single" collapsible className="flex flex-col gap-3">
+                {faqs.map((faq, i) => (
+                  <AccordionItem key={i} value={`faq-${i}`} className="rounded-xl border border-border bg-white px-6 shadow-sm">
+                    <AccordionTrigger className="text-left font-semibold text-foreground py-5 hover:no-underline">
+                      {faq.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-5">
+                      {faq.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 13. FINAL CTA ── */}
+      <section className="py-32 bg-gradient-to-br from-teal-50 via-cyan-50 to-white text-center">
+        <div className="container">
+          <AnimatedSection className="flex flex-col items-center gap-8 max-w-2xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+              Your Body Is Unique.<br />
+              <span className="text-teal-600">Start Understanding It.</span>
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Join early adopters who are taking control of their metabolic wellness with EasyTouch+.
+            </p>
+            <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-12 text-base font-semibold shadow-lg shadow-teal-200">
+              Get EasyTouch+
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 14. DISCLAIMER ── */}
+      <div className="bg-muted/60 border-t border-border py-6">
+        <div className="container">
+          <p className="text-xs text-muted-foreground text-center max-w-3xl mx-auto leading-relaxed">
+            <strong>Disclaimer:</strong> EasyTouch+ is intended for wellness and lifestyle awareness. It is not intended for medical diagnosis, treatment, or disease management. Always consult a qualified healthcare professional for any medical concerns.
+          </p>
+        </div>
+      </div>
+    </Layout>
+  );
+}

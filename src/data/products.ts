@@ -84,6 +84,27 @@ export const products: Product[] = [
     ]
   },
   {
+    id: "easytouch-plus",
+    name: "EasyTouch+",
+    tagline: "See How Your Food Affects Your Body",
+    description: "A wellness device for metabolic awareness. Track your body's response to meals, sleep, fasting, and lifestyle habits with a simple finger touch.",
+    benefits: [
+      "Metabolic response tracking",
+      "Before & after meal insights",
+      "Sleep & fasting patterns"
+    ],
+    image: rhythmCardImg,
+    category: "wellness",
+    isExternal: false,
+    link: "/products/easytouch-plus",
+    features: [
+      "Simple finger-touch reading",
+      "Mobile app dashboard",
+      "Lifestyle trend tracking",
+      "iOS & Android compatible"
+    ]
+  },
+  {
     id: "corebalance",
     name: "CoreBalance BMI",
     tagline: "Beyond Just Weight",
