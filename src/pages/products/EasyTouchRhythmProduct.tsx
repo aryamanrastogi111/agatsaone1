@@ -166,6 +166,12 @@ const EasyTouchRhythmProduct = () => {
   // Fire PageView and ViewContent on mount for Facebook Pixel
   useEasyTouchRhythmPixelPageView();
 
+  // Sticky hero parallax hooks
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const bgOpacity = useTransform(scrollYProgress, [0.6, 1], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+
   const handleAddToCart = async () => {
     const product = findProductByTitle("EasyTouch Rhythm");
     if (product) {
