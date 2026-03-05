@@ -112,11 +112,11 @@ export default function EasyTouchPlusProduct() {
               <Zap className="h-3.5 w-3.5" /> Metabolic Wellness Device
             </span>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mt-4 max-w-3xl">
-              See How Your Food <br className="hidden md:block" />
-              <span className="text-teal-600">Affects Your Body</span>
+              Your glucometer tells you a number.<br className="hidden md:block" />
+              <span className="text-teal-600">EasyTouch+ tells you the story.</span>
             </h1>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Track your body's metabolic response to meals, sleep, and lifestyle habits with a simple finger touch.
+              Track your metabolic signal across the 22 hours your glucometer misses — no strips, no pricks.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-8 text-base shadow-lg shadow-teal-200">
@@ -173,6 +173,63 @@ export default function EasyTouchPlusProduct() {
             <p className="text-lg text-muted-foreground max-w-xl mx-auto">
               Most people never see how their body reacts internally. <strong className="text-foreground">EasyTouch+ changes that.</strong>
             </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 2b. THE 22-HOUR GAP ── */}
+      <section className="py-24 bg-muted/20">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-2xl mx-auto mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              You're Blind for <span className="text-teal-600">22 Hours</span> a Day
+            </h2>
+            <p className="mt-4 text-muted-foreground text-lg">
+              A glucometer gives you 2 snapshots. EasyTouch+ watches everything in between.
+            </p>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <div className="max-w-3xl mx-auto">
+              {/* Timeline */}
+              <div className="relative flex items-stretch gap-0">
+                {/* 7am */}
+                <div className="flex flex-col items-center gap-2 min-w-[90px]">
+                  <div className="rounded-xl border-2 border-border bg-card p-4 flex flex-col items-center gap-1 shadow-sm text-center">
+                    <Droplets className="h-6 w-6 text-muted-foreground" />
+                    <span className="text-xs font-bold text-foreground">7 AM</span>
+                    <span className="text-xs text-muted-foreground">Glucometer</span>
+                    <span className="text-sm font-semibold text-foreground">118 mg/dL</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">Fasting</span>
+                </div>
+                {/* gap line */}
+                <div className="flex-1 flex flex-col justify-center px-2">
+                  <div className="relative h-0.5 w-full bg-gradient-to-r from-border via-teal-400 to-border">
+                    {/* spike badge */}
+                    <div className="absolute left-1/2 -translate-x-1/2 -top-8 flex flex-col items-center">
+                      <div className="rounded-full bg-teal-600 text-white text-xs font-bold px-3 py-1 shadow-md whitespace-nowrap">
+                        ⚡ 3 PM — Spike Caught
+                      </div>
+                      <div className="w-0.5 h-4 bg-teal-400 mt-1" />
+                    </div>
+                  </div>
+                  <p className="text-center text-xs text-teal-600 font-medium mt-3">EasyTouch+ continuous tracking</p>
+                </div>
+                {/* 9pm */}
+                <div className="flex flex-col items-center gap-2 min-w-[90px]">
+                  <div className="rounded-xl border-2 border-border bg-card p-4 flex flex-col items-center gap-1 shadow-sm text-center">
+                    <Droplets className="h-6 w-6 text-muted-foreground" />
+                    <span className="text-xs font-bold text-foreground">9 PM</span>
+                    <span className="text-xs text-muted-foreground">Glucometer</span>
+                    <span className="text-sm font-semibold text-foreground">142 mg/dL</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">Post-dinner</span>
+                </div>
+              </div>
+              <p className="text-center text-sm text-muted-foreground mt-8 max-w-lg mx-auto">
+                The 3 PM spike happened <strong className="text-foreground">6 hours before your 9 PM reading.</strong> Without EasyTouch+, you'd never know it was there.
+              </p>
+            </div>
           </AnimatedSection>
         </div>
       </section>
@@ -241,6 +298,56 @@ export default function EasyTouchPlusProduct() {
               </AnimatedSection>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── 4b. CALIBRATION STORY ── */}
+      <section className="py-24 bg-gradient-to-b from-teal-50/50 to-white">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-2xl mx-auto mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              EasyTouch+ Learns <span className="text-teal-600">Your Metabolic Fingerprint</span>
+            </h2>
+            <p className="mt-4 text-muted-foreground text-lg">
+              Not an average person's. Yours. The calibration step is what makes it accurate — and it's a 2-day setup, once.
+            </p>
+          </AnimatedSection>
+          <div className="grid md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            {[
+              { step: "1", icon: <Droplets className="h-7 w-7 text-muted-foreground" />, title: "Take 4 glucometer readings", sub: "Fasting morning + post-meal evening, over 2 days" },
+              { step: "2", icon: <Fingerprint className="h-7 w-7 text-teal-600" />, title: "Pair with EasyTouch+ PPG", sub: "Read at the same moment as each glucometer snap" },
+              { step: "3", icon: <Brain className="h-7 w-7 text-teal-600" />, title: "Algorithm builds your model", sub: "A personal PPG→metabolic correlation, unique to you" },
+              { step: "4", icon: <Sparkles className="h-7 w-7 text-teal-600" />, title: "All future readings show your Index", sub: "No two people calibrate the same way" },
+            ].map((item, i) => (
+              <AnimatedSection key={i} delay={i * 0.1}>
+                <div className="rounded-2xl border border-border bg-card p-6 flex flex-col gap-3 h-full shadow-sm text-center items-center">
+                  <span className="text-xs font-bold tracking-widest text-teal-500 uppercase">Step {item.step}</span>
+                  <div className="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center">
+                    {item.icon}
+                  </div>
+                  <p className="font-semibold text-sm text-foreground">{item.title}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.sub}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+          {/* Metabolic Index mockup */}
+          <AnimatedSection delay={0.5} className="mt-14 flex flex-col items-center gap-4">
+            <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">After calibration, you see:</p>
+            <div className="flex items-center gap-6 p-8 rounded-3xl border-2 border-teal-200 bg-white shadow-xl shadow-teal-100">
+              <div className="flex flex-col items-center justify-center w-28 h-28 rounded-full border-4 border-teal-500 shadow-inner">
+                <span className="text-3xl font-bold text-foreground">72</span>
+                <span className="text-xs font-semibold text-teal-600 uppercase tracking-wide">Metabolic<br/>Index</span>
+              </div>
+              <div className="flex flex-col gap-2">
+                <span className="inline-flex items-center gap-2 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold px-4 py-1.5 border border-orange-200">
+                  ⚠ Elevated Zone
+                </span>
+                <p className="text-sm text-muted-foreground max-w-xs">Your metabolic signal is elevated. This corresponds to your logged readings in the post-meal range.</p>
+                <p className="text-xs text-muted-foreground italic">Not mg/dL — calibrated to your body.</p>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -346,6 +453,53 @@ export default function EasyTouchPlusProduct() {
         </div>
       </section>
 
+      {/* ── 8b. 3 LEVELS OF KNOWING ── */}
+      <section className="py-24 bg-gradient-to-b from-muted/20 to-white">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-2xl mx-auto mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              3 Levels of <span className="text-teal-600">Knowing</span>
+            </h2>
+            <p className="mt-4 text-muted-foreground text-lg">Your glucometer only gives you Level 1.</p>
+          </AnimatedSection>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <AnimatedSection delay={0}>
+              <div className="rounded-2xl border border-border bg-muted/40 p-7 flex flex-col gap-4 h-full">
+                <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">Level 1 — Snapshot</span>
+                <div className="flex items-center gap-3">
+                  <Droplets className="h-7 w-7 text-muted-foreground" />
+                  <span className="font-semibold text-foreground">Glucometer</span>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed italic">"My sugar is 148 right now."</p>
+                <p className="text-xs text-muted-foreground mt-auto">A number, at one moment, twice a day.</p>
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={0.1}>
+              <div className="rounded-2xl border-2 border-teal-400 bg-teal-50 p-7 flex flex-col gap-4 h-full shadow-md shadow-teal-100">
+                <span className="text-xs font-bold tracking-widest text-teal-600 uppercase">Level 2 — Pattern</span>
+                <div className="flex items-center gap-3">
+                  <Activity className="h-7 w-7 text-teal-600" />
+                  <span className="font-semibold text-foreground">EasyTouch+</span>
+                </div>
+                <p className="text-sm text-teal-700 leading-relaxed italic">"My metabolic signal spikes every day at 3 PM — regardless of what I eat."</p>
+                <p className="text-xs text-teal-600 mt-auto font-medium">Continuous. Calibrated. Yours.</p>
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={0.2}>
+              <div className="rounded-2xl border border-border bg-gradient-to-br from-teal-600 to-cyan-500 p-7 flex flex-col gap-4 h-full shadow-lg shadow-teal-200">
+                <span className="text-xs font-bold tracking-widest text-teal-200 uppercase">Level 3 — Prediction</span>
+                <div className="flex items-center gap-3">
+                  <Sparkles className="h-7 w-7 text-white" />
+                  <span className="font-semibold text-white">Nera AI</span>
+                </div>
+                <p className="text-sm text-white/90 leading-relaxed italic">"This pattern will normalise in 11 weeks if you shift your dinner timing by 90 minutes."</p>
+                <p className="text-xs text-teal-200 mt-auto">Coming soon — powered by your pattern data.</p>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
       {/* ── 9. COMPARISON ── */}
       <section className="py-24 bg-muted/30">
         <div className="container">
@@ -358,9 +512,9 @@ export default function EasyTouchPlusProduct() {
                 <h3 className="font-bold text-lg text-muted-foreground text-center">Without EasyTouch+</h3>
                 {[
                   "Guess how food affects you",
-                  "Follow generic diet advice",
-                  "No metabolic feedback",
-                  "One-size-fits-all approach",
+                  "₹50 per glucometer strip — rationing your health data",
+                  "No continuous metabolic data",
+                  "Generic, one-size-fits-all advice",
                 ].map((t, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <XCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
@@ -371,10 +525,10 @@ export default function EasyTouchPlusProduct() {
               <div className="bg-teal-600 p-8 flex flex-col gap-6">
                 <h3 className="font-bold text-lg text-white text-center">With EasyTouch+</h3>
                 {[
-                  "Observe your body's response",
-                  "Personalise your diet",
-                  "Track lifestyle trends",
-                  "Data-driven wellness",
+                  "Observe your body's metabolic response",
+                  "₹0 per EasyTouch+ reading — unlimited insights",
+                  "22-hour continuous metabolic tracking",
+                  "Calibrated to your body, not an average",
                 ].map((t, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-teal-200 shrink-0 mt-0.5" />
