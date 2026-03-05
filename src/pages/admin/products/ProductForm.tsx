@@ -2,7 +2,7 @@
 // Used for both Create and Edit product
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { db as supabase } from "@/integrations/supabase/db";
 import { Plus, Trash2, Upload, ArrowLeft, Save } from "lucide-react";
 import { toast } from "sonner";
 

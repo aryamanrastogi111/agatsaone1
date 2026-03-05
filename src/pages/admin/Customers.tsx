@@ -1,6 +1,7 @@
 // src/pages/admin/Customers.tsx
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { db } from "@/integrations/supabase/db";
 import { Search, Users } from "lucide-react";
 
 interface Customer {

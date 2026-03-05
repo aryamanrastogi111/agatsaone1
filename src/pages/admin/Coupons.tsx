@@ -1,6 +1,6 @@
 // src/pages/admin/Coupons.tsx
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { db as supabase } from "@/integrations/supabase/db";
 import { Plus, Trash2, Tag } from "lucide-react";
 import { toast } from "sonner";
 

@@ -1,7 +1,7 @@
 // src/pages/admin/products/ProductsList.tsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { db as supabase } from "@/integrations/supabase/db";
 import { Plus, Search, Edit, Trash2, Eye, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
 

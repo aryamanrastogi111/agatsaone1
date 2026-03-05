@@ -1,7 +1,7 @@
 // src/pages/admin/orders/OrdersList.tsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { db as supabase } from "@/integrations/supabase/db";
 import { Search, Filter, Download } from "lucide-react";
 
 interface Order {
