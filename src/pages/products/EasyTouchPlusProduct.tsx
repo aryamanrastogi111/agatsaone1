@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import easytouchPlusHero from "@/assets/easytouch-plus-hero.png";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
