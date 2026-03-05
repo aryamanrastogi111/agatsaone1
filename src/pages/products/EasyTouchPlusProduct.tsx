@@ -105,13 +105,12 @@ export default function EasyTouchPlusProduct() {
     offset: ["start start", "end start"],
   });
 
-  // White fade overlay opacity
-  const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.85], [0, 1]);
+  // White fade overlay opacity — only on the background image layer
+  const overlayOpacity = useTransform(scrollYProgress, [0.4, 1], [0, 1]);
   // Text moves up as you scroll
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
 
-  // Track whether the fixed bg should be visible
+  // Hide fixed bg once hero is fully scrolled past
   const [showFixed, setShowFixed] = useState(true);
   useEffect(() => {
     return scrollYProgress.on("change", (v) => setShowFixed(v < 1));
@@ -120,13 +119,12 @@ export default function EasyTouchPlusProduct() {
   return (
     <Layout>
       {/* ── 1. HERO ── */}
-      {/* 200vh tall section — fixed bg stays put, text scrolls out */}
       <section
         ref={heroRef}
         className="relative"
         style={{ height: "200vh" }}
       >
-        {/* FIXED background — never moves */}
+        {/* FIXED background — only the image + overlays, no text */}
         {showFixed && (
           <div className="fixed top-0 left-0 w-full h-screen overflow-hidden" style={{ zIndex: 0 }}>
             <img
@@ -137,7 +135,7 @@ export default function EasyTouchPlusProduct() {
             />
             {/* Dark overlay for text legibility */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
-            {/* White fade overlay — grows as you scroll into the next section */}
+            {/* White fade — only fades the background, not the text */}
             <motion.div
               className="absolute inset-0 bg-background"
               style={{ opacity: overlayOpacity }}
@@ -145,8 +143,8 @@ export default function EasyTouchPlusProduct() {
           </div>
         )}
 
-        {/* Text — fixed to viewport center, scrolls away via framer-motion */}
-        <div className="fixed top-0 left-0 w-full h-screen flex items-center justify-center pointer-events-none" style={{ zIndex: 1 }}>
+        {/* Text — sits in normal flow at top of section, scrolls naturally */}
+        <div className="sticky top-0 h-screen flex items-center justify-center pointer-events-none" style={{ zIndex: 1 }}>
           <motion.div
             style={{ y: textY }}
             className="container flex flex-col items-center text-center gap-8 pointer-events-auto"
