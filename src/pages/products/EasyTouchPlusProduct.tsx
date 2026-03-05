@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import easytouchPlusHero from "@/assets/easytouch-plus-hero.png";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -99,25 +99,49 @@ const faqs = [
 ];
 
 export default function EasyTouchPlusProduct() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  // The white fade-in overlay increases opacity as you scroll down
+  const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.85], [0, 1]);
+  // Text moves up as you scroll (parallax)
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
   return (
     <Layout>
       {/* ── 1. HERO ── */}
-      <section className="relative overflow-hidden py-24 md:py-36 min-h-[80vh] flex items-center">
-        {/* Background image */}
-        <div className="absolute inset-0">
+      <section
+        ref={heroRef}
+        className="relative h-screen"
+        style={{ marginTop: 0 }}
+      >
+        {/* Sticky background image — stays fixed while text scrolls */}
+        <div className="sticky top-0 h-screen w-full overflow-hidden">
           <img
             src={easytouchPlusHero}
             alt=""
             aria-hidden="true"
             className="w-full h-full object-cover object-center"
           />
-          {/* Dark + teal overlay for text legibility */}
+          {/* Dark overlay for text legibility */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
-          <div className="absolute inset-0 bg-teal-950/30" />
+          {/* White fade overlay — appears as you scroll down */}
+          <motion.div
+            className="absolute inset-0 bg-background"
+            style={{ opacity: overlayOpacity }}
+          />
         </div>
 
-        <div className="container relative z-10 flex flex-col items-center text-center gap-8">
-          <AnimatedSection>
+        {/* Text content — positioned absolute over the sticky bg, scrolls away */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <motion.div
+            style={{ y: textY, opacity: textOpacity }}
+            className="container flex flex-col items-center text-center gap-8 pointer-events-auto"
+          >
             <span className="inline-flex items-center gap-2 rounded-full bg-teal-400/20 border border-teal-400/30 px-4 py-1.5 text-sm font-medium text-teal-300 mb-2">
               <Zap className="h-3.5 w-3.5" /> Metabolic Wellness Device
             </span>
@@ -137,7 +161,7 @@ export default function EasyTouchPlusProduct() {
                 See How It Works
               </Button>
             </div>
-          </AnimatedSection>
+          </motion.div>
         </div>
       </section>
 
