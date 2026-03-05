@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { addBusinessDays, format } from "date-fns";
-import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, useInView, useMotionValue, useTransform, animate, useScroll } from "framer-motion";
 import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, ArrowRight, Loader2, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
@@ -166,6 +166,12 @@ const EasyTouchRhythmProduct = () => {
   // Fire PageView and ViewContent on mount for Facebook Pixel
   useEasyTouchRhythmPixelPageView();
 
+  // Sticky hero parallax hooks
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const bgOpacity = useTransform(scrollYProgress, [0.6, 1], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+
   const handleAddToCart = async () => {
     const product = findProductByTitle("EasyTouch Rhythm");
     if (product) {
@@ -234,159 +240,129 @@ const EasyTouchRhythmProduct = () => {
         </section>
       )}
 
-      {/* Section 1: Hero Introduction */}
-      <section className="min-h-[90vh] flex items-center bg-background py-16 lg:py-24">
-        <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="order-2 lg:order-1"
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                Introducing EasyTouch Rhythm™
-              </div>
-              
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-                I finally understand why my{" "}
-                <span className="text-primary">body feels</span>{" "}
-                the way it does.
-              </h1>
-              
-              <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-                EasyTouch Rhythm doesn't just track your health—it reveals the hidden patterns 
-                that explain your energy, your fatigue, your clarity, and your calm.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button 
-                  size="lg" 
-                  className="text-lg px-8 py-6 gap-2"
-                  onClick={handleAddToCart}
-                  disabled={addingToCart || loading}
+      {/* Section 1: Hero Introduction — Sticky Parallax */}
+      {/* Section 1: Hero Introduction — Sticky Parallax */}
+      <section ref={heroRef} className="relative h-[200vh]">
+        {/* Sticky background image fades out as you scroll */}
+        <motion.div
+          style={{ opacity: bgOpacity }}
+          className="sticky top-0 h-screen w-full overflow-hidden"
+        >
+          <img
+            src={images.heroband}
+            alt="EasyTouch Rhythm Band"
+            className="absolute inset-0 w-full h-full object-cover object-center scale-105"
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
+          {/* Fade to background at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent to-background" />
+
+          {/* Hero text — moves upward with parallax as you scroll */}
+          <motion.div
+            style={{ y: textY }}
+            className="absolute inset-0 flex items-center"
+          >
+            <div className="container">
+              <div className="max-w-2xl">
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8 }}
                 >
-                  {addingToCart ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <ShoppingCart className="h-5 w-5" />
-                  )}
-                  {isSaleActive() ? (
-                    <>Add to Cart — <span className="line-through text-primary-foreground/60 mr-1">₹4,999</span> ₹4,499</>
-                  ) : (
-                    "Add to Cart — ₹4,999"
-                  )}
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="text-lg px-8 py-6"
-                  onClick={() => window.open("https://www.youtube.com/watch?v=j8QwXnQwozg", "_blank", "noopener,noreferrer")}
-                >
-                  Watch Demo
-                  <Play className="h-5 w-5 ml-2" />
-                </Button>
-              </div>
-              
-              {/* Republic Day Offer Inline */}
-              {isSaleActive() && (
-                <div className="bg-gradient-to-r from-orange-500/10 via-background to-green-600/10 border border-primary/20 rounded-xl p-4 mb-4">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <span className="text-lg">🇮🇳</span>
-                    <span className="font-medium text-foreground">Republic Day Discount Active</span>
-                    <CouponCodeBox variant="inline" />
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-medium mb-6">
+                    <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    Introducing EasyTouch Rhythm™
                   </div>
-                  <CountdownTimer variant="compact" className="mt-3" />
-                </div>
-              )}
-              
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <Truck className="h-4 w-4 text-primary" />
-                  Free Shipping
-                </div>
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-primary" />
-                  7-Day Returns (Mfg. Defects)
-                </div>
-              </div>
-              
-              <MultiProductDiscountBanner variant="compact" className="mt-4" />
-              
-              {/* Bonus Offer Section */}
-              <div className="mt-4 space-y-3">
-                <div className="text-xs text-muted-foreground text-center">also</div>
-                
-                <div className="bg-orange-50 dark:bg-orange-950/30 rounded-xl p-3 border border-orange-200 dark:border-orange-800/50">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-base">🍴</span>
-                    <span className="text-sm font-medium text-foreground">Detailed Meal Logging</span>
-                    <span className="text-xs text-muted-foreground line-through">₹1,200/yr</span>
-                    <span className="text-sm font-bold text-emerald-600">FREE</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-200 dark:bg-orange-800 text-orange-700 dark:text-orange-200 font-medium">Limited Time</span>
+                  
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                    I finally understand why my{" "}
+                    <span className="text-primary">body feels</span>{" "}
+                    the way it does.
+                  </h1>
+                  
+                  <p className="text-xl text-white/70 leading-relaxed mb-8">
+                    EasyTouch Rhythm doesn't just track your health—it reveals the hidden patterns 
+                    that explain your energy, your fatigue, your clarity, and your calm.
+                  </p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                    <Button 
+                      size="lg" 
+                      className="text-lg px-8 py-6 gap-2"
+                      onClick={handleAddToCart}
+                      disabled={addingToCart || loading}
+                    >
+                      {addingToCart ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <ShoppingCart className="h-5 w-5" />
+                      )}
+                      {isSaleActive() ? (
+                        <>Add to Cart — <span className="line-through text-primary-foreground/60 mr-1">₹4,999</span> ₹4,499</>
+                      ) : (
+                        "Add to Cart — ₹4,999"
+                      )}
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="lg" 
+                      className="text-lg px-8 py-6 border-white/30 text-white hover:bg-white/10"
+                      onClick={() => window.open("https://www.youtube.com/watch?v=j8QwXnQwozg", "_blank", "noopener,noreferrer")}
+                    >
+                      Watch Demo
+                      <Play className="h-5 w-5 ml-2" />
+                    </Button>
                   </div>
-                </div>
-                
-                {/* FOMO Counter */}
-                <FomoCounter productHandle="easytouch-rhythm" lowStockThreshold={20} className="justify-center" />
-                
-                {/* Delivery Estimate */}
-                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                  <span>📦</span>
-                  <span>Delivers by <span className="font-medium text-foreground">{format(addBusinessDays(new Date(), 3), "EEE, MMM d")}</span></span>
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="order-1 lg:order-2 relative"
-            >
-              <div className="relative">
-                {/* Sale Badge */}
-                {isSaleActive() && (
-                  <RepublicDaySaleBadge className="absolute -top-2 -right-2 z-10" />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-primary/10 rounded-3xl blur-3xl" />
-                <img
-                  src={images.heroband}
-                  alt="EasyTouch Rhythm Band"
-                  className="relative w-full max-w-lg mx-auto"
-                />
-              </div>
-              
-              {/* Floating Price Card */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="absolute -bottom-4 right-4 lg:right-0 bg-card border rounded-2xl p-4 shadow-lg"
-              >
-                {isSaleActive() ? (
-                  <>
-                    <div className="text-xs text-primary font-medium mb-1">🇮🇳 Republic Day Offer</div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-foreground">₹4,499</span>
-                      <span className="text-sm text-muted-foreground line-through">₹4,999</span>
+
+                  {isSaleActive() && (
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 mb-4">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <span className="text-lg">🇮🇳</span>
+                        <span className="font-medium text-white">Republic Day Discount Active</span>
+                        <CouponCodeBox variant="inline" />
+                      </div>
+                      <CountdownTimer variant="compact" className="mt-3" />
                     </div>
-                    <p className="text-[10px] text-muted-foreground mt-1">Use code {SALE_CODE}</p>
-                  </>
-                ) : (
-                  <>
-                    <div className="text-xs text-primary font-medium mb-1">Introductory Offer</div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-foreground">₹4,999</span>
-                      <span className="text-sm text-muted-foreground line-through">₹7,999</span>
+                  )}
+                  
+                  <div className="flex items-center gap-6 text-sm text-white/60">
+                    <div className="flex items-center gap-2">
+                      <Truck className="h-4 w-4 text-primary" />
+                      Free Shipping
                     </div>
-                  </>
-                )}
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck className="h-4 w-4 text-primary" />
+                      7-Day Returns (Mfg. Defects)
+                    </div>
+                  </div>
+
+                  <MultiProductDiscountBanner variant="compact" className="mt-4" />
+
+                  <div className="mt-4 space-y-3">
+                    <div className="bg-orange-500/20 backdrop-blur-sm rounded-xl p-3 border border-orange-400/30">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-base">🍴</span>
+                        <span className="text-sm font-medium text-white">Detailed Meal Logging</span>
+                        <span className="text-xs text-white/50 line-through">₹1,200/yr</span>
+                        <span className="text-sm font-bold text-emerald-400">FREE</span>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-400/30 text-orange-200 font-medium">Limited Time</span>
+                      </div>
+                    </div>
+                    <FomoCounter productHandle="easytouch-rhythm" lowStockThreshold={20} className="justify-start" />
+                    <div className="flex items-center gap-2 text-sm text-white/50">
+                      <span>📦</span>
+                      <span>Delivers by <span className="font-medium text-white/80">{format(addBusinessDays(new Date(), 3), "EEE, MMM d")}</span></span>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Spacer so the next section starts below the fold */}
+        <div className="h-screen" />
       </section>
 
       {/* Republic Day Special Offer Section */}
