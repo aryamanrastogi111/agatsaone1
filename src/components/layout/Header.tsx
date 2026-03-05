@@ -82,6 +82,14 @@ export function Header() {
               </Link>
             </Button>
           </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+            <Button asChild variant="ghost" size="sm" className="text-teal-600 hover:text-teal-700 hover:bg-teal-50 gap-1.5">
+              <Link to="/products/easytouch-plus">
+                <Zap className="h-3.5 w-3.5" />
+                EasyTouch+
+              </Link>
+            </Button>
+          </motion.div>
         </div>
 
         {/* Desktop Navigation - Second */}
