@@ -637,7 +637,7 @@ export default function EasyTouchPlusProduct() {
       <div className="bg-muted/60 border-t border-border py-6">
         <div className="container">
           <p className="text-xs text-muted-foreground text-center max-w-3xl mx-auto leading-relaxed">
-            <strong>Disclaimer:</strong> EasyTouch+ is intended for wellness and lifestyle awareness. It is not intended for medical diagnosis, treatment, or disease management. Always consult a qualified healthcare professional for any medical concerns.
+            <strong>Disclaimer:</strong> EasyTouch+ is a wellness device intended for lifestyle awareness and personal health tracking. <strong>Metabolic Index is a wellness indicator derived from PPG signals and personal calibration data. It is not a substitute for clinical blood glucose measurement.</strong> EasyTouch+ is not intended for medical diagnosis, treatment, or disease management. Always consult a qualified healthcare professional for any medical concerns.
           </p>
         </div>
       </div>
