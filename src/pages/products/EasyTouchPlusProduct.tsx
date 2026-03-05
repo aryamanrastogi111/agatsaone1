@@ -74,6 +74,8 @@ const audience = [
   { icon: <Clock className="h-5 w-5" />, label: "Intermittent Fasters" },
   { icon: <Salad className="h-5 w-5" />, label: "Diet Optimisers" },
   { icon: <ShieldCheck className="h-5 w-5" />, label: "Health-Conscious Individuals" },
+  { icon: <Activity className="h-5 w-5" />, label: "Pre-diabetics & Borderline Cases" },
+  { icon: <HeartPulse className="h-5 w-5" />, label: "People with Family History of Diabetes" },
 ];
 
 const faqs = [
