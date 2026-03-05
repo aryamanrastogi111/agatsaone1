@@ -130,13 +130,15 @@ export default function EasyTouchPlusProduct() {
             </div>
           </AnimatedSection>
 
-          {/* Product visual placeholder */}
-          <AnimatedSection delay={0.2} className="mt-12 w-full max-w-md">
-            <div className="relative mx-auto w-64 h-64 md:w-80 md:h-80 rounded-3xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center shadow-2xl shadow-teal-200">
-              <Fingerprint className="h-32 w-32 text-white/80" />
-              <div className="absolute -bottom-4 -right-4 w-20 h-20 rounded-2xl bg-white shadow-xl flex items-center justify-center">
-                <BarChart3 className="h-10 w-10 text-teal-600" />
-              </div>
+          {/* Product image */}
+          <AnimatedSection delay={0.2} className="mt-12 w-full max-w-lg">
+            <div className="relative mx-auto flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full bg-teal-200/30 blur-3xl scale-75" />
+              <img
+                src={easytouchPlusHero}
+                alt="EasyTouch+ Sugar Index Device"
+                className="relative w-72 md:w-96 object-contain drop-shadow-2xl"
+              />
             </div>
           </AnimatedSection>
         </div>
