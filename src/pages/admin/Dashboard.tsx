@@ -1,6 +1,6 @@
 // src/pages/admin/Dashboard.tsx
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { db as supabase } from "@/integrations/supabase/db";
 import { Link } from "react-router-dom";
 import {
   TrendingUp, ShoppingCart, Package, Users,

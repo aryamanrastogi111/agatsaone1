@@ -1,6 +1,6 @@
 // src/pages/admin/Reviews.tsx
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { db as supabase } from "@/integrations/supabase/db";
 import { Star, Check, X } from "lucide-react";
 import { toast } from "sonner";
 

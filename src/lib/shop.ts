@@ -4,7 +4,9 @@
 // Add this file to your repo at: src/lib/shop.ts
 // ============================================================
 
-import { supabase } from "@/integrations/supabase/client";
+import { supabase as _supabase } from "@/integrations/supabase/client";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const supabase = _supabase as any;
 
 // ─── Types ───────────────────────────────────────────────────
 
@@ -130,13 +132,10 @@ export async function getProducts(options?: {
   limit?: number;
   offset?: number;
 }) {
-  let query = supabase
+  const db = supabase as any;
+  let query = db
     .from("products")
-    .select(`
-      *,
-      product_variants(*),
-      product_images(*)
-    `)
+    .select(`*, product_variants(*), product_images(*)`)
     .eq("status", "active")
     .order("created_at", { ascending: false });
 
@@ -144,18 +143,18 @@ export async function getProducts(options?: {
   if (options?.offset) query = query.range(options.offset, options.offset + (options.limit ?? 20) - 1);
 
   if (options?.collection) {
-    const { data: collection } = await supabase
+    const { data: collection } = await db
       .from("collections")
       .select("id")
       .eq("slug", options.collection)
       .single();
     if (collection) {
-      const { data: productIds } = await supabase
+      const { data: productIds } = await db
         .from("collection_products")
         .select("product_id")
         .eq("collection_id", collection.id);
       if (productIds) {
-        query = query.in("id", productIds.map((p) => p.product_id));
+        query = query.in("id", productIds.map((p: any) => p.product_id));
       }
     }
   }
