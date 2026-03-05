@@ -241,136 +241,129 @@ const EasyTouchRhythmProduct = () => {
       )}
 
       {/* Section 1: Hero Introduction — Sticky Parallax */}
-      {(() => {
-        const heroRef = useRef(null);
-        const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-        const bgOpacity = useTransform(scrollYProgress, [0.6, 1], [1, 0]);
-        const textY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-        return (
-          <section ref={heroRef} className="relative h-[200vh]">
-            {/* Sticky background image */}
-            <motion.div
-              style={{ opacity: bgOpacity }}
-              className="sticky top-0 h-screen w-full overflow-hidden"
-            >
-              <img
-                src={images.heroband}
-                alt="EasyTouch Rhythm Band"
-                className="absolute inset-0 w-full h-full object-cover object-center scale-105"
-              />
-              {/* Dark overlay for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
-              {/* Fade to white at bottom */}
-              <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-background" />
+      {/* Section 1: Hero Introduction — Sticky Parallax */}
+      <section ref={heroRef} className="relative h-[200vh]">
+        {/* Sticky background image fades out as you scroll */}
+        <motion.div
+          style={{ opacity: bgOpacity }}
+          className="sticky top-0 h-screen w-full overflow-hidden"
+        >
+          <img
+            src={images.heroband}
+            alt="EasyTouch Rhythm Band"
+            className="absolute inset-0 w-full h-full object-cover object-center scale-105"
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
+          {/* Fade to background at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent to-background" />
 
-              {/* Hero text — scrolls with parallax */}
-              <motion.div
-                style={{ y: textY }}
-                className="absolute inset-0 flex items-center"
-              >
-                <div className="container">
-                  <div className="max-w-2xl">
-                    <motion.div
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8 }}
-                    >
-                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-medium mb-6">
-                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                        Introducing EasyTouch Rhythm™
-                      </div>
-                      
-                      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                        I finally understand why my{" "}
-                        <span className="text-primary">body feels</span>{" "}
-                        the way it does.
-                      </h1>
-                      
-                      <p className="text-xl text-white/70 leading-relaxed mb-8">
-                        EasyTouch Rhythm doesn't just track your health—it reveals the hidden patterns 
-                        that explain your energy, your fatigue, your clarity, and your calm.
-                      </p>
-                      
-                      <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                        <Button 
-                          size="lg" 
-                          className="text-lg px-8 py-6 gap-2"
-                          onClick={handleAddToCart}
-                          disabled={addingToCart || loading}
-                        >
-                          {addingToCart ? (
-                            <Loader2 className="h-5 w-5 animate-spin" />
-                          ) : (
-                            <ShoppingCart className="h-5 w-5" />
-                          )}
-                          {isSaleActive() ? (
-                            <>Add to Cart — <span className="line-through text-primary-foreground/60 mr-1">₹4,999</span> ₹4,499</>
-                          ) : (
-                            "Add to Cart — ₹4,999"
-                          )}
-                        </Button>
-                        <Button 
-                          variant="outline" 
-                          size="lg" 
-                          className="text-lg px-8 py-6 border-white/30 text-white hover:bg-white/10"
-                          onClick={() => window.open("https://www.youtube.com/watch?v=j8QwXnQwozg", "_blank", "noopener,noreferrer")}
-                        >
-                          Watch Demo
-                          <Play className="h-5 w-5 ml-2" />
-                        </Button>
-                      </div>
-
-                      {isSaleActive() && (
-                        <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 mb-4">
-                          <div className="flex items-center gap-3 flex-wrap">
-                            <span className="text-lg">🇮🇳</span>
-                            <span className="font-medium text-white">Republic Day Discount Active</span>
-                            <CouponCodeBox variant="inline" />
-                          </div>
-                          <CountdownTimer variant="compact" className="mt-3" />
-                        </div>
-                      )}
-                      
-                      <div className="flex items-center gap-6 text-sm text-white/60">
-                        <div className="flex items-center gap-2">
-                          <Truck className="h-4 w-4 text-primary" />
-                          Free Shipping
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <ShieldCheck className="h-4 w-4 text-primary" />
-                          7-Day Returns (Mfg. Defects)
-                        </div>
-                      </div>
-
-                      <MultiProductDiscountBanner variant="compact" className="mt-4" />
-
-                      <div className="mt-4 space-y-3">
-                        <div className="bg-orange-500/20 backdrop-blur-sm rounded-xl p-3 border border-orange-400/30">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-base">🍴</span>
-                            <span className="text-sm font-medium text-white">Detailed Meal Logging</span>
-                            <span className="text-xs text-white/50 line-through">₹1,200/yr</span>
-                            <span className="text-sm font-bold text-emerald-400">FREE</span>
-                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-400/30 text-orange-200 font-medium">Limited Time</span>
-                          </div>
-                        </div>
-                        <FomoCounter productHandle="easytouch-rhythm" lowStockThreshold={20} className="justify-start" />
-                        <div className="flex items-center gap-2 text-sm text-white/50">
-                          <span>📦</span>
-                          <span>Delivers by <span className="font-medium text-white/80">{format(addBusinessDays(new Date(), 3), "EEE, MMM d")}</span></span>
-                        </div>
-                      </div>
-                    </motion.div>
+          {/* Hero text — moves upward with parallax as you scroll */}
+          <motion.div
+            style={{ y: textY }}
+            className="absolute inset-0 flex items-center"
+          >
+            <div className="container">
+              <div className="max-w-2xl">
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-medium mb-6">
+                    <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    Introducing EasyTouch Rhythm™
                   </div>
-                </div>
-              </motion.div>
-            </motion.div>
+                  
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                    I finally understand why my{" "}
+                    <span className="text-primary">body feels</span>{" "}
+                    the way it does.
+                  </h1>
+                  
+                  <p className="text-xl text-white/70 leading-relaxed mb-8">
+                    EasyTouch Rhythm doesn't just track your health—it reveals the hidden patterns 
+                    that explain your energy, your fatigue, your clarity, and your calm.
+                  </p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                    <Button 
+                      size="lg" 
+                      className="text-lg px-8 py-6 gap-2"
+                      onClick={handleAddToCart}
+                      disabled={addingToCart || loading}
+                    >
+                      {addingToCart ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <ShoppingCart className="h-5 w-5" />
+                      )}
+                      {isSaleActive() ? (
+                        <>Add to Cart — <span className="line-through text-primary-foreground/60 mr-1">₹4,999</span> ₹4,499</>
+                      ) : (
+                        "Add to Cart — ₹4,999"
+                      )}
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="lg" 
+                      className="text-lg px-8 py-6 border-white/30 text-white hover:bg-white/10"
+                      onClick={() => window.open("https://www.youtube.com/watch?v=j8QwXnQwozg", "_blank", "noopener,noreferrer")}
+                    >
+                      Watch Demo
+                      <Play className="h-5 w-5 ml-2" />
+                    </Button>
+                  </div>
 
-            {/* Spacer to push next section below */}
-            <div className="h-screen" />
-          </section>
-        );
-      })()}
+                  {isSaleActive() && (
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 mb-4">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <span className="text-lg">🇮🇳</span>
+                        <span className="font-medium text-white">Republic Day Discount Active</span>
+                        <CouponCodeBox variant="inline" />
+                      </div>
+                      <CountdownTimer variant="compact" className="mt-3" />
+                    </div>
+                  )}
+                  
+                  <div className="flex items-center gap-6 text-sm text-white/60">
+                    <div className="flex items-center gap-2">
+                      <Truck className="h-4 w-4 text-primary" />
+                      Free Shipping
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck className="h-4 w-4 text-primary" />
+                      7-Day Returns (Mfg. Defects)
+                    </div>
+                  </div>
+
+                  <MultiProductDiscountBanner variant="compact" className="mt-4" />
+
+                  <div className="mt-4 space-y-3">
+                    <div className="bg-orange-500/20 backdrop-blur-sm rounded-xl p-3 border border-orange-400/30">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-base">🍴</span>
+                        <span className="text-sm font-medium text-white">Detailed Meal Logging</span>
+                        <span className="text-xs text-white/50 line-through">₹1,200/yr</span>
+                        <span className="text-sm font-bold text-emerald-400">FREE</span>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-400/30 text-orange-200 font-medium">Limited Time</span>
+                      </div>
+                    </div>
+                    <FomoCounter productHandle="easytouch-rhythm" lowStockThreshold={20} className="justify-start" />
+                    <div className="flex items-center gap-2 text-sm text-white/50">
+                      <span>📦</span>
+                      <span>Delivers by <span className="font-medium text-white/80">{format(addBusinessDays(new Date(), 3), "EEE, MMM d")}</span></span>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Spacer so the next section starts below the fold */}
+        <div className="h-screen" />
+      </section>
 
       {/* Republic Day Special Offer Section */}
       {isSaleActive() && (
