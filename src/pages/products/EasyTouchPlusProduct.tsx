@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import easytouchPlusHero from "@/assets/easytouch-plus-hero.png";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
@@ -109,12 +109,8 @@ export default function EasyTouchPlusProduct() {
   const overlayOpacity = useTransform(scrollYProgress, [0.4, 1], [0, 1]);
   // Text moves up as you scroll
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
-
-  // Hide fixed bg once hero is fully scrolled past
-  const [showFixed, setShowFixed] = useState(true);
-  useEffect(() => {
-    return scrollYProgress.on("change", (v) => setShowFixed(v < 1));
-  }, [scrollYProgress]);
+  // Fade out the fixed bg container itself at end to avoid flash
+  const fixedBgOpacity = useTransform(scrollYProgress, [0.95, 1], [1, 0]);
 
   return (
     <Layout>
@@ -124,26 +120,27 @@ export default function EasyTouchPlusProduct() {
         className="relative"
         style={{ height: "200vh" }}
       >
-        {/* FIXED background — only the image + overlays, no text */}
-        {showFixed && (
-          <div className="fixed top-0 left-0 w-full h-screen overflow-hidden" style={{ zIndex: 0 }}>
-            <img
-              src={easytouchPlusHero}
-              alt=""
-              aria-hidden="true"
-              className="w-full h-full object-cover object-center"
-            />
-            {/* Dark overlay for text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
-            {/* White fade — only fades the background, not the text */}
-            <motion.div
-              className="absolute inset-0 bg-background"
-              style={{ opacity: overlayOpacity }}
-            />
-          </div>
-        )}
+        {/* FIXED background — always mounted, hidden via opacity after hero */}
+        <motion.div
+          className="fixed top-0 left-0 w-full h-screen overflow-hidden pointer-events-none"
+          style={{ zIndex: 0, opacity: fixedBgOpacity }}
+        >
+          <img
+            src={easytouchPlusHero}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Dark overlay for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
+          {/* White fade — only fades the background, not the text */}
+          <motion.div
+            className="absolute inset-0 bg-background"
+            style={{ opacity: overlayOpacity }}
+          />
+        </motion.div>
 
-        {/* Text — sits in normal flow at top of section, scrolls naturally */}
+        {/* Text — sticky, scrolls up and away */}
         <div className="sticky top-0 h-screen flex items-center justify-center pointer-events-none" style={{ zIndex: 1 }}>
           <motion.div
             style={{ y: textY }}
