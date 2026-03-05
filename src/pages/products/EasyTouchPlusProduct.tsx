@@ -105,23 +105,30 @@ export default function EasyTouchPlusProduct() {
     offset: ["start start", "end start"],
   });
 
-  // The white fade-in overlay increases opacity as you scroll down
+  // White fade overlay opacity
   const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.85], [0, 1]);
-  // Text moves up as you scroll (parallax)
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  // Text moves up as you scroll
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0]);
+
+  // Track whether the fixed bg should be visible
+  const [showFixed, setShowFixed] = useState(true);
+  useEffect(() => {
+    return scrollYProgress.on("change", (v) => setShowFixed(v < 1));
+  }, [scrollYProgress]);
 
   return (
     <Layout>
       {/* ── 1. HERO ── */}
-      {/* Tall section gives scroll room; sticky bg stays fixed; text scrolls out */}
+      {/* 200vh tall section — fixed bg stays put, text scrolls out */}
       <section
         ref={heroRef}
         className="relative"
         style={{ height: "200vh" }}
       >
-        {/* Fixed background — truly stays put */}
-        <div className="sticky top-0 h-screen w-full overflow-hidden">
+        {/* FIXED background — never moves */}
+        {showFixed && (
+        <div className="fixed top-0 left-0 w-full h-screen overflow-hidden" style={{ zIndex: 0 }}>
           <img
             src={easytouchPlusHero}
             alt=""
