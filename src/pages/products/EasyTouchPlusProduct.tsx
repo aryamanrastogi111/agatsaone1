@@ -123,7 +123,7 @@ export default function EasyTouchPlusProduct() {
         {/* FIXED background — always mounted, hidden via opacity after hero */}
         <motion.div
           className="fixed top-0 left-0 w-full h-screen overflow-hidden pointer-events-none"
-          style={{ zIndex: 0, opacity: useTransform(scrollYProgress, [0.98, 1], [1, 0]) }}
+          style={{ zIndex: 0, opacity: fixedBgOpacity }}
         >
           <img
             src={easytouchPlusHero}
