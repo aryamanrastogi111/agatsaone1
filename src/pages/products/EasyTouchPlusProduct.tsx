@@ -271,9 +271,11 @@ export default function EasyTouchPlusProduct() {
           </AnimatedSection>
           <div className="flex flex-col md:flex-row items-center gap-12">
             <AnimatedSection delay={0.1} className="flex-1 flex justify-center">
-              <div className="w-56 h-56 md:w-72 md:h-72 rounded-3xl bg-gradient-to-br from-teal-500 to-cyan-400 flex items-center justify-center shadow-2xl shadow-teal-200/50">
-                <Fingerprint className="h-28 w-28 text-white/90" />
-              </div>
+              <img
+                src={easytouchPlusDevice}
+                alt="EasyTouch+ Device showing Metabolic Index"
+                className="w-72 md:w-96 rounded-3xl shadow-2xl shadow-teal-200/50 object-cover"
+              />
             </AnimatedSection>
             <AnimatedSection delay={0.2} className="flex-1">
               <div className="grid grid-cols-1 gap-4">
