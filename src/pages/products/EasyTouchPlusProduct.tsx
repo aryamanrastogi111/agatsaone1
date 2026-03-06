@@ -117,7 +117,7 @@ export default function EasyTouchPlusProduct() {
       <section
         ref={heroRef}
         className="relative"
-        style={{ height: "150vh" }}
+        style={{ height: "120vh" }}
       >
         {/* Sticky container clips everything to viewport height */}
         <div className="sticky top-0 h-screen overflow-hidden">
