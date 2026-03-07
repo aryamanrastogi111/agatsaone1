@@ -127,27 +127,28 @@ export default function EasyTouchPlusProduct() {
   }, [rawX, rawY]);
 
   return (
+    <div
+      className="relative"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
+      {/* Cursor glow orb — follows across whole page */}
+      <motion.div
+        className="pointer-events-none fixed w-[500px] h-[500px] rounded-full -translate-x-1/2 -translate-y-1/2 z-[9999]"
+        animate={{ opacity: isHovering ? 1 : 0 }}
+        transition={{ opacity: { duration: 0.5 } }}
+        style={{
+          left: springX,
+          top: springY,
+          filter: "blur(80px)",
+          background: "radial-gradient(circle, hsl(174 72% 56% / 0.22) 0%, hsl(195 80% 60% / 0.12) 40%, transparent 70%)",
+        }}
+      />
     <Layout>
       {/* ── 1. HERO ── */}
-      <section
-        className="bg-background pt-16 pb-10 md:pt-20 md:pb-12 relative overflow-hidden"
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
-        {/* Cursor glow orb */}
-        <motion.div
-          className="pointer-events-none absolute w-[500px] h-[500px] rounded-full -translate-x-1/2 -translate-y-1/2 z-0"
-          animate={{ opacity: isHovering ? 1 : 0 }}
-          transition={{ opacity: { duration: 0.5 } }}
-          style={{
-            left: springX,
-            top: springY,
-            filter: "blur(80px)",
-            background: "radial-gradient(circle, hsl(174 72% 56% / 0.22) 0%, hsl(195 80% 60% / 0.12) 40%, transparent 70%)",
-          }}
-        />
-        <div className="container relative z-10">
+      <section className="bg-background pt-16 pb-10 md:pt-20 md:pb-12">
+        <div className="container">
           <div className="flex flex-col items-center gap-3 max-w-5xl mx-auto">
 
             {/* Badge */}
@@ -764,5 +765,6 @@ export default function EasyTouchPlusProduct() {
         </div>
       </div>
     </Layout>
+    </div>
   );
 }
