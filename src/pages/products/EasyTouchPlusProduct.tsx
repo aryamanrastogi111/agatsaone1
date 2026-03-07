@@ -156,7 +156,7 @@ export default function EasyTouchPlusProduct() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative -my-4"
+              className="relative -my-14"
             >
               <div className="absolute inset-0 rounded-3xl bg-teal-300/30 blur-3xl scale-125" />
               <img
