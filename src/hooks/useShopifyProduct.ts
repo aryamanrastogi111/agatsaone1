@@ -3,13 +3,14 @@ import { fetchProducts, ShopifyProduct } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 
-export function useShopifyProduct(productHandle?: string) {
+export function useShopifyProduct(productHandle?: string | 'skip') {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(productHandle !== 'skip');
   const [error, setError] = useState<string | null>(null);
   const addItem = useCartStore((state) => state.addItem);
 
   useEffect(() => {
+    if (productHandle === 'skip') return;
     async function loadProducts() {
       try {
         setLoading(true);
@@ -22,7 +23,7 @@ export function useShopifyProduct(productHandle?: string) {
       }
     }
     loadProducts();
-  }, []);
+  }, [productHandle]);
 
   const findProductByHandle = (handle: string): ShopifyProduct | undefined => {
     return products.find(p => p.node.handle === handle);

@@ -87,7 +87,14 @@ const getProductRoute = (handle: string): string => {
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
-  const { products, addToCart } = useShopifyProduct();
+  // Only fetch Shopify products when the drawer has been opened (lazy load)
+  const [hasOpened, setHasOpened] = useState(false);
+  const { products, addToCart } = useShopifyProduct(hasOpened ? undefined : 'skip');
+
+  const handleOpenChange = (open: boolean) => {
+    if (open && !hasOpened) setHasOpened(true);
+    setIsOpen(open);
+  };
   const { trackInitiateCheckout } = useFacebookPixel();
 
   const {
@@ -269,7 +276,7 @@ export const CartDrawer = () => {
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={handleOpenChange}>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="relative">
             <ShoppingCart className="h-5 w-5" />
