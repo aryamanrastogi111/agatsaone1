@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
- import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart, Code2, Zap } from "lucide-react";
+import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart, Code2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -79,14 +79,6 @@ export function Header() {
               <Link to="/products/sanketlife">
                 <Heart className="h-3.5 w-3.5" />
                 SanketLife
-              </Link>
-            </Button>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-            <Button asChild variant="ghost" size="sm" className="text-teal-600 hover:text-teal-700 hover:bg-teal-50 gap-1.5">
-              <Link to="/products/easytouch-plus">
-                <Zap className="h-3.5 w-3.5" />
-                EasyTouch+
               </Link>
             </Button>
           </motion.div>
