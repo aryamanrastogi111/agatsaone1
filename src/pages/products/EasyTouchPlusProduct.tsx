@@ -137,13 +137,14 @@ export default function EasyTouchPlusProduct() {
       >
         {/* Cursor glow orb */}
         <motion.div
-          className="pointer-events-none absolute w-[500px] h-[500px] rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0"
+          className="pointer-events-none absolute w-[500px] h-[500px] rounded-full -translate-x-1/2 -translate-y-1/2 z-0"
           animate={{ opacity: isHovering ? 1 : 0 }}
           transition={{ opacity: { duration: 0.5 } }}
           style={{
             left: springX,
             top: springY,
-            background: "radial-gradient(circle, hsl(174 72% 56% / 0.35) 0%, hsl(174 72% 56% / 0.1) 50%, transparent 70%)",
+            filter: "blur(80px)",
+            background: "radial-gradient(circle, hsl(174 72% 56% / 0.22) 0%, hsl(195 80% 60% / 0.12) 40%, transparent 70%)",
           }}
         />
         <div className="container relative z-10">
