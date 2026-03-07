@@ -159,11 +159,11 @@ export default function EasyTouchPlusProduct() {
               className="relative"
             >
               <div className="absolute inset-0 rounded-3xl bg-teal-300/30 blur-3xl scale-125" />
-              <img
-                src={easytouchPlusDevice}
-                alt="EasyTouch+ Device"
-                className="relative w-48 md:w-64 object-contain drop-shadow-2xl"
-              />
+                <img
+                  src={easytouchPlusDevice}
+                  alt="EasyTouch+ Device"
+                  className="relative w-72 md:w-96 lg:w-[480px] object-contain drop-shadow-2xl"
+                />
             </motion.div>
 
             {/* Big Feature Cards */}
