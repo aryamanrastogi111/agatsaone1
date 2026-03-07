@@ -41,6 +41,7 @@ import ProductsList from "./pages/admin/products/ProductsList";
 import ProductForm from "./pages/admin/products/ProductForm";
 import OrdersList from "./pages/admin/orders/OrdersList";
 import OrderDetail from "./pages/admin/orders/OrderDetail";
+import AdminLogin from "./pages/admin/AdminLogin";
 import AdminCustomers from "./pages/admin/Customers";
 import AdminCoupons from "./pages/admin/Coupons";
 import AdminReviews from "./pages/admin/Reviews";
@@ -94,6 +95,7 @@ const App = () => (
           <Route path="/sdk/support" element={<SDKSupport />} />
           <Route path="/sdk/admin" element={<SDKAdmin />} />
           {/* Admin Panel Routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="products" element={<ProductsList />} />

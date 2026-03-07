@@ -87,21 +87,21 @@ export default function AdminLayout() {
   useEffect(() => {
     (async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { navigate("/sdk/auth"); return; }
+      if (!user) { navigate("/admin/login"); return; }
       const { data: role } = await supabase
         .from("user_roles")
         .select("role")
         .eq("user_id", user.id)
         .eq("role", "admin")
         .single();
-      if (!role) { navigate("/"); return; }
+      if (!role) { navigate("/admin/login"); return; }
       setAdminChecked(true);
     })();
   }, [navigate]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate("/sdk/auth");
+    navigate("/admin/login");
   };
 
   const toggleGroup = (label: string) => {
