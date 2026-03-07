@@ -44,6 +44,17 @@ import OrderDetail from "./pages/admin/orders/OrderDetail";
 import AdminCustomers from "./pages/admin/Customers";
 import AdminCoupons from "./pages/admin/Coupons";
 import AdminReviews from "./pages/admin/Reviews";
+import AdminInventory from "./pages/admin/Inventory";
+import AdminSubscriptions from "./pages/admin/Subscriptions";
+import AdminShipping from "./pages/admin/Shipping";
+import AdminReturns from "./pages/admin/Returns";
+import AdminLeads from "./pages/admin/Leads";
+import AdminTickets from "./pages/admin/Tickets";
+import AdminAnalytics from "./pages/admin/Analytics";
+import AdminTeam from "./pages/admin/Team";
+import AdminSettings from "./pages/admin/Settings";
+import AdminIntegrations from "./pages/admin/Integrations";
+import AdminActivityLogs from "./pages/admin/ActivityLogs";
 
 const queryClient = new QueryClient();
 
