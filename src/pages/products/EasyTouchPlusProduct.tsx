@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 import easytouchPlusHero from "@/assets/easytouch-plus-hero.png";
 import easytouchPlusDevice from "@/assets/easytouch-plus-device-new.png";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
