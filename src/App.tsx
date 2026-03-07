@@ -104,6 +104,17 @@ const App = () => (
             <Route path="customers" element={<AdminCustomers />} />
             <Route path="coupons" element={<AdminCoupons />} />
             <Route path="reviews" element={<AdminReviews />} />
+            <Route path="inventory" element={<AdminInventory />} />
+            <Route path="subscriptions" element={<AdminSubscriptions />} />
+            <Route path="shipping" element={<AdminShipping />} />
+            <Route path="returns" element={<AdminReturns />} />
+            <Route path="leads" element={<AdminLeads />} />
+            <Route path="tickets" element={<AdminTickets />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
+            <Route path="team" element={<AdminTeam />} />
+            <Route path="settings" element={<AdminSettings />} />
+            <Route path="integrations" element={<AdminIntegrations />} />
+            <Route path="activity-logs" element={<AdminActivityLogs />} />
           </Route>
           {/* Redirects for old routes */}
           <Route path="/solutions" element={<Navigate to="/support#solutions" replace />} />
