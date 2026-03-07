@@ -1,7 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 import easytouchPlusHero from "@/assets/easytouch-plus-hero.png";
 import easytouchPlusDevice from "@/assets/easytouch-plus-device-new.png";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -113,11 +113,40 @@ export default function EasyTouchPlusProduct() {
   // Text floats up
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
 
+  // Cursor glow tracker
+  const [isHovering, setIsHovering] = useState(false);
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const springX = useSpring(rawX, { stiffness: 120, damping: 20 });
+  const springY = useSpring(rawY, { stiffness: 120, damping: 20 });
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    rawX.set(e.clientX - rect.left);
+    rawY.set(e.clientY - rect.top);
+  }, [rawX, rawY]);
+
   return (
     <Layout>
       {/* ── 1. HERO ── */}
-      <section className="bg-background pt-16 pb-10 md:pt-20 md:pb-12">
-        <div className="container">
+      <section
+        className="bg-background pt-16 pb-10 md:pt-20 md:pb-12 relative overflow-hidden"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
+        {/* Cursor glow orb */}
+        <motion.div
+          className="pointer-events-none absolute w-96 h-96 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 z-0"
+          style={{
+            left: springX,
+            top: springY,
+            background: "radial-gradient(circle, hsl(174 72% 56% / 0.18) 0%, transparent 70%)",
+            opacity: isHovering ? 1 : 0,
+          }}
+          transition={{ opacity: { duration: 0.4 } }}
+        />
+        <div className="container relative z-10">
           <div className="flex flex-col items-center gap-3 max-w-5xl mx-auto">
 
             {/* Badge */}

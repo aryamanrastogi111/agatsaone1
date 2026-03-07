@@ -1,38 +1,71 @@
 
-## Cursor Glow Tracker Effect
+# Add Blog Section to the Website
 
-### What we're building
-A soft radial glow that follows the user's cursor across the entire EasyTouch+ page hero section. It will be a very faint, blurred teal/cyan orb (~300–400px wide) that smoothly tracks mouse movement using `framer-motion`'s `useMotionValue` and `useSpring` for a buttery lag effect.
+## Overview
+Create a new Blog section with a dedicated page, a "Blog" link in the header navigation, and populate it with the first article about smartwatch vs clinical-grade heart monitoring.
 
-### How it works
-- Track `mousemove` on the hero section container using a `useEffect` event listener
-- Use `framer-motion`'s `useMotionValue` for raw x/y coordinates
-- Apply `useSpring` with low stiffness for a smooth, slightly-delayed follow effect
-- Render a `motion.div` absolutely positioned inside the hero with:
-  - `pointer-events-none` so it never blocks clicks
-  - `bg-teal-300/20` radial gradient
-  - `blur-3xl` for the soft glow
-  - `w-80 h-80` (~320px diameter)
-  - `translate(-50%, -50%)` to centre on cursor
+## What Will Change
 
-### Changes
-Only `src/pages/products/EasyTouchPlusProduct.tsx`:
-1. Import `useMotionValue`, `useSpring` from `framer-motion`
-2. Add `useState` for tracking whether mouse is in the hero (fade in/out the glow)
-3. Create `cursorX` / `cursorY` motion values + spring-smoothed versions
-4. Add `onMouseMove` handler on the hero `<section>` that updates the values
-5. Insert the glow `motion.div` as the first child inside the hero section, absolutely positioned
+### 1. Header Navigation
+Add a "Blog" link to the navigation bar (both desktop and mobile) between "Support" and the hidden SDK link.
 
+### 2. Blog Listing Page (`/blog`)
+A clean, modern blog index page featuring:
+- Hero banner with title "Agatsa Insights" and subtitle
+- Blog post cards in a grid layout showing thumbnail, title, excerpt, date, and read time
+- Each card links to the full article
+- Consistent with the site's white and cyan design language
+
+### 3. Blog Post Page (`/blog/:slug`)
+A dedicated article reader page with:
+- Full-width hero/header area with the post title and metadata (date, read time)
+- Clean, readable typography for the article body
+- A call-to-action at the bottom linking to the SanketLife product page
+- "Back to Blog" navigation
+
+### 4. First Blog Post Content
+The article "Why Your Smartwatch Isn't Enough: The Truth About Clinical-Grade Heart Monitoring at Home" will be stored as structured data and rendered on the blog post page.
+
+## Files to Create
+- `src/pages/Blog.tsx` -- Blog listing page
+- `src/pages/BlogPost.tsx` -- Individual blog post page
+- `src/data/blogPosts.ts` -- Blog post data (title, slug, content, date, excerpt)
+
+## Files to Modify
+- `src/components/layout/Header.tsx` -- Add "Blog" nav item
+- `src/components/layout/Footer.tsx` -- Add Blog link under company links
+- `src/App.tsx` -- Add `/blog` and `/blog/:slug` routes
+
+## Technical Details
+
+### Blog data structure (`src/data/blogPosts.ts`)
 ```text
-<section onMouseMove={handleMouseMove} className="relative ...">
-  {/* Cursor glow orb */}
-  <motion.div
-    className="pointer-events-none absolute w-80 h-80 rounded-full bg-teal-300/20 blur-3xl -translate-x-1/2 -translate-y-1/2"
-    style={{ left: springX, top: springY, opacity: glowOpacity }}
-  />
-  ...existing content...
-</section>
+{
+  slug: "smartwatch-vs-clinical-ecg",
+  title: "Why Your Smartwatch Isn't Enough...",
+  excerpt: "It feels good when your wrist buzzes...",
+  date: "2026-02-10",
+  readTime: "5 min read",
+  sections: [
+    { type: "paragraph", content: "..." },
+    { type: "heading", content: "..." },
+    { type: "list", items: ["..."] },
+  ]
+}
 ```
 
-### Spring config
-`stiffness: 120, damping: 20` — gives a subtle lag that feels premium, not jittery.
+### Route additions in `App.tsx`
+```text
+/blog        --> Blog listing page
+/blog/:slug  --> Individual blog post
+```
+
+### Header nav update
+```text
+navItems = [
+  { label: "Products", href: "/products" },
+  { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Support", href: "/support" },
+]
+```
