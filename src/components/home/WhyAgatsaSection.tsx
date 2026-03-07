@@ -121,8 +121,31 @@ export function WhyAgatsaSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {qualityCommitments.map((item, index) => {
+        {/* Big Accuracy Hero Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="rounded-2xl bg-primary text-primary-foreground p-8 md:p-12 mb-6 flex flex-col md:flex-row items-center gap-8 shadow-xl shadow-primary/20"
+        >
+          <div className="text-center md:text-left shrink-0">
+            <div className="text-7xl md:text-8xl font-extrabold tracking-tight leading-none">
+              99.7<span className="text-4xl md:text-5xl">%</span>
+            </div>
+            <div className="text-xl md:text-2xl font-semibold mt-2 opacity-90">ECG Accuracy</div>
+          </div>
+          <div className="w-px h-16 bg-primary-foreground/20 hidden md:block" />
+          <div className="flex-1 text-center md:text-left">
+            <h3 className="text-2xl md:text-3xl font-bold mb-3">Hospital-Grade Precision, At Home</h3>
+            <p className="text-primary-foreground/80 text-base leading-relaxed max-w-xl">
+              Our ECG algorithms are clinically validated against hospital-grade equipment across thousands of readings — delivering unmatched accuracy you can rely on for every heartbeat.
+            </p>
+          </div>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {qualityCommitments.filter(i => i.title !== "99.7% Accuracy").map((item, index) => {
             const Icon = item.icon;
             return (
               <motion.div
