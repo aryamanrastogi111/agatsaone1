@@ -4,7 +4,7 @@ export const SHOPIFY_STORE_PERMANENT_DOMAIN = '2nn8py-5t.myshopify.com';
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 const SHOPIFY_STOREFRONT_TOKEN = 'a54d568ea2cc9b9565b925cfc654a314';
 
-import { toast } from "sonner";
+
 
 export interface ShopifyProduct {
   node: {
