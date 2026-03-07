@@ -200,7 +200,7 @@ export default function EasyTouchPlusProduct() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.6 + i * 0.08 }}
-                  className="rounded-2xl bg-black/80 backdrop-blur-md border border-white/10 p-5 flex flex-col gap-3 hover:border-teal-400/40 hover:bg-black/70 transition-all duration-300 shadow-xl shadow-black/20"
+                  className="rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-5 flex flex-col gap-3 hover:bg-white/15 hover:border-teal-300/40 transition-all duration-300 shadow-lg shadow-black/5"
                 >
                   <div className="w-11 h-11 rounded-xl bg-teal-400/10 border border-teal-400/20 flex items-center justify-center">
                     <span className="text-teal-400">{card.icon}</span>
