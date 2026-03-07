@@ -1,7 +1,7 @@
-import sanketlifeCardImg from "@/assets/sanketlife-card.jpg";
-import rhythmCardImg from "@/assets/rhythm-card.jpg";
-import zluCardImg from "@/assets/zlu-card.png";
-import corebalanceCardImg from "@/assets/corebalance-card.png";
+import sanketlifeCardImg from "@/assets/sanketlife-card-opt.webp";
+import rhythmCardImg from "@/assets/rhythm-card-opt.webp";
+import zluCardImg from "@/assets/zlu-card-opt.webp";
+import corebalanceCardImg from "@/assets/corebalance-card-opt.webp";
 
 export interface Product {
   id: string;
