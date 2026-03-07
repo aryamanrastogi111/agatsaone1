@@ -216,7 +216,7 @@ export default function EasyTouchPlusProduct() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.9 }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-4 mt-6"
             >
               <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-8 text-base shadow-lg shadow-teal-200">
                 Start Your Metabolic Discovery
