@@ -41,6 +41,7 @@ import ProductsList from "./pages/admin/products/ProductsList";
 import ProductForm from "./pages/admin/products/ProductForm";
 import OrdersList from "./pages/admin/orders/OrdersList";
 import OrderDetail from "./pages/admin/orders/OrderDetail";
+import AdminLogin from "./pages/admin/AdminLogin";
 import AdminCustomers from "./pages/admin/Customers";
 import AdminCoupons from "./pages/admin/Coupons";
 import AdminReviews from "./pages/admin/Reviews";
