@@ -122,6 +122,7 @@ export default function EasyTouchPlusProduct() {
         style={{ height: "120vh" }}
       >
         <div className="sticky top-0 h-screen overflow-hidden">
+          {/* Background image */}
           <img
             src={easytouchPlusHero}
             alt=""
@@ -129,13 +130,14 @@ export default function EasyTouchPlusProduct() {
             className="absolute inset-0 w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/60 to-black/80" />
+          {/* White fade overlay on scroll */}
           <motion.div
             className="absolute inset-0 bg-background"
             style={{ opacity: overlayOpacity }}
           />
 
-          <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
-            <motion.div style={{ y: textY }} className="w-full max-w-6xl mx-auto flex flex-col items-center gap-8">
+          <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 overflow-y-hidden">
+            <motion.div style={{ y: textY }} className="w-full max-w-5xl mx-auto flex flex-col items-center gap-5">
               {/* Badge */}
               <motion.span
                 initial={{ opacity: 0, y: -10 }}
@@ -162,36 +164,51 @@ export default function EasyTouchPlusProduct() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
-                className="text-white/70 text-lg max-w-xl text-center"
+                className="text-white/70 text-base max-w-xl text-center"
               >
                 Track your metabolic signal across the 22 hours your glucometer misses — no strips, no pricks.
               </motion.p>
+
+              {/* Device Image */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="relative"
+              >
+                <div className="absolute inset-0 rounded-3xl bg-teal-400/20 blur-2xl scale-110" />
+                <img
+                  src={easytouchPlusDevice}
+                  alt="EasyTouch+ Device"
+                  className="relative w-44 md:w-56 object-contain drop-shadow-2xl"
+                />
+              </motion.div>
 
               {/* Big Feature Cards */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.35 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full mt-2"
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full"
               >
                 {[
                   {
-                    icon: <ScanLine className="h-7 w-7 text-teal-400" />,
+                    icon: <ScanLine className="h-6 w-6 text-teal-400" />,
                     title: "No Pricks",
                     desc: "PPG-based finger sensor — painless, strip-free readings",
                   },
                   {
-                    icon: <Waves className="h-7 w-7 text-cyan-400" />,
+                    icon: <Waves className="h-6 w-6 text-cyan-400" />,
                     title: "22-Hour Coverage",
                     desc: "Continuous metabolic tracking your glucometer can't provide",
                   },
                   {
-                    icon: <Fingerprint className="h-7 w-7 text-teal-300" />,
+                    icon: <Fingerprint className="h-6 w-6 text-teal-300" />,
                     title: "Personalised Index",
                     desc: "Calibrated to your unique body — not population averages",
                   },
                   {
-                    icon: <BarChart3 className="h-7 w-7 text-cyan-300" />,
+                    icon: <BarChart3 className="h-6 w-6 text-cyan-300" />,
                     title: "Smart Patterns",
                     desc: "Meal, sleep, workout & fasting insights in one dashboard",
                   },
@@ -200,13 +217,13 @@ export default function EasyTouchPlusProduct() {
                     key={i}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.45 + i * 0.1 }}
-                    className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-5 flex flex-col gap-3 hover:bg-white/15 transition-colors duration-300"
+                    transition={{ duration: 0.5, delay: 0.6 + i * 0.08 }}
+                    className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-4 flex flex-col gap-2 hover:bg-white/15 transition-colors duration-300"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-teal-500/20 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl bg-teal-500/20 flex items-center justify-center">
                       {card.icon}
                     </div>
-                    <h3 className="text-white font-semibold text-base">{card.title}</h3>
+                    <h3 className="text-white font-semibold text-sm">{card.title}</h3>
                     <p className="text-white/60 text-xs leading-relaxed">{card.desc}</p>
                   </motion.div>
                 ))}
@@ -216,8 +233,8 @@ export default function EasyTouchPlusProduct() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                className="flex flex-col sm:flex-row gap-4 mt-2"
+                transition={{ duration: 0.6, delay: 0.9 }}
+                className="flex flex-col sm:flex-row gap-4"
               >
                 <Button size="lg" className="bg-teal-500 hover:bg-teal-400 text-white rounded-full px-8 text-base shadow-lg shadow-teal-900/50">
                   Start Your Metabolic Discovery
