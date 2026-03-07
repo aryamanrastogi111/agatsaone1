@@ -66,9 +66,8 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   });
 
   if (response.status === 402) {
-    toast.error("Shopify: Payment required", {
-      description: "Shopify API access requires an active Shopify billing plan. Your store needs to be upgraded to a paid plan.",
-    });
+    // Silently return null — do not show a toast to customers
+    console.warn('Shopify Storefront API: 402 Payment Required. Store billing plan may need to be upgraded.');
     return null;
   }
 
