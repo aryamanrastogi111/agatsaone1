@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback } from "react";
 import easytouchPlusHero from "@/assets/easytouch-plus-hero.png";
 import easytouchPlusDevice from "@/assets/easytouch-plus-device-new.png";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
