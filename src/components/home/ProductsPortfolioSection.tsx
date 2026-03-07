@@ -25,87 +25,58 @@ export function ProductsPortfolioSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {products.map((product, index) => (
             <motion.div
               key={product.id}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              whileHover={{ y: -8 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
               className="group"
             >
-              <div className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-2xl hover:border-primary/20 transition-all duration-500">
-                <div className="aspect-[3/4] bg-gradient-to-br from-muted/60 via-muted/30 to-background/40 relative overflow-hidden">
-                  {/* Animated background pattern */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.05)_0%,transparent_70%)]" />
+              <div className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-400 h-full flex flex-col">
+                {/* Image */}
+                <div className="aspect-square bg-gradient-to-br from-muted/60 via-muted/30 to-background/40 relative overflow-hidden">
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.06)_0%,transparent_70%)]" />
                   <motion.img
                     src={product.image}
                     alt={product.name}
                     loading="lazy"
-                    className="w-[92%] h-[92%] mx-auto my-auto object-contain relative z-10 drop-shadow-2xl"
-                    whileHover={{ scale: 1.05 }}
+                    className="w-full h-full object-contain p-4 relative z-10 drop-shadow-lg"
+                    whileHover={{ scale: 1.06 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    onError={(e) => {
-                      e.currentTarget.src = "/placeholder.svg";
-                    }}
+                    onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
                   />
                 </div>
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
-                        {product.name}
-                      </h3>
-                      <p className="text-primary text-sm font-medium">
-                        {product.tagline}
-                      </p>
-                    </div>
-                    {product.price && (
-                      <span className="text-lg font-bold text-foreground">
-                        {product.price}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-muted-foreground text-sm mb-4">
+
+                {/* Content */}
+                <div className="p-4 flex flex-col flex-1">
+                  <h3 className="text-base font-semibold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
+                    {product.name}
+                  </h3>
+                  <p className="text-primary text-xs font-medium mt-0.5 mb-2">
+                    {product.tagline}
+                  </p>
+                  <p className="text-muted-foreground text-xs mb-3 line-clamp-2 flex-1">
                     {product.description}
                   </p>
-                  <ul className="space-y-2 mb-6">
-                    {product.benefits.map((benefit, i) => (
-                      <motion.li
-                        key={i}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 * i }}
-                        className="text-sm text-foreground flex items-start gap-2"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                        {benefit}
-                      </motion.li>
-                    ))}
-                  </ul>
+                  {product.price && (
+                    <p className="text-sm font-bold text-foreground mb-3">{product.price}</p>
+                  )}
                   {product.isExternal ? (
-                    <Button asChild className="w-full btn-glow group/btn">
-                      <a
-                        href={product.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2"
-                      >
+                    <Button asChild size="sm" className="w-full btn-glow group/btn text-xs">
+                      <a href={product.link} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1.5">
                         Visit website
-                        <ExternalLink className="h-4 w-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                        <ExternalLink className="h-3 w-3 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                       </a>
                     </Button>
                   ) : (
-                    <Button asChild className="w-full btn-glow group/btn">
-                      <Link
-                        to={product.link}
-                        className="flex items-center justify-center gap-2"
-                      >
-                        {product.id === "sanketlife" ? "Explore SanketLife" : product.id === "easytouch-rhythm" ? "Explore EasyTouch Rhythm" : product.id === "zlu" ? "Explore Zlu" : product.id === "corebalance" ? "Explore CoreBalance" : "Learn more"}
-                        <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                    <Button asChild size="sm" className="w-full btn-glow group/btn text-xs">
+                      <Link to={product.link} className="flex items-center justify-center gap-1.5">
+                        Explore
+                        <ArrowRight className="h-3 w-3 group-hover/btn:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
                   )}
