@@ -36,6 +36,8 @@ import {
   Activity,
   Sparkles,
   HeartPulse,
+  ScanLine,
+  Waves,
 } from "lucide-react";
 
 function AnimatedSection({
