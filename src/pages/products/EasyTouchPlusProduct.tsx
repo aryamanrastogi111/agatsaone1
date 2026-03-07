@@ -765,5 +765,6 @@ export default function EasyTouchPlusProduct() {
         </div>
       </div>
     </Layout>
+    </div>
   );
 }
