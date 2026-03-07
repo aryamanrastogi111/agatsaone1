@@ -113,6 +113,19 @@ export default function EasyTouchPlusProduct() {
   // Text floats up
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
 
+  // Cursor glow tracker
+  const [isHovering, setIsHovering] = useState(false);
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const springX = useSpring(rawX, { stiffness: 120, damping: 20 });
+  const springY = useSpring(rawY, { stiffness: 120, damping: 20 });
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    rawX.set(e.clientX - rect.left);
+    rawY.set(e.clientY - rect.top);
+  }, [rawX, rawY]);
+
   return (
     <Layout>
       {/* ── 1. HERO ── */}
