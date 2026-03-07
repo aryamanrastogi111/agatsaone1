@@ -202,11 +202,11 @@ export default function EasyTouchPlusProduct() {
                   transition={{ duration: 0.5, delay: 0.6 + i * 0.08 }}
                   className="rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-5 flex flex-col gap-3 hover:bg-white/15 hover:border-teal-300/40 transition-all duration-300 shadow-lg shadow-black/5"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-teal-400/10 border border-teal-400/20 flex items-center justify-center">
-                    <span className="text-teal-400">{card.icon}</span>
+                  <div className="w-11 h-11 rounded-xl bg-teal-500/15 border border-teal-400/20 flex items-center justify-center">
+                    <span className="text-teal-600">{card.icon}</span>
                   </div>
-                  <h3 className="text-white font-semibold text-sm">{card.title}</h3>
-                  <p className="text-white/50 text-xs leading-relaxed">{card.desc}</p>
+                  <h3 className="text-foreground font-semibold text-sm">{card.title}</h3>
+                  <p className="text-muted-foreground text-xs leading-relaxed">{card.desc}</p>
                 </motion.div>
               ))}
             </motion.div>
