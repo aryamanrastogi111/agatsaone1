@@ -44,6 +44,17 @@ import OrderDetail from "./pages/admin/orders/OrderDetail";
 import AdminCustomers from "./pages/admin/Customers";
 import AdminCoupons from "./pages/admin/Coupons";
 import AdminReviews from "./pages/admin/Reviews";
+import AdminInventory from "./pages/admin/Inventory";
+import AdminSubscriptions from "./pages/admin/Subscriptions";
+import AdminShipping from "./pages/admin/Shipping";
+import AdminReturns from "./pages/admin/Returns";
+import AdminLeads from "./pages/admin/Leads";
+import AdminTickets from "./pages/admin/Tickets";
+import AdminAnalytics from "./pages/admin/Analytics";
+import AdminTeam from "./pages/admin/Team";
+import AdminSettings from "./pages/admin/Settings";
+import AdminIntegrations from "./pages/admin/Integrations";
+import AdminActivityLogs from "./pages/admin/ActivityLogs";
 
 const queryClient = new QueryClient();
 
@@ -93,6 +104,17 @@ const App = () => (
             <Route path="customers" element={<AdminCustomers />} />
             <Route path="coupons" element={<AdminCoupons />} />
             <Route path="reviews" element={<AdminReviews />} />
+            <Route path="inventory" element={<AdminInventory />} />
+            <Route path="subscriptions" element={<AdminSubscriptions />} />
+            <Route path="shipping" element={<AdminShipping />} />
+            <Route path="returns" element={<AdminReturns />} />
+            <Route path="leads" element={<AdminLeads />} />
+            <Route path="tickets" element={<AdminTickets />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
+            <Route path="team" element={<AdminTeam />} />
+            <Route path="settings" element={<AdminSettings />} />
+            <Route path="integrations" element={<AdminIntegrations />} />
+            <Route path="activity-logs" element={<AdminActivityLogs />} />
           </Route>
           {/* Redirects for old routes */}
           <Route path="/solutions" element={<Navigate to="/support#solutions" replace />} />
