@@ -116,9 +116,9 @@ export default function EasyTouchPlusProduct() {
   return (
     <Layout>
       {/* ── 1. HERO ── */}
-      <section className="bg-background py-20 md:py-28">
+      <section className="bg-background pt-16 pb-10 md:pt-20 md:pb-12">
         <div className="container">
-          <div className="flex flex-col items-center gap-8 max-w-5xl mx-auto">
+          <div className="flex flex-col items-center gap-3 max-w-5xl mx-auto">
 
             {/* Badge */}
             <motion.span
@@ -151,19 +151,19 @@ export default function EasyTouchPlusProduct() {
               Track your metabolic signal across the 22 hours your glucometer misses — no strips, no pricks.
             </motion.p>
 
-            {/* Device Image */}
+            {/* Device Image — negative margin trims transparent whitespace */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative"
+              className="relative -my-4"
             >
               <div className="absolute inset-0 rounded-3xl bg-teal-300/30 blur-3xl scale-125" />
-                <img
-                  src={easytouchPlusDevice}
-                  alt="EasyTouch+ Device"
-                  className="relative w-72 md:w-96 lg:w-[480px] object-contain drop-shadow-2xl"
-                />
+              <img
+                src={easytouchPlusDevice}
+                alt="EasyTouch+ Device"
+                className="relative w-72 md:w-96 lg:w-[480px] object-contain drop-shadow-2xl"
+              />
             </motion.div>
 
             {/* Big Feature Cards */}
