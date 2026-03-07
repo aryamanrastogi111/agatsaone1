@@ -101,7 +101,7 @@ export default function AdminLayout() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate("/sdk/auth");
+    navigate("/admin/login");
   };
 
   const toggleGroup = (label: string) => {

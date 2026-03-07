@@ -95,6 +95,7 @@ const App = () => (
           <Route path="/sdk/support" element={<SDKSupport />} />
           <Route path="/sdk/admin" element={<SDKAdmin />} />
           {/* Admin Panel Routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="products" element={<ProductsList />} />
