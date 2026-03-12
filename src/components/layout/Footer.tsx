@@ -29,6 +29,7 @@ const policyLinks = [
   { label: "Return & Refund Policy", href: "/return-policy" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms-of-service" },
+  { label: "Data Deletion", href: "/data-deletion" },
 ];
 
 export const Footer = forwardRef<HTMLElement>((_, ref) => {

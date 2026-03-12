@@ -22,6 +22,7 @@ import ShippingPolicy from "./pages/ShippingPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import DataDeletion from "./pages/DataDeletion";
 
 // SDK Portal Pages
 import SDKLanding from "./pages/sdk/SDKLanding";
@@ -84,6 +85,7 @@ const App = () => (
           <Route path="/return-policy" element={<ReturnPolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/data-deletion" element={<DataDeletion />} />
           {/* SDK Portal Routes */}
           <Route path="/sdk" element={<SDKLanding />} />
           <Route path="/sdk/auth" element={<SDKAuth />} />
