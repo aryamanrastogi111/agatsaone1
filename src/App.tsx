@@ -22,6 +22,7 @@ import ShippingPolicy from "./pages/ShippingPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import DataDeletion from "./pages/DataDeletion";
 
 // SDK Portal Pages
 import SDKLanding from "./pages/sdk/SDKLanding";
