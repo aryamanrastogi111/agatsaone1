@@ -5,7 +5,8 @@ import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, Arro
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
-import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 import { useFacebookPixel, useEasyTouchRhythmPixelPageView } from "@/hooks/useFacebookPixel";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { FomoCounter } from "@/components/shop/FomoCounter";
