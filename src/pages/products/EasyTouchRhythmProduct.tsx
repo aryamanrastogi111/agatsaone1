@@ -264,7 +264,7 @@ const EasyTouchRhythmProduct = () => {
                   size="lg" 
                   className="text-lg px-8 py-6 gap-2"
                   onClick={handleAddToCart}
-                  disabled={addingToCart || loading}
+                  disabled={addingToCart}
                 >
                   {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
