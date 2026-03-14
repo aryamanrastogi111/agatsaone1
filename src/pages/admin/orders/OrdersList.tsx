@@ -420,11 +420,6 @@ export default function OrdersList() {
     </div>
   );
 }
-
-
-interface Order {
-  id: string;
-  order_number: string;
   email: string;
   phone: string;
   total: number;
