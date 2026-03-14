@@ -320,8 +320,8 @@ const SanketLifeProduct = () => {
                 <Button 
                   size="lg" 
                   className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700 text-white"
-                  onClick={() => handleAddToCart("Sanket life 2.0")}
-                  disabled={addingToCart || loading}
+                  onClick={() => handleAddToCart("sanketlife-2")}
+                  disabled={addingToCart}
                 >
                   {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
