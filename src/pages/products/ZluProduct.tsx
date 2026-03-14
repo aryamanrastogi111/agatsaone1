@@ -144,7 +144,7 @@ const ZluProduct = () => {
                   size="lg" 
                   className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
                   onClick={handleAddToCart}
-                  disabled={addingToCart || loading}
+                  disabled={addingToCart}
                 >
                   {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
