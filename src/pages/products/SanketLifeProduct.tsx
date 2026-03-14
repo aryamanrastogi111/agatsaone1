@@ -257,17 +257,23 @@ const testimonials = [
   },
 ];
 
+const SANKETLIFE_PRODUCTS: Record<string, { name: string; price: number; image: string }> = {
+  "sanketlife-2": { name: "SanketLife 2.0", price: 4999, image: sanketlife2Product.src ?? sanketlife2Product },
+  "sanketlife-proplus": { name: "SanketLife Pro+", price: 7999, image: sanketlifeProplus.src ?? sanketlifeProplus },
+  "combo": { name: "Pro-Plus Combo", price: 14999, image: sanketlifeCombo.src ?? sanketlifeCombo },
+};
+
 const SanketLifeProduct = () => {
-  const { products: shopifyProducts, loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
 
-  const handleAddToCart = async (searchTitle: string) => {
-    const product = findProductByTitle(searchTitle);
-    if (product) {
-      setAddingToCart(true);
-      addToCart(product);
-      setTimeout(() => setAddingToCart(false), 500);
-    }
+  const handleAddToCart = (productId: string = "sanketlife-2") => {
+    const p = SANKETLIFE_PRODUCTS[productId];
+    if (!p) return;
+    setAddingToCart(true);
+    addItem({ productId, productName: p.name, variantTitle: "Default Title", price: p.price, quantity: 1, imageUrl: p.image });
+    toast.success(`${p.name} added to cart`, { position: "top-center" });
+    setTimeout(() => setAddingToCart(false), 500);
   };
 
   return (
