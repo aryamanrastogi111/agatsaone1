@@ -101,16 +101,14 @@ const safetyPoints = [
 ];
 
 const ZluProduct = () => {
-  const { loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
 
-  const handleAddToCart = async () => {
-    const product = findProductByTitle("Zlu");
-    if (product) {
-      setAddingToCart(true);
-      addToCart(product);
-      setTimeout(() => setAddingToCart(false), 500);
-    }
+  const handleAddToCart = () => {
+    setAddingToCart(true);
+    addItem({ productId: "zlu", productName: "Zlu Sleep Aid Device", variantTitle: "Default Title", price: 4999, quantity: 1 });
+    toast.success("Zlu added to cart", { position: "top-center" });
+    setTimeout(() => setAddingToCart(false), 500);
   };
 
   return (

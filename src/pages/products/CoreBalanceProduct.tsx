@@ -127,16 +127,14 @@ const testimonials = [
 ];
 
 const CoreBalanceProduct = () => {
-  const { loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
 
-  const handleAddToCart = async () => {
-    const product = findProductByTitle("CoreBalance");
-    if (product) {
-      setAddingToCart(true);
-      addToCart(product);
-      setTimeout(() => setAddingToCart(false), 500);
-    }
+  const handleAddToCart = () => {
+    setAddingToCart(true);
+    addItem({ productId: "corebalance", productName: "CoreBalance Smart Scale", variantTitle: "Default Title", price: 3999, quantity: 1 });
+    toast.success("CoreBalance added to cart", { position: "top-center" });
+    setTimeout(() => setAddingToCart(false), 500);
   };
 
   return (

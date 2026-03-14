@@ -160,22 +160,20 @@ const AnimatedSection = ({ children, className = "", id }: { children: React.Rea
 };
 
 const EasyTouchRhythmProduct = () => {
-  const { loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
   const { trackAddToCart } = useFacebookPixel();
   
   // Fire PageView and ViewContent on mount for Facebook Pixel
   useEasyTouchRhythmPixelPageView();
 
-  const handleAddToCart = async () => {
-    const product = findProductByTitle("EasyTouch Rhythm");
-    if (product) {
-      setAddingToCart(true);
-      addToCart(product);
-      // Track AddToCart event for Facebook Pixel
-      trackAddToCart(1);
-      setTimeout(() => setAddingToCart(false), 500);
-    }
+  const handleAddToCart = () => {
+    setAddingToCart(true);
+    addItem({ productId: "easytouch-rhythm", productName: "EasyTouch Rhythm", variantTitle: "Default Title", price: 4999, quantity: 1 });
+    toast.success("EasyTouch Rhythm added to cart", { position: "top-center" });
+    // Track AddToCart event for Facebook Pixel
+    trackAddToCart(1);
+    setTimeout(() => setAddingToCart(false), 500);
   };
 
   return (
