@@ -420,7 +420,6 @@ export default function OrdersList() {
     </div>
   );
 }
-  email: string;
   phone: string;
   total: number;
   status: string;
