@@ -238,26 +238,8 @@ const CART_CREATE_MUTATION = `
   }
 `;
 
-// Check if sale is active and get discount code
-function getActiveDiscountCode(): string | null {
-  // Republic Day Sale: active until Jan 26, 2026 midnight IST
-  const saleEndDate = new Date('2026-01-26T23:59:59+05:30');
-  const now = new Date();
-  if (now <= saleEndDate) {
-    return 'REPUBLIC10';
-  }
-  return null;
-}
-
-// Check if cart has eligible products for the discount
-function hasEligibleProducts(items: CartItem[]): boolean {
-  return items.some(item => 
-    item.product.node.handle === 'easytouch-rhythm' || 
-    item.product.node.title.toLowerCase().includes('easytouch rhythm')
-  );
-}
-
-export interface CartItem {
+// ShopifyCartItem — used by createStorefrontCheckout (legacy, Shopify-only)
+export interface ShopifyCartItem {
   product: ShopifyProduct;
   variantId: string;
   variantTitle: string;
@@ -272,14 +254,28 @@ export interface CartItem {
   }>;
 }
 
-export async function createStorefrontCheckout(items: CartItem[]): Promise<string> {
+// Kept for backwards-compat; no longer called by CartDrawer
+function getActiveDiscountCode(): string | null {
+  const saleEndDate = new Date('2026-01-26T23:59:59+05:30');
+  const now = new Date();
+  if (now <= saleEndDate) return 'REPUBLIC10';
+  return null;
+}
+
+function hasEligibleProducts(items: ShopifyCartItem[]): boolean {
+  return items.some(item =>
+    item.product.node.handle === 'easytouch-rhythm' ||
+    item.product.node.title.toLowerCase().includes('easytouch rhythm')
+  );
+}
+
+export async function createStorefrontCheckout(items: ShopifyCartItem[]): Promise<string> {
   try {
     const lines = items.map(item => ({
       quantity: item.quantity,
       merchandiseId: item.variantId,
     }));
 
-    // Auto-apply discount code if sale is active and cart has eligible products
     const discountCode = getActiveDiscountCode();
     const shouldApplyDiscount = discountCode && hasEligibleProducts(items);
 
@@ -290,31 +286,21 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
       },
     });
 
-    if (!cartData) {
-      throw new Error('Failed to create cart');
-    }
-
+    if (!cartData) throw new Error('Failed to create cart');
     if (cartData.data.cartCreate.userErrors.length > 0) {
       throw new Error(`Cart creation failed: ${cartData.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ')}`);
     }
 
     const cart = cartData.data.cartCreate.cart;
+    if (!cart.checkoutUrl) throw new Error('No checkout URL returned from Shopify');
 
-    if (!cart.checkoutUrl) {
-      throw new Error('No checkout URL returned from Shopify');
-    }
-
-    // Shopify can return either an absolute URL or a relative path (e.g. /cart/c/...).
-    // It may also return an absolute URL on the store's primary domain (e.g. https://www.agatsaone.com/...),
-    // which would 404 because www.agatsaone.com is THIS React site, not the Shopify online store.
-    // We always force the URL onto the permanent *.myshopify.com domain.
     const rawCheckoutUrl: string = cart.checkoutUrl;
     const candidateUrl = /^https?:\/\//i.test(rawCheckoutUrl)
       ? rawCheckoutUrl
       : `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}${rawCheckoutUrl}`;
 
     const url = new URL(candidateUrl);
-    url.protocol = "https:";
+    url.protocol = 'https:';
     url.host = SHOPIFY_STORE_PERMANENT_DOMAIN;
     url.searchParams.set('channel', 'online_store');
     return url.toString();
