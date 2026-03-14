@@ -1495,7 +1495,7 @@ const EasyTouchRhythmProduct = () => {
         productName="EasyTouch Rhythm"
         price={isSaleActive() ? "₹4,499 (10% OFF)" : "₹4,999"}
         onAddToCart={handleAddToCart}
-        isLoading={loading}
+        isLoading={addingToCart}
         themeColor="primary"
       />
     </Layout>

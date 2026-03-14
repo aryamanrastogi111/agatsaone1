@@ -701,7 +701,7 @@ const CoreBalanceProduct = () => {
         productName="CoreBalance BMI Scale"
         price="₹1,999"
         onAddToCart={handleAddToCart}
-        isLoading={loading}
+        isLoading={addingToCart}
         themeColor="emerald"
       />
     </Layout>

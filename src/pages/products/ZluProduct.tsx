@@ -736,7 +736,7 @@ const ZluProduct = () => {
         productName="Zlu Sleep Aid"
         price="₹4,999"
         onAddToCart={handleAddToCart}
-        isLoading={loading}
+        isLoading={addingToCart}
         themeColor="cyan"
       />
     </Layout>
