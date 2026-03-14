@@ -11,7 +11,8 @@ import appMuscle from "@/assets/corebalance-app-muscle.png";
 import appComposition from "@/assets/corebalance-app-composition.png";
 import appBmi from "@/assets/corebalance-app-bmi.png";
 import appMetrics from "@/assets/corebalance-app-metrics.png";
-import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { FomoCounter } from "@/components/shop/FomoCounter";
@@ -126,16 +127,14 @@ const testimonials = [
 ];
 
 const CoreBalanceProduct = () => {
-  const { loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
 
-  const handleAddToCart = async () => {
-    const product = findProductByTitle("CoreBalance");
-    if (product) {
-      setAddingToCart(true);
-      addToCart(product);
-      setTimeout(() => setAddingToCart(false), 500);
-    }
+  const handleAddToCart = () => {
+    setAddingToCart(true);
+    addItem({ productId: "corebalance", productName: "CoreBalance Smart Scale", variantTitle: "Default Title", price: 3999, quantity: 1 });
+    toast.success("CoreBalance added to cart", { position: "top-center" });
+    setTimeout(() => setAddingToCart(false), 500);
   };
 
   return (
@@ -172,7 +171,7 @@ const CoreBalanceProduct = () => {
                   size="lg" 
                   className="text-lg px-8 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700"
                   onClick={handleAddToCart}
-                  disabled={addingToCart || loading}
+                  disabled={addingToCart}
                 >
                   {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -702,7 +701,7 @@ const CoreBalanceProduct = () => {
         productName="CoreBalance BMI Scale"
         price="₹1,999"
         onAddToCart={handleAddToCart}
-        isLoading={loading}
+        isLoading={addingToCart}
         themeColor="emerald"
       />
     </Layout>

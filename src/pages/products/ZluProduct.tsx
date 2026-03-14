@@ -9,7 +9,8 @@ import zluHero from "@/assets/zlu-hero.png";
 import zluDevice from "@/assets/zlu-device.webp";
 import zluLifestyle from "@/assets/zlu-lifestyle.png";
 import zluTravel from "@/assets/zlu-travel.png";
-import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { FomoCounter } from "@/components/shop/FomoCounter";
@@ -100,16 +101,14 @@ const safetyPoints = [
 ];
 
 const ZluProduct = () => {
-  const { loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
 
-  const handleAddToCart = async () => {
-    const product = findProductByTitle("Zlu");
-    if (product) {
-      setAddingToCart(true);
-      addToCart(product);
-      setTimeout(() => setAddingToCart(false), 500);
-    }
+  const handleAddToCart = () => {
+    setAddingToCart(true);
+    addItem({ productId: "zlu", productName: "Zlu Sleep Aid Device", variantTitle: "Default Title", price: 4999, quantity: 1 });
+    toast.success("Zlu added to cart", { position: "top-center" });
+    setTimeout(() => setAddingToCart(false), 500);
   };
 
   return (
@@ -145,7 +144,7 @@ const ZluProduct = () => {
                   size="lg" 
                   className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
                   onClick={handleAddToCart}
-                  disabled={addingToCart || loading}
+                  disabled={addingToCart}
                 >
                   {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -704,9 +703,9 @@ const ZluProduct = () => {
                   size="lg" 
                   className="text-lg px-12 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
                   onClick={handleAddToCart}
-                  disabled={loading}
+                  disabled={addingToCart}
                 >
-                  {loading ? (
+                  {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
                     <ShoppingCart className="h-5 w-5" />
@@ -737,7 +736,7 @@ const ZluProduct = () => {
         productName="Zlu Sleep Aid"
         price="₹4,999"
         onAddToCart={handleAddToCart}
-        isLoading={loading}
+        isLoading={addingToCart}
         themeColor="cyan"
       />
     </Layout>

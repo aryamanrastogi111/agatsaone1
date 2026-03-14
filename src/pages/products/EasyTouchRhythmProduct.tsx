@@ -5,7 +5,8 @@ import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, Arro
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
-import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 import { useFacebookPixel, useEasyTouchRhythmPixelPageView } from "@/hooks/useFacebookPixel";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { FomoCounter } from "@/components/shop/FomoCounter";
@@ -159,22 +160,20 @@ const AnimatedSection = ({ children, className = "", id }: { children: React.Rea
 };
 
 const EasyTouchRhythmProduct = () => {
-  const { loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
   const { trackAddToCart } = useFacebookPixel();
   
   // Fire PageView and ViewContent on mount for Facebook Pixel
   useEasyTouchRhythmPixelPageView();
 
-  const handleAddToCart = async () => {
-    const product = findProductByTitle("EasyTouch Rhythm");
-    if (product) {
-      setAddingToCart(true);
-      addToCart(product);
-      // Track AddToCart event for Facebook Pixel
-      trackAddToCart(1);
-      setTimeout(() => setAddingToCart(false), 500);
-    }
+  const handleAddToCart = () => {
+    setAddingToCart(true);
+    addItem({ productId: "easytouch-rhythm", productName: "EasyTouch Rhythm", variantTitle: "Default Title", price: 4999, quantity: 1 });
+    toast.success("EasyTouch Rhythm added to cart", { position: "top-center" });
+    // Track AddToCart event for Facebook Pixel
+    trackAddToCart(1);
+    setTimeout(() => setAddingToCart(false), 500);
   };
 
   return (
@@ -212,7 +211,7 @@ const EasyTouchRhythmProduct = () => {
                   size="lg" 
                   className="gap-2"
                   onClick={handleAddToCart}
-                  disabled={addingToCart || loading}
+                  disabled={addingToCart}
                 >
                   {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -265,7 +264,7 @@ const EasyTouchRhythmProduct = () => {
                   size="lg" 
                   className="text-lg px-8 py-6 gap-2"
                   onClick={handleAddToCart}
-                  disabled={addingToCart || loading}
+                  disabled={addingToCart}
                 >
                   {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -436,7 +435,7 @@ const EasyTouchRhythmProduct = () => {
                   size="lg" 
                   className="text-lg px-10 py-6 gap-2"
                   onClick={handleAddToCart}
-                  disabled={addingToCart || loading}
+                  disabled={addingToCart}
                 >
                   {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -1458,7 +1457,7 @@ const EasyTouchRhythmProduct = () => {
                 size="lg" 
                 className="text-lg px-12 py-6 gap-2 w-full sm:w-auto"
                 onClick={handleAddToCart}
-                disabled={addingToCart || loading}
+                disabled={addingToCart}
               >
                 {addingToCart ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -1496,7 +1495,7 @@ const EasyTouchRhythmProduct = () => {
         productName="EasyTouch Rhythm"
         price={isSaleActive() ? "₹4,499 (10% OFF)" : "₹4,999"}
         onAddToCart={handleAddToCart}
-        isLoading={loading}
+        isLoading={addingToCart}
         themeColor="primary"
       />
     </Layout>

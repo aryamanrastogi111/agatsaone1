@@ -32,7 +32,8 @@ import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useShopifyProduct } from "@/hooks/useShopifyProduct";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { FomoCounter } from "@/components/shop/FomoCounter";
@@ -256,17 +257,23 @@ const testimonials = [
   },
 ];
 
+const SANKETLIFE_PRODUCTS: Record<string, { name: string; price: number; image: string }> = {
+  "sanketlife-2": { name: "SanketLife 2.0", price: 4999, image: sanketlife2Product },
+  "sanketlife-proplus": { name: "SanketLife Pro+", price: 7999, image: sanketlifeProplus },
+  "combo": { name: "Pro-Plus Combo", price: 14999, image: sanketlifeCombo },
+};
+
 const SanketLifeProduct = () => {
-  const { products: shopifyProducts, loading, findProductByTitle, addToCart } = useShopifyProduct();
+  const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
 
-  const handleAddToCart = async (searchTitle: string) => {
-    const product = findProductByTitle(searchTitle);
-    if (product) {
-      setAddingToCart(true);
-      addToCart(product);
-      setTimeout(() => setAddingToCart(false), 500);
-    }
+  const handleAddToCart = (productId: string = "sanketlife-2") => {
+    const p = SANKETLIFE_PRODUCTS[productId];
+    if (!p) return;
+    setAddingToCart(true);
+    addItem({ productId, productName: p.name, variantTitle: "Default Title", price: p.price, quantity: 1, imageUrl: p.image });
+    toast.success(`${p.name} added to cart`, { position: "top-center" });
+    setTimeout(() => setAddingToCart(false), 500);
   };
 
   return (
@@ -313,8 +320,8 @@ const SanketLifeProduct = () => {
                 <Button 
                   size="lg" 
                   className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700 text-white"
-                  onClick={() => handleAddToCart("Sanket life 2.0")}
-                  disabled={addingToCart || loading}
+                  onClick={() => handleAddToCart("sanketlife-2")}
+                  disabled={addingToCart}
                 >
                   {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -965,8 +972,8 @@ const SanketLifeProduct = () => {
                 <Button 
                   size="lg" 
                   className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700 text-white"
-                  onClick={() => handleAddToCart("Sanket life 2.0")}
-                  disabled={addingToCart || loading}
+                  onClick={() => handleAddToCart("sanketlife-2")}
+                  disabled={addingToCart}
                 >
                   {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -1067,8 +1074,8 @@ const SanketLifeProduct = () => {
       <StickyAddToCart
         productName="SanketLife 2.0"
         price="₹4,999"
-        onAddToCart={() => handleAddToCart("Sanket life 2.0")}
-        isLoading={loading}
+        onAddToCart={() => handleAddToCart("sanketlife-2")}
+        isLoading={addingToCart}
         themeColor="cyan"
       />
     </Layout>
