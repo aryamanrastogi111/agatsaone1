@@ -30,7 +30,7 @@ export function useShopifyProduct(productHandle?: string | 'skip') {
   };
 
   const findProductByTitle = (title: string): ShopifyProduct | undefined => {
-    return products.find(p => 
+    return products.find(p =>
       p.node.title.toLowerCase().includes(title.toLowerCase())
     );
   };
@@ -43,12 +43,12 @@ export function useShopifyProduct(productHandle?: string | 'skip') {
     }
 
     addItem({
-      product,
-      variantId: variant.id,
+      productId: product.node.id,
+      productName: product.node.title,
       variantTitle: variant.title,
-      price: variant.price,
+      price: parseFloat(variant.price.amount),
       quantity,
-      selectedOptions: variant.selectedOptions || [],
+      imageUrl: product.node.images?.edges?.[0]?.node?.url,
     });
 
     toast.success(`${product.node.title} added to cart`, {
