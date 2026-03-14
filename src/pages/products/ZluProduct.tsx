@@ -703,9 +703,9 @@ const ZluProduct = () => {
                   size="lg" 
                   className="text-lg px-12 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
                   onClick={handleAddToCart}
-                  disabled={loading}
+                  disabled={addingToCart}
                 >
-                  {loading ? (
+                  {addingToCart ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
                     <ShoppingCart className="h-5 w-5" />
