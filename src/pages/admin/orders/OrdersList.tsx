@@ -420,7 +420,6 @@ export default function OrdersList() {
     </div>
   );
 }
-  phone: string;
   total: number;
   status: string;
   payment_status: string;
