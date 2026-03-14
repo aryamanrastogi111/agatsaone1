@@ -257,7 +257,8 @@ function hasEligibleProducts(items: CartItem[]): boolean {
   );
 }
 
-export interface CartItem {
+// CartItem is now defined in @/lib/razorpay — kept for legacy reference only
+export interface ShopifyCartItem {
   product: ShopifyProduct;
   variantId: string;
   variantTitle: string;
