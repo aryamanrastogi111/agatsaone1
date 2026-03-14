@@ -258,9 +258,9 @@ const testimonials = [
 ];
 
 const SANKETLIFE_PRODUCTS: Record<string, { name: string; price: number; image: string }> = {
-  "sanketlife-2": { name: "SanketLife 2.0", price: 4999, image: sanketlife2Product.src ?? sanketlife2Product },
-  "sanketlife-proplus": { name: "SanketLife Pro+", price: 7999, image: sanketlifeProplus.src ?? sanketlifeProplus },
-  "combo": { name: "Pro-Plus Combo", price: 14999, image: sanketlifeCombo.src ?? sanketlifeCombo },
+  "sanketlife-2": { name: "SanketLife 2.0", price: 4999, image: sanketlife2Product },
+  "sanketlife-proplus": { name: "SanketLife Pro+", price: 7999, image: sanketlifeProplus },
+  "combo": { name: "Pro-Plus Combo", price: 14999, image: sanketlifeCombo },
 };
 
 const SanketLifeProduct = () => {
