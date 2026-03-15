@@ -136,6 +136,7 @@ function RazorpayOrdersTab() {
                 <th className="text-left px-5 py-3 font-medium hidden sm:table-cell">Customer</th>
                 <th className="text-left px-5 py-3 font-medium hidden lg:table-cell">Delivery Address</th>
                 <th className="text-left px-5 py-3 font-medium hidden md:table-cell">Items</th>
+                <th className="text-left px-5 py-3 font-medium hidden xl:table-cell">Coupon</th>
                 <th className="text-left px-5 py-3 font-medium">Status</th>
                 <th className="text-right px-5 py-3 font-medium">Amount</th>
                 <th className="text-right px-5 py-3 font-medium hidden sm:table-cell">Date</th>
@@ -166,13 +167,32 @@ function RazorpayOrdersTab() {
                   <td className="px-5 py-3 hidden md:table-cell text-xs text-gray-400">
                     {order.items?.map((i) => `${i.productName} ×${i.quantity}`).join(", ") ?? "—"}
                   </td>
+                  <td className="px-5 py-3 hidden xl:table-cell">
+                    {order.coupon_code ? (
+                      <div className="flex flex-col gap-0.5">
+                        <span className="inline-flex items-center gap-1 bg-violet-50 text-violet-700 border border-violet-200 text-xs font-mono font-bold px-2 py-0.5 rounded-full w-fit">
+                          🏷 {order.coupon_code}
+                        </span>
+                        {order.discount_amount != null && order.discount_amount > 0 && (
+                          <span className="text-xs text-gray-400">−₹{order.discount_amount.toLocaleString("en-IN")}</span>
+                        )}
+                      </div>
+                    ) : (
+                      <span className="text-xs text-gray-300">—</span>
+                    )}
+                  </td>
                   <td className="px-5 py-3">
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[order.status] ?? "bg-gray-100 text-gray-600"}`}>
                       {order.status}
                     </span>
                   </td>
-                  <td className="px-5 py-3 text-right font-bold text-gray-900">
-                    ₹{order.amount?.toLocaleString("en-IN")}
+                  <td className="px-5 py-3 text-right">
+                    <p className="font-bold text-gray-900">₹{order.amount?.toLocaleString("en-IN")}</p>
+                    {order.coupon_code && order.discount_amount != null && order.discount_amount > 0 && (
+                      <p className="text-xs text-gray-400 line-through">
+                        ₹{(order.amount + order.discount_amount).toLocaleString("en-IN")}
+                      </p>
+                    )}
                   </td>
                   <td className="px-5 py-3 text-right hidden sm:table-cell text-gray-400 text-xs">
                     {new Date(order.created_at).toLocaleDateString("en-IN")}
