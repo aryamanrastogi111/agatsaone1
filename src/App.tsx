@@ -120,6 +120,7 @@ const App = () => (
             <Route path="settings" element={<AdminSettings />} />
             <Route path="integrations" element={<AdminIntegrations />} />
             <Route path="activity-logs" element={<AdminActivityLogs />} />
+            <Route path="email-preview" element={<AdminEmailPreview />} />
           </Route>
           {/* Redirects for old routes */}
           <Route path="/solutions" element={<Navigate to="/support#solutions" replace />} />
