@@ -39,7 +39,6 @@ serve(async (req) => {
   try {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
     const {
       customerEmail,
@@ -370,57 +369,65 @@ serve(async (req) => {
 </body>
 </html>`;
 
-    if (!LOVABLE_API_KEY) {
-      console.log("LOVABLE_API_KEY not set — skipping email send");
-      return new Response(JSON.stringify({ success: true, note: "API key not set" }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // ─── SEND CUSTOMER EMAIL ──────────────────────────────────────────────────
-    const customerRes = await fetch("https://api.lovable.dev/v1/email/send", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-      },
-      body: JSON.stringify({
+    // ─── ENQUEUE CUSTOMER EMAIL ───────────────────────────────────────────────
+    const customerMsgId = crypto.randomUUID();
+    await supabase.from("email_send_log").insert({
+      message_id: customerMsgId,
+      template_name: "order_confirmation",
+      recipient_email: customerEmail,
+      status: "pending",
+    });
+    const { error: customerEnqueueError } = await supabase.rpc("enqueue_email", {
+      queue_name: "transactional_emails",
+      payload: {
+        message_id: customerMsgId,
         to: customerEmail,
+        from: "Agatsa Medical Technologies <orders@notify.agatsa.in>",
+        sender_domain: "notify.agatsa.in",
         subject: `✅ Order Confirmed – ${orderId} | Agatsa`,
         html: customerEmailHtml,
-        from_name: "Agatsa Medical Technologies",
-        from_email: "orders@notify.agatsa.in",
-        reply_to: "care@agatsa.com",
-      }),
+        purpose: "transactional",
+        label: "order_confirmation",
+        queued_at: new Date().toISOString(),
+      },
     });
-
-    if (!customerRes.ok) {
-      console.error("Customer email failed:", await customerRes.text());
+    if (customerEnqueueError) {
+      console.error("Failed to enqueue customer email:", customerEnqueueError);
+    } else {
+      console.log("Customer email enqueued:", customerMsgId);
     }
 
-    // ─── SEND TEAM NOTIFICATION ───────────────────────────────────────────────
-    const teamRes = await fetch("https://api.lovable.dev/v1/email/send", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-      },
-      body: JSON.stringify({
+    // ─── ENQUEUE TEAM NOTIFICATION ────────────────────────────────────────────
+    const teamMsgId = crypto.randomUUID();
+    await supabase.from("email_send_log").insert({
+      message_id: teamMsgId,
+      template_name: "order_team_notification",
+      recipient_email: teamRecipient,
+      status: "pending",
+    });
+    const { error: teamEnqueueError } = await supabase.rpc("enqueue_email", {
+      queue_name: "transactional_emails",
+      payload: {
+        message_id: teamMsgId,
         to: teamRecipient,
+        from: "Agatsa Orders <orders@notify.agatsa.in>",
+        sender_domain: "notify.agatsa.in",
         subject: `🛎️ New Order: ${customerName || customerEmail} – ${totalFormatted}`,
         html: teamEmailHtml,
-        from_name: "Agatsa Orders",
-        from_email: "orders@notify.agatsa.in",
-        reply_to: customerEmail,
-      }),
+        purpose: "transactional",
+        label: "order_team_notification",
+        queued_at: new Date().toISOString(),
+      },
     });
-
-    if (!teamRes.ok) {
-      console.error("Team email failed:", await teamRes.text());
+    if (teamEnqueueError) {
+      console.error("Failed to enqueue team email:", teamEnqueueError);
+    } else {
+      console.log("Team email enqueued:", teamMsgId);
     }
 
-    // Log to DB
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+    // Update order status
     await supabase.from("orders").update({ status: "confirmed" }).eq("razorpay_order_id", orderId);
 
     return new Response(JSON.stringify({ success: true }), {
