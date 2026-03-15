@@ -1,7 +1,7 @@
 // src/pages/admin/Leads.tsx
 import { useEffect, useState } from "react";
 import { db as supabase } from "@/integrations/supabase/db";
-import { Plus, Search, Users, TrendingUp, Trophy, X } from "lucide-react";
+import { Plus, Search, X } from "lucide-react";
 import { format } from "date-fns";
 
 interface Lead {
@@ -21,13 +21,13 @@ interface Lead {
 const STAGES = ["new", "contacted", "demo_scheduled", "proposal_sent", "negotiating", "won", "lost"] as const;
 
 const STAGE_COLORS: Record<string, string> = {
-  new:             "bg-gray-500/20 text-gray-400",
-  contacted:       "bg-blue-500/20 text-blue-400",
-  demo_scheduled:  "bg-purple-500/20 text-purple-400",
-  proposal_sent:   "bg-yellow-500/20 text-yellow-400",
-  negotiating:     "bg-orange-500/20 text-orange-400",
-  won:             "bg-green-500/20 text-green-400",
-  lost:            "bg-red-500/20 text-red-400",
+  new:            "bg-gray-100 text-gray-600",
+  contacted:      "bg-blue-100 text-blue-700",
+  demo_scheduled: "bg-purple-100 text-purple-700",
+  proposal_sent:  "bg-yellow-100 text-yellow-700",
+  negotiating:    "bg-orange-100 text-orange-700",
+  won:            "bg-green-100 text-green-700",
+  lost:           "bg-red-100 text-red-700",
 };
 
 const STAGE_LABELS: Record<string, string> = {
@@ -60,6 +60,7 @@ export default function Leads() {
   useEffect(() => { fetchLeads(); }, []);
 
   const saveLead = async () => {
+    if (!form.name.trim()) return;
     await supabase.from("leads").insert({
       name: form.name, company: form.company, phone: form.phone, email: form.email,
       source: form.source, interest_category: form.interest_category,
@@ -85,32 +86,29 @@ export default function Leads() {
     return matchSearch && matchStage;
   });
 
-  const won = leads.filter(l => l.stage === "won").length;
-  const active = leads.filter(l => !["won", "lost"].includes(l.stage)).length;
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-white">Lead Management</h2>
-          <p className="text-sm text-gray-400">CRM pipeline for doctors, distributors, and partners</p>
+          <h2 className="text-xl font-bold text-gray-900">Lead Management</h2>
+          <p className="text-sm text-gray-500">CRM pipeline for doctors, distributors, and partners</p>
         </div>
         <button onClick={() => setFormOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm transition-colors">
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors font-medium">
           <Plus size={14} /> Add Lead
         </button>
       </div>
 
       {/* Pipeline bar */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-        <p className="text-xs text-gray-400 mb-3 uppercase tracking-wider">Pipeline Overview</p>
+      <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+        <p className="text-xs text-gray-400 mb-3 uppercase tracking-wider font-medium">Pipeline Overview</p>
         <div className="flex gap-2 flex-wrap">
           {STAGES.map(stage => {
             const count = leads.filter(l => l.stage === stage).length;
             return (
               <button key={stage} onClick={() => setStageFilter(stageFilter === stage ? "all" : stage)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all border
-                  ${stageFilter === stage ? "border-blue-500 " + STAGE_COLORS[stage] : "border-gray-800 text-gray-400 hover:border-gray-600"}`}>
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all border font-medium
+                  ${stageFilter === stage ? "border-blue-300 " + STAGE_COLORS[stage] : "border-gray-200 text-gray-500 hover:border-gray-300 bg-white"}`}>
                 <span>{STAGE_LABELS[stage]}</span>
                 <span className="font-bold">{count}</span>
               </button>
@@ -120,39 +118,39 @@ export default function Leads() {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
-        <div className="flex-1 bg-gray-900 border border-gray-800 rounded-xl">
-          <div className="p-4 border-b border-gray-800 flex flex-wrap gap-3">
+        <div className="flex-1 bg-white border border-gray-200 rounded-xl shadow-sm">
+          <div className="p-4 border-b border-gray-100 flex flex-wrap gap-3">
             <div className="relative flex-1 min-w-[200px] max-w-xs">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search leads…"
-                className="w-full pl-8 pr-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500" />
+                className="w-full pl-8 pr-3 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500" />
             </div>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wider">
-                  <th className="text-left px-5 py-3">Lead</th>
-                  <th className="text-left px-5 py-3">Source</th>
-                  <th className="text-left px-5 py-3">Interest</th>
-                  <th className="text-left px-5 py-3">Stage</th>
-                  <th className="text-left px-5 py-3">Follow Up</th>
+                <tr className="border-b border-gray-100 text-gray-500 text-xs uppercase tracking-wider bg-gray-50">
+                  <th className="text-left px-5 py-3 font-medium">Lead</th>
+                  <th className="text-left px-5 py-3 font-medium">Source</th>
+                  <th className="text-left px-5 py-3 font-medium">Interest</th>
+                  <th className="text-left px-5 py-3 font-medium">Stage</th>
+                  <th className="text-left px-5 py-3 font-medium">Follow Up</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-800">
-                {loading && <tr><td colSpan={5} className="text-center py-12 text-gray-500">Loading…</td></tr>}
-                {!loading && filtered.length === 0 && <tr><td colSpan={5} className="text-center py-12 text-gray-500">No leads found</td></tr>}
+              <tbody className="divide-y divide-gray-100">
+                {loading && <tr><td colSpan={5} className="text-center py-12 text-gray-400">Loading…</td></tr>}
+                {!loading && filtered.length === 0 && <tr><td colSpan={5} className="text-center py-12 text-gray-400">No leads found</td></tr>}
                 {filtered.map(lead => (
                   <tr key={lead.id} onClick={() => setSelected(lead)}
-                    className={`cursor-pointer hover:bg-gray-800/40 transition-colors ${selected?.id === lead.id ? "bg-gray-800/60" : ""}`}>
+                    className={`cursor-pointer hover:bg-gray-50 transition-colors ${selected?.id === lead.id ? "bg-blue-50/50" : ""}`}>
                     <td className="px-5 py-3.5">
-                      <p className="font-medium text-white">{lead.name}</p>
+                      <p className="font-medium text-gray-900">{lead.name}</p>
                       <p className="text-xs text-gray-400">{lead.company ?? lead.email ?? ""}</p>
                     </td>
-                    <td className="px-5 py-3.5 text-gray-400 text-xs">{lead.source ?? "—"}</td>
-                    <td className="px-5 py-3.5 text-gray-400 text-xs">{lead.interest_category ?? "—"}</td>
+                    <td className="px-5 py-3.5 text-gray-500 text-xs">{lead.source ?? "—"}</td>
+                    <td className="px-5 py-3.5 text-gray-500 text-xs">{lead.interest_category ?? "—"}</td>
                     <td className="px-5 py-3.5">
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${STAGE_COLORS[lead.stage] ?? ""}`}>
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STAGE_COLORS[lead.stage] ?? ""}`}>
                         {STAGE_LABELS[lead.stage]}
                       </span>
                     </td>
@@ -167,10 +165,10 @@ export default function Leads() {
         </div>
 
         {selected && (
-          <div className="w-full lg:w-80 bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4 shrink-0">
+          <div className="w-full lg:w-80 bg-white border border-gray-200 rounded-xl p-5 space-y-4 shrink-0 shadow-sm">
             <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-white">Lead Details</h3>
-              <button onClick={() => setSelected(null)} className="text-gray-500 hover:text-white text-xs">✕</button>
+              <h3 className="font-semibold text-gray-900">Lead Details</h3>
+              <button onClick={() => setSelected(null)} className="text-gray-400 hover:text-gray-700"><X size={16} /></button>
             </div>
             <div className="space-y-2.5 text-sm">
               {[
@@ -184,17 +182,17 @@ export default function Leads() {
               ].filter(f => f.val).map(f => (
                 <div key={f.label}>
                   <p className="text-xs text-gray-400">{f.label}</p>
-                  <p className="text-white text-sm">{f.val}</p>
+                  <p className="text-gray-900 text-sm">{f.val}</p>
                 </div>
               ))}
             </div>
             <div>
-              <p className="text-xs text-gray-400 mb-2">Move Stage</p>
+              <p className="text-xs text-gray-400 mb-2 font-medium">Move Stage</p>
               <div className="flex flex-wrap gap-1.5">
                 {STAGES.map(s => (
                   <button key={s} onClick={() => updateStage(selected.id, s)}
-                    className={`text-xs px-2 py-1 rounded-full transition-colors
-                      ${selected.stage === s ? STAGE_COLORS[s] : "bg-gray-800 text-gray-400 hover:text-white"}`}>
+                    className={`text-xs px-2 py-1 rounded-full transition-colors font-medium
+                      ${selected.stage === s ? STAGE_COLORS[s] : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}>
                     {STAGE_LABELS[s]}
                   </button>
                 ))}
@@ -205,11 +203,11 @@ export default function Leads() {
       </div>
 
       {formOpen && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 border border-gray-800 rounded-xl w-full max-w-lg p-6 space-y-4 overflow-y-auto max-h-[90vh]">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white border border-gray-200 rounded-xl w-full max-w-lg p-6 space-y-4 overflow-y-auto max-h-[90vh] shadow-xl">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-white">Add New Lead</h3>
-              <button onClick={() => setFormOpen(false)} className="text-gray-500 hover:text-white"><X size={16} /></button>
+              <h3 className="text-lg font-semibold text-gray-900">Add New Lead</h3>
+              <button onClick={() => setFormOpen(false)} className="text-gray-400 hover:text-gray-700"><X size={16} /></button>
             </div>
             <div className="grid grid-cols-2 gap-3">
               {[
@@ -217,46 +215,46 @@ export default function Leads() {
                 { label: "Phone", key: "phone" }, { label: "Email", key: "email" },
               ].map(f => (
                 <div key={f.key} className={f.key === "name" ? "col-span-2" : ""}>
-                  <label className="text-xs text-gray-400 block mb-1">{f.label}</label>
+                  <label className="text-xs text-gray-500 block mb-1 font-medium">{f.label}</label>
                   <input value={(form as any)[f.key]} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
-                    className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500" />
+                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:border-blue-500" />
                 </div>
               ))}
               <div>
-                <label className="text-xs text-gray-400 block mb-1">Source</label>
+                <label className="text-xs text-gray-500 block mb-1 font-medium">Source</label>
                 <select value={form.source} onChange={e => setForm(p => ({ ...p, source: e.target.value }))}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:border-blue-500">
                   {SOURCES.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
               <div>
-                <label className="text-xs text-gray-400 block mb-1">Interest</label>
+                <label className="text-xs text-gray-500 block mb-1 font-medium">Interest</label>
                 <select value={form.interest_category} onChange={e => setForm(p => ({ ...p, interest_category: e.target.value }))}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:border-blue-500">
                   {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
               <div>
-                <label className="text-xs text-gray-400 block mb-1">Stage</label>
+                <label className="text-xs text-gray-500 block mb-1 font-medium">Stage</label>
                 <select value={form.stage} onChange={e => setForm(p => ({ ...p, stage: e.target.value }))}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:border-blue-500">
                   {STAGES.map(s => <option key={s} value={s}>{STAGE_LABELS[s]}</option>)}
                 </select>
               </div>
               <div>
-                <label className="text-xs text-gray-400 block mb-1">Follow Up Date</label>
+                <label className="text-xs text-gray-500 block mb-1 font-medium">Follow Up Date</label>
                 <input type="date" value={form.follow_up_date} onChange={e => setForm(p => ({ ...p, follow_up_date: e.target.value }))}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500" />
+                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:border-blue-500" />
               </div>
               <div className="col-span-2">
-                <label className="text-xs text-gray-400 block mb-1">Notes</label>
+                <label className="text-xs text-gray-500 block mb-1 font-medium">Notes</label>
                 <textarea value={form.notes} onChange={e => setForm(p => ({ ...p, notes: e.target.value }))}
-                  rows={3} className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white resize-none focus:outline-none focus:border-blue-500" />
+                  rows={3} className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm resize-none focus:outline-none focus:border-blue-500" />
               </div>
             </div>
             <div className="flex gap-3 pt-2">
-              <button onClick={() => setFormOpen(false)} className="flex-1 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg text-sm">Cancel</button>
-              <button onClick={saveLead} className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium">Save Lead</button>
+              <button onClick={() => setFormOpen(false)} className="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition-colors">Cancel</button>
+              <button onClick={saveLead} className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">Save Lead</button>
             </div>
           </div>
         </div>
