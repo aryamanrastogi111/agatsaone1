@@ -104,8 +104,11 @@ const safetyPoints = [
 const ZluProduct = () => {
   const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
+  const { isOutOfStock } = useInventory();
+  const outOfStock = isOutOfStock("zlu");
 
   const handleAddToCart = () => {
+    if (outOfStock) return;
     setAddingToCart(true);
     addItem({ productId: "zlu", productName: "Zlu Sleep Aid Device", variantTitle: "Default Title", price: 4999, quantity: 1 });
     toast.success("Zlu added to cart", { position: "top-center" });

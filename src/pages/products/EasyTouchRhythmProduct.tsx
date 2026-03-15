@@ -164,11 +164,14 @@ const EasyTouchRhythmProduct = () => {
   const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
   const { trackAddToCart } = useFacebookPixel();
+  const { isOutOfStock } = useInventory();
+  const outOfStock = isOutOfStock("easytouch-rhythm");
   
   // Fire PageView and ViewContent on mount for Facebook Pixel
   useEasyTouchRhythmPixelPageView();
 
   const handleAddToCart = () => {
+    if (outOfStock) return;
     setAddingToCart(true);
     addItem({ productId: "easytouch-rhythm", productName: "EasyTouch Rhythm", variantTitle: "Default Title", price: 4999, quantity: 1 });
     toast.success("EasyTouch Rhythm added to cart", { position: "top-center" });

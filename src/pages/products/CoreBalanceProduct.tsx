@@ -130,8 +130,11 @@ const testimonials = [
 const CoreBalanceProduct = () => {
   const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
+  const { isOutOfStock } = useInventory();
+  const outOfStock = isOutOfStock("corebalance");
 
   const handleAddToCart = () => {
+    if (outOfStock) return;
     setAddingToCart(true);
     addItem({ productId: "corebalance", productName: "CoreBalance Smart Scale", variantTitle: "Default Title", price: 3999, quantity: 1 });
     toast.success("CoreBalance added to cart", { position: "top-center" });
