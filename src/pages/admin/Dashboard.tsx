@@ -3,31 +3,27 @@ import { useEffect, useState } from "react";
 import { db as supabase } from "@/integrations/supabase/db";
 import { Link } from "react-router-dom";
 import {
-  TrendingUp, ShoppingCart, Package, Users,
-  AlertTriangle, ArrowUpRight, Clock
+  TrendingUp, ShoppingCart, Clock, AlertTriangle, ArrowUpRight
 } from "lucide-react";
 
-interface Stats {
-  total_revenue: number;
-  total_orders: number;
-  pending_orders: number;
-  processing_orders: number;
-  shipped_orders: number;
-  delivered_orders: number;
-  cancelled_orders: number;
-  revenue_today: number;
-  revenue_this_month: number;
-  orders_today: number;
-  orders_this_month: number;
+interface DashboardStats {
+  totalRevenue: number;
+  totalOrders: number;
+  paidOrders: number;
+  createdOrders: number;
+  revenueToday: number;
+  ordersToday: number;
+  revenueThisMonth: number;
+  ordersThisMonth: number;
 }
 
 interface RecentOrder {
   id: string;
-  order_number: string;
-  email: string;
-  total: number;
+  razorpay_order_id: string;
+  customer_name: string | null;
+  customer_email: string | null;
+  amount: number;
   status: string;
-  payment_status: string;
   created_at: string;
 }
 
@@ -40,19 +36,21 @@ interface LowStockItem {
 }
 
 const STATUS_COLORS: Record<string, string> = {
+  created:    "bg-yellow-500/20 text-yellow-400",
+  paid:       "bg-green-500/20 text-green-400",
+  failed:     "bg-red-500/20 text-red-400",
+  refunded:   "bg-gray-500/20 text-gray-400",
   pending:    "bg-yellow-500/20 text-yellow-400",
   confirmed:  "bg-blue-500/20 text-blue-400",
   processing: "bg-purple-500/20 text-purple-400",
   shipped:    "bg-cyan-500/20 text-cyan-400",
   delivered:  "bg-green-500/20 text-green-400",
   cancelled:  "bg-red-500/20 text-red-400",
-  refunded:   "bg-gray-500/20 text-gray-400",
-  paid:       "bg-green-500/20 text-green-400",
-  failed:     "bg-red-500/20 text-red-400",
 };
 
 function StatCard({ label, value, sub, icon: Icon, color }: {
   label: string; value: string; sub?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any; color: string;
 }) {
   return (
@@ -72,25 +70,49 @@ function StatCard({ label, value, sub, icon: Icon, color }: {
 }
 
 export default function Dashboard() {
-  const [stats, setStats] = useState<Stats | null>(null);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
   const [recentOrders, setRecentOrders] = useState<RecentOrder[]>([]);
   const [lowStock, setLowStock] = useState<LowStockItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const [statsRes, ordersRes, stockRes] = await Promise.all([
-        supabase.rpc("get_dashboard_stats"),
+      const now = new Date();
+      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+      const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+
+      const [allOrdersRes, recentRes, lowStockRes] = await Promise.all([
+        supabase.from("orders").select("amount, status, created_at"),
         supabase.from("orders")
-          .select("id, order_number, email, total, status, payment_status, created_at")
+          .select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
           .order("created_at", { ascending: false })
           .limit(8),
-        supabase.rpc("get_low_stock_variants", { threshold: 5 }),
+        supabase.rpc("get_low_stock_variants", { threshold: 5 }).throwOnError().then(
+          (r) => r,
+          () => ({ data: [] as LowStockItem[] })
+        ),
       ]);
 
-      if (statsRes.data) setStats(statsRes.data as Stats);
-      if (ordersRes.data) setRecentOrders(ordersRes.data as RecentOrder[]);
-      if (stockRes.data) setLowStock(stockRes.data as LowStockItem[]);
+      if (allOrdersRes.data) {
+        const all = allOrdersRes.data;
+        const paid = all.filter((o) => o.status === "paid");
+        const today = all.filter((o) => o.created_at >= todayStart);
+        const thisMonth = all.filter((o) => o.created_at >= monthStart);
+
+        setStats({
+          totalRevenue: paid.reduce((s, o) => s + (o.amount ?? 0), 0),
+          totalOrders: all.length,
+          paidOrders: paid.length,
+          createdOrders: all.filter((o) => o.status === "created").length,
+          revenueToday: today.filter((o) => o.status === "paid").reduce((s, o) => s + (o.amount ?? 0), 0),
+          ordersToday: today.length,
+          revenueThisMonth: thisMonth.filter((o) => o.status === "paid").reduce((s, o) => s + (o.amount ?? 0), 0),
+          ordersThisMonth: thisMonth.length,
+        });
+      }
+
+      if (recentRes.data) setRecentOrders(recentRes.data as RecentOrder[]);
+      if (lowStockRes.data) setLowStock(lowStockRes.data as LowStockItem[]);
       setLoading(false);
     })();
   }, []);
@@ -103,7 +125,7 @@ export default function Dashboard() {
     );
   }
 
-  const fmt = (n: number) => `₹${n?.toLocaleString("en-IN") ?? 0}`;
+  const fmt = (n: number) => `₹${(n ?? 0).toLocaleString("en-IN")}`;
 
   return (
     <div className="space-y-6">
@@ -116,30 +138,30 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           label="Revenue (All Time)"
-          value={fmt(stats?.total_revenue ?? 0)}
-          sub={`${fmt(stats?.revenue_this_month ?? 0)} this month`}
+          value={fmt(stats?.totalRevenue ?? 0)}
+          sub={`${fmt(stats?.revenueThisMonth ?? 0)} this month`}
           icon={TrendingUp}
           color="bg-green-500/20 text-green-400"
         />
         <StatCard
           label="Total Orders"
-          value={String(stats?.total_orders ?? 0)}
-          sub={`${stats?.orders_today ?? 0} today`}
+          value={String(stats?.totalOrders ?? 0)}
+          sub={`${stats?.ordersToday ?? 0} today`}
           icon={ShoppingCart}
           color="bg-blue-500/20 text-blue-400"
         />
         <StatCard
-          label="Pending Orders"
-          value={String(stats?.pending_orders ?? 0)}
-          sub={`${stats?.processing_orders ?? 0} processing`}
-          icon={Clock}
-          color="bg-yellow-500/20 text-yellow-400"
+          label="Paid Orders"
+          value={String(stats?.paidOrders ?? 0)}
+          sub={`${stats?.ordersThisMonth ?? 0} this month`}
+          icon={TrendingUp}
+          color="bg-green-500/20 text-green-400"
         />
         <StatCard
           label="Today's Revenue"
-          value={fmt(stats?.revenue_today ?? 0)}
-          sub={`${stats?.orders_today ?? 0} orders today`}
-          icon={TrendingUp}
+          value={fmt(stats?.revenueToday ?? 0)}
+          sub={`${stats?.ordersToday ?? 0} orders today`}
+          icon={Clock}
           color="bg-purple-500/20 text-purple-400"
         />
       </div>
@@ -147,10 +169,10 @@ export default function Dashboard() {
       {/* Order status breakdown */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: "Shipped",   value: stats?.shipped_orders ?? 0,   color: "text-cyan-400" },
-          { label: "Delivered", value: stats?.delivered_orders ?? 0, color: "text-green-400" },
-          { label: "Cancelled", value: stats?.cancelled_orders ?? 0, color: "text-red-400" },
-          { label: "Processing",value: stats?.processing_orders ?? 0,color: "text-purple-400" },
+          { label: "Paid",      value: stats?.paidOrders ?? 0,    color: "text-green-400" },
+          { label: "Pending",   value: stats?.createdOrders ?? 0, color: "text-yellow-400" },
+          { label: "This Month",value: stats?.ordersThisMonth ?? 0,color: "text-blue-400" },
+          { label: "Today",     value: stats?.ordersToday ?? 0,   color: "text-purple-400" },
         ].map((s) => (
           <div key={s.label} className="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
@@ -175,21 +197,20 @@ export default function Dashboard() {
             {recentOrders.map((order) => (
               <Link
                 key={order.id}
-                to={`/admin/orders/${order.id}`}
+                to="/admin/orders"
                 className="flex items-center justify-between px-5 py-3.5 hover:bg-gray-800/50 transition-colors"
               >
                 <div>
-                  <p className="text-sm font-medium text-white">{order.order_number}</p>
-                  <p className="text-xs text-gray-400">{order.email}</p>
+                  <p className="text-sm font-medium text-white font-mono text-xs">
+                    {order.razorpay_order_id ?? order.id.slice(0, 8)}
+                  </p>
+                  <p className="text-xs text-gray-400">{order.customer_name ?? order.customer_email ?? "—"}</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[order.status] ?? ""}`}>
                     {order.status}
                   </span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[order.payment_status] ?? ""}`}>
-                    {order.payment_status}
-                  </span>
-                  <span className="text-sm font-semibold text-white">₹{order.total?.toLocaleString("en-IN")}</span>
+                  <span className="text-sm font-semibold text-white">₹{order.amount?.toLocaleString("en-IN")}</span>
                 </div>
               </Link>
             ))}

@@ -24,6 +24,8 @@ import {
   Loader2,
   CheckCircle2,
   CreditCard,
+  MapPin,
+  Package,
 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
@@ -33,17 +35,36 @@ import {
   verifyRazorpayPayment,
   openRazorpayCheckout,
 } from "@/lib/razorpay";
+import type { RazorpayPaymentResponse } from "@/lib/razorpay";
+
+interface SuccessData {
+  orderId: string;
+  paymentId: string;
+  customerName: string;
+  customerEmail: string;
+  items: { productName: string; quantity: number; price: number; variantTitle?: string }[];
+  total: number;
+  shippingAddress: string;
+  shippingCity: string;
+  shippingState: string;
+  shippingPincode: string;
+}
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
-  const [orderSuccess, setOrderSuccess] = useState(false);
+  const [successData, setSuccessData] = useState<SuccessData | null>(null);
 
   // Customer info form
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  // Shipping address
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
 
   const { items, isLoading, updateQuantity, removeItem, clearCart, getTotalItems, getTotalPrice } =
     useCartStore();
@@ -67,10 +88,20 @@ export const CartDrawer = () => {
       const loaded = await loadRazorpayScript();
       if (!loaded) {
         toast.error("Failed to load payment gateway. Please try again.");
+        setIsPaying(false);
         return;
       }
 
-      const orderData = await createRazorpayOrder(items, name, email, phone);
+      const orderData = await createRazorpayOrder(
+        items, name, email, phone,
+        address, city, state, pincode
+      );
+
+      // Close checkout dialog BEFORE opening Razorpay so it doesn't interfere
+      setCheckoutOpen(false);
+
+      // Small delay to let dialog close animation finish
+      await new Promise((r) => setTimeout(r, 300));
 
       openRazorpayCheckout(
         orderData,
@@ -78,7 +109,7 @@ export const CartDrawer = () => {
         name,
         email,
         phone,
-        async (response) => {
+        async (response: RazorpayPaymentResponse) => {
           try {
             const verified = await verifyRazorpayPayment(
               response.razorpay_order_id,
@@ -89,24 +120,42 @@ export const CartDrawer = () => {
 
             if (verified) {
               clearCart();
-              setCheckoutOpen(false);
               setIsOpen(false);
-              setOrderSuccess(true);
+              setSuccessData({
+                orderId: response.razorpay_order_id,
+                paymentId: response.razorpay_payment_id,
+                customerName: name,
+                customerEmail: email,
+                items: items.map((i) => ({
+                  productName: i.productName,
+                  quantity: i.quantity,
+                  price: i.price,
+                  variantTitle: i.variantTitle,
+                })),
+                total: totalPrice,
+                shippingAddress: address,
+                shippingCity: city,
+                shippingState: state,
+                shippingPincode: pincode,
+              });
             } else {
               toast.error("Payment verification failed. Please contact support.");
             }
           } catch {
             toast.error("Payment verification error. Please contact care@agatsa.com");
+          } finally {
+            setIsPaying(false);
           }
         },
         () => {
           setIsPaying(false);
-          toast.info("Payment cancelled.");
+          // Re-open checkout dialog if user dismissed Razorpay
+          setCheckoutOpen(true);
+          toast.info("Payment cancelled. You can try again.");
         }
       );
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Payment failed. Try again.");
-    } finally {
       setIsPaying(false);
     }
   };
@@ -246,54 +295,125 @@ export const CartDrawer = () => {
         </SheetContent>
       </Sheet>
 
-      {/* Checkout dialog — customer details */}
-      <Dialog open={checkoutOpen} onOpenChange={setCheckoutOpen}>
-        <DialogContent className="sm:max-w-sm">
+      {/* Checkout dialog — customer details + shipping */}
+      <Dialog open={checkoutOpen} onOpenChange={(open) => { if (!isPaying) setCheckoutOpen(open); }}>
+        <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Complete Your Order</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handlePay} className="space-y-4 pt-2">
-            <div className="space-y-1.5">
-              <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                placeholder="Your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                type="tel"
-                placeholder="+91 9876543210"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
+          <form onSubmit={handlePay} className="space-y-5 pt-2">
+            {/* Contact Info */}
+            <div>
+              <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <CreditCard className="h-4 w-4 text-primary" />
+                Contact Information
+              </h3>
+              <div className="space-y-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="name">Full Name *</Label>
+                  <Input
+                    id="name"
+                    placeholder="Your full name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="email">Email *</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="phone">Phone *</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="+91 98765 43210"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
+            {/* Shipping Address */}
+            <div>
+              <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-primary" />
+                Delivery Address
+              </h3>
+              <div className="space-y-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="address">Address Line *</Label>
+                  <Input
+                    id="address"
+                    placeholder="House/Flat No., Street, Area"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="city">City *</Label>
+                    <Input
+                      id="city"
+                      placeholder="e.g. New Delhi"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="state">State *</Label>
+                    <Input
+                      id="state"
+                      placeholder="e.g. Delhi"
+                      value={state}
+                      onChange={(e) => setState(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="pincode">PIN Code *</Label>
+                  <Input
+                    id="pincode"
+                    placeholder="6-digit PIN code"
+                    value={pincode}
+                    onChange={(e) => setPincode(e.target.value)}
+                    maxLength={6}
+                    pattern="[0-9]{6}"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Order Summary */}
             <div className="bg-muted/40 rounded-lg p-3 space-y-1">
+              <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
+                Order Summary
+              </p>
               {items.map((item) => (
                 <div
                   key={`${item.productId}-${item.variantTitle}`}
                   className="flex justify-between text-sm"
                 >
                   <span className="text-muted-foreground">
-                    {item.productName} × {item.quantity}
+                    {item.productName}
+                    {item.variantTitle && item.variantTitle !== "Default Title" && ` (${item.variantTitle})`}
+                    {" "}× {item.quantity}
                   </span>
                   <span className="font-medium">{formatINR(item.price * item.quantity)}</span>
                 </div>
@@ -304,7 +424,7 @@ export const CartDrawer = () => {
               </div>
             </div>
 
-            <Button type="submit" className="w-full" disabled={isPaying}>
+            <Button type="submit" className="w-full" size="lg" disabled={isPaying}>
               {isPaying ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -322,23 +442,86 @@ export const CartDrawer = () => {
       </Dialog>
 
       {/* Success modal */}
-      <Dialog open={orderSuccess} onOpenChange={setOrderSuccess}>
-        <DialogContent className="sm:max-w-sm text-center">
-          <div className="py-4">
-            <CheckCircle2 className="h-14 w-14 text-green-500 mx-auto mb-4" />
-            <h2 className="text-xl font-bold mb-2">Order Confirmed! 🎉</h2>
-            <p className="text-muted-foreground text-sm">
-              Thank you for your purchase. You'll receive a confirmation email shortly at{" "}
-              <span className="font-medium text-foreground">{email}</span>.
-            </p>
-            <p className="text-xs text-muted-foreground mt-3">
-              For support, contact{" "}
-              <a href="mailto:care@agatsa.com" className="text-primary hover:underline">
-                care@agatsa.com
-              </a>
+      <Dialog open={!!successData} onOpenChange={(open) => { if (!open) setSuccessData(null); }}>
+        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+          <div className="text-center py-2">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="h-9 w-9 text-primary" />
+            </div>
+            <h2 className="text-2xl font-bold mb-1">Order Confirmed! 🎉</h2>
+            <p className="text-muted-foreground text-sm mb-5">
+              Thank you, <span className="font-medium text-foreground">{successData?.customerName}</span>!
+              Your order has been placed successfully.
             </p>
           </div>
-          <Button onClick={() => setOrderSuccess(false)}>Done</Button>
+
+          {successData && (
+            <div className="space-y-4">
+              {/* Order ID */}
+              <div className="bg-muted/40 rounded-lg p-3">
+                <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold mb-1">Order Reference</p>
+                <p className="font-mono text-xs text-foreground break-all">{successData.orderId}</p>
+                {successData.paymentId && (
+                  <p className="font-mono text-xs text-muted-foreground mt-0.5 break-all">
+                    Payment: {successData.paymentId}
+                  </p>
+                )}
+              </div>
+
+              {/* Items ordered */}
+              <div className="bg-muted/40 rounded-lg p-3">
+                <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold mb-2 flex items-center gap-1">
+                  <Package className="h-3 w-3" /> Items Ordered
+                </p>
+                {successData.items.map((item, i) => (
+                  <div key={i} className="flex justify-between text-sm py-0.5">
+                    <span className="text-muted-foreground">
+                      {item.productName}
+                      {item.variantTitle && item.variantTitle !== "Default Title" && ` (${item.variantTitle})`}
+                      {" "}× {item.quantity}
+                    </span>
+                    <span className="font-medium">{formatINR(item.price * item.quantity)}</span>
+                  </div>
+                ))}
+                <div className="border-t mt-2 pt-2 flex justify-between text-sm font-semibold">
+                  <span>Total Paid</span>
+                  <span className="text-primary">{formatINR(successData.total)}</span>
+                </div>
+              </div>
+
+              {/* Delivery address */}
+              <div className="bg-muted/40 rounded-lg p-3">
+                <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold mb-1 flex items-center gap-1">
+                  <MapPin className="h-3 w-3" /> Delivery To
+                </p>
+                <p className="text-sm text-foreground">
+                  {successData.shippingAddress}, {successData.shippingCity},{" "}
+                  {successData.shippingState} — {successData.shippingPincode}
+                </p>
+              </div>
+
+              {/* Email confirmation */}
+              <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-center">
+                <p className="text-sm text-foreground">
+                  📧 A confirmation email will be sent to{" "}
+                  <span className="font-medium text-primary">{successData.customerEmail}</span>
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  For support:{" "}
+                  <a href="mailto:care@agatsa.com" className="text-primary hover:underline">
+                    care@agatsa.com
+                  </a>
+                </p>
+              </div>
+            </div>
+          )}
+
+          <Button
+            className="w-full mt-2"
+            onClick={() => setSuccessData(null)}
+          >
+            Continue Shopping
+          </Button>
         </DialogContent>
       </Dialog>
     </>

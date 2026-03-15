@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 serve(async (req) => {
@@ -22,7 +22,17 @@ serve(async (req) => {
     }
 
     const body = await req.json();
-    const { items, customerName, customerEmail, customerPhone, amountInPaise } = body;
+    const {
+      items,
+      customerName,
+      customerEmail,
+      customerPhone,
+      amountInPaise,
+      shippingAddress,
+      shippingCity,
+      shippingState,
+      shippingPincode,
+    } = body;
 
     if (!amountInPaise || amountInPaise <= 0) {
       throw new Error("Invalid amount");
@@ -44,6 +54,8 @@ serve(async (req) => {
           customer_name: customerName || "",
           customer_email: customerEmail || "",
           customer_phone: customerPhone || "",
+          shipping_city: shippingCity || "",
+          shipping_state: shippingState || "",
         },
       }),
     });
@@ -55,7 +67,7 @@ serve(async (req) => {
 
     const razorpayOrder = await razorpayResponse.json();
 
-    // Save pending order to DB
+    // Save pending order to DB with shipping address
     if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
       await supabase.from("orders").insert({
@@ -67,6 +79,10 @@ serve(async (req) => {
         customer_email: customerEmail || null,
         customer_phone: customerPhone || null,
         items: items || [],
+        shipping_address: shippingAddress || null,
+        shipping_city: shippingCity || null,
+        shipping_state: shippingState || null,
+        shipping_pincode: shippingPincode || null,
       });
     }
 
