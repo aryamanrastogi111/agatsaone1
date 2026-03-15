@@ -75,11 +75,11 @@ export async function createRazorpayOrder(
   shippingAddress?: string,
   shippingCity?: string,
   shippingState?: string,
-  shippingPincode?: string
+  shippingPincode?: string,
+  overrideTotal?: number // discounted total in INR
 ): Promise<RazorpayOrderResponse> {
-  const amountInPaise = Math.round(
-    items.reduce((sum, item) => sum + item.price * item.quantity, 0) * 100
-  );
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const amountInPaise = Math.round((overrideTotal !== undefined ? overrideTotal : subtotal) * 100);
 
   const { data, error } = await supabase.functions.invoke("razorpay-create-order", {
     body: {
