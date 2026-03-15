@@ -371,6 +371,11 @@ serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+    // Plain-text fallbacks (strip HTML tags)
+    const stripHtml = (html: string) => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const customerText = stripHtml(customerEmailHtml);
+    const teamText = stripHtml(teamEmailHtml);
+
     // ─── ENQUEUE CUSTOMER EMAIL ───────────────────────────────────────────────
     const customerMsgId = crypto.randomUUID();
     await supabase.from("email_send_log").insert({
@@ -389,6 +394,7 @@ serve(async (req) => {
         sender_domain: "notify.agatsa.in",
         subject: `✅ Order Confirmed – ${orderId} | Agatsa`,
         html: customerEmailHtml,
+        text: customerText,
         purpose: "transactional",
         label: "order_confirmation",
         queued_at: new Date().toISOString(),
@@ -418,6 +424,7 @@ serve(async (req) => {
         sender_domain: "notify.agatsa.in",
         subject: `🛎️ New Order: ${customerName || customerEmail} – ${totalFormatted}`,
         html: teamEmailHtml,
+        text: teamText,
         purpose: "transactional",
         label: "order_team_notification",
         queued_at: new Date().toISOString(),
