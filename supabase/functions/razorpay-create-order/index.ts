@@ -32,6 +32,8 @@ serve(async (req) => {
       shippingCity,
       shippingState,
       shippingPincode,
+      couponCode,
+      discountAmount,
     } = body;
 
     if (!amountInPaise || amountInPaise <= 0) {
@@ -56,6 +58,7 @@ serve(async (req) => {
           customer_phone: customerPhone || "",
           shipping_city: shippingCity || "",
           shipping_state: shippingState || "",
+          coupon_code: couponCode || "",
         },
       }),
     });
@@ -67,7 +70,7 @@ serve(async (req) => {
 
     const razorpayOrder = await razorpayResponse.json();
 
-    // Save pending order to DB with shipping address
+    // Save pending order to DB with shipping address + coupon info
     if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
       await supabase.from("orders").insert({
@@ -83,6 +86,8 @@ serve(async (req) => {
         shipping_city: shippingCity || null,
         shipping_state: shippingState || null,
         shipping_pincode: shippingPincode || null,
+        coupon_code: couponCode || null,
+        discount_amount: discountAmount || 0,
       });
     }
 

@@ -76,7 +76,9 @@ export async function createRazorpayOrder(
   shippingCity?: string,
   shippingState?: string,
   shippingPincode?: string,
-  overrideTotal?: number // discounted total in INR
+  overrideTotal?: number,
+  couponCode?: string,
+  discountAmount?: number
 ): Promise<RazorpayOrderResponse> {
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const amountInPaise = Math.round((overrideTotal !== undefined ? overrideTotal : subtotal) * 100);
@@ -92,6 +94,8 @@ export async function createRazorpayOrder(
       shippingCity,
       shippingState,
       shippingPincode,
+      couponCode: couponCode || null,
+      discountAmount: discountAmount || 0,
     },
   });
 
