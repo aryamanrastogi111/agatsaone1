@@ -546,7 +546,7 @@ export const CartDrawer = () => {
             </div>
 
             {/* Email confirmation */}
-            <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-3 text-center">
+            <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-center">
               <p className="text-sm text-foreground font-medium">
                 📧 Order confirmation email sent to
               </p>
