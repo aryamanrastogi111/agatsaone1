@@ -194,6 +194,9 @@ const CoreBalanceProduct = () => {
                 )}
               </div>
               
+              {/* Low stock FOMO */}
+              <LowStockBadge productKey="corebalance" variant="banner" className="mb-4" />
+
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <Truck className="h-4 w-4 text-emerald-600" />

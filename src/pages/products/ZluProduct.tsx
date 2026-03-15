@@ -166,6 +166,9 @@ const ZluProduct = () => {
                   </Button>
                 )}
               </div>
+
+              {/* Low stock FOMO */}
+              <LowStockBadge productKey="zlu" variant="banner" className="mt-4" />
               
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
