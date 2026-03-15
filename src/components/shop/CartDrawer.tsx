@@ -190,7 +190,9 @@ export const CartDrawer = () => {
       const orderData = await createRazorpayOrder(
         items, name, email, phone,
         address, city, state, pincode,
-        couponApplied ? finalTotal : undefined
+        couponApplied ? finalTotal : undefined,
+        couponApplied && couponData ? couponData.code : undefined,
+        couponApplied ? couponDiscount : undefined
       );
 
       const cartSnapshot = items.map((i) => ({
