@@ -52,7 +52,10 @@ serve(async (req) => {
       shippingCity,
       shippingState,
       shippingPincode,
+      _testTeamEmail,
     } = await req.json();
+
+    const teamRecipient = _testTeamEmail || "info@agatsa.com";
 
     if (!customerEmail || !orderId) {
       return new Response(JSON.stringify({ error: "Missing required fields" }), {
