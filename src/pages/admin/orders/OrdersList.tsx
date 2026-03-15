@@ -130,38 +130,47 @@ function RazorpayOrdersTab() {
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-800 text-gray-400">
+              <tr className="border-b border-gray-200 text-gray-500 bg-gray-50">
                 <th className="text-left px-5 py-3 font-medium">Order ID</th>
                 <th className="text-left px-5 py-3 font-medium hidden sm:table-cell">Customer</th>
+                <th className="text-left px-5 py-3 font-medium hidden lg:table-cell">Delivery Address</th>
                 <th className="text-left px-5 py-3 font-medium hidden md:table-cell">Items</th>
                 <th className="text-left px-5 py-3 font-medium">Status</th>
                 <th className="text-right px-5 py-3 font-medium">Amount</th>
                 <th className="text-right px-5 py-3 font-medium hidden sm:table-cell">Date</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800">
+            <tbody className="divide-y divide-gray-100">
               {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-800/50 transition-colors">
+                <tr key={order.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-5 py-3">
-                    <p className="font-medium text-white font-mono text-xs">{order.razorpay_order_id}</p>
+                    <p className="font-medium text-gray-900 font-mono text-xs">{order.razorpay_order_id}</p>
                     {order.razorpay_payment_id && (
-                      <p className="text-xs text-gray-500 font-mono">{order.razorpay_payment_id}</p>
+                      <p className="text-xs text-gray-400 font-mono">{order.razorpay_payment_id}</p>
                     )}
                   </td>
                   <td className="px-5 py-3 hidden sm:table-cell">
-                    <p className="text-white">{order.customer_name ?? "—"}</p>
+                    <p className="text-gray-900 font-medium">{order.customer_name ?? "—"}</p>
                     <p className="text-xs text-gray-400">{order.customer_email ?? ""}</p>
-                    {order.customer_phone && <p className="text-xs text-gray-500">{order.customer_phone}</p>}
+                    {order.customer_phone && <p className="text-xs text-gray-400">{order.customer_phone}</p>}
+                  </td>
+                  <td className="px-5 py-3 hidden lg:table-cell text-xs text-gray-500">
+                    {order.shipping_address ? (
+                      <>
+                        <p>{order.shipping_address}</p>
+                        <p>{[order.shipping_city, order.shipping_state].filter(Boolean).join(", ")} {order.shipping_pincode}</p>
+                      </>
+                    ) : "—"}
                   </td>
                   <td className="px-5 py-3 hidden md:table-cell text-xs text-gray-400">
                     {order.items?.map((i) => `${i.productName} ×${i.quantity}`).join(", ") ?? "—"}
                   </td>
                   <td className="px-5 py-3">
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[order.status] ?? ""}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[order.status] ?? "bg-gray-100 text-gray-600"}`}>
                       {order.status}
                     </span>
                   </td>
-                  <td className="px-5 py-3 text-right font-semibold text-white">
+                  <td className="px-5 py-3 text-right font-bold text-gray-900">
                     ₹{order.amount?.toLocaleString("en-IN")}
                   </td>
                   <td className="px-5 py-3 text-right hidden sm:table-cell text-gray-400 text-xs">
