@@ -4,6 +4,7 @@ import { ExternalLink, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { products } from "@/data/products";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 
 export function ProductsPortfolioSection() {
   return (
