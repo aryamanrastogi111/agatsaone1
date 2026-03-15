@@ -7,6 +7,30 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+// Agatsa brand colors
+const BRAND_BLUE = "#0ea5e9";
+const BRAND_DARK = "#0f172a";
+
+// Estimated delivery window
+function getDeliveryWindow(): { from: string; to: string } {
+  const now = new Date();
+  const addBusinessDays = (date: Date, days: number) => {
+    let d = new Date(date);
+    let added = 0;
+    while (added < days) {
+      d.setDate(d.getDate() + 1);
+      if (d.getDay() !== 0 && d.getDay() !== 6) added++;
+    }
+    return d;
+  };
+  const fmt = (d: Date) =>
+    d.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+  return {
+    from: fmt(addBusinessDays(now, 5)),
+    to: fmt(addBusinessDays(now, 7)),
+  };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -37,110 +61,176 @@ serve(async (req) => {
       });
     }
 
-    // Format items list
+    const delivery = getDeliveryWindow();
+    const totalFormatted = `₹${(total || 0).toLocaleString("en-IN")}`;
+    const fullAddress = [shippingAddress, shippingCity, shippingState, shippingPincode]
+      .filter(Boolean)
+      .join(", ");
+
+    // Format items
     const itemsHtml = (items || [])
       .map(
         (item: { productName: string; variantTitle?: string; quantity: number; price: number }) =>
           `<tr>
-            <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">
-              ${item.productName}${item.variantTitle && item.variantTitle !== "Default Title" ? ` (${item.variantTitle})` : ""}
+            <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-size:14px;color:#374151;">
+              <strong>${item.productName}</strong>${item.variantTitle && item.variantTitle !== "Default Title" ? `<br/><span style="font-size:12px;color:#64748b;">${item.variantTitle}</span>` : ""}
             </td>
-            <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:center;">${item.quantity}</td>
-            <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:right;">₹${(item.price * item.quantity).toLocaleString("en-IN")}</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;text-align:center;font-size:14px;color:#374151;">${item.quantity}</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;text-align:right;font-size:14px;color:#374151;font-weight:600;">₹${(item.price * item.quantity).toLocaleString("en-IN")}</td>
           </tr>`
       )
       .join("");
 
-    const totalFormatted = `₹${(total || 0).toLocaleString("en-IN")}`;
-
-    const emailHtml = `<!DOCTYPE html>
-<html>
+    // ─── CUSTOMER EMAIL HTML ───────────────────────────────────────────────────
+    const customerEmailHtml = `<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Order Confirmed – Agatsa</title>
 </head>
-<body style="margin:0;padding:0;background:#f5f5f5;font-family:Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:32px 0;">
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:40px 16px;">
     <tr>
       <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);max-width:600px;">
+        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+
           <!-- Header -->
           <tr>
-            <td style="background:#0ea5e9;padding:28px 32px;text-align:center;">
-              <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;letter-spacing:-0.5px;">Agatsa Medical Technologies</h1>
-              <p style="color:#bae6fd;margin:6px 0 0;font-size:13px;">Your health, powered by innovation</p>
+            <td style="background:linear-gradient(135deg,#0ea5e9 0%,#0284c7 100%);padding:32px 40px;text-align:center;">
+              <table cellpadding="0" cellspacing="0" align="center">
+                <tr>
+                  <td>
+                    <img src="https://agatsaone1.lovable.app/agatsa-favicon.png" alt="Agatsa" width="40" height="40" style="display:block;margin:0 auto 12px;border-radius:8px;"/>
+                  </td>
+                </tr>
+              </table>
+              <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;letter-spacing:-0.3px;">Agatsa Medical Technologies</h1>
+              <p style="color:#bae6fd;margin:6px 0 0;font-size:13px;letter-spacing:0.3px;">YOUR HEART, OUR PRIORITY</p>
             </td>
           </tr>
+
           <!-- Success Banner -->
           <tr>
-            <td style="background:#f0fdf4;padding:20px 32px;text-align:center;border-bottom:1px solid #dcfce7;">
-              <p style="margin:0;font-size:28px;">✅</p>
-              <h2 style="color:#166534;margin:8px 0 4px;font-size:20px;">Order Confirmed!</h2>
-              <p style="color:#15803d;margin:0;font-size:14px;">Thank you, ${customerName || "Valued Customer"}! Your order has been successfully placed.</p>
+            <td style="background:#f0fdf4;padding:28px 40px 20px;text-align:center;border-bottom:2px solid #dcfce7;">
+              <div style="display:inline-block;background:#22c55e;width:52px;height:52px;border-radius:50%;text-align:center;line-height:52px;font-size:26px;margin-bottom:12px;">✓</div>
+              <h2 style="color:#15803d;margin:0 0 6px;font-size:24px;font-weight:700;">Order Confirmed!</h2>
+              <p style="color:#166534;margin:0;font-size:15px;">Thank you, <strong>${customerName || "Valued Customer"}</strong>! Your order is on its way.</p>
             </td>
           </tr>
+
           <!-- Body -->
           <tr>
-            <td style="padding:28px 32px;">
-              <!-- Order Reference -->
-              <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:8px;margin-bottom:20px;">
+            <td style="padding:32px 40px;">
+
+              <!-- Delivery Estimate Banner -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:12px;margin-bottom:28px;border:1px solid #bfdbfe;">
                 <tr>
-                  <td style="padding:14px 16px;">
-                    <p style="margin:0 0 6px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Order Reference</p>
-                    <p style="margin:0;font-family:monospace;font-size:13px;color:#0f172a;word-break:break-all;">${orderId}</p>
-                    ${paymentId ? `<p style="margin:4px 0 0;font-family:monospace;font-size:11px;color:#64748b;word-break:break-all;">Payment: ${paymentId}</p>` : ""}
+                  <td style="padding:18px 20px;">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                      <tr>
+                        <td style="vertical-align:middle;">
+                          <p style="margin:0 0 4px;font-size:12px;color:#1e40af;text-transform:uppercase;letter-spacing:0.8px;font-weight:700;">🚚 Estimated Delivery</p>
+                          <p style="margin:0;font-size:18px;font-weight:700;color:#1e3a8a;">${delivery.from} – ${delivery.to}</p>
+                          <p style="margin:4px 0 0;font-size:12px;color:#3b82f6;">5–7 business days after dispatch</p>
+                        </td>
+                        <td style="text-align:right;vertical-align:middle;">
+                          <div style="background:#1d4ed8;color:#ffffff;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;display:inline-block;">IN TRANSIT</div>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
 
-              <!-- Items -->
-              <h3 style="margin:0 0 12px;font-size:14px;color:#0f172a;font-weight:600;">📦 Items Ordered</h3>
-              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin-bottom:20px;">
+              <!-- Order Reference -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:10px;margin-bottom:24px;border:1px solid #e2e8f0;">
+                <tr>
+                  <td style="padding:16px 18px;">
+                    <p style="margin:0 0 6px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.7px;font-weight:700;">Order Reference</p>
+                    <p style="margin:0;font-family:'Courier New',monospace;font-size:13px;color:#0f172a;word-break:break-all;">${orderId}</p>
+                    ${paymentId ? `<p style="margin:6px 0 0;font-family:'Courier New',monospace;font-size:11px;color:#64748b;word-break:break-all;">Payment ID: ${paymentId}</p>` : ""}
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Product Image Row -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  <td align="center">
+                    <img src="https://agatsaone1.lovable.app/agatsa-favicon.png" alt="Agatsa Product" width="120" height="120" style="border-radius:12px;object-fit:cover;border:2px solid #e2e8f0;"/>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Items Table -->
+              <h3 style="margin:0 0 12px;font-size:15px;color:#0f172a;font-weight:700;">📦 Items Ordered</h3>
+              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:24px;">
                 <thead>
                   <tr style="background:#f8fafc;">
-                    <th style="padding:10px 12px;text-align:left;font-size:12px;color:#64748b;font-weight:600;border-bottom:1px solid #e2e8f0;">Product</th>
-                    <th style="padding:10px 12px;text-align:center;font-size:12px;color:#64748b;font-weight:600;border-bottom:1px solid #e2e8f0;">Qty</th>
-                    <th style="padding:10px 12px;text-align:right;font-size:12px;color:#64748b;font-weight:600;border-bottom:1px solid #e2e8f0;">Amount</th>
+                    <th style="padding:10px 14px;text-align:left;font-size:12px;color:#64748b;font-weight:700;border-bottom:1px solid #e2e8f0;text-transform:uppercase;letter-spacing:0.5px;">Product</th>
+                    <th style="padding:10px 14px;text-align:center;font-size:12px;color:#64748b;font-weight:700;border-bottom:1px solid #e2e8f0;text-transform:uppercase;letter-spacing:0.5px;">Qty</th>
+                    <th style="padding:10px 14px;text-align:right;font-size:12px;color:#64748b;font-weight:700;border-bottom:1px solid #e2e8f0;text-transform:uppercase;letter-spacing:0.5px;">Amount</th>
                   </tr>
                 </thead>
                 <tbody>
                   ${itemsHtml}
                   <tr style="background:#f0f9ff;">
-                    <td colspan="2" style="padding:10px 12px;font-size:14px;font-weight:700;color:#0f172a;">Total Paid</td>
-                    <td style="padding:10px 12px;font-size:14px;font-weight:700;color:#0ea5e9;text-align:right;">${totalFormatted}</td>
+                    <td colspan="2" style="padding:12px 14px;font-size:15px;font-weight:700;color:#0f172a;">Total Paid</td>
+                    <td style="padding:12px 14px;font-size:16px;font-weight:700;color:#0ea5e9;text-align:right;">${totalFormatted}</td>
                   </tr>
                 </tbody>
               </table>
 
-              <!-- Delivery Address -->
-              <h3 style="margin:0 0 10px;font-size:14px;color:#0f172a;font-weight:600;">📍 Delivery Address</h3>
-              <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:8px;margin-bottom:20px;">
+              <!-- Shipping Address -->
+              <h3 style="margin:0 0 10px;font-size:15px;color:#0f172a;font-weight:700;">📍 Delivery Address</h3>
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:10px;margin-bottom:24px;border:1px solid #e2e8f0;">
                 <tr>
-                  <td style="padding:14px 16px;font-size:14px;color:#374151;line-height:1.6;">
-                    ${shippingAddress || ""}${shippingAddress ? ", " : ""}${shippingCity || ""}${shippingState ? ", " + shippingState : ""}${shippingPincode ? " - " + shippingPincode : ""}
+                  <td style="padding:16px 18px;font-size:14px;color:#374151;line-height:1.7;">
+                    ${fullAddress || "Address not provided"}
+                  </td>
+                </tr>
+              </table>
+
+              <!-- What's Next -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#fefce8;border:1px solid #fde68a;border-radius:10px;margin-bottom:24px;">
+                <tr>
+                  <td style="padding:16px 18px;">
+                    <p style="margin:0 0 8px;font-size:14px;color:#92400e;font-weight:700;">⏭️ What happens next?</p>
+                    <ul style="margin:0;padding-left:18px;font-size:13px;color:#78350f;line-height:1.8;">
+                      <li>Our team will verify and pack your order within 1-2 business days.</li>
+                      <li>You'll receive a shipping confirmation with tracking details once dispatched.</li>
+                      <li>Estimated delivery: <strong>${delivery.from} – ${delivery.to}</strong></li>
+                    </ul>
                   </td>
                 </tr>
               </table>
 
               <!-- Support -->
-              <table width="100%" cellpadding="0" cellspacing="0" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;">
                 <tr>
-                  <td style="padding:16px;">
-                    <p style="margin:0 0 4px;font-size:14px;color:#1e40af;font-weight:600;">Need help with your order?</p>
-                    <p style="margin:0;font-size:13px;color:#1d4ed8;">Email us at <a href="mailto:care@agatsa.com" style="color:#0ea5e9;">care@agatsa.com</a> or visit <a href="https://agatsa.com/support" style="color:#0ea5e9;">agatsa.com/support</a></p>
+                  <td style="padding:16px 18px;">
+                    <p style="margin:0 0 4px;font-size:14px;color:#1e40af;font-weight:700;">Need help with your order?</p>
+                    <p style="margin:0;font-size:13px;color:#1d4ed8;">
+                      Email us at <a href="mailto:care@agatsa.com" style="color:#0ea5e9;text-decoration:none;font-weight:600;">care@agatsa.com</a>
+                      &nbsp;|&nbsp;
+                      <a href="https://agatsa.com/support" style="color:#0ea5e9;text-decoration:none;">agatsa.com/support</a>
+                    </p>
                   </td>
                 </tr>
               </table>
+
             </td>
           </tr>
+
           <!-- Footer -->
           <tr>
-            <td style="background:#f8fafc;padding:20px 32px;text-align:center;border-top:1px solid #e2e8f0;">
-              <p style="margin:0;font-size:12px;color:#94a3b8;">© 2025 Agatsa Medical Technologies Pvt. Ltd.</p>
-              <p style="margin:4px 0 0;font-size:12px;color:#94a3b8;">Bengaluru, India</p>
+            <td style="background:#f8fafc;padding:24px 40px;text-align:center;border-top:1px solid #e2e8f0;">
+              <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;font-weight:600;">© 2025 Agatsa Medical Technologies Pvt. Ltd.</p>
+              <p style="margin:0;font-size:11px;color:#cbd5e1;">Bengaluru, India · <a href="https://agatsa.com" style="color:#94a3b8;text-decoration:none;">agatsa.com</a></p>
             </td>
           </tr>
+
         </table>
       </td>
     </tr>
@@ -148,36 +238,187 @@ serve(async (req) => {
 </body>
 </html>`;
 
-    // Try to send via Lovable email API if key is available
-    if (LOVABLE_API_KEY) {
-      const emailRes = await fetch("https://api.lovable.dev/v1/email/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        },
-        body: JSON.stringify({
-          to: customerEmail,
-          subject: `✅ Order Confirmed – ${orderId}`,
-          html: emailHtml,
-          from_name: "Agatsa Medical Technologies",
-        }),
-      });
+    // ─── TEAM NOTIFICATION EMAIL HTML ─────────────────────────────────────────
+    const itemsTextList = (items || [])
+      .map(
+        (item: { productName: string; variantTitle?: string; quantity: number; price: number }) =>
+          `<tr>
+            <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#374151;">${item.productName}${item.variantTitle && item.variantTitle !== "Default Title" ? ` (${item.variantTitle})` : ""}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center;font-size:13px;">${item.quantity}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:right;font-size:13px;font-weight:600;">₹${(item.price * item.quantity).toLocaleString("en-IN")}</td>
+          </tr>`
+      )
+      .join("");
 
-      if (!emailRes.ok) {
-        const errText = await emailRes.text();
-        console.error("Email send failed:", errText);
-        // Don't throw — order is already placed, just log
-      }
-    } else {
+    const teamEmailHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>New Order Received – ${orderId}</title>
+</head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.07);">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:#0f172a;padding:20px 32px;text-align:center;">
+              <h1 style="color:#f8fafc;margin:0;font-size:18px;font-weight:700;">🛎️ New Order Alert</h1>
+              <p style="color:#94a3b8;margin:4px 0 0;font-size:12px;text-transform:uppercase;letter-spacing:0.8px;">Agatsa Internal Notification</p>
+            </td>
+          </tr>
+
+          <!-- Alert Banner -->
+          <tr>
+            <td style="background:#fef3c7;padding:14px 32px;border-bottom:2px solid #fde68a;">
+              <p style="margin:0;font-size:14px;color:#92400e;font-weight:700;text-align:center;">
+                🎉 A new order has been placed — please process for fulfillment
+              </p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:28px 32px;">
+
+              <!-- Customer Info -->
+              <h3 style="margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:0.7px;color:#64748b;font-weight:700;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">👤 Customer Details</h3>
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  <td style="padding:6px 0;font-size:13px;color:#64748b;width:120px;font-weight:600;">Name</td>
+                  <td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:700;">${customerName || "—"}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;font-size:13px;color:#64748b;font-weight:600;">Email</td>
+                  <td style="padding:6px 0;font-size:14px;color:#0ea5e9;"><a href="mailto:${customerEmail}" style="color:#0ea5e9;text-decoration:none;">${customerEmail}</a></td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;font-size:13px;color:#64748b;font-weight:600;">Delivery To</td>
+                  <td style="padding:6px 0;font-size:14px;color:#0f172a;">${fullAddress || "—"}</td>
+                </tr>
+              </table>
+
+              <!-- Order Details -->
+              <h3 style="margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:0.7px;color:#64748b;font-weight:700;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">📦 Order Details</h3>
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  <td style="padding:6px 0;font-size:13px;color:#64748b;width:120px;font-weight:600;">Order ID</td>
+                  <td style="padding:6px 0;font-family:'Courier New',monospace;font-size:13px;color:#0f172a;">${orderId}</td>
+                </tr>
+                ${paymentId ? `<tr>
+                  <td style="padding:6px 0;font-size:13px;color:#64748b;font-weight:600;">Payment ID</td>
+                  <td style="padding:6px 0;font-family:'Courier New',monospace;font-size:13px;color:#0f172a;">${paymentId}</td>
+                </tr>` : ""}
+                <tr>
+                  <td style="padding:6px 0;font-size:13px;color:#64748b;font-weight:600;">Order Total</td>
+                  <td style="padding:6px 0;font-size:15px;color:#16a34a;font-weight:700;">${totalFormatted}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;font-size:13px;color:#64748b;font-weight:600;">Exp. Delivery</td>
+                  <td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${delivery.from} – ${delivery.to}</td>
+                </tr>
+              </table>
+
+              <!-- Items -->
+              <h3 style="margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:0.7px;color:#64748b;font-weight:700;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">🛒 Items to Fulfill</h3>
+              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin-bottom:24px;">
+                <thead>
+                  <tr style="background:#f8fafc;">
+                    <th style="padding:8px 12px;text-align:left;font-size:11px;color:#64748b;font-weight:700;border-bottom:1px solid #e2e8f0;">Product</th>
+                    <th style="padding:8px 12px;text-align:center;font-size:11px;color:#64748b;font-weight:700;border-bottom:1px solid #e2e8f0;">Qty</th>
+                    <th style="padding:8px 12px;text-align:right;font-size:11px;color:#64748b;font-weight:700;border-bottom:1px solid #e2e8f0;">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${itemsTextList}
+                  <tr style="background:#f0fdf4;">
+                    <td colspan="2" style="padding:10px 12px;font-size:14px;font-weight:700;color:#0f172a;">TOTAL</td>
+                    <td style="padding:10px 12px;font-size:14px;font-weight:700;color:#16a34a;text-align:right;">${totalFormatted}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- CTA -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center">
+                    <a href="https://agatsaone1.lovable.app/admin/orders" style="display:inline-block;background:#0ea5e9;color:#ffffff;text-decoration:none;padding:12px 32px;border-radius:8px;font-size:14px;font-weight:700;letter-spacing:0.3px;">View Order in Admin Panel →</a>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f8fafc;padding:16px 32px;text-align:center;border-top:1px solid #e2e8f0;">
+              <p style="margin:0;font-size:11px;color:#94a3b8;">Agatsa Medical Technologies · Internal Use Only</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+
+    if (!LOVABLE_API_KEY) {
       console.log("LOVABLE_API_KEY not set — skipping email send");
+      return new Response(JSON.stringify({ success: true, note: "API key not set" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
-    // Log to DB for audit
+    // ─── SEND CUSTOMER EMAIL ──────────────────────────────────────────────────
+    const customerRes = await fetch("https://api.lovable.dev/v1/email/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+      },
+      body: JSON.stringify({
+        to: customerEmail,
+        subject: `✅ Order Confirmed – ${orderId} | Agatsa`,
+        html: customerEmailHtml,
+        from_name: "Agatsa Medical Technologies",
+        from_email: "orders@notify.agatsa.in",
+        reply_to: "care@agatsa.com",
+      }),
+    });
+
+    if (!customerRes.ok) {
+      console.error("Customer email failed:", await customerRes.text());
+    }
+
+    // ─── SEND TEAM NOTIFICATION ───────────────────────────────────────────────
+    const teamRes = await fetch("https://api.lovable.dev/v1/email/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+      },
+      body: JSON.stringify({
+        to: "info@agatsa.com",
+        subject: `🛎️ New Order: ${customerName || customerEmail} – ${totalFormatted}`,
+        html: teamEmailHtml,
+        from_name: "Agatsa Orders",
+        from_email: "orders@notify.agatsa.in",
+        reply_to: customerEmail,
+      }),
+    });
+
+    if (!teamRes.ok) {
+      console.error("Team email failed:", await teamRes.text());
+    }
+
+    // Log to DB
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-    await supabase.from("orders").update({
-      // Mark that confirmation was attempted
-    }).eq("razorpay_order_id", orderId);
+    await supabase.from("orders").update({ status: "confirmed" }).eq("razorpay_order_id", orderId);
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
