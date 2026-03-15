@@ -275,6 +275,9 @@ const EasyTouchRhythmProduct = () => {
                 that explain your energy, your fatigue, your clarity, and your calm.
               </p>
               
+              {/* FOMO / Low stock inline badge */}
+              <LowStockBadge productKey="easytouch-rhythm" variant="inline" className="mb-4" />
+
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Button 
                   size="lg" 
