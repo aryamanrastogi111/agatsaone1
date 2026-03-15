@@ -89,9 +89,8 @@ serve(async (req) => {
     } = await req.json();
 
     const teamRecipient = _testTeamEmail || "info@agatsa.com";
-    // Use notify.agatsa.in — must be added & verified in YOUR Resend account
-    const customerFrom = "Agatsa Medical Technologies <orders@notify.agatsa.in>";
-    const teamFrom = "Agatsa Orders <orders@notify.agatsa.in>";
+    const customerFrom = "Agatsa Medical Technologies <orders@agatsa.in>";
+    const teamFrom = "Agatsa Orders <orders@agatsa.in>";
 
     if (!customerEmail || !orderId) {
       return new Response(JSON.stringify({ error: "Missing required fields" }), {
