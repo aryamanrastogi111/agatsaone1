@@ -18,6 +18,7 @@ export const StickyAddToCart = ({
   onAddToCart,
   isLoading = false,
   themeColor = "primary",
+  outOfStock = false,
 }: StickyAddToCartProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [addingToCart, setAddingToCart] = useState(false);
