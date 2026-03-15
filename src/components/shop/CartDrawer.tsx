@@ -485,7 +485,7 @@ export const CartDrawer = () => {
                 ))}
                 <div className="border-t mt-2 pt-2 flex justify-between text-sm font-semibold">
                   <span>Total Paid</span>
-                  <span className="text-green-600">{formatINR(successData.total)}</span>
+                  <span className="text-primary">{formatINR(successData.total)}</span>
                 </div>
               </div>
 
