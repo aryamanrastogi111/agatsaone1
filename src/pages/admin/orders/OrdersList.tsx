@@ -38,6 +38,7 @@ interface RazorpayOrder {
   shipping_address: string | null; shipping_city: string | null;
   shipping_state: string | null; shipping_pincode: string | null;
   items: { productName: string; quantity: number; price: number }[] | null;
+  coupon_code: string | null; discount_amount: number | null;
   paid_at: string | null; created_at: string;
 }
 
