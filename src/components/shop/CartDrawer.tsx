@@ -164,7 +164,16 @@ export const CartDrawer = () => {
               response.razorpay_order_id,
               response.razorpay_payment_id,
               response.razorpay_signature,
-              email
+              {
+                customerEmail: email,
+                customerName: name,
+                items: items,
+                total: totalSnapshot,
+                shippingAddress: address,
+                shippingCity: city,
+                shippingState: state,
+                shippingPincode: pincode,
+              }
             );
 
             if (verified) {
