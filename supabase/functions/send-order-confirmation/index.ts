@@ -133,8 +133,8 @@ serve(async (req) => {
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
           <tr>
             <td style="background:linear-gradient(135deg,#0ea5e9 0%,#0284c7 100%);padding:32px 40px;text-align:center;">
-              <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;letter-spacing:-0.3px;">Agatsa Medical Technologies</h1>
-              <p style="color:#bae6fd;margin:6px 0 0;font-size:13px;letter-spacing:0.3px;">YOUR HEART, OUR PRIORITY</p>
+              <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;letter-spacing:-0.3px;">Agatsa Software Pvt Ltd</h1>
+              <p style="color:#bae6fd;margin:6px 0 0;font-size:13px;letter-spacing:0.3px;">FUTURE IS NEAR</p>
             </td>
           </tr>
           <tr>
