@@ -40,6 +40,8 @@ interface RazorpayOptions {
   };
   modal?: {
     ondismiss?: () => void;
+    backdropclose?: boolean;
+    escape?: boolean;
   };
 }
 
@@ -69,14 +71,28 @@ export async function createRazorpayOrder(
   items: CartItem[],
   customerName?: string,
   customerEmail?: string,
-  customerPhone?: string
+  customerPhone?: string,
+  shippingAddress?: string,
+  shippingCity?: string,
+  shippingState?: string,
+  shippingPincode?: string
 ): Promise<RazorpayOrderResponse> {
   const amountInPaise = Math.round(
     items.reduce((sum, item) => sum + item.price * item.quantity, 0) * 100
   );
 
   const { data, error } = await supabase.functions.invoke("razorpay-create-order", {
-    body: { items, customerName, customerEmail, customerPhone, amountInPaise },
+    body: {
+      items,
+      customerName,
+      customerEmail,
+      customerPhone,
+      amountInPaise,
+      shippingAddress,
+      shippingCity,
+      shippingState,
+      shippingPincode,
+    },
   });
 
   if (error) throw new Error(error.message);
@@ -108,7 +124,6 @@ export function openRazorpayCheckout(
   onSuccess: (response: RazorpayPaymentResponse) => void,
   onDismiss?: () => void
 ) {
-  const totalAmount = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
   const itemNames = items.map((i) => `${i.productName} x${i.quantity}`).join(", ");
 
   const options: RazorpayOptions = {
@@ -125,7 +140,11 @@ export function openRazorpayCheckout(
       contact: customerPhone,
     },
     theme: { color: "#0ea5e9" },
-    modal: { ondismiss: onDismiss },
+    modal: {
+      ondismiss: onDismiss,
+      backdropclose: false,
+      escape: false,
+    },
   };
 
   const rzp = new window.Razorpay(options);
