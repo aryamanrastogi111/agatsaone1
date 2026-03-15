@@ -1,159 +1,199 @@
 // src/pages/admin/Shipping.tsx
 import { useEffect, useState } from "react";
-import { db as supabase } from "@/integrations/supabase/db";
-import { Truck, Search, Package, AlertCircle, Clock, CheckCircle2 } from "lucide-react";
-import { format } from "date-fns";
-import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Truck, Search, CheckCircle2, Clock, Package, MapPin } from "lucide-react";
 
-interface Fulfillment {
+interface ShipOrder {
   id: string;
-  order_id: string;
-  tracking_number: string;
-  carrier: string;
+  razorpay_order_id: string | null;
+  customer_name: string | null;
+  customer_email: string | null;
+  customer_phone: string | null;
+  shipping_address: string | null;
+  shipping_city: string | null;
+  shipping_state: string | null;
+  shipping_pincode: string | null;
+  amount: number;
   status: string;
-  shipped_at: string;
-  estimated_delivery: string;
-  delivered_at: string;
-  notes: string;
-  orders?: { order_number: string; email: string; city: string; state: string };
+  items: any;
+  paid_at: string | null;
+  created_at: string;
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  pending:     "bg-yellow-500/20 text-yellow-400",
-  shipped:     "bg-blue-500/20 text-blue-400",
-  in_transit:  "bg-purple-500/20 text-purple-400",
-  delivered:   "bg-green-500/20 text-green-400",
-  failed:      "bg-red-500/20 text-red-400",
-  rto:         "bg-orange-500/20 text-orange-400",
-  returned:    "bg-gray-500/20 text-gray-400",
+  paid:       "bg-blue-100 text-blue-700",
+  confirmed:  "bg-purple-100 text-purple-700",
+  processing: "bg-yellow-100 text-yellow-700",
+  shipped:    "bg-cyan-100 text-cyan-700",
+  delivered:  "bg-green-100 text-green-700",
+  cancelled:  "bg-red-100 text-red-700",
+  created:    "bg-gray-100 text-gray-600",
 };
 
 export default function Shipping() {
-  const [fulfillments, setFulfillments] = useState<Fulfillment[]>([]);
+  const [orders, setOrders] = useState<ShipOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    (async () => {
-      const { data } = await supabase
-        .from("fulfillments")
-        .select("*, orders(order_number, email, city, state)")
-        .order("created_at", { ascending: false });
-      if (data) setFulfillments(data);
-      setLoading(false);
-    })();
-  }, []);
+  const fetchOrders = async () => {
+    const { data } = await supabase
+      .from("orders")
+      .select("*")
+      .in("status", ["paid", "confirmed", "processing", "shipped", "delivered"])
+      .order("created_at", { ascending: false });
+    setOrders((data ?? []) as ShipOrder[]);
+    setLoading(false);
+  };
 
-  const filtered = fulfillments.filter(f => {
+  useEffect(() => { fetchOrders(); }, []);
+
+  const updateStatus = async (id: string, status: string) => {
+    setUpdatingId(id);
+    await supabase.from("orders").update({ status }).eq("id", id);
+    await fetchOrders();
+    setUpdatingId(null);
+  };
+
+  const filtered = orders.filter(o => {
     const matchSearch =
-      (f.tracking_number ?? "").toLowerCase().includes(search.toLowerCase()) ||
-      (f.orders?.order_number ?? "").toLowerCase().includes(search.toLowerCase()) ||
-      (f.orders?.email ?? "").toLowerCase().includes(search.toLowerCase());
-    const matchStatus = statusFilter === "all" || f.status === statusFilter;
+      (o.customer_name ?? "").toLowerCase().includes(search.toLowerCase()) ||
+      (o.customer_email ?? "").toLowerCase().includes(search.toLowerCase()) ||
+      (o.razorpay_order_id ?? "").toLowerCase().includes(search.toLowerCase()) ||
+      (o.shipping_city ?? "").toLowerCase().includes(search.toLowerCase());
+    const matchStatus = statusFilter === "all" || o.status === statusFilter;
     return matchSearch && matchStatus;
   });
 
-  const shipped = fulfillments.filter(f => f.status === "shipped" || f.status === "in_transit").length;
-  const delivered = fulfillments.filter(f => f.status === "delivered").length;
-  const failed = fulfillments.filter(f => f.status === "failed" || f.status === "rto").length;
+  const shipped = orders.filter(o => o.status === "shipped").length;
+  const delivered = orders.filter(o => o.status === "delivered").length;
+  const pending = orders.filter(o => ["paid", "confirmed", "processing"].includes(o.status)).length;
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-white">Shipping & Fulfillment</h2>
-        <p className="text-sm text-gray-400">Track shipments and logistics operations</p>
+        <h2 className="text-xl font-bold text-gray-900">Shipping & Fulfillment</h2>
+        <p className="text-sm text-gray-500">Manage order dispatch and delivery tracking</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 flex items-center gap-4">
-          <Truck size={22} className="text-blue-400 shrink-0" />
-          <div><p className="text-sm text-gray-400">In Transit</p><p className="text-2xl font-bold text-white">{shipped}</p></div>
+        <div className="bg-white border border-gray-200 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+          <Clock size={22} className="text-yellow-500 shrink-0" />
+          <div><p className="text-sm text-gray-500">Awaiting Dispatch</p><p className="text-2xl font-bold text-gray-900">{pending}</p></div>
         </div>
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 flex items-center gap-4">
-          <CheckCircle2 size={22} className="text-green-400 shrink-0" />
-          <div><p className="text-sm text-gray-400">Delivered</p><p className="text-2xl font-bold text-white">{delivered}</p></div>
+        <div className="bg-white border border-gray-200 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+          <Truck size={22} className="text-blue-500 shrink-0" />
+          <div><p className="text-sm text-gray-500">Shipped</p><p className="text-2xl font-bold text-gray-900">{shipped}</p></div>
         </div>
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 flex items-center gap-4">
-          <AlertCircle size={22} className="text-red-400 shrink-0" />
-          <div><p className="text-sm text-gray-400">Failed / RTO</p><p className="text-2xl font-bold text-white">{failed}</p></div>
+        <div className="bg-white border border-gray-200 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+          <CheckCircle2 size={22} className="text-green-500 shrink-0" />
+          <div><p className="text-sm text-gray-500">Delivered</p><p className="text-2xl font-bold text-gray-900">{delivered}</p></div>
         </div>
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-xl">
-        <div className="p-4 border-b border-gray-800 flex flex-wrap items-center gap-3">
-          <div className="relative flex-1 min-w-[200px] max-w-xs">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search AWB, order, email…"
-              className="w-full pl-8 pr-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500" />
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by customer, order ID, or city…"
+            className="w-full bg-white border border-gray-300 rounded-lg pl-9 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500" />
+        </div>
+        <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
+          className="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:border-blue-500">
+          <option value="all">All Statuses</option>
+          <option value="paid">Paid (New)</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+        </select>
+      </div>
+
+      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+        {loading ? (
+          <div className="flex items-center justify-center h-40">
+            <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
           </div>
-          <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
-            className="px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-blue-500">
-            <option value="all">All Statuses</option>
-            {Object.keys(STATUS_COLORS).map(s => <option key={s} value={s}>{s.replace(/_/g, " ")}</option>)}
-          </select>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wider">
-                <th className="text-left px-5 py-3">Order</th>
-                <th className="text-left px-5 py-3">Carrier / AWB</th>
-                <th className="text-left px-5 py-3">Customer</th>
-                <th className="text-left px-5 py-3">Destination</th>
-                <th className="text-left px-5 py-3">Status</th>
-                <th className="text-left px-5 py-3">Shipped</th>
-                <th className="text-left px-5 py-3">ETA</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-800">
-              {loading && <tr><td colSpan={7} className="text-center py-12 text-gray-500">Loading…</td></tr>}
-              {!loading && filtered.length === 0 && (
-                <tr>
-                  <td colSpan={7} className="text-center py-12">
-                    <Truck size={32} className="mx-auto text-gray-700 mb-2" />
-                    <p className="text-gray-500">No shipments found</p>
-                  </td>
-                </tr>
-              )}
-              {filtered.map(f => (
-                <tr key={f.id} className="hover:bg-gray-800/40 transition-colors">
-                  <td className="px-5 py-3.5">
-                    <Link to={`/admin/orders/${f.order_id}`} className="font-medium text-blue-400 hover:text-blue-300">
-                      {f.orders?.order_number ?? f.order_id?.slice(0, 8) ?? "—"}
-                    </Link>
-                  </td>
-                  <td className="px-5 py-3.5">
-                    <p className="text-white font-medium">{f.carrier ?? "—"}</p>
-                    <p className="text-xs text-gray-400 font-mono">{f.tracking_number ?? "No AWB"}</p>
-                  </td>
-                  <td className="px-5 py-3.5 text-gray-300 text-xs">{f.orders?.email ?? "—"}</td>
-                  <td className="px-5 py-3.5 text-gray-300 text-xs">
-                    {[f.orders?.city, f.orders?.state].filter(Boolean).join(", ") || "—"}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[f.status] ?? "bg-gray-500/20 text-gray-400"}`}>
-                      {(f.status ?? "—").replace(/_/g, " ")}
-                    </span>
-                  </td>
-                  <td className="px-5 py-3.5 text-gray-400 text-xs">
-                    {f.shipped_at ? format(new Date(f.shipped_at), "MMM d, yyyy") : "—"}
-                  </td>
-                  <td className="px-5 py-3.5 text-gray-400 text-xs">
-                    {f.estimated_delivery ? format(new Date(f.estimated_delivery), "MMM d, yyyy") : "—"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-16">
+            <Truck size={32} className="text-gray-300 mx-auto mb-2" />
+            <p className="text-gray-500">No orders to show</p>
+          </div>
+        ) : (
+          <div className="divide-y divide-gray-100">
+            {filtered.map(o => (
+              <div key={o.id} className="p-5 hover:bg-gray-50 transition-colors">
+                <div className="flex items-start justify-between gap-4 flex-wrap">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <span className="font-mono text-xs text-gray-600 font-medium">{o.razorpay_order_id ?? o.id.slice(0, 8)}</span>
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[o.status] ?? "bg-gray-100 text-gray-600"}`}>
+                        {o.status}
+                      </span>
+                      <span className="text-sm font-bold text-gray-900">₹{o.amount?.toLocaleString("en-IN")}</span>
+                    </div>
+                    <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-500">
+                      <div>
+                        <p className="font-medium text-gray-700">{o.customer_name ?? "—"}</p>
+                        <p>{o.customer_email ?? "—"}</p>
+                        <p>{o.customer_phone ?? "—"}</p>
+                      </div>
+                      {o.shipping_address && (
+                        <div className="flex items-start gap-1.5">
+                          <MapPin size={12} className="mt-0.5 shrink-0 text-gray-400" />
+                          <div>
+                            <p>{o.shipping_address}</p>
+                            <p>{[o.shipping_city, o.shipping_state].filter(Boolean).join(", ")} {o.shipping_pincode}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    {o.items && Array.isArray(o.items) && o.items.length > 0 && (
+                      <p className="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
+                        <Package size={11} />
+                        {o.items.map((i: any) => `${i.productName ?? i.name} ×${i.quantity}`).join(", ")}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex gap-2 flex-wrap shrink-0">
+                    {o.status === "paid" && (
+                      <button onClick={() => updateStatus(o.id, "confirmed")} disabled={updatingId === o.id}
+                        className="text-xs px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium disabled:opacity-50 transition-colors">
+                        Confirm
+                      </button>
+                    )}
+                    {o.status === "confirmed" && (
+                      <button onClick={() => updateStatus(o.id, "processing")} disabled={updatingId === o.id}
+                        className="text-xs px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium disabled:opacity-50 transition-colors">
+                        Processing
+                      </button>
+                    )}
+                    {(o.status === "processing" || o.status === "confirmed") && (
+                      <button onClick={() => updateStatus(o.id, "shipped")} disabled={updatingId === o.id}
+                        className="text-xs px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg font-medium disabled:opacity-50 transition-colors">
+                        Mark Shipped
+                      </button>
+                    )}
+                    {o.status === "shipped" && (
+                      <button onClick={() => updateStatus(o.id, "delivered")} disabled={updatingId === o.id}
+                        className="text-xs px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium disabled:opacity-50 transition-colors">
+                        Mark Delivered
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Future integration placeholder */}
-      <div className="bg-gray-900/50 border border-dashed border-gray-700 rounded-xl p-6 text-center">
-        <Truck size={28} className="mx-auto text-gray-600 mb-2" />
-        <p className="text-sm text-gray-500 font-medium">Courier API Integration</p>
-        <p className="text-xs text-gray-600 mt-1">Future: Connect Shiprocket, Delhivery, or BlueDart for real-time tracking</p>
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+        <div className="flex items-center gap-2">
+          <Truck size={16} className="text-blue-500 shrink-0" />
+          <p className="text-sm text-blue-700 font-medium">Courier API Integration</p>
+        </div>
+        <p className="text-xs text-blue-600 mt-1">Future: Connect Shiprocket, Delhivery, or BlueDart for automatic AWB generation and real-time tracking</p>
       </div>
     </div>
   );
