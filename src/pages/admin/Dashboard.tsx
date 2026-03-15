@@ -50,7 +50,8 @@ const STATUS_COLORS: Record<string, string> = {
 
 function StatCard({ label, value, sub, icon: Icon, color }: {
   label: string; value: string; sub?: string;
-  icon: React.ComponentType<{ size?: number }>; color: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  icon: any; color: string;
 }) {
   return (
     <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
