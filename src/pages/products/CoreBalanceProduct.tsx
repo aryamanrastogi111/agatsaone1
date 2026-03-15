@@ -14,6 +14,7 @@ import appMetrics from "@/assets/corebalance-app-metrics.png";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { useInventory } from "@/hooks/useInventory";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { FomoCounter } from "@/components/shop/FomoCounter";
 

@@ -8,6 +8,7 @@ import { useRef, useEffect, useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { useFacebookPixel, useEasyTouchRhythmPixelPageView } from "@/hooks/useFacebookPixel";
+import { useInventory } from "@/hooks/useInventory";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { FomoCounter } from "@/components/shop/FomoCounter";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
