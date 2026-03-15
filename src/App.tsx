@@ -57,6 +57,7 @@ import AdminTeam from "./pages/admin/Team";
 import AdminSettings from "./pages/admin/Settings";
 import AdminIntegrations from "./pages/admin/Integrations";
 import AdminActivityLogs from "./pages/admin/ActivityLogs";
+import AdminEmailPreview from "./pages/admin/EmailPreview";
 
 const queryClient = new QueryClient();
 
@@ -119,6 +120,7 @@ const App = () => (
             <Route path="settings" element={<AdminSettings />} />
             <Route path="integrations" element={<AdminIntegrations />} />
             <Route path="activity-logs" element={<AdminActivityLogs />} />
+            <Route path="email-preview" element={<AdminEmailPreview />} />
           </Route>
           {/* Redirects for old routes */}
           <Route path="/solutions" element={<Navigate to="/support#solutions" replace />} />

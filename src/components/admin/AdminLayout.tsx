@@ -6,7 +6,7 @@ import {
   LayoutDashboard, Package, ShoppingCart, Users, Tag, Truck, Star,
   LogOut, Menu, X, ChevronRight, Bell, Settings, BarChart2,
   Boxes, RefreshCw, RotateCcw, UserCheck, LifeBuoy, Activity,
-  Puzzle, Shield, ChevronDown, ChevronUp,
+  Puzzle, Shield, ChevronDown, ChevronUp, Mail,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -56,9 +56,10 @@ const NAV_GROUPS: NavGroup[] = [
   {
     label: "System",
     items: [
-      { label: "Team & Access",  icon: Shield,  href: "/admin/team" },
-      { label: "Settings",       icon: Settings, href: "/admin/settings" },
-      { label: "Integrations",   icon: Puzzle,  href: "/admin/integrations" },
+      { label: "Team & Access",   icon: Shield,  href: "/admin/team" },
+      { label: "Email Previews",  icon: Mail,    href: "/admin/email-preview" },
+      { label: "Settings",        icon: Settings, href: "/admin/settings" },
+      { label: "Integrations",    icon: Puzzle,  href: "/admin/integrations" },
     ],
   },
 ];
