@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Mail, Users, ChevronDown } from "lucide-react";
+import { Mail, Users, Send, CheckCircle, XCircle, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 // ── Sample data ────────────────────────────────────────────────────────────────
 const SAMPLE = {
