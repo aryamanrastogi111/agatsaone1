@@ -61,9 +61,9 @@ function CustomModal({
   maxWidth?: string;
 }) {
   if (!open) return null;
-  return (
+  const modal = (
     <div
-      className="fixed inset-0 z-[200] overflow-y-auto"
+      className="fixed inset-0 z-[9999] overflow-y-auto"
       style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
     >
       <div className="flex min-h-full items-center justify-center p-4 py-8">
@@ -90,6 +90,7 @@ function CustomModal({
       </div>
     </div>
   );
+  return createPortal(modal, document.body);
 }
 
 export const CartDrawer = () => {
