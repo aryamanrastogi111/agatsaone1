@@ -371,10 +371,10 @@ serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // For externally-triggered Edge Functions (not invoked from Lovable editor),
-    // use LOVABLE_API_KEY as the run_id — this is the correct auth mechanism
-    // for transactional emails sent outside of a Lovable editor session.
-    const run_id = Deno.env.get("LOVABLE_API_KEY") ?? "";
+    // For transactional emails, run_id is not required — the LOVABLE_API_KEY
+    // is used by process-email-queue as the apiKey parameter to sendLovableEmail.
+    // Passing LOVABLE_API_KEY as run_id causes a 500 from the Lovable email API.
+    const run_id = "";
 
     // Plain-text fallbacks (strip HTML tags)
     const stripHtml = (html: string) => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
