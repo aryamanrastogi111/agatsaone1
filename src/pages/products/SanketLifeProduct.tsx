@@ -267,8 +267,11 @@ const SANKETLIFE_PRODUCTS: Record<string, { name: string; price: number; image: 
 const SanketLifeProduct = () => {
   const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
+  const { isOutOfStock } = useInventory();
+  const outOfStock = isOutOfStock("sanketlife");
 
   const handleAddToCart = (productId: string = "sanketlife-2") => {
+    if (outOfStock) return;
     const p = SANKETLIFE_PRODUCTS[productId];
     if (!p) return;
     setAddingToCart(true);
