@@ -188,7 +188,7 @@ export const CartDrawer = () => {
       }
 
       const orderData = await createRazorpayOrder(
-        items, customerName = name, email, phone,
+        items, name, email, phone,
         address, city, state, pincode,
         couponApplied ? finalTotal : undefined
       );
