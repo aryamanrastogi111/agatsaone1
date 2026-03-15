@@ -342,6 +342,9 @@ const SanketLifeProduct = () => {
               
               <MultiProductDiscountBanner variant="compact" className="mb-4" />
               
+              {/* Low stock FOMO */}
+              <LowStockBadge productKey="sanketlife" variant="banner" className="mb-4" />
+
               {/* Bonus Offer Section */}
               <div className="space-y-3 mb-6">
                 <div className="text-xs text-muted-foreground text-center">also</div>
