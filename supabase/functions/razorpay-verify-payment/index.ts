@@ -4,7 +4,7 @@ import { crypto } from "https://deno.land/std@0.168.0/crypto/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 async function hmacSHA256(key: string, message: string): Promise<string> {
@@ -29,15 +29,26 @@ serve(async (req) => {
 
   try {
     const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET");
-    const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
-    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
     if (!RAZORPAY_KEY_SECRET || !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
       throw new Error("Missing environment variables");
     }
 
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, customerEmail } =
-      await req.json();
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      customerEmail,
+      customerName,
+      items,
+      total,
+      shippingAddress,
+      shippingCity,
+      shippingState,
+      shippingPincode,
+    } = await req.json();
 
     // Verify signature
     const expectedSignature = await hmacSHA256(
@@ -54,7 +65,7 @@ serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // Update order status
+    // Update order status to paid
     const { data: order } = await supabase
       .from("orders")
       .update({
@@ -66,6 +77,30 @@ serve(async (req) => {
       .eq("razorpay_order_id", razorpay_order_id)
       .select()
       .single();
+
+    // Fire-and-forget: send order confirmation email
+    const projectId = Deno.env.get("SUPABASE_PROJECT_ID") || SUPABASE_URL.split("//")[1]?.split(".")[0];
+    if (projectId && customerEmail) {
+      fetch(`${SUPABASE_URL}/functions/v1/send-order-confirmation`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+        },
+        body: JSON.stringify({
+          customerEmail,
+          customerName,
+          orderId: razorpay_order_id,
+          paymentId: razorpay_payment_id,
+          items: items || order?.items || [],
+          total: total || order?.amount,
+          shippingAddress: shippingAddress || order?.shipping_address,
+          shippingCity: shippingCity || order?.shipping_city,
+          shippingState: shippingState || order?.shipping_state,
+          shippingPincode: shippingPincode || order?.shipping_pincode,
+        }),
+      }).catch((err) => console.error("Failed to trigger confirmation email:", err));
+    }
 
     return new Response(
       JSON.stringify({ success: true, order }),
