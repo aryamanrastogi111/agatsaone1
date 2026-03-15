@@ -367,13 +367,13 @@ export default function OrdersList() {
 
   return (
     <div className="space-y-5">
-      <div className="flex gap-1 bg-gray-900 border border-gray-800 rounded-xl p-1 w-fit">
+      <div className="flex gap-1 bg-gray-100 border border-gray-200 rounded-xl p-1 w-fit">
         <button onClick={() => setTab("razorpay")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "razorpay" ? "bg-blue-600 text-white" : "text-gray-400 hover:text-white"}`}>
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "razorpay" ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700"}`}>
           <CreditCard size={14} /> Razorpay Orders
         </button>
         <button onClick={() => setTab("shopify")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "shopify" ? "bg-green-700 text-white" : "text-gray-400 hover:text-white"}`}>
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${tab === "shopify" ? "bg-white text-gray-900 shadow-sm border border-gray-200" : "text-gray-500 hover:text-gray-700"}`}>
           <ShoppingBag size={14} /> Shopify (Legacy)
         </button>
       </div>
