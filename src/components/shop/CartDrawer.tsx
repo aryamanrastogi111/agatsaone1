@@ -501,7 +501,7 @@ export const CartDrawer = () => {
               </div>
 
               {/* Email confirmation */}
-              <div className="rounded-lg border border-blue-500/20 bg-blue-500/5 p-3 text-center">
+              <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-center">
                 <p className="text-sm text-foreground">
                   📧 A confirmation email will be sent to{" "}
                   <span className="font-medium text-primary">{successData.customerEmail}</span>
