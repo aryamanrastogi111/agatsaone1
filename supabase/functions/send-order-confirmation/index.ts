@@ -371,6 +371,12 @@ serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+    // run_id must be the Lovable project run ID (not a self-generated UUID)
+    const run_id = Deno.env.get("LOVABLE_RUN_ID") ?? "";
+    if (!run_id) {
+      console.error("LOVABLE_RUN_ID environment variable is not set");
+    }
+
     // Plain-text fallbacks (strip HTML tags)
     const stripHtml = (html: string) => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
     const customerText = stripHtml(customerEmailHtml);
@@ -387,7 +393,7 @@ serve(async (req) => {
     const { error: customerEnqueueError } = await supabase.rpc("enqueue_email", {
       queue_name: "transactional_emails",
       payload: {
-        run_id: customerMsgId,
+        run_id,
         message_id: customerMsgId,
         to: customerEmail,
         from: "Agatsa Medical Technologies <orders@notify.agatsa.in>",
@@ -417,7 +423,7 @@ serve(async (req) => {
     const { error: teamEnqueueError } = await supabase.rpc("enqueue_email", {
       queue_name: "transactional_emails",
       payload: {
-        run_id: teamMsgId,
+        run_id,
         message_id: teamMsgId,
         to: teamRecipient,
         from: "Agatsa Orders <orders@notify.agatsa.in>",
