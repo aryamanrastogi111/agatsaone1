@@ -124,6 +124,16 @@ export const CartDrawer = () => {
 
   const handlePay = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Manual validation — HTML required doesn't always fire in custom modals
+    if (!name.trim()) { toast.error("Please enter your full name."); return; }
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast.error("Please enter a valid email address."); return; }
+    if (!phone.trim() || phone.replace(/\D/g, "").length < 10) { toast.error("Please enter a valid 10-digit phone number."); return; }
+    if (!address.trim()) { toast.error("Please enter your delivery address."); return; }
+    if (!city.trim()) { toast.error("Please enter your city."); return; }
+    if (!state.trim()) { toast.error("Please enter your state."); return; }
+    if (!/^\d{6}$/.test(pincode.trim())) { toast.error("Please enter a valid 6-digit PIN code."); return; }
+
     setIsPaying(true);
 
     try {
