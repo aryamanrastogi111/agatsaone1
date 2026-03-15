@@ -7,11 +7,6 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Agatsa brand colors
-const BRAND_BLUE = "#0ea5e9";
-const BRAND_DARK = "#0f172a";
-
-// Estimated delivery window
 function getDeliveryWindow(): { from: string; to: string } {
   const now = new Date();
   const addBusinessDays = (date: Date, days: number) => {
@@ -31,6 +26,36 @@ function getDeliveryWindow(): { from: string; to: string } {
   };
 }
 
+async function sendViaResend(params: {
+  to: string;
+  from: string;
+  subject: string;
+  html: string;
+  text: string;
+  resendApiKey: string;
+}): Promise<{ success: boolean; id?: string; error?: string }> {
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${params.resendApiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: params.from,
+      to: [params.to],
+      subject: params.subject,
+      html: params.html,
+      text: params.text,
+    }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    return { success: false, error: data?.message || JSON.stringify(data) };
+  }
+  return { success: true, id: data.id };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -39,6 +64,15 @@ serve(async (req) => {
   try {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY")!;
+
+    if (!RESEND_API_KEY) {
+      console.error("RESEND_API_KEY secret is not configured");
+      return new Response(JSON.stringify({ error: "Email service not configured" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     const {
       customerEmail,
@@ -69,7 +103,6 @@ serve(async (req) => {
       .filter(Boolean)
       .join(", ");
 
-    // Format items
     const itemsHtml = (items || [])
       .map(
         (item: { productName: string; variantTitle?: string; quantity: number; price: number }) =>
@@ -96,23 +129,12 @@ serve(async (req) => {
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
-
-          <!-- Header -->
           <tr>
             <td style="background:linear-gradient(135deg,#0ea5e9 0%,#0284c7 100%);padding:32px 40px;text-align:center;">
-              <table cellpadding="0" cellspacing="0" align="center">
-                <tr>
-                  <td>
-                    <img src="https://agatsaone1.lovable.app/agatsa-favicon.png" alt="Agatsa" width="40" height="40" style="display:block;margin:0 auto 12px;border-radius:8px;"/>
-                  </td>
-                </tr>
-              </table>
               <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;letter-spacing:-0.3px;">Agatsa Medical Technologies</h1>
               <p style="color:#bae6fd;margin:6px 0 0;font-size:13px;letter-spacing:0.3px;">YOUR HEART, OUR PRIORITY</p>
             </td>
           </tr>
-
-          <!-- Success Banner -->
           <tr>
             <td style="background:#f0fdf4;padding:28px 40px 20px;text-align:center;border-bottom:2px solid #dcfce7;">
               <div style="display:inline-block;background:#22c55e;width:52px;height:52px;border-radius:50%;text-align:center;line-height:52px;font-size:26px;margin-bottom:12px;">✓</div>
@@ -120,12 +142,8 @@ serve(async (req) => {
               <p style="color:#166534;margin:0;font-size:15px;">Thank you, <strong>${customerName || "Valued Customer"}</strong>! Your order is on its way.</p>
             </td>
           </tr>
-
-          <!-- Body -->
           <tr>
             <td style="padding:32px 40px;">
-
-              <!-- Delivery Estimate Banner -->
               <table width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:12px;margin-bottom:28px;border:1px solid #bfdbfe;">
                 <tr>
                   <td style="padding:18px 20px;">
@@ -144,8 +162,6 @@ serve(async (req) => {
                   </td>
                 </tr>
               </table>
-
-              <!-- Order Reference -->
               <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:10px;margin-bottom:24px;border:1px solid #e2e8f0;">
                 <tr>
                   <td style="padding:16px 18px;">
@@ -155,17 +171,6 @@ serve(async (req) => {
                   </td>
                 </tr>
               </table>
-
-              <!-- Product Image Row -->
-              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
-                <tr>
-                  <td align="center">
-                    <img src="https://agatsaone1.lovable.app/agatsa-favicon.png" alt="Agatsa Product" width="120" height="120" style="border-radius:12px;object-fit:cover;border:2px solid #e2e8f0;"/>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- Items Table -->
               <h3 style="margin:0 0 12px;font-size:15px;color:#0f172a;font-weight:700;">📦 Items Ordered</h3>
               <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:24px;">
                 <thead>
@@ -183,8 +188,6 @@ serve(async (req) => {
                   </tr>
                 </tbody>
               </table>
-
-              <!-- Shipping Address -->
               <h3 style="margin:0 0 10px;font-size:15px;color:#0f172a;font-weight:700;">📍 Delivery Address</h3>
               <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:10px;margin-bottom:24px;border:1px solid #e2e8f0;">
                 <tr>
@@ -193,8 +196,6 @@ serve(async (req) => {
                   </td>
                 </tr>
               </table>
-
-              <!-- What's Next -->
               <table width="100%" cellpadding="0" cellspacing="0" style="background:#fefce8;border:1px solid #fde68a;border-radius:10px;margin-bottom:24px;">
                 <tr>
                   <td style="padding:16px 18px;">
@@ -207,8 +208,6 @@ serve(async (req) => {
                   </td>
                 </tr>
               </table>
-
-              <!-- Support -->
               <table width="100%" cellpadding="0" cellspacing="0" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;">
                 <tr>
                   <td style="padding:16px 18px;">
@@ -221,18 +220,14 @@ serve(async (req) => {
                   </td>
                 </tr>
               </table>
-
             </td>
           </tr>
-
-          <!-- Footer -->
           <tr>
             <td style="background:#f8fafc;padding:24px 40px;text-align:center;border-top:1px solid #e2e8f0;">
               <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;font-weight:600;">© 2025 Agatsa Medical Technologies Pvt. Ltd.</p>
               <p style="margin:0;font-size:11px;color:#cbd5e1;">Bengaluru, India · <a href="https://agatsa.com" style="color:#94a3b8;text-decoration:none;">agatsa.com</a></p>
             </td>
           </tr>
-
         </table>
       </td>
     </tr>
@@ -264,16 +259,12 @@ serve(async (req) => {
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.07);">
-
-          <!-- Header -->
           <tr>
             <td style="background:#0f172a;padding:20px 32px;text-align:center;">
               <h1 style="color:#f8fafc;margin:0;font-size:18px;font-weight:700;">🛎️ New Order Alert</h1>
               <p style="color:#94a3b8;margin:4px 0 0;font-size:12px;text-transform:uppercase;letter-spacing:0.8px;">Agatsa Internal Notification</p>
             </td>
           </tr>
-
-          <!-- Alert Banner -->
           <tr>
             <td style="background:#fef3c7;padding:14px 32px;border-bottom:2px solid #fde68a;">
               <p style="margin:0;font-size:14px;color:#92400e;font-weight:700;text-align:center;">
@@ -281,12 +272,8 @@ serve(async (req) => {
               </p>
             </td>
           </tr>
-
-          <!-- Body -->
           <tr>
             <td style="padding:28px 32px;">
-
-              <!-- Customer Info -->
               <h3 style="margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:0.7px;color:#64748b;font-weight:700;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">👤 Customer Details</h3>
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
                 <tr>
@@ -302,8 +289,6 @@ serve(async (req) => {
                   <td style="padding:6px 0;font-size:14px;color:#0f172a;">${fullAddress || "—"}</td>
                 </tr>
               </table>
-
-              <!-- Order Details -->
               <h3 style="margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:0.7px;color:#64748b;font-weight:700;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">📦 Order Details</h3>
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
                 <tr>
@@ -323,8 +308,6 @@ serve(async (req) => {
                   <td style="padding:6px 0;font-size:14px;color:#0f172a;font-weight:600;">${delivery.from} – ${delivery.to}</td>
                 </tr>
               </table>
-
-              <!-- Items -->
               <h3 style="margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:0.7px;color:#64748b;font-weight:700;border-bottom:2px solid #e2e8f0;padding-bottom:8px;">🛒 Items to Fulfill</h3>
               <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin-bottom:24px;">
                 <thead>
@@ -342,8 +325,6 @@ serve(async (req) => {
                   </tr>
                 </tbody>
               </table>
-
-              <!-- CTA -->
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td align="center">
@@ -351,17 +332,13 @@ serve(async (req) => {
                   </td>
                 </tr>
               </table>
-
             </td>
           </tr>
-
-          <!-- Footer -->
           <tr>
             <td style="background:#f8fafc;padding:16px 32px;text-align:center;border-top:1px solid #e2e8f0;">
               <p style="margin:0;font-size:11px;color:#94a3b8;">Agatsa Medical Technologies · Internal Use Only</p>
             </td>
           </tr>
-
         </table>
       </td>
     </tr>
@@ -369,84 +346,63 @@ serve(async (req) => {
 </body>
 </html>`;
 
+    const stripHtml = (html: string) => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // For transactional emails, run_id is not required — the LOVABLE_API_KEY
-    // is used by process-email-queue as the apiKey parameter to sendLovableEmail.
-    // Passing LOVABLE_API_KEY as run_id causes a 500 from the Lovable email API.
-    const run_id = "";
+    // ─── SEND CUSTOMER EMAIL VIA RESEND ──────────────────────────────────────
+    const customerResult = await sendViaResend({
+      to: customerEmail,
+      from: "Agatsa Medical Technologies <orders@notify.agatsa.in>",
+      subject: `✅ Order Confirmed – ${orderId} | Agatsa`,
+      html: customerEmailHtml,
+      text: stripHtml(customerEmailHtml),
+      resendApiKey: RESEND_API_KEY,
+    });
 
-    // Plain-text fallbacks (strip HTML tags)
-    const stripHtml = (html: string) => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-    const customerText = stripHtml(customerEmailHtml);
-    const teamText = stripHtml(teamEmailHtml);
+    console.log("Customer email result:", JSON.stringify(customerResult));
 
-    // ─── ENQUEUE CUSTOMER EMAIL ───────────────────────────────────────────────
-    const customerMsgId = crypto.randomUUID();
     await supabase.from("email_send_log").insert({
-      message_id: customerMsgId,
+      message_id: crypto.randomUUID(),
       template_name: "order_confirmation",
       recipient_email: customerEmail,
-      status: "pending",
+      status: customerResult.success ? "sent" : "failed",
+      error_message: customerResult.error || null,
+      metadata: { resend_id: customerResult.id },
     });
-    const { error: customerEnqueueError } = await supabase.rpc("enqueue_email", {
-      queue_name: "transactional_emails",
-      payload: {
-        run_id,
-        message_id: customerMsgId,
-        to: customerEmail,
-        from: "Agatsa Medical Technologies <orders@notify.agatsa.in>",
-        sender_domain: "notify.agatsa.in",
-        subject: `✅ Order Confirmed – ${orderId} | Agatsa`,
-        html: customerEmailHtml,
-        text: customerText,
-        purpose: "transactional",
-        label: "order_confirmation",
-        queued_at: new Date().toISOString(),
-      },
-    });
-    if (customerEnqueueError) {
-      console.error("Failed to enqueue customer email:", customerEnqueueError);
-    } else {
-      console.log("Customer email enqueued:", customerMsgId);
-    }
 
-    // ─── ENQUEUE TEAM NOTIFICATION ────────────────────────────────────────────
-    const teamMsgId = crypto.randomUUID();
+    // ─── SEND TEAM EMAIL VIA RESEND ───────────────────────────────────────────
+    const teamResult = await sendViaResend({
+      to: teamRecipient,
+      from: "Agatsa Orders <orders@notify.agatsa.in>",
+      subject: `🛎️ New Order: ${customerName || customerEmail} – ${totalFormatted}`,
+      html: teamEmailHtml,
+      text: stripHtml(teamEmailHtml),
+      resendApiKey: RESEND_API_KEY,
+    });
+
+    console.log("Team email result:", JSON.stringify(teamResult));
+
     await supabase.from("email_send_log").insert({
-      message_id: teamMsgId,
+      message_id: crypto.randomUUID(),
       template_name: "order_team_notification",
       recipient_email: teamRecipient,
-      status: "pending",
+      status: teamResult.success ? "sent" : "failed",
+      error_message: teamResult.error || null,
+      metadata: { resend_id: teamResult.id },
     });
-    const { error: teamEnqueueError } = await supabase.rpc("enqueue_email", {
-      queue_name: "transactional_emails",
-      payload: {
-        run_id,
-        message_id: teamMsgId,
-        to: teamRecipient,
-        from: "Agatsa Orders <orders@notify.agatsa.in>",
-        sender_domain: "notify.agatsa.in",
-        subject: `🛎️ New Order: ${customerName || customerEmail} – ${totalFormatted}`,
-        html: teamEmailHtml,
-        text: teamText,
-        purpose: "transactional",
-        label: "order_team_notification",
-        queued_at: new Date().toISOString(),
-      },
-    });
-    if (teamEnqueueError) {
-      console.error("Failed to enqueue team email:", teamEnqueueError);
-    } else {
-      console.log("Team email enqueued:", teamMsgId);
-    }
 
     // Update order status
     await supabase.from("orders").update({ status: "confirmed" }).eq("razorpay_order_id", orderId);
 
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        success: true,
+        customer: customerResult,
+        team: teamResult,
+      }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
   } catch (error) {
     console.error("Order confirmation email error:", error);
     return new Response(
