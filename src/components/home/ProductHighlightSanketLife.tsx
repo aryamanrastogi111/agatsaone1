@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Heart, Shield, Smartphone, CheckCircle } from "lucide-react";
+import { ArrowRight, Heart, Shield, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import sanketlifeImg from "@/assets/sanketlife-hero.png";
 
 export function ProductHighlightSanketLife() {
@@ -31,9 +32,12 @@ export function ProductHighlightSanketLife() {
             <p className="text-xl text-primary font-medium mb-4">
               Your Heart, in Your Hands
             </p>
-            <p className="text-muted-foreground text-lg mb-6">
+            <p className="text-muted-foreground text-lg mb-4">
               A portable, medical-grade ECG device that lets you monitor your heart health anytime, anywhere. Get hospital-quality cardiac readings without the hospital visit.
             </p>
+
+            {/* FOMO low-stock banner */}
+            <LowStockBadge productKey="sanketlife" variant="banner" className="mb-6" />
 
             <div className="space-y-4 mb-8">
               {features.map((feature, index) => (

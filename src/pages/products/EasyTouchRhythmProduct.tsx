@@ -11,6 +11,7 @@ import { useFacebookPixel, useEasyTouchRhythmPixelPageView } from "@/hooks/useFa
 import { useInventory } from "@/hooks/useInventory";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { FomoCounter } from "@/components/shop/FomoCounter";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { 
   CountdownTimer, 
@@ -188,6 +189,9 @@ const EasyTouchRhythmProduct = () => {
           <div className="container py-4 md:py-5">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               {/* Left: Sale info with small banner image */}
+              {/* Low stock FOMO */}
+              <LowStockBadge productKey="easytouch-rhythm" variant="banner" className="mb-4" />
+
               <div className="flex items-center gap-4">
                 <img 
                   src={republicDayHeroBanner} 

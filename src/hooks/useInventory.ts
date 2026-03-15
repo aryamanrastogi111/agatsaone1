@@ -69,13 +69,19 @@ export function useInventory() {
     return qty !== undefined && qty <= 0;
   };
 
+  /** Check if a product/variant is low stock (qty > 0 and <= threshold, default 10) */
+  const isLowStock = (key: string, threshold = 10): boolean => {
+    const qty = inventory[key];
+    return qty !== undefined && qty > 0 && qty <= threshold;
+  };
+
   /** Get available quantity for a key */
   const getQuantity = (key: string): number | null => {
     const qty = inventory[key];
     return qty !== undefined ? qty : null;
   };
 
-  return { inventory, loading, isOutOfStock, getQuantity, reload: loadInventory };
+  return { inventory, loading, isOutOfStock, isLowStock, getQuantity, reload: loadInventory };
 }
 
 export function invalidateInventoryCache() {

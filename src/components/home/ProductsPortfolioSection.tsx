@@ -4,6 +4,7 @@ import { ExternalLink, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { products } from "@/data/products";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 
 export function ProductsPortfolioSection() {
   return (
@@ -59,9 +60,15 @@ export function ProductsPortfolioSection() {
                   <p className="text-primary text-xs font-medium mt-0.5 mb-2">
                     {product.tagline}
                   </p>
-                  <p className="text-muted-foreground text-xs mb-3 line-clamp-2 flex-1">
+                  <p className="text-muted-foreground text-xs mb-2 line-clamp-2 flex-1">
                     {product.description}
                   </p>
+                  {/* Low stock / out-of-stock badge */}
+                  {!product.isExternal && (
+                    <div className="mb-2">
+                      <LowStockBadge productKey={product.id} variant="badge" />
+                    </div>
+                  )}
                   {product.price && (
                     <p className="text-sm font-bold text-foreground mb-3">{product.price}</p>
                   )}

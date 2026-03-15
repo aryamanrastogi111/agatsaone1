@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Scale, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import corebalanceImg from "@/assets/corebalance-hero.png";
 
 export function ProductHighlightCoreBalance() {
@@ -46,9 +47,12 @@ export function ProductHighlightCoreBalance() {
             <p className="text-xl text-primary font-medium mb-4">
               Beyond Just Weight
             </p>
-            <p className="text-muted-foreground text-lg mb-6">
+            <p className="text-muted-foreground text-lg mb-4">
               An advanced body composition analyzer that gives you insights beyond the scale. Understand your body better with professional-grade accuracy at home.
             </p>
+
+            {/* FOMO low-stock banner */}
+            <LowStockBadge productKey="corebalance" variant="banner" className="mb-6" />
 
             <div className="space-y-4 mb-8">
               {features.map((feature, index) => (

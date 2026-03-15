@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Moon, Leaf, Battery } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import zluImg from "@/assets/zlu-device-new.webp";
 
 export function ProductHighlightZlu() {
@@ -31,9 +32,12 @@ export function ProductHighlightZlu() {
             <p className="text-xl text-primary font-medium mb-4">
               Rest Better, Naturally
             </p>
-            <p className="text-muted-foreground text-lg mb-6">
+            <p className="text-muted-foreground text-lg mb-4">
               A non-invasive sleep support device that helps you achieve deeper, more restful sleep without medication. Perfect for those seeking natural solutions to sleep challenges.
             </p>
+
+            {/* FOMO low-stock banner */}
+            <LowStockBadge productKey="zlu" variant="banner" className="mb-6" />
 
             <div className="space-y-4 mb-8">
               {features.map((feature, index) => (

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { products } from "@/data/products";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 
 const categoryIcons = {
   heart: Heart,
@@ -111,9 +112,13 @@ const Products = () => {
                           </span>
                         )}
                       </div>
-                      <p className="text-muted-foreground mb-4">
+                      <p className="text-muted-foreground mb-3">
                         {product.description}
                       </p>
+                      {/* Low stock / out-of-stock FOMO */}
+                      {!product.isExternal && (
+                        <LowStockBadge productKey={product.id} variant="inline" className="mb-3" />
+                      )}
                       <ul className="space-y-2 mb-6">
                         {product.benefits.map((benefit, index) => (
                           <li

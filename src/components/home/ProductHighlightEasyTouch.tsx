@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Brain, Zap, Sun, Heart, Flame } from "lucide-react";
+import { ArrowRight, Brain, Zap, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { RepublicDaySaleBadge, CountdownTimer, CouponCodeBox, isSaleActive, SALE_CODE } from "@/components/sale";
+import { RepublicDaySaleBadge, CountdownTimer, CouponCodeBox, isSaleActive } from "@/components/sale";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import easytouchImg from "@/assets/easytouch-rhythm-new.png";
 
 export function ProductHighlightEasyTouch() {
@@ -23,7 +24,6 @@ export function ProductHighlightEasyTouch() {
             transition={{ duration: 0.6 }}
           >
             <div className="relative">
-              {/* Sale Badge */}
               {isSaleActive() && (
                 <RepublicDaySaleBadge className="absolute -top-4 left-4 z-10" />
               )}
@@ -51,9 +51,12 @@ export function ProductHighlightEasyTouch() {
             <p className="text-xl text-primary font-medium mb-4">
               Understand Why Your Body Feels the Way It Does
             </p>
-            <p className="text-muted-foreground text-lg mb-6">
+            <p className="text-muted-foreground text-lg mb-4">
               More than a fitness tracker — EasyTouch Rhythm reveals the hidden patterns behind your energy, fatigue, clarity, and calm by tracking 5 interconnected body rhythms.
             </p>
+
+            {/* FOMO low-stock banner */}
+            <LowStockBadge productKey="easytouch-rhythm" variant="banner" className="mb-6" />
 
             <div className="space-y-4 mb-8">
               {features.map((feature, index) => (
@@ -73,7 +76,6 @@ export function ProductHighlightEasyTouch() {
               ))}
             </div>
 
-            {/* Republic Day Sale Section */}
             {isSaleActive() && (
               <div className="bg-gradient-to-r from-orange-500/10 via-background to-green-600/10 border border-primary/20 rounded-xl p-4 mb-6">
                 <div className="flex items-center gap-2 mb-2">
