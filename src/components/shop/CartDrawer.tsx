@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -60,32 +61,36 @@ function CustomModal({
   maxWidth?: string;
 }) {
   if (!open) return null;
-  return (
+  const modal = (
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[9999] overflow-y-auto"
       style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
     >
-      <div
-        className={`relative bg-background border border-border rounded-xl shadow-2xl w-full ${maxWidth} max-h-[90vh] overflow-y-auto`}
-      >
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="absolute right-4 top-4 z-10 rounded-sm opacity-70 hover:opacity-100 transition-opacity"
-          >
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
-          </button>
-        )}
-        {title && (
-          <div className="px-6 pt-6 pb-2">
-            <h2 className="text-lg font-semibold leading-none tracking-tight">{title}</h2>
-          </div>
-        )}
-        <div className="px-6 pb-6 pt-2">{children}</div>
+      <div className="flex min-h-full items-center justify-center p-4 py-8">
+        <div
+          className={`relative bg-background border border-border rounded-xl shadow-2xl w-full ${maxWidth}`}
+        >
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="absolute right-4 top-4 z-10 rounded-sm opacity-70 hover:opacity-100 transition-opacity"
+            >
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </button>
+          )}
+          {title && (
+            <div className="px-6 pt-6 pb-2 pr-10">
+              <h2 className="text-lg font-semibold leading-none tracking-tight">{title}</h2>
+            </div>
+          )}
+          <div className="px-6 pb-6 pt-2">{children}</div>
+        </div>
       </div>
     </div>
   );
+  return createPortal(modal, document.body);
 }
 
 export const CartDrawer = () => {
@@ -121,6 +126,16 @@ export const CartDrawer = () => {
 
   const handlePay = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Manual validation — HTML required doesn't always fire in custom modals
+    if (!name.trim()) { toast.error("Please enter your full name."); return; }
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast.error("Please enter a valid email address."); return; }
+    if (!phone.trim() || phone.replace(/\D/g, "").length < 10) { toast.error("Please enter a valid 10-digit phone number."); return; }
+    if (!address.trim()) { toast.error("Please enter your delivery address."); return; }
+    if (!city.trim()) { toast.error("Please enter your city."); return; }
+    if (!state.trim()) { toast.error("Please enter your state."); return; }
+    if (!/^\d{6}$/.test(pincode.trim())) { toast.error("Please enter a valid 6-digit PIN code."); return; }
+
     setIsPaying(true);
 
     try {
