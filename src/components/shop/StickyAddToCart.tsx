@@ -9,6 +9,7 @@ interface StickyAddToCartProps {
   onAddToCart: () => void;
   isLoading?: boolean;
   themeColor?: string;
+  outOfStock?: boolean;
 }
 
 export const StickyAddToCart = ({
