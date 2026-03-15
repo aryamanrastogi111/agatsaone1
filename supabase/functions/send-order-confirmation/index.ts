@@ -89,6 +89,10 @@ serve(async (req) => {
     } = await req.json();
 
     const teamRecipient = _testTeamEmail || "info@agatsa.com";
+    // Allow override sender for testing (e.g. onboarding@resend.dev)
+    const senderDomain = "notify.agatsa.in";
+    const customerFrom = `Agatsa Medical Technologies <orders@${senderDomain}>`;
+    const teamFrom = `Agatsa Orders <orders@${senderDomain}>`;
 
     if (!customerEmail || !orderId) {
       return new Response(JSON.stringify({ error: "Missing required fields" }), {
