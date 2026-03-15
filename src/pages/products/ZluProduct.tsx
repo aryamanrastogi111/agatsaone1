@@ -144,19 +144,26 @@ const ZluProduct = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button 
-                  size="lg" 
-                  className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
-                  onClick={handleAddToCart}
-                  disabled={addingToCart}
-                >
-                  {addingToCart ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <ShoppingCart className="h-5 w-5" />
-                  )}
-                  Add to Cart — ₹4,999
-                </Button>
+                {outOfStock ? (
+                  <div className="flex items-center gap-2 px-6 py-3 bg-red-50 border border-red-200 rounded-lg text-red-700 font-medium text-sm">
+                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    Out of Stock — Check back soon
+                  </div>
+                ) : (
+                  <Button 
+                    size="lg" 
+                    className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
+                    onClick={handleAddToCart}
+                    disabled={addingToCart}
+                  >
+                    {addingToCart ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <ShoppingCart className="h-5 w-5" />
+                    )}
+                    Add to Cart — ₹4,999
+                  </Button>
+                )}
               </div>
               
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
