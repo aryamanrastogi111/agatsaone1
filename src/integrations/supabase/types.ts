@@ -269,62 +269,77 @@ export type Database = {
       orders: {
         Row: {
           amount: number
+          courier_partner: string | null
           created_at: string
           currency: string
           customer_email: string | null
           customer_name: string | null
           customer_phone: string | null
+          delivery_method: string | null
+          estimated_delivery: string | null
           id: string
           items: Json | null
           paid_at: string | null
           razorpay_order_id: string | null
           razorpay_payment_id: string | null
           razorpay_signature: string | null
+          shipped_at: string | null
           shipping_address: string | null
           shipping_city: string | null
           shipping_pincode: string | null
           shipping_state: string | null
           status: string
+          tracking_number: string | null
           updated_at: string
         }
         Insert: {
           amount: number
+          courier_partner?: string | null
           created_at?: string
           currency?: string
           customer_email?: string | null
           customer_name?: string | null
           customer_phone?: string | null
+          delivery_method?: string | null
+          estimated_delivery?: string | null
           id?: string
           items?: Json | null
           paid_at?: string | null
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
           razorpay_signature?: string | null
+          shipped_at?: string | null
           shipping_address?: string | null
           shipping_city?: string | null
           shipping_pincode?: string | null
           shipping_state?: string | null
           status?: string
+          tracking_number?: string | null
           updated_at?: string
         }
         Update: {
           amount?: number
+          courier_partner?: string | null
           created_at?: string
           currency?: string
           customer_email?: string | null
           customer_name?: string | null
           customer_phone?: string | null
+          delivery_method?: string | null
+          estimated_delivery?: string | null
           id?: string
           items?: Json | null
           paid_at?: string | null
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
           razorpay_signature?: string | null
+          shipped_at?: string | null
           shipping_address?: string | null
           shipping_city?: string | null
           shipping_pincode?: string | null
           shipping_state?: string | null
           status?: string
+          tracking_number?: string | null
           updated_at?: string
         }
         Relationships: []
