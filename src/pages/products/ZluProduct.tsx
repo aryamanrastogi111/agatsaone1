@@ -15,6 +15,7 @@ import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { useInventory } from "@/hooks/useInventory";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { FomoCounter } from "@/components/shop/FomoCounter";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 // Counting number animation component
 const CountingNumber = ({ value, delay = 0, className = "" }: { value: number; delay?: number; className?: string }) => {
   const ref = useRef(null);

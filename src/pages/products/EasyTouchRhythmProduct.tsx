@@ -11,6 +11,7 @@ import { useFacebookPixel, useEasyTouchRhythmPixelPageView } from "@/hooks/useFa
 import { useInventory } from "@/hooks/useInventory";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { FomoCounter } from "@/components/shop/FomoCounter";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { 
   CountdownTimer, 
