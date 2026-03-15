@@ -445,8 +445,8 @@ export const CartDrawer = () => {
       <Dialog open={!!successData} onOpenChange={(open) => { if (!open) setSuccessData(null); }}>
         <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
           <div className="text-center py-2">
-            <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 className="h-9 w-9 text-green-500" />
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="h-9 w-9 text-primary" />
             </div>
             <h2 className="text-2xl font-bold mb-1">Order Confirmed! 🎉</h2>
             <p className="text-muted-foreground text-sm mb-5">
