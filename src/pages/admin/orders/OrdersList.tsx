@@ -35,6 +35,8 @@ interface RazorpayOrder {
   amount: number; currency: string; status: string;
   customer_name: string | null; customer_email: string | null;
   customer_phone: string | null;
+  shipping_address: string | null; shipping_city: string | null;
+  shipping_state: string | null; shipping_pincode: string | null;
   items: { productName: string; quantity: number; price: number }[] | null;
   paid_at: string | null; created_at: string;
 }
@@ -86,13 +88,13 @@ function RazorpayOrdersTab() {
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <CreditCard size={18} className="text-blue-400" /> Razorpay Orders
+          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <CreditCard size={18} className="text-blue-500" /> Razorpay Orders
           </h2>
-          <p className="text-sm text-gray-400">{total} total orders</p>
+          <p className="text-sm text-gray-500">{total} total orders</p>
         </div>
         <button onClick={exportCSV}
-          className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium px-4 py-2 rounded-lg border border-gray-700">
+          className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 shadow-sm transition-colors">
           <Download size={15} /> Export CSV
         </button>
       </div>
@@ -102,10 +104,10 @@ function RazorpayOrdersTab() {
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input type="text" placeholder="Search by name, email or order ID…" value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(0); }}
-            className="w-full bg-gray-900 border border-gray-700 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500" />
+            className="w-full bg-white border border-gray-300 rounded-lg pl-9 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500" />
         </div>
         <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(0); }}
-          className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none">
+          className="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:border-blue-500">
           <option value="all">All Status</option>
           <option value="created">Created</option>
           <option value="paid">Paid</option>
@@ -114,52 +116,61 @@ function RazorpayOrdersTab() {
         </select>
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
         {loading ? (
           <div className="flex items-center justify-center h-40">
             <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
           </div>
         ) : orders.length === 0 ? (
           <div className="text-center py-16">
-            <CreditCard size={32} className="text-gray-600 mx-auto mb-3" />
-            <p className="text-gray-400">No Razorpay orders yet</p>
-            <p className="text-xs text-gray-600 mt-1">Orders will appear here after customers pay</p>
+            <CreditCard size={32} className="text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-500">No Razorpay orders yet</p>
+            <p className="text-xs text-gray-400 mt-1">Orders will appear here after customers pay</p>
           </div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-800 text-gray-400">
+              <tr className="border-b border-gray-200 text-gray-500 bg-gray-50">
                 <th className="text-left px-5 py-3 font-medium">Order ID</th>
                 <th className="text-left px-5 py-3 font-medium hidden sm:table-cell">Customer</th>
+                <th className="text-left px-5 py-3 font-medium hidden lg:table-cell">Delivery Address</th>
                 <th className="text-left px-5 py-3 font-medium hidden md:table-cell">Items</th>
                 <th className="text-left px-5 py-3 font-medium">Status</th>
                 <th className="text-right px-5 py-3 font-medium">Amount</th>
                 <th className="text-right px-5 py-3 font-medium hidden sm:table-cell">Date</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800">
+            <tbody className="divide-y divide-gray-100">
               {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-800/50 transition-colors">
+                <tr key={order.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-5 py-3">
-                    <p className="font-medium text-white font-mono text-xs">{order.razorpay_order_id}</p>
+                    <p className="font-medium text-gray-900 font-mono text-xs">{order.razorpay_order_id}</p>
                     {order.razorpay_payment_id && (
-                      <p className="text-xs text-gray-500 font-mono">{order.razorpay_payment_id}</p>
+                      <p className="text-xs text-gray-400 font-mono">{order.razorpay_payment_id}</p>
                     )}
                   </td>
                   <td className="px-5 py-3 hidden sm:table-cell">
-                    <p className="text-white">{order.customer_name ?? "—"}</p>
+                    <p className="text-gray-900 font-medium">{order.customer_name ?? "—"}</p>
                     <p className="text-xs text-gray-400">{order.customer_email ?? ""}</p>
-                    {order.customer_phone && <p className="text-xs text-gray-500">{order.customer_phone}</p>}
+                    {order.customer_phone && <p className="text-xs text-gray-400">{order.customer_phone}</p>}
+                  </td>
+                  <td className="px-5 py-3 hidden lg:table-cell text-xs text-gray-500">
+                    {order.shipping_address ? (
+                      <>
+                        <p>{order.shipping_address}</p>
+                        <p>{[order.shipping_city, order.shipping_state].filter(Boolean).join(", ")} {order.shipping_pincode}</p>
+                      </>
+                    ) : "—"}
                   </td>
                   <td className="px-5 py-3 hidden md:table-cell text-xs text-gray-400">
                     {order.items?.map((i) => `${i.productName} ×${i.quantity}`).join(", ") ?? "—"}
                   </td>
                   <td className="px-5 py-3">
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[order.status] ?? ""}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[order.status] ?? "bg-gray-100 text-gray-600"}`}>
                       {order.status}
                     </span>
                   </td>
-                  <td className="px-5 py-3 text-right font-semibold text-white">
+                  <td className="px-5 py-3 text-right font-bold text-gray-900">
                     ₹{order.amount?.toLocaleString("en-IN")}
                   </td>
                   <td className="px-5 py-3 text-right hidden sm:table-cell text-gray-400 text-xs">

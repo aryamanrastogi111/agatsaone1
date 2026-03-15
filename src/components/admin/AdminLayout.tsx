@@ -10,16 +10,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type NavItem = {
-  label: string;
-  icon: any;
-  href: string;
-};
-
-type NavGroup = {
-  label: string;
-  items: NavItem[];
-};
+type NavItem = { label: string; icon: any; href: string };
+type NavGroup = { label: string; items: NavItem[] };
 
 const NAV_GROUPS: NavGroup[] = [
   {
@@ -110,7 +102,7 @@ export default function AdminLayout() {
 
   if (!adminChecked) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-950">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -119,20 +111,20 @@ export default function AdminLayout() {
   const currentItem = ALL_ITEMS.find(n => isActive(n.href, location.pathname));
 
   return (
-    <div className="flex min-h-screen bg-gray-950 text-gray-100">
+    <div className="flex min-h-screen bg-gray-50 text-gray-800">
       {/* Sidebar */}
       <aside className={cn(
-        "flex flex-col bg-gray-900 border-r border-gray-800 transition-all duration-300 shrink-0",
+        "flex flex-col bg-white border-r border-gray-200 transition-all duration-300 shrink-0 shadow-sm",
         sidebarOpen ? "w-56" : "w-16"
       )}>
         {/* Logo / Toggle */}
-        <div className="flex items-center h-14 px-3 border-b border-gray-800 shrink-0">
+        <div className="flex items-center h-14 px-3 border-b border-gray-200 shrink-0">
           <button onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-1.5 rounded-lg hover:bg-gray-800 mr-2 shrink-0 text-gray-400 hover:text-white transition-colors">
+            className="p-1.5 rounded-lg hover:bg-gray-100 mr-2 shrink-0 text-gray-500 hover:text-gray-800 transition-colors">
             {sidebarOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
           {sidebarOpen && (
-            <span className="font-bold text-white text-sm tracking-tight truncate">Agatsa Admin</span>
+            <span className="font-bold text-gray-900 text-sm tracking-tight truncate">Agatsa Admin</span>
           )}
         </div>
 
@@ -140,20 +132,19 @@ export default function AdminLayout() {
         <nav className="flex-1 py-3 overflow-y-auto overflow-x-hidden">
           {NAV_GROUPS.map(group => {
             const isGroupOpen = !collapsed[group.label];
-            const hasActive = group.items.some(i => isActive(i.href, location.pathname));
 
             return (
               <div key={group.label} className="mb-1">
                 {sidebarOpen && (
                   <button
                     onClick={() => toggleGroup(group.label)}
-                    className="w-full flex items-center justify-between px-4 py-1.5 text-xs font-semibold text-gray-500 uppercase tracking-widest hover:text-gray-300 transition-colors"
+                    className="w-full flex items-center justify-between px-4 py-1.5 text-xs font-semibold text-gray-400 uppercase tracking-widest hover:text-gray-600 transition-colors"
                   >
                     <span>{group.label}</span>
                     {isGroupOpen ? <ChevronUp size={10} /> : <ChevronDown size={10} />}
                   </button>
                 )}
-                {!sidebarOpen && <div className="h-px bg-gray-800 mx-2 my-1.5" />}
+                {!sidebarOpen && <div className="h-px bg-gray-200 mx-2 my-1.5" />}
                 {(isGroupOpen || !sidebarOpen) && (
                   <div className="space-y-0.5 px-2">
                     {group.items.map(item => {
@@ -166,13 +157,13 @@ export default function AdminLayout() {
                           className={cn(
                             "flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm font-medium transition-colors",
                             active
-                              ? "bg-blue-600 text-white"
-                              : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                              ? "bg-blue-50 text-blue-700 border border-blue-100"
+                              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                           )}
                         >
                           <item.icon size={16} className="shrink-0" />
                           {sidebarOpen && <span className="truncate">{item.label}</span>}
-                          {sidebarOpen && active && <ChevronRight size={12} className="ml-auto shrink-0" />}
+                          {sidebarOpen && active && <ChevronRight size={12} className="ml-auto shrink-0 text-blue-500" />}
                         </Link>
                       );
                     })}
@@ -184,10 +175,10 @@ export default function AdminLayout() {
         </nav>
 
         {/* Logout */}
-        <div className="p-2 border-t border-gray-800 shrink-0">
+        <div className="p-2 border-t border-gray-200 shrink-0">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-gray-400 hover:bg-red-900/30 hover:text-red-400 transition-colors"
+            className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-gray-500 hover:bg-red-50 hover:text-red-600 transition-colors"
             title={!sidebarOpen ? "Logout" : undefined}
           >
             <LogOut size={16} className="shrink-0" />
@@ -199,15 +190,15 @@ export default function AdminLayout() {
       {/* Main */}
       <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         {/* Top bar */}
-        <header className="h-14 bg-gray-900 border-b border-gray-800 flex items-center justify-between px-6 shrink-0">
-          <h1 className="text-sm font-medium text-gray-300">
+        <header className="h-14 bg-white border-b border-gray-200 flex items-center justify-between px-6 shrink-0 shadow-sm">
+          <h1 className="text-sm font-semibold text-gray-700">
             {currentItem?.label ?? "Admin Panel"}
           </h1>
           <div className="flex items-center gap-3">
-            <button className="p-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition-colors">
+            <button className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors">
               <Bell size={16} />
             </button>
-            <Link to="/" target="_blank" className="text-xs text-blue-400 hover:text-blue-300 transition-colors">
+            <Link to="/" target="_blank" className="text-xs text-blue-600 hover:text-blue-700 transition-colors font-medium">
               View Store →
             </Link>
           </div>
