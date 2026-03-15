@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Mail, Users, ChevronDown } from "lucide-react";
+import { Mail, Users, Send, CheckCircle, XCircle, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 // ── Sample data ────────────────────────────────────────────────────────────────
 const SAMPLE = {
@@ -214,13 +216,48 @@ function buildTeamHtml(data: typeof SAMPLE) {
 
 // ── Component ──────────────────────────────────────────────────────────────────
 type Tab = "customer" | "team";
+type SendStatus = "idle" | "sending" | "success" | "error";
 
 export default function EmailPreview() {
   const [active, setActive] = useState<Tab>("customer");
+  const [testEmail, setTestEmail] = useState("");
+  const [sendStatus, setSendStatus] = useState<SendStatus>("idle");
 
   const html = active === "customer"
     ? buildCustomerHtml(SAMPLE)
     : buildTeamHtml(SAMPLE);
+
+  const sendTestEmail = async () => {
+    const target = testEmail.trim();
+    if (!target) { toast.error("Enter an email address first"); return; }
+    setSendStatus("sending");
+    try {
+      const { error } = await supabase.functions.invoke("send-order-confirmation", {
+        body: {
+          customerEmail: active === "customer" ? target : SAMPLE.customerEmail,
+          customerName: SAMPLE.customerName,
+          orderId: SAMPLE.orderId,
+          paymentId: SAMPLE.paymentId,
+          items: SAMPLE.items,
+          total: SAMPLE.total,
+          shippingAddress: SAMPLE.shippingAddress,
+          shippingCity: SAMPLE.shippingCity,
+          shippingState: SAMPLE.shippingState,
+          shippingPincode: SAMPLE.shippingPincode,
+          // Override team recipient for testing
+          _testTeamEmail: active === "team" ? target : undefined,
+        },
+      });
+      if (error) throw error;
+      setSendStatus("success");
+      toast.success(`Test email sent to ${target}`);
+      setTimeout(() => setSendStatus("idle"), 4000);
+    } catch (err: any) {
+      setSendStatus("error");
+      toast.error(err?.message || "Failed to send test email");
+      setTimeout(() => setSendStatus("idle"), 4000);
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -263,10 +300,43 @@ export default function EmailPreview() {
         <span className="text-amber-600">— using sample order data. Actual emails use real order details.</span>
       </div>
 
+      {/* Send test email */}
+      <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium text-gray-800">Send a test email</p>
+          <p className="text-xs text-gray-500 mt-0.5">
+            {active === "customer"
+              ? "Sends the customer confirmation to the address below using real sample data."
+              : "Sends the team notification to the address below instead of info@agatsa.com."}
+          </p>
+        </div>
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <input
+            type="email"
+            placeholder="your@email.com"
+            value={testEmail}
+            onChange={e => setTestEmail(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && sendTestEmail()}
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-56 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          <button
+            onClick={sendTestEmail}
+            disabled={sendStatus === "sending"}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-60 transition-all shrink-0"
+          >
+            {sendStatus === "sending" && <Loader2 size={14} className="animate-spin" />}
+            {sendStatus === "success" && <CheckCircle size={14} />}
+            {sendStatus === "error" && <XCircle size={14} />}
+            {sendStatus === "idle" && <Send size={14} />}
+            {sendStatus === "sending" ? "Sending…" : sendStatus === "success" ? "Sent!" : sendStatus === "error" ? "Failed" : "Send Test"}
+          </button>
+        </div>
+      </div>
+
       {/* Email iframe */}
       <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
         {/* Mock email header */}
-        <div className="bg-gray-50 border-b border-gray-200 px-5 py-3 flex items-center gap-6 text-xs text-gray-500">
+        <div className="bg-gray-50 border-b border-gray-200 px-5 py-3 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-gray-500">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-gray-400 uppercase tracking-wide">From</span>
             <span className="text-gray-700 font-medium">

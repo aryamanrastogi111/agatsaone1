@@ -52,7 +52,10 @@ serve(async (req) => {
       shippingCity,
       shippingState,
       shippingPincode,
+      _testTeamEmail,
     } = await req.json();
+
+    const teamRecipient = _testTeamEmail || "info@agatsa.com";
 
     if (!customerEmail || !orderId) {
       return new Response(JSON.stringify({ error: "Missing required fields" }), {
@@ -403,7 +406,7 @@ serve(async (req) => {
         Authorization: `Bearer ${LOVABLE_API_KEY}`,
       },
       body: JSON.stringify({
-        to: "info@agatsa.com",
+        to: teamRecipient,
         subject: `🛎️ New Order: ${customerName || customerEmail} – ${totalFormatted}`,
         html: teamEmailHtml,
         from_name: "Agatsa Orders",
