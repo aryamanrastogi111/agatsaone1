@@ -267,9 +267,6 @@ export const CartDrawer = () => {
     }
   };
 
-  // Fix for variable declaration issue
-  let customerName = name;
-
   return (
     <>
       {/* Cart trigger button */}
