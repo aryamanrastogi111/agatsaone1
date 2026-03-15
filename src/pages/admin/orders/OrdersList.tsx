@@ -88,13 +88,13 @@ function RazorpayOrdersTab() {
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <CreditCard size={18} className="text-blue-400" /> Razorpay Orders
+          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <CreditCard size={18} className="text-blue-500" /> Razorpay Orders
           </h2>
-          <p className="text-sm text-gray-400">{total} total orders</p>
+          <p className="text-sm text-gray-500">{total} total orders</p>
         </div>
         <button onClick={exportCSV}
-          className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium px-4 py-2 rounded-lg border border-gray-700">
+          className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 shadow-sm transition-colors">
           <Download size={15} /> Export CSV
         </button>
       </div>
@@ -104,10 +104,10 @@ function RazorpayOrdersTab() {
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input type="text" placeholder="Search by name, email or order ID…" value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(0); }}
-            className="w-full bg-gray-900 border border-gray-700 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500" />
+            className="w-full bg-white border border-gray-300 rounded-lg pl-9 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500" />
         </div>
         <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(0); }}
-          className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none">
+          className="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:border-blue-500">
           <option value="all">All Status</option>
           <option value="created">Created</option>
           <option value="paid">Paid</option>
@@ -116,16 +116,16 @@ function RazorpayOrdersTab() {
         </select>
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
         {loading ? (
           <div className="flex items-center justify-center h-40">
             <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
           </div>
         ) : orders.length === 0 ? (
           <div className="text-center py-16">
-            <CreditCard size={32} className="text-gray-600 mx-auto mb-3" />
-            <p className="text-gray-400">No Razorpay orders yet</p>
-            <p className="text-xs text-gray-600 mt-1">Orders will appear here after customers pay</p>
+            <CreditCard size={32} className="text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-500">No Razorpay orders yet</p>
+            <p className="text-xs text-gray-400 mt-1">Orders will appear here after customers pay</p>
           </div>
         ) : (
           <table className="w-full text-sm">
