@@ -382,6 +382,7 @@ serve(async (req) => {
     const { error: customerEnqueueError } = await supabase.rpc("enqueue_email", {
       queue_name: "transactional_emails",
       payload: {
+        run_id: customerMsgId,
         message_id: customerMsgId,
         to: customerEmail,
         from: "Agatsa Medical Technologies <orders@notify.agatsa.in>",
@@ -410,6 +411,7 @@ serve(async (req) => {
     const { error: teamEnqueueError } = await supabase.rpc("enqueue_email", {
       queue_name: "transactional_emails",
       payload: {
+        run_id: teamMsgId,
         message_id: teamMsgId,
         to: teamRecipient,
         from: "Agatsa Orders <orders@notify.agatsa.in>",
