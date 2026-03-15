@@ -1,66 +1,77 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-export interface InventoryVariant {
-  id: string;
-  sku: string | null;
-  inventory_quantity: number;
-  low_stock_threshold: number;
-  product_id: string;
-  product_name: string;
-  product_image: string | null;
+export interface InventoryItem {
+  variantId: string;
+  productId: string;
+  productSlug: string;
+  quantity: number;
 }
 
-// Global cache so all product pages can share inventory state
+// Module-level cache
 let cache: Record<string, number> | null = null;
 let cacheListeners: Array<() => void> = [];
+
+async function fetchInventoryFromDB(): Promise<Record<string, number>> {
+  const sb = supabase as any;
+  const { data } = await sb
+    .from("product_variants")
+    .select("id, inventory_quantity, products(id, slug, name)");
+
+  const map: Record<string, number> = {};
+  if (data) {
+    data.forEach((v: any) => {
+      // Key by variant id
+      map[v.id] = v.inventory_quantity ?? 0;
+      // Key by product slug (sum across all variants)
+      const slug = v.products?.slug;
+      if (slug) map[slug] = (map[slug] ?? 0) + (v.inventory_quantity ?? 0);
+      // Key by product id
+      const pid = v.products?.id;
+      if (pid) map[pid] = (map[pid] ?? 0) + (v.inventory_quantity ?? 0);
+    });
+  }
+  return map;
+}
 
 export function useInventory() {
   const [inventory, setInventory] = useState<Record<string, number>>(cache ?? {});
   const [loading, setLoading] = useState(!cache);
 
   const loadInventory = useCallback(async () => {
-    const sb = supabase as any;
-    const { data } = await sb
-      .from("product_variants")
-      .select("id, sku, inventory_quantity, products(id, name)");
-
-    if (data) {
-      const map: Record<string, number> = {};
-      data.forEach((v: any) => {
-        // key by product id and by product name slug for easy lookup
-        if (v.products?.id) map[v.products.id] = (map[v.products.id] ?? 0) + v.inventory_quantity;
-        if (v.products?.name) {
-          const slug = v.products.name.toLowerCase().replace(/\s+/g, "-");
-          map[slug] = (map[slug] ?? 0) + v.inventory_quantity;
-        }
-        map[v.id] = v.inventory_quantity;
-      });
-      cache = map;
-      setInventory(map);
-      cacheListeners.forEach((fn) => fn());
-    }
+    setLoading(true);
+    const map = await fetchInventoryFromDB();
+    cache = map;
+    setInventory(map);
+    cacheListeners.forEach((fn) => fn());
     setLoading(false);
   }, []);
 
   useEffect(() => {
+    const listener = () => { if (cache) setInventory({ ...cache }); };
+    cacheListeners.push(listener);
+
     if (!cache) {
       loadInventory();
+    } else {
+      setInventory({ ...cache });
+      setLoading(false);
     }
-    const listener = () => setInventory({ ...cache! });
-    cacheListeners.push(listener);
+
     return () => {
       cacheListeners = cacheListeners.filter((l) => l !== listener);
     };
   }, [loadInventory]);
 
-  const isOutOfStock = (productIdOrSlug: string): boolean => {
-    const qty = inventory[productIdOrSlug];
+  /** Check if a product/variant is out of stock by its slug, product id, or variant id */
+  const isOutOfStock = (key: string): boolean => {
+    const qty = inventory[key];
     return qty !== undefined && qty <= 0;
   };
 
-  const getQuantity = (productIdOrSlug: string): number | null => {
-    const qty = inventory[productIdOrSlug];
+  /** Get available quantity for a key */
+  const getQuantity = (key: string): number | null => {
+    const qty = inventory[key];
     return qty !== undefined ? qty : null;
   };
 
@@ -69,4 +80,5 @@ export function useInventory() {
 
 export function invalidateInventoryCache() {
   cache = null;
+  cacheListeners.forEach((fn) => fn());
 }
