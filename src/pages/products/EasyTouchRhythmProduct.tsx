@@ -211,21 +211,28 @@ const EasyTouchRhythmProduct = () => {
               {/* Right: Countdown and CTA */}
               <div className="flex items-center gap-4 flex-wrap">
                 <CountdownTimer variant="compact" className="hidden md:flex" />
-                <Button 
-                  size="lg" 
-                  className="gap-2"
-                  onClick={handleAddToCart}
-                  disabled={addingToCart}
-                >
-                  {addingToCart ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <ShoppingCart className="h-5 w-5" />
-                  )}
-                  <span className="hidden sm:inline">Grab Yours —</span>
-                  <span className="line-through text-primary-foreground/60">₹4,999</span>
-                  <span className="font-bold">₹4,499</span>
-                </Button>
+                {outOfStock ? (
+                  <div className="flex items-center gap-2 px-4 py-2 bg-red-50 border border-red-200 rounded-lg text-red-700 font-medium text-sm">
+                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    Out of Stock
+                  </div>
+                ) : (
+                  <Button 
+                    size="lg" 
+                    className="gap-2"
+                    onClick={handleAddToCart}
+                    disabled={addingToCart}
+                  >
+                    {addingToCart ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <ShoppingCart className="h-5 w-5" />
+                    )}
+                    <span className="hidden sm:inline">Grab Yours —</span>
+                    <span className="line-through text-primary-foreground/60">₹4,999</span>
+                    <span className="font-bold">₹4,499</span>
+                  </Button>
+                )}
               </div>
             </div>
             
