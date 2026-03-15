@@ -4,6 +4,7 @@ import {
   ChooseByNeedSection,
   ProductsPortfolioSection,
   ProductHighlightSanketLife,
+  ProductHighlightEasyTouch,
   ProductHighlightZlu,
   ProductHighlightCoreBalance,
   WhyAgatsaSection,
@@ -19,6 +20,7 @@ const Index = () => {
       <ChooseByNeedSection />
       <ProductsPortfolioSection />
       <ProductHighlightSanketLife />
+      <ProductHighlightEasyTouch />
       <ProductHighlightZlu />
       <ProductHighlightCoreBalance />
       <WhyAgatsaSection />
