@@ -541,7 +541,7 @@ export const CartDrawer = () => {
               </Button>
             </div>
             {couponApplied && couponData && (
-              <div className="mt-2 flex items-center gap-2 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+              <div className="mt-2 flex items-center gap-2 text-sm text-success bg-success/10 border border-success/20 rounded-lg px-3 py-2" style={{color: 'hsl(142 71% 35%)', background: 'hsl(142 71% 35% / 0.08)', borderColor: 'hsl(142 71% 35% / 0.2)'}}>
                 <Check className="h-4 w-4 shrink-0" />
                 <span><span className="font-mono font-bold">{couponData.code}</span> applied — saving {formatINR(couponDiscount)}</span>
               </div>
