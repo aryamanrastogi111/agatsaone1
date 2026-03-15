@@ -749,6 +749,7 @@ const ZluProduct = () => {
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="cyan"
+        outOfStock={outOfStock}
       />
     </Layout>
   );

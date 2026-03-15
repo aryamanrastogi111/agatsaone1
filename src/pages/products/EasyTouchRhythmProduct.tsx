@@ -1508,6 +1508,7 @@ const EasyTouchRhythmProduct = () => {
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="primary"
+        outOfStock={outOfStock}
       />
     </Layout>
   );

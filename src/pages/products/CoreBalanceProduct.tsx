@@ -714,6 +714,7 @@ const CoreBalanceProduct = () => {
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="emerald"
+        outOfStock={outOfStock}
       />
     </Layout>
   );

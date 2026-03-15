@@ -1081,6 +1081,7 @@ const SanketLifeProduct = () => {
         onAddToCart={() => handleAddToCart("sanketlife-2")}
         isLoading={addingToCart}
         themeColor="cyan"
+        outOfStock={outOfStock}
       />
     </Layout>
   );
