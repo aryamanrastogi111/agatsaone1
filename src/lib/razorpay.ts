@@ -101,14 +101,37 @@ export async function createRazorpayOrder(
   return data as RazorpayOrderResponse;
 }
 
+export interface OrderConfirmationPayload {
+  customerEmail?: string;
+  customerName?: string;
+  items?: CartItem[];
+  total?: number;
+  shippingAddress?: string;
+  shippingCity?: string;
+  shippingState?: string;
+  shippingPincode?: string;
+}
+
 export async function verifyRazorpayPayment(
   razorpay_order_id: string,
   razorpay_payment_id: string,
   razorpay_signature: string,
-  customerEmail?: string
+  payload?: OrderConfirmationPayload
 ): Promise<boolean> {
   const { data, error } = await supabase.functions.invoke("razorpay-verify-payment", {
-    body: { razorpay_order_id, razorpay_payment_id, razorpay_signature, customerEmail },
+    body: {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      customerEmail: payload?.customerEmail,
+      customerName: payload?.customerName,
+      items: payload?.items,
+      total: payload?.total,
+      shippingAddress: payload?.shippingAddress,
+      shippingCity: payload?.shippingCity,
+      shippingState: payload?.shippingState,
+      shippingPincode: payload?.shippingPincode,
+    },
   });
 
   if (error) throw new Error(error.message);
