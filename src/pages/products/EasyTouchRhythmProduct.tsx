@@ -183,14 +183,15 @@ const EasyTouchRhythmProduct = () => {
 
   return (
     <Layout>
+      {/* Low stock FOMO - always visible */}
+      <LowStockBadge productKey="easytouch-rhythm" variant="banner" className="mx-auto max-w-3xl mt-4 px-4" />
+
       {/* Republic Day Sale Strip - Compact Banner */}
       {isSaleActive() && (
         <section className="bg-gradient-to-r from-orange-500/10 via-background to-green-600/10 border-b">
           <div className="container py-4 md:py-5">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               {/* Left: Sale info with small banner image */}
-              {/* Low stock FOMO */}
-              <LowStockBadge productKey="easytouch-rhythm" variant="banner" className="mb-4" />
 
               <div className="flex items-center gap-4">
                 <img 
