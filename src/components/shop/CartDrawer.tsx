@@ -22,6 +22,8 @@ import {
   MapPin,
   Package,
   X,
+  Tag,
+  Check,
 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
@@ -32,6 +34,7 @@ import {
   openRazorpayCheckout,
 } from "@/lib/razorpay";
 import type { RazorpayPaymentResponse } from "@/lib/razorpay";
+import { validateCoupon } from "@/lib/shop";
 
 interface SuccessData {
   orderId: string;
@@ -40,6 +43,7 @@ interface SuccessData {
   customerEmail: string;
   items: { productName: string; quantity: number; price: number; variantTitle?: string }[];
   total: number;
+  discountAmount: number;
   shippingAddress: string;
   shippingCity: string;
   shippingState: string;
@@ -109,25 +113,62 @@ export const CartDrawer = () => {
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
 
+  // Coupon state
+  const [couponCode, setCouponCode] = useState("");
+  const [couponApplied, setCouponApplied] = useState(false);
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponData, setCouponData] = useState<{ id: string; code: string } | null>(null);
+  const [couponLoading, setCouponLoading] = useState(false);
+
   const { items, isLoading, updateQuantity, removeItem, clearCart, getTotalItems, getTotalPrice } =
     useCartStore();
 
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
+  const finalTotal = Math.max(totalPrice - couponDiscount, 10); // minimum ₹10 (Razorpay min)
 
   const formatINR = (amount: number) =>
     new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(amount);
 
   const handleProceedToCheckout = () => {
     if (items.length === 0) return;
-    setIsOpen(false); // close cart drawer first
+    setIsOpen(false);
     setTimeout(() => setCheckoutOpen(true), 200);
+  };
+
+  const handleApplyCoupon = async () => {
+    const code = couponCode.trim().toUpperCase();
+    if (!code) { toast.error("Enter a coupon code first"); return; }
+    if (couponApplied) {
+      // Remove coupon
+      setCouponApplied(false);
+      setCouponDiscount(0);
+      setCouponData(null);
+      setCouponCode("");
+      toast.info("Coupon removed");
+      return;
+    }
+    setCouponLoading(true);
+    try {
+      const result = await validateCoupon(code, totalPrice);
+      if (!result.valid) {
+        toast.error(result.error || "Invalid coupon");
+      } else {
+        setCouponDiscount(result.discount ?? 0);
+        setCouponData(result.coupon as { id: string; code: string });
+        setCouponApplied(true);
+        toast.success(`Coupon applied! You save ${formatINR(result.discount ?? 0)}`);
+      }
+    } catch {
+      toast.error("Failed to validate coupon");
+    } finally {
+      setCouponLoading(false);
+    }
   };
 
   const handlePay = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Manual validation — HTML required doesn't always fire in custom modals
     if (!name.trim()) { toast.error("Please enter your full name."); return; }
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast.error("Please enter a valid email address."); return; }
     if (!phone.trim() || phone.replace(/\D/g, "").length < 10) { toast.error("Please enter a valid 10-digit phone number."); return; }
@@ -147,24 +188,23 @@ export const CartDrawer = () => {
       }
 
       const orderData = await createRazorpayOrder(
-        items, name, email, phone,
-        address, city, state, pincode
+        items, customerName = name, email, phone,
+        address, city, state, pincode,
+        couponApplied ? finalTotal : undefined
       );
 
-      // Snapshot cart items & total BEFORE clearing
       const cartSnapshot = items.map((i) => ({
         productName: i.productName,
         quantity: i.quantity,
         price: i.price,
         variantTitle: i.variantTitle,
       }));
-      const totalSnapshot = totalPrice;
+      const totalSnapshot = finalTotal;
+      const discountSnapshot = couponDiscount;
 
-      // Hide checkout modal completely before Razorpay opens
       setCheckoutOpen(false);
       setIsPaying(false);
 
-      // Wait for modal to fully unmount
       await new Promise((r) => setTimeout(r, 400));
 
       openRazorpayCheckout(
@@ -200,14 +240,15 @@ export const CartDrawer = () => {
                 customerEmail: email,
                 items: cartSnapshot,
                 total: totalSnapshot,
+                discountAmount: discountSnapshot,
                 shippingAddress: address,
                 shippingCity: city,
                 shippingState: state,
                 shippingPincode: pincode,
               });
-              // Reset form
               setName(""); setEmail(""); setPhone("");
               setAddress(""); setCity(""); setState(""); setPincode("");
+              setCouponCode(""); setCouponApplied(false); setCouponDiscount(0); setCouponData(null);
             } else {
               toast.error("Payment verification failed. Please contact support.");
             }
@@ -216,7 +257,6 @@ export const CartDrawer = () => {
           }
         },
         () => {
-          // User dismissed Razorpay — reopen checkout form
           setTimeout(() => setCheckoutOpen(true), 200);
           toast.info("Payment cancelled. You can try again.");
         }
@@ -226,6 +266,9 @@ export const CartDrawer = () => {
       setIsPaying(false);
     }
   };
+
+  // Fix for variable declaration issue
+  let customerName = name;
 
   return (
     <>
@@ -467,6 +510,44 @@ export const CartDrawer = () => {
             </div>
           </div>
 
+          {/* Coupon Code */}
+          <div>
+            <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+              <Tag className="h-4 w-4 text-primary" />
+              Discount Code
+            </h3>
+            <div className="flex gap-2">
+              <Input
+                placeholder="Enter coupon code"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                disabled={couponApplied}
+                className="flex-1 font-mono"
+              />
+              <Button
+                type="button"
+                variant={couponApplied ? "destructive" : "outline"}
+                onClick={handleApplyCoupon}
+                disabled={couponLoading}
+                className="shrink-0"
+              >
+                {couponLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : couponApplied ? (
+                  <><X className="h-4 w-4 mr-1" /> Remove</>
+                ) : (
+                  "Apply"
+                )}
+              </Button>
+            </div>
+            {couponApplied && couponData && (
+              <div className="mt-2 flex items-center gap-2 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                <Check className="h-4 w-4 shrink-0" />
+                <span><span className="font-mono font-bold">{couponData.code}</span> applied — saving {formatINR(couponDiscount)}</span>
+              </div>
+            )}
+          </div>
+
           {/* Order Summary */}
           <div className="bg-muted/40 rounded-lg p-3 space-y-1">
             <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
@@ -485,9 +566,17 @@ export const CartDrawer = () => {
                 <span className="font-medium">{formatINR(item.price * item.quantity)}</span>
               </div>
             ))}
+            {couponApplied && couponDiscount > 0 && (
+              <div className="flex justify-between text-sm text-green-700">
+                <span>Discount ({couponData?.code})</span>
+                <span>− {formatINR(couponDiscount)}</span>
+              </div>
+            )}
             <div className="border-t pt-1 mt-1 flex justify-between text-sm font-semibold">
               <span>Total</span>
-              <span>{formatINR(totalPrice)}</span>
+              <span className={couponApplied && couponDiscount > 0 ? "text-green-700" : ""}>
+                {formatINR(finalTotal)}
+              </span>
             </div>
           </div>
 
@@ -500,7 +589,7 @@ export const CartDrawer = () => {
             ) : (
               <>
                 <CreditCard className="h-4 w-4 mr-2" />
-                Pay {formatINR(totalPrice)}
+                Pay {formatINR(finalTotal)}
               </>
             )}
           </Button>
@@ -552,6 +641,12 @@ export const CartDrawer = () => {
                   <span className="font-medium">{formatINR(item.price * item.quantity)}</span>
                 </div>
               ))}
+              {successData.discountAmount > 0 && (
+                <div className="flex justify-between text-sm text-green-700 mt-1">
+                  <span>Discount Applied</span>
+                  <span>− {formatINR(successData.discountAmount)}</span>
+                </div>
+              )}
               <div className="border-t mt-2 pt-2 flex justify-between text-sm font-semibold">
                 <span>Total Paid</span>
                 <span className="text-primary">{formatINR(successData.total)}</span>
