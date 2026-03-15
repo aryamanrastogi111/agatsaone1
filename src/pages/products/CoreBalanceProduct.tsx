@@ -14,6 +14,7 @@ import appMetrics from "@/assets/corebalance-app-metrics.png";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { useInventory } from "@/hooks/useInventory";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { FomoCounter } from "@/components/shop/FomoCounter";
 
@@ -129,8 +130,11 @@ const testimonials = [
 const CoreBalanceProduct = () => {
   const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
+  const { isOutOfStock } = useInventory();
+  const outOfStock = isOutOfStock("corebalance");
 
   const handleAddToCart = () => {
+    if (outOfStock) return;
     setAddingToCart(true);
     addItem({ productId: "corebalance", productName: "CoreBalance Smart Scale", variantTitle: "Default Title", price: 3999, quantity: 1 });
     toast.success("CoreBalance added to cart", { position: "top-center" });
@@ -167,19 +171,26 @@ const CoreBalanceProduct = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button 
-                  size="lg" 
-                  className="text-lg px-8 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700"
-                  onClick={handleAddToCart}
-                  disabled={addingToCart}
-                >
-                  {addingToCart ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <ShoppingCart className="h-5 w-5" />
-                  )}
-                  Add to Cart — ₹1,999
-                </Button>
+                {outOfStock ? (
+                  <div className="flex items-center gap-2 px-6 py-3 bg-red-50 border border-red-200 rounded-lg text-red-700 font-medium text-sm">
+                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    Out of Stock — Check back soon
+                  </div>
+                ) : (
+                  <Button 
+                    size="lg" 
+                    className="text-lg px-8 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700"
+                    onClick={handleAddToCart}
+                    disabled={addingToCart}
+                  >
+                    {addingToCart ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <ShoppingCart className="h-5 w-5" />
+                    )}
+                    Add to Cart — ₹1,999
+                  </Button>
+                )}
               </div>
               
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
@@ -703,6 +714,7 @@ const CoreBalanceProduct = () => {
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="emerald"
+        outOfStock={outOfStock}
       />
     </Layout>
   );

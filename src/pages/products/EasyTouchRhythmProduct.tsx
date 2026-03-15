@@ -8,6 +8,7 @@ import { useRef, useEffect, useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { useFacebookPixel, useEasyTouchRhythmPixelPageView } from "@/hooks/useFacebookPixel";
+import { useInventory } from "@/hooks/useInventory";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { FomoCounter } from "@/components/shop/FomoCounter";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
@@ -163,11 +164,14 @@ const EasyTouchRhythmProduct = () => {
   const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
   const { trackAddToCart } = useFacebookPixel();
+  const { isOutOfStock } = useInventory();
+  const outOfStock = isOutOfStock("easytouch-rhythm");
   
   // Fire PageView and ViewContent on mount for Facebook Pixel
   useEasyTouchRhythmPixelPageView();
 
   const handleAddToCart = () => {
+    if (outOfStock) return;
     setAddingToCart(true);
     addItem({ productId: "easytouch-rhythm", productName: "EasyTouch Rhythm", variantTitle: "Default Title", price: 4999, quantity: 1 });
     toast.success("EasyTouch Rhythm added to cart", { position: "top-center" });
@@ -207,21 +211,28 @@ const EasyTouchRhythmProduct = () => {
               {/* Right: Countdown and CTA */}
               <div className="flex items-center gap-4 flex-wrap">
                 <CountdownTimer variant="compact" className="hidden md:flex" />
-                <Button 
-                  size="lg" 
-                  className="gap-2"
-                  onClick={handleAddToCart}
-                  disabled={addingToCart}
-                >
-                  {addingToCart ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <ShoppingCart className="h-5 w-5" />
-                  )}
-                  <span className="hidden sm:inline">Grab Yours —</span>
-                  <span className="line-through text-primary-foreground/60">₹4,999</span>
-                  <span className="font-bold">₹4,499</span>
-                </Button>
+                {outOfStock ? (
+                  <div className="flex items-center gap-2 px-4 py-2 bg-red-50 border border-red-200 rounded-lg text-red-700 font-medium text-sm">
+                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    Out of Stock
+                  </div>
+                ) : (
+                  <Button 
+                    size="lg" 
+                    className="gap-2"
+                    onClick={handleAddToCart}
+                    disabled={addingToCart}
+                  >
+                    {addingToCart ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <ShoppingCart className="h-5 w-5" />
+                    )}
+                    <span className="hidden sm:inline">Grab Yours —</span>
+                    <span className="line-through text-primary-foreground/60">₹4,999</span>
+                    <span className="font-bold">₹4,499</span>
+                  </Button>
+                )}
               </div>
             </div>
             
@@ -1497,6 +1508,7 @@ const EasyTouchRhythmProduct = () => {
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="primary"
+        outOfStock={outOfStock}
       />
     </Layout>
   );

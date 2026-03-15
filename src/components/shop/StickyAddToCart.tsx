@@ -9,6 +9,7 @@ interface StickyAddToCartProps {
   onAddToCart: () => void;
   isLoading?: boolean;
   themeColor?: string;
+  outOfStock?: boolean;
 }
 
 export const StickyAddToCart = ({
@@ -17,6 +18,7 @@ export const StickyAddToCart = ({
   onAddToCart,
   isLoading = false,
   themeColor = "primary",
+  outOfStock = false,
 }: StickyAddToCartProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [addingToCart, setAddingToCart] = useState(false);
@@ -59,19 +61,26 @@ export const StickyAddToCart = ({
                 <p className="font-semibold text-foreground truncate">{productName}</p>
                 <p className="text-sm text-muted-foreground">{price}</p>
               </div>
-              <Button
-                size="lg"
-                className={`gap-2 px-6 ${colorClasses[themeColor] || colorClasses.primary}`}
-                onClick={handleClick}
-                disabled={addingToCart || isLoading}
-              >
-                {addingToCart ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  <ShoppingCart className="h-5 w-5" />
-                )}
-                <span className="hidden sm:inline">Add to Cart</span>
-              </Button>
+              {outOfStock ? (
+                <div className="flex items-center gap-2 px-4 py-2 bg-red-50 border border-red-200 rounded-lg text-red-700 font-medium text-sm">
+                  <span className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
+                  Out of Stock
+                </div>
+              ) : (
+                <Button
+                  size="lg"
+                  className={`gap-2 px-6 ${colorClasses[themeColor] || colorClasses.primary}`}
+                  onClick={handleClick}
+                  disabled={addingToCart || isLoading}
+                >
+                  {addingToCart ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="h-5 w-5" />
+                  )}
+                  <span className="hidden sm:inline">Add to Cart</span>
+                </Button>
+              )}
             </div>
           </div>
         </motion.div>

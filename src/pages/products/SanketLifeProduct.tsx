@@ -37,6 +37,7 @@ import { toast } from "sonner";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { FomoCounter } from "@/components/shop/FomoCounter";
+import { useInventory } from "@/hooks/useInventory";
 
 // Image imports
 import sanketlifeHeroV2 from "@/assets/sanketlife-device-app.png";
@@ -266,8 +267,11 @@ const SANKETLIFE_PRODUCTS: Record<string, { name: string; price: number; image: 
 const SanketLifeProduct = () => {
   const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
+  const { isOutOfStock } = useInventory();
+  const outOfStock = isOutOfStock("sanketlife");
 
   const handleAddToCart = (productId: string = "sanketlife-2") => {
+    if (outOfStock) return;
     const p = SANKETLIFE_PRODUCTS[productId];
     if (!p) return;
     setAddingToCart(true);
@@ -1077,6 +1081,7 @@ const SanketLifeProduct = () => {
         onAddToCart={() => handleAddToCart("sanketlife-2")}
         isLoading={addingToCart}
         themeColor="cyan"
+        outOfStock={outOfStock}
       />
     </Layout>
   );

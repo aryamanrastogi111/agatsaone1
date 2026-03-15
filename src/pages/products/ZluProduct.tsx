@@ -12,6 +12,7 @@ import zluTravel from "@/assets/zlu-travel.png";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { useInventory } from "@/hooks/useInventory";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { FomoCounter } from "@/components/shop/FomoCounter";
 // Counting number animation component
@@ -103,8 +104,11 @@ const safetyPoints = [
 const ZluProduct = () => {
   const addItem = useCartStore((s) => s.addItem);
   const [addingToCart, setAddingToCart] = useState(false);
+  const { isOutOfStock } = useInventory();
+  const outOfStock = isOutOfStock("zlu");
 
   const handleAddToCart = () => {
+    if (outOfStock) return;
     setAddingToCart(true);
     addItem({ productId: "zlu", productName: "Zlu Sleep Aid Device", variantTitle: "Default Title", price: 4999, quantity: 1 });
     toast.success("Zlu added to cart", { position: "top-center" });
@@ -140,19 +144,26 @@ const ZluProduct = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button 
-                  size="lg" 
-                  className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
-                  onClick={handleAddToCart}
-                  disabled={addingToCart}
-                >
-                  {addingToCart ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <ShoppingCart className="h-5 w-5" />
-                  )}
-                  Add to Cart — ₹4,999
-                </Button>
+                {outOfStock ? (
+                  <div className="flex items-center gap-2 px-6 py-3 bg-red-50 border border-red-200 rounded-lg text-red-700 font-medium text-sm">
+                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    Out of Stock — Check back soon
+                  </div>
+                ) : (
+                  <Button 
+                    size="lg" 
+                    className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
+                    onClick={handleAddToCart}
+                    disabled={addingToCart}
+                  >
+                    {addingToCart ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <ShoppingCart className="h-5 w-5" />
+                    )}
+                    Add to Cart — ₹4,999
+                  </Button>
+                )}
               </div>
               
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
@@ -738,6 +749,7 @@ const ZluProduct = () => {
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="cyan"
+        outOfStock={outOfStock}
       />
     </Layout>
   );
