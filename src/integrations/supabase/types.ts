@@ -392,6 +392,115 @@ export type Database = {
         }
         Relationships: []
       }
+      product_images: {
+        Row: {
+          created_at: string
+          id: string
+          position: number
+          product_id: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          position?: number
+          product_id: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          position?: number
+          product_id?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_images_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_variants: {
+        Row: {
+          created_at: string
+          id: string
+          inventory_quantity: number
+          low_stock_threshold: number
+          price: number | null
+          product_id: string
+          sku: string | null
+          updated_at: string
+          variant_name: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          inventory_quantity?: number
+          low_stock_threshold?: number
+          price?: number | null
+          product_id: string
+          sku?: string | null
+          updated_at?: string
+          variant_name?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          inventory_quantity?: number
+          low_stock_threshold?: number
+          price?: number | null
+          product_id?: string
+          sku?: string | null
+          updated_at?: string
+          variant_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_variants_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          price: number
+          slug: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          price?: number
+          slug: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          price?: number
+          slug?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           company_name: string | null
