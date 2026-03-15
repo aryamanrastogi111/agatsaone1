@@ -357,7 +357,7 @@ serve(async (req) => {
     // ─── SEND CUSTOMER EMAIL VIA RESEND ──────────────────────────────────────
     const customerResult = await sendViaResend({
       to: customerEmail,
-      from: "Agatsa Medical Technologies <orders@notify.agatsa.in>",
+      from: customerFrom,
       subject: `✅ Order Confirmed – ${orderId} | Agatsa`,
       html: customerEmailHtml,
       text: stripHtml(customerEmailHtml),
@@ -378,7 +378,7 @@ serve(async (req) => {
     // ─── SEND TEAM EMAIL VIA RESEND ───────────────────────────────────────────
     const teamResult = await sendViaResend({
       to: teamRecipient,
-      from: "Agatsa Orders <orders@notify.agatsa.in>",
+      from: teamFrom,
       subject: `🛎️ New Order: ${customerName || customerEmail} – ${totalFormatted}`,
       html: teamEmailHtml,
       text: stripHtml(teamEmailHtml),
