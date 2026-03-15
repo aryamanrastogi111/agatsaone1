@@ -642,7 +642,7 @@ export const CartDrawer = () => {
                 </div>
               ))}
               {successData.discountAmount > 0 && (
-                <div className="flex justify-between text-sm text-green-700 mt-1">
+                <div className="flex justify-between text-sm mt-1" style={{color: 'hsl(142 71% 35%)'}}>
                   <span>Discount Applied</span>
                   <span>− {formatINR(successData.discountAmount)}</span>
                 </div>
