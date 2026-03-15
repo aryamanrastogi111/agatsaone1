@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { products } from "@/data/products";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 
 const categoryIcons = {
   heart: Heart,
