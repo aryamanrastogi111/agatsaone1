@@ -56,9 +56,10 @@ const NAV_GROUPS: NavGroup[] = [
   {
     label: "System",
     items: [
-      { label: "Team & Access",  icon: Shield,  href: "/admin/team" },
-      { label: "Settings",       icon: Settings, href: "/admin/settings" },
-      { label: "Integrations",   icon: Puzzle,  href: "/admin/integrations" },
+      { label: "Team & Access",   icon: Shield,  href: "/admin/team" },
+      { label: "Email Previews",  icon: Mail,    href: "/admin/email-preview" },
+      { label: "Settings",        icon: Settings, href: "/admin/settings" },
+      { label: "Integrations",    icon: Puzzle,  href: "/admin/integrations" },
     ],
   },
 ];
