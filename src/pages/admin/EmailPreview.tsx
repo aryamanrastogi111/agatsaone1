@@ -216,13 +216,48 @@ function buildTeamHtml(data: typeof SAMPLE) {
 
 // ── Component ──────────────────────────────────────────────────────────────────
 type Tab = "customer" | "team";
+type SendStatus = "idle" | "sending" | "success" | "error";
 
 export default function EmailPreview() {
   const [active, setActive] = useState<Tab>("customer");
+  const [testEmail, setTestEmail] = useState("");
+  const [sendStatus, setSendStatus] = useState<SendStatus>("idle");
 
   const html = active === "customer"
     ? buildCustomerHtml(SAMPLE)
     : buildTeamHtml(SAMPLE);
+
+  const sendTestEmail = async () => {
+    const target = testEmail.trim();
+    if (!target) { toast.error("Enter an email address first"); return; }
+    setSendStatus("sending");
+    try {
+      const { error } = await supabase.functions.invoke("send-order-confirmation", {
+        body: {
+          customerEmail: active === "customer" ? target : SAMPLE.customerEmail,
+          customerName: SAMPLE.customerName,
+          orderId: SAMPLE.orderId,
+          paymentId: SAMPLE.paymentId,
+          items: SAMPLE.items,
+          total: SAMPLE.total,
+          shippingAddress: SAMPLE.shippingAddress,
+          shippingCity: SAMPLE.shippingCity,
+          shippingState: SAMPLE.shippingState,
+          shippingPincode: SAMPLE.shippingPincode,
+          // Override team recipient for testing
+          _testTeamEmail: active === "team" ? target : undefined,
+        },
+      });
+      if (error) throw error;
+      setSendStatus("success");
+      toast.success(`Test email sent to ${target}`);
+      setTimeout(() => setSendStatus("idle"), 4000);
+    } catch (err: any) {
+      setSendStatus("error");
+      toast.error(err?.message || "Failed to send test email");
+      setTimeout(() => setSendStatus("idle"), 4000);
+    }
+  };
 
   return (
     <div className="space-y-4">
