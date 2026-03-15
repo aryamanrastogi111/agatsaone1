@@ -371,11 +371,10 @@ serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // run_id must be the Lovable project run ID (not a self-generated UUID)
-    const run_id = Deno.env.get("LOVABLE_RUN_ID") ?? "";
-    if (!run_id) {
-      console.error("LOVABLE_RUN_ID environment variable is not set");
-    }
+    // For externally-triggered Edge Functions (not invoked from Lovable editor),
+    // use LOVABLE_API_KEY as the run_id — this is the correct auth mechanism
+    // for transactional emails sent outside of a Lovable editor session.
+    const run_id = Deno.env.get("LOVABLE_API_KEY") ?? "";
 
     // Plain-text fallbacks (strip HTML tags)
     const stripHtml = (html: string) => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
