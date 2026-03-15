@@ -406,7 +406,7 @@ serve(async (req) => {
         Authorization: `Bearer ${LOVABLE_API_KEY}`,
       },
       body: JSON.stringify({
-        to: "info@agatsa.com",
+        to: teamRecipient,
         subject: `🛎️ New Order: ${customerName || customerEmail} – ${totalFormatted}`,
         html: teamEmailHtml,
         from_name: "Agatsa Orders",
