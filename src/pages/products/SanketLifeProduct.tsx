@@ -37,6 +37,7 @@ import { toast } from "sonner";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { MultiProductDiscountBanner } from "@/components/shop/MultiProductDiscountBanner";
 import { FomoCounter } from "@/components/shop/FomoCounter";
+import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import { useInventory } from "@/hooks/useInventory";
 
 // Image imports
