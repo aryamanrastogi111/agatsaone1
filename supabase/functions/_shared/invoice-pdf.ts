@@ -177,37 +177,6 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
 }
 
 
-
-function ascii(s: string): string {
-  let r = "";
-  for (let i = 0; i < s.length; i++) {
-    const code = s.charCodeAt(i);
-    r += (code >= 32 && code <= 126) ? s[i] : "?";
-  }
-  return r;
-}
-
-function esc(s: string): string {
-  let r = "";
-  for (const c of ascii(s)) {
-    if (c === "\\") r += "\\\\";
-    else if (c === "(") r += "\\(";
-    else if (c === ")") r += "\\)";
-    else r += c;
-  }
-  return r;
-}
-
-function fmt(amount: number): string {
-  return "Rs. " + amount.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
-
-function pad10(n: number): string {
-  return String(n).padStart(10, "0");
-}
-
-export function buildInvoicePdf(data: InvoicePdfData): Uint8Array {
-  // A4: 595 x 842 pts. PDF origin = bottom-left, y increases upward.
   const W = 595;
   const H = 842;
   const ML = 50;
