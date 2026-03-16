@@ -87,7 +87,7 @@ export function useTrackingPixels() {
 
         if (error || !data) return;
 
-        (data as PixelConfig[]).forEach((pixel) => {
+        (data as unknown as PixelConfig[]).forEach((pixel) => {
           if (!pixel.is_enabled) return;
           const cfg = pixel.config || {};
 

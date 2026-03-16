@@ -248,7 +248,7 @@ export default function Pixels() {
       .select("platform, is_enabled, config, updated_at");
     if (data) {
       const map: Record<string, PixelRow> = {};
-      (data as PixelRow[]).forEach((r) => (map[r.platform] = r));
+      (data as unknown as PixelRow[]).forEach((r) => (map[r.platform] = r));
       setRows(map);
     }
     setLoading(false);
