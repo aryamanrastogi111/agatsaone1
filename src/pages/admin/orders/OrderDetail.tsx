@@ -75,7 +75,7 @@ export default function OrderDetail() {
       couponCode: order.coupon_code ?? undefined,
       total: order.amount ?? subtotal,
     };
-    await downloadAdminInvoice(invoiceData);
+    downloadAdminInvoice(invoiceData);
     toast.success("Operations invoice downloaded");
   };
 
