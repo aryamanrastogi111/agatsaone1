@@ -1,4 +1,4 @@
-import { jsPDF } from "jspdf";
+import { PDFDocument, rgb, StandardFonts, PDFPage, PDFFont } from "pdf-lib";
 
 export interface InvoiceItem {
   productName: string;
@@ -25,197 +25,117 @@ export interface InvoiceData {
   total: number;
 }
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 function fmt(amount: number): string {
   return "Rs. " + amount.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-// ─── Manual table renderer (no plugin needed) ────────────────────────────────
-function drawTable(
-  doc: jsPDF,
-  startY: number,
-  rows: string[][],
-  colWidths: number[],
-  marginLeft: number,
-  pageWidth: number
-): number {
-  const ROW_H = 8;
-  const HEAD_H = 9;
-  const PAD_L = 3;
-  const PAD_T = 6;
-  const headers = ["Description", "Unit Price", "Qty", "Amount"];
-  const aligns: ("left" | "right" | "center")[] = ["left", "right", "center", "right"];
-
-  let y = startY;
-  const tableW = colWidths.reduce((a, b) => a + b, 0);
-
-  // Header background
-  doc.setFillColor(20, 20, 20);
-  doc.rect(marginLeft, y, tableW, HEAD_H, "F");
-
-  // Header text
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(8.5);
-  doc.setTextColor(255, 255, 255);
-  let cx = marginLeft;
-  for (let i = 0; i < headers.length; i++) {
-    const tx =
-      aligns[i] === "right"
-        ? cx + colWidths[i] - PAD_L
-        : aligns[i] === "center"
-        ? cx + colWidths[i] / 2
-        : cx + PAD_L;
-    doc.text(headers[i], tx, y + PAD_T, { align: aligns[i] });
-    cx += colWidths[i];
-  }
-  y += HEAD_H;
-
-  // Rows
-  for (let r = 0; r < rows.length; r++) {
-    const row = rows[r];
-
-    // Wrap description text
-    const descMaxW = colWidths[0] - PAD_L * 2;
-    const descLines = doc.splitTextToSize(row[0], descMaxW) as string[];
-    const rowHeight = Math.max(ROW_H, descLines.length * 5 + 4);
-
-    // Alternate row fill
-    if (r % 2 === 0) {
-      doc.setFillColor(247, 247, 247);
-    } else {
-      doc.setFillColor(255, 255, 255);
-    }
-    doc.rect(marginLeft, y, tableW, rowHeight, "F");
-
-    // Row bottom border
-    doc.setDrawColor(220, 220, 220);
-    doc.setLineWidth(0.2);
-    doc.line(marginLeft, y + rowHeight, marginLeft + tableW, y + rowHeight);
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(8.5);
-    doc.setTextColor(20, 20, 20);
-
-    cx = marginLeft;
-    for (let i = 0; i < row.length; i++) {
-      const cellTop = y + 5;
-      if (i === 0) {
-        // Description may wrap
-        for (let li = 0; li < descLines.length; li++) {
-          doc.text(descLines[li], cx + PAD_L, cellTop + li * 5);
-        }
-      } else {
-        const tx =
-          aligns[i] === "right"
-            ? cx + colWidths[i] - PAD_L
-            : aligns[i] === "center"
-            ? cx + colWidths[i] / 2
-            : cx + PAD_L;
-        doc.text(row[i], tx, cellTop, { align: aligns[i] });
-      }
-      cx += colWidths[i];
-    }
-
-    y += rowHeight;
-  }
-
-  // Outer border
-  doc.setDrawColor(180, 180, 180);
-  doc.setLineWidth(0.3);
-  doc.rect(marginLeft, startY, tableW, y - startY, "S");
-
-  return y; // returns bottom Y
+/** pt-based helper: draw text with a given font/size/color */
+function drawText(
+  page: PDFPage,
+  text: string,
+  x: number,
+  y: number,
+  font: PDFFont,
+  size: number,
+  r = 0, g = 0, b = 0
+) {
+  page.drawText(text, { x, y, font, size, color: rgb(r, g, b) });
 }
 
-// ─── Shared document builder ─────────────────────────────────────────────────
-function buildDoc(data: InvoiceData, isAdmin: boolean): jsPDF {
-  const doc = new jsPDF({ unit: "mm", format: "a4" });
-  const W = 210;
-  const margin = 18;
+/** Right-align text by computing width first */
+function drawTextRight(
+  page: PDFPage,
+  text: string,
+  rightX: number,
+  y: number,
+  font: PDFFont,
+  size: number,
+  r = 0, g = 0, b = 0
+) {
+  const w = font.widthOfTextAtSize(text, size);
+  page.drawText(text, { x: rightX - w, y, font, size, color: rgb(r, g, b) });
+}
 
-  // ── Header bar ───────────────────────────────────────────────────────────────
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(11);
-  doc.setTextColor(0, 0, 0);
-  doc.text("Agatsa Medical Technologies Pvt. Ltd.", margin, 20);
+/** Wrap text to fit maxWidth, return array of lines */
+function wrapText(text: string, font: PDFFont, size: number, maxWidth: number): string[] {
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let current = "";
+  for (const word of words) {
+    const candidate = current ? current + " " + word : word;
+    if (font.widthOfTextAtSize(candidate, size) <= maxWidth) {
+      current = candidate;
+    } else {
+      if (current) lines.push(current);
+      current = word;
+    }
+  }
+  if (current) lines.push(current);
+  return lines.length ? lines : [text];
+}
 
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(90, 90, 90);
-  doc.text("Bengaluru, Karnataka, India  |  care@agatsa.com  |  agatsa.com", margin, 26);
+// ─── Core builder (async because pdf-lib is async) ────────────────────────────
+async function buildDoc(data: InvoiceData, isAdmin: boolean): Promise<Uint8Array> {
+  const doc = await PDFDocument.create();
 
-  // Title (right)
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(isAdmin ? 18 : 22);
-  doc.setTextColor(0, 0, 0);
-  doc.text(isAdmin ? "OPERATIONS INVOICE" : "INVOICE", W - margin, 20, { align: "right" });
+  // Page size: A4 = 595 x 842 pt
+  const W = 595;
+  const H = 842;
+  const page = doc.addPage([W, H]);
 
+  const bold = await doc.embedFont(StandardFonts.HelveticaBold);
+  const regular = await doc.embedFont(StandardFonts.Helvetica);
+
+  const ML = 50;  // margin left
+  const MR = 50;  // margin right
+  const contentW = W - ML - MR;
+
+  // ── Top horizontal rule ───────────────────────────────────────────────────
+  let y = H - 40;
+
+  // Company name
+  drawText(page, "Agatsa Medical Technologies Pvt. Ltd.", ML, y, bold, 11);
+  y -= 14;
+  drawText(page, "Bengaluru, Karnataka, India  |  care@agatsa.com  |  agatsa.com", ML, y, regular, 8, 0.35, 0.35, 0.35);
+
+  // Invoice title (right side)
+  const title = isAdmin ? "OPERATIONS INVOICE" : "INVOICE";
+  drawTextRight(page, title, W - MR, H - 40, bold, isAdmin ? 18 : 22);
   if (isAdmin) {
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(7.5);
-    doc.setTextColor(140, 140, 140);
-    doc.text("INTERNAL USE ONLY", W - margin, 27, { align: "right" });
+    drawTextRight(page, "INTERNAL USE ONLY", W - MR, H - 57, regular, 7.5, 0.55, 0.55, 0.55);
   }
 
   // Divider
-  doc.setDrawColor(0, 0, 0);
-  doc.setLineWidth(0.5);
-  doc.line(margin, 32, W - margin, 32);
+  y = H - 72;
+  page.drawLine({ start: { x: ML, y }, end: { x: W - MR, y }, thickness: 0.5, color: rgb(0, 0, 0) });
 
-  // ── Order meta ───────────────────────────────────────────────────────────────
-  const metaY = 40;
-  const col2 = 80;
-  const col3 = 140;
+  // ── Order meta row ────────────────────────────────────────────────────────
+  y -= 20;
+  const col2x = ML + 180;
+  const col3x = ML + 340;
 
-  doc.setFontSize(7.5);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(100, 100, 100);
-  doc.text("ORDER ID", margin, metaY);
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(0, 0, 0);
-  doc.text(data.orderId, margin, metaY + 5);
-
-  doc.setFontSize(7.5);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(100, 100, 100);
-  doc.text("DATE", col2, metaY);
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(0, 0, 0);
-  doc.text(data.orderDate, col2, metaY + 5);
-
+  drawText(page, "ORDER ID", ML, y, bold, 7.5, 0.39, 0.39, 0.39);
+  drawText(page, "DATE", col2x, y, bold, 7.5, 0.39, 0.39, 0.39);
   if (data.paymentId) {
-    doc.setFontSize(7.5);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(100, 100, 100);
-    doc.text("PAYMENT ID", col3, metaY);
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(7.5);
-    doc.setTextColor(0, 0, 0);
-    doc.text(data.paymentId, col3, metaY + 5);
+    drawText(page, "PAYMENT ID", col3x, y, bold, 7.5, 0.39, 0.39, 0.39);
+  }
+  y -= 13;
+  drawText(page, data.orderId, ML, y, regular, 8.5);
+  drawText(page, data.orderDate, col2x, y, regular, 8.5);
+  if (data.paymentId) {
+    drawText(page, data.paymentId, col3x, y, regular, 7.5);
   }
 
-  // ── Bill To section ───────────────────────────────────────────────────────────
-  const billY = 58;
-  const rightCol = 115;
+  // ── Bill To ───────────────────────────────────────────────────────────────
+  y -= 28;
+  drawText(page, "BILL TO", ML, y, bold, 7.5);
+  page.drawLine({ start: { x: ML, y: y - 3 }, end: { x: ML + 50, y: y - 3 }, thickness: 0.3, color: rgb(0, 0, 0) });
 
-  // Left — Bill To
-  doc.setFontSize(7.5);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(0, 0, 0);
-  doc.text("BILL TO", margin, billY);
-  doc.setDrawColor(0, 0, 0);
-  doc.setLineWidth(0.2);
-  doc.line(margin, billY + 1.5, margin + 28, billY + 1.5);
+  y -= 16;
+  drawText(page, data.customerName || "—", ML, y, bold, 10);
+  y -= 13;
 
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(10);
-  doc.text(data.customerName || "—", margin, billY + 8);
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8.5);
-  doc.setTextColor(50, 50, 50);
-  let addrY = billY + 14;
   const billLines = [
     data.shippingAddress,
     [data.shippingCity, data.shippingState].filter(Boolean).join(", "),
@@ -224,132 +144,182 @@ function buildDoc(data: InvoiceData, isAdmin: boolean): jsPDF {
     data.customerPhone ?? "",
   ].filter(Boolean);
 
-  billLines.forEach((line) => {
-    doc.text(line, margin, addrY);
-    addrY += 5;
-  });
+  for (const line of billLines) {
+    const wrapped = wrapText(line, regular, 8.5, 200);
+    for (const wl of wrapped) {
+      drawText(page, wl, ML, y, regular, 8.5, 0.2, 0.2, 0.2);
+      y -= 12;
+    }
+  }
 
-  // Right — Shipping Address (admin only, or repeat for customer)
+  // Ship To (admin only, right column)
   if (isAdmin) {
-    doc.setFontSize(7.5);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 0);
-    doc.text("SHIP TO", rightCol, billY);
-    doc.setDrawColor(0, 0, 0);
-    doc.setLineWidth(0.2);
-    doc.line(rightCol, billY + 1.5, rightCol + 22, billY + 1.5);
-
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(10);
-    doc.text(data.customerName || "—", rightCol, billY + 8);
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(8.5);
-    doc.setTextColor(50, 50, 50);
-    let shipY = billY + 14;
+    let shipY = H - 72 - 20 - 13 - 28;
+    drawText(page, "SHIP TO", col3x, shipY, bold, 7.5);
+    page.drawLine({ start: { x: col3x, y: shipY - 3 }, end: { x: col3x + 50, y: shipY - 3 }, thickness: 0.3, color: rgb(0, 0, 0) });
+    shipY -= 16;
+    drawText(page, data.customerName || "—", col3x, shipY, bold, 10);
+    shipY -= 13;
     const shipLines = [
       data.shippingAddress,
       [data.shippingCity, data.shippingState].filter(Boolean).join(", "),
       data.shippingPincode ? `PIN: ${data.shippingPincode}` : "",
     ].filter(Boolean);
-    shipLines.forEach((line) => {
-      doc.text(line, rightCol, shipY);
-      shipY += 5;
-    });
+    for (const line of shipLines) {
+      const wrapped = wrapText(line, regular, 8.5, 140);
+      for (const wl of wrapped) {
+        drawText(page, wl, col3x, shipY, regular, 8.5, 0.2, 0.2, 0.2);
+        shipY -= 12;
+      }
+    }
   }
 
-  // ── Items table ───────────────────────────────────────────────────────────────
-  const tableY = Math.max(addrY + 8, 105);
-  const usableW = W - margin * 2;
-  // col widths: Description auto, Unit Price, Qty, Amount
-  const colWidths = [usableW - 34 - 16 - 34, 34, 16, 34];
+  // ── Items table ───────────────────────────────────────────────────────────
+  // Ensure table starts with some gap below address block
+  y = Math.min(y - 10, H - 310);
 
-  const tableRows = data.items.map((item) => [
-    item.variantTitle && item.variantTitle !== "Default Title"
-      ? `${item.productName} (${item.variantTitle})`
-      : item.productName,
-    fmt(item.price),
-    String(item.quantity),
-    fmt(item.price * item.quantity),
-  ]);
+  const tableTop = y;
+  const ROW_H = 22;
+  const HEAD_H = 24;
 
-  const tableBottom = drawTable(doc, tableY, tableRows, colWidths, margin, usableW);
+  // Column widths (in pt): Description | Unit Price | Qty | Amount
+  const descW = contentW - 90 - 40 - 90;
+  const colX = [ML, ML + descW, ML + descW + 90, ML + descW + 90 + 40];
+  const colW = [descW, 90, 40, 90];
 
-  // ── Totals ───────────────────────────────────────────────────────────────────
-  const totalsX = W - margin - 70;
-  let totY = tableBottom + 8;
+  // Header background
+  page.drawRectangle({ x: ML, y: tableTop - HEAD_H, width: contentW, height: HEAD_H, color: rgb(0.08, 0.08, 0.08) });
 
-  doc.setFontSize(8.5);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(60, 60, 60);
+  const headers = ["Description", "Unit Price", "Qty", "Amount"];
+  const aligns = ["left", "right", "center", "right"];
+  for (let i = 0; i < headers.length; i++) {
+    let tx = colX[i] + 6;
+    if (aligns[i] === "right") {
+      const tw = bold.widthOfTextAtSize(headers[i], 8.5);
+      tx = colX[i] + colW[i] - 6 - tw;
+    } else if (aligns[i] === "center") {
+      const tw = bold.widthOfTextAtSize(headers[i], 8.5);
+      tx = colX[i] + (colW[i] - tw) / 2;
+    }
+    page.drawText(headers[i], { x: tx, y: tableTop - HEAD_H + 8, font: bold, size: 8.5, color: rgb(1, 1, 1) });
+  }
 
-  doc.text("Subtotal", totalsX, totY);
-  doc.text(fmt(data.subtotal), W - margin, totY, { align: "right" });
-  totY += 6;
+  let rowY = tableTop - HEAD_H;
+
+  // Rows
+  for (let r = 0; r < data.items.length; r++) {
+    const item = data.items[r];
+    const descStr =
+      item.variantTitle && item.variantTitle !== "Default Title"
+        ? `${item.productName} (${item.variantTitle})`
+        : item.productName;
+
+    const descLines = wrapText(descStr, regular, 8.5, descW - 12);
+    const rh = Math.max(ROW_H, descLines.length * 13 + 8);
+
+    // Alternate fill
+    const fillGrey = r % 2 === 0 ? 0.969 : 1;
+    page.drawRectangle({ x: ML, y: rowY - rh, width: contentW, height: rh, color: rgb(fillGrey, fillGrey, fillGrey) });
+
+    // Row bottom border
+    page.drawLine({ start: { x: ML, y: rowY - rh }, end: { x: ML + contentW, y: rowY - rh }, thickness: 0.2, color: rgb(0.86, 0.86, 0.86) });
+
+    const textY = rowY - rh + (rh - descLines.length * 13) / 2 + (descLines.length - 1) * 13 + 5;
+
+    // Description (may wrap)
+    for (let li = 0; li < descLines.length; li++) {
+      drawText(page, descLines[li], colX[0] + 6, textY - li * 13, regular, 8.5, 0.08, 0.08, 0.08);
+    }
+
+    // Unit price
+    const unitStr = fmt(item.price);
+    const unitW = regular.widthOfTextAtSize(unitStr, 8.5);
+    drawText(page, unitStr, colX[1] + colW[1] - 6 - unitW, rowY - rh + (rh / 2) - 4, regular, 8.5, 0.08, 0.08, 0.08);
+
+    // Qty (centered)
+    const qtyStr = String(item.quantity);
+    const qtyW = regular.widthOfTextAtSize(qtyStr, 8.5);
+    drawText(page, qtyStr, colX[2] + (colW[2] - qtyW) / 2, rowY - rh + (rh / 2) - 4, regular, 8.5, 0.08, 0.08, 0.08);
+
+    // Amount
+    const amtStr = fmt(item.price * item.quantity);
+    const amtW = regular.widthOfTextAtSize(amtStr, 8.5);
+    drawText(page, amtStr, colX[3] + colW[3] - 6 - amtW, rowY - rh + (rh / 2) - 4, regular, 8.5, 0.08, 0.08, 0.08);
+
+    rowY -= rh;
+  }
+
+  // Table outer border
+  page.drawRectangle({ x: ML, y: rowY, width: contentW, height: tableTop - rowY, borderColor: rgb(0.7, 0.7, 0.7), borderWidth: 0.4, color: rgb(1, 1, 1) });
+
+  // ── Totals ────────────────────────────────────────────────────────────────
+  const totX = W - MR - 180;
+  let totY = rowY - 22;
+
+  drawText(page, "Subtotal", totX, totY, regular, 8.5, 0.24, 0.24, 0.24);
+  drawTextRight(page, fmt(data.subtotal), W - MR, totY, regular, 8.5, 0.24, 0.24, 0.24);
+  totY -= 16;
 
   if (data.discountAmount && data.discountAmount > 0) {
-    doc.text(`Discount${data.couponCode ? ` (${data.couponCode})` : ""}`, totalsX, totY);
-    doc.text(`- ${fmt(data.discountAmount)}`, W - margin, totY, { align: "right" });
-    totY += 6;
+    const label = `Discount${data.couponCode ? ` (${data.couponCode})` : ""}`;
+    drawText(page, label, totX, totY, regular, 8.5, 0.24, 0.24, 0.24);
+    drawTextRight(page, `- ${fmt(data.discountAmount)}`, W - MR, totY, regular, 8.5, 0.24, 0.24, 0.24);
+    totY -= 16;
   }
 
-  doc.text("Shipping", totalsX, totY);
-  doc.text("Free", W - margin, totY, { align: "right" });
-  totY += 6;
+  drawText(page, "Shipping", totX, totY, regular, 8.5, 0.24, 0.24, 0.24);
+  drawTextRight(page, "Free", W - MR, totY, regular, 8.5, 0.24, 0.24, 0.24);
+  totY -= 10;
 
-  doc.setDrawColor(0, 0, 0);
-  doc.setLineWidth(0.4);
-  doc.line(totalsX, totY, W - margin, totY);
-  totY += 5;
+  page.drawLine({ start: { x: totX, y: totY }, end: { x: W - MR, y: totY }, thickness: 0.5, color: rgb(0, 0, 0) });
+  totY -= 16;
 
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(11);
-  doc.setTextColor(0, 0, 0);
-  doc.text(isAdmin ? "Grand Total" : "Total", totalsX, totY);
-  doc.text(fmt(data.total), W - margin, totY, { align: "right" });
-  totY += 6;
+  const totalLabel = isAdmin ? "Grand Total" : "Total";
+  drawText(page, totalLabel, totX, totY, bold, 11);
+  drawTextRight(page, fmt(data.total), W - MR, totY, bold, 11);
+  totY -= 13;
 
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(7.5);
-  doc.setTextColor(120, 120, 120);
-  doc.text("Payment received via Razorpay. Amount in INR.", totalsX, totY);
+  drawText(page, "Payment received via Razorpay. Amount in INR.", totX, totY, regular, 7.5, 0.47, 0.47, 0.47);
 
-  // ── Footer ───────────────────────────────────────────────────────────────────
-  const pageH = 297;
-  doc.setDrawColor(180, 180, 180);
-  doc.setLineWidth(0.3);
-  doc.line(margin, pageH - 20, W - margin, pageH - 20);
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(7.5);
-  doc.setTextColor(120, 120, 120);
+  // ── Footer ────────────────────────────────────────────────────────────────
+  const footerY = 28;
+  page.drawLine({ start: { x: ML, y: footerY + 14 }, end: { x: W - MR, y: footerY + 14 }, thickness: 0.3, color: rgb(0.7, 0.7, 0.7) });
 
   if (isAdmin) {
-    doc.text(
-      `Generated: ${new Date().toLocaleString("en-IN")}  |  FOR INTERNAL OPERATIONS USE ONLY`,
-      margin, pageH - 14
-    );
+    drawText(page, `Generated: ${new Date().toLocaleString("en-IN")}  |  FOR INTERNAL OPERATIONS USE ONLY`, ML, footerY + 4, regular, 7, 0.47, 0.47, 0.47);
   } else {
-    doc.text("Thank you for your purchase.", margin, pageH - 14);
-    doc.text("Queries: care@agatsa.com  |  agatsa.com/support", margin, pageH - 9);
+    drawText(page, "Thank you for your purchase.", ML, footerY + 4, regular, 7.5, 0.47, 0.47, 0.47);
+    drawText(page, "Queries: care@agatsa.com  |  agatsa.com/support", ML, footerY - 6, regular, 7.5, 0.47, 0.47, 0.47);
   }
-  doc.text("Agatsa Medical Technologies Pvt. Ltd., Bengaluru, India", W - margin, pageH - 14, {
-    align: "right",
-  });
+  drawTextRight(page, "Agatsa Medical Technologies Pvt. Ltd., Bengaluru, India", W - MR, footerY + 4, regular, 7, 0.47, 0.47, 0.47);
 
-  return doc;
+  return doc.save();
+}
+
+// ─── Helper: trigger browser download ─────────────────────────────────────────
+function triggerDownload(bytes: Uint8Array, filename: string) {
+  const blob = new Blob([bytes.buffer as ArrayBuffer], { type: "application/pdf" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 // ─── Public API ───────────────────────────────────────────────────────────────
-export function generateCustomerInvoicePdf(data: InvoiceData): Uint8Array {
-  const doc = buildDoc(data, false);
-  return doc.output("arraybuffer") as unknown as Uint8Array;
+export async function generateCustomerInvoicePdf(data: InvoiceData): Promise<Uint8Array> {
+  return buildDoc(data, false);
 }
 
-export function downloadCustomerInvoice(data: InvoiceData): void {
-  buildDoc(data, false).save(`invoice-${data.orderId}.pdf`);
+export async function downloadCustomerInvoice(data: InvoiceData): Promise<void> {
+  const bytes = await buildDoc(data, false);
+  triggerDownload(bytes, `invoice-${data.orderId}.pdf`);
 }
 
-export function downloadAdminInvoice(data: InvoiceData): void {
-  buildDoc(data, true).save(`operations-invoice-${data.orderId}.pdf`);
+export async function downloadAdminInvoice(data: InvoiceData): Promise<void> {
+  const bytes = await buildDoc(data, true);
+  triggerDownload(bytes, `operations-invoice-${data.orderId}.pdf`);
 }
