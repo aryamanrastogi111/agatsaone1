@@ -49,6 +49,7 @@ const NAV_GROUPS: NavGroup[] = [
   {
     label: "Reports",
     items: [
+      { label: "Live Activity", icon: Radio,    href: "/admin/live" },
       { label: "Analytics",     icon: BarChart2, href: "/admin/analytics" },
       { label: "Activity Logs", icon: Activity,  href: "/admin/activity-logs" },
     ],
