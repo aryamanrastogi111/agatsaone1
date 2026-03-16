@@ -23,13 +23,24 @@ export interface InvoicePdfData {
 
 const enc = new TextEncoder();
 
-// Strip non-ASCII characters to keep PDF stream bytes predictable
 function ascii(s: string): string {
-  return s.replace(/[^\\x20-\\x7E]/g, "?");
+  let r = "";
+  for (let i = 0; i < s.length; i++) {
+    const code = s.charCodeAt(i);
+    r += (code >= 32 && code <= 126) ? s[i] : "?";
+  }
+  return r;
 }
 
 function esc(s: string): string {
-  return ascii(s).replace(/\\\\/g, "\\\\\\\\").replace(/\\(/g, "\\\\(").replace(/\\)/g, "\\\\)");
+  let r = "";
+  for (const c of ascii(s)) {
+    if (c === "\\") r += "\\\\";
+    else if (c === "(") r += "\\(";
+    else if (c === ")") r += "\\)";
+    else r += c;
+  }
+  return r;
 }
 
 function fmt(amount: number): string {
