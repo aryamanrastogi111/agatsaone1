@@ -80,6 +80,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <GlobalTracking />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/products" element={<Products />} />
