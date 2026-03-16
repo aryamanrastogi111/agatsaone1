@@ -176,21 +176,7 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
   return await doc.save();
 }
 
-  customerEmail: string;
-  customerPhone?: string;
-  shippingAddress: string;
-  shippingCity: string;
-  shippingState: string;
-  shippingPincode: string;
-  items: { productName: string; variantTitle?: string; quantity: number; price: number }[];
-  subtotal: number;
-  discountAmount?: number;
-  couponCode?: string;
-  total: number;
-  isAdmin?: boolean;
-}
 
-const enc = new TextEncoder();
 
 function ascii(s: string): string {
   let r = "";
