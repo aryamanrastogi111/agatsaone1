@@ -2,7 +2,36 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db as supabase } from "@/integrations/supabase/db";
-import { Search, Download, CreditCard, ShoppingBag } from "lucide-react";
+import { Search, Download, CreditCard, ShoppingBag, FileText } from "lucide-react";
+import { downloadAdminInvoice, type InvoiceData } from "@/lib/invoicePdf";
+
+function handleOrderInvoiceDownload(order: RazorpayOrder) {
+  const items = Array.isArray(order.items) ? order.items : [];
+  const subtotal = items.reduce((s, i) => s + (i.price ?? 0) * (i.quantity ?? 1), 0);
+  const invoiceData: InvoiceData = {
+    orderId: order.razorpay_order_id ?? order.id,
+    paymentId: order.razorpay_payment_id ?? undefined,
+    orderDate: new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }),
+    customerName: order.customer_name ?? "",
+    customerEmail: order.customer_email ?? "",
+    customerPhone: order.customer_phone ?? undefined,
+    shippingAddress: order.shipping_address ?? "",
+    shippingCity: order.shipping_city ?? "",
+    shippingState: order.shipping_state ?? "",
+    shippingPincode: order.shipping_pincode ?? "",
+    items: items.map((i) => ({
+      productName: i.productName ?? "Product",
+      variantTitle: undefined,
+      quantity: i.quantity ?? 1,
+      price: i.price ?? 0,
+    })),
+    subtotal,
+    discountAmount: order.discount_amount ?? undefined,
+    couponCode: order.coupon_code ?? undefined,
+    total: order.amount ?? subtotal,
+  };
+  downloadAdminInvoice(invoiceData);
+}
 
 const STATUS_COLORS: Record<string, string> = {
   pending:     "bg-yellow-500/20 text-yellow-400",
