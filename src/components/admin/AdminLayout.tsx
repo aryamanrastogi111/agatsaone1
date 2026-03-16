@@ -58,6 +58,7 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { label: "Team & Access",   icon: Shield,  href: "/admin/team" },
       { label: "Email Previews",  icon: Mail,    href: "/admin/email-preview" },
+      { label: "Pixels & Tracking", icon: Zap,  href: "/admin/pixels" },
       { label: "Settings",        icon: Settings, href: "/admin/settings" },
       { label: "Integrations",    icon: Puzzle,  href: "/admin/integrations" },
     ],
