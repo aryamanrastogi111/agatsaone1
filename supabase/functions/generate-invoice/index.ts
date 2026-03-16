@@ -3,8 +3,7 @@ import { buildInvoicePdf } from "../_shared/invoice-pdf.ts";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
 serve(async (req) => {
@@ -14,8 +13,8 @@ serve(async (req) => {
     const body = await req.json();
     const isAdmin = body.isAdmin === true;
 
-    const pdfBytes = buildInvoicePdf({
-      orderId:         body.orderId         ?? "—",
+    const pdfBytes = await buildInvoicePdf({
+      orderId:         body.orderId         ?? "DRAFT",
       paymentId:       body.paymentId,
       orderDate:       body.orderDate       ?? new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }),
       customerName:    body.customerName    ?? "",
