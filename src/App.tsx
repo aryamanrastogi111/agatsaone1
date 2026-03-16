@@ -58,6 +58,7 @@ import AdminSettings from "./pages/admin/Settings";
 import AdminIntegrations from "./pages/admin/Integrations";
 import AdminActivityLogs from "./pages/admin/ActivityLogs";
 import AdminEmailPreview from "./pages/admin/EmailPreview";
+import AdminPixels from "./pages/admin/Pixels";
 
 const queryClient = new QueryClient();
 
