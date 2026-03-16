@@ -133,6 +133,7 @@ const App = () => (
             <Route path="settings" element={<AdminSettings />} />
             <Route path="integrations" element={<AdminIntegrations />} />
             <Route path="activity-logs" element={<AdminActivityLogs />} />
+            <Route path="live" element={<AdminLiveActivity />} />
             <Route path="email-preview" element={<AdminEmailPreview />} />
             <Route path="pixels" element={<AdminPixels />} />
           </Route>
