@@ -143,17 +143,28 @@ function RazorpayOrdersTab() {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <CreditCard size={18} className="text-blue-500" /> Razorpay Orders
+            <CreditCard size={18} className="text-blue-500" /> All Orders
           </h2>
           <p className="text-sm text-gray-500">{total} total orders</p>
         </div>
-        <button onClick={exportCSV}
-          className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 shadow-sm transition-colors">
-          <Download size={15} /> Export CSV
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={importShopifyOrders}
+            disabled={importing}
+            title="Import all Shopify orders into the native backend"
+            className="flex items-center gap-2 bg-orange-50 hover:bg-orange-100 text-orange-700 text-sm font-medium px-4 py-2 rounded-lg border border-orange-200 shadow-sm transition-colors disabled:opacity-60"
+          >
+            <RefreshCw size={15} className={importing ? "animate-spin" : ""} />
+            {importing ? "Migrating…" : "Import Shopify Orders"}
+          </button>
+          <button onClick={exportCSV}
+            className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 shadow-sm transition-colors">
+            <Download size={15} /> Export CSV
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
