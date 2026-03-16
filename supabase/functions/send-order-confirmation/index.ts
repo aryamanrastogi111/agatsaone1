@@ -131,7 +131,7 @@ serve(async (req) => {
         (sum: number, item: { price: number; quantity: number }) => sum + item.price * item.quantity,
         0
       );
-      const pdfBytes = buildInvoicePdf({
+      const pdfBytes = await buildInvoicePdf({
         orderId,
         paymentId,
         orderDate,
