@@ -881,6 +881,30 @@ export type Database = {
         }
         Relationships: []
       }
+      tracking_pixels: {
+        Row: {
+          config: Json
+          id: string
+          is_enabled: boolean
+          platform: string
+          updated_at: string
+        }
+        Insert: {
+          config?: Json
+          id?: string
+          is_enabled?: boolean
+          platform: string
+          updated_at?: string
+        }
+        Update: {
+          config?: Json
+          id?: string
+          is_enabled?: boolean
+          platform?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
