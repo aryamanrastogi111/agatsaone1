@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, Package, Truck, X, MapPin, User, Phone, Mail } from "lucide-react";
+import { ArrowLeft, Package, Truck, X, MapPin, User, Phone, Mail, Download } from "lucide-react";
 import { toast } from "sonner";
+import { downloadAdminInvoice, type InvoiceData } from "@/lib/invoicePdf";
 
 const STATUS_COLORS: Record<string, string> = {
   pending:    "bg-yellow-100 text-yellow-700 border-yellow-200",
@@ -47,6 +48,36 @@ export default function OrderDetail() {
   };
 
   useEffect(() => { fetchOrder(); }, [id]);
+
+  const handleDownloadInvoice = () => {
+    if (!order) return;
+    const items = Array.isArray(order.items) ? order.items : [];
+    const subtotal = items.reduce((s: number, i: any) => s + (i.price ?? 0) * (i.quantity ?? 1), 0);
+    const invoiceData: InvoiceData = {
+      orderId: order.razorpay_order_id ?? order.id,
+      paymentId: order.razorpay_payment_id ?? undefined,
+      orderDate: new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }),
+      customerName: order.customer_name ?? "",
+      customerEmail: order.customer_email ?? "",
+      customerPhone: order.customer_phone ?? undefined,
+      shippingAddress: order.shipping_address ?? "",
+      shippingCity: order.shipping_city ?? "",
+      shippingState: order.shipping_state ?? "",
+      shippingPincode: order.shipping_pincode ?? "",
+      items: items.map((i: any) => ({
+        productName: i.productName ?? i.name ?? "Product",
+        variantTitle: i.variantTitle ?? undefined,
+        quantity: i.quantity ?? 1,
+        price: i.price ?? 0,
+      })),
+      subtotal,
+      discountAmount: order.discount_amount ?? undefined,
+      couponCode: order.coupon_code ?? undefined,
+      total: order.amount ?? subtotal,
+    };
+    downloadAdminInvoice(invoiceData);
+    toast.success("Operations invoice downloaded");
+  };
 
   const updateStatus = async (newStatus: string) => {
     setUpdatingStatus(true);
@@ -110,6 +141,12 @@ export default function OrderDetail() {
             paid
           </span>
         )}
+        <button
+          onClick={handleDownloadInvoice}
+          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-900 text-white hover:bg-gray-700 transition-colors border border-gray-800"
+        >
+          <Download size={13} /> Download Invoice
+        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">

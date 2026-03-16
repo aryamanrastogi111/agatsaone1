@@ -2,7 +2,36 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db as supabase } from "@/integrations/supabase/db";
-import { Search, Download, CreditCard, ShoppingBag } from "lucide-react";
+import { Search, Download, CreditCard, ShoppingBag, FileText } from "lucide-react";
+import { downloadAdminInvoice, type InvoiceData } from "@/lib/invoicePdf";
+
+function handleOrderInvoiceDownload(order: RazorpayOrder) {
+  const items = Array.isArray(order.items) ? order.items : [];
+  const subtotal = items.reduce((s, i) => s + (i.price ?? 0) * (i.quantity ?? 1), 0);
+  const invoiceData: InvoiceData = {
+    orderId: order.razorpay_order_id ?? order.id,
+    paymentId: order.razorpay_payment_id ?? undefined,
+    orderDate: new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }),
+    customerName: order.customer_name ?? "",
+    customerEmail: order.customer_email ?? "",
+    customerPhone: order.customer_phone ?? undefined,
+    shippingAddress: order.shipping_address ?? "",
+    shippingCity: order.shipping_city ?? "",
+    shippingState: order.shipping_state ?? "",
+    shippingPincode: order.shipping_pincode ?? "",
+    items: items.map((i) => ({
+      productName: i.productName ?? "Product",
+      variantTitle: undefined,
+      quantity: i.quantity ?? 1,
+      price: i.price ?? 0,
+    })),
+    subtotal,
+    discountAmount: order.discount_amount ?? undefined,
+    couponCode: order.coupon_code ?? undefined,
+    total: order.amount ?? subtotal,
+  };
+  downloadAdminInvoice(invoiceData);
+}
 
 const STATUS_COLORS: Record<string, string> = {
   pending:     "bg-yellow-500/20 text-yellow-400",
@@ -140,6 +169,7 @@ function RazorpayOrdersTab() {
                 <th className="text-left px-5 py-3 font-medium">Status</th>
                 <th className="text-right px-5 py-3 font-medium">Amount</th>
                 <th className="text-right px-5 py-3 font-medium hidden sm:table-cell">Date</th>
+                <th className="px-5 py-3 font-medium hidden sm:table-cell"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -171,10 +201,10 @@ function RazorpayOrdersTab() {
                     {order.coupon_code ? (
                       <div className="flex flex-col gap-0.5">
                         <span className="inline-flex items-center gap-1 bg-violet-50 text-violet-700 border border-violet-200 text-xs font-mono font-bold px-2 py-0.5 rounded-full w-fit">
-                          🏷 {order.coupon_code}
+                          {order.coupon_code}
                         </span>
                         {order.discount_amount != null && order.discount_amount > 0 && (
-                          <span className="text-xs text-gray-400">−₹{order.discount_amount.toLocaleString("en-IN")}</span>
+                          <span className="text-xs text-gray-400">-Rs.{order.discount_amount.toLocaleString("en-IN")}</span>
                         )}
                       </div>
                     ) : (
@@ -187,15 +217,24 @@ function RazorpayOrdersTab() {
                     </span>
                   </td>
                   <td className="px-5 py-3 text-right">
-                    <p className="font-bold text-gray-900">₹{order.amount?.toLocaleString("en-IN")}</p>
+                    <p className="font-bold text-gray-900">Rs.{order.amount?.toLocaleString("en-IN")}</p>
                     {order.coupon_code && order.discount_amount != null && order.discount_amount > 0 && (
                       <p className="text-xs text-gray-400 line-through">
-                        ₹{(order.amount + order.discount_amount).toLocaleString("en-IN")}
+                        Rs.{(order.amount + order.discount_amount).toLocaleString("en-IN")}
                       </p>
                     )}
                   </td>
                   <td className="px-5 py-3 text-right hidden sm:table-cell text-gray-400 text-xs">
                     {new Date(order.created_at).toLocaleDateString("en-IN")}
+                  </td>
+                  <td className="px-3 py-3 hidden sm:table-cell">
+                    <button
+                      onClick={() => handleOrderInvoiceDownload(order)}
+                      title="Download operations invoice"
+                      className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition-colors"
+                    >
+                      <FileText size={14} />
+                    </button>
                   </td>
                 </tr>
               ))}
