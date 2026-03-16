@@ -49,6 +49,36 @@ export default function OrderDetail() {
 
   useEffect(() => { fetchOrder(); }, [id]);
 
+  const handleDownloadInvoice = () => {
+    if (!order) return;
+    const items = Array.isArray(order.items) ? order.items : [];
+    const subtotal = items.reduce((s: number, i: any) => s + (i.price ?? 0) * (i.quantity ?? 1), 0);
+    const invoiceData: InvoiceData = {
+      orderId: order.razorpay_order_id ?? order.id,
+      paymentId: order.razorpay_payment_id ?? undefined,
+      orderDate: new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }),
+      customerName: order.customer_name ?? "",
+      customerEmail: order.customer_email ?? "",
+      customerPhone: order.customer_phone ?? undefined,
+      shippingAddress: order.shipping_address ?? "",
+      shippingCity: order.shipping_city ?? "",
+      shippingState: order.shipping_state ?? "",
+      shippingPincode: order.shipping_pincode ?? "",
+      items: items.map((i: any) => ({
+        productName: i.productName ?? i.name ?? "Product",
+        variantTitle: i.variantTitle ?? undefined,
+        quantity: i.quantity ?? 1,
+        price: i.price ?? 0,
+      })),
+      subtotal,
+      discountAmount: order.discount_amount ?? undefined,
+      couponCode: order.coupon_code ?? undefined,
+      total: order.amount ?? subtotal,
+    };
+    downloadAdminInvoice(invoiceData);
+    toast.success("Operations invoice downloaded");
+  };
+
   const updateStatus = async (newStatus: string) => {
     setUpdatingStatus(true);
     const { error } = await supabase.from("orders").update({ status: newStatus }).eq("id", id!);
