@@ -141,6 +141,12 @@ export default function OrderDetail() {
             paid
           </span>
         )}
+        <button
+          onClick={handleDownloadInvoice}
+          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-900 text-white hover:bg-gray-700 transition-colors border border-gray-800"
+        >
+          <Download size={13} /> Download Invoice
+        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
