@@ -11,5 +11,7 @@ project_id = "jqyvtovddyqjvawnoysl"
     verify_jwt = false
   [functions.razorpay-verify-payment]
     verify_jwt = false
+  [functions.generate-invoice]
+    verify_jwt = false
   [functions.send-order-confirmation]
     verify_jwt = false
