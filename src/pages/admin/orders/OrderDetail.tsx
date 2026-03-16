@@ -49,7 +49,7 @@ export default function OrderDetail() {
 
   useEffect(() => { fetchOrder(); }, [id]);
 
-  const handleDownloadInvoice = () => {
+  const handleDownloadInvoice = async () => {
     if (!order) return;
     const items = Array.isArray(order.items) ? order.items : [];
     const subtotal = items.reduce((s: number, i: any) => s + (i.price ?? 0) * (i.quantity ?? 1), 0);
