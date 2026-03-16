@@ -1,4 +1,7 @@
-import { PDFDocument, rgb, StandardFonts, PDFPage, PDFFont } from "pdf-lib";
+// Pure raw-PDF invoice generator — no external library needed.
+// Uses standard Type1 fonts (Helvetica / Helvetica-Bold) built into every PDF viewer.
+// This is the same approach used in the send-order-confirmation edge function which
+// is proven to produce valid, readable PDFs.
 
 export interface InvoiceItem {
   productName: string;
@@ -30,275 +33,272 @@ function fmt(amount: number): string {
   return "Rs. " + amount.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-/** pt-based helper: draw text with a given font/size/color */
-function drawText(
-  page: PDFPage,
-  text: string,
-  x: number,
-  y: number,
-  font: PDFFont,
-  size: number,
-  r = 0, g = 0, b = 0
-) {
-  page.drawText(text, { x, y, font, size, color: rgb(r, g, b) });
+function esc(s: string): string {
+  return s.replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
 }
 
-/** Right-align text by computing width first */
-function drawTextRight(
-  page: PDFPage,
-  text: string,
-  rightX: number,
-  y: number,
-  font: PDFFont,
-  size: number,
-  r = 0, g = 0, b = 0
-) {
-  const w = font.widthOfTextAtSize(text, size);
-  page.drawText(text, { x: rightX - w, y, font, size, color: rgb(r, g, b) });
-}
+// ─── Raw PDF builder ──────────────────────────────────────────────────────────
+function buildRawPdf(data: InvoiceData, isAdmin: boolean): Uint8Array {
+  const enc = new TextEncoder();
 
-/** Wrap text to fit maxWidth, return array of lines */
-function wrapText(text: string, font: PDFFont, size: number, maxWidth: number): string[] {
-  const words = text.split(" ");
-  const lines: string[] = [];
-  let current = "";
-  for (const word of words) {
-    const candidate = current ? current + " " + word : word;
-    if (font.widthOfTextAtSize(candidate, size) <= maxWidth) {
-      current = candidate;
-    } else {
-      if (current) lines.push(current);
-      current = word;
-    }
-  }
-  if (current) lines.push(current);
-  return lines.length ? lines : [text];
-}
-
-// ─── Core builder (async because pdf-lib is async) ────────────────────────────
-async function buildDoc(data: InvoiceData, isAdmin: boolean): Promise<Uint8Array> {
-  const doc = await PDFDocument.create();
-
-  // Page size: A4 = 595 x 842 pt
+  // Page: A4 = 595 x 842 pts. Origin bottom-left in PDF space.
   const W = 595;
   const H = 842;
-  const page = doc.addPage([W, H]);
+  const ML = 50; // margin left
 
-  const bold = await doc.embedFont(StandardFonts.HelveticaBold);
-  const regular = await doc.embedFont(StandardFonts.Helvetica);
+  // Stream drawing commands (PDF graphics operators)
+  const s: string[] = [];
 
-  const ML = 50;  // margin left
-  const MR = 50;  // margin right
-  const contentW = W - ML - MR;
+  // Helper: draw text at (x, y) — y measured from TOP of page (we flip internally)
+  const txt = (x: number, yFromTop: number, str: string, size: number, bold = false) => {
+    const font = bold ? "/F2" : "/F1";
+    s.push(`BT ${font} ${size} Tf ${x} ${H - yFromTop} Td (${esc(str)}) Tj ET`);
+  };
 
-  // ── Top horizontal rule ───────────────────────────────────────────────────
-  let y = H - 40;
+  const txtWhite = (x: number, yFromTop: number, str: string, size: number, bold = false) => {
+    const font = bold ? "/F2" : "/F1";
+    s.push(`BT 1 1 1 rg ${font} ${size} Tf ${x} ${H - yFromTop} Td (${esc(str)}) Tj 0 0 0 rg ET`);
+  };
 
-  // Company name
-  drawText(page, "Agatsa Medical Technologies Pvt. Ltd.", ML, y, bold, 11);
-  y -= 14;
-  drawText(page, "Bengaluru, Karnataka, India  |  care@agatsa.com  |  agatsa.com", ML, y, regular, 8, 0.35, 0.35, 0.35);
+  const hLine = (yFromTop: number, x1 = ML, x2 = W - ML, w = 0.4) => {
+    s.push(`${w} w ${x1} ${H - yFromTop} m ${x2} ${H - yFromTop} l S`);
+  };
 
-  // Invoice title (right side)
-  const title = isAdmin ? "OPERATIONS INVOICE" : "INVOICE";
-  drawTextRight(page, title, W - MR, H - 40, bold, isAdmin ? 18 : 22);
+  // Filled rectangle — y measured from TOP, height downward
+  const fillRect = (x: number, yFromTop: number, w: number, h: number, gray: number) => {
+    s.push(`${gray} g ${x} ${H - yFromTop - h} ${w} ${h} re f 0 g`);
+  };
+
+  // ── Header bar ───────────────────────────────────────────────────────────────
+  fillRect(0, 0, W, 56, 0.08);
+  txtWhite(ML, 22, "Agatsa Medical Technologies Pvt. Ltd.", 12, true);
+  txtWhite(ML, 37, "Bengaluru, Karnataka, India  |  care@agatsa.com  |  agatsa.com", 8);
+  const titleStr = isAdmin ? "OPERATIONS INVOICE" : "INVOICE";
+  txtWhite(W - ML - (isAdmin ? 155 : 85), 28, titleStr, isAdmin ? 18 : 22, true);
   if (isAdmin) {
-    drawTextRight(page, "INTERNAL USE ONLY", W - MR, H - 57, regular, 7.5, 0.55, 0.55, 0.55);
+    txtWhite(W - ML - 110, 42, "INTERNAL USE ONLY", 8);
   }
 
-  // Divider
-  y = H - 72;
-  page.drawLine({ start: { x: ML, y }, end: { x: W - MR, y }, thickness: 0.5, color: rgb(0, 0, 0) });
+  // Separator
+  s.push("0.8 G");
+  hLine(60, ML, W - ML, 0.4);
+  s.push("0 G");
 
-  // ── Order meta row ────────────────────────────────────────────────────────
-  y -= 20;
-  const col2x = ML + 180;
-  const col3x = ML + 340;
+  // ── Order meta ────────────────────────────────────────────────────────────────
+  let y = 76;
+  const col2 = ML + 160;
+  const col3 = ML + 320;
 
-  drawText(page, "ORDER ID", ML, y, bold, 7.5, 0.39, 0.39, 0.39);
-  drawText(page, "DATE", col2x, y, bold, 7.5, 0.39, 0.39, 0.39);
+  txt(ML, y, "ORDER ID", 7.5, true);
+  txt(col2, y, "DATE", 7.5, true);
+  if (data.paymentId) txt(col3, y, "PAYMENT ID", 7.5, true);
+  y += 13;
+  const shortId = data.orderId.length > 28 ? data.orderId.slice(0, 28) + "..." : data.orderId;
+  txt(ML, y, shortId, 8.5);
+  txt(col2, y, data.orderDate, 8.5);
   if (data.paymentId) {
-    drawText(page, "PAYMENT ID", col3x, y, bold, 7.5, 0.39, 0.39, 0.39);
-  }
-  y -= 13;
-  drawText(page, data.orderId, ML, y, regular, 8.5);
-  drawText(page, data.orderDate, col2x, y, regular, 8.5);
-  if (data.paymentId) {
-    drawText(page, data.paymentId, col3x, y, regular, 7.5);
+    const shortPay = data.paymentId.length > 24 ? data.paymentId.slice(0, 24) + "..." : data.paymentId;
+    txt(col3, y, shortPay, 8);
   }
 
-  // ── Bill To ───────────────────────────────────────────────────────────────
-  y -= 28;
-  drawText(page, "BILL TO", ML, y, bold, 7.5);
-  page.drawLine({ start: { x: ML, y: y - 3 }, end: { x: ML + 50, y: y - 3 }, thickness: 0.3, color: rgb(0, 0, 0) });
-
-  y -= 16;
-  drawText(page, data.customerName || "—", ML, y, bold, 10);
-  y -= 13;
+  // ── Bill To ───────────────────────────────────────────────────────────────────
+  y += 22;
+  txt(ML, y, "BILL TO", 7.5, true);
+  hLine(y + 2, ML, ML + 46, 0.3);
+  y += 13;
+  txt(ML, y, data.customerName || "—", 10, true);
+  y += 12;
 
   const billLines = [
     data.shippingAddress,
     [data.shippingCity, data.shippingState].filter(Boolean).join(", "),
-    data.shippingPincode ? `PIN: ${data.shippingPincode}` : "",
+    data.shippingPincode ? "PIN: " + data.shippingPincode : "",
     data.customerEmail,
     data.customerPhone ?? "",
   ].filter(Boolean);
 
   for (const line of billLines) {
-    const wrapped = wrapText(line, regular, 8.5, 200);
-    for (const wl of wrapped) {
-      drawText(page, wl, ML, y, regular, 8.5, 0.2, 0.2, 0.2);
-      y -= 12;
-    }
+    const safe = line.length > 60 ? line.slice(0, 60) + "..." : line;
+    txt(ML, y, safe, 8.5);
+    y += 11;
   }
 
-  // Ship To (admin only, right column)
+  // Ship To (admin — right column)
   if (isAdmin) {
-    let shipY = H - 72 - 20 - 13 - 28;
-    drawText(page, "SHIP TO", col3x, shipY, bold, 7.5);
-    page.drawLine({ start: { x: col3x, y: shipY - 3 }, end: { x: col3x + 50, y: shipY - 3 }, thickness: 0.3, color: rgb(0, 0, 0) });
-    shipY -= 16;
-    drawText(page, data.customerName || "—", col3x, shipY, bold, 10);
-    shipY -= 13;
+    let sy = 111; // start at same level as BILL TO
+    txt(col3, sy, "SHIP TO", 7.5, true);
+    hLine(sy + 2, col3, col3 + 46, 0.3);
+    sy += 13;
+    txt(col3, sy, data.customerName || "—", 10, true);
+    sy += 12;
     const shipLines = [
       data.shippingAddress,
       [data.shippingCity, data.shippingState].filter(Boolean).join(", "),
-      data.shippingPincode ? `PIN: ${data.shippingPincode}` : "",
+      data.shippingPincode ? "PIN: " + data.shippingPincode : "",
     ].filter(Boolean);
     for (const line of shipLines) {
-      const wrapped = wrapText(line, regular, 8.5, 140);
-      for (const wl of wrapped) {
-        drawText(page, wl, col3x, shipY, regular, 8.5, 0.2, 0.2, 0.2);
-        shipY -= 12;
-      }
+      const safe = line.length > 36 ? line.slice(0, 36) + "..." : line;
+      txt(col3, sy, safe, 8.5);
+      sy += 11;
     }
   }
 
-  // ── Items table ───────────────────────────────────────────────────────────
-  // Ensure table starts with some gap below address block
-  y = Math.min(y - 10, H - 310);
+  // ── Items table ───────────────────────────────────────────────────────────────
+  y = Math.max(y + 8, 270);
 
-  const tableTop = y;
-  const ROW_H = 22;
-  const HEAD_H = 24;
+  const tableW = W - 2 * ML;
+  const colPrice = W - ML - 140;
+  const colQty = W - ML - 90;
+  const colAmt = W - ML - 8;
+  const rowH = 20;
 
-  // Column widths (in pt): Description | Unit Price | Qty | Amount
-  const descW = contentW - 90 - 40 - 90;
-  const colX = [ML, ML + descW, ML + descW + 90, ML + descW + 90 + 40];
-  const colW = [descW, 90, 40, 90];
+  // Header
+  fillRect(ML, y, tableW, rowH, 0.08);
+  txtWhite(ML + 4, y + 13, "Description", 8, true);
+  txtWhite(colPrice, y + 13, "Unit Price", 8, true);
+  txtWhite(colQty + 4, y + 13, "Qty", 8, true);
+  txtWhite(colAmt - 38, y + 13, "Amount", 8, true);
+  y += rowH;
 
-  // Header background
-  page.drawRectangle({ x: ML, y: tableTop - HEAD_H, width: contentW, height: HEAD_H, color: rgb(0.08, 0.08, 0.08) });
-
-  const headers = ["Description", "Unit Price", "Qty", "Amount"];
-  const aligns = ["left", "right", "center", "right"];
-  for (let i = 0; i < headers.length; i++) {
-    let tx = colX[i] + 6;
-    if (aligns[i] === "right") {
-      const tw = bold.widthOfTextAtSize(headers[i], 8.5);
-      tx = colX[i] + colW[i] - 6 - tw;
-    } else if (aligns[i] === "center") {
-      const tw = bold.widthOfTextAtSize(headers[i], 8.5);
-      tx = colX[i] + (colW[i] - tw) / 2;
-    }
-    page.drawText(headers[i], { x: tx, y: tableTop - HEAD_H + 8, font: bold, size: 8.5, color: rgb(1, 1, 1) });
-  }
-
-  let rowY = tableTop - HEAD_H;
-
-  // Rows
-  for (let r = 0; r < data.items.length; r++) {
-    const item = data.items[r];
-    const descStr =
+  let alt = false;
+  for (const item of data.items) {
+    const label =
       item.variantTitle && item.variantTitle !== "Default Title"
-        ? `${item.productName} (${item.variantTitle})`
+        ? item.productName + " - " + item.variantTitle
         : item.productName;
-
-    const descLines = wrapText(descStr, regular, 8.5, descW - 12);
-    const rh = Math.max(ROW_H, descLines.length * 13 + 8);
-
-    // Alternate fill
-    const fillGrey = r % 2 === 0 ? 0.969 : 1;
-    page.drawRectangle({ x: ML, y: rowY - rh, width: contentW, height: rh, color: rgb(fillGrey, fillGrey, fillGrey) });
-
-    // Row bottom border
-    page.drawLine({ start: { x: ML, y: rowY - rh }, end: { x: ML + contentW, y: rowY - rh }, thickness: 0.2, color: rgb(0.86, 0.86, 0.86) });
-
-    const textY = rowY - rh + (rh - descLines.length * 13) / 2 + (descLines.length - 1) * 13 + 5;
-
-    // Description (may wrap)
-    for (let li = 0; li < descLines.length; li++) {
-      drawText(page, descLines[li], colX[0] + 6, textY - li * 13, regular, 8.5, 0.08, 0.08, 0.08);
-    }
-
-    // Unit price
-    const unitStr = fmt(item.price);
-    const unitW = regular.widthOfTextAtSize(unitStr, 8.5);
-    drawText(page, unitStr, colX[1] + colW[1] - 6 - unitW, rowY - rh + (rh / 2) - 4, regular, 8.5, 0.08, 0.08, 0.08);
-
-    // Qty (centered)
-    const qtyStr = String(item.quantity);
-    const qtyW = regular.widthOfTextAtSize(qtyStr, 8.5);
-    drawText(page, qtyStr, colX[2] + (colW[2] - qtyW) / 2, rowY - rh + (rh / 2) - 4, regular, 8.5, 0.08, 0.08, 0.08);
-
-    // Amount
-    const amtStr = fmt(item.price * item.quantity);
-    const amtW = regular.widthOfTextAtSize(amtStr, 8.5);
-    drawText(page, amtStr, colX[3] + colW[3] - 6 - amtW, rowY - rh + (rh / 2) - 4, regular, 8.5, 0.08, 0.08, 0.08);
-
-    rowY -= rh;
+    const safeLabel = label.length > 52 ? label.slice(0, 52) + "..." : label;
+    if (alt) fillRect(ML, y, tableW, rowH, 0.95);
+    txt(ML + 4, y + 13, safeLabel, 8.5);
+    txt(colPrice, y + 13, fmt(item.price), 8.5);
+    txt(colQty + 8, y + 13, String(item.quantity), 8.5);
+    txt(colAmt - 38, y + 13, fmt(item.price * item.quantity), 8.5);
+    s.push("0.85 G");
+    hLine(y + rowH, ML, W - ML, 0.2);
+    s.push("0 G");
+    y += rowH;
+    alt = !alt;
   }
 
-  // Table outer border
-  page.drawRectangle({ x: ML, y: rowY, width: contentW, height: tableTop - rowY, borderColor: rgb(0.7, 0.7, 0.7), borderWidth: 0.4, color: rgb(1, 1, 1) });
+  // Table border
+  s.push(`0.75 G 0.4 w ${ML} ${H - y} ${tableW} ${y - (y - data.items.length * rowH - rowH)} re S 0 G`);
 
-  // ── Totals ────────────────────────────────────────────────────────────────
-  const totX = W - MR - 180;
-  let totY = rowY - 22;
+  // ── Totals ────────────────────────────────────────────────────────────────────
+  y += 10;
+  const totLX = W - ML - 162;
+  const totVX = W - ML - 8;
 
-  drawText(page, "Subtotal", totX, totY, regular, 8.5, 0.24, 0.24, 0.24);
-  drawTextRight(page, fmt(data.subtotal), W - MR, totY, regular, 8.5, 0.24, 0.24, 0.24);
-  totY -= 16;
+  const totRow = (label: string, value: string, bold = false) => {
+    txt(totLX, y, label, 9, bold);
+    txt(totVX - value.length * 5.2, y, value, 9, bold);
+    y += 13;
+  };
 
+  totRow("Subtotal", fmt(data.subtotal));
   if (data.discountAmount && data.discountAmount > 0) {
-    const label = `Discount${data.couponCode ? ` (${data.couponCode})` : ""}`;
-    drawText(page, label, totX, totY, regular, 8.5, 0.24, 0.24, 0.24);
-    drawTextRight(page, `- ${fmt(data.discountAmount)}`, W - MR, totY, regular, 8.5, 0.24, 0.24, 0.24);
-    totY -= 16;
+    const discLabel = "Discount" + (data.couponCode ? " (" + data.couponCode + ")" : "");
+    totRow(discLabel, "- " + fmt(data.discountAmount));
   }
+  totRow("Shipping", "Free");
 
-  drawText(page, "Shipping", totX, totY, regular, 8.5, 0.24, 0.24, 0.24);
-  drawTextRight(page, "Free", W - MR, totY, regular, 8.5, 0.24, 0.24, 0.24);
-  totY -= 10;
+  hLine(y - 3, totLX, W - ML, 0.5);
+  y += 2;
+  totRow(isAdmin ? "Grand Total" : "Total", fmt(data.total), true);
 
-  page.drawLine({ start: { x: totX, y: totY }, end: { x: W - MR, y: totY }, thickness: 0.5, color: rgb(0, 0, 0) });
-  totY -= 16;
+  s.push("0.5 g");
+  txt(totLX, y, "Payment received via Razorpay. Amount in INR.", 7.5);
+  s.push("0 g");
 
-  const totalLabel = isAdmin ? "Grand Total" : "Total";
-  drawText(page, totalLabel, totX, totY, bold, 11);
-  drawTextRight(page, fmt(data.total), W - MR, totY, bold, 11);
-  totY -= 13;
-
-  drawText(page, "Payment received via Razorpay. Amount in INR.", totX, totY, regular, 7.5, 0.47, 0.47, 0.47);
-
-  // ── Footer ────────────────────────────────────────────────────────────────
-  const footerY = 28;
-  page.drawLine({ start: { x: ML, y: footerY + 14 }, end: { x: W - MR, y: footerY + 14 }, thickness: 0.3, color: rgb(0.7, 0.7, 0.7) });
-
+  // ── Footer ────────────────────────────────────────────────────────────────────
+  s.push("0.75 G 0.3 w " + ML + " 40 m " + (W - ML) + " 40 l S 0 G");
+  s.push("0.5 g");
   if (isAdmin) {
-    drawText(page, `Generated: ${new Date().toLocaleString("en-IN")}  |  FOR INTERNAL OPERATIONS USE ONLY`, ML, footerY + 4, regular, 7, 0.47, 0.47, 0.47);
+    s.push(`BT /F1 7 Tf ${ML} 26 Td (Generated: ${esc(new Date().toLocaleString("en-IN"))}  |  FOR INTERNAL OPERATIONS USE ONLY) Tj ET`);
   } else {
-    drawText(page, "Thank you for your purchase.", ML, footerY + 4, regular, 7.5, 0.47, 0.47, 0.47);
-    drawText(page, "Queries: care@agatsa.com  |  agatsa.com/support", ML, footerY - 6, regular, 7.5, 0.47, 0.47, 0.47);
+    s.push(`BT /F1 7.5 Tf ${ML} 26 Td (Thank you for your purchase. For queries: care@agatsa.com  |  agatsa.com/support) Tj ET`);
   }
-  drawTextRight(page, "Agatsa Medical Technologies Pvt. Ltd., Bengaluru, India", W - MR, footerY + 4, regular, 7, 0.47, 0.47, 0.47);
+  s.push(`BT /F1 7 Tf ${W - ML - 290} 15 Td (Agatsa Medical Technologies Pvt. Ltd., Bengaluru, India) Tj ET`);
+  s.push("0 g");
 
-  return doc.save();
+  // ── Assemble PDF ──────────────────────────────────────────────────────────────
+  const streamContent = s.join("\n");
+  const streamBytes = enc.encode(streamContent);
+  const streamLen = streamBytes.length;
+
+  // Build object list — we track byte offsets for xref
+  const objs: string[] = [];
+  objs.push("%PDF-1.4");                                                         // offset 0 (not an obj)
+  const obj1 = "1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj";
+  const obj2 = "2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj";
+  const obj3 = [
+    "3 0 obj << /Type /Page /Parent 2 0 R",
+    `/MediaBox [0 0 ${W} ${H}]`,
+    "/Resources << /Font << /F1 4 0 R /F2 5 0 R >> >>",
+    "/Contents 6 0 R >> endobj",
+  ].join("\n");
+  const obj4 = "4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj";
+  const obj5 = "5 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj";
+  const obj6Header = `6 0 obj << /Length ${streamLen} >>\nstream\n`;
+  const obj6Footer = "\nendstream\nendobj";
+
+  // Calculate byte offsets
+  const header = "%PDF-1.4\n";
+  let offset = header.length;
+  const offsets: number[] = [];
+
+  const parts: Uint8Array[] = [];
+  parts.push(enc.encode(header));
+
+  const addObj = (content: string) => {
+    offsets.push(offset);
+    const b = enc.encode(content + "\n");
+    parts.push(b);
+    offset += b.length;
+  };
+
+  addObj(obj1);
+  addObj(obj2);
+  addObj(obj3);
+  addObj(obj4);
+  addObj(obj5);
+
+  // Stream object (obj6) handled manually
+  offsets.push(offset);
+  const obj6Start = enc.encode(obj6Header);
+  const obj6End = enc.encode(obj6Footer + "\n");
+  parts.push(obj6Start);
+  parts.push(streamBytes);
+  parts.push(obj6End);
+  offset += obj6Start.length + streamBytes.length + obj6End.length;
+
+  // xref table
+  const xrefOffset = offset;
+  const xrefLines = [
+    "xref",
+    `0 7`,
+    "0000000000 65535 f ",
+    ...offsets.map((o) => String(o).padStart(10, "0") + " 00000 n "),
+    "",
+    `trailer << /Size 7 /Root 1 0 R >>`,
+    `startxref`,
+    String(xrefOffset),
+    "%%EOF",
+  ].join("\n");
+  parts.push(enc.encode(xrefLines));
+
+  // Merge all parts
+  const totalLen = parts.reduce((sum, p) => sum + p.length, 0);
+  const result = new Uint8Array(totalLen);
+  let pos = 0;
+  for (const p of parts) {
+    result.set(p, pos);
+    pos += p.length;
+  }
+  return result;
 }
 
-// ─── Helper: trigger browser download ─────────────────────────────────────────
+// ─── Download helper ──────────────────────────────────────────────────────────
 function triggerDownload(bytes: Uint8Array, filename: string) {
-  const blob = new Blob([bytes.buffer as ArrayBuffer], { type: "application/pdf" });
+  const blob = new Blob([new Uint8Array(bytes)], { type: "application/pdf" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -310,16 +310,14 @@ function triggerDownload(bytes: Uint8Array, filename: string) {
 }
 
 // ─── Public API ───────────────────────────────────────────────────────────────
-export async function generateCustomerInvoicePdf(data: InvoiceData): Promise<Uint8Array> {
-  return buildDoc(data, false);
+export function generateCustomerInvoicePdf(data: InvoiceData): Uint8Array {
+  return buildRawPdf(data, false);
 }
 
-export async function downloadCustomerInvoice(data: InvoiceData): Promise<void> {
-  const bytes = await buildDoc(data, false);
-  triggerDownload(bytes, `invoice-${data.orderId}.pdf`);
+export function downloadCustomerInvoice(data: InvoiceData): void {
+  triggerDownload(buildRawPdf(data, false), `invoice-${data.orderId}.pdf`);
 }
 
-export async function downloadAdminInvoice(data: InvoiceData): Promise<void> {
-  const bytes = await buildDoc(data, true);
-  triggerDownload(bytes, `operations-invoice-${data.orderId}.pdf`);
+export function downloadAdminInvoice(data: InvoiceData): void {
+  triggerDownload(buildRawPdf(data, true), `operations-invoice-${data.orderId}.pdf`);
 }

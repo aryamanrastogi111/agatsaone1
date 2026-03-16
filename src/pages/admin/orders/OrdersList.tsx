@@ -5,7 +5,7 @@ import { db as supabase } from "@/integrations/supabase/db";
 import { Search, Download, CreditCard, ShoppingBag, FileText } from "lucide-react";
 import { downloadAdminInvoice, type InvoiceData } from "@/lib/invoicePdf";
 
-async function handleOrderInvoiceDownload(order: RazorpayOrder) {
+function handleOrderInvoiceDownload(order: RazorpayOrder) {
   const items = Array.isArray(order.items) ? order.items : [];
   const subtotal = items.reduce((s, i) => s + (i.price ?? 0) * (i.quantity ?? 1), 0);
   const invoiceData: InvoiceData = {
@@ -30,7 +30,7 @@ async function handleOrderInvoiceDownload(order: RazorpayOrder) {
     couponCode: order.coupon_code ?? undefined,
     total: order.amount ?? subtotal,
   };
-  await downloadAdminInvoice(invoiceData);
+  downloadAdminInvoice(invoiceData);
 }
 
 const STATUS_COLORS: Record<string, string> = {

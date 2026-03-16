@@ -49,7 +49,7 @@ export default function OrderDetail() {
 
   useEffect(() => { fetchOrder(); }, [id]);
 
-  const handleDownloadInvoice = async () => {
+  const handleDownloadInvoice = () => {
     if (!order) return;
     const items = Array.isArray(order.items) ? order.items : [];
     const subtotal = items.reduce((s: number, i: any) => s + (i.price ?? 0) * (i.quantity ?? 1), 0);
@@ -75,7 +75,7 @@ export default function OrderDetail() {
       couponCode: order.coupon_code ?? undefined,
       total: order.amount ?? subtotal,
     };
-    await downloadAdminInvoice(invoiceData);
+    downloadAdminInvoice(invoiceData);
     toast.success("Operations invoice downloaded");
   };
 
