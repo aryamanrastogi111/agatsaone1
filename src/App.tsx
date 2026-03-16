@@ -58,6 +58,7 @@ import AdminSettings from "./pages/admin/Settings";
 import AdminIntegrations from "./pages/admin/Integrations";
 import AdminActivityLogs from "./pages/admin/ActivityLogs";
 import AdminEmailPreview from "./pages/admin/EmailPreview";
+import AdminPixels from "./pages/admin/Pixels";
 
 const queryClient = new QueryClient();
 
@@ -121,6 +122,7 @@ const App = () => (
             <Route path="integrations" element={<AdminIntegrations />} />
             <Route path="activity-logs" element={<AdminActivityLogs />} />
             <Route path="email-preview" element={<AdminEmailPreview />} />
+            <Route path="pixels" element={<AdminPixels />} />
           </Route>
           {/* Redirects for old routes */}
           <Route path="/solutions" element={<Navigate to="/support#solutions" replace />} />
