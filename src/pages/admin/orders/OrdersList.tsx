@@ -30,7 +30,7 @@ async function handleOrderInvoiceDownload(order: RazorpayOrder) {
     couponCode: order.coupon_code ?? undefined,
     total: order.amount ?? subtotal,
   };
-  downloadAdminInvoice(invoiceData);
+  await downloadAdminInvoice(invoiceData);
 }
 
 const STATUS_COLORS: Record<string, string> = {
