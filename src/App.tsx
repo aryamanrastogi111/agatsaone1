@@ -66,6 +66,13 @@ import AdminPixels from "./pages/admin/Pixels";
 
 const queryClient = new QueryClient();
 
+// Global tracking hooks — live inside Router so useLocation works
+function GlobalTracking() {
+  useVisitorTracking();
+  useCartSync();
+  return null;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
