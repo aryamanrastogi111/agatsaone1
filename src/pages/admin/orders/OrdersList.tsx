@@ -82,6 +82,7 @@ function RazorpayOrdersTab() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
+  const [importing, setImporting] = useState(false);
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -100,6 +101,31 @@ function RazorpayOrdersTab() {
   };
 
   useEffect(() => { fetchOrders(); }, [search, statusFilter, page]);
+
+  const importShopifyOrders = async () => {
+    setImporting(true);
+    let totalImported = 0;
+    let lastId: string | null = null;
+    let hasMore = true;
+
+    try {
+      while (hasMore) {
+        const { data, error } = await supabase.functions.invoke("import-shopify-orders", {
+          body: { limit: 250, since_id: lastId },
+        });
+        if (error) throw new Error(error.message);
+        totalImported += data.imported ?? 0;
+        lastId = data.last_shopify_id;
+        hasMore = data.has_more ?? false;
+      }
+      toast.success(`Migrated ${totalImported} Shopify orders to native backend`);
+      fetchOrders();
+    } catch (err: any) {
+      toast.error(`Migration failed: ${err.message}`);
+    } finally {
+      setImporting(false);
+    }
+  };
 
   const exportCSV = () => {
     const headers = ["Order ID", "Payment ID", "Customer", "Email", "Phone", "Amount", "Status", "Date"];
