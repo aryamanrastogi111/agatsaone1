@@ -176,10 +176,6 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
   return await doc.save();
 }
 
-  orderId: string;
-  paymentId?: string;
-  orderDate: string;
-  customerName: string;
   customerEmail: string;
   customerPhone?: string;
   shippingAddress: string;
