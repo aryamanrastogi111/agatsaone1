@@ -250,7 +250,7 @@ async function buildDoc(data: InvoiceData, isAdmin: boolean): Promise<Uint8Array
   }
 
   // Table outer border
-  page.drawRectangle({ x: ML, y: rowY, width: contentW, height: tableTop - rowY, borderColor: rgb(0.7, 0.7, 0.7), borderWidth: 0.4, color: rgb(1, 1, 1, 0) });
+  page.drawRectangle({ x: ML, y: rowY, width: contentW, height: tableTop - rowY, borderColor: rgb(0.7, 0.7, 0.7), borderWidth: 0.4, color: rgb(1, 1, 1) });
 
   // ── Totals ────────────────────────────────────────────────────────────────
   const totX = W - MR - 180;
