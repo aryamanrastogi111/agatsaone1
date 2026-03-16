@@ -35,6 +35,10 @@ import SDKDocs from "./pages/sdk/SDKDocs";
 import SDKSupport from "./pages/sdk/SDKSupport";
 import SDKAdmin from "./pages/sdk/SDKAdmin";
 
+import AdminLiveActivity from "./pages/admin/LiveActivity";
+import { useVisitorTracking } from "./hooks/useVisitorTracking";
+import { useCartSync } from "./hooks/useCartSync";
+
 // Admin Panel
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/Dashboard";
