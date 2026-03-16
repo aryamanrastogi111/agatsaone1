@@ -15,3 +15,5 @@ project_id = "jqyvtovddyqjvawnoysl"
     verify_jwt = false
   [functions.send-order-confirmation]
     verify_jwt = false
+  [functions.import-shopify-orders]
+    verify_jwt = false
