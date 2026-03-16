@@ -53,6 +53,48 @@ export type Database = {
         }
         Relationships: []
       }
+      cart_sessions: {
+        Row: {
+          converted_order_id: string | null
+          created_at: string
+          email: string | null
+          id: string
+          item_count: number
+          items: Json
+          last_page: string | null
+          phone: string | null
+          session_id: string
+          subtotal: number
+          updated_at: string
+        }
+        Insert: {
+          converted_order_id?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          item_count?: number
+          items?: Json
+          last_page?: string | null
+          phone?: string | null
+          session_id: string
+          subtotal?: number
+          updated_at?: string
+        }
+        Update: {
+          converted_order_id?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          item_count?: number
+          items?: Json
+          last_page?: string | null
+          phone?: string | null
+          session_id?: string
+          subtotal?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       coupons: {
         Row: {
           code: string

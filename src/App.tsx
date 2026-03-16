@@ -35,6 +35,10 @@ import SDKDocs from "./pages/sdk/SDKDocs";
 import SDKSupport from "./pages/sdk/SDKSupport";
 import SDKAdmin from "./pages/sdk/SDKAdmin";
 
+import AdminLiveActivity from "./pages/admin/LiveActivity";
+import { useVisitorTracking } from "./hooks/useVisitorTracking";
+import { useCartSync } from "./hooks/useCartSync";
+
 // Admin Panel
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -62,6 +66,13 @@ import AdminPixels from "./pages/admin/Pixels";
 
 const queryClient = new QueryClient();
 
+// Global tracking hooks — live inside Router so useLocation works
+function GlobalTracking() {
+  useVisitorTracking();
+  useCartSync();
+  return null;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -69,6 +80,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <GlobalTracking />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/products" element={<Products />} />
@@ -121,6 +133,7 @@ const App = () => (
             <Route path="settings" element={<AdminSettings />} />
             <Route path="integrations" element={<AdminIntegrations />} />
             <Route path="activity-logs" element={<AdminActivityLogs />} />
+            <Route path="live" element={<AdminLiveActivity />} />
             <Route path="email-preview" element={<AdminEmailPreview />} />
             <Route path="pixels" element={<AdminPixels />} />
           </Route>
