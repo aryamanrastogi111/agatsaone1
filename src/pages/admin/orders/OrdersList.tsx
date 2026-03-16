@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db as supabase } from "@/integrations/supabase/db";
-import { Search, Download, CreditCard, ShoppingBag, FileText } from "lucide-react";
+import { Search, Download, CreditCard, ShoppingBag, FileText, RefreshCw } from "lucide-react";
 import { downloadAdminInvoice, type InvoiceData } from "@/lib/invoicePdf";
+import { toast } from "sonner";
 
 async function handleOrderInvoiceDownload(order: RazorpayOrder) {
   const items = Array.isArray(order.items) ? order.items : [];
@@ -81,6 +82,7 @@ function RazorpayOrdersTab() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
+  const [importing, setImporting] = useState(false);
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -100,6 +102,31 @@ function RazorpayOrdersTab() {
 
   useEffect(() => { fetchOrders(); }, [search, statusFilter, page]);
 
+  const importShopifyOrders = async () => {
+    setImporting(true);
+    let totalImported = 0;
+    let lastId: string | null = null;
+    let hasMore = true;
+
+    try {
+      while (hasMore) {
+        const { data, error } = await supabase.functions.invoke("import-shopify-orders", {
+          body: { limit: 250, since_id: lastId },
+        });
+        if (error) throw new Error(error.message);
+        totalImported += data.imported ?? 0;
+        lastId = data.last_shopify_id;
+        hasMore = data.has_more ?? false;
+      }
+      toast.success(`Migrated ${totalImported} Shopify orders to native backend`);
+      fetchOrders();
+    } catch (err: any) {
+      toast.error(`Migration failed: ${err.message}`);
+    } finally {
+      setImporting(false);
+    }
+  };
+
   const exportCSV = () => {
     const headers = ["Order ID", "Payment ID", "Customer", "Email", "Phone", "Amount", "Status", "Date"];
     const rows = orders.map((o) => [
@@ -116,17 +143,28 @@ function RazorpayOrdersTab() {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <CreditCard size={18} className="text-blue-500" /> Razorpay Orders
+            <CreditCard size={18} className="text-blue-500" /> All Orders
           </h2>
           <p className="text-sm text-gray-500">{total} total orders</p>
         </div>
-        <button onClick={exportCSV}
-          className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 shadow-sm transition-colors">
-          <Download size={15} /> Export CSV
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={importShopifyOrders}
+            disabled={importing}
+            title="Import all Shopify orders into the native backend"
+            className="flex items-center gap-2 bg-orange-50 hover:bg-orange-100 text-orange-700 text-sm font-medium px-4 py-2 rounded-lg border border-orange-200 shadow-sm transition-colors disabled:opacity-60"
+          >
+            <RefreshCw size={15} className={importing ? "animate-spin" : ""} />
+            {importing ? "Migrating…" : "Import Shopify Orders"}
+          </button>
+          <button onClick={exportCSV}
+            className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 shadow-sm transition-colors">
+            <Download size={15} /> Export CSV
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
