@@ -114,7 +114,7 @@ export default function Shipping() {
       delivery_method: order.delivery_method ?? "",
       estimated_delivery: order.estimated_delivery ?? "",
       send_notification: true,
-      mark_shipped: order.status !== "shipped" && order.status !== "delivered",
+      mark_shipped: false,
     });
   };
 
