@@ -428,9 +428,15 @@ export default function Shipping() {
                           </button>
                         )}
                         {o.status === "shipped" && (
-                          <button onClick={() => updateStatus(o.id, "delivered")} disabled={updatingId === o.id}
+                          <button onClick={() => { if (window.confirm(`Mark order for ${o.customer_name ?? "this customer"} as Delivered?`)) updateStatus(o.id, "delivered"); }} disabled={updatingId === o.id}
                             className="text-xs px-2.5 py-1 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium disabled:opacity-50">
-                            Delivered
+                            Mark Delivered
+                          </button>
+                        )}
+                        {o.status === "delivered" && (
+                          <button onClick={() => { if (window.confirm(`Undo delivery for ${o.customer_name ?? "this order"}? This will revert status back to Shipped.`)) updateStatus(o.id, "shipped"); }} disabled={updatingId === o.id}
+                            className="text-xs px-2.5 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium disabled:opacity-50">
+                            Undo Delivery
                           </button>
                         )}
                       </div>
