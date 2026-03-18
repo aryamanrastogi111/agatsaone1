@@ -43,7 +43,7 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
   page.drawText("AGATSA", {
     x: margin, y: height - 36, font: bold, size: 20, color: rgb(1, 1, 1),
   });
-  page.drawText("Medical Technologies Pvt Ltd", {
+  page.drawText("Software Pvt Ltd", {
     x: margin, y: height - 52, font: regular, size: 9, color: rgb(0.75, 0.75, 0.75),
   });
   page.drawText(data.isAdmin ? "OPERATIONS INVOICE" : "TAX INVOICE", {
@@ -62,7 +62,7 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
     ...(data.paymentId ? [["Payment ID", data.paymentId.slice(0, 28)] as [string, string]] : []),
   ];
   const metaRight: [string, string][] = [
-    ["Sold By", "Agatsa Medical Technologies Pvt Ltd"],
+    ["Sold By", "Agatsa Software Pvt Ltd"],
     ["GSTIN", "29AACCA8844R1ZD"],
     ["Email", "care@agatsa.com"],
   ];
@@ -215,7 +215,7 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
     { x: margin, y: 36, font: regular, size: 7.5, color: rgb(0.6, 0.6, 0.6) }
   );
   page.drawText(
-    "Agatsa Medical Technologies Pvt. Ltd.  Bengaluru, India  care@agatsa.com  agatsa.com",
+    "Agatsa Software Pvt Ltd  Bengaluru, India  care@agatsa.com  agatsa.com",
     { x: margin, y: 24, font: regular, size: 7.5, color: rgb(0.6, 0.6, 0.6) }
   );
 
