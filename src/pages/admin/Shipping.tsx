@@ -74,7 +74,9 @@ export default function Shipping() {
     courier_partner: string;
     delivery_method: string;
     estimated_delivery: string;
-  }>({ tracking_number: "", courier_partner: "", delivery_method: "", estimated_delivery: "" });
+    send_notification: boolean;
+    mark_shipped: boolean;
+  }>({ tracking_number: "", courier_partner: "", delivery_method: "", estimated_delivery: "", send_notification: true, mark_shipped: true });
   const [notifyingId, setNotifyingId] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null);
 
