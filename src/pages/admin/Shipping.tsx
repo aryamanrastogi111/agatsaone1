@@ -113,21 +113,61 @@ export default function Shipping() {
       courier_partner: order.courier_partner ?? "",
       delivery_method: order.delivery_method ?? "",
       estimated_delivery: order.estimated_delivery ?? "",
+      send_notification: true,
+      mark_shipped: order.status !== "shipped" && order.status !== "delivered",
     });
   };
 
-  const saveEdit = async (id: string) => {
+  const saveEdit = async (id: string, order: ShipOrder) => {
     setUpdatingId(id);
-    await supabase.from("orders").update({
+    const updatePayload: any = {
       tracking_number: editData.tracking_number || null,
       courier_partner: editData.courier_partner || null,
       delivery_method: editData.delivery_method || null,
       estimated_delivery: editData.estimated_delivery || null,
-    }).eq("id", id);
+    };
+    if (editData.mark_shipped && order.status !== "shipped" && order.status !== "delivered") {
+      updatePayload.status = "shipped";
+      updatePayload.shipped_at = new Date().toISOString();
+    }
+    await supabase.from("orders").update(updatePayload).eq("id", id);
     setEditingId(null);
     await fetchOrders();
     setUpdatingId(null);
-    showToast("Shipment details saved");
+
+    // Auto-send shipping notification if requested
+    if (editData.send_notification && order.customer_email) {
+      setNotifyingId(id);
+      try {
+        const updatedOrder = {
+          ...order,
+          tracking_number: editData.tracking_number || null,
+          courier_partner: editData.courier_partner || null,
+          estimated_delivery: editData.estimated_delivery || null,
+        };
+        await supabase.functions.invoke("send-shipping-notification", {
+          body: {
+            customerEmail: order.customer_email,
+            customerName: order.customer_name,
+            orderId: order.razorpay_order_id ?? order.id,
+            trackingNumber: updatedOrder.tracking_number,
+            courierPartner: updatedOrder.courier_partner,
+            estimatedDelivery: updatedOrder.estimated_delivery,
+            items: order.items,
+            shippingAddress: order.shipping_address,
+            shippingCity: order.shipping_city,
+            shippingState: order.shipping_state,
+            shippingPincode: order.shipping_pincode,
+          },
+        });
+        showToast(`Shipment saved & notification sent to ${order.customer_email}`);
+      } catch {
+        showToast("Shipment saved, but notification failed", "error");
+      }
+      setNotifyingId(null);
+    } else {
+      showToast("Shipment details saved");
+    }
   };
 
   const sendShippingNotification = async (order: ShipOrder) => {
