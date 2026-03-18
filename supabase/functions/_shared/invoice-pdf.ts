@@ -63,7 +63,7 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
   ];
   const metaRight: [string, string][] = [
     ["Sold By", "Agatsa Software Pvt Ltd"],
-    ["GSTIN", "29AACCA8844R1ZD"],
+    ["GSTIN", "09AAICA3515H1ZS"],
     ["Email", "care@agatsa.com"],
   ];
 
