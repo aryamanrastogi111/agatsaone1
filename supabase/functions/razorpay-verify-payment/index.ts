@@ -78,6 +78,27 @@ serve(async (req) => {
       .select()
       .single();
 
+    // Decrement inventory for each item purchased
+    const orderItems: { variant_id?: string; quantity?: number }[] = items || order?.items || [];
+    if (orderItems.length > 0) {
+      for (const item of orderItems) {
+        if (!item.variant_id) continue;
+        // Read current quantity first
+        const { data: variant } = await supabase
+          .from("product_variants")
+          .select("inventory_quantity")
+          .eq("id", item.variant_id)
+          .single();
+        if (variant) {
+          const newQty = Math.max(0, (variant.inventory_quantity ?? 0) - (item.quantity ?? 1));
+          await supabase
+            .from("product_variants")
+            .update({ inventory_quantity: newQty })
+            .eq("id", item.variant_id);
+        }
+      }
+    }
+
     // Fire-and-forget: send order confirmation email
     const projectId = Deno.env.get("SUPABASE_PROJECT_ID") || SUPABASE_URL.split("//")[1]?.split(".")[0];
     if (projectId && customerEmail) {
