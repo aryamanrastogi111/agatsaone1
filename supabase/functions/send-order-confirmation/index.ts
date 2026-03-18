@@ -103,7 +103,9 @@ serve(async (req) => {
       _testTeamEmail,
     } = await req.json();
 
-    const teamRecipient = _testTeamEmail || "info@agatsa.com";
+    const teamRecipients = _testTeamEmail
+      ? [_testTeamEmail]
+      : ["info@agatsa.com", "munfungaming@gmail.com", "rahul.amu2@gmail.com", "agr.neha@gmail.com"];
     const customerFrom = "Agatsa Medical Technologies <orders@agatsa.in>";
     const teamFrom = "Agatsa Orders <orders@agatsa.in>";
 
