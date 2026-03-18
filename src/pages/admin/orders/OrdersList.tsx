@@ -344,13 +344,13 @@ function ShopifyOrdersTab() {
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <ShoppingBag size={18} className="text-green-400" /> Shopify Orders
+          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <ShoppingBag size={18} className="text-green-600" /> Shopify Orders
           </h2>
-          <p className="text-sm text-gray-400">{total} historical orders</p>
+          <p className="text-sm text-gray-500">{total} historical orders</p>
         </div>
         <button onClick={exportCSV}
-          className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium px-4 py-2 rounded-lg border border-gray-700">
+          className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 shadow-sm transition-colors">
           <Download size={15} /> Export CSV
         </button>
       </div>
@@ -360,10 +360,10 @@ function ShopifyOrdersTab() {
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input type="text" placeholder="Search by order # or email…" value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(0); }}
-            className="w-full bg-gray-900 border border-gray-700 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500" />
+            className="w-full bg-white border border-gray-300 rounded-lg pl-9 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500" />
         </div>
         <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(0); }}
-          className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none">
+          className="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:border-blue-500">
           <option value="all">All Status</option>
           <option value="pending">Pending</option>
           <option value="confirmed">Confirmed</option>
@@ -373,7 +373,7 @@ function ShopifyOrdersTab() {
           <option value="cancelled">Cancelled</option>
         </select>
         <select value={paymentFilter} onChange={(e) => { setPaymentFilter(e.target.value); setPage(0); }}
-          className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none">
+          className="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:border-blue-500">
           <option value="all">All Payments</option>
           <option value="pending">Pending</option>
           <option value="paid">Paid</option>
@@ -382,19 +382,21 @@ function ShopifyOrdersTab() {
         </select>
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
         {loading ? (
           <div className="flex items-center justify-center h-40">
             <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
           </div>
         ) : orders.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-400">No Shopify orders found</p>
+            <ShoppingBag size={32} className="text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-500">No Shopify orders found</p>
+            <p className="text-xs text-gray-400 mt-1">Use "Import Shopify Orders" to migrate legacy orders</p>
           </div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-800 text-gray-400">
+              <tr className="border-b border-gray-200 text-gray-500 bg-gray-50">
                 <th className="text-left px-5 py-3 font-medium">Order</th>
                 <th className="text-left px-5 py-3 font-medium hidden sm:table-cell">Customer</th>
                 <th className="text-left px-5 py-3 font-medium">Status</th>
@@ -404,32 +406,32 @@ function ShopifyOrdersTab() {
                 <th className="text-right px-5 py-3 font-medium hidden sm:table-cell">Date</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800">
+            <tbody className="divide-y divide-gray-100">
               {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-800/50 transition-colors">
+                <tr key={order.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-5 py-3">
-                    <Link to={`/admin/orders/${order.id}`} className="font-medium text-blue-400 hover:text-blue-300">
+                    <Link to={`/admin/orders/${order.id}`} className="font-medium text-blue-600 hover:text-blue-700">
                       {order.order_number}
                     </Link>
                   </td>
                   <td className="px-5 py-3 hidden sm:table-cell">
-                    <p className="text-white">{order.email}</p>
+                    <p className="text-gray-900">{order.email}</p>
                     {order.phone && <p className="text-xs text-gray-400">{order.phone}</p>}
                   </td>
                   <td className="px-5 py-3">
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[order.status] ?? ""}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[order.status] ?? "bg-gray-100 text-gray-600"}`}>
                       {order.status}
                     </span>
                   </td>
                   <td className="px-5 py-3 hidden md:table-cell">
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLORS[order.payment_status] ?? ""}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLORS[order.payment_status] ?? "bg-gray-100 text-gray-600"}`}>
                       {order.payment_status}
                     </span>
                   </td>
-                  <td className="px-5 py-3 hidden lg:table-cell text-gray-400 text-xs">
-                    {order.shipping_city}, {order.shipping_state}
+                  <td className="px-5 py-3 hidden lg:table-cell text-gray-500 text-xs">
+                    {[order.shipping_city, order.shipping_state].filter(Boolean).join(", ")}
                   </td>
-                  <td className="px-5 py-3 text-right font-semibold text-white">
+                  <td className="px-5 py-3 text-right font-bold text-gray-900">
                     ₹{order.total?.toLocaleString("en-IN")}
                   </td>
                   <td className="px-5 py-3 text-right hidden sm:table-cell text-gray-400 text-xs">
@@ -443,13 +445,13 @@ function ShopifyOrdersTab() {
       </div>
 
       {total > PAGE_SIZE && (
-        <div className="flex items-center justify-between text-sm text-gray-400">
+        <div className="flex items-center justify-between text-sm text-gray-500">
           <span>Showing {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, total)} of {total}</span>
           <div className="flex gap-2">
             <button onClick={() => setPage((p) => Math.max(0, p - 1))} disabled={page === 0}
-              className="px-3 py-1.5 bg-gray-800 rounded-lg disabled:opacity-40 hover:bg-gray-700">Previous</button>
+              className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 rounded-lg disabled:opacity-40 hover:bg-gray-50 text-sm">Previous</button>
             <button onClick={() => setPage((p) => p + 1)} disabled={(page + 1) * PAGE_SIZE >= total}
-              className="px-3 py-1.5 bg-gray-800 rounded-lg disabled:opacity-40 hover:bg-gray-700">Next</button>
+              className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 rounded-lg disabled:opacity-40 hover:bg-gray-50 text-sm">Next</button>
           </div>
         </div>
       )}
