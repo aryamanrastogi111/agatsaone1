@@ -43,7 +43,7 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
   page.drawText("AGATSA", {
     x: margin, y: height - 36, font: bold, size: 20, color: rgb(1, 1, 1),
   });
-  page.drawText("Medical Technologies Pvt Ltd", {
+  page.drawText("Software Pvt Ltd", {
     x: margin, y: height - 52, font: regular, size: 9, color: rgb(0.75, 0.75, 0.75),
   });
   page.drawText(data.isAdmin ? "OPERATIONS INVOICE" : "TAX INVOICE", {

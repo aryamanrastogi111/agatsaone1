@@ -157,7 +157,7 @@ export function openRazorpayCheckout(
     key: orderData.keyId,
     amount: orderData.amount,
     currency: orderData.currency,
-    name: "Agatsa Medical Technologies",
+    name: "Agatsa Software Pvt Ltd",
     description: itemNames,
     order_id: orderData.orderId,
     handler: onSuccess,
