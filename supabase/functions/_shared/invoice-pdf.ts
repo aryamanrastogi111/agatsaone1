@@ -215,7 +215,7 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
     { x: margin, y: 36, font: regular, size: 7.5, color: rgb(0.6, 0.6, 0.6) }
   );
   page.drawText(
-    "Agatsa Medical Technologies Pvt. Ltd.  Bengaluru, India  care@agatsa.com  agatsa.com",
+    "Agatsa Software Pvt Ltd  Bengaluru, India  care@agatsa.com  agatsa.com",
     { x: margin, y: 24, font: regular, size: 7.5, color: rgb(0.6, 0.6, 0.6) }
   );
 
