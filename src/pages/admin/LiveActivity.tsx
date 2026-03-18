@@ -348,7 +348,18 @@ export default function LiveActivity() {
   useEffect(() => {
     fetchData();
     const interval = setInterval(fetchData, 30_000); // refresh every 30s
-    return () => clearInterval(interval);
+
+    // Realtime: refresh immediately when a cart session or order changes
+    const channel = supabase
+      .channel("live-activity-db")
+      .on("postgres_changes", { event: "*", schema: "public", table: "cart_sessions" }, () => { fetchData(); })
+      .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, () => { fetchData(); })
+      .subscribe();
+
+    return () => {
+      clearInterval(interval);
+      supabase.removeChannel(channel);
+    };
   }, [fetchData]);
 
   return (

@@ -17,8 +17,18 @@ export function useVisitorTracking() {
   const location = useLocation();
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const sessionId = useRef(getSessionId());
+  const subscribedRef = useRef(false);
+
+  // Skip tracking for admin and SDK portal routes
+  const isAdminOrInternal =
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/sdk");
 
   useEffect(() => {
+    if (isAdminOrInternal) return;
+
+    subscribedRef.current = false;
+
     const device = window.innerWidth < 768 ? "mobile" : "desktop";
     const referrer = document.referrer
       ? document.referrer.includes(window.location.hostname)
@@ -34,6 +44,7 @@ export function useVisitorTracking() {
 
     channel.subscribe(async (status) => {
       if (status === "SUBSCRIBED") {
+        subscribedRef.current = true;
         await channel.track({
           session_id: sessionId.current,
           current_page: location.pathname,
@@ -45,13 +56,16 @@ export function useVisitorTracking() {
     });
 
     return () => {
+      subscribedRef.current = false;
       supabase.removeChannel(channel);
+      channelRef.current = null;
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isAdminOrInternal]); // re-init when switching between admin/public
 
-  // Update presence on page navigation
+  // Update presence on page navigation (public pages only)
   useEffect(() => {
-    if (channelRef.current) {
+    if (isAdminOrInternal) return;
+    if (channelRef.current && subscribedRef.current) {
       channelRef.current.track({
         session_id: sessionId.current,
         current_page: location.pathname,
@@ -60,5 +74,5 @@ export function useVisitorTracking() {
         started_at: sessionStorage.getItem("agatsa_vsid_start") ?? new Date().toISOString(),
       });
     }
-  }, [location.pathname]);
+  }, [location.pathname, isAdminOrInternal]);
 }
