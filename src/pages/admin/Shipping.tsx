@@ -74,7 +74,9 @@ export default function Shipping() {
     courier_partner: string;
     delivery_method: string;
     estimated_delivery: string;
-  }>({ tracking_number: "", courier_partner: "", delivery_method: "", estimated_delivery: "" });
+    send_notification: boolean;
+    mark_shipped: boolean;
+  }>({ tracking_number: "", courier_partner: "", delivery_method: "", estimated_delivery: "", send_notification: true, mark_shipped: true });
   const [notifyingId, setNotifyingId] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null);
 
@@ -111,21 +113,61 @@ export default function Shipping() {
       courier_partner: order.courier_partner ?? "",
       delivery_method: order.delivery_method ?? "",
       estimated_delivery: order.estimated_delivery ?? "",
+      send_notification: true,
+      mark_shipped: order.status !== "shipped" && order.status !== "delivered",
     });
   };
 
-  const saveEdit = async (id: string) => {
+  const saveEdit = async (id: string, order: ShipOrder) => {
     setUpdatingId(id);
-    await supabase.from("orders").update({
+    const updatePayload: any = {
       tracking_number: editData.tracking_number || null,
       courier_partner: editData.courier_partner || null,
       delivery_method: editData.delivery_method || null,
       estimated_delivery: editData.estimated_delivery || null,
-    }).eq("id", id);
+    };
+    if (editData.mark_shipped && order.status !== "shipped" && order.status !== "delivered") {
+      updatePayload.status = "shipped";
+      updatePayload.shipped_at = new Date().toISOString();
+    }
+    await supabase.from("orders").update(updatePayload).eq("id", id);
     setEditingId(null);
     await fetchOrders();
     setUpdatingId(null);
-    showToast("Shipment details saved");
+
+    // Auto-send shipping notification if requested
+    if (editData.send_notification && order.customer_email) {
+      setNotifyingId(id);
+      try {
+        const updatedOrder = {
+          ...order,
+          tracking_number: editData.tracking_number || null,
+          courier_partner: editData.courier_partner || null,
+          estimated_delivery: editData.estimated_delivery || null,
+        };
+        await supabase.functions.invoke("send-shipping-notification", {
+          body: {
+            customerEmail: order.customer_email,
+            customerName: order.customer_name,
+            orderId: order.razorpay_order_id ?? order.id,
+            trackingNumber: updatedOrder.tracking_number,
+            courierPartner: updatedOrder.courier_partner,
+            estimatedDelivery: updatedOrder.estimated_delivery,
+            items: order.items,
+            shippingAddress: order.shipping_address,
+            shippingCity: order.shipping_city,
+            shippingState: order.shipping_state,
+            shippingPincode: order.shipping_pincode,
+          },
+        });
+        showToast(`Shipment saved & notification sent to ${order.customer_email}`);
+      } catch {
+        showToast("Shipment saved, but notification failed", "error");
+      }
+      setNotifyingId(null);
+    } else {
+      showToast("Shipment details saved");
+    }
   };
 
   const sendShippingNotification = async (order: ShipOrder) => {
@@ -449,6 +491,25 @@ export default function Shipping() {
                           </select>
                           <input type="date" value={editData.estimated_delivery} onChange={e => setEditData(p => ({ ...p, estimated_delivery: e.target.value }))}
                             className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:border-blue-500" />
+                          {/* Auto-send options */}
+                          <div className="mt-2 space-y-1.5 border-t border-gray-100 pt-2">
+                            {o.status !== "shipped" && o.status !== "delivered" && (
+                              <label className="flex items-center gap-1.5 cursor-pointer">
+                                <input type="checkbox" checked={editData.mark_shipped}
+                                  onChange={e => setEditData(p => ({ ...p, mark_shipped: e.target.checked }))}
+                                  className="rounded border-gray-300 text-cyan-600" />
+                                <span className="text-xs text-gray-600">Mark as Shipped</span>
+                              </label>
+                            )}
+                            <label className="flex items-center gap-1.5 cursor-pointer">
+                              <input type="checkbox" checked={editData.send_notification}
+                                onChange={e => setEditData(p => ({ ...p, send_notification: e.target.checked }))}
+                                className="rounded border-gray-300 text-indigo-600" />
+                              <span className="text-xs text-gray-600 flex items-center gap-1">
+                                <Send size={10} /> Send shipping email
+                              </span>
+                            </label>
+                          </div>
                         </div>
                       ) : (
                         <div className="space-y-1">
@@ -470,9 +531,12 @@ export default function Shipping() {
                     <div className="flex flex-col gap-1.5 shrink-0">
                       {isEditing ? (
                         <>
-                          <button onClick={() => saveEdit(o.id)} disabled={updatingId === o.id}
+                          <button onClick={() => saveEdit(o.id, o)} disabled={updatingId === o.id}
                             className="flex items-center justify-center gap-1 text-xs px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium disabled:opacity-50">
-                            <Check size={12} /> Save
+                            {updatingId === o.id || notifyingId === o.id
+                              ? <><span className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" /> Saving…</>
+                              : <><Check size={12} /> {editData.send_notification ? "Save & Notify" : "Save"}</>
+                            }
                           </button>
                           <button onClick={() => setEditingId(null)}
                             className="flex items-center justify-center gap-1 text-xs px-3 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium">
