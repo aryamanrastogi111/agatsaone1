@@ -52,6 +52,7 @@ serve(async (req) => {
         amount: amountInPaise,
         currency: "INR",
         receipt: `rcpt_${Date.now()}`,
+        payment_capture: 1,
         notes: {
           customer_name: customerName || "",
           customer_email: customerEmail || "",
