@@ -103,7 +103,9 @@ serve(async (req) => {
       _testTeamEmail,
     } = await req.json();
 
-    const teamRecipient = _testTeamEmail || "info@agatsa.com";
+    const teamRecipients = _testTeamEmail
+      ? [_testTeamEmail]
+      : ["info@agatsa.com", "munfungaming@gmail.com", "rahul.amu2@gmail.com", "agr.neha@gmail.com"];
     const customerFrom = "Agatsa Medical Technologies <orders@agatsa.in>";
     const teamFrom = "Agatsa Orders <orders@agatsa.in>";
 
@@ -446,26 +448,34 @@ serve(async (req) => {
       metadata: { resend_id: customerResult.id, has_invoice: !!invoicePdfBase64 },
     });
 
-    // ─── SEND TEAM EMAIL VIA RESEND ───────────────────────────────────────────
-    const teamResult = await sendViaResend({
-      to: teamRecipient,
-      from: teamFrom,
-      subject: `New Order: ${customerName || customerEmail} – ${totalFormatted}`,
-      html: teamEmailHtml,
-      text: stripHtml(teamEmailHtml),
-      resendApiKey: RESEND_API_KEY,
-    });
+    // ─── SEND TEAM EMAIL TO ALL RECIPIENTS VIA RESEND ────────────────────────
+    const teamResults = await Promise.all(
+      teamRecipients.map((recipient) =>
+        sendViaResend({
+          to: recipient,
+          from: teamFrom,
+          subject: `New Order: ${customerName || customerEmail} – ${totalFormatted}`,
+          html: teamEmailHtml,
+          text: stripHtml(teamEmailHtml),
+          resendApiKey: RESEND_API_KEY,
+        })
+      )
+    );
 
-    console.log("Team email result:", JSON.stringify(teamResult));
+    console.log("Team email results:", JSON.stringify(teamResults));
 
-    await supabase.from("email_send_log").insert({
-      message_id: crypto.randomUUID(),
-      template_name: "order_team_notification",
-      recipient_email: teamRecipient,
-      status: teamResult.success ? "sent" : "failed",
-      error_message: teamResult.error || null,
-      metadata: { resend_id: teamResult.id },
-    });
+    await supabase.from("email_send_log").insert(
+      teamRecipients.map((recipient, i) => ({
+        message_id: crypto.randomUUID(),
+        template_name: "order_team_notification",
+        recipient_email: recipient,
+        status: teamResults[i].success ? "sent" : "failed",
+        error_message: teamResults[i].error || null,
+        metadata: { resend_id: teamResults[i].id },
+      }))
+    );
+
+    const teamResult = teamResults[0];
 
     // Update order status
     await supabase.from("orders").update({ status: "confirmed" }).eq("razorpay_order_id", orderId);
