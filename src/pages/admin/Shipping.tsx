@@ -491,6 +491,25 @@ export default function Shipping() {
                           </select>
                           <input type="date" value={editData.estimated_delivery} onChange={e => setEditData(p => ({ ...p, estimated_delivery: e.target.value }))}
                             className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:border-blue-500" />
+                          {/* Auto-send options */}
+                          <div className="mt-2 space-y-1.5 border-t border-gray-100 pt-2">
+                            {o.status !== "shipped" && o.status !== "delivered" && (
+                              <label className="flex items-center gap-1.5 cursor-pointer">
+                                <input type="checkbox" checked={editData.mark_shipped}
+                                  onChange={e => setEditData(p => ({ ...p, mark_shipped: e.target.checked }))}
+                                  className="rounded border-gray-300 text-cyan-600" />
+                                <span className="text-xs text-gray-600">Mark as Shipped</span>
+                              </label>
+                            )}
+                            <label className="flex items-center gap-1.5 cursor-pointer">
+                              <input type="checkbox" checked={editData.send_notification}
+                                onChange={e => setEditData(p => ({ ...p, send_notification: e.target.checked }))}
+                                className="rounded border-gray-300 text-indigo-600" />
+                              <span className="text-xs text-gray-600 flex items-center gap-1">
+                                <Send size={10} /> Send shipping email
+                              </span>
+                            </label>
+                          </div>
                         </div>
                       ) : (
                         <div className="space-y-1">
@@ -512,9 +531,12 @@ export default function Shipping() {
                     <div className="flex flex-col gap-1.5 shrink-0">
                       {isEditing ? (
                         <>
-                          <button onClick={() => saveEdit(o.id)} disabled={updatingId === o.id}
+                          <button onClick={() => saveEdit(o.id, o)} disabled={updatingId === o.id}
                             className="flex items-center justify-center gap-1 text-xs px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium disabled:opacity-50">
-                            <Check size={12} /> Save
+                            {updatingId === o.id || notifyingId === o.id
+                              ? <><span className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" /> Saving…</>
+                              : <><Check size={12} /> {editData.send_notification ? "Save & Notify" : "Save"}</>
+                            }
                           </button>
                           <button onClick={() => setEditingId(null)}
                             className="flex items-center justify-center gap-1 text-xs px-3 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium">
