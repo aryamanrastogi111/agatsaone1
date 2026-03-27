@@ -18,6 +18,7 @@ import {
   Smartphone,
   FileText,
   Quote,
+  Database,
 } from "lucide-react";
 import {
   Accordion,
@@ -25,6 +26,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+import doctorsHeroImg from "@/assets/doctors-hero.jpg";
+import doctorsPatientImg from "@/assets/doctors-patient-device.jpg";
+import doctorsPortalImg from "@/assets/doctors-portal-dashboard.jpg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -40,66 +45,110 @@ export default function Doctors() {
     <Layout>
       {/* ---------- HERO ---------- */}
       <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background py-24 md:py-32">
+        <div className="container max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="text-center md:text-left">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary mb-6"
+              >
+                <Stethoscope className="h-4 w-4" />
+                For Doctors & Clinics
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6"
+              >
+                Monitor every patient, 24/7 —{" "}
+                <span className="text-primary">from your desk.</span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-8"
+              >
+                Clinical-grade ECG, HRV, blood pressure, body composition, and sleep
+                — delivered as AI-interpreted reports to your portal. Know who needs
+                attention before they call you.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+              >
+                <Button asChild size="lg" className="text-base group">
+                  <a
+                    href="https://ecg-lab-portal-b4yda2wdqa-el.a.run.app/provider/register"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    Start free — no card required
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
+              </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="mt-6 text-sm text-muted-foreground"
+              >
+                Used by 600+ doctors · CDSCO Class IIa certified · CE Mark · ISO
+                13485
+              </motion.p>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="hidden md:block"
+            >
+              <img
+                src={doctorsHeroImg}
+                alt="Doctor monitoring patient ECG data remotely on tablet"
+                width={1280}
+                height={720}
+                className="rounded-2xl shadow-2xl"
+              />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- AI DATA SECTION ---------- */}
+      <section className="py-16 bg-gradient-to-r from-red-600 to-red-500">
         <div className="container max-w-4xl text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary mb-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0}
+            className="flex flex-col items-center gap-4"
           >
-            <Stethoscope className="h-4 w-4" />
-            For Doctors & Clinics
+            <Database className="h-10 w-10 text-white/80" />
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Powered by 1.5 Crore+ Indian Health Records
+            </h2>
+            <p className="text-lg text-white/80 max-w-2xl">
+              Our AI engine, Nera, is trained on over 1.5 crore real Indian health
+              data points — making it one of the largest India-specific health
+              datasets. This means more accurate interpretations tuned for Indian
+              demographics and conditions.
+            </p>
           </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6"
-          >
-            Monitor every patient, 24/7 —{" "}
-            <span className="text-primary">from your desk.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8"
-          >
-            Clinical-grade ECG, HRV, blood pressure, body composition, and sleep
-            — delivered as AI-interpreted reports to your portal. Know who needs
-            attention before they call you.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Button asChild size="lg" className="text-base group">
-              <a
-                href="https://ecg-lab-portal-b4yda2wdqa-el.a.run.app/provider/register"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                Start free — no card required
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-6 text-sm text-muted-foreground"
-          >
-            Used by 600+ doctors · CDSCO Class IIa certified · CE Mark · ISO
-            13485
-          </motion.p>
         </div>
       </section>
 
@@ -138,7 +187,7 @@ export default function Doctors() {
               {
                 step: "02",
                 icon: Activity,
-                title: "Patient wears the device",
+                title: "Patient uses the device",
                 desc: "We ship a clinical-grade device to your patient. They sync data daily — no effort required from them.",
               },
               {
@@ -173,6 +222,25 @@ export default function Doctors() {
               </motion.div>
             ))}
           </div>
+
+          {/* Patient device image */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={5}
+            className="mt-12 flex justify-center"
+          >
+            <img
+              src={doctorsPatientImg}
+              alt="Patient using portable ECG and health band at home"
+              width={800}
+              height={600}
+              loading="lazy"
+              className="rounded-2xl shadow-lg max-w-md w-full"
+            />
+          </motion.div>
         </div>
       </section>
 
@@ -207,7 +275,6 @@ export default function Doctors() {
                 name: "Sanket ECG",
                 tagline: "Lead I + II in 30 seconds",
                 desc: "The world's smallest medical-grade ECG. CDSCO-approved, used in 600+ clinics. AI classifies 15+ arrhythmias instantly.",
-                price: "₹999/patient/month",
                 color: "text-red-500",
                 bg: "bg-red-500/10",
               },
@@ -216,7 +283,6 @@ export default function Doctors() {
                 name: "Rhythm Band",
                 tagline: "24/7 HRV, BP & sleep",
                 desc: "Worn like a fitness band. Continuously tracks HRV, optical blood pressure, SpO2, and 8-hour sleep staging every night.",
-                price: "₹1,799/patient/month",
                 color: "text-primary",
                 bg: "bg-primary/10",
               },
@@ -225,7 +291,6 @@ export default function Doctors() {
                 name: "Smart Scale",
                 tagline: "26 body metrics in one step",
                 desc: "Bioelectrical impedance analysis. Visceral fat, muscle mass, bone density, metabolic rate — weekly trend reports.",
-                price: "₹1,499/patient/month",
                 color: "text-emerald-500",
                 bg: "bg-emerald-500/10",
               },
@@ -251,12 +316,9 @@ export default function Doctors() {
                     <p className="text-sm font-medium text-primary mb-3">
                       {d.tagline}
                     </p>
-                    <p className="text-sm text-muted-foreground mb-4">
+                    <p className="text-sm text-muted-foreground">
                       {d.desc}
                     </p>
-                    <span className="inline-block rounded-full bg-muted px-3 py-1 text-sm font-semibold text-foreground">
-                      {d.price}
-                    </span>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -267,7 +329,7 @@ export default function Doctors() {
 
       {/* ---------- PORTAL FEATURES ---------- */}
       <section className="py-20 bg-muted/30">
-        <div className="container max-w-4xl">
+        <div className="container max-w-5xl">
           <motion.h2
             initial="hidden"
             whileInView="visible"
@@ -279,179 +341,75 @@ export default function Doctors() {
             What you see in your portal
           </motion.h2>
 
-          <div className="grid sm:grid-cols-2 gap-6">
-            {[
-              {
-                icon: FileText,
-                text: "Weekly AI-interpreted report per patient — no manual reading required",
-              },
-              {
-                icon: Bell,
-                text: "Instant alert if ECG shows abnormal rhythm or critical reading",
-              },
-              {
-                icon: BarChart3,
-                text: "HRV trend, sleep score, BP history — all in one view",
-              },
-              {
-                icon: Shield,
-                text: "Patient data shared only after they accept your invite",
-              },
-              {
-                icon: UserMinus,
-                text: "Remove any patient anytime — data access stops immediately",
-              },
-              {
-                icon: Eye,
-                text: "Full visibility across your entire patient panel at a glance",
-              },
-            ].map((f, i) => (
-              <motion.div
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i}
-                className="flex items-start gap-4"
-              >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <f.icon className="h-5 w-5 text-primary" />
-                </div>
-                <p className="text-foreground text-sm leading-relaxed pt-2">
-                  {f.text}
-                </p>
-              </motion.div>
-            ))}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid sm:grid-cols-1 gap-6">
+              {[
+                {
+                  icon: FileText,
+                  text: "Weekly AI-interpreted report per patient — no manual reading required",
+                },
+                {
+                  icon: Bell,
+                  text: "Instant alert if ECG shows abnormal rhythm or critical reading",
+                },
+                {
+                  icon: BarChart3,
+                  text: "HRV trend, sleep score, BP history — all in one view",
+                },
+                {
+                  icon: Shield,
+                  text: "Patient data shared only after they accept your invite",
+                },
+                {
+                  icon: UserMinus,
+                  text: "Remove any patient anytime — data access stops immediately",
+                },
+                {
+                  icon: Eye,
+                  text: "Full visibility across your entire patient panel at a glance",
+                },
+              ].map((f, i) => (
+                <motion.div
+                  key={i}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  custom={i}
+                  className="flex items-start gap-4"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <f.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <p className="text-foreground text-sm leading-relaxed pt-2">
+                    {f.text}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              custom={3}
+            >
+              <img
+                src={doctorsPortalImg}
+                alt="AI-powered health monitoring portal dashboard"
+                width={1280}
+                height={720}
+                loading="lazy"
+                className="rounded-2xl shadow-xl"
+              />
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ---------- PRICING ---------- */}
-      <section className="py-20">
-        <div className="container max-w-3xl">
-          <motion.h2
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={0}
-            className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4"
-          >
-            Simple, transparent pricing
-          </motion.h2>
-          <motion.p
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={1}
-            className="text-center text-muted-foreground mb-10 max-w-xl mx-auto"
-          >
-            Device cost is separate — billed per kit dispatched. No upfront
-            inventory commitment.
-          </motion.p>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={2}
-          >
-            <Card className="overflow-hidden border shadow-md">
-              <CardContent className="p-0">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="bg-muted/50 border-b">
-                      <th className="text-left p-4 font-semibold text-foreground">
-                        Plan
-                      </th>
-                      <th className="text-left p-4 font-semibold text-foreground">
-                        Patients
-                      </th>
-                      <th className="text-left p-4 font-semibold text-foreground">
-                        Price
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      {
-                        plan: "Starter",
-                        patients: "Up to 10",
-                        price: "Free to start",
-                        highlight: true,
-                      },
-                      {
-                        plan: "Growth",
-                        patients: "Up to 50",
-                        price: "₹249/patient/month",
-                      },
-                      {
-                        plan: "Pro",
-                        patients: "Up to 200",
-                        price: "₹299/patient/month",
-                      },
-                      {
-                        plan: "Enterprise",
-                        patients: "Unlimited",
-                        price: "Contact us",
-                      },
-                    ].map((row, i) => (
-                      <tr
-                        key={row.plan}
-                        className={`border-b last:border-0 ${
-                          row.highlight ? "bg-primary/5" : ""
-                        }`}
-                      >
-                        <td className="p-4 font-medium text-foreground flex items-center gap-2">
-                          {row.plan}
-                          {row.highlight && (
-                            <span className="text-[10px] uppercase tracking-wider bg-primary text-primary-foreground px-1.5 py-0.5 rounded-full font-bold">
-                              Popular
-                            </span>
-                          )}
-                        </td>
-                        <td className="p-4 text-muted-foreground">
-                          {row.patients}
-                        </td>
-                        <td className="p-4 font-semibold text-foreground">
-                          {row.price}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={3}
-            className="text-center mt-8"
-          >
-            <Button asChild size="lg" className="text-base group">
-              <a
-                href="https://ecg-lab-portal-b4yda2wdqa-el.a.run.app/provider/register"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                Register your clinic free
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
-          </motion.div>
-        </div>
-      </section>
-
       {/* ---------- SOCIAL PROOF ---------- */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20">
         <div className="container max-w-3xl">
           <motion.div
             initial="hidden"
@@ -485,7 +443,7 @@ export default function Doctors() {
           >
             {[
               "97.8% concordance with cardiologist interpretation",
-              "1.3M+ ECGs analyzed",
+              "1.5 Cr+ Indian health data points powering Nera AI",
               "CDSCO Class IIa certified",
             ].map((stat) => (
               <div
@@ -501,7 +459,7 @@ export default function Doctors() {
       </section>
 
       {/* ---------- FAQ ---------- */}
-      <section className="py-20">
+      <section className="py-20 bg-muted/30">
         <div className="container max-w-2xl">
           <motion.h2
             initial="hidden"
@@ -555,7 +513,7 @@ export default function Doctors() {
       </section>
 
       {/* ---------- FINAL CTA ---------- */}
-      <section className="py-20 bg-primary/5">
+      <section className="py-20 bg-gradient-to-r from-red-600 to-red-500">
         <div className="container max-w-2xl text-center">
           <motion.h2
             initial="hidden"
@@ -563,7 +521,7 @@ export default function Doctors() {
             viewport={{ once: true }}
             variants={fadeUp}
             custom={0}
-            className="text-3xl md:text-4xl font-bold text-foreground mb-4"
+            className="text-3xl md:text-4xl font-bold text-white mb-4"
           >
             Start monitoring your first 10 patients free.
           </motion.h2>
@@ -573,7 +531,7 @@ export default function Doctors() {
             viewport={{ once: true }}
             variants={fadeUp}
             custom={1}
-            className="text-lg text-muted-foreground mb-8"
+            className="text-lg text-white/80 mb-8"
           >
             No credit card. No upfront cost. Device shipped within 3 days of
             patient enrollment.
@@ -585,7 +543,7 @@ export default function Doctors() {
             variants={fadeUp}
             custom={2}
           >
-            <Button asChild size="lg" className="text-base group">
+            <Button asChild size="lg" className="text-base group bg-white text-red-600 hover:bg-white/90">
               <a
                 href="https://ecg-lab-portal-b4yda2wdqa-el.a.run.app/provider/register"
                 target="_blank"

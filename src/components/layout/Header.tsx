@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart, Code2 } from "lucide-react";
+import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart, Code2, Stethoscope } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -9,7 +9,6 @@ import { CartDrawer } from "@/components/shop/CartDrawer";
 
 const navItems = [
   { label: "Products", href: "/products" },
-  { label: "For Doctors", href: "/doctors" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
   { label: "Support", href: "/support" },
@@ -101,9 +100,14 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <Link
+            to="/doctors"
+            className="text-sm font-bold whitespace-nowrap bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent hover:from-red-700 hover:to-red-600 transition-all"
+          >
+            For Doctors
+          </Link>
           <CartDrawer />
         </nav>
-
 
         {/* Mobile Menu Button + Cart */}
         <div className="md:hidden flex items-center gap-2">
@@ -194,6 +198,21 @@ export function Header() {
                   </Link>
                 </motion.div>
               ))}
+              {/* For Doctors link */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.25 }}
+              >
+                <Link
+                  to="/doctors"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 text-sm font-bold py-3 px-4 rounded-lg bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent"
+                >
+                  <Stethoscope className="h-4 w-4 text-red-500" />
+                  For Doctors
+                </Link>
+              </motion.div>
               {/* Product Quick Links in Mobile */}
               <div className="flex flex-col gap-2 pt-2 border-t border-border mt-2">
                 <p className="text-xs text-muted-foreground px-4 pt-2">Quick Access</p>
