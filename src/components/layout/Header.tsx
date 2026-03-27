@@ -107,7 +107,7 @@ export function Header() {
             For Doctors
           </Link>
           <CartDrawer />
-
+        </nav>
 
         {/* Mobile Menu Button + Cart */}
         <div className="md:hidden flex items-center gap-2">
