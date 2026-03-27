@@ -96,23 +96,21 @@ function LiveVisitorsPanel() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
 
   useEffect(() => {
-    // Use a SEPARATE channel for admin reading — joining the same "live-visitors"
-    // channel would add the admin browser as a ghost visitor.
-    // We create a second channel that mirrors the same presence topic so we can
-    // read the state without polluting it with an admin presence entry.
-    const channel = supabase.channel("admin-live-watch", {
-      config: { presence: { key: "admin-readonly" } },
+    // Join the SAME "live-visitors" channel so we can read its presence state.
+    // We filter out any admin session IDs so admins don't appear as visitors.
+    const channel = supabase.channel("live-visitors", {
+      config: { presence: { key: `admin_${Date.now()}` } },
     });
 
-    // Also subscribe to the actual visitors channel just to read its state
-    const visitorChannel = supabase.channel("live-visitors-reader");
-
-    visitorChannel
+    channel
       .on("presence", { event: "sync" }, () => {
-        const state = visitorChannel.presenceState() as Record<string, any[]>;
+        const state = channel.presenceState() as Record<string, any[]>;
         const list: Visitor[] = Object.values(state)
           .flat()
-          .filter((p: any) => !p.session_id?.startsWith("admin"))
+          .filter((p: any) => {
+            const sid = p.session_id ?? "";
+            return !sid.startsWith("admin") && sid.startsWith("v_");
+          })
           .map((p: any) => ({
             session_id: p.session_id ?? p.presence_ref,
             current_page: p.current_page ?? "/",
@@ -122,30 +120,9 @@ function LiveVisitorsPanel() {
           }));
         setVisitors(list);
       })
-      .on("presence", { event: "join" }, ({ newPresences }) => {
-        setVisitors(prev => {
-          const incoming = (newPresences as any[])
-            .filter((p: any) => !p.session_id?.startsWith("admin"))
-            .map((p: any) => ({
-              session_id: p.session_id ?? p.presence_ref,
-              current_page: p.current_page ?? "/",
-              device: p.device ?? "desktop",
-              referrer: p.referrer ?? "direct",
-              started_at: p.started_at ?? new Date().toISOString(),
-            }));
-          const map = new Map(prev.map(v => [v.session_id, v]));
-          incoming.forEach(v => map.set(v.session_id, v));
-          return Array.from(map.values());
-        });
-      })
-      .on("presence", { event: "leave" }, ({ leftPresences }) => {
-        const leaving = new Set((leftPresences as any[]).map((p: any) => p.session_id ?? p.presence_ref));
-        setVisitors(prev => prev.filter(v => !leaving.has(v.session_id)));
-      })
       .subscribe();
 
     return () => {
-      supabase.removeChannel(visitorChannel);
       supabase.removeChannel(channel);
     };
   }, []);
