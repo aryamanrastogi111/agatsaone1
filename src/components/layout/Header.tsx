@@ -86,13 +86,13 @@ export function Header() {
         </div>
 
         {/* Desktop Navigation - Second */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-4">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
               className={cn(
-                "text-sm font-medium transition-colors relative py-1 link-underline",
+                "text-sm font-medium transition-colors relative py-1 link-underline whitespace-nowrap",
                 location.pathname === item.href
                   ? "text-primary"
                   : "text-muted-foreground hover:text-primary"
