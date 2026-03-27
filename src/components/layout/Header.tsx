@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart, Code2 } from "lucide-react";
+import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart, Code2, Stethoscope } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
