@@ -100,8 +100,13 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <Link
+            to="/doctors"
+            className="text-sm font-bold whitespace-nowrap bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent hover:from-red-700 hover:to-red-600 transition-all"
+          >
+            For Doctors
+          </Link>
           <CartDrawer />
-        </nav>
 
 
         {/* Mobile Menu Button + Cart */}
