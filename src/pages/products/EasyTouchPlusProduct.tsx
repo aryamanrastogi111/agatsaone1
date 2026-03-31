@@ -368,11 +368,32 @@ export default function EasyTouchPlusProduct() {
 
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
             <AnimatedSection delay={0.1}>
-              <div className="bg-gradient-to-br from-teal-100 to-indigo-50 rounded-3xl p-16 flex items-center justify-center border border-teal-200/50">
-                <div className="text-center space-y-3">
-                  <Sparkles className="h-16 w-16 text-teal-600 mx-auto" />
-                  <p className="font-bold text-teal-700">Nera AI</p>
-                  <p className="text-sm text-teal-600/80">Your personal metabolic engine</p>
+              <div className="relative bg-gradient-to-br from-teal-900 via-teal-800 to-indigo-900 rounded-3xl p-16 flex items-center justify-center border border-teal-500/30 shadow-2xl shadow-teal-500/20 overflow-hidden group">
+                {/* Animated glow rings */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-48 h-48 rounded-full border border-teal-400/20 animate-pulse" />
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-64 h-64 rounded-full border border-teal-400/10 animate-[pulse_3s_ease-in-out_infinite]" />
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-80 h-80 rounded-full border border-indigo-400/5 animate-[pulse_4s_ease-in-out_infinite]" />
+                </div>
+                {/* Floating particles */}
+                <div className="absolute top-8 left-12 w-2 h-2 bg-teal-400/40 rounded-full animate-drift" />
+                <div className="absolute bottom-12 right-10 w-1.5 h-1.5 bg-indigo-400/40 rounded-full animate-float" />
+                <div className="absolute top-1/3 right-16 w-1 h-1 bg-teal-300/50 rounded-full animate-float-slow" />
+                {/* Content */}
+                <div className="relative text-center space-y-4 z-10">
+                  <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-teal-400 to-indigo-500 flex items-center justify-center shadow-lg shadow-teal-400/30 group-hover:scale-110 transition-transform duration-500">
+                    <Brain className="h-10 w-10 text-white" />
+                  </div>
+                  <p className="font-bold text-xl text-white tracking-wide">Nera AI</p>
+                  <p className="text-sm text-teal-300/90 max-w-[200px]">Your personal metabolic intelligence engine</p>
+                  <div className="flex items-center justify-center gap-1.5 pt-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
+                    <span className="text-xs text-teal-400 font-medium tracking-wider uppercase">Active & Learning</span>
+                  </div>
                 </div>
               </div>
             </AnimatedSection>
