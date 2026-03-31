@@ -79,6 +79,46 @@ export default function OrderDetail() {
     toast.success("Operations invoice downloaded");
   };
 
+  const handleDownloadDeliverySlip = async () => {
+    if (!order) return;
+    const items = Array.isArray(order.items) ? order.items : [];
+    try {
+      const { data: bytes, error } = await supabase.functions.invoke("generate-delivery-slip", {
+        body: {
+          orderId: order.razorpay_order_id ?? order.id,
+          orderDate: new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }),
+          customerName: order.customer_name ?? "",
+          customerPhone: order.customer_phone ?? undefined,
+          shippingAddress: order.shipping_address ?? "",
+          shippingCity: order.shipping_city ?? "",
+          shippingState: order.shipping_state ?? "",
+          shippingPincode: order.shipping_pincode ?? "",
+          items: items.map((i: any) => ({
+            productName: i.productName ?? i.name ?? "Product",
+            variantTitle: i.variantTitle ?? undefined,
+            quantity: i.quantity ?? 1,
+            price: i.price ?? 0,
+          })),
+          total: order.amount ?? 0,
+        },
+      });
+      if (error) throw new Error(error.message ?? "Delivery slip generation failed");
+      const ab: ArrayBuffer = bytes instanceof ArrayBuffer ? bytes : await (bytes as Blob).arrayBuffer();
+      const blob = new Blob([ab], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `delivery-slip-${order.razorpay_order_id ?? order.id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      toast.success("Delivery slip downloaded");
+    } catch (err: any) {
+      toast.error(err.message || "Failed to generate delivery slip");
+    }
+  };
+
   const updateStatus = async (newStatus: string) => {
     setUpdatingStatus(true);
     const { error } = await supabase.from("orders").update({ status: newStatus }).eq("id", id!);
