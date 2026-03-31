@@ -4,6 +4,8 @@ import easytouchFingerImg from "@/assets/easytouch-wellness-finger.png";
 import { motion, useInView } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 import {
   Accordion,
   AccordionContent,
@@ -64,7 +66,7 @@ function AnimatedSection({
 }
 
 /* ── Sticky header buy button ── */
-function StickyBuyBar() {
+function StickyBuyBar({ onBuy }: { onBuy: () => void }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: false });
   return (
@@ -78,8 +80,8 @@ function StickyBuyBar() {
         >
           <div className="container flex items-center justify-between h-12">
             <span className="font-semibold text-sm text-foreground">EasyTouch Wellness</span>
-            <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-6" asChild>
-              <a href="#buy">Buy Now — ₹2,499</a>
+            <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-6" onClick={onBuy}>
+              Buy Now — ₹2,499
             </Button>
           </div>
         </motion.div>
@@ -104,9 +106,23 @@ function FloatingWhatsApp() {
 }
 
 export default function EasyTouchPlusProduct() {
+  const addItem = useCartStore((state) => state.addItem);
+
+  const handleBuyNow = () => {
+    addItem({
+      productId: "a03c6d9e-5ded-41cb-942c-4a27c57d51c3",
+      productName: "EasyTouch Wellness",
+      variantTitle: "Default",
+      price: 2499,
+      quantity: 1,
+      imageUrl: easytouchWellnessImg,
+    });
+    toast.success("EasyTouch Wellness added to cart!", { position: "top-center" });
+  };
+
   return (
     <Layout>
-      <StickyBuyBar />
+      <StickyBuyBar onBuy={handleBuyNow} />
       <FloatingWhatsApp />
 
       {/* ═══ SECTION 1 — HERO ═══ */}
@@ -155,10 +171,8 @@ export default function EasyTouchPlusProduct() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-8 text-base shadow-lg shadow-teal-200" asChild>
-                <a href="#buy">
+              <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-8 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
                   Buy Now — ₹2,499 <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
               </Button>
               <Button size="lg" variant="outline" className="rounded-full px-8 text-base border-teal-200 text-teal-700 hover:bg-teal-50" asChild>
                 <a href="#how-it-works">
@@ -499,7 +513,7 @@ export default function EasyTouchPlusProduct() {
               </div>
               <p className="text-teal-600 font-medium mb-1">Save ₹1,500 — Launch Offer</p>
               <p className="text-muted-foreground text-sm mb-6">Free shipping across India</p>
-              <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200">
+              <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
                 Buy Now — ₹2,499 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -606,10 +620,8 @@ export default function EasyTouchPlusProduct() {
             <p className="text-muted-foreground text-lg mb-8">
               EasyTouch Wellness — ₹2,499. Free shipping. 30-day returns.
             </p>
-            <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200" asChild>
-              <a href="#buy">
+            <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
                 Buy EasyTouch Wellness — ₹2,499 <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
             </Button>
             <p className="text-muted-foreground text-sm mt-6">
               Questions?{" "}
