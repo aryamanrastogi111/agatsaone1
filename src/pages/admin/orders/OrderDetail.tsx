@@ -185,7 +185,13 @@ export default function OrderDetail() {
           onClick={handleDownloadInvoice}
           className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-900 text-white hover:bg-gray-700 transition-colors border border-gray-800"
         >
-          <Download size={13} /> Download Invoice
+          <Download size={13} /> Invoice
+        </button>
+        <button
+          onClick={handleDownloadDeliverySlip}
+          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition-colors border border-orange-700"
+        >
+          <FileText size={13} /> Delivery Slip
         </button>
       </div>
 
