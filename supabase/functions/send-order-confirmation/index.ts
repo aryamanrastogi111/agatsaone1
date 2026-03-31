@@ -161,6 +161,31 @@ serve(async (req) => {
       console.error("PDF generation failed (non-fatal):", pdfErr);
     }
 
+    // ── Build delivery slip PDF (for team email only) ──────────────────────────
+    let deliverySlipBase64 = "";
+    try {
+      const slipBytes = await buildDeliverySlipPdf({
+        orderId,
+        orderDate,
+        paymentMethod: paymentId ? "PREPAID" : "PREPAID",
+        customerName: customerName || "",
+        customerPhone,
+        shippingAddress: shippingAddress || "",
+        shippingCity: shippingCity || "",
+        shippingState: shippingState || "",
+        shippingPincode: shippingPincode || "",
+        items: items || [],
+        total: total || 0,
+      });
+      let binary = "";
+      for (let i = 0; i < slipBytes.length; i++) {
+        binary += String.fromCharCode(slipBytes[i]);
+      }
+      deliverySlipBase64 = btoa(binary);
+    } catch (slipErr) {
+      console.error("Delivery slip generation failed (non-fatal):", slipErr);
+    }
+
     const itemsHtml = (items || [])
       .map(
         (item: { productName: string; variantTitle?: string; quantity: number; price: number }) =>
