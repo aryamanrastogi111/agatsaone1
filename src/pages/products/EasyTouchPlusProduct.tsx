@@ -66,7 +66,7 @@ function AnimatedSection({
 }
 
 /* ── Sticky header buy button ── */
-function StickyBuyBar() {
+function StickyBuyBar({ onBuy }: { onBuy: () => void }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: false });
   return (
@@ -80,8 +80,8 @@ function StickyBuyBar() {
         >
           <div className="container flex items-center justify-between h-12">
             <span className="font-semibold text-sm text-foreground">EasyTouch Wellness</span>
-            <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-6" asChild>
-              <a href="#buy">Buy Now — ₹2,499</a>
+            <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-6" onClick={onBuy}>
+              Buy Now — ₹2,499
             </Button>
           </div>
         </motion.div>
