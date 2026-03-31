@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import easytouchWellnessImg from "@/assets/easytouch-wellness-device.png";
+import easytouchFingerImg from "@/assets/easytouch-wellness-finger.png";
 import { motion, useInView } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -239,9 +240,11 @@ export default function EasyTouchPlusProduct() {
 
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
             <AnimatedSection delay={0.1}>
-              <div className="bg-gradient-to-br from-teal-100 to-teal-50 rounded-3xl p-16 flex items-center justify-center border border-teal-200/50">
-                <Fingerprint className="h-24 w-24 text-teal-600" />
-              </div>
+              <img
+                src={easytouchFingerImg}
+                alt="EasyTouch Wellness device with finger on sensor showing Metabolic Index"
+                className="rounded-3xl w-full drop-shadow-2xl"
+              />
             </AnimatedSection>
             <AnimatedSection delay={0.2}>
               <ul className="space-y-5">
