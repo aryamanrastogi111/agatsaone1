@@ -4,6 +4,8 @@ import easytouchFingerImg from "@/assets/easytouch-wellness-finger.png";
 import { motion, useInView } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 import {
   Accordion,
   AccordionContent,
