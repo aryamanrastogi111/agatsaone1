@@ -277,7 +277,7 @@ export function Header() {
                     className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-teal-600 hover:bg-teal-50 transition-colors"
                   >
                     <Activity className="h-4 w-4" />
-                    EasyTouch Rhythm
+                    EasyTouch Wellness+
                   </Link>
                 </motion.div>
                 <motion.div
