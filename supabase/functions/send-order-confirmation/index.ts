@@ -475,6 +475,15 @@ serve(async (req) => {
     });
 
     // ─── SEND TEAM EMAIL TO ALL RECIPIENTS VIA RESEND ────────────────────────
+    const teamAttachments: { filename: string; content: string; content_type: string }[] = [];
+    if (deliverySlipBase64) {
+      teamAttachments.push({
+        filename: `delivery-slip-${orderId}.pdf`,
+        content: deliverySlipBase64,
+        content_type: "application/pdf",
+      });
+    }
+
     const teamResults = await Promise.all(
       teamRecipients.map((recipient) =>
         sendViaResend({
@@ -484,6 +493,7 @@ serve(async (req) => {
           html: teamEmailHtml,
           text: stripHtml(teamEmailHtml),
           resendApiKey: RESEND_API_KEY,
+          attachments: teamAttachments,
         })
       )
     );
