@@ -623,7 +623,6 @@ export default function EasyTouchPlusProduct() {
             <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
                 Buy EasyTouch Wellness — ₹2,499 <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            </Button>
             <p className="text-muted-foreground text-sm mt-6">
               Questions?{" "}
               <a
