@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import easytouchWellnessImg from "@/assets/easytouch-wellness-device.png";
 import { motion, useInView } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -139,13 +140,11 @@ export default function EasyTouchPlusProduct() {
               className="relative w-full max-w-lg my-4"
             >
               <div className="absolute inset-0 rounded-3xl bg-teal-300/20 blur-3xl scale-110" />
-              <div className="relative bg-gradient-to-br from-teal-100 to-teal-50 rounded-3xl p-12 flex items-center justify-center border border-teal-200/50">
-                <div className="text-center space-y-2">
-                  <Fingerprint className="h-16 w-16 text-teal-600 mx-auto" />
-                  <p className="text-teal-700 font-semibold text-lg">EasyTouch Wellness</p>
-                  <p className="text-teal-600/70 text-sm">Device + Nera Metabolic Score</p>
-                </div>
-              </div>
+              <img
+                src={easytouchWellnessImg}
+                alt="EasyTouch Wellness device showing Metabolic Index reading"
+                className="relative w-full rounded-3xl drop-shadow-2xl"
+              />
             </motion.div>
 
             {/* CTAs */}
