@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import easytouchWellnessImg from "@/assets/easytouch-wellness-device.png";
+import easytouchFingerImg from "@/assets/easytouch-wellness-finger.png";
 import { motion, useInView } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
