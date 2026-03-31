@@ -514,7 +514,7 @@ export default function EasyTouchPlusProduct() {
               </div>
               <p className="text-teal-600 font-medium mb-1">Save ₹1,500 — Launch Offer</p>
               <p className="text-muted-foreground text-sm mb-6">Free shipping across India</p>
-              <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200">
+              <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
                 Buy Now — ₹2,499 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
