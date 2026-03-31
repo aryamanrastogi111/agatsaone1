@@ -174,7 +174,6 @@ export default function EasyTouchPlusProduct() {
               <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-8 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
                   Buy Now — ₹2,499 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              </Button>
               <Button size="lg" variant="outline" className="rounded-full px-8 text-base border-teal-200 text-teal-700 hover:bg-teal-50" asChild>
                 <a href="#how-it-works">
                   See How It Works <ArrowDown className="ml-2 h-4 w-4" />
