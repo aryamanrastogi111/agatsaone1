@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { buildInvoicePdf } from "../_shared/invoice-pdf.ts";
+import { buildDeliverySlipPdf } from "../_shared/delivery-slip-pdf.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -158,6 +159,31 @@ serve(async (req) => {
       invoicePdfBase64 = btoa(binary);
     } catch (pdfErr) {
       console.error("PDF generation failed (non-fatal):", pdfErr);
+    }
+
+    // ── Build delivery slip PDF (for team email only) ──────────────────────────
+    let deliverySlipBase64 = "";
+    try {
+      const slipBytes = await buildDeliverySlipPdf({
+        orderId,
+        orderDate,
+        paymentMethod: paymentId ? "PREPAID" : "PREPAID",
+        customerName: customerName || "",
+        customerPhone,
+        shippingAddress: shippingAddress || "",
+        shippingCity: shippingCity || "",
+        shippingState: shippingState || "",
+        shippingPincode: shippingPincode || "",
+        items: items || [],
+        total: total || 0,
+      });
+      let binary = "";
+      for (let i = 0; i < slipBytes.length; i++) {
+        binary += String.fromCharCode(slipBytes[i]);
+      }
+      deliverySlipBase64 = btoa(binary);
+    } catch (slipErr) {
+      console.error("Delivery slip generation failed (non-fatal):", slipErr);
     }
 
     const itemsHtml = (items || [])
@@ -449,6 +475,15 @@ serve(async (req) => {
     });
 
     // ─── SEND TEAM EMAIL TO ALL RECIPIENTS VIA RESEND ────────────────────────
+    const teamAttachments: { filename: string; content: string; content_type: string }[] = [];
+    if (deliverySlipBase64) {
+      teamAttachments.push({
+        filename: `delivery-slip-${orderId}.pdf`,
+        content: deliverySlipBase64,
+        content_type: "application/pdf",
+      });
+    }
+
     const teamResults = await Promise.all(
       teamRecipients.map((recipient) =>
         sendViaResend({
@@ -458,6 +493,7 @@ serve(async (req) => {
           html: teamEmailHtml,
           text: stripHtml(teamEmailHtml),
           resendApiKey: RESEND_API_KEY,
+          attachments: teamAttachments,
         })
       )
     );

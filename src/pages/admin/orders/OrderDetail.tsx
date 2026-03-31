@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, Package, Truck, X, MapPin, User, Phone, Mail, Download } from "lucide-react";
+import { ArrowLeft, Package, Truck, X, MapPin, User, Phone, Mail, Download, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { downloadAdminInvoice, type InvoiceData } from "@/lib/invoicePdf";
 
@@ -79,6 +79,46 @@ export default function OrderDetail() {
     toast.success("Operations invoice downloaded");
   };
 
+  const handleDownloadDeliverySlip = async () => {
+    if (!order) return;
+    const items = Array.isArray(order.items) ? order.items : [];
+    try {
+      const { data: bytes, error } = await supabase.functions.invoke("generate-delivery-slip", {
+        body: {
+          orderId: order.razorpay_order_id ?? order.id,
+          orderDate: new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }),
+          customerName: order.customer_name ?? "",
+          customerPhone: order.customer_phone ?? undefined,
+          shippingAddress: order.shipping_address ?? "",
+          shippingCity: order.shipping_city ?? "",
+          shippingState: order.shipping_state ?? "",
+          shippingPincode: order.shipping_pincode ?? "",
+          items: items.map((i: any) => ({
+            productName: i.productName ?? i.name ?? "Product",
+            variantTitle: i.variantTitle ?? undefined,
+            quantity: i.quantity ?? 1,
+            price: i.price ?? 0,
+          })),
+          total: order.amount ?? 0,
+        },
+      });
+      if (error) throw new Error(error.message ?? "Delivery slip generation failed");
+      const ab: ArrayBuffer = bytes instanceof ArrayBuffer ? bytes : await (bytes as Blob).arrayBuffer();
+      const blob = new Blob([ab], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `delivery-slip-${order.razorpay_order_id ?? order.id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      toast.success("Delivery slip downloaded");
+    } catch (err: any) {
+      toast.error(err.message || "Failed to generate delivery slip");
+    }
+  };
+
   const updateStatus = async (newStatus: string) => {
     setUpdatingStatus(true);
     const { error } = await supabase.from("orders").update({ status: newStatus }).eq("id", id!);
@@ -145,7 +185,13 @@ export default function OrderDetail() {
           onClick={handleDownloadInvoice}
           className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-900 text-white hover:bg-gray-700 transition-colors border border-gray-800"
         >
-          <Download size={13} /> Download Invoice
+          <Download size={13} /> Invoice
+        </button>
+        <button
+          onClick={handleDownloadDeliverySlip}
+          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition-colors border border-orange-700"
+        >
+          <FileText size={13} /> Delivery Slip
         </button>
       </div>
 
