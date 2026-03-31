@@ -621,10 +621,9 @@ export default function EasyTouchPlusProduct() {
             <p className="text-muted-foreground text-lg mb-8">
               EasyTouch Wellness — ₹2,499. Free shipping. 30-day returns.
             </p>
-            <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200" asChild>
-              <a href="#buy">
+            <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
                 Buy EasyTouch Wellness — ₹2,499 <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
+            </Button>
             </Button>
             <p className="text-muted-foreground text-sm mt-6">
               Questions?{" "}
