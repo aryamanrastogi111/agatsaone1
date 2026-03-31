@@ -85,7 +85,8 @@ export default function Dashboard() {
 
       if (allRes.data) {
         const all = allRes.data as { amount: number; status: string; created_at: string }[];
-        const paid = all.filter(o => o.status === "paid");
+        const paidStatuses = ["paid", "confirmed", "processing", "shipped", "delivered"];
+        const paid = all.filter(o => paidStatuses.includes(o.status));
         const today = all.filter(o => o.created_at >= todayStart);
         const thisMonth = all.filter(o => o.created_at >= monthStart);
 
