@@ -5,7 +5,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, Package, Truck, X, MapPin, User, Phone, Mail, Download, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { downloadAdminInvoice, type InvoiceData } from "@/lib/invoicePdf";
-import { supabase } from "@/integrations/supabase/client";
 
 const STATUS_COLORS: Record<string, string> = {
   pending:    "bg-yellow-100 text-yellow-700 border-yellow-200",
