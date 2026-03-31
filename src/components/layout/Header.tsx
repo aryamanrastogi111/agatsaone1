@@ -78,7 +78,7 @@ export function Header() {
             <Button asChild variant="ghost" size="sm" className="text-teal-600 hover:text-teal-700 hover:bg-teal-50 gap-1.5">
               <Link to="/products/easytouch-plus">
                 <Activity className="h-3.5 w-3.5" />
-                Wellness+
+                EasyTouch Wellness
               </Link>
             </Button>
           </motion.div>
