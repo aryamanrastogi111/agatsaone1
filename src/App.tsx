@@ -54,6 +54,7 @@ import AdminReviews from "./pages/admin/Reviews";
 import AdminInventory from "./pages/admin/Inventory";
 import AdminSubscriptions from "./pages/admin/Subscriptions";
 import AdminShipping from "./pages/admin/Shipping";
+import AdminDeliverySlips from "./pages/admin/DeliverySlips";
 import AdminReturns from "./pages/admin/Returns";
 import AdminLeads from "./pages/admin/Leads";
 import AdminTickets from "./pages/admin/Tickets";
@@ -127,6 +128,7 @@ const App = () => (
             <Route path="inventory" element={<AdminInventory />} />
             <Route path="subscriptions" element={<AdminSubscriptions />} />
             <Route path="shipping" element={<AdminShipping />} />
+            <Route path="delivery-slips" element={<AdminDeliverySlips />} />
             <Route path="returns" element={<AdminReturns />} />
             <Route path="leads" element={<AdminLeads />} />
             <Route path="tickets" element={<AdminTickets />} />
