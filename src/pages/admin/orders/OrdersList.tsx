@@ -358,7 +358,7 @@ function ShopifyOrdersTab() {
 
   const fetchOrders = async () => {
     setLoading(true);
-    let query = supabase
+    let query = (supabase as any)
       .from("shopify_orders")
       .select("id, order_number, email, phone, total, status, payment_status, fulfillment_status, shipping_city, shipping_state, created_at", { count: "exact" })
       .order("created_at", { ascending: false })
@@ -367,7 +367,7 @@ function ShopifyOrdersTab() {
     if (paymentFilter !== "all") query = query.eq("payment_status", paymentFilter);
     if (search) query = query.or(`order_number.ilike.%${search}%,email.ilike.%${search}%`);
     const { data, count } = await query;
-    setOrders((data ?? []) as ShopifyOrder[]);
+    setOrders((data ?? []) as unknown as ShopifyOrder[]);
     setTotal(count ?? 0);
     setLoading(false);
   };
