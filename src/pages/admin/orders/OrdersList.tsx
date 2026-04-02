@@ -304,21 +304,23 @@ function RazorpayOrdersTab() {
                   <td className="px-5 py-3 text-right hidden sm:table-cell text-gray-400 text-xs">
                     {new Date(order.created_at).toLocaleDateString("en-IN")}
                   </td>
-                  <td className="px-3 py-3 hidden sm:table-cell">
-                    <div className="flex items-center gap-1">
+                  <td className="px-3 py-3 hidden sm:table-cell whitespace-nowrap">
+                    <div className="flex items-center justify-end gap-2">
                       <button
                         onClick={() => handleOrderInvoiceDownload(order)}
                         title="Download operations invoice"
-                        className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition-colors"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100"
                       >
-                        <FileText size={14} />
+                        <FileText size={13} />
+                        Invoice
                       </button>
                       <button
                         onClick={() => handleDeliverySlipDownload(order)}
                         title="Download delivery slip"
-                        className="p-1.5 rounded-lg hover:bg-orange-50 text-gray-400 hover:text-orange-600 transition-colors"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-orange-200 bg-orange-50 px-2.5 py-1.5 text-xs font-medium text-orange-700 transition-colors hover:bg-orange-100"
                       >
-                        <Truck size={14} />
+                        <Truck size={13} />
+                        Slip
                       </button>
                     </div>
                   </td>
