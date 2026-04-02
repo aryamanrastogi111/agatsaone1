@@ -223,7 +223,7 @@ function RazorpayOrdersTab() {
         </select>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+      <div className="bg-white border border-gray-200 rounded-xl overflow-x-auto shadow-sm">
         {loading ? (
           <div className="flex items-center justify-center h-40">
             <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
@@ -246,7 +246,7 @@ function RazorpayOrdersTab() {
                 <th className="text-left px-5 py-3 font-medium">Status</th>
                 <th className="text-right px-5 py-3 font-medium">Amount</th>
                 <th className="text-right px-5 py-3 font-medium hidden sm:table-cell">Date</th>
-                <th className="px-5 py-3 font-medium hidden sm:table-cell"></th>
+                <th className="px-3 py-3 font-medium hidden sm:table-cell w-[160px] min-w-[160px]">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -304,12 +304,12 @@ function RazorpayOrdersTab() {
                   <td className="px-5 py-3 text-right hidden sm:table-cell text-gray-400 text-xs">
                     {new Date(order.created_at).toLocaleDateString("en-IN")}
                   </td>
-                  <td className="px-3 py-3 hidden sm:table-cell whitespace-nowrap">
-                    <div className="flex items-center justify-end gap-2">
+                  <td className="px-3 py-3 hidden sm:table-cell w-[160px] min-w-[160px]">
+                    <div className="flex items-center gap-2 whitespace-nowrap overflow-visible">
                       <button
                         onClick={() => handleOrderInvoiceDownload(order)}
                         title="Download operations invoice"
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100"
+                        className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-gray-50 px-2 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100"
                       >
                         <FileText size={13} />
                         Invoice
@@ -317,7 +317,7 @@ function RazorpayOrdersTab() {
                       <button
                         onClick={() => handleDeliverySlipDownload(order)}
                         title="Download delivery slip"
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-orange-200 bg-orange-50 px-2.5 py-1.5 text-xs font-medium text-orange-700 transition-colors hover:bg-orange-100"
+                        className="inline-flex items-center gap-1 rounded-lg border border-orange-200 bg-orange-50 px-2 py-1.5 text-xs font-medium text-orange-700 transition-colors hover:bg-orange-100"
                       >
                         <Truck size={13} />
                         Slip
