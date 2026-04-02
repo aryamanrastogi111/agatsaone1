@@ -304,12 +304,12 @@ function RazorpayOrdersTab() {
                   <td className="px-5 py-3 text-right hidden sm:table-cell text-gray-400 text-xs">
                     {new Date(order.created_at).toLocaleDateString("en-IN")}
                   </td>
-                  <td className="px-3 py-3 hidden sm:table-cell whitespace-nowrap">
-                    <div className="flex items-center justify-end gap-2">
+                  <td className="px-3 py-3 hidden sm:table-cell w-[160px] min-w-[160px]">
+                    <div className="flex items-center gap-2 whitespace-nowrap overflow-visible">
                       <button
                         onClick={() => handleOrderInvoiceDownload(order)}
                         title="Download operations invoice"
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100"
+                        className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-gray-50 px-2 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100"
                       >
                         <FileText size={13} />
                         Invoice
@@ -317,7 +317,7 @@ function RazorpayOrdersTab() {
                       <button
                         onClick={() => handleDeliverySlipDownload(order)}
                         title="Download delivery slip"
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-orange-200 bg-orange-50 px-2.5 py-1.5 text-xs font-medium text-orange-700 transition-colors hover:bg-orange-100"
+                        className="inline-flex items-center gap-1 rounded-lg border border-orange-200 bg-orange-50 px-2 py-1.5 text-xs font-medium text-orange-700 transition-colors hover:bg-orange-100"
                       >
                         <Truck size={13} />
                         Slip
