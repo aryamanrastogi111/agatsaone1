@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db as supabase } from "@/integrations/supabase/db";
-import { Search, Download, CreditCard, ShoppingBag, FileText, RefreshCw } from "lucide-react";
+import { Search, Download, CreditCard, ShoppingBag, FileText, RefreshCw, Truck } from "lucide-react";
 import { downloadAdminInvoice, type InvoiceData } from "@/lib/invoicePdf";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 async function handleOrderInvoiceDownload(order: RazorpayOrder) {
