@@ -134,7 +134,7 @@ function RazorpayOrdersTab() {
     if (search)
       query = query.or(`customer_email.ilike.%${search}%,customer_name.ilike.%${search}%,razorpay_order_id.ilike.%${search}%`);
     const { data, count } = await query;
-    setOrders((data ?? []) as RazorpayOrder[]);
+    setOrders((data ?? []) as unknown as RazorpayOrder[]);
     setTotal(count ?? 0);
     setLoading(false);
   };
