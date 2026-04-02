@@ -52,23 +52,23 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   drawBox(m, y, innerW, shipToH);
 
   let sy = y - 16;
-  page.drawText("Ship To", { x: m + 8, y: sy, font: bold, size: 11, color: black });
-  sy -= 16;
-  page.drawText(data.customerName || "Customer", { x: m + 8, y: sy, font: bold, size: 10, color: black });
-  sy -= 14;
+  page.drawText("Ship To", { x: m + 8, y: sy, font: bold, size: 14, color: black });
+  sy -= 20;
+  page.drawText(data.customerName || "Customer", { x: m + 8, y: sy, font: bold, size: 13, color: black });
+  sy -= 18;
 
   // Wrap address
   const addrParts = [data.shippingAddress, data.shippingCity, data.shippingState].filter(Boolean);
   for (const part of addrParts) {
-    page.drawText(part, { x: m + 8, y: sy, font: regular, size: 9, color: black });
-    sy -= 13;
+    page.drawText(part, { x: m + 8, y: sy, font: regular, size: 12, color: black });
+    sy -= 16;
   }
   if (data.shippingPincode) {
-    page.drawText(data.shippingPincode, { x: m + 8, y: sy, font: bold, size: 9, color: black });
-    sy -= 13;
+    page.drawText(data.shippingPincode, { x: m + 8, y: sy, font: bold, size: 12, color: black });
+    sy -= 16;
   }
   if (data.customerPhone) {
-    page.drawText(`Phone No.: ${data.customerPhone}`, { x: m + 8, y: sy, font: regular, size: 8, color: black });
+    page.drawText(`Phone No.: ${data.customerPhone}`, { x: m + 8, y: sy, font: regular, size: 11, color: black });
   }
 
   y -= shipToH + 8;
