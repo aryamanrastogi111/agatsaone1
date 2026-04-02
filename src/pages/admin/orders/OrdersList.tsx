@@ -306,13 +306,22 @@ function RazorpayOrdersTab() {
                     {new Date(order.created_at).toLocaleDateString("en-IN")}
                   </td>
                   <td className="px-3 py-3 hidden sm:table-cell">
-                    <button
-                      onClick={() => handleOrderInvoiceDownload(order)}
-                      title="Download operations invoice"
-                      className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition-colors"
-                    >
-                      <FileText size={14} />
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => handleOrderInvoiceDownload(order)}
+                        title="Download operations invoice"
+                        className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition-colors"
+                      >
+                        <FileText size={14} />
+                      </button>
+                      <button
+                        onClick={() => handleDeliverySlipDownload(order)}
+                        title="Download delivery slip"
+                        className="p-1.5 rounded-lg hover:bg-orange-50 text-gray-400 hover:text-orange-600 transition-colors"
+                      >
+                        <Truck size={14} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
