@@ -186,9 +186,9 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   // Footer
   page.drawText(
     "THIS IS AN AUTO-GENERATED LABEL AND DOES NOT NEED SIGNATURE.",
-    { x: m, y: y, font: bold, size: 7, color: gray }
+    { x: m, y: y, font: bold, size: 9, color: gray }
   );
-  page.drawText("Powered by Agatsa", { x: width - m - 80, y: y, font: regular, size: 7, color: gray });
+  page.drawText("Powered by Agatsa", { x: width - m - 90, y: y, font: regular, size: 9, color: gray });
 
   return await doc.save();
 }
