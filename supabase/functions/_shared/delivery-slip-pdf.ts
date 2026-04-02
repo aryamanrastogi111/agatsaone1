@@ -41,8 +41,8 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
 
   // ── Helper: draw label-value pair ────────────────────────────
   const drawLabelValue = (label: string, value: string, x: number, yPos: number, labelW = 110) => {
-    page.drawText(label, { x, y: yPos, font: bold, size: 8, color: black });
-    page.drawText(value, { x: x + labelW, y: yPos, font: regular, size: 8, color: black });
+    page.drawText(label, { x, y: yPos, font: bold, size: 11, color: black });
+    page.drawText(value, { x: x + labelW, y: yPos, font: regular, size: 11, color: black });
   };
 
   // ══════════════════════════════════════════════════════════════
