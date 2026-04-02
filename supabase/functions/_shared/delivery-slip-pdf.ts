@@ -105,27 +105,27 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   drawBox(m, y, innerW, shippedH);
 
   sy = y - 16;
-  page.drawText("Shipped By", { x: m + 8, y: sy, font: bold, size: 9, color: black });
-  page.drawText("(If undelivered, return to)", { x: m + 72, y: sy, font: regular, size: 7.5, color: gray });
+  page.drawText("Shipped By", { x: m + 8, y: sy, font: bold, size: 12, color: black });
+  page.drawText("(If undelivered, return to)", { x: m + 82, y: sy, font: regular, size: 9, color: gray });
+  sy -= 18;
+  page.drawText("Agatsa Software Pvt Ltd", { x: m + 8, y: sy, font: bold, size: 12, color: black });
   sy -= 16;
-  page.drawText("Agatsa Software Pvt Ltd", { x: m + 8, y: sy, font: bold, size: 9, color: black });
-  sy -= 13;
-  page.drawText("A-270, Sector 69", { x: m + 8, y: sy, font: regular, size: 8.5, color: black });
-  sy -= 12;
-  page.drawText("Noida, Uttar Pradesh", { x: m + 8, y: sy, font: regular, size: 8.5, color: black });
-  sy -= 12;
-  page.drawText("201301", { x: m + 8, y: sy, font: bold, size: 8.5, color: black });
+  page.drawText("A-270, Sector 69", { x: m + 8, y: sy, font: regular, size: 11, color: black });
+  sy -= 15;
+  page.drawText("Noida, Uttar Pradesh", { x: m + 8, y: sy, font: regular, size: 11, color: black });
+  sy -= 15;
+  page.drawText("201301", { x: m + 8, y: sy, font: bold, size: 11, color: black });
+  sy -= 16;
+  page.drawText("GSTIN: 09AAICA3515H1ZS", { x: m + 8, y: sy, font: regular, size: 9, color: gray });
   sy -= 14;
-  page.drawText("GSTIN: 09AAICA3515H1ZS", { x: m + 8, y: sy, font: regular, size: 7.5, color: gray });
-  sy -= 11;
-  page.drawText("Phone No.: +91-9717681555", { x: m + 8, y: sy, font: regular, size: 7.5, color: gray });
+  page.drawText("Phone No.: +91-9717681555", { x: m + 8, y: sy, font: regular, size: 9, color: gray });
 
   // Right side: Order # and Invoice info
-  ry = y - 16;
+  ry = y - 18;
   const rx2 = m + innerW / 2 + 10;
-  drawLabelValue("Order #:", data.orderId.slice(0, 28), rx2, ry, 60);
-  ry -= 16;
-  drawLabelValue("Invoice Date:", data.orderDate, rx2, ry, 85);
+  drawLabelValue("Order #:", data.orderId.slice(0, 28), rx2, ry, 70);
+  ry -= 20;
+  drawLabelValue("Invoice Date:", data.orderDate, rx2, ry, 100);
 
   y -= shippedH + 8;
 
