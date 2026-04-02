@@ -41,8 +41,8 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
 
   // ── Helper: draw label-value pair ────────────────────────────
   const drawLabelValue = (label: string, value: string, x: number, yPos: number, labelW = 110) => {
-    page.drawText(label, { x, y: yPos, font: bold, size: 8, color: black });
-    page.drawText(value, { x: x + labelW, y: yPos, font: regular, size: 8, color: black });
+    page.drawText(label, { x, y: yPos, font: bold, size: 11, color: black });
+    page.drawText(value, { x: x + labelW, y: yPos, font: regular, size: 11, color: black });
   };
 
   // ══════════════════════════════════════════════════════════════
@@ -52,23 +52,23 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   drawBox(m, y, innerW, shipToH);
 
   let sy = y - 16;
-  page.drawText("Ship To", { x: m + 8, y: sy, font: bold, size: 11, color: black });
-  sy -= 16;
-  page.drawText(data.customerName || "Customer", { x: m + 8, y: sy, font: bold, size: 10, color: black });
-  sy -= 14;
+  page.drawText("Ship To", { x: m + 8, y: sy, font: bold, size: 14, color: black });
+  sy -= 20;
+  page.drawText(data.customerName || "Customer", { x: m + 8, y: sy, font: bold, size: 13, color: black });
+  sy -= 18;
 
   // Wrap address
   const addrParts = [data.shippingAddress, data.shippingCity, data.shippingState].filter(Boolean);
   for (const part of addrParts) {
-    page.drawText(part, { x: m + 8, y: sy, font: regular, size: 9, color: black });
-    sy -= 13;
+    page.drawText(part, { x: m + 8, y: sy, font: regular, size: 12, color: black });
+    sy -= 16;
   }
   if (data.shippingPincode) {
-    page.drawText(data.shippingPincode, { x: m + 8, y: sy, font: bold, size: 9, color: black });
-    sy -= 13;
+    page.drawText(data.shippingPincode, { x: m + 8, y: sy, font: bold, size: 12, color: black });
+    sy -= 16;
   }
   if (data.customerPhone) {
-    page.drawText(`Phone No.: ${data.customerPhone}`, { x: m + 8, y: sy, font: regular, size: 8, color: black });
+    page.drawText(`Phone No.: ${data.customerPhone}`, { x: m + 8, y: sy, font: regular, size: 11, color: black });
   }
 
   y -= shipToH + 8;
@@ -83,18 +83,18 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   // Left box: dimensions / payment
   let ly = y - 14;
   const lx = m + 8;
-  drawLabelValue("Payment:", data.paymentMethod || "PREPAID", lx, ly, 70);
-  ly -= 14;
-  drawLabelValue("ORDER TOTAL:", `${data.total.toLocaleString("en-IN")} INR`, lx, ly, 90);
-  ly -= 14;
-  drawLabelValue("Weight:", data.weight || "0.5 KG", lx, ly, 70);
+  drawLabelValue("Payment:", data.paymentMethod || "PREPAID", lx, ly, 80);
+  ly -= 18;
+  drawLabelValue("ORDER TOTAL:", `${data.total.toLocaleString("en-IN")} INR`, lx, ly, 105);
+  ly -= 18;
+  drawLabelValue("Weight:", data.weight || "0.5 KG", lx, ly, 80);
 
   // Right box: routing info
-  let ry = y - 14;
+  let ry = y - 16;
   const rx = m + innerW / 2 + 10;
-  page.drawText("Agatsa Fulfillment", { x: rx, y: ry, font: bold, size: 9, color: black });
-  ry -= 16;
-  drawLabelValue("Order Date:", data.orderDate, rx, ry, 80);
+  page.drawText("Agatsa Fulfillment", { x: rx, y: ry, font: bold, size: 12, color: black });
+  ry -= 20;
+  drawLabelValue("Order Date:", data.orderDate, rx, ry, 90);
 
   y -= infoH + 8;
 
@@ -105,27 +105,27 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   drawBox(m, y, innerW, shippedH);
 
   sy = y - 16;
-  page.drawText("Shipped By", { x: m + 8, y: sy, font: bold, size: 9, color: black });
-  page.drawText("(If undelivered, return to)", { x: m + 72, y: sy, font: regular, size: 7.5, color: gray });
+  page.drawText("Shipped By", { x: m + 8, y: sy, font: bold, size: 12, color: black });
+  page.drawText("(If undelivered, return to)", { x: m + 82, y: sy, font: regular, size: 9, color: gray });
+  sy -= 18;
+  page.drawText("Agatsa Software Pvt Ltd", { x: m + 8, y: sy, font: bold, size: 12, color: black });
   sy -= 16;
-  page.drawText("Agatsa Software Pvt Ltd", { x: m + 8, y: sy, font: bold, size: 9, color: black });
-  sy -= 13;
-  page.drawText("A-270, Sector 69", { x: m + 8, y: sy, font: regular, size: 8.5, color: black });
-  sy -= 12;
-  page.drawText("Noida, Uttar Pradesh", { x: m + 8, y: sy, font: regular, size: 8.5, color: black });
-  sy -= 12;
-  page.drawText("201301", { x: m + 8, y: sy, font: bold, size: 8.5, color: black });
+  page.drawText("A-270, Sector 69", { x: m + 8, y: sy, font: regular, size: 11, color: black });
+  sy -= 15;
+  page.drawText("Noida, Uttar Pradesh", { x: m + 8, y: sy, font: regular, size: 11, color: black });
+  sy -= 15;
+  page.drawText("201301", { x: m + 8, y: sy, font: bold, size: 11, color: black });
+  sy -= 16;
+  page.drawText("GSTIN: 09AAICA3515H1ZS", { x: m + 8, y: sy, font: regular, size: 9, color: gray });
   sy -= 14;
-  page.drawText("GSTIN: 09AAICA3515H1ZS", { x: m + 8, y: sy, font: regular, size: 7.5, color: gray });
-  sy -= 11;
-  page.drawText("Phone No.: +91-9717681555", { x: m + 8, y: sy, font: regular, size: 7.5, color: gray });
+  page.drawText("Phone No.: +91-9717681555", { x: m + 8, y: sy, font: regular, size: 9, color: gray });
 
   // Right side: Order # and Invoice info
-  ry = y - 16;
+  ry = y - 18;
   const rx2 = m + innerW / 2 + 10;
-  drawLabelValue("Order #:", data.orderId.slice(0, 28), rx2, ry, 60);
-  ry -= 16;
-  drawLabelValue("Invoice Date:", data.orderDate, rx2, ry, 85);
+  drawLabelValue("Order #:", data.orderId.slice(0, 28), rx2, ry, 70);
+  ry -= 20;
+  drawLabelValue("Invoice Date:", data.orderDate, rx2, ry, 100);
 
   y -= shippedH + 8;
 
@@ -142,10 +142,10 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
 
   page.drawRectangle({ x: m, y: y - headerH, width: innerW, height: headerH, color: rgb(0.95, 0.95, 0.95), borderColor: black, borderWidth: 1 });
   const hy = y - 14;
-  page.drawText("Product Name & SKU", { x: colProduct, y: hy, font: bold, size: 8, color: black });
-  page.drawText("Qty", { x: colQty + 4, y: hy, font: bold, size: 8, color: black });
-  page.drawText("Unit Price", { x: colUnitPrice, y: hy, font: bold, size: 8, color: black });
-  page.drawText("Total", { x: colTotal, y: hy, font: bold, size: 8, color: black });
+  page.drawText("Product Name & SKU", { x: colProduct, y: hy, font: bold, size: 10, color: black });
+  page.drawText("Qty", { x: colQty + 4, y: hy, font: bold, size: 10, color: black });
+  page.drawText("Unit Price", { x: colUnitPrice, y: hy, font: bold, size: 10, color: black });
+  page.drawText("Total", { x: colTotal, y: hy, font: bold, size: 10, color: black });
 
   y -= headerH;
 
@@ -154,14 +154,14 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
     const rowH = 28;
     drawBox(m, y, innerW, rowH);
     const iy = y - 12;
-    const name = item.productName.length > 45 ? item.productName.slice(0, 44) + "..." : item.productName;
-    page.drawText(name, { x: colProduct, y: iy, font: regular, size: 8, color: black });
+    const name = item.productName.length > 40 ? item.productName.slice(0, 39) + "..." : item.productName;
+    page.drawText(name, { x: colProduct, y: iy, font: regular, size: 10, color: black });
     if (item.variantTitle && item.variantTitle !== "Default Title") {
-      page.drawText(item.variantTitle, { x: colProduct, y: iy - 10, font: regular, size: 7, color: gray });
+      page.drawText(item.variantTitle, { x: colProduct, y: iy - 12, font: regular, size: 9, color: gray });
     }
-    page.drawText(String(item.quantity), { x: colQty + 8, y: iy, font: regular, size: 8, color: black });
-    page.drawText(`${item.price.toLocaleString("en-IN")}`, { x: colUnitPrice, y: iy, font: regular, size: 8, color: black });
-    page.drawText(`${(item.price * item.quantity).toLocaleString("en-IN")}`, { x: colTotal, y: iy, font: regular, size: 8, color: black });
+    page.drawText(String(item.quantity), { x: colQty + 8, y: iy, font: regular, size: 10, color: black });
+    page.drawText(`${item.price.toLocaleString("en-IN")}`, { x: colUnitPrice, y: iy, font: regular, size: 10, color: black });
+    page.drawText(`${(item.price * item.quantity).toLocaleString("en-IN")}`, { x: colTotal, y: iy, font: regular, size: 10, color: black });
     y -= rowH;
   }
 
@@ -174,11 +174,11 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   drawBox(m, y, innerW, disclaimerH);
   page.drawText(
     "All disputes are subject to Noida jurisdiction only. Goods once sold will only be",
-    { x: m + 8, y: y - 14, font: regular, size: 7.5, color: black }
+    { x: m + 8, y: y - 16, font: regular, size: 9, color: black }
   );
   page.drawText(
     "taken back or exchanged as per the store's exchange/return policy.",
-    { x: m + 8, y: y - 25, font: regular, size: 7.5, color: black }
+    { x: m + 8, y: y - 28, font: regular, size: 9, color: black }
   );
 
   y -= disclaimerH + 10;
@@ -186,9 +186,9 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   // Footer
   page.drawText(
     "THIS IS AN AUTO-GENERATED LABEL AND DOES NOT NEED SIGNATURE.",
-    { x: m, y: y, font: bold, size: 7, color: gray }
+    { x: m, y: y, font: bold, size: 9, color: gray }
   );
-  page.drawText("Powered by Agatsa", { x: width - m - 80, y: y, font: regular, size: 7, color: gray });
+  page.drawText("Powered by Agatsa", { x: width - m - 90, y: y, font: regular, size: 9, color: gray });
 
   return await doc.save();
 }
