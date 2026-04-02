@@ -6,7 +6,7 @@ import {
   LayoutDashboard, Package, ShoppingCart, Users, Tag, Truck, Star,
   LogOut, Menu, X, ChevronRight, Bell, Settings, BarChart2,
   Boxes, RefreshCw, RotateCcw, UserCheck, LifeBuoy, Activity,
-  Puzzle, Shield, ChevronDown, ChevronUp, Mail, Zap, Radio,
+  Puzzle, Shield, ChevronDown, ChevronUp, Mail, Zap, Radio, FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 

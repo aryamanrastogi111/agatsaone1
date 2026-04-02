@@ -54,6 +54,7 @@ import AdminReviews from "./pages/admin/Reviews";
 import AdminInventory from "./pages/admin/Inventory";
 import AdminSubscriptions from "./pages/admin/Subscriptions";
 import AdminShipping from "./pages/admin/Shipping";
+import AdminDeliverySlips from "./pages/admin/DeliverySlips";
 import AdminReturns from "./pages/admin/Returns";
 import AdminLeads from "./pages/admin/Leads";
 import AdminTickets from "./pages/admin/Tickets";
