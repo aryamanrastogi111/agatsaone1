@@ -83,18 +83,18 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   // Left box: dimensions / payment
   let ly = y - 14;
   const lx = m + 8;
-  drawLabelValue("Payment:", data.paymentMethod || "PREPAID", lx, ly, 70);
-  ly -= 14;
-  drawLabelValue("ORDER TOTAL:", `${data.total.toLocaleString("en-IN")} INR`, lx, ly, 90);
-  ly -= 14;
-  drawLabelValue("Weight:", data.weight || "0.5 KG", lx, ly, 70);
+  drawLabelValue("Payment:", data.paymentMethod || "PREPAID", lx, ly, 80);
+  ly -= 18;
+  drawLabelValue("ORDER TOTAL:", `${data.total.toLocaleString("en-IN")} INR`, lx, ly, 105);
+  ly -= 18;
+  drawLabelValue("Weight:", data.weight || "0.5 KG", lx, ly, 80);
 
   // Right box: routing info
-  let ry = y - 14;
+  let ry = y - 16;
   const rx = m + innerW / 2 + 10;
-  page.drawText("Agatsa Fulfillment", { x: rx, y: ry, font: bold, size: 9, color: black });
-  ry -= 16;
-  drawLabelValue("Order Date:", data.orderDate, rx, ry, 80);
+  page.drawText("Agatsa Fulfillment", { x: rx, y: ry, font: bold, size: 12, color: black });
+  ry -= 20;
+  drawLabelValue("Order Date:", data.orderDate, rx, ry, 90);
 
   y -= infoH + 8;
 
