@@ -1,10 +1,9 @@
 // src/pages/admin/orders/OrdersList.tsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { db as supabase } from "@/integrations/supabase/db";
+import { supabase } from "@/integrations/supabase/client";
 import { Search, Download, CreditCard, ShoppingBag, FileText, RefreshCw, Truck } from "lucide-react";
 import { downloadAdminInvoice, type InvoiceData } from "@/lib/invoicePdf";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 async function handleOrderInvoiceDownload(order: RazorpayOrder) {
