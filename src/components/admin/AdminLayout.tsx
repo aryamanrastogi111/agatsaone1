@@ -17,9 +17,10 @@ const NAV_GROUPS: NavGroup[] = [
   {
     label: "Operations",
     items: [
-      { label: "Dashboard",  icon: LayoutDashboard, href: "/admin" },
-      { label: "Orders",     icon: ShoppingCart,    href: "/admin/orders" },
-      { label: "Shipping",   icon: Truck,           href: "/admin/shipping" },
+      { label: "Dashboard",       icon: LayoutDashboard, href: "/admin" },
+      { label: "Orders",          icon: ShoppingCart,    href: "/admin/orders" },
+      { label: "Shipping",        icon: Truck,           href: "/admin/shipping" },
+      { label: "Delivery Slips",  icon: FileText,        href: "/admin/delivery-slips" },
     ],
   },
   {
