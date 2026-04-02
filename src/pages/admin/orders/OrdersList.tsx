@@ -1,8 +1,8 @@
 // src/pages/admin/orders/OrdersList.tsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { db as supabase } from "@/integrations/supabase/db";
-import { Search, Download, CreditCard, ShoppingBag, FileText, RefreshCw } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Search, Download, CreditCard, ShoppingBag, FileText, RefreshCw, Truck } from "lucide-react";
 import { downloadAdminInvoice, type InvoiceData } from "@/lib/invoicePdf";
 import { toast } from "sonner";
 
@@ -32,6 +32,45 @@ async function handleOrderInvoiceDownload(order: RazorpayOrder) {
     total: order.amount ?? subtotal,
   };
   await downloadAdminInvoice(invoiceData);
+}
+
+async function handleDeliverySlipDownload(order: RazorpayOrder) {
+  const items = Array.isArray(order.items) ? order.items : [];
+  try {
+    const { data: bytes, error } = await supabase.functions.invoke("generate-delivery-slip", {
+      body: {
+        orderId: order.razorpay_order_id ?? order.id,
+        orderDate: new Date(order.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }),
+        customerName: order.customer_name ?? "",
+        customerPhone: order.customer_phone ?? undefined,
+        shippingAddress: order.shipping_address ?? "",
+        shippingCity: order.shipping_city ?? "",
+        shippingState: order.shipping_state ?? "",
+        shippingPincode: order.shipping_pincode ?? "",
+        items: items.map((i) => ({
+          productName: i.productName ?? "Product",
+          variantTitle: undefined,
+          quantity: i.quantity ?? 1,
+          price: i.price ?? 0,
+        })),
+        total: order.amount ?? 0,
+      },
+    });
+    if (error) throw new Error(error.message ?? "Delivery slip generation failed");
+    const ab: ArrayBuffer = bytes instanceof ArrayBuffer ? bytes : await (bytes as Blob).arrayBuffer();
+    const blob = new Blob([ab], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `delivery-slip-${order.razorpay_order_id ?? order.id}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    toast.success("Delivery slip downloaded");
+  } catch (err: any) {
+    toast.error(err.message || "Failed to generate delivery slip");
+  }
 }
 
 const STATUS_COLORS: Record<string, string> = {
@@ -95,7 +134,7 @@ function RazorpayOrdersTab() {
     if (search)
       query = query.or(`customer_email.ilike.%${search}%,customer_name.ilike.%${search}%,razorpay_order_id.ilike.%${search}%`);
     const { data, count } = await query;
-    setOrders((data ?? []) as RazorpayOrder[]);
+    setOrders((data ?? []) as unknown as RazorpayOrder[]);
     setTotal(count ?? 0);
     setLoading(false);
   };
@@ -266,13 +305,22 @@ function RazorpayOrdersTab() {
                     {new Date(order.created_at).toLocaleDateString("en-IN")}
                   </td>
                   <td className="px-3 py-3 hidden sm:table-cell">
-                    <button
-                      onClick={() => handleOrderInvoiceDownload(order)}
-                      title="Download operations invoice"
-                      className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition-colors"
-                    >
-                      <FileText size={14} />
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => handleOrderInvoiceDownload(order)}
+                        title="Download operations invoice"
+                        className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition-colors"
+                      >
+                        <FileText size={14} />
+                      </button>
+                      <button
+                        onClick={() => handleDeliverySlipDownload(order)}
+                        title="Download delivery slip"
+                        className="p-1.5 rounded-lg hover:bg-orange-50 text-gray-400 hover:text-orange-600 transition-colors"
+                      >
+                        <Truck size={14} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -310,7 +358,7 @@ function ShopifyOrdersTab() {
 
   const fetchOrders = async () => {
     setLoading(true);
-    let query = supabase
+    let query = (supabase as any)
       .from("shopify_orders")
       .select("id, order_number, email, phone, total, status, payment_status, fulfillment_status, shipping_city, shipping_state, created_at", { count: "exact" })
       .order("created_at", { ascending: false })
@@ -319,7 +367,7 @@ function ShopifyOrdersTab() {
     if (paymentFilter !== "all") query = query.eq("payment_status", paymentFilter);
     if (search) query = query.or(`order_number.ilike.%${search}%,email.ilike.%${search}%`);
     const { data, count } = await query;
-    setOrders((data ?? []) as ShopifyOrder[]);
+    setOrders((data ?? []) as unknown as ShopifyOrder[]);
     setTotal(count ?? 0);
     setLoading(false);
   };
