@@ -174,11 +174,11 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   drawBox(m, y, innerW, disclaimerH);
   page.drawText(
     "All disputes are subject to Noida jurisdiction only. Goods once sold will only be",
-    { x: m + 8, y: y - 14, font: regular, size: 7.5, color: black }
+    { x: m + 8, y: y - 16, font: regular, size: 9, color: black }
   );
   page.drawText(
     "taken back or exchanged as per the store's exchange/return policy.",
-    { x: m + 8, y: y - 25, font: regular, size: 7.5, color: black }
+    { x: m + 8, y: y - 28, font: regular, size: 9, color: black }
   );
 
   y -= disclaimerH + 10;
