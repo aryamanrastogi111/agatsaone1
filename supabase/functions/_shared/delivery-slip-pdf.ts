@@ -154,14 +154,14 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
     const rowH = 28;
     drawBox(m, y, innerW, rowH);
     const iy = y - 12;
-    const name = item.productName.length > 45 ? item.productName.slice(0, 44) + "..." : item.productName;
-    page.drawText(name, { x: colProduct, y: iy, font: regular, size: 8, color: black });
+    const name = item.productName.length > 40 ? item.productName.slice(0, 39) + "..." : item.productName;
+    page.drawText(name, { x: colProduct, y: iy, font: regular, size: 10, color: black });
     if (item.variantTitle && item.variantTitle !== "Default Title") {
-      page.drawText(item.variantTitle, { x: colProduct, y: iy - 10, font: regular, size: 7, color: gray });
+      page.drawText(item.variantTitle, { x: colProduct, y: iy - 12, font: regular, size: 9, color: gray });
     }
-    page.drawText(String(item.quantity), { x: colQty + 8, y: iy, font: regular, size: 8, color: black });
-    page.drawText(`${item.price.toLocaleString("en-IN")}`, { x: colUnitPrice, y: iy, font: regular, size: 8, color: black });
-    page.drawText(`${(item.price * item.quantity).toLocaleString("en-IN")}`, { x: colTotal, y: iy, font: regular, size: 8, color: black });
+    page.drawText(String(item.quantity), { x: colQty + 8, y: iy, font: regular, size: 10, color: black });
+    page.drawText(`${item.price.toLocaleString("en-IN")}`, { x: colUnitPrice, y: iy, font: regular, size: 10, color: black });
+    page.drawText(`${(item.price * item.quantity).toLocaleString("en-IN")}`, { x: colTotal, y: iy, font: regular, size: 10, color: black });
     y -= rowH;
   }
 
