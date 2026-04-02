@@ -142,10 +142,10 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
 
   page.drawRectangle({ x: m, y: y - headerH, width: innerW, height: headerH, color: rgb(0.95, 0.95, 0.95), borderColor: black, borderWidth: 1 });
   const hy = y - 14;
-  page.drawText("Product Name & SKU", { x: colProduct, y: hy, font: bold, size: 8, color: black });
-  page.drawText("Qty", { x: colQty + 4, y: hy, font: bold, size: 8, color: black });
-  page.drawText("Unit Price", { x: colUnitPrice, y: hy, font: bold, size: 8, color: black });
-  page.drawText("Total", { x: colTotal, y: hy, font: bold, size: 8, color: black });
+  page.drawText("Product Name & SKU", { x: colProduct, y: hy, font: bold, size: 10, color: black });
+  page.drawText("Qty", { x: colQty + 4, y: hy, font: bold, size: 10, color: black });
+  page.drawText("Unit Price", { x: colUnitPrice, y: hy, font: bold, size: 10, color: black });
+  page.drawText("Total", { x: colTotal, y: hy, font: bold, size: 10, color: black });
 
   y -= headerH;
 
