@@ -246,7 +246,7 @@ function RazorpayOrdersTab() {
                 <th className="text-left px-5 py-3 font-medium">Status</th>
                 <th className="text-right px-5 py-3 font-medium">Amount</th>
                 <th className="text-right px-5 py-3 font-medium hidden sm:table-cell">Date</th>
-                <th className="px-5 py-3 font-medium hidden sm:table-cell"></th>
+                <th className="px-3 py-3 font-medium hidden sm:table-cell w-[160px] min-w-[160px]">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
