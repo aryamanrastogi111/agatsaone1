@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/accordion";
 
 import doctorsHeroImg from "@/assets/doctors-hero.jpg";
-import doctorsPatientImg from "@/assets/doctors-patient-device.jpg";
+
 import doctorsPortalImg from "@/assets/doctors-portal-dashboard.jpg";
 
 const fadeUp = {
@@ -223,24 +223,6 @@ export default function Doctors() {
             ))}
           </div>
 
-          {/* Patient device image */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={5}
-            className="mt-12 flex justify-center"
-          >
-            <img
-              src={doctorsPatientImg}
-              alt="Patient using portable ECG and health band at home"
-              width={800}
-              height={600}
-              loading="lazy"
-              className="rounded-2xl shadow-lg max-w-md w-full"
-            />
-          </motion.div>
         </div>
       </section>
 
