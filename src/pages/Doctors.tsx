@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/accordion";
 
 import doctorsHeroImg from "@/assets/doctors-hero.jpg";
-import doctorsPatientImg from "@/assets/doctors-patient-device.jpg";
+
 import doctorsPortalImg from "@/assets/doctors-portal-dashboard.jpg";
 
 const fadeUp = {
