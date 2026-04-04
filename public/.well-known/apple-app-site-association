@@ -1,0 +1,9 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [{
+      "appID": "LJM8LK8Y2H.com.agatsa.one",
+      "paths": ["/join/*"]
+    }]
+  }
+}

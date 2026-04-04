@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.agatsakone",
+    "sha256_cert_fingerprints": [
+      "2F:4D:F3:C6:20:00:B5:1D:59:FF:37:CA:B2:C1:8B:41:D4:D2:DB:CE:B2:67:92:C0:2E:E6:2D:CD:F9:5A:80:51"
+    ]
+  }
+}]
