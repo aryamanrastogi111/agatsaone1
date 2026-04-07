@@ -25,10 +25,18 @@ const companyLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
+const supportLinks = [
+  { label: "Help Center", href: "/support" },
+  { label: "FAQs", href: "/support#faq" },
+  { label: "Device Activation", href: "/d/activate" },
+];
+
 const bottomLinks = [
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms-of-service" },
-  { label: "Cookie Policy", href: "/cookie-policy" },
+  { label: "Shipping Policy", href: "/shipping-policy" },
+  { label: "Return & Refund Policy", href: "/return-policy" },
+  { label: "Data Deletion", href: "/data-deletion" },
 ];
 
 export function SiteFooter() {
@@ -36,9 +44,9 @@ export function SiteFooter() {
     <footer className="bg-dark-bg text-white py-16 px-8">
       <div className="max-w-7xl mx-auto">
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:col-span-2">
             <div className="flex items-center gap-0.5">
               <span className="text-xl font-bold">Agatsa One</span>
               <span className="text-xl text-primary font-bold">●</span>
@@ -83,11 +91,21 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Company & Support */}
           <div>
             <h4 className="font-semibold text-sm mb-4">Company</h4>
             <ul className="space-y-2.5">
               {companyLinks.map((link) => (
+                <li key={link.href}>
+                  <Link to={link.href} className="text-sm text-white/60 hover:text-white transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <h4 className="font-semibold text-sm mb-4 mt-6">Support</h4>
+            <ul className="space-y-2.5">
+              {supportLinks.map((link) => (
                 <li key={link.href}>
                   <Link to={link.href} className="text-sm text-white/60 hover:text-white transition-colors">
                     {link.label}
