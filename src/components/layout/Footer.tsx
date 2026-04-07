@@ -4,10 +4,10 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import agatsaLogo from "@/assets/agatsa-logo.png";
 
 const productLinks = [
-  { label: "SanketLife", href: "/products/sanketlife" },
-  { label: "EasyTouch Rhythm", href: "/products/easytouch-rhythm" },
-  { label: "Zlu – Sleep Aid", href: "/products/zlu" },
-  { label: "CoreBalance BMI", href: "/products/corebalance" },
+  { label: "SanketLife ECG", href: "/devices/sanketlife-ecg" },
+  { label: "EasyTouch Wellness", href: "/devices/easytouch-wellness" },
+  { label: "Rhythm Band", href: "/devices/rhythm-band" },
+  { label: "Smart Scale", href: "/devices/smart-scale" },
 ];
 
 const companyLinks = [

@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { CountdownTimer, SALE_CODE, isSaleActive } from "./CountdownTimer";
 
 const STORAGE_KEY = "republic-sale-bar-dismissed";
-const ALLOWED_PATHS = ["/", "/products", "/products/easytouch-rhythm"];
+const ALLOWED_PATHS = ["/", "/devices", "/devices/easytouch-wellness"];
 
 export const RepublicDayAnnouncementBar = () => {
   const location = useLocation();

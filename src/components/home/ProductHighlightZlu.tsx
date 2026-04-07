@@ -59,7 +59,7 @@ export function ProductHighlightZlu() {
 
             <div className="flex flex-wrap gap-4 items-center">
               <Button asChild size="lg" className="bg-indigo-600 hover:bg-indigo-700">
-                <Link to="/products/zlu" className="flex items-center gap-2">
+                <Link to="/devices" className="flex items-center gap-2">
                   Explore Zlu
                   <ArrowRight className="h-4 w-4" />
                 </Link>

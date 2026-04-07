@@ -60,7 +60,7 @@ export const FinalCTASection = forwardRef<HTMLElement>((_, ref) => {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Button asChild size="lg" className="text-base btn-glow group">
-              <Link to="/device-finder" className="flex items-center gap-2">
+              <Link to="/devices" className="flex items-center gap-2">
                 Find the right device
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>

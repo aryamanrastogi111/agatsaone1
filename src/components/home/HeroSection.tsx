@@ -179,13 +179,13 @@ export function HeroSection() {
           className="relative z-10 px-5 pb-6 space-y-3"
         >
           <Button asChild size="lg" className="w-full h-12 text-base group">
-            <Link to="/products" className="flex items-center justify-center gap-2">
+              <Link to="/devices" className="flex items-center justify-center gap-2">
               Shop All Devices
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Button>
           <Button asChild variant="ghost" size="lg" className="w-full h-12 text-base text-primary">
-            <Link to="/device-finder">Help me choose →</Link>
+            <Link to="/devices">Help me choose →</Link>
           </Button>
         </motion.div>
       </section>
@@ -262,7 +262,7 @@ export function HeroSection() {
                 className="flex items-center gap-4 pt-2"
               >
                 <Button asChild size="lg" className="h-14 px-8 text-base group">
-                  <Link to="/products" className="flex items-center gap-2">
+                  <Link to="/devices" className="flex items-center gap-2">
                     Explore Devices
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
@@ -273,7 +273,7 @@ export function HeroSection() {
                   size="lg"
                   className="h-14 px-8 text-base border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground"
                 >
-                  <Link to="/device-finder">Take the Quiz</Link>
+                  <Link to="/devices">Browse Devices</Link>
                 </Button>
               </motion.div>
             </div>

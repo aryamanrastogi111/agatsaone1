@@ -91,7 +91,7 @@ export function ProductHighlightEasyTouch() {
 
             <div className="flex flex-wrap gap-4 items-center">
               <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
-                <Link to="/products/easytouch-rhythm" className="flex items-center gap-2">
+                <Link to="/devices/easytouch-wellness" className="flex items-center gap-2">
                   {isSaleActive() ? "Grab 10% OFF" : "Explore EasyTouch Rhythm"}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
