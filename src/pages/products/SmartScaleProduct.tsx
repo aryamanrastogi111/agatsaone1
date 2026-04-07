@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -6,6 +7,8 @@ import { SiteLayout } from "@/components/SiteLayout";
 import scaleHero from "@/assets/corebalance-hero.png";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 

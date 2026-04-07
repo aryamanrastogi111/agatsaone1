@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -6,6 +7,8 @@ import { SiteLayout } from "@/components/SiteLayout";
 import sanketlifeHero from "@/assets/sanketlife-device-app.png";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 
@@ -47,6 +50,14 @@ const relatedDevices = [
 ];
 
 export default function SanketLifeECGProduct() {
+  const addItem = useCartStore((s) => s.addItem);
+  const [adding, setAdding] = useState(false);
+  const handleBuy = () => {
+    setAdding(true);
+    addItem({ productId: "sanketlife-ecg", productName: "SanketLife 12-Lead ECG", variantTitle: "Default Title", price: 4999, quantity: 1 });
+    toast.success("SanketLife ECG added to cart", { position: "top-center" });
+    setTimeout(() => setAdding(false), 500);
+  };
   useSEO({ title: "SanketLife 12-Lead ECG Monitor — Hospital-Grade Portable ECG | Agatsa One", description: "12-lead ECG in your pocket. 98.15% sensitivity validated at Sri Jayadeva Institute. Arrhythmia detection, ST analysis, Nera AI reports. ₹4,999." });
 
   return (
