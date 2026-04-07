@@ -26,7 +26,7 @@ const fadeUp = {
 };
 
 const features = [
-  { emoji: "🫀", text: "Connect medical-grade ECG, glucose, BP, scale, and wellness band" },
+  { emoji: "🫀", text: "Connect medical-grade ECG, metabolic health, BP, scale, and wellness band" },
   { emoji: "🧠", text: "Nera AI analyses every reading and builds your health story" },
   { emoji: "📊", text: "Weekly AI health reports in plain English — every Monday" },
   { emoji: "👨‍👩‍👧", text: "Share your health data securely with family and doctors" },
@@ -66,7 +66,7 @@ const deviceConfigs: Record<
   },
   easytouch: {
     h1: "You have an EasyTouch Wellness Monitor",
-    sub: "Download Agatsa One to activate your EasyTouch device and start monitoring glucose, BP, and SpO2 — all without needles.",
+    sub: "Download Agatsa One to activate your EasyTouch device and start tracking your metabolic health, BP, and SpO2 — all without needles.",
     highlight:
       "EasyTouch Wellness · Optical Glucose + BP + SpO2 · No needles · No blood",
     steps: [
@@ -336,7 +336,7 @@ function DeviceState({ device }: { device: string }) {
 
 /* ─── Main page ─── */
 export default function AppDownloadPage() {
-  useSEO({ title: "Download Agatsa One — Free AI Health Monitoring App", description: "Download Agatsa One free on iOS and Android. Connect your health devices. Get AI insights from Nera. Start monitoring your heart, glucose, and vitals today." });
+  useSEO({ title: "Download Agatsa One — Free AI Health Monitoring App", description: "Download Agatsa One free on iOS and Android. Connect your health devices. Get AI insights from Nera. Start monitoring your heart, metabolic health, and vitals today." });
 
   const [searchParams] = useSearchParams();
   const ref = searchParams.get("ref");

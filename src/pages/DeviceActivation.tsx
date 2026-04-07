@@ -21,7 +21,7 @@ const DEVICE_CONFIG: Record<string, { name: string; headline: string; copy: stri
   easytouch: {
     name: "EasyTouch Wellness Monitor",
     headline: "Your EasyTouch Wellness Monitor is ready to activate",
-    copy: "Download Agatsa One to activate your EasyTouch device and start monitoring glucose, BP, and SpO2 — no needles, no cuffs, no complexity.",
+    copy: "Download Agatsa One to activate your EasyTouch device and start tracking metabolic health, BP, and SpO2 — no needles, no cuffs, no complexity.",
     steps: [
       "Download Agatsa One (free) using the button below",
       "Create your account or sign in",

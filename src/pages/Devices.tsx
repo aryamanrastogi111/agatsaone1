@@ -79,7 +79,7 @@ const devices: DeviceData[] = [
     ],
     appFeatures: [
       "Glucose trend analysis and HbA1c prediction",
-      "Post-meal glucose scoring (log meals, see impact)",
+      "Post-meal metabolic scoring (log meals, see impact)",
       "BP trend analysis with hypertension stage tracking",
       "SpO2 alerts below 94%",
       "Compatible with Diabetic Cardiac Care Programme",
@@ -110,7 +110,7 @@ const devices: DeviceData[] = [
     appFeatures: [
       "Nera AI sleep analysis and body clock insights",
       "HRV-based recovery scores",
-      "Lifestyle correlation — see how sleep affects glucose",
+      "Lifestyle correlation — see how sleep affects metabolic health",
       "Band vital readings in your unified health timeline",
       "Compatible with all 5 Care Programmes",
       "7-day battery life",
@@ -253,7 +253,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
 }
 
 export default function DevicesPage() {
-  useSEO({ title: "Health Monitoring Devices — SanketLife ECG, EasyTouch, Rhythm Band | Agatsa One", description: "Medical-grade ECG, optical glucose monitor, wellness band, and smart scale. All CDSCO-approved, clinically validated, and integrated with Nera AI. Shop now from ₹2,499." });
+  useSEO({ title: "Health Monitoring Devices — SanketLife ECG, EasyTouch, Rhythm Band | Agatsa One", description: "Medical-grade ECG, metabolic health monitor, wellness band, and smart scale. All CDSCO-approved, clinically validated, and integrated with Nera AI. Shop now from ₹2,499." });
 
   return (
     <SiteLayout>
