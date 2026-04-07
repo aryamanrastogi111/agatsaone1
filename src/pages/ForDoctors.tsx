@@ -11,14 +11,14 @@ const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0
 const valueProps = [
   { icon: Monitor, title: "Remote patient monitoring that actually works", body: "Your patients are already using health apps. The problem is those apps don't give you access. With Agatsa One, patients can share their entire health timeline with you — all readings, AI analysis, trend charts — with a single tap. Review before an appointment, not during it." },
   { icon: Brain, title: "AI pre-analysis so you see the signal, not the noise", body: "Nera AI processes every patient reading before you see it. By the time a reading lands in your provider portal, it's already been classified — normal, borderline, abnormal, or critical. You focus on what matters. Nera handles the volume." },
-  { icon: TrendingUp, title: "A new revenue stream for your practice", body: "Enrol your patients in supervised Care Programmes. Set monitoring protocols. Conduct video consultations. Bill for remote monitoring management. Agatsa One's provider platform creates a new, recurring revenue stream for forward-thinking clinics — no infrastructure investment required." },
+  { icon: TrendingUp, title: "A smarter way to practice medicine", body: "Your patients are already generating health data. Agatsa One makes it visible to you. See trends across your entire patient panel. Spot who needs attention before they call your receptionist. Spend your consultation time on decisions — not on collecting baseline data you should have had a week ago." },
 ];
 
 const steps = [
   { n: "1", title: "Register your clinic", copy: "Register your clinic on the Agatsa One Provider Portal — takes 10 minutes, free to join. Verification is completed within 24 hours." },
   { n: "2", title: "Invite your patients", copy: "Invite your patients to download Agatsa One and connect their devices. They approve sharing with your practice. You're connected instantly." },
   { n: "3", title: "Access your dashboard", copy: "Access your provider dashboard — patient list, reading summaries, alerts, AI analysis. Flag patients for follow-up. Review ECGs before appointments." },
-  { n: "4", title: "Get paid for the value you deliver", copy: "Bill for remote monitoring management. Offer premium care programme oversight. Build the practice of the future — while your patients get better care between every visit." },
+  { n: "4", title: "Deliver better care between visits", copy: "Catch deterioration before it becomes an emergency. Reduce unnecessary appointments. Your patients feel supported between visits — and you see the full picture when they arrive." },
 ];
 
 const faqs = [
@@ -28,10 +28,97 @@ const faqs = [
   { q: "Can I enrol my patients in Care Programmes?", a: "Yes. As a provider, you can recommend specific Care Programmes for your patients. For premium oversight (where you receive weekly programme reports), this is available on our Provider Growth and Pro plans." },
 ];
 
-const plans = [
-  { name: "Free", price: "₹0", desc: "Individual doctors" },
-  { name: "Clinic", price: "₹4,999/mo", desc: "Growing practices" },
-  { name: "Hospital", price: "₹39,999/mo", desc: "Hospital-grade" },
+const providerPlans = [
+  {
+    name: "Starter",
+    tagline: "For individual doctors",
+    price: "₹199",
+    priceColor: "text-[#7C4DFF]",
+    capacity: "Up to 10 patients",
+    capacityStyle: "bg-gray-100 text-gray-600",
+    highlighted: false,
+    features: [
+      { included: true, text: "Free to register — no card needed" },
+      { included: true, text: "Patient vitals dashboard" },
+      { included: true, text: "ECG review before appointments" },
+      { included: true, text: "Nera AI risk score per patient" },
+      { included: true, text: "Alert notifications (in-app)" },
+      { included: true, text: "Patient data shared with consent" },
+      { included: false, text: "Care Programme oversight" },
+      { included: false, text: "Bulk patient import" },
+      { included: false, text: "API access" },
+    ],
+    cta: "Register Free",
+    ctaStyle: "border-2 border-[#7C4DFF] text-[#7C4DFF] hover:bg-purple-50 bg-transparent",
+    href: "mailto:info@agatsa.com?subject=Provider Registration - Starter",
+  },
+  {
+    name: "Growth",
+    tagline: "For busy clinics",
+    price: "₹249",
+    priceColor: "text-[#7C4DFF]",
+    capacity: "Up to 50 patients",
+    capacityStyle: "bg-purple-100 text-purple-700",
+    highlighted: true,
+    badge: "⭐ Most Popular",
+    features: [
+      { included: true, text: "Everything in Starter, plus:" },
+      { included: true, text: "All 5 Care Programme oversight" },
+      { included: true, text: "Weekly programme progress reports" },
+      { included: true, text: "Patient enrolment via QR code" },
+      { included: true, text: "Multi-doctor / nurse access" },
+      { included: true, text: "Camp screening module" },
+      { included: true, text: "Priority email support" },
+      { included: false, text: "API access" },
+      { included: false, text: "White-label options" },
+    ],
+    cta: "Get Started",
+    ctaStyle: "bg-[#7C4DFF] text-white shadow-lg shadow-purple-200 hover:bg-purple-700",
+    href: "mailto:info@agatsa.com?subject=Provider Registration - Growth",
+  },
+  {
+    name: "Pro",
+    tagline: "For multi-doctor practices",
+    price: "₹299",
+    priceColor: "text-[#1A1A2E]",
+    capacity: "Up to 200 patients",
+    capacityStyle: "bg-gray-100 text-gray-600",
+    highlighted: false,
+    features: [
+      { included: true, text: "Everything in Growth, plus:" },
+      { included: true, text: "REST API access for EMR integration" },
+      { included: true, text: "Aggregate population health analytics" },
+      { included: true, text: "Bulk patient import (CSV)" },
+      { included: true, text: "Custom alert thresholds per patient" },
+      { included: true, text: "Dedicated onboarding support" },
+      { included: true, text: "SLA-backed response time (24h)" },
+    ],
+    cta: "Contact Us",
+    ctaStyle: "border-2 border-gray-200 text-gray-700 hover:border-purple-400 hover:text-purple-700 bg-transparent",
+    href: "mailto:info@agatsa.com?subject=Provider Registration - Pro",
+  },
+  {
+    name: "Enterprise",
+    tagline: "For hospitals & health systems",
+    price: "₹349",
+    priceColor: "text-[#1A1A2E]",
+    capacity: "Unlimited patients",
+    capacityStyle: "bg-green-100 text-green-700",
+    highlighted: false,
+    features: [
+      { included: true, text: "Everything in Pro, plus:" },
+      { included: true, text: "Unlimited patient capacity" },
+      { included: true, text: "Multi-location / multi-department setup" },
+      { included: true, text: "White-label patient app (your brand)" },
+      { included: true, text: "HL7 FHIR-ready API for HIS/EMR" },
+      { included: true, text: "Dedicated implementation team" },
+      { included: true, text: "Custom SLA and uptime guarantee" },
+      { included: true, text: "Quarterly business review" },
+    ],
+    cta: "Talk to Sales",
+    ctaStyle: "bg-[#1A1A2E] text-white hover:bg-gray-800",
+    href: "mailto:info@agatsa.com?subject=Enterprise Provider Inquiry",
+  },
 ];
 
 export default function ForDoctorsPage() {
@@ -39,6 +126,7 @@ export default function ForDoctorsPage() {
 
   return (
     <SiteLayout>
+      {/* Hero */}
       <section className="pt-8 pb-8 bg-gradient-to-b from-background to-[hsl(260,100%,97%)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeUp}>
@@ -51,14 +139,19 @@ export default function ForDoctorsPage() {
               Your patient's ECG from last Thursday. Their metabolic trend over the past 30 days. Their BP at 2 AM. Their sleep quality the night before they came to you complaining of fatigue. Agatsa One gives you the data you've always wanted but never had — without adding a single minute to your workflow.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-8">
-              <Button className="rounded-full px-8 py-4 text-base">Book a Demo</Button>
-              <Button variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">Download Provider Guide</Button>
+              <a href="mailto:info@agatsa.com?subject=Provider Demo Request">
+                <Button className="rounded-full px-8 py-4 text-base w-full">Book a Demo</Button>
+              </a>
+              <a href="/agatsa-one-hospital-brochure.pdf" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary w-full">Download Provider Guide</Button>
+              </a>
             </div>
           </motion.div>
           <motion.img {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} src="https://placehold.co/580x420/1A1A2E/7C4DFF?text=Provider+Portal" alt="Agatsa One Provider Portal" className="w-full rounded-3xl shadow-2xl" />
         </div>
       </section>
 
+      {/* Value Props */}
       <section className="py-20 bg-background">
         <div className="max-w-5xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
@@ -77,6 +170,7 @@ export default function ForDoctorsPage() {
         </div>
       </section>
 
+      {/* How It Works */}
       <section className="py-20 bg-[hsl(260,100%,97%)]">
         <div className="max-w-5xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
@@ -95,6 +189,7 @@ export default function ForDoctorsPage() {
         </div>
       </section>
 
+      {/* Testimonial */}
       <section className="py-20 bg-background">
         <motion.div {...fadeUp} className="max-w-[800px] mx-auto px-4">
           <div className="bg-[hsl(260,100%,97%)] rounded-3xl p-8 md:p-12">
@@ -115,32 +210,84 @@ export default function ForDoctorsPage() {
         </motion.div>
       </section>
 
+      {/* Provider Pricing */}
       <section className="py-20 bg-[hsl(260,100%,97%)]">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.div {...fadeUp} className="text-center mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Pricing</p>
-            <h2 className="text-3xl font-bold text-foreground">Free for doctors to join. Revenue-positive from day one.</h2>
-            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-              The provider portal is free for individual doctors. There is no subscription fee, no setup cost, and no per-patient licensing fee for basic remote monitoring. You only pay when you scale.
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#7C4DFF] mb-3">PROVIDER PRICING</p>
+            <h2 className="text-3xl md:text-[40px] font-extrabold text-[#1A1A2E] leading-tight">
+              Free to register.<br />Pay only for patients you actively monitor.
+            </h2>
+            <p className="text-lg text-[#4A4A68] mt-3 max-w-xl mx-auto">
+              No monthly subscription. No setup fee. No lock-in. You only pay for patients who are actively enrolled in monitoring — and only while they're active.
             </p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {plans.map((p, i) => (
-              <motion.div key={p.name} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }} className="bg-card border border-border rounded-2xl p-6 text-center">
-                <h3 className="text-lg font-bold text-foreground">{p.name}</h3>
-                <p className="text-3xl font-extrabold text-primary mt-2">{p.price}</p>
-                <p className="text-sm text-muted-foreground mt-1">{p.desc}</p>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+            {providerPlans.map((plan, i) => (
+              <motion.div
+                key={plan.name}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className={`rounded-3xl p-8 bg-white flex flex-col relative ${
+                  plan.highlighted
+                    ? "border-2 border-[#7C4DFF] shadow-2xl shadow-purple-100 z-10"
+                    : "border border-gray-200 shadow-sm"
+                }`}
+              >
+                {plan.badge && (
+                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#7C4DFF] text-white text-xs font-bold px-4 py-1.5 rounded-full shadow whitespace-nowrap">
+                    {plan.badge}
+                  </span>
+                )}
+                <h3 className={`text-xl font-bold ${plan.highlighted ? "text-[#7C4DFF]" : "text-[#1A1A2E]"}`}>{plan.name}</h3>
+                <p className="text-sm text-[#4A4A68] mt-1">{plan.tagline}</p>
+                <div className="mt-6">
+                  <span className={`text-5xl font-extrabold ${plan.priceColor}`}>{plan.price}</span>
+                  <span className="text-[15px] text-[#4A4A68]">/patient/month</span>
+                </div>
+                <span className={`inline-block mt-3 ${plan.capacityStyle} rounded-full px-3 py-1 text-sm font-medium w-fit`}>
+                  {plan.capacity}
+                </span>
+                <div className="border-t border-gray-100 my-6" />
+                <p className="text-[13px] font-semibold uppercase tracking-wider text-gray-400 mb-3">WHAT'S INCLUDED</p>
+                <ul className="space-y-3 text-sm text-[#4A4A68] flex-1">
+                  {plan.features.map((f, fi) => (
+                    <li key={fi} className="flex items-start gap-2">
+                      <span className="shrink-0 mt-0.5">{f.included ? "✅" : "❌"}</span>
+                      <span>{f.text}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-8">
+                  <a href={plan.href} className="block">
+                    <button className={`w-full rounded-full py-3.5 font-semibold text-base transition-colors ${plan.ctaStyle}`}>
+                      {plan.cta}
+                    </button>
+                  </a>
+                </div>
               </motion.div>
             ))}
           </div>
-          <div className="text-center mt-6">
-            <Link to="/pricing" className="text-sm font-semibold text-primary hover:underline inline-flex items-center gap-1">
-              View full pricing <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </div>
+
+          {/* Explainer Note */}
+          <motion.div {...fadeUp} className="mt-10 max-w-3xl mx-auto">
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
+              <p className="text-[15px] text-[#4A4A68]">
+                💡 <strong>How billing works:</strong> You register free. When you enrol a patient in active monitoring, they count toward your plan. A patient is 'active' only while they have an ongoing monitoring relationship with your practice. Remove a patient and billing stops. No hidden fees.
+              </p>
+              <a
+                href="mailto:info@agatsa.com?subject=Provider Pricing Question"
+                className="inline-block mt-3 text-[#7C4DFF] font-semibold underline underline-offset-2 text-sm"
+              >
+                Questions? Email us at info@agatsa.com →
+              </a>
+            </div>
+          </motion.div>
         </div>
       </section>
 
+      {/* FAQ */}
       <section className="py-20 bg-background">
         <div className="max-w-3xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-8">
@@ -158,13 +305,18 @@ export default function ForDoctorsPage() {
         </div>
       </section>
 
+      {/* Final CTA */}
       <section className="bg-primary py-20">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready to monitor your patients beyond the waiting room?</h2>
-          <p className="text-primary-foreground/80 mt-3 text-lg">Join 500+ doctors and clinics already using Agatsa One to deliver better care.</p>
+          <p className="text-primary-foreground/80 mt-3 text-lg">Join doctors and clinics across India using Agatsa One to deliver better care.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-            <Button className="rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Book a Demo</Button>
-            <Button variant="outline" className="rounded-full px-10 py-5 text-lg border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 font-semibold">Register as a Provider</Button>
+            <a href="mailto:info@agatsa.com?subject=Provider Demo Request">
+              <Button className="rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Book a Demo</Button>
+            </a>
+            <a href="mailto:info@agatsa.com?subject=Register as Provider">
+              <Button variant="outline" className="rounded-full px-10 py-5 text-lg border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 font-semibold">Register as a Provider</Button>
+            </a>
           </div>
         </div>
       </section>
