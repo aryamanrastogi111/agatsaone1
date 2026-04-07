@@ -42,7 +42,7 @@ export default function ForHospitalsPage() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="bg-[hsl(var(--dark-bg))] text-white pt-8 pb-8">
+      <section className="bg-[#1A1A2E] text-white pt-8 pb-8">
         <motion.div className="max-w-4xl mx-auto px-4 text-center" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-4">For Hospitals</p>
           <h1 className="text-4xl md:text-[56px] leading-tight font-extrabold">Remote patient monitoring at hospital scale.</h1>
