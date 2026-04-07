@@ -45,8 +45,8 @@ export default function ForHospitalsPage() {
       <section className="bg-[#1A1A2E] text-white pt-8 pb-8">
         <motion.div className="max-w-4xl mx-auto px-4 text-center" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-4">For Hospitals</p>
-          <h1 className="text-4xl md:text-[56px] leading-tight font-extrabold">Remote patient monitoring at hospital scale.</h1>
-          <p className="mt-4 text-lg md:text-xl text-white/75 max-w-[640px] mx-auto">Reduce cardiac readmissions. Monitor post-discharge patients automatically. Catch deterioration at home before it becomes an ICU readmission. Built for the scale, compliance, and integration requirements of large healthcare institutions.</p>
+          <h1 className="text-4xl md:text-[56px] leading-tight font-extrabold text-white">Remote patient monitoring at hospital scale.</h1>
+          <p className="mt-4 text-lg md:text-xl text-white/80 max-w-[640px] mx-auto">Reduce cardiac readmissions. Monitor post-discharge patients automatically. Catch deterioration at home before it becomes an ICU readmission. Built for the scale, compliance, and integration requirements of large healthcare institutions.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
             <a href="mailto:info@agatsa.com?subject=Hospital Demo Request" className="bg-primary text-primary-foreground rounded-full px-8 py-4 font-semibold hover:opacity-90 transition">Schedule a Hospital Demo</a>
             <a href="/agatsa-one-hospital-brochure.pdf" target="_blank" rel="noopener noreferrer" className="border border-white/40 text-white rounded-full px-8 py-4 font-semibold hover:bg-white/10 transition">Download Hospital Brochure</a>
