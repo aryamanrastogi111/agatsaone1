@@ -311,7 +311,7 @@ export default function SanketLifeECGProduct() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready to take your first ECG?</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Most users take their first reading within 5 minutes of unboxing.</p>
-          <Button className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">
+          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">
             Buy SanketLife ECG — ₹4,999
           </Button>
         </div>
