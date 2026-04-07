@@ -116,7 +116,211 @@ export const CartDrawer = ({
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
   const [successData, setSuccessData] = useState<SuccessData | null>(null);
-...
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
+
+  const [couponCode, setCouponCode] = useState("");
+  const [couponApplied, setCouponApplied] = useState(false);
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponData, setCouponData] = useState<{ id: string; code: string } | null>(null);
+  const [couponLoading, setCouponLoading] = useState(false);
+
+  const { items, isLoading, updateQuantity, removeItem, clearCart, getTotalItems, getTotalPrice } =
+    useCartStore();
+
+  const totalItems = getTotalItems();
+  const totalPrice = getTotalPrice();
+  const finalTotal = Math.max(totalPrice - couponDiscount, 10);
+
+  const formatINR = (amount: number) =>
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(amount);
+
+  const handleProceedToCheckout = () => {
+    if (items.length === 0) return;
+    setCartOpen(false);
+    setTimeout(() => setCheckoutOpen(true), 200);
+  };
+
+  const handleApplyCoupon = async () => {
+    const code = couponCode.trim().toUpperCase();
+    if (!code) {
+      toast.error("Enter a coupon code first");
+      return;
+    }
+    if (couponApplied) {
+      setCouponApplied(false);
+      setCouponDiscount(0);
+      setCouponData(null);
+      setCouponCode("");
+      toast.info("Coupon removed");
+      return;
+    }
+    setCouponLoading(true);
+    try {
+      const result = await validateCoupon(code, totalPrice);
+      if (!result.valid) {
+        toast.error(result.error || "Invalid coupon");
+      } else {
+        setCouponDiscount(result.discount ?? 0);
+        setCouponData(result.coupon as { id: string; code: string });
+        setCouponApplied(true);
+        toast.success(`Coupon applied! You save ${formatINR(result.discount ?? 0)}`);
+      }
+    } catch {
+      toast.error("Failed to validate coupon");
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const handlePay = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!name.trim()) {
+      toast.error("Please enter your full name.");
+      return;
+    }
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    if (!phone.trim() || phone.replace(/\D/g, "").length < 10) {
+      toast.error("Please enter a valid 10-digit phone number.");
+      return;
+    }
+    if (!address.trim()) {
+      toast.error("Please enter your delivery address.");
+      return;
+    }
+    if (!city.trim()) {
+      toast.error("Please enter your city.");
+      return;
+    }
+    if (!state.trim()) {
+      toast.error("Please enter your state.");
+      return;
+    }
+    if (!/^\d{6}$/.test(pincode.trim())) {
+      toast.error("Please enter a valid 6-digit PIN code.");
+      return;
+    }
+
+    setIsPaying(true);
+
+    try {
+      const loaded = await loadRazorpayScript();
+      if (!loaded) {
+        toast.error("Failed to load payment gateway. Please try again.");
+        setIsPaying(false);
+        return;
+      }
+
+      const orderData = await createRazorpayOrder(
+        items,
+        name,
+        email,
+        phone,
+        address,
+        city,
+        state,
+        pincode,
+        couponApplied ? finalTotal : undefined,
+        couponApplied && couponData ? couponData.code : undefined,
+        couponApplied ? couponDiscount : undefined
+      );
+
+      const cartSnapshot = items.map((i) => ({
+        productName: i.productName,
+        quantity: i.quantity,
+        price: i.price,
+        variantTitle: i.variantTitle,
+      }));
+      const totalSnapshot = finalTotal;
+      const discountSnapshot = couponDiscount;
+
+      setCheckoutOpen(false);
+      setIsPaying(false);
+
+      await new Promise((r) => setTimeout(r, 400));
+
+      openRazorpayCheckout(
+        orderData,
+        items,
+        name,
+        email,
+        phone,
+        async (response: RazorpayPaymentResponse) => {
+          try {
+            const verified = await verifyRazorpayPayment(
+              response.razorpay_order_id,
+              response.razorpay_payment_id,
+              response.razorpay_signature,
+              {
+                customerEmail: email,
+                customerName: name,
+                items,
+                total: totalSnapshot,
+                shippingAddress: address,
+                shippingCity: city,
+                shippingState: state,
+                shippingPincode: pincode,
+              }
+            );
+
+            if (verified) {
+              clearCart();
+              setSuccessData({
+                orderId: response.razorpay_order_id,
+                paymentId: response.razorpay_payment_id,
+                customerName: name,
+                customerEmail: email,
+                items: cartSnapshot,
+                total: totalSnapshot,
+                discountAmount: discountSnapshot,
+                shippingAddress: address,
+                shippingCity: city,
+                shippingState: state,
+                shippingPincode: pincode,
+              });
+              setName("");
+              setEmail("");
+              setPhone("");
+              setAddress("");
+              setCity("");
+              setState("");
+              setPincode("");
+              setCouponCode("");
+              setCouponApplied(false);
+              setCouponDiscount(0);
+              setCouponData(null);
+            } else {
+              toast.error("Payment verification failed. Please contact support.");
+            }
+          } catch {
+            toast.error("Payment verification error. Please contact info@agatsa.com");
+          }
+        },
+        () => {
+          setTimeout(() => setCheckoutOpen(true), 200);
+          toast.info("Payment cancelled. You can try again.");
+        }
+      );
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Payment failed. Try again.");
+      setIsPaying(false);
+    }
+  };
+
   return (
     <>
       {!hideTrigger && (
