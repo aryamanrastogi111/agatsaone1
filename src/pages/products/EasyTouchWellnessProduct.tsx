@@ -19,7 +19,7 @@ const measures = [
 
 const steps = [
   { n: "1", title: "Position your finger on the sensor", copy: "Rest your index finger gently on the EasyTouch sensor. Advanced optical sensing captures your metabolic, cardiovascular, and oxygen data simultaneously. No pain. No preparation." },
-  { n: "2", title: "Hold for 60 seconds", copy: "The device takes a 60-second reading, capturing optical data across multiple wavelengths. The Agatsa One app shows a live progress indicator and guides you through the process." },
+  { n: "2", title: "Hold for 15 seconds", copy: "The device takes a 15-second reading, capturing optical data across multiple wavelengths. The Agatsa One app shows a live progress indicator and guides you through the process." },
   { n: "3", title: "Get your complete health picture", copy: "Nera AI processes all vitals simultaneously — comparing them to your historical trends, flagging anything unusual, and updating your Nera Health Score. Log your meal before readings for metabolic impact scoring." },
 ];
 
@@ -31,7 +31,7 @@ const boxItems = [
 ];
 
 const faqs = [
-  { q: "What does EasyTouch Wellness measure?", a: "EasyTouch Wellness is a non-invasive metabolic health monitor. It tracks your body's metabolic load — how your body responds to food, stress, and activity — along with SpO2, heart rate, HRV, and more. It gives you a comprehensive metabolic and cardiovascular picture in 60 seconds." },
+  { q: "What does EasyTouch Wellness measure?", a: "EasyTouch Wellness is a non-invasive metabolic health monitor. It tracks your body's metabolic load — how your body responds to food, stress, and activity — along with SpO2, heart rate, HRV, and more. It gives you a comprehensive metabolic and cardiovascular picture in 15 seconds." },
   { q: "Is this a medical diagnostic device?", a: "EasyTouch Wellness is a health monitoring aid designed for daily wellness tracking. It provides metabolic trend insights that help you understand your body better. For medical diagnosis or treatment decisions, always consult your healthcare provider." },
   { q: "Who should use the EasyTouch Wellness?", a: "Anyone who wants daily visibility into their metabolic and cardiovascular health — especially those managing lifestyle conditions, monitoring their diet's impact, or wanting to track SpO2 and heart rate trends without frequent clinic visits. It's designed for proactive health management." },
   { q: "How does metabolic load tracking work?", a: "The EasyTouch uses advanced optical sensing to measure bioelectrical metabolic markers. When you log your meals in the app, Nera AI correlates your readings with your diet to show how your body processes food over time — building a personalised metabolic profile." },
@@ -45,7 +45,7 @@ const relatedDevices = [
 ];
 
 export default function EasyTouchWellnessProduct() {
-  useSEO({ title: "EasyTouch Wellness — Non-Invasive Metabolic Health Monitor | Agatsa One", description: "Track your metabolic health, SpO2, HRV and more — no needles, no blood. Multiple vitals in 60 seconds. ₹3,499. Powered by Nera AI." });
+  useSEO({ title: "EasyTouch Wellness — Non-Invasive Metabolic Health Monitor | Agatsa One", description: "Track your metabolic health, SpO2, HRV and more — no needles, no blood. Multiple vitals in 15 seconds. ₹3,499. Powered by Nera AI." });
 
   return (
     <SiteLayout>
@@ -75,7 +75,7 @@ export default function EasyTouchWellnessProduct() {
               </p>
 
               <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">
-                Track your metabolic load, SpO2, heart rate, and HRV — all in one device, in under 60 seconds. No needles. No blood. No discomfort. Just daily metabolic intelligence powered by Nera AI.
+                Track your metabolic load, SpO2, heart rate, and HRV — all in one device, in under 15 seconds. No needles. No blood. No discomfort. Just daily metabolic intelligence powered by Nera AI.
               </p>
 
               <div className="mt-6">
@@ -111,7 +111,7 @@ export default function EasyTouchWellnessProduct() {
         <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           {[
             { big: "8 Vitals", label: "In one reading", sub: "Metabolic + cardiovascular + respiratory" },
-            { big: "60 Sec", label: "Complete reading time", sub: "No needles, no prep" },
+            { big: "15 Sec", label: "Complete reading time", sub: "No needles, no prep" },
             { big: "15,000+", label: "Active users", sub: "Across India" },
           ].map((s) => (
             <motion.div key={s.big} {...fadeUp}>
@@ -129,7 +129,7 @@ export default function EasyTouchWellnessProduct() {
           <motion.div {...fadeUp}>
             <h2 className="text-3xl font-bold text-foreground">Your daily metabolic health snapshot</h2>
             <p className="text-lg text-muted-foreground mt-3 max-w-xl mx-auto">
-              EasyTouch Wellness captures a comprehensive picture of your metabolic and cardiovascular health in a single 60-second reading. No needles. No blood.
+              EasyTouch Wellness captures a comprehensive picture of your metabolic and cardiovascular health in a single 15-second reading. No needles. No blood.
             </p>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
@@ -146,7 +146,7 @@ export default function EasyTouchWellnessProduct() {
       {/* How It Works */}
       <section className="py-20 bg-[hsl(260,100%,97%)]">
         <div className="max-w-4xl mx-auto px-4">
-          <motion.h2 {...fadeUp} className="text-3xl font-bold text-foreground text-center">How to take a reading in 60 seconds</motion.h2>
+          <motion.h2 {...fadeUp} className="text-3xl font-bold text-foreground text-center">How to take a reading in 15 seconds</motion.h2>
           <div className="mt-12 grid md:grid-cols-3 gap-8">
             {steps.map((s, i) => (
               <motion.div key={s.n} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.12 }} className="text-center md:text-left">
@@ -171,7 +171,7 @@ export default function EasyTouchWellnessProduct() {
               Most health problems don't appear overnight — they build up silently over months and years. Your metabolic health is one of the earliest indicators of how your body is doing. How you process food, how your cardiovascular system responds to stress, how efficiently your blood carries oxygen.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              EasyTouch Wellness gives you a window into these signals — daily, painlessly, in just 60 seconds. Combined with Nera AI, it builds your personalised metabolic profile over time, helping you and your doctor make informed decisions before problems escalate.
+              EasyTouch Wellness gives you a window into these signals — daily, painlessly, in just 15 seconds. Combined with Nera AI, it builds your personalised metabolic profile over time, helping you and your doctor make informed decisions before problems escalate.
             </p>
             <blockquote className="bg-card rounded-2xl p-6 border-l-4 border-primary">
               <p className="text-sm text-muted-foreground italic">
@@ -243,7 +243,7 @@ export default function EasyTouchWellnessProduct() {
       <section className="bg-primary py-20">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Your metabolic health, in your hands.</h2>
-          <p className="text-primary-foreground/80 mt-3 text-lg">Your first reading takes under 60 seconds. No needles. No blood. Just insight.</p>
+          <p className="text-primary-foreground/80 mt-3 text-lg">Your first reading takes under 15 seconds. No needles. No blood. Just insight.</p>
           <Button className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">
             Buy EasyTouch Wellness — ₹3,499
           </Button>
