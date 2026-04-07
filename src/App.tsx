@@ -29,6 +29,12 @@ import ShippingPolicy from "./pages/ShippingPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import DataDeletion from "./pages/DataDeletion";
 import Support from "./pages/Support";
+import Contact from "./pages/Contact";
+import Careers from "./pages/Careers";
+import Press from "./pages/Press";
+import Partner from "./pages/Partner";
+import Demo from "./pages/Demo";
+import CookiePolicy from "./pages/CookiePolicy";
 import NotFound from "./pages/NotFound";
 
 // SDK Portal Pages
@@ -101,8 +107,13 @@ const App = () => (
           <Route path="/return-policy" element={<ReturnPolicy />} />
           <Route path="/data-deletion" element={<DataDeletion />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/press" element={<Press />} />
+          <Route path="/partner" element={<Partner />} />
+          <Route path="/demo" element={<Demo />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
 
-          {/* Deep link pages */}
           <Route path="/d/:code" element={<DeviceActivation />} />
           <Route path="/r/:code" element={<ReferralPage />} />
 
