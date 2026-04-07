@@ -2,7 +2,6 @@ import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { BarChart3, Palette, Database, Activity, Check, X } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
@@ -10,23 +9,24 @@ const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, tra
 const valueProps = [
   { icon: BarChart3, title: "Post-discharge monitoring at scale", body: "Deploy Agatsa One to every cardiac discharge. Patients monitor from home. Your team sees every reading in a unified dashboard. Catch deterioration before the ambulance arrives." },
   { icon: Palette, title: "White-label capability", body: "Deploy under your hospital's brand. 'Apollo Health Monitor', 'Fortis CarePro', 'Narayana Remote' — whatever fits your brand. Full white-label including app icon, colour scheme, and in-app branding." },
-  { icon: Database, title: "EHR and HIS integration", body: "API-first architecture integrates with major Indian HIS platforms (Meditech, Infor Cloverleaf, HealthPlix, eHospital). Patient readings flow into existing records. No double data entry." },
+  { icon: Database, title: "EHR and HIS integration", body: "API-first architecture designed for integration with Indian HIS platforms. Our REST API and HL7 FHIR-compatible endpoints allow patient readings and Nera AI risk scores to flow into existing systems. Available on Pro and Enterprise plans — our team handles the integration scoping with your IT department." },
   { icon: Activity, title: "Camp screening for community outreach", body: "Deploy bulk ECG and vitals screening camps. Patients scan a QR code, complete a reading, and their results go directly into the Agatsa One system. Camp screening data feeds into your CRM." },
 ];
 
 const tiers = ["Starter", "Growth", "Pro", "Enterprise"] as const;
-const prices = ["₹4,999/mo", "₹14,999/mo", "₹39,999/mo", "Custom"];
+const tierPrices = ["₹199", "₹249", "₹299", "₹349"];
 const rows: { label: string; values: (string | boolean)[] }[] = [
-  { label: "Provider seats", values: ["5", "25", "100", "Unlimited"] },
-  { label: "Active patients", values: ["100", "500", "2,000", "Unlimited"] },
+  { label: "Max active patients", values: ["10", "50", "200", "Unlimited"] },
+  { label: "Provider / doctor seats", values: ["2", "10", "50", "Unlimited"] },
   { label: "ECG AI analysis", values: [true, true, true, true] },
-  { label: "Care programmes", values: ["Basic (2)", "All 5", "All 5", "Custom"] },
-  { label: "White label", values: [false, false, true, true] },
-  { label: "EHR integration", values: [false, false, true, true] },
-  { label: "Camp screening", values: [false, true, true, true] },
-  { label: "Dedicated CSM", values: [false, false, true, true] },
-  { label: "SLA", values: ["99%", "99.5%", "99.9%", "99.99%"] },
-  { label: "Support", values: ["Email", "Chat", "Phone", "Dedicated"] },
+  { label: "Nera Health Score per patient", values: [true, true, true, true] },
+  { label: "Care Programmes (all 5)", values: [true, true, true, true] },
+  { label: "Camp screening module", values: [true, true, true, true] },
+  { label: "Bulk patient import (CSV)", values: [false, true, true, true] },
+  { label: "API / EMR integration", values: [false, false, true, true] },
+  { label: "White-label app", values: [false, false, false, "✅ (custom, contact us)"] },
+  { label: "Dedicated support", values: ["Email", "Email", "Phone + Email", "Dedicated CSM"] },
+  { label: "Registration", values: ["Free", "Free", "Free", "Free"] },
 ];
 
 const Cell = ({ v }: { v: string | boolean }) =>
@@ -37,7 +37,7 @@ const Cell = ({ v }: { v: string | boolean }) =>
   );
 
 export default function ForHospitalsPage() {
-  useSEO({ title: "Hospital Remote Monitoring Platform — Reduce Readmissions | Agatsa One", description: "Post-discharge cardiac monitoring at scale. White-label capability. EHR integration. Reduce 30-day readmissions. SaaS plans from ₹4,999/month." });
+  useSEO({ title: "Hospital Remote Monitoring Platform — Reduce Readmissions | Agatsa One", description: "Post-discharge cardiac monitoring at scale. White-label capability. EHR integration. Reduce 30-day readmissions. Per-patient pricing from ₹199/month." });
 
   return (
     <SiteLayout>
@@ -46,10 +46,10 @@ export default function ForHospitalsPage() {
         <motion.div className="max-w-4xl mx-auto px-4 text-center" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-4">For Hospitals</p>
           <h1 className="text-4xl md:text-[56px] leading-tight font-extrabold">Remote patient monitoring at hospital scale.</h1>
-          <p className="mt-4 text-lg md:text-xl text-white/75 max-w-[640px] mx-auto">Reduce cardiac readmissions. Monitor post-discharge patients automatically. Build a digital health revenue stream. Agatsa One's hospital platform is built for the scale, compliance, and integration requirements of large healthcare institutions.</p>
+          <p className="mt-4 text-lg md:text-xl text-white/75 max-w-[640px] mx-auto">Reduce cardiac readmissions. Monitor post-discharge patients automatically. Catch deterioration at home before it becomes an ICU readmission. Built for the scale, compliance, and integration requirements of large healthcare institutions.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <Link to="/demo" className="bg-primary text-primary-foreground rounded-full px-8 py-4 font-semibold hover:opacity-90 transition">Schedule a Hospital Demo</Link>
-            <button className="border border-white/40 text-white rounded-full px-8 py-4 font-semibold hover:bg-white/10 transition">Download Hospital Brochure</button>
+            <a href="mailto:info@agatsa.com?subject=Hospital Demo Request" className="bg-primary text-primary-foreground rounded-full px-8 py-4 font-semibold hover:opacity-90 transition">Schedule a Hospital Demo</a>
+            <a href="/agatsa-one-hospital-brochure.pdf" target="_blank" rel="noopener noreferrer" className="border border-white/40 text-white rounded-full px-8 py-4 font-semibold hover:bg-white/10 transition">Download Hospital Brochure</a>
           </div>
         </motion.div>
       </section>
@@ -90,9 +90,9 @@ export default function ForHospitalsPage() {
       <section className="py-20 bg-background">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div className="text-center mb-12" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-2">Pricing</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Transparent SaaS pricing for healthcare institutions.</h2>
-            <p className="text-muted-foreground mt-2">All plans exclude GST. Annual billing available at 15% discount.</p>
+            <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-2">PRICING</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Pay per patient. No flat fees. No surprise invoices.</h2>
+            <p className="text-muted-foreground mt-2 max-w-xl mx-auto">Register free. You're only billed for patients actively enrolled in monitoring. No patient activity = no charge.</p>
           </motion.div>
 
           {/* Desktop table */}
@@ -111,8 +111,8 @@ export default function ForHospitalsPage() {
               </thead>
               <tbody>
                 <tr className="border-b">
-                  <td className="p-4 font-medium text-foreground">Price</td>
-                  {prices.map((p, i) => (
+                  <td className="p-4 font-medium text-foreground">Price per patient/month</td>
+                  {tierPrices.map((p, i) => (
                     <td key={i} className={`p-4 text-center font-bold text-foreground ${i === 2 ? "border-x-2 border-primary bg-primary/5" : ""}`}>{p}</td>
                   ))}
                 </tr>
@@ -138,7 +138,8 @@ export default function ForHospitalsPage() {
                   <h3 className="text-lg font-bold text-foreground">{t}</h3>
                   {ti === 2 && <Badge className="bg-primary text-primary-foreground text-[10px]">Most Popular</Badge>}
                 </div>
-                <p className="text-2xl font-extrabold text-foreground mb-4">{prices[ti]}</p>
+                <p className="text-2xl font-extrabold text-foreground">{tierPrices[ti]}</p>
+                <p className="text-sm text-muted-foreground mb-4">/patient/month</p>
                 <ul className="space-y-2 text-sm">
                   {rows.map((r, ri) => (
                     <li key={ri} className="flex justify-between">
@@ -151,20 +152,30 @@ export default function ForHospitalsPage() {
             ))}
           </div>
 
+          {/* Pricing note */}
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-center mt-8 max-w-3xl mx-auto text-[#4A4A68]">
+            All prices exclude GST. Annual billing available at 10% discount. White-label deployment requires a minimum 3-month commitment and custom scoping. Contact us for enterprise quotes.
+          </div>
+
           <div className="text-center mt-10">
-            <Link to="/demo" className="inline-block bg-primary text-primary-foreground rounded-full px-10 py-4 font-semibold hover:opacity-90 transition text-lg">Schedule a Hospital Demo</Link>
+            <a href="mailto:info@agatsa.com?subject=Hospital Demo Request" className="inline-block bg-primary text-primary-foreground rounded-full px-10 py-4 font-semibold hover:opacity-90 transition text-lg">Schedule a Hospital Demo</a>
           </div>
         </div>
       </section>
 
-      {/* Case Study */}
+      {/* Social Proof (replaces fake case study) */}
       <section className="py-20 bg-muted/30">
-        <motion.div className="max-w-[800px] mx-auto px-4" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <div className="bg-card rounded-3xl p-10 border shadow-sm">
-            <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-3">Case Study</p>
-            <h3 className="text-2xl font-bold text-foreground mb-3">How a 150-bed cardiac hospital reduced 30-day readmissions by 34%</h3>
-            <p className="text-muted-foreground mb-4">A mid-size cardiac hospital in Chennai deployed Agatsa One for post-discharge monitoring in their cardiac ICU step-down unit. In 6 months, 30-day readmissions dropped from 18% to 12%.</p>
-            <Link to="/case-studies/cardiac-hospital" className="text-primary font-semibold hover:underline">Read the full case study →</Link>
+        <motion.div className="max-w-3xl mx-auto px-4" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          <div className="bg-[hsl(260,100%,97%)] rounded-3xl p-10 text-center">
+            <h3 className="text-2xl font-bold text-[#1A1A2E]">Built for Indian healthcare. Deployed across India.</h3>
+            <p className="text-base text-[#4A4A68] mt-3 max-w-2xl mx-auto">
+              Agatsa One's SanketLife ECG is clinically validated at 98.15% sensitivity at Sri Jayadeva Institute of Cardiovascular Sciences, Bengaluru — one of India's top cardiac institutions. Our devices hold CDSCO Class B certification. Our platform is built for the compliance, data sovereignty, and workflow requirements of Indian healthcare institutions.
+            </p>
+            <div className="flex gap-4 justify-center flex-wrap mt-6">
+              <span className="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-semibold">98.15% ECG sensitivity</span>
+              <span className="bg-green-100 text-green-700 rounded-full px-4 py-2 text-sm font-semibold">CDSCO Class B certified</span>
+              <span className="bg-blue-100 text-blue-700 rounded-full px-4 py-2 text-sm font-semibold">Validated at Sri Jayadeva, Bengaluru</span>
+            </div>
           </div>
         </motion.div>
       </section>
@@ -174,7 +185,7 @@ export default function ForHospitalsPage() {
         <motion.div className="max-w-3xl mx-auto px-4 text-center" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-bold text-white">Ready to build the remote monitoring programme your patients deserve?</h2>
           <p className="mt-4 text-white/75 text-lg">Talk to our hospital partnerships team. We'll design the right deployment for your institution.</p>
-          <Link to="/demo" className="inline-block mt-8 bg-primary text-primary-foreground rounded-full px-10 py-5 font-semibold text-lg hover:opacity-90 transition">Schedule a Hospital Demo</Link>
+          <a href="mailto:info@agatsa.com?subject=Hospital Demo Request" className="inline-block mt-8 bg-primary text-primary-foreground rounded-full px-10 py-5 font-semibold text-lg hover:opacity-90 transition">Schedule a Hospital Demo</a>
         </motion.div>
       </section>
     </SiteLayout>
