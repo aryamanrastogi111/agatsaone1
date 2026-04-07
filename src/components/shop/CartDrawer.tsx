@@ -97,8 +97,14 @@ function CustomModal({
   return createPortal(modal, document.body);
 }
 
-export const CartDrawer = () => {
+export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: boolean; onExternalClose?: () => void } = {}) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const cartOpen = externalOpen || isOpen;
+  const setCartOpen = (open: boolean) => {
+    setIsOpen(open);
+    if (!open && onExternalClose) onExternalClose();
+  };
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
   const [successData, setSuccessData] = useState<SuccessData | null>(null);
