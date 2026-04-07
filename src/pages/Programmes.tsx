@@ -125,13 +125,14 @@ const programmes: (Programme & { slug: string })[] = [
   },
 ];
 
-function ProgrammeCard({ p, index }: { p: Programme; index: number }) {
+function ProgrammeCard({ p, index }: { p: Programme & { slug: string }; index: number }) {
   const isInfo = p.alert.type === "info";
   return (
     <motion.div
+      id={p.slug}
       {...fadeUp}
       transition={{ duration: 0.6, delay: index * 0.08 }}
-      className="bg-card rounded-3xl shadow-md border border-border overflow-hidden flex"
+      className="bg-card rounded-3xl shadow-md border border-border overflow-hidden flex scroll-mt-24"
     >
       <div className="w-1 shrink-0" style={{ backgroundColor: p.accent }} />
       <div className="p-6 md:p-8 flex-1">
