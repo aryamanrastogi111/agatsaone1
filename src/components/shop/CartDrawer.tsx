@@ -138,7 +138,7 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
 
   const handleProceedToCheckout = () => {
     if (items.length === 0) return;
-    setIsOpen(false);
+    setCartOpen(false);
     setTimeout(() => setCheckoutOpen(true), 200);
   };
 
@@ -293,7 +293,7 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
       </Button>
 
       {/* Cart drawer */}
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <Sheet open={cartOpen} onOpenChange={setCartOpen}>
         <SheetContent className="w-full sm:max-w-md flex flex-col h-full p-0">
           <SheetHeader className="flex-shrink-0 p-6 pb-4 border-b">
             <SheetTitle className="flex items-center gap-2">
