@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import sanketlifeImg from "@/assets/sanketlife-hero-new.png";
+import easytouchImg from "@/assets/easytouch-wellness-device.png";
+import rhythmImg from "@/assets/easytouch-rhythm-new.png";
+import scaleImg from "@/assets/core-balance.png";
 
 const devices = [
   {
@@ -10,7 +14,7 @@ const devices = [
     stat: "98.15% sensitivity",
     price: "₹4,999",
     link: "/devices/sanketlife-ecg",
-    emoji: "🫀",
+    image: sanketlifeImg,
   },
   {
     name: "EasyTouch Wellness",
@@ -19,7 +23,7 @@ const devices = [
     stat: "98.56% validated at Medanta",
     price: "₹3,499",
     link: "/devices/easytouch-wellness",
-    emoji: "💡",
+    image: easytouchImg,
   },
   {
     name: "EasyTouch Rhythm Band",
@@ -28,7 +32,7 @@ const devices = [
     stat: "Sleep, HRV, steps, SpO2",
     price: "₹2,999",
     link: "/devices/rhythm-band",
-    emoji: "⌚",
+    image: rhythmImg,
   },
   {
     name: "Agatsa Smart Scale",
@@ -37,7 +41,7 @@ const devices = [
     stat: "BMI, body fat, muscle mass",
     price: "₹2,499",
     link: "/devices/smart-scale",
-    emoji: "⚖️",
+    image: scaleImg,
   },
 ];
 
@@ -75,9 +79,8 @@ export function DeviceShowcaseSection() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="min-w-[260px] md:min-w-0 flex flex-col bg-card rounded-3xl border border-border p-6 hover:shadow-purple transition-shadow duration-300"
             >
-              {/* Image placeholder */}
-              <div className="aspect-[3/2] bg-muted rounded-2xl flex items-center justify-center mb-4">
-                <span className="text-5xl">{device.emoji}</span>
+              <div className="aspect-[3/2] bg-muted rounded-2xl flex items-center justify-center mb-4 overflow-hidden">
+                <img src={device.image} alt={device.name} className="w-full h-full object-contain p-4" />
               </div>
 
               {device.badge && (
