@@ -87,12 +87,12 @@ export default function ReferralPage() {
 
           {/* Download buttons */}
           <div className="flex flex-col gap-3">
-            <a href={`${APP_STORE}${code ? `?referral=${code}` : ""}`} target="_blank" rel="noopener noreferrer">
+            <a href={`${APP_STORE}${code ? `?referral=${code}` : ""}`} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("referral_download_click", { platform: "ios", referral_code: code })}>
               <Button className="w-full rounded-full py-4 text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90">
                 Download for iOS — Free
               </Button>
             </a>
-            <a href={`${PLAY_STORE}${code ? `&referrer=referral_${code}` : ""}`} target="_blank" rel="noopener noreferrer">
+            <a href={`${PLAY_STORE}${code ? `&referrer=referral_${code}` : ""}`} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("referral_download_click", { platform: "android", referral_code: code })}>
               <Button variant="outline" className="w-full rounded-full py-4 text-sm font-semibold border-primary text-primary hover:bg-primary/5">
                 Download for Android — Free
               </Button>
