@@ -33,8 +33,8 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center bg-gradient-to-b from-background to-muted overflow-hidden">
       {/* Decorative blobs */}
-      <div className="absolute top-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-72 h-72 bg-secondary/5 rounded-full blur-3xl" />
+      <div className="absolute top-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-20 left-10 w-72 h-72 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
