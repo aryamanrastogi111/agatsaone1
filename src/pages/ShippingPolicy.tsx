@@ -287,10 +287,6 @@ const ShippingPolicy = () => {
                       <Mail className="h-5 w-5 text-primary" />
                       care@agatsa.com
                     </a>
-                    <a href="tel:08069289999" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
-                      <Phone className="h-5 w-5 text-primary" />
-                      08069289999
-                    </a>
                   </div>
                 </div>
               </motion.div>

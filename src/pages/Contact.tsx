@@ -11,7 +11,7 @@ import { toast } from "sonner";
 const fade = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
 export default function Contact() {
-  useSEO({ title: "Contact Us — Agatsa One", description: "Get in touch with Agatsa. Email care@agatsa.com, call 08069289999, or fill our contact form. We respond within 24 hours." });
+  useSEO({ title: "Contact Us — Agatsa One", description: "Get in touch with Agatsa. Email care@agatsa.com or fill our contact form. We respond within 24 hours." });
 
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const handleSubmit = (e: React.FormEvent) => {
