@@ -1,133 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom gradient utilities */
-@layer utilities {
-  .bg-gradient-radial {
-    background: radial-gradient(circle, var(--tw-gradient-stops));
-  }
-  
-  /* Subtle hero texture pattern */
-  .hero-texture {
-    background-image: 
-      radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.02) 1px, transparent 1px),
-      radial-gradient(circle at 80% 50%, hsl(var(--primary) / 0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  /* Shimmer animation for gradient text */
-  @keyframes shimmer {
-    0% {
-      background-position: 200% center;
-    }
-    100% {
-      background-position: -200% center;
-    }
-  }
-}
-
-/* Agatsa Brand Design System
-   Primary: Cyan Blue (SanketLife/EasyTouch tone)
-   Secondary: Deep Medical Blue
-   Background: Pure White
-   Style: Minimal, flat, medical-premium UI
-*/
-
 @layer base {
   :root {
+    /* Agatsa One Design System */
     --background: 0 0% 100%;
-    --foreground: 210 50% 10%;
+    --foreground: 240 33% 14%;          /* #1A1A2E */
 
     --card: 0 0% 100%;
-    --card-foreground: 210 50% 10%;
+    --card-foreground: 240 33% 14%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 50% 10%;
+    --popover-foreground: 240 33% 14%;
 
-    /* Cyan Blue - Primary Brand Color */
-    --primary: 187 85% 43%;
+    /* Primary Purple #7C4DFF */
+    --primary: 256 100% 65%;
     --primary-foreground: 0 0% 100%;
 
-    /* Deep Medical Blue - Secondary */
-    --secondary: 210 60% 20%;
+    /* Secondary Blue #1A73E8 */
+    --secondary: 217 82% 51%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 210 20% 45%;
+    --muted: 264 100% 98%;             /* #F8F4FF */
+    --muted-foreground: 237 18% 35%;   /* #4A4A68 */
 
-    --accent: 187 85% 95%;
-    --accent-foreground: 187 85% 35%;
+    --accent: 264 100% 98%;
+    --accent-foreground: 256 100% 65%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 100% 64%;         /* #FF4B4B */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 20% 90%;
-    --input: 210 20% 90%;
-    --ring: 187 85% 43%;
+    --success: 152 100% 39%;           /* #00C853 */
+    --warning: 26 100% 50%;            /* #FF6D00 */
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 256 100% 65%;
 
     --radius: 0.75rem;
 
-    /* Custom Agatsa tokens */
-    --cyan: 187 85% 43%;
-    --cyan-light: 187 85% 95%;
-    --cyan-dark: 187 85% 35%;
-    --medical-blue: 210 60% 20%;
-    --medical-blue-light: 210 60% 35%;
+    /* Custom tokens */
+    --purple-shadow: 0 4px 24px rgba(124,77,255,0.12);
+    --dark-bg: 240 33% 14%;           /* #1A1A2E */
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 210 50% 10%;
-    --sidebar-primary: 187 85% 43%;
+    --sidebar-foreground: 240 33% 14%;
+    --sidebar-primary: 256 100% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 187 85% 95%;
-    --sidebar-accent-foreground: 187 85% 35%;
-    --sidebar-border: 210 20% 90%;
-    --sidebar-ring: 187 85% 43%;
-  }
-
-  .dark {
-    --background: 210 50% 5%;
-    --foreground: 210 20% 98%;
-
-    --card: 210 50% 8%;
-    --card-foreground: 210 20% 98%;
-
-    --popover: 210 50% 8%;
-    --popover-foreground: 210 20% 98%;
-
-    --primary: 187 85% 50%;
-    --primary-foreground: 210 50% 5%;
-
-    --secondary: 210 60% 30%;
-    --secondary-foreground: 210 20% 98%;
-
-    --muted: 210 30% 15%;
-    --muted-foreground: 210 20% 65%;
-
-    --accent: 187 85% 20%;
-    --accent-foreground: 187 85% 70%;
-
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 210 30% 20%;
-    --input: 210 30% 20%;
-    --ring: 187 85% 50%;
-
-    --cyan: 187 85% 50%;
-    --cyan-light: 187 85% 20%;
-    --cyan-dark: 187 85% 60%;
-    --medical-blue: 210 60% 30%;
-    --medical-blue-light: 210 60% 45%;
-
-    --sidebar-background: 210 50% 8%;
-    --sidebar-foreground: 210 20% 98%;
-    --sidebar-primary: 187 85% 50%;
-    --sidebar-primary-foreground: 210 50% 5%;
-    --sidebar-accent: 187 85% 20%;
-    --sidebar-accent-foreground: 187 85% 70%;
-    --sidebar-border: 210 30% 20%;
-    --sidebar-ring: 187 85% 50%;
+    --sidebar-accent: 264 100% 98%;
+    --sidebar-accent-foreground: 256 100% 65%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 256 100% 65%;
   }
 }
 
@@ -141,11 +67,11 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased font-sans;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+    @apply font-semibold tracking-tight text-foreground;
   }
 }
 
@@ -156,82 +82,20 @@
 }
 
 @layer components {
-  /* Hover scale animation */
-  .hover-scale {
-    @apply transition-transform duration-300 ease-out hover:scale-105;
-  }
-
-  /* Hover lift animation */
   .hover-lift {
     @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg;
   }
 
-  /* Card hover effect */
-  .card-hover {
-    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:border-primary/30;
-  }
-
-  /* Button hover glow */
   .btn-glow {
     @apply relative overflow-hidden transition-all duration-300;
   }
-  
+
   .btn-glow::before {
     content: "";
     @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full transition-transform duration-500;
   }
-  
+
   .btn-glow:hover::before {
     @apply translate-x-full;
-  }
-
-  /* Underline animation for links */
-  .link-underline {
-    @apply relative inline-block;
-  }
-  
-  .link-underline::after {
-    content: "";
-    @apply absolute w-full scale-x-0 h-0.5 bottom-0 left-0 bg-primary origin-bottom-right transition-transform duration-300;
-  }
-  
-  .link-underline:hover::after {
-    @apply scale-x-100 origin-bottom-left;
-  }
-
-  /* Stagger children animation */
-  .stagger-children > * {
-    @apply opacity-0 animate-fade-in;
-  }
-
-  /* Pulse subtle */
-  .pulse-subtle {
-    animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  @keyframes pulse-subtle {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.8;
-    }
-  }
-
-  /* Shimmer effect */
-  .shimmer {
-    @apply relative overflow-hidden;
-  }
-  
-  .shimmer::after {
-    content: "";
-    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent;
-    animation: shimmer 2s infinite;
-  }
-
-  @keyframes shimmer {
-    100% {
-      transform: translateX(100%);
-    }
   }
 }
