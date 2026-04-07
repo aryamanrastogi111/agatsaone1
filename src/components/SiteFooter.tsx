@@ -6,7 +6,7 @@ const productLinks = [
   { label: "Care Programmes", href: "/programmes" },
   { label: "Pricing", href: "/pricing" },
   { label: "Download App", href: "/app" },
-  { label: "Referral Programme", href: "/referral" },
+  { label: "Referral Programme", href: "/app" },
 ];
 
 const providerLinks = [
