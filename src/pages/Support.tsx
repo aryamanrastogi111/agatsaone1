@@ -34,20 +34,20 @@ const solutions = [{
   description: "Take charge of your health from the comfort of your home. Our devices are designed to be easy to use, with clear results you can understand and share with your doctor.",
   benefits: ["Monitor your health daily without clinic visits", "Easy-to-read reports you can share with doctors", "Peace of mind for you and your family", "Track trends over time to catch issues early"],
   products: [{
-    name: "SanketLife",
-    link: "/products/sanketlife"
+    name: "SanketLife ECG",
+    link: "/devices/sanketlife-ecg"
   }, {
-    name: "EasyTouch Rhythm",
-    link: "/products/easytouch-rhythm"
+    name: "EasyTouch Wellness",
+    link: "/devices/easytouch-wellness"
   }, {
-    name: "Zlu – Sleep Aid",
-    link: "/products/zlu"
+    name: "Rhythm Band",
+    link: "/devices/rhythm-band"
   }, {
-    name: "CoreBalance BMI",
-    link: "/products/corebalance"
+    name: "Smart Scale",
+    link: "/devices/smart-scale"
   }],
   cta: "Explore Home Products",
-  link: "/products"
+  link: "/devices"
 }, {
   id: "clinics",
   icon: Building2,
@@ -56,11 +56,11 @@ const solutions = [{
   description: "Enhance your practice with medical-grade monitoring devices that integrate seamlessly into your workflow. Provide better care with accurate, instant results.",
   benefits: ["Medical-grade accuracy certified for clinical use", "Quick screening for high patient volumes", "Digital records for easy documentation", "Cost-effective compared to traditional equipment"],
   products: [{
-    name: "SanketLife Pro",
-    link: "/products/sanketlife"
+    name: "SanketLife ECG",
+    link: "/devices/sanketlife-ecg"
   }, {
-    name: "CoreBalance Clinical",
-    link: "/products/corebalance"
+    name: "Smart Scale",
+    link: "/devices/smart-scale"
   }, {
     name: "Multi-device licensing",
     link: "/support#contact"

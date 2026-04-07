@@ -319,7 +319,7 @@ export default function DevicesPage() {
             Take our 2-minute health quiz and we'll recommend the best device for your health goals.
           </p>
           <Button asChild className="mt-6 rounded-full px-8">
-            <Link to="/quiz">Find My Device</Link>
+            <Link to="/contact">Help Me Choose</Link>
           </Button>
           <p className="text-sm text-muted-foreground mt-4">
             Or{" "}
