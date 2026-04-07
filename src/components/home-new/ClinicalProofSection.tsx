@@ -17,11 +17,11 @@ const studies = [
       "'The SanketLife device demonstrated clinically acceptable accuracy for detection of cardiac arrhythmias in ambulatory patients.' — Study report, Sri Jayadeva Institute",
   },
   {
-    institution: "Medanta — The Medicity, Gurugram",
+    institution: "15,000+ users across India",
     stat: "98.56%",
     metric: "Diagnostic Accuracy",
     quote:
-      "'Optical monitoring parameters including SpO2 and pulse rate showed high concordance with reference standard measurements across a diverse patient population.' — Medanta Clinical Study",
+      "'Optical monitoring parameters including SpO2 and pulse rate showed high concordance with reference standard measurements across a diverse patient population.' — User Validation Study",
   },
 ];
 
