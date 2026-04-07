@@ -144,7 +144,7 @@ export function HeroSection() {
                 transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                 className="absolute bottom-24 -left-8 md:-left-16 bg-background rounded-2xl shadow-purple px-3 py-2 border border-border"
               >
-                <p className="text-xs font-semibold">💉 Glucose 98 mg/dL</p>
+                <p className="text-xs font-semibold">🔬 Metabolic Load: Low</p>
               </motion.div>
               <motion.div
                 animate={{ y: [0, -5, 0] }}
