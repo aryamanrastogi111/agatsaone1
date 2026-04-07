@@ -43,7 +43,7 @@ export default function Demo() {
         <div className="max-w-4xl mx-auto px-4 grid md:grid-cols-3 gap-6 text-center">
           {[
             { icon: Monitor, title: "Live Portal Demo", desc: "See the provider dashboard with real patient data" },
-            { icon: Users, title: "Device Hands-On", desc: "Watch ECG, glucose, and vitals readings in real time" },
+            { icon: Users, title: "Device Hands-On", desc: "Watch ECG, metabolic health, and vitals readings in real time" },
             { icon: BarChart3, title: "AI & Analytics", desc: "Explore Nera AI reports and population health dashboards" },
           ].map((f, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.5, delay: i * 0.1 }} className="bg-card border border-border rounded-2xl p-6">

@@ -31,7 +31,7 @@ const heroProducts = [
     name: "EasyTouch Rhythm",
     image: zluHeroImg,
     tagline: "5 Body Rhythms",
-    benefit: "Track glucose & vitals",
+    benefit: "Track metabolic health & vitals",
     icon: Activity,
     accent: "from-primary/20 to-cyan-500/5",
   },
@@ -233,7 +233,7 @@ export function HeroSection() {
                 </h1>
                 
                 <p className="text-lg text-muted-foreground max-w-lg">
-                  Track ECG, blood glucose response, sleep quality, and body composition with devices trusted by doctors and designed for you.
+                  Track ECG, metabolic response, sleep quality, and body composition with devices trusted by doctors and designed for you.
                 </p>
               </motion.div>
 
