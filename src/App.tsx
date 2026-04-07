@@ -29,6 +29,12 @@ import ShippingPolicy from "./pages/ShippingPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import DataDeletion from "./pages/DataDeletion";
 import Support from "./pages/Support";
+import Contact from "./pages/Contact";
+import Careers from "./pages/Careers";
+import Press from "./pages/Press";
+import Partner from "./pages/Partner";
+import Demo from "./pages/Demo";
+import CookiePolicy from "./pages/CookiePolicy";
 import NotFound from "./pages/NotFound";
 
 // SDK Portal Pages
