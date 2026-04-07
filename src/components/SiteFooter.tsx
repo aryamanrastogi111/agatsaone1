@@ -133,7 +133,7 @@ export function SiteFooter() {
 
         {/* Disclaimer */}
         <p className="text-xs text-white/40 text-center mt-4 max-w-4xl mx-auto leading-relaxed">
-          Agatsa One is a medical-grade monitoring aid and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional for medical decisions. ECG sensitivity of 98.15% validated at Sri Jayadeva Institute of Cardiovascular Sciences, Bengaluru. AI insights are for informational purposes only.
+          Agatsa One is a medical-grade monitoring aid and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional for medical decisions. ECG validated at 98.15% sensitivity (Sri Jayadeva Institute) and 98.5% accuracy (Narayana Health). AI insights are for informational purposes only.
         </p>
       </div>
     </footer>
