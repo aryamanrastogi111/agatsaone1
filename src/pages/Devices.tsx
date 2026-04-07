@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -252,6 +253,8 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
 }
 
 export default function DevicesPage() {
+  useSEO({ title: "Health Monitoring Devices — SanketLife ECG, EasyTouch, Rhythm Band | Agatsa One", description: "Medical-grade ECG, optical glucose monitor, wellness band, and smart scale. All CDSCO-approved, clinically validated, and integrated with Nera AI. Shop now from ₹2,499." });
+
   return (
     <SiteLayout>
       {/* Header */}

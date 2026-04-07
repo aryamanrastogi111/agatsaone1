@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, Check, ArrowRight, Bluetooth, Clock, ShieldCheck, Package, Mic, ChevronDown } from "lucide-react";
@@ -46,6 +47,8 @@ const relatedDevices = [
 ];
 
 export default function SanketLifeECGProduct() {
+  useSEO({ title: "SanketLife 12-Lead ECG Monitor — Hospital-Grade Portable ECG | Agatsa One", description: "12-lead ECG in your pocket. 98.15% sensitivity validated at Sri Jayadeva Institute. Arrhythmia detection, ST analysis, Nera AI reports. ₹4,999." });
+
   return (
     <SiteLayout>
       {/* Hero */}

@@ -1,8 +1,11 @@
+import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Truck, Clock, Globe, Package, MapPin, Mail, Phone } from "lucide-react";
 
 const ShippingPolicy = () => {
+  useSEO({ title: "Shipping Policy — Agatsa One", description: "Free shipping on all orders above ₹999. Pan-India delivery in 3-7 business days." });
+
   return (
     <SiteLayout>
       <div className="min-h-screen bg-background">

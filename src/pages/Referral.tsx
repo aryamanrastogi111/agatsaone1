@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { SiteLayout } from "@/components/SiteLayout";
+import { trackEvent } from "@/lib/analytics";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "https://agatsa-one-api-651017108992.asia-south1.run.app";
-
 const PLAY_STORE = "https://play.google.com/store/apps/details?id=com.agatsakone";
 const APP_STORE = "https://apps.apple.com/app/agatsa-one/id6670175601";
 
@@ -17,9 +18,7 @@ export default function ReferralPage() {
   useEffect(() => {
     if (!code) { setLoading(false); return; }
     localStorage.setItem("referralCode", code);
-    if ((window as any).gtag) {
-      (window as any).gtag("event", "referral_link_clicked", { code });
-    }
+    trackEvent("referral_page_view", { referral_code: code });
     fetch(`${API_BASE}/v1/referrals/info/${code}`)
       .then(r => r.json())
       .then(data => { if (data.name) setReferrerName(data.name); })
@@ -37,70 +36,74 @@ export default function ReferralPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-muted">
-        <div className="text-center">
-          <div className="h-8 w-8 mx-auto border-2 border-t-transparent rounded-full animate-spin mb-4" style={{ borderColor: "#7C4DFF", borderTopColor: "transparent" }} />
-          <p style={{ color: "#4A4A68" }}>Loading your invitation...</p>
+      <SiteLayout>
+        <div className="min-h-[70vh] flex items-center justify-center">
+          <div className="text-center space-y-4">
+            <Loader2 className="h-8 w-8 mx-auto animate-spin text-primary" />
+            <p className="text-muted-foreground">Loading your invitation...</p>
+          </div>
         </div>
-      </div>
+      </SiteLayout>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "linear-gradient(180deg, #F8F4FF 0%, #FFFFFF 100%)" }}>
-      <div className="bg-card rounded-3xl shadow-xl max-w-md w-full p-8 text-center space-y-6">
-        <span className="inline-block text-xs font-semibold px-4 py-1.5 rounded-full" style={{ background: "#F3EEFF", color: "#7C4DFF" }}>
-          🎁 You've been personally invited
-        </span>
+    <SiteLayout>
+      <div className="min-h-[70vh] flex items-center justify-center p-4 py-24" style={{ background: "linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 100%)" }}>
+        <div className="bg-card rounded-3xl shadow-xl max-w-md w-full p-8 text-center space-y-6">
+          <span className="inline-block text-xs font-semibold px-4 py-1.5 rounded-full bg-primary/10 text-primary">
+            🎁 You've been personally invited
+          </span>
 
-        <h1 className="text-2xl font-extrabold leading-tight" style={{ color: "#1A1A2E" }}>{headline}</h1>
+          <h1 className="text-2xl font-extrabold leading-tight text-foreground">{headline}</h1>
 
-        <p className="text-sm leading-relaxed" style={{ color: "#4A4A68" }}>
-          Agatsa One is India's most trusted AI health monitoring app. Your friend is already using it to monitor their heart, vitals, and wellbeing — and they want you to have the same peace of mind.
-        </p>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Agatsa One is India's most trusted AI health monitoring app. Your friend is already using it to monitor their heart, vitals, and wellbeing — and they want you to have the same peace of mind.
+          </p>
 
-        {/* Offer box */}
-        <div className="rounded-2xl p-6 border" style={{ background: "#F8F4FF", borderColor: "rgba(124,77,255,0.2)" }}>
-          <p className="text-lg font-extrabold" style={{ color: "#7C4DFF" }}>Your first month FREE</p>
-          <p className="text-sm mt-1" style={{ color: "#4A4A68" }}>Nera AI subscription — worth ₹599 — included when you download with this invite</p>
+          {/* Offer box */}
+          <div className="rounded-2xl p-6 border border-primary/20 bg-primary/5">
+            <p className="text-lg font-extrabold text-primary">Your first month FREE</p>
+            <p className="text-sm mt-1 text-muted-foreground">Nera AI subscription — worth ₹599 — included when you download with this invite</p>
+          </div>
+
+          {/* Code pill */}
+          {code && (
+            <button onClick={copyCode} className="mx-auto flex items-center gap-2 px-5 py-2.5 rounded-full border border-dashed border-primary transition-colors hover:bg-muted">
+              <span className="font-mono font-bold text-sm text-primary">{code}</span>
+              <span className="text-xs text-muted-foreground">tap to copy</span>
+            </button>
+          )}
+
+          {/* Benefits */}
+          <ul className="text-left space-y-2">
+            {["1 month of Nera AI free (worth ₹599)", "Full AI analysis on all your readings", "Weekly health reports from Nera"].map((b, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm">
+                <Check size={16} className="mt-0.5 shrink-0 text-green-500" />
+                <span className="text-foreground">{b}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* Download buttons */}
+          <div className="flex flex-col gap-3">
+            <a href={`${APP_STORE}${code ? `?referral=${code}` : ""}`} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("referral_download_click", { platform: "ios", referral_code: code })}>
+              <Button className="w-full rounded-full py-4 text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90">
+                Download for iOS — Free
+              </Button>
+            </a>
+            <a href={`${PLAY_STORE}${code ? `&referrer=referral_${code}` : ""}`} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("referral_download_click", { platform: "android", referral_code: code })}>
+              <Button variant="outline" className="w-full rounded-full py-4 text-sm font-semibold border-primary text-primary hover:bg-primary/5">
+                Download for Android — Free
+              </Button>
+            </a>
+          </div>
+
+          <p className="text-xs text-muted-foreground">
+            Offer valid for new Agatsa One users only. Free month applied after sign-up with referral code. Standard terms and conditions apply.
+          </p>
         </div>
-
-        {/* Code pill */}
-        {code && (
-          <button onClick={copyCode} className="mx-auto flex items-center gap-2 px-5 py-2.5 rounded-full border border-dashed transition-colors hover:bg-muted" style={{ borderColor: "#7C4DFF" }}>
-            <span className="font-mono font-bold text-sm" style={{ color: "#7C4DFF" }}>{code}</span>
-            <span className="text-xs" style={{ color: "#4A4A68" }}>tap to copy</span>
-          </button>
-        )}
-
-        {/* Benefits */}
-        <ul className="text-left space-y-2">
-          {["1 month of Nera AI free (worth ₹599)", "Full AI analysis on all your readings", "Weekly health reports from Nera"].map((b, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm">
-              <Check size={16} className="mt-0.5 shrink-0" style={{ color: "#22C55E" }} />
-              <span style={{ color: "#1A1A2E" }}>{b}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* Download buttons */}
-        <div className="flex flex-col gap-3">
-          <a href={`${APP_STORE}${code ? `?referral=${code}` : ""}`} target="_blank" rel="noopener noreferrer">
-            <Button className="w-full rounded-full py-4 text-sm font-semibold text-white" style={{ background: "#7C4DFF" }}>
-              Download on App Store
-            </Button>
-          </a>
-          <a href={`${PLAY_STORE}${code ? `&referrer=referral_${code}` : ""}`} target="_blank" rel="noopener noreferrer">
-            <Button variant="outline" className="w-full rounded-full py-4 text-sm font-semibold" style={{ borderColor: "#7C4DFF", color: "#7C4DFF" }}>
-              Get it on Google Play
-            </Button>
-          </a>
-        </div>
-
-        <p className="text-xs" style={{ color: "#9CA3AF" }}>
-          Offer valid for new Agatsa One users only. Free month applied after sign-up with referral code. Standard terms and conditions apply.
-        </p>
       </div>
-    </div>
+    </SiteLayout>
   );
 }

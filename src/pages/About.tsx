@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,8 @@ const regs = [
 ];
 
 export default function About() {
+  useSEO({ title: "About Agatsa — India's AI Health Monitoring Company | Nera AI", description: "Founded in 2015. CDSCO certified. 50,000+ users. Clinical validation at Sri Jayadeva and Medanta. Meet the team behind India's most trusted cardiac monitoring app." });
+
   return (
     <SiteLayout>
       {/* Hero */}

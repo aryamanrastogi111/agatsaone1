@@ -1,8 +1,11 @@
+import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Shield, Database, Share2, Lock, Mail, MapPin } from "lucide-react";
 
 const PrivacyPolicy = () => {
+  useSEO({ title: "Privacy Policy — Agatsa One", description: "Read how Agatsa collects, uses, and protects your personal data. CDSCO-compliant medical device data handling." });
+
   return (
     <SiteLayout>
       <div className="min-h-screen bg-background">

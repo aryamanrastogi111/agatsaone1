@@ -1,8 +1,11 @@
+import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { RefreshCw, CheckCircle, XCircle, Clock, Mail, Phone } from "lucide-react";
 
 const ReturnPolicy = () => {
+  useSEO({ title: "Return & Refund Policy — Agatsa One", description: "7-day return policy for manufacturing defects. EasyTouch Wellness has 30-day no-questions-asked returns." });
+
   return (
     <SiteLayout>
       <div className="min-h-screen bg-background">

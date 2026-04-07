@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -87,6 +88,8 @@ const CellValue = ({ v }: { v: string | boolean }) =>
     : <span className="text-sm">{v}</span>;
 
 export default function PricingPage() {
+  useSEO({ title: "Pricing — Free, ₹599/month, ₹3,999/year, Premium | Agatsa One", description: "Agatsa One is free to download. Nera AI subscription from ₹599/month. Annual plan saves 44%. Business plans from ₹4,999/month. No hidden fees. Cancel anytime." });
+
   const [tab, setTab] = useState<"individual" | "business">("individual");
   const [annual, setAnnual] = useState(true);
   const plans = individualPlans(annual);
