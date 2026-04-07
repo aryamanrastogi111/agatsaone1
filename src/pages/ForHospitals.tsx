@@ -181,7 +181,7 @@ export default function ForHospitalsPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="bg-[hsl(var(--dark-bg))] py-20">
+      <section className="bg-[#1A1A2E] py-20">
         <motion.div className="max-w-3xl mx-auto px-4 text-center" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-bold text-white">Ready to build the remote monitoring programme your patients deserve?</h2>
           <p className="mt-4 text-white/75 text-lg">Talk to our hospital partnerships team. We'll design the right deployment for your institution.</p>
