@@ -99,6 +99,42 @@ serve(async (req) => {
       }
     }
 
+    // Fire-and-forget: register device activation in Agatsa backend
+    const SKU_TO_DEVICE_TYPE: Record<string, string> = {
+      ecg_bundle: "ecg",
+      wellness_sub: "easytouch",
+      band_sub: "rhythm",
+      scale_sub: "scale",
+      bundle_ecg_band: "ecg",
+    };
+
+    const customerPhone = order?.customer_phone;
+    const allItems: { variant_id?: string; quantity?: number; productId?: string; sku?: string }[] =
+      items || order?.items || [];
+
+    if (customerPhone && allItems.length > 0) {
+      for (const item of allItems) {
+        const sku = item.sku || item.productId || "";
+        const deviceType = SKU_TO_DEVICE_TYPE[sku];
+        if (!deviceType) continue;
+        fetch(
+          "https://agatsa-one-api-651017108992.asia-south1.run.app/v1/device-activations/create",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-secret": Deno.env.get("AGATSA_ADMIN_SECRET") ?? "",
+            },
+            body: JSON.stringify({
+              phone: customerPhone,
+              deviceType,
+              deviceOrderId: razorpay_order_id,
+            }),
+          }
+        ).catch((err) => console.error("Failed to register device activation:", err));
+      }
+    }
+
     // Fire-and-forget: send order confirmation email
     const projectId = Deno.env.get("SUPABASE_PROJECT_ID") || SUPABASE_URL.split("//")[1]?.split(".")[0];
     if (projectId && customerEmail) {
