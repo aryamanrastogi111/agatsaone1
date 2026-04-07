@@ -37,7 +37,7 @@ export default function CookiePolicy() {
 
   return (
     <SiteLayout>
-      <section className="pt-28 pb-16 text-center" style={{ background: "linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 100%)" }}>
+      <section className="pt-16 pb-12 text-center" style={{ background: "linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 100%)" }}>
         <motion.div {...fade} className="max-w-3xl mx-auto px-4">
           <Cookie className="h-12 w-12 mx-auto text-primary mb-4" />
           <h1 className="text-4xl md:text-5xl font-extrabold text-foreground">Cookie Policy</h1>
