@@ -38,7 +38,7 @@ export default function About() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="pt-16 pb-12" style={{ background: "#1A1A2E" }}>
+      <section className="pt-8 pb-8" style={{ background: "#1A1A2E" }}>
         <div className="max-w-7xl mx-auto px-4 text-center">
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>OUR MISSION</span>

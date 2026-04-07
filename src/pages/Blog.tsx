@@ -8,7 +8,7 @@ const Blog = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative py-12 md:py-16 bg-gradient-to-b from-cyan-50/60 to-background">
+      <section className="relative py-8 md:py-10 bg-gradient-to-b from-cyan-50/60 to-background">
         <div className="container text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}

@@ -97,7 +97,7 @@ export default function PricingPage() {
   return (
     <SiteLayout>
       {/* Header */}
-      <section className="pt-16 pb-10 bg-background">
+      <section className="pt-8 pb-8 bg-background">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <h1 className="font-extrabold leading-tight" style={{ color: "#1A1A2E", fontSize: "clamp(34px,4vw,52px)" }}>

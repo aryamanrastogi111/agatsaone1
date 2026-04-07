@@ -64,7 +64,7 @@ export default function RhythmBandProduct() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="pt-16 pb-12 bg-background">
+      <section className="pt-8 pb-8 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="text-sm text-muted-foreground mb-6">
             <Link to="/devices" className="hover:text-primary">Devices</Link>

@@ -258,7 +258,7 @@ export default function DevicesPage() {
   return (
     <SiteLayout>
       {/* Header */}
-      <section className="pt-16 pb-12 bg-background text-center">
+      <section className="pt-8 pb-8 bg-background text-center">
         <div className="max-w-3xl mx-auto px-4">
           <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
             Medical Devices
