@@ -74,7 +74,8 @@ const App = () => (
         <Routes>
           {/* Public marketing pages */}
           <Route path="/" element={<Home />} />
-          <Route path="/devices" element={<DevicesPage />} />
+<Route path="/devices" element={<DevicesPage />} />
+          <Route path="/devices/sanketlife-ecg" element={<SanketLifeECGProduct />} />
           <Route path="/programmes" element={<ProgrammesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/about" element={<About />} />
