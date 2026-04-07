@@ -4,6 +4,7 @@ import { Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { SiteLayout } from "@/components/SiteLayout";
+import { trackEvent } from "@/lib/analytics";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "https://agatsa-one-api-651017108992.asia-south1.run.app";
 const PLAY_STORE = "https://play.google.com/store/apps/details?id=com.agatsakone";
@@ -17,6 +18,7 @@ export default function ReferralPage() {
   useEffect(() => {
     if (!code) { setLoading(false); return; }
     localStorage.setItem("referralCode", code);
+    trackEvent("referral_page_view", { referral_code: code });
     fetch(`${API_BASE}/v1/referrals/info/${code}`)
       .then(r => r.json())
       .then(data => { if (data.name) setReferrerName(data.name); })

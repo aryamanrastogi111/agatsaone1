@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { SiteLayout } from "@/components/SiteLayout";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { Activity, Loader2, AlertCircle, XCircle } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "https://agatsa-one-api-651017108992.asia-south1.run.app";
 
@@ -71,14 +72,16 @@ export default function DeviceActivationPage() {
     fetch(`${API_BASE}/v1/device-activations/${code}`)
       .then((r) => r.json())
       .then((data) => {
-        if (data.error) { setInvalid(true); return; }
+        if (data.error) { setInvalid(true); trackEvent("device_activation_view", { device_type: "unknown", code_valid: false }); return; }
         setDeviceType(data.deviceType);
         setRedeemed(data.redeemed);
+        trackEvent("device_activation_view", { device_type: data.deviceType, code_valid: true });
         if (!data.redeemed) {
+          trackEvent("deep_link_attempt", { device_type: data.deviceType });
           window.location.href = `agatsaone://activate?device=${data.deviceType}&code=${code}`;
         }
       })
-      .catch(() => setInvalid(true))
+      .catch(() => { setInvalid(true); trackEvent("device_activation_view", { device_type: "unknown", code_valid: false }); })
       .finally(() => setLoading(false));
   }, [code]);
 
