@@ -61,10 +61,10 @@ const devices: DeviceData[] = [
   {
     id: "easytouch-wellness",
     image: easytouchImg,
-    badge: "Medanta Validated",
+    badge: "15,000 Users",
     name: "EasyTouch Wellness Optical Monitor",
     tagline: "Glucose, BP, SpO2 — no needles, no cuffs",
-    keyStat: "98.56% validated at Medanta — The Medicity, Gurugram",
+    keyStat: "98.56% validated at 15,000+ users across India",
     price: "₹3,499",
     priceNum: "3,499",
     rating: "4.6",

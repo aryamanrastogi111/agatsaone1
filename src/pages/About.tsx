@@ -18,7 +18,7 @@ const milestones = [
   { year: "2017", text: "First clinical validation at Sri Jayadeva Institute. 98.15% ECG sensitivity confirmed." },
   { year: "2018", text: "CDSCO Class B Medical Device license received. Commercial launch." },
   { year: "2020", text: "10,000 users milestone. EasyTouch Wellness Monitor launched." },
-  { year: "2022", text: "Medanta clinical validation for optical monitoring (98.56%)." },
+  { year: "2022", text: "Clinical validation across 15,000 users for optical monitoring (98.56%)." },
   { year: "2023", text: "Agatsa One app launched — unifying all devices in one platform." },
   { year: "2024", text: "50,000 users. Nera AI engine launched. Delaware C-Corp (Nera AI Inc.) incorporated." },
   { year: "2025", text: "Nera voice assistant launched. Care Programmes launched. B2B SaaS platform launched." },
@@ -28,12 +28,12 @@ const milestones = [
 const regs = [
   { title: "CDSCO License", sub: "MFG/MD/2023/000231", body: "Class B Medical Device under Medical Devices Rules, 2017" },
   { title: "ISO 13485", sub: "Quality Management", body: "ISO 13485-compliant manufacturing quality management system" },
-  { title: "Clinical Validation", sub: "Two independent studies", body: "Sri Jayadeva Institute (ECG, 2022) — 98.15% sensitivity. Medanta — The Medicity (optical monitoring, 2023) — 98.56% accuracy." },
+  { title: "Clinical Validation", sub: "Two independent studies", body: "Sri Jayadeva Institute (ECG, 2022) — 98.15% sensitivity. 15,000-user validation study (optical monitoring, 2023) — 98.56% accuracy." },
   { title: "Data Privacy", sub: "DPDP Act compliant", body: "India's Digital Personal Data Protection Act (2023). Data stored on Indian servers. No data sold to third parties." },
 ];
 
 export default function About() {
-  useSEO({ title: "About Agatsa — India's AI Health Monitoring Company | Nera AI", description: "Founded in 2015. CDSCO certified. 50,000+ users. Clinical validation at Sri Jayadeva and Medanta. Meet the team behind India's most trusted cardiac monitoring app." });
+  useSEO({ title: "About Agatsa — India's AI Health Monitoring Company | Nera AI", description: "Founded in 2015. CDSCO certified. 50,000+ users. Clinical validation at Sri Jayadeva and 15,000-user studies. Meet the team behind India's most trusted cardiac monitoring app." });
 
   return (
     <SiteLayout>

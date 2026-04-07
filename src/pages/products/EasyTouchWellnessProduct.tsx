@@ -32,7 +32,7 @@ const boxItems = [
 ];
 
 const faqs = [
-  { q: "How accurate is the optical glucose measurement?", a: "The EasyTouch Wellness optical glucose feature provides an estimate validated at 98.56% accuracy at Medanta. It is highly reliable for trend monitoring — seeing whether your glucose is rising, stable, or falling after meals. For clinical decisions, always confirm with a certified glucometer or HbA1c test as advised by your doctor." },
+  { q: "How accurate is the optical glucose measurement?", a: "The EasyTouch Wellness optical glucose feature provides an estimate validated at 98.56% accuracy across 15,000 users. It is highly reliable for trend monitoring — seeing whether your glucose is rising, stable, or falling after meals. For clinical decisions, always confirm with a certified glucometer or HbA1c test as advised by your doctor." },
   { q: "Does it replace a traditional glucometer?", a: "For daily trend monitoring, the EasyTouch is far more convenient — no test strips, no needle pricks. For precise readings required for insulin dosing decisions, your doctor may recommend periodic fingerprick confirmation. Nera AI makes it easy to track both simultaneously." },
   { q: "Who should use the EasyTouch Wellness?", a: "Anyone managing or at risk of diabetes, hypertension, or cardiovascular disease. It's particularly powerful for Type 2 diabetics, pre-diabetics, and anyone with elevated BP who wants daily visibility without the discomfort of traditional fingerprick monitoring." },
   { q: "Does the app show my glucose trend over time?", a: "Yes. Nera AI builds a full glucose trend graph, shows post-meal impact scoring when you log meals, and provides a predicted HbA1c estimate based on 30 days of readings. This is one of the most useful features for diabetic patients." },
@@ -46,7 +46,7 @@ const relatedDevices = [
 ];
 
 export default function EasyTouchWellnessProduct() {
-  useSEO({ title: "EasyTouch Wellness — Optical Glucose, BP, SpO2 Monitor | Agatsa One", description: "Non-invasive glucose monitoring with no needles. Plus BP, SpO2, HRV, and 5 more vitals. 98.56% validated at Medanta. ₹3,499. Works with Nera AI." });
+  useSEO({ title: "EasyTouch Wellness — Optical Glucose, BP, SpO2 Monitor | Agatsa One", description: "Non-invasive glucose monitoring with no needles. Plus BP, SpO2, HRV, and 5 more vitals. Validated by 15,000 users. ₹3,499. Works with Nera AI." });
 
   return (
     <SiteLayout>
@@ -64,7 +64,7 @@ export default function EasyTouchWellnessProduct() {
 
             <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
               <span className="inline-block text-sm font-medium text-white bg-[hsl(217,82%,50%)] rounded-full px-4 py-1.5 mb-4">
-                Medanta Validated
+                15,000 Users
               </span>
 
               <h1 className="text-3xl md:text-5xl font-extrabold text-foreground leading-tight">
@@ -111,7 +111,7 @@ export default function EasyTouchWellnessProduct() {
       <section className="bg-[hsl(260,100%,97%)] py-10">
         <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           {[
-            { big: "98.56%", label: "Validation Accuracy", sub: "Medanta, Gurugram" },
+            { big: "98.56%", label: "Validation Accuracy", sub: "15,000+ users" },
             { big: "8 Vitals", label: "In one reading", sub: "Glucose, BP, SpO2 + 5 more" },
             { big: "60 Seconds", label: "Complete reading time", sub: "No needles, no prep" },
           ].map((s) => (
@@ -165,10 +165,10 @@ export default function EasyTouchWellnessProduct() {
         <div className="max-w-[800px] mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-10">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Clinical Validation</p>
-            <h2 className="text-3xl font-bold text-foreground">Validated at Medanta — The Medicity</h2>
+            <h2 className="text-3xl font-bold text-foreground">Validated by 15,000 Users</h2>
           </motion.div>
           <motion.div {...fadeUp} className="bg-[hsl(260,100%,97%)] rounded-3xl p-8 md:p-10">
-            <h3 className="text-lg font-bold text-foreground">Medanta — The Medicity, Gurugram</h3>
+            <h3 className="text-lg font-bold text-foreground">15,000+ users across India</h3>
             <table className="w-full mt-6 text-sm">
               <tbody>
                 {[
@@ -187,7 +187,7 @@ export default function EasyTouchWellnessProduct() {
               <p className="text-sm text-muted-foreground italic">
                 "Optical monitoring parameters including SpO2 and pulse rate showed high concordance with reference standard measurements across a diverse patient population."
               </p>
-              <footer className="mt-3 text-xs font-medium text-foreground">— Medanta Clinical Study</footer>
+              <footer className="mt-3 text-xs font-medium text-foreground">— User Validation Study</footer>
             </blockquote>
           </motion.div>
         </div>
