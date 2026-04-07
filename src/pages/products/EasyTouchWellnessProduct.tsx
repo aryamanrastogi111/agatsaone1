@@ -25,7 +25,7 @@ const steps = [
 
 const boxItems = [
   "EasyTouch Wellness device (1 unit)",
-  "USB-C charging cable",
+  "2× AAA batteries (included)",
   "Quick start guide (English + Hindi)",
   "1-year manufacturer warranty card",
 ];
