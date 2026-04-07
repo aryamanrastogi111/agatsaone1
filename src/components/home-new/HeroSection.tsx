@@ -42,7 +42,7 @@ export function HeroSection() {
           <div className="space-y-8">
             <motion.div {...stagger(0)}>
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-muted text-sm font-medium text-muted-foreground">
-                🏥 Trusted by 50,000+ users across India
+                🏥 Trusted by 2.1 Lac+ users across India
               </span>
             </motion.div>
 
@@ -89,7 +89,7 @@ export function HeroSection() {
             >
               <span>98.15% ECG accuracy</span>
               <span className="text-border">|</span>
-              <span>50,000+ users</span>
+              <span>2.1 Lac+ users</span>
               <span className="text-border">|</span>
               <span>CDSCO Class B certified</span>
               <span className="text-border hidden md:inline">|</span>

@@ -20,9 +20,9 @@ const milestones = [
   { year: "2020", text: "10,000 users milestone. EasyTouch Wellness Monitor launched." },
   { year: "2022", text: "Clinical validation across 15,000 users for optical monitoring (98.56%)." },
   { year: "2023", text: "Agatsa One app launched — unifying all devices in one platform." },
-  { year: "2024", text: "50,000 users. Nera AI engine launched. Delaware C-Corp (Nera AI Inc.) incorporated." },
+  { year: "2024", text: "2.1 Lac+ users. Nera AI engine launched. Delaware C-Corp (Nera AI Inc.) incorporated." },
   { year: "2025", text: "Nera voice assistant launched. Care Programmes launched. B2B SaaS platform launched." },
-  { year: "2026", text: "50,000+ users. Worldwide app availability. Camp screening. AI multimodal pipeline live." },
+  { year: "2026", text: "2.1 Lac+ users. Worldwide app availability. Camp screening. AI multimodal pipeline live." },
 ];
 
 const regs = [
@@ -33,7 +33,7 @@ const regs = [
 ];
 
 export default function About() {
-  useSEO({ title: "About Agatsa — India's AI Health Monitoring Company | Nera AI", description: "Founded in 2015. CDSCO certified. 50,000+ users. Clinical validation at Sri Jayadeva and 15,000-user studies. Meet the team behind India's most trusted cardiac monitoring app." });
+  useSEO({ title: "About Agatsa — India's AI Health Monitoring Company | Nera AI", description: "Founded in 2015. CDSCO certified. 2.1 Lac+ users. Clinical validation at Sri Jayadeva and 15,000-user studies. Meet the team behind India's most trusted cardiac monitoring app." });
 
   return (
     <SiteLayout>
@@ -68,7 +68,7 @@ export default function About() {
               Agatsa was founded in 2014 by engineers and doctors who watched too many people die from conditions that were perfectly detectable — if only they had access to the right tools. The SanketLife ECG began as a clinical research project at IIT Delhi, designed to bring hospital-grade cardiac monitoring to remote villages. It was validated in ICUs. It was used in emergency rooms. Then we asked: why should this technology only be available in hospitals?
             </p>
             <p className="mt-4 text-base leading-relaxed" style={{ color: "#4A4A68" }}>
-              Today, SanketLife is used by more than 50,000 individuals — from cardiac ICU patients to village health workers to busy executives who want to know their hearts are okay. The next chapter — Agatsa One — brings everything together: devices, AI, data, and community. One app. One AI. One health story.
+              Today, SanketLife is used by more than 2.1 Lac+ individuals — from cardiac ICU patients to village health workers to busy executives who want to know their hearts are okay. The next chapter — Agatsa One — brings everything together: devices, AI, data, and community. One app. One AI. One health story.
             </p>
           </motion.div>
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -129,7 +129,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4">
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
             <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>OUR JOURNEY</span>
-            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>From a Delhi garage to 50,000 users.</h2>
+            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>From a Delhi garage to 2.1 Lac+ users.</h2>
           </motion.div>
           <div className="relative max-w-3xl mx-auto">
             <div className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5" style={{ background: "#7C4DFF", opacity: 0.2 }} />
@@ -188,7 +188,7 @@ export default function About() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <h2 className="text-3xl md:text-4xl font-extrabold text-white">Be part of the mission.</h2>
-            <p className="mt-4 text-lg text-white/80">Join 50,000+ users taking control of their cardiac health.</p>
+            <p className="mt-4 text-lg text-white/80">Join 2.1 Lac+ users taking control of their cardiac health.</p>
             <Link to="/app"><Button className="mt-8 rounded-full px-10 py-5 text-base font-semibold" style={{ background: "white", color: "#7C4DFF" }}>Download Agatsa One Free</Button></Link>
           </motion.div>
         </div>

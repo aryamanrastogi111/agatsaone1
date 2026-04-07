@@ -40,7 +40,7 @@ export function TestimonialsSection() {
             What Users Say
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            50,000 users. Real stories. Real results.
+            2.1 Lac+ users. Real stories. Real results.
           </h2>
         </motion.div>
 

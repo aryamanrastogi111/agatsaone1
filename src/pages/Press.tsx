@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 const fade = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
 const pressHighlights = [
-  { date: "March 2025", title: "Agatsa One crosses 50,000 users across India", source: "Company Announcement" },
+  { date: "March 2025", title: "Agatsa One crosses 2.1 Lac+ users across India", source: "Company Announcement" },
   { date: "January 2025", title: "Nera AI voice health assistant launches in public beta", source: "Product Launch" },
   { date: "November 2024", title: "SanketLife ECG validated at 98.15% sensitivity — Sri Jayadeva Institute", source: "Clinical Validation" },
   { date: "September 2024", title: "EasyTouch Wellness metabolic health monitor — 15,000 active users", source: "Clinical Validation" },
@@ -43,7 +43,7 @@ export default function Press() {
       <section className="py-12 bg-background">
         <div className="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
-            { stat: "50,000+", label: "Users" },
+            { stat: "2.1 Lac+", label: "Users" },
             { stat: "2015", label: "Founded" },
             { stat: "98.15%", label: "ECG Sensitivity" },
             { stat: "CDSCO", label: "Class B Certified" },
