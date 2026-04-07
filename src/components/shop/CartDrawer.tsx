@@ -97,8 +97,14 @@ function CustomModal({
   return createPortal(modal, document.body);
 }
 
-export const CartDrawer = () => {
+export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: boolean; onExternalClose?: () => void } = {}) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const cartOpen = externalOpen || isOpen;
+  const setCartOpen = (open: boolean) => {
+    setIsOpen(open);
+    if (!open && onExternalClose) onExternalClose();
+  };
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
   const [successData, setSuccessData] = useState<SuccessData | null>(null);
@@ -132,7 +138,7 @@ export const CartDrawer = () => {
 
   const handleProceedToCheckout = () => {
     if (items.length === 0) return;
-    setIsOpen(false);
+    setCartOpen(false);
     setTimeout(() => setCheckoutOpen(true), 200);
   };
 
@@ -276,7 +282,7 @@ export const CartDrawer = () => {
         variant="outline"
         size="icon"
         className="relative"
-        onClick={() => setIsOpen(true)}
+        onClick={() => setCartOpen(true)}
       >
         <ShoppingCart className="h-5 w-5" />
         {totalItems > 0 && (
@@ -287,7 +293,7 @@ export const CartDrawer = () => {
       </Button>
 
       {/* Cart drawer */}
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <Sheet open={cartOpen} onOpenChange={setCartOpen}>
         <SheetContent className="w-full sm:max-w-md flex flex-col h-full p-0">
           <SheetHeader className="flex-shrink-0 p-6 pb-4 border-b">
             <SheetTitle className="flex items-center gap-2">
