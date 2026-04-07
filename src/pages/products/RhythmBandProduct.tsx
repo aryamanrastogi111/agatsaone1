@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, ArrowRight, Package } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import rhythmHero from "@/assets/easytouch-rhythm-new.png";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
@@ -57,7 +58,7 @@ export default function RhythmBandProduct() {
             <span className="text-foreground font-medium">EasyTouch Rhythm Band</span>
           </nav>
           <div className="grid lg:grid-cols-[55%_45%] gap-12 items-center">
-            <motion.img {...fadeUp} src="https://placehold.co/560x440/00C853/FFFFFF?text=Rhythm+Band" alt="EasyTouch Rhythm Wellness Band" className="w-full rounded-3xl shadow-2xl" />
+            <motion.img {...fadeUp} src={rhythmHero} alt="EasyTouch Rhythm Wellness Band" className="w-full rounded-3xl shadow-2xl" />
             <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
               <h1 className="text-3xl md:text-5xl font-extrabold text-foreground leading-tight">EasyTouch Rhythm Wellness Band</h1>
               <p className="text-xl md:text-2xl font-bold text-green-600 dark:text-green-400 mt-3">24/7 health monitoring that never sleeps.</p>

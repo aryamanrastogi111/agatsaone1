@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, ArrowRight, Package } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import scaleHero from "@/assets/corebalance-hero.png";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
@@ -62,7 +63,7 @@ export default function SmartScaleProduct() {
             <span className="text-foreground font-medium">Agatsa Smart Scale</span>
           </nav>
           <div className="grid lg:grid-cols-[55%_45%] gap-12 items-center">
-            <motion.img {...fadeUp} src="https://placehold.co/560x440/FF6D00/FFFFFF?text=Smart+Scale" alt="Agatsa Smart Scale" className="w-full rounded-3xl shadow-2xl" />
+            <motion.img {...fadeUp} src={scaleHero} alt="Agatsa Smart Scale" className="w-full rounded-3xl shadow-2xl" />
             <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
               <h1 className="text-3xl md:text-5xl font-extrabold text-foreground leading-tight">Agatsa Smart Scale</h1>
               <p className="text-xl md:text-2xl font-bold text-orange-500 dark:text-orange-400 mt-3">Step on. Know everything.</p>
