@@ -283,9 +283,9 @@ const ShippingPolicy = () => {
                     For any shipping-related queries, please reach out to our support team:
                   </p>
                   <div className="space-y-3">
-                    <a href="mailto:care@agatsa.com" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
+                    <a href="mailto:info@agatsa.com" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
                       <Mail className="h-5 w-5 text-primary" />
-                      care@agatsa.com
+                      info@agatsa.com
                     </a>
                   </div>
                 </div>

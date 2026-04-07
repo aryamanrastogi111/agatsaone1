@@ -83,7 +83,7 @@ export default function Demo() {
               ))}
             </ul>
             <div className="bg-card border border-border rounded-xl p-4 mt-6">
-              <p className="text-sm text-muted-foreground"><span className="font-semibold text-foreground">Need help?</span><br />Email us at <a href="mailto:care@agatsa.com" className="text-primary font-medium">care@agatsa.com</a></p>
+              <p className="text-sm text-muted-foreground"><span className="font-semibold text-foreground">Need help?</span><br />Email us at <a href="mailto:info@agatsa.com" className="text-primary font-medium">info@agatsa.com</a></p>
             </div>
           </motion.div>
         </div>

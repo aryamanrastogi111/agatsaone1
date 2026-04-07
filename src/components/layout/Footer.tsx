@@ -47,9 +47,9 @@ export const Footer = forwardRef<HTMLElement>((_, ref) => {
               Smart, non-invasive health devices designed to help you understand your body better — at home and on the go.
             </p>
             <div className="flex flex-col gap-3 text-sm">
-              <a href="mailto:care@agatsa.com" className="flex items-center gap-2 hover:text-primary transition-colors">
+              <a href="mailto:info@agatsa.com" className="flex items-center gap-2 hover:text-primary transition-colors">
                 <Mail className="h-4 w-4" />
-                care@agatsa.com
+                info@agatsa.com
               </a>
               <div className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 mt-0.5" />

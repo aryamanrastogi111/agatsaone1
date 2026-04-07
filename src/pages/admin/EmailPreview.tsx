@@ -112,7 +112,7 @@ function buildCustomerHtml(data: typeof SAMPLE) {
           <table width="100%" cellpadding="0" cellspacing="0" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;">
             <tr><td style="padding:16px 18px;">
               <p style="margin:0 0 4px;font-size:14px;color:#1e40af;font-weight:700;">Need help with your order?</p>
-              <p style="margin:0;font-size:13px;color:#1d4ed8;">Email us at <a href="mailto:care@agatsa.com" style="color:#0ea5e9;text-decoration:none;font-weight:600;">care@agatsa.com</a></p>
+              <p style="margin:0;font-size:13px;color:#1d4ed8;">Email us at <a href="mailto:info@agatsa.com" style="color:#0ea5e9;text-decoration:none;font-weight:600;">info@agatsa.com</a></p>
             </td></tr>
           </table>
         </td></tr>

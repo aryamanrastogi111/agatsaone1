@@ -381,8 +381,8 @@ const Support = () => {
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground">Email</h3>
-                    <a href="mailto:care@agatsa.com" className="text-primary hover:underline">
-                      care@agatsa.com
+                    <a href="mailto:info@agatsa.com" className="text-primary hover:underline">
+                      info@agatsa.com
                     </a>
                     <p className="text-sm text-muted-foreground">
                       We respond within 24 hours
