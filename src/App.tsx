@@ -25,6 +25,10 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import ShippingPolicy from "./pages/ShippingPolicy";
+import ReturnPolicy from "./pages/ReturnPolicy";
+import DataDeletion from "./pages/DataDeletion";
+import Support from "./pages/Support";
 import NotFound from "./pages/NotFound";
 
 // SDK Portal Pages
@@ -93,6 +97,10 @@ const App = () => (
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/shipping-policy" element={<ShippingPolicy />} />
+          <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/data-deletion" element={<DataDeletion />} />
+          <Route path="/support" element={<Support />} />
 
           {/* Deep link pages */}
           <Route path="/d/:code" element={<DeviceActivation />} />

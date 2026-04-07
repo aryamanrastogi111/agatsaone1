@@ -1,4 +1,4 @@
-import { Layout } from "@/components/layout/Layout";
+import { SiteLayout } from "@/components/SiteLayout";
 import { Trash2, ShieldCheck, Clock, AlertCircle, Mail } from "lucide-react";
 
 const DATA_TYPES = [
@@ -12,7 +12,7 @@ const DATA_TYPES = [
 
 export default function DataDeletion() {
   return (
-    <Layout>
+    <SiteLayout>
       <div className="min-h-screen bg-background">
         {/* Header */}
         <section className="border-b border-border bg-muted/40 py-14">
@@ -103,6 +103,6 @@ export default function DataDeletion() {
 
         </div>
       </div>
-    </Layout>
+    </SiteLayout>
   );
 }

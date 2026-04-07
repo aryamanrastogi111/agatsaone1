@@ -1,10 +1,10 @@
-import { Layout } from "@/components/layout/Layout";
+import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { FileText, User, ShoppingCart, Shield, Scale, Mail, MapPin } from "lucide-react";
 
 const TermsOfService = () => {
   return (
-    <Layout>
+    <SiteLayout>
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-16 md:py-24">
@@ -408,7 +408,7 @@ const TermsOfService = () => {
           </div>
         </section>
       </div>
-    </Layout>
+    </SiteLayout>
   );
 };
 

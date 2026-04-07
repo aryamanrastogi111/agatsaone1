@@ -1,10 +1,10 @@
-import { Layout } from "@/components/layout/Layout";
+import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Shield, Database, Share2, Lock, Mail, MapPin } from "lucide-react";
 
 const PrivacyPolicy = () => {
   return (
-    <Layout>
+    <SiteLayout>
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-16 md:py-24">
@@ -348,7 +348,7 @@ const PrivacyPolicy = () => {
           </div>
         </section>
       </div>
-    </Layout>
+    </SiteLayout>
   );
 };
 
