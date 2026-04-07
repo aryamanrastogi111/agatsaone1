@@ -39,7 +39,7 @@ export default function ForDoctorsPage() {
 
   return (
     <SiteLayout>
-      <section className="pt-28 pb-16 bg-gradient-to-b from-background to-[hsl(260,100%,97%)]">
+      <section className="pt-16 pb-12 bg-gradient-to-b from-background to-[hsl(260,100%,97%)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeUp}>
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">For Doctors & Clinics</p>
