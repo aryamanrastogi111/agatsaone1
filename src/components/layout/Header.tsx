@@ -52,7 +52,7 @@ export function Header() {
           <div className="w-px h-4 bg-border" />
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <Button asChild variant="ghost" size="sm" className="text-cyan-600 hover:text-cyan-700 hover:bg-cyan-50 gap-1.5">
-              <Link to="/products/zlu">
+              <Link to="/devices">
                 <Moon className="h-3.5 w-3.5" />
                 Zlu
               </Link>
@@ -60,7 +60,7 @@ export function Header() {
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <Button asChild variant="ghost" size="sm" className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 gap-1.5">
-              <Link to="/products/corebalance">
+              <Link to="/devices/smart-scale">
                 <Scale className="h-3.5 w-3.5" />
                 CoreBalance
               </Link>
@@ -68,7 +68,7 @@ export function Header() {
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <Button asChild variant="ghost" size="sm" className="text-primary hover:text-primary hover:bg-primary/10 gap-1.5">
-              <Link to="/products/easytouch-rhythm">
+              <Link to="/devices/rhythm-band">
                 <Activity className="h-3.5 w-3.5" />
                 Rhythm
               </Link>
@@ -76,7 +76,7 @@ export function Header() {
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <Button asChild variant="ghost" size="sm" className="text-teal-600 hover:text-teal-700 hover:bg-teal-50 gap-1.5">
-              <Link to="/products/easytouch-plus">
+              <Link to="/devices/easytouch-wellness">
                 <Activity className="h-3.5 w-3.5" />
                 EasyTouch Wellness
               </Link>
@@ -84,7 +84,7 @@ export function Header() {
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <Button asChild variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50 gap-1.5">
-              <Link to="/products/sanketlife">
+              <Link to="/devices/sanketlife-ecg">
                 <Heart className="h-3.5 w-3.5" />
                 SanketLife
               </Link>
@@ -230,7 +230,7 @@ export function Header() {
                   transition={{ delay: 0.25 }}
                 >
                   <Link
-                    to="/products/zlu"
+                    to="/devices"
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-cyan-600 hover:bg-cyan-50 transition-colors"
                   >
@@ -244,7 +244,7 @@ export function Header() {
                   transition={{ delay: 0.3 }}
                 >
                   <Link
-                    to="/products/corebalance"
+                    to="/devices/smart-scale"
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-emerald-600 hover:bg-emerald-50 transition-colors"
                   >
@@ -258,7 +258,7 @@ export function Header() {
                   transition={{ delay: 0.35 }}
                 >
                   <Link
-                    to="/products/easytouch-rhythm"
+                    to="/devices/rhythm-band"
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-primary hover:bg-primary/10 transition-colors"
                   >
@@ -272,7 +272,7 @@ export function Header() {
                   transition={{ delay: 0.37 }}
                 >
                   <Link
-                    to="/products/easytouch-plus"
+                    to="/devices/easytouch-wellness"
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-teal-600 hover:bg-teal-50 transition-colors"
                   >
@@ -286,7 +286,7 @@ export function Header() {
                   transition={{ delay: 0.4 }}
                 >
                   <Link
-                    to="/products/sanketlife"
+                    to="/devices/sanketlife-ecg"
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
                   >

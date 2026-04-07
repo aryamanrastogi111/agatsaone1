@@ -74,7 +74,7 @@ export function ProductHighlightCoreBalance() {
 
             <div className="flex flex-wrap gap-4 items-center">
               <Button asChild size="lg" className="bg-emerald-600 hover:bg-emerald-700">
-                <Link to="/products/corebalance" className="flex items-center gap-2">
+                <Link to="/devices/smart-scale" className="flex items-center gap-2">
                   Explore CoreBalance
                   <ArrowRight className="h-4 w-4" />
                 </Link>
