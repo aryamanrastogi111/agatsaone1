@@ -148,7 +148,7 @@ export default function ForDoctorsPage() {
               </a>
             </div>
           </motion.div>
-          <motion.img {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} src="https://placehold.co/580x420/1A1A2E/7C4DFF?text=Provider+Portal" alt="Agatsa One Provider Portal" className="w-full rounded-3xl shadow-2xl" />
+          <motion.img {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} src={providerPortalImg} alt="Agatsa One Provider Portal Dashboard" className="w-full rounded-3xl shadow-2xl" />
         </div>
       </section>
 
