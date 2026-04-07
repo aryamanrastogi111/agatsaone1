@@ -62,7 +62,7 @@ export function HeroSection() {
               {...stagger(2)}
               className="text-base md:text-lg text-muted-foreground max-w-[580px] leading-relaxed"
             >
-              Agatsa One connects to medical-grade ECG, glucose, and vital monitors — then
+              Agatsa One connects to medical-grade ECG, metabolic health, and vital monitors — then
               uses Nera AI to understand your health, spot risks early, and guide you every
               day. Not just data. Intelligence.
             </motion.p>
