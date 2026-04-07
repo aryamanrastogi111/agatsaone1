@@ -14,7 +14,7 @@ const testimonials = [
     location: "Hyderabad, Telangana",
     meta: "Diabetologist",
     quote:
-      "I recommend Agatsa One to all my diabetic patients with cardiac risk. The combined glucose and ECG monitoring gives me a picture I simply can't get from quarterly HbA1c tests. My patients are more engaged with their health, and I can actually intervene early instead of reacting to crises.",
+      "I recommend Agatsa One to all my diabetic patients with cardiac risk. The combined metabolic and ECG monitoring gives me a picture I simply can't get from quarterly HbA1c tests. My patients are more engaged with their health, and I can actually intervene early instead of reacting to crises.",
   },
   {
     name: "Sunita Mehta",

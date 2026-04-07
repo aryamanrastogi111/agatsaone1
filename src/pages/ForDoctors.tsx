@@ -35,7 +35,7 @@ const plans = [
 ];
 
 export default function ForDoctorsPage() {
-  useSEO({ title: "Remote Patient Monitoring for Doctors — Agatsa One Provider Platform", description: "Monitor your patients between appointments. Review ECGs, glucose trends, and BP data in your provider portal. Free to join. Start in 10 minutes." });
+  useSEO({ title: "Remote Patient Monitoring for Doctors — Agatsa One Provider Platform", description: "Monitor your patients between appointments. Review ECGs, metabolic trends, and BP data in your provider portal. Free to join. Start in 10 minutes." });
 
   return (
     <SiteLayout>
@@ -48,7 +48,7 @@ export default function ForDoctorsPage() {
               <br className="hidden md:block" /> Finally.
             </h1>
             <p className="text-lg text-muted-foreground mt-4 max-w-[520px]">
-              Your patient's ECG from last Thursday. Their glucose trend over the past 30 days. Their BP at 2 AM. Their sleep quality the night before they came to you complaining of fatigue. Agatsa One gives you the data you've always wanted but never had — without adding a single minute to your workflow.
+              Your patient's ECG from last Thursday. Their metabolic trend over the past 30 days. Their BP at 2 AM. Their sleep quality the night before they came to you complaining of fatigue. Agatsa One gives you the data you've always wanted but never had — without adding a single minute to your workflow.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-8">
               <Button className="rounded-full px-8 py-4 text-base">Book a Demo</Button>

@@ -49,7 +49,7 @@ const faqs = [
 
 const relatedDevices = [
   { name: "EasyTouch Rhythm Band", desc: "Add 24/7 activity and sleep monitoring", link: "/devices/rhythm-band" },
-  { name: "EasyTouch Wellness", desc: "Add glucose and BP monitoring", link: "/devices/easytouch-wellness" },
+  { name: "EasyTouch Wellness", desc: "Add metabolic health and BP monitoring", link: "/devices/easytouch-wellness" },
   { name: "SanketLife ECG", desc: "Add cardiac monitoring for the complete picture", link: "/devices/sanketlife-ecg" },
 ];
 

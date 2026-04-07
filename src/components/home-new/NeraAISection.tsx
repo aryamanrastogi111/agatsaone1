@@ -22,14 +22,14 @@ const features = [
     emoji: "🎙️",
     title: "Talk to Nera",
     description:
-      "Ask Nera anything about your health — 'Was my ECG normal yesterday?', 'Why is my glucose high after lunch?', 'Is my BP trend improving?' — and get answers grounded in your actual data. Available on Nera AI Premium.",
+      "Ask Nera anything about your health — 'Was my ECG normal yesterday?', 'Why is my metabolic load high after lunch?', 'Is my BP trend improving?' — and get answers grounded in your actual data. Available on Nera AI Premium.",
   },
   {
     icon: AlertTriangle,
     emoji: "🔬",
     title: "Early Warning System",
     description:
-      "Nera's multimodal AI pipeline analyses your vitals for patterns that precede cardiac events, glucose crises, and hypertensive episodes — often days before symptoms appear.",
+      "Nera's multimodal AI pipeline analyses your vitals for patterns that precede cardiac events, metabolic crises, and hypertensive episodes — often days before symptoms appear.",
   },
   {
     icon: Star,
@@ -56,7 +56,7 @@ export function NeraAISection() {
               </h2>
               <p className="text-white/60 leading-relaxed mb-10">
                 Nera isn't a chatbot that reads generic health articles. Nera has read every one of
-                your readings. Every ECG. Every glucose log. Every sleep session. And Nera remembers —
+                your readings. Every ECG. Every metabolic reading. Every sleep session. And Nera remembers —
                 building a living health intelligence profile that gets smarter every week.
               </p>
             </motion.div>

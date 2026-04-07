@@ -43,7 +43,7 @@ const faqs = [
 
 const relatedDevices = [
   { name: "SanketLife ECG", desc: "Add clinical ECG for complete cardiac monitoring", link: "/devices/sanketlife-ecg" },
-  { name: "EasyTouch Wellness", desc: "Add glucose and BP for the full metabolic picture", link: "/devices/easytouch-wellness" },
+  { name: "EasyTouch Wellness", desc: "Add metabolic health and BP monitoring", link: "/devices/easytouch-wellness" },
   { name: "Agatsa Smart Scale", desc: "Add body composition for complete health tracking", link: "/devices/smart-scale" },
 ];
 

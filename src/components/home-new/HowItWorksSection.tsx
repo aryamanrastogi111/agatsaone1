@@ -13,7 +13,7 @@ const steps = [
     num: "01",
     icon: Plug,
     title: "Connect your devices",
-    copy: "Pair your SanketLife ECG, EasyTouch glucose monitor, BP device, smart scale, or Rhythm wellness band via Bluetooth. Setup takes under 2 minutes. Your readings are automatically synced to the Agatsa One app and securely stored.",
+    copy: "Pair your SanketLife ECG, EasyTouch metabolic health monitor, BP device, smart scale, or Rhythm wellness band via Bluetooth. Setup takes under 2 minutes. Your readings are automatically synced to the Agatsa One app and securely stored.",
   },
   {
     num: "02",

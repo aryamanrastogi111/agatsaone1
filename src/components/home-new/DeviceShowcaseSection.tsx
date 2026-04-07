@@ -19,8 +19,8 @@ const devices = [
   {
     name: "EasyTouch Wellness",
     badge: null,
-    tagline: "Optical glucose + BP + SpO2, no needles",
-    stat: "Validated by 15,000 users",
+    tagline: "Non-invasive metabolic health + BP + SpO2, no needles",
+    stat: "8 vitals in 60 seconds",
     price: "₹3,499",
     link: "/devices/easytouch-wellness",
     image: easytouchImg,
