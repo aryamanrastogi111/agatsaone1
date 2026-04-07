@@ -46,7 +46,7 @@ export default function ForCorporatesPage() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="pt-32 pb-20" style={{ background: "linear-gradient(180deg, #F8F4FF 0%, #FFFFFF 100%)" }}>
+      <section className="pt-16 pb-12" style={{ background: "linear-gradient(180deg, #F8F4FF 0%, #FFFFFF 100%)" }}>
         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>FOR CORPORATES</span>

@@ -31,7 +31,7 @@ export default function Press() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="pt-28 pb-16 text-center" style={{ background: "linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 100%)" }}>
+      <section className="pt-16 pb-12 text-center" style={{ background: "linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 100%)" }}>
         <motion.div {...fade} className="max-w-3xl mx-auto px-4">
           <span className="inline-block text-xs font-semibold uppercase tracking-widest text-primary mb-4">Press & Media</span>
           <h1 className="text-4xl md:text-5xl font-extrabold text-foreground">Agatsa in the News</h1>

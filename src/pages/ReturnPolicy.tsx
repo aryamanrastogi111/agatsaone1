@@ -10,7 +10,7 @@ const ReturnPolicy = () => {
     <SiteLayout>
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-16 md:py-24">
+        <section className="bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-10 md:py-16">
           <div className="container">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
