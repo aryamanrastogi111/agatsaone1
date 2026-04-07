@@ -1,23 +1,62 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { SiteLayout } from "@/components/SiteLayout";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
+import { Activity, Loader2, AlertCircle, XCircle } from "lucide-react";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "https://agatsa-one-api-651017108992.asia-south1.run.app";
 
-const DEVICE_NAMES: Record<string, string> = {
-  ecg: "SanketLife ECG",
-  easytouch: "EasyTouch Wellness Monitor",
-  rhythm: "EasyTouch Rhythm Band",
-  scale: "Agatsa Smart Scale",
-  multivital: "MultiVital Monitor",
-};
-const DEVICE_EMOJI: Record<string, string> = { ecg: "🫀", easytouch: "💡", rhythm: "⌚", scale: "⚖️", multivital: "📊" };
-const DEVICE_STEPS: Record<string, string[]> = {
-  ecg: ["Download Agatsa One from App Store or Play Store", "Enter your phone number and verify with OTP", "Your SanketLife ECG setup screen opens automatically", "Follow the on-screen pairing instructions (30 seconds)"],
-  easytouch: ["Download Agatsa One from App Store or Play Store", "Enter your phone number and verify with OTP", "Your EasyTouch Wellness setup screen opens automatically", "Calibrate once for accurate glucose estimates"],
-  rhythm: ["Download Agatsa One from App Store or Play Store", "Enter your phone number and verify with OTP", "Your Rhythm Band setup screen opens automatically", "Wear on your non-dominant wrist for best accuracy"],
-  scale: ["Download Agatsa One from App Store or Play Store", "Enter your phone number and verify with OTP", "Stand on the scale barefoot — it syncs automatically", "View your 14 body composition metrics in the app"],
-  multivital: ["Download Agatsa One from App Store or Play Store", "Enter your phone number and verify with OTP", "Your MultiVital setup screen opens automatically", "Follow the calibration guide for accurate readings"],
+const DEVICE_CONFIG: Record<string, { name: string; headline: string; copy: string; steps: string[] }> = {
+  ecg: {
+    name: "SanketLife ECG",
+    headline: "Your SanketLife ECG is ready to activate",
+    copy: "You've purchased a SanketLife 12-Lead ECG Monitor. Download Agatsa One to complete setup, activate your device, and start getting AI-powered cardiac analysis from Nera.",
+    steps: [
+      "Download Agatsa One (free) using the button below",
+      "Create your account or sign in",
+      'Tap "Add Device" and select SanketLife ECG',
+    ],
+  },
+  easytouch: {
+    name: "EasyTouch Wellness Monitor",
+    headline: "Your EasyTouch Wellness Monitor is ready to activate",
+    copy: "Download Agatsa One to activate your EasyTouch device and start monitoring glucose, BP, and SpO2 — no needles, no cuffs, no complexity.",
+    steps: [
+      "Download Agatsa One (free) using the button below",
+      "Create your account or sign in",
+      'Tap "Add Device" and select EasyTouch Wellness',
+    ],
+  },
+  rhythm: {
+    name: "EasyTouch Rhythm Band",
+    headline: "Your EasyTouch Rhythm Band is ready to activate",
+    copy: "Download Agatsa One to activate your Rhythm band and begin 24/7 wellness monitoring — sleep, heart rate, HRV, steps, and SpO2, all unified with Nera AI.",
+    steps: [
+      "Download Agatsa One (free) using the button below",
+      "Create your account or sign in",
+      'Tap "Add Device" and select Rhythm Band',
+    ],
+  },
+  scale: {
+    name: "Agatsa Smart Scale",
+    headline: "Your Agatsa Smart Scale is ready to activate",
+    copy: "Download Agatsa One to activate your Smart Scale and track 14 body composition metrics — weight, BMI, body fat, muscle mass, and more.",
+    steps: [
+      "Download Agatsa One (free) using the button below",
+      "Create your account or sign in",
+      "Stand on the scale barefoot — it syncs automatically",
+    ],
+  },
+  multivital: {
+    name: "MultiVital Monitor",
+    headline: "Your MultiVital Monitor is ready to activate",
+    copy: "Download Agatsa One to activate your MultiVital Monitor and start tracking all your vitals with Nera AI.",
+    steps: [
+      "Download Agatsa One (free) using the button below",
+      "Create your account or sign in",
+      'Tap "Add Device" and select MultiVital',
+    ],
+  },
 };
 
 export default function DeviceActivationPage() {
@@ -35,60 +74,111 @@ export default function DeviceActivationPage() {
         if (data.error) { setInvalid(true); return; }
         setDeviceType(data.deviceType);
         setRedeemed(data.redeemed);
-        window.location.href = `agatsaone://activate?device=${data.deviceType}&code=${code}`;
+        if (!data.redeemed) {
+          window.location.href = `agatsaone://activate?device=${data.deviceType}&code=${code}`;
+        }
       })
       .catch(() => setInvalid(true))
       .finally(() => setLoading(false));
   }, [code]);
 
-  const deviceName = deviceType ? DEVICE_NAMES[deviceType] ?? "your device" : "your device";
-  const emoji = deviceType ? DEVICE_EMOJI[deviceType] ?? "📦" : "📦";
-  const steps = deviceType ? DEVICE_STEPS[deviceType] ?? [] : [];
-
+  // Loading
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-muted">
-        <div className="animate-pulse text-lg text-muted-foreground">Loading your device...</div>
-      </div>
+      <SiteLayout>
+        <div className="min-h-[70vh] flex items-center justify-center">
+          <div className="text-center space-y-4">
+            <Loader2 className="h-10 w-10 mx-auto animate-spin text-primary" />
+            <h2 className="text-xl font-bold text-foreground">Activating your device...</h2>
+            <p className="text-muted-foreground">Looking up your device code. This takes just a moment.</p>
+          </div>
+        </div>
+      </SiteLayout>
     );
   }
 
+  // Invalid code
   if (invalid) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-muted text-center px-4">
-        <p className="text-5xl mb-4">❌</p>
-        <h1 className="text-2xl font-bold text-foreground mb-2">Invalid activation link</h1>
-        <p className="text-muted-foreground mb-6">This link may be expired or incorrect. Contact support@agatsaone.com</p>
-        <a href="/app" className="bg-primary text-primary-foreground px-8 py-3 rounded-full font-bold">Download Agatsa One</a>
-      </div>
+      <SiteLayout>
+        <div className="min-h-[70vh] flex items-center justify-center px-4">
+          <div className="bg-card rounded-3xl shadow-xl max-w-md w-full p-8 text-center space-y-5">
+            <XCircle className="h-14 w-14 mx-auto text-destructive" />
+            <h1 className="text-2xl font-extrabold text-foreground">We couldn't find this device code</h1>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              The code <span className="font-mono font-bold text-foreground">{code}</span> doesn't match any device in our system. Please double-check the code on the sticker inside your device box. If the problem persists, contact <a href="mailto:support@agatsa.ai" className="text-primary font-medium">support@agatsa.ai</a> — we'll get it sorted within 24 hours.
+            </p>
+            <a href="/app" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full font-bold text-sm">
+              Download Agatsa One
+            </a>
+          </div>
+        </div>
+      </SiteLayout>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-muted flex items-center justify-center p-4">
-      <div className="bg-background rounded-3xl shadow-purple-lg max-w-md w-full p-8 text-center space-y-6">
-        <p className="text-5xl">{emoji}</p>
-        <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-muted text-muted-foreground">
-          {redeemed ? "Previously Activated" : "Ready to Set Up"}
-        </span>
-        <h1 className="text-2xl font-bold text-foreground">Set up your {deviceName}</h1>
-        <p className="text-muted-foreground text-sm">Download Agatsa One to connect your device in 30 seconds.</p>
-        <p className="text-xs text-muted-foreground">Your device is pre-configured — no long setup needed.</p>
-
-        <div className="bg-muted rounded-2xl p-4 text-left space-y-2">
-          <p className="font-semibold text-foreground text-sm">How to set up:</p>
-          {steps.map((step, i) => (
-            <p key={i} className="text-sm text-muted-foreground"><span className="font-semibold text-foreground">{i + 1}.</span> {step}</p>
-          ))}
+  // Already redeemed
+  if (redeemed) {
+    return (
+      <SiteLayout>
+        <div className="min-h-[70vh] flex items-center justify-center px-4">
+          <div className="bg-card rounded-3xl shadow-xl max-w-md w-full p-8 text-center space-y-5">
+            <AlertCircle className="h-14 w-14 mx-auto text-amber-500" />
+            <h1 className="text-2xl font-extrabold text-foreground">This device has already been activated</h1>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Device code <span className="font-mono font-bold text-foreground">{code}</span> has already been used. If you believe this is an error, or if you received this device as a gift and need a new activation, please contact our support team at <a href="mailto:support@agatsa.ai" className="text-primary font-medium">support@agatsa.ai</a> or call <span className="font-medium text-foreground">08069289999</span>.
+            </p>
+            <a href="/app" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full font-bold text-sm">
+              Download Agatsa One
+            </a>
+          </div>
         </div>
+      </SiteLayout>
+    );
+  }
 
-        <AppStoreBadges className="justify-center" />
+  // Valid device
+  const config = deviceType ? DEVICE_CONFIG[deviceType] : null;
+  const deviceName = config?.name ?? "your device";
+  const headline = config?.headline ?? `Your ${deviceName} is ready to activate`;
+  const copy = config?.copy ?? "Download Agatsa One to complete your device setup.";
+  const steps = config?.steps ?? [];
 
-        <p className="text-xs text-muted-foreground">
-          Save this email — this link works anytime, even after your device arrives.<br />
-          Code: <span className="font-mono font-semibold text-foreground">{code}</span>
-        </p>
+  return (
+    <SiteLayout>
+      <div className="min-h-[70vh] flex items-center justify-center px-4 py-20">
+        <div className="bg-card rounded-3xl shadow-xl max-w-md w-full p-8 text-center space-y-6">
+          <Activity className="h-14 w-14 mx-auto text-primary" />
+
+          <span className="inline-block text-xs font-semibold px-4 py-1.5 rounded-full bg-primary/10 text-primary">
+            Ready to Set Up
+          </span>
+
+          <h1 className="text-2xl font-extrabold text-foreground">{headline}</h1>
+
+          <p className="text-sm text-muted-foreground leading-relaxed">{copy}</p>
+
+          {/* Steps */}
+          <div className="bg-muted rounded-2xl p-5 text-left space-y-3">
+            {steps.map((step, i) => (
+              <p key={i} className="text-sm text-muted-foreground">
+                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs font-bold mr-2">{i + 1}</span>
+                {step}
+              </p>
+            ))}
+            <p className="text-sm text-muted-foreground">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs font-bold mr-2">{steps.length + 1}</span>
+              Your device code <span className="font-mono font-bold text-foreground">{code}</span> will activate your 3-month Nera AI subscription automatically
+            </p>
+          </div>
+
+          <AppStoreBadges className="justify-center" />
+
+          <p className="text-xs text-muted-foreground">
+            Code: <span className="font-mono font-semibold text-foreground">{code}</span>
+          </p>
+        </div>
       </div>
-    </div>
+    </SiteLayout>
   );
 }
