@@ -2,6 +2,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Monitor, BarChart3, Smartphone, ClipboardList, FileText, ShieldCheck } from "lucide-react";
+import { BrochureLeadCapture } from "@/components/BrochureLeadCapture";
 
 const fade = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
@@ -116,7 +117,12 @@ export default function ForCorporatesPage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <a href="mailto:info@agatsa.com?subject=Corporate Demo Request" className="rounded-full px-8 py-4 text-base font-semibold text-white bg-[#7C4DFF] hover:opacity-90 transition">Request a Corporate Demo</a>
-              <a href="/agatsa-one-corporate-brochure.pdf" target="_blank" rel="noopener noreferrer" className="rounded-full px-8 py-4 text-base font-semibold border-2 border-[#7C4DFF] text-[#7C4DFF] hover:bg-purple-50 transition">Download Corporate Brochure</a>
+              <BrochureLeadCapture
+                brochureType="corporates"
+                brochurePath="/agatsa-one-corporate-brochure.pdf"
+                buttonText="Download Corporate Brochure"
+                buttonClassName="rounded-full px-8 py-4 text-base font-semibold border-2 border-[#7C4DFF] text-[#7C4DFF] hover:bg-purple-50 transition"
+              />
             </div>
           </motion.div>
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>

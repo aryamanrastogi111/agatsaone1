@@ -3,6 +3,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { BarChart3, Palette, Database, Activity, Check, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { BrochureLeadCapture } from "@/components/BrochureLeadCapture";
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
@@ -49,7 +50,12 @@ export default function ForHospitalsPage() {
           <p className="mt-4 text-lg md:text-xl text-white/80 max-w-[640px] mx-auto">Reduce cardiac readmissions. Monitor post-discharge patients automatically. Catch deterioration at home before it becomes an ICU readmission. Built for the scale, compliance, and integration requirements of large healthcare institutions.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
             <a href="mailto:info@agatsa.com?subject=Hospital Demo Request" className="bg-primary text-primary-foreground rounded-full px-8 py-4 font-semibold hover:opacity-90 transition">Schedule a Hospital Demo</a>
-            <a href="/agatsa-one-hospital-brochure.pdf" target="_blank" rel="noopener noreferrer" className="border border-white/40 text-white rounded-full px-8 py-4 font-semibold hover:bg-white/10 transition">Download Hospital Brochure</a>
+            <BrochureLeadCapture
+              brochureType="hospitals"
+              brochurePath="/agatsa-one-hospital-brochure.pdf"
+              buttonText="Download Hospital Brochure"
+              buttonClassName="border border-white/40 text-white rounded-full px-8 py-4 font-semibold hover:bg-white/10 transition"
+            />
           </div>
         </motion.div>
       </section>
