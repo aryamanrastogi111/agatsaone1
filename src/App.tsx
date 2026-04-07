@@ -17,6 +17,7 @@ import ForCorporates from "./pages/ForCorporates";
 import AppDownload from "./pages/AppDownload";
 import SanketLifeECGProduct from "./pages/products/SanketLifeECGProduct";
 import EasyTouchWellnessProduct from "./pages/products/EasyTouchWellnessProduct";
+import RhythmBandProduct from "./pages/products/RhythmBandProduct";
 import DeviceActivation from "./pages/DeviceActivation";
 import ReferralPage from "./pages/Referral";
 import Blog from "./pages/Blog";
