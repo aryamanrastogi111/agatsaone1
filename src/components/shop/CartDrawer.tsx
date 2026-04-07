@@ -282,7 +282,7 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
         variant="outline"
         size="icon"
         className="relative"
-        onClick={() => setIsOpen(true)}
+        onClick={() => setCartOpen(true)}
       >
         <ShoppingCart className="h-5 w-5" />
         {totalItems > 0 && (
