@@ -116,7 +116,7 @@ export default function SanketLifeECGProduct() {
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
                   Buy SanketLife ECG — ₹4,999
                 </Button>
                 <Button asChild variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">
