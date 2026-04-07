@@ -20,7 +20,7 @@ const milestones = [
   { year: "2020", text: "10,000 users milestone. EasyTouch Wellness Monitor launched." },
   { year: "2022", text: "Clinical validation across 15,000 users for optical monitoring (98.56%)." },
   { year: "2023", text: "Agatsa One app launched — unifying all devices in one platform." },
-  { year: "2024", text: "2.1 Lac+ users. Nera AI engine launched. Delaware C-Corp (Nera AI Inc.) incorporated." },
+  { year: "2024", text: "2.1 Lac+ users. Nera AI engine launched." },
   { year: "2025", text: "Nera voice assistant launched. Care Programmes launched. B2B SaaS platform launched." },
   { year: "2026", text: "2.1 Lac+ users. Worldwide app availability. Camp screening. AI multimodal pipeline live." },
 ];
@@ -107,18 +107,12 @@ export default function About() {
             <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>CORPORATE STRUCTURE</span>
             <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>How we're structured</h2>
           </motion.div>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="max-w-xl mx-auto">
             <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="rounded-2xl p-8 border" style={{ background: "#F8F4FF", borderColor: "rgba(124,77,255,0.2)" }}>
               <p className="text-3xl">🇮🇳</p>
               <h3 className="mt-3 text-xl font-bold" style={{ color: "#1A1A2E" }}>Agatsa Software Pvt. Ltd.</h3>
               <p className="text-sm font-medium mt-1" style={{ color: "#7C4DFF" }}>India — Hardware & Clinical Validation</p>
               <p className="mt-3 text-sm" style={{ color: "#4A4A68" }}>Develops, manufactures, and validates all Agatsa medical devices. Holds CDSCO licenses. Manages India operations, distribution, and clinical partnerships. Based in Delhi, India.</p>
-            </motion.div>
-            <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="rounded-2xl p-8" style={{ background: "#1A1A2E" }}>
-              <p className="text-3xl">🇺🇸</p>
-              <h3 className="mt-3 text-xl font-bold text-white">Nera AI Inc.</h3>
-              <p className="text-sm font-medium mt-1" style={{ color: "#7C4DFF" }}>Delaware, USA — AI Intellectual Property</p>
-              <p className="mt-3 text-sm text-white/75">Owns all AI intellectual property for the Nera AI health intelligence engine. Manages US operations, international expansion, and patent portfolio. Agatsa India holds 5% equity in Nera AI Inc.</p>
             </motion.div>
           </div>
         </div>
