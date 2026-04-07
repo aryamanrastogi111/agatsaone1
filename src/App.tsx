@@ -25,6 +25,10 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import ShippingPolicy from "./pages/ShippingPolicy";
+import ReturnPolicy from "./pages/ReturnPolicy";
+import DataDeletion from "./pages/DataDeletion";
+import Support from "./pages/Support";
 import NotFound from "./pages/NotFound";
 
 // SDK Portal Pages
