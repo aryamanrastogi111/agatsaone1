@@ -44,7 +44,7 @@ export function ProvidersSection() {
             For Healthcare Providers
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Built for patients. Designed for the providers who care for them.
+            Built for you. Designed for the providers who care for them.
           </h2>
         </motion.div>
 
