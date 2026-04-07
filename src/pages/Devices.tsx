@@ -34,7 +34,7 @@ const devices: DeviceData[] = [
     badge: "CDSCO Class B Certified · MFG/MD/2023/000231",
     name: "SanketLife 12-Lead ECG Monitor",
     tagline: "Hospital-grade ECG in your shirt pocket",
-    keyStat: "98.15% sensitivity validated at Sri Jayadeva Institute, Bengaluru",
+    keyStat: "98.5% accuracy validated at Narayana Health & Sri Jayadeva Institute",
     price: "₹4,999",
     priceNum: "4,999",
     rating: "4.8",
@@ -56,7 +56,7 @@ const devices: DeviceData[] = [
       "Compatible with Post Heart Attack Recovery Programme",
     ],
     link: "/devices/sanketlife-ecg",
-    clinicalNote: "98.15% sensitivity validated at Sri Jayadeva Institute of Cardiovascular Sciences, Bengaluru",
+    clinicalNote: "98.5% accuracy validated at Narayana Health & Sri Jayadeva Institute of Cardiovascular Sciences",
   },
   {
     id: "easytouch-wellness",

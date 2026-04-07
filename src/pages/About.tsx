@@ -28,7 +28,7 @@ const milestones = [
 const regs = [
   { title: "CDSCO License", sub: "MFG/MD/2023/000231", body: "Class B Medical Device under Medical Devices Rules, 2017" },
   { title: "ISO 13485", sub: "Quality Management", body: "ISO 13485-compliant manufacturing quality management system" },
-  { title: "Clinical Validation", sub: "Two independent studies", body: "Sri Jayadeva Institute (ECG, 2022) — 98.15% sensitivity. 15,000-user validation study (optical monitoring, 2023) — 98.56% accuracy." },
+  { title: "Clinical Validation", sub: "Three independent studies", body: "Sri Jayadeva Institute (ECG, 2022) — 98.15% sensitivity. Narayana Health (ECG) — 98.5% accuracy. 15,000-user validation study (optical monitoring, 2023) — 98.56% accuracy." },
   { title: "Data Privacy", sub: "DPDP Act compliant", body: "India's Digital Personal Data Protection Act (2023). Data stored on Indian servers. No data sold to third parties." },
 ];
 
