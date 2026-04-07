@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -6,6 +7,8 @@ import { SiteLayout } from "@/components/SiteLayout";
 import rhythmHero from "@/assets/easytouch-rhythm-new.png";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 
@@ -48,6 +51,14 @@ const relatedDevices = [
 ];
 
 export default function RhythmBandProduct() {
+  const addItem = useCartStore((s) => s.addItem);
+  const [adding, setAdding] = useState(false);
+  const handleBuy = () => {
+    setAdding(true);
+    addItem({ productId: "rhythm-band", productName: "EasyTouch Rhythm Band", variantTitle: "Default Title", price: 2999, quantity: 1 });
+    toast.success("Rhythm Band added to cart", { position: "top-center" });
+    setTimeout(() => setAdding(false), 500);
+  };
   useSEO({ title: "EasyTouch Rhythm Band — 24/7 Sleep, HRV, SpO2 Monitoring | Agatsa One", description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Works with Nera AI. ₹2,999. Compatible with all 5 Care Programmes." });
 
   return (
@@ -76,7 +87,7 @@ export default function RhythmBandProduct() {
                 <span className="text-sm text-muted-foreground ml-1">4.5/5 (612 reviews)</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Rhythm Band — ₹2,999</Button>
+                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Rhythm Band — ₹2,999</Button>
                 <Button asChild variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">
                   <Link to="/app?device=rhythm">Download Agatsa One App (free)</Link>
                 </Button>
@@ -192,7 +203,7 @@ export default function RhythmBandProduct() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready for 24/7 health monitoring?</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Pair in 30 seconds. Wear it all week. Let Nera AI do the rest.</p>
-          <Button className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Rhythm Band — ₹2,999</Button>
+          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Rhythm Band — ₹2,999</Button>
         </div>
       </section>
     </SiteLayout>
