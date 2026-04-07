@@ -10,7 +10,7 @@ const values = [
   { icon: Heart, title: "Mission-Driven", desc: "Every line of code and circuit we build serves one goal — making cardiac monitoring accessible to every Indian household." },
   { icon: Cpu, title: "Deep Tech", desc: "We work at the intersection of medical hardware, AI, and mobile software. If you want to build things that truly matter, this is the place." },
   { icon: Users, title: "Small Team, Big Impact", desc: "We're a lean team where every person's contribution is visible. No bureaucracy. Ship fast, learn faster." },
-  { icon: Rocket, title: "Growth Stage", desc: "50,000+ users, CDSCO certified, clinical validation at India's top hospitals. We're scaling — and hiring for the next phase." },
+  { icon: Rocket, title: "Growth Stage", desc: "2.1 Lac+ users, CDSCO certified, clinical validation at India's top hospitals. We're scaling — and hiring for the next phase." },
 ];
 
 const openings = [

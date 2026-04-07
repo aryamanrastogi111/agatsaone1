@@ -123,7 +123,7 @@ export default function SanketLifeECGProduct() {
           {[
             { big: "98.5%", label: "ECG Accuracy", sub: "Narayana Health & Sri Jayadeva" },
             { big: "30 seconds", label: "Time for a 12-lead ECG", sub: "No gel, no preparation" },
-            { big: "50,000+", label: "ECG readings analysed", sub: "By Nera AI to date" },
+            { big: "2.1 Lac+", label: "ECG readings analysed", sub: "By Nera AI to date" },
           ].map((s) => (
             <motion.div key={s.big} {...fadeUp}>
               <p className="text-4xl md:text-5xl font-extrabold text-primary">{s.big}</p>
