@@ -118,7 +118,7 @@ export function SiteFooter() {
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
-          <p>© 2026 Agatsa Medical Technologies Pvt. Ltd.</p>
+          <p>© 2026 Agatsa Software Pvt. Ltd.</p>
           <p className="text-center">
             CDSCO License MFG/MD/2023/000231 &nbsp;|&nbsp; Class B Medical Device
           </p>

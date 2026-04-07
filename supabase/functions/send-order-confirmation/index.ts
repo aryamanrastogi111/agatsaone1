@@ -107,7 +107,7 @@ serve(async (req) => {
     const teamRecipients = _testTeamEmail
       ? [_testTeamEmail]
       : ["info@agatsa.com", "munfungaming@gmail.com", "rahul.amu2@gmail.com", "agr.neha@gmail.com"];
-    const customerFrom = "Agatsa Medical Technologies <orders@agatsa.in>";
+    const customerFrom = "Agatsa Software <orders@agatsa.in>";
     const teamFrom = "Agatsa Orders <orders@agatsa.in>";
 
     if (!customerEmail || !orderId) {
@@ -314,7 +314,7 @@ serve(async (req) => {
           </tr>
           <tr>
             <td style="background:#f8fafc;padding:24px 40px;text-align:center;border-top:1px solid #e2e8f0;">
-              <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;font-weight:600;">2025 Agatsa Medical Technologies Pvt. Ltd.</p>
+              <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;font-weight:600;">2025 Agatsa Software Pvt. Ltd.</p>
               <p style="margin:0;font-size:11px;color:#cbd5e1;">Bengaluru, India · <a href="https://agatsa.com" style="color:#94a3b8;text-decoration:none;">agatsa.com</a></p>
             </td>
           </tr>
@@ -430,7 +430,7 @@ serve(async (req) => {
           </tr>
           <tr>
             <td style="background:#f8fafc;padding:16px 32px;text-align:center;border-top:1px solid #e2e8f0;">
-              <p style="margin:0;font-size:11px;color:#94a3b8;">Agatsa Medical Technologies · Internal Use Only</p>
+              <p style="margin:0;font-size:11px;color:#94a3b8;">Agatsa Software · Internal Use Only</p>
             </td>
           </tr>
         </table>
