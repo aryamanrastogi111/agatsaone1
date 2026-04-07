@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { BarChart3, Palette, Database, Activity, Check, X } from "lucide-react";
@@ -36,6 +37,8 @@ const Cell = ({ v }: { v: string | boolean }) =>
   );
 
 export default function ForHospitalsPage() {
+  useSEO({ title: "Hospital Remote Monitoring Platform — Reduce Readmissions | Agatsa One", description: "Post-discharge cardiac monitoring at scale. White-label capability. EHR integration. Reduce 30-day readmissions. SaaS plans from ₹4,999/month." });
+
   return (
     <SiteLayout>
       {/* Hero */}

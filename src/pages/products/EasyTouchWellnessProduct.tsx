@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, ArrowRight, Package } from "lucide-react";
@@ -45,6 +46,8 @@ const relatedDevices = [
 ];
 
 export default function EasyTouchWellnessProduct() {
+  useSEO({ title: "EasyTouch Wellness — Optical Glucose, BP, SpO2 Monitor | Agatsa One", description: "Non-invasive glucose monitoring with no needles. Plus BP, SpO2, HRV, and 5 more vitals. 98.56% validated at Medanta. ₹3,499. Works with Nera AI." });
+
   return (
     <SiteLayout>
       {/* Hero */}

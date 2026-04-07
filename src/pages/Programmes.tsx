@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
@@ -173,6 +174,8 @@ function ProgrammeCard({ p, index }: { p: Programme; index: number }) {
 }
 
 export default function ProgrammesPage() {
+  useSEO({ title: "AI Care Programmes — Post Heart Attack, Diabetes, Hypertension | Agatsa One", description: "Five evidence-based Care Programmes: Post Heart Attack Recovery, Diabetic Cardiac Care, Obesity Reversal, Hypertension Control, Corporate Wellness. AI-guided. Doctor-supervised." });
+
   return (
     <SiteLayout>
       <section className="pt-32 pb-16 bg-gradient-to-b from-background to-[hsl(260,100%,97%)]">

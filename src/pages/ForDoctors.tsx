@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Monitor, Brain, TrendingUp, Star, ArrowRight } from "lucide-react";
@@ -34,6 +35,8 @@ const plans = [
 ];
 
 export default function ForDoctorsPage() {
+  useSEO({ title: "Remote Patient Monitoring for Doctors — Agatsa One Provider Platform", description: "Monitor your patients between appointments. Review ECGs, glucose trends, and BP data in your provider portal. Free to join. Start in 10 minutes." });
+
   return (
     <SiteLayout>
       <section className="pt-28 pb-16 bg-gradient-to-b from-background to-[hsl(260,100%,97%)]">

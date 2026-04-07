@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Monitor, BarChart3, Smartphone, ClipboardList, FileText, ShieldCheck } from "lucide-react";
@@ -32,6 +33,8 @@ const tiers = [
 ];
 
 export default function ForCorporatesPage() {
+  useSEO({ title: "Corporate Cardiac Health Programme — Agatsa One for Employers", description: "Prevent cardiac events in your workforce. Biometric screening, anonymous aggregate dashboards, employee care programmes. ROI from day one." });
+
   const [formData, setFormData] = useState({ company: "", employees: "", name: "", phone: "", email: "" });
 
   const handleSubmit = (e: React.FormEvent) => {

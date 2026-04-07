@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, ArrowRight, Package } from "lucide-react";
@@ -47,6 +48,8 @@ const relatedDevices = [
 ];
 
 export default function RhythmBandProduct() {
+  useSEO({ title: "EasyTouch Rhythm Band — 24/7 Sleep, HRV, SpO2 Monitoring | Agatsa One", description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Works with Nera AI. ₹2,999. Compatible with all 5 Care Programmes." });
+
   return (
     <SiteLayout>
       {/* Hero */}

@@ -1,8 +1,11 @@
+import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { FileText, User, ShoppingCart, Shield, Scale, Mail, MapPin } from "lucide-react";
 
 const TermsOfService = () => {
+  useSEO({ title: "Terms of Service — Agatsa One", description: "Terms and conditions for using Agatsa One app, devices, and Nera AI services." });
+
   return (
     <SiteLayout>
       <div className="min-h-screen bg-background">

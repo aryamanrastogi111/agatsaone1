@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -108,6 +109,8 @@ const itemVariants = {
   }
 };
 const Support = () => {
+  useSEO({ title: "Help & Support — Agatsa One", description: "Get help with Agatsa One devices and app. FAQs, warranty info, and contact support." });
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     name: "",

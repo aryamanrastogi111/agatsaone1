@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Trash2, ShieldCheck, Clock, AlertCircle, Mail } from "lucide-react";
 
@@ -11,6 +12,8 @@ const DATA_TYPES = [
 ];
 
 export default function DataDeletion() {
+  useSEO({ title: "Data Deletion — Agatsa One", description: "Request deletion of your personal data from Agatsa One. We process requests within 30 days." });
+
   return (
     <SiteLayout>
       <div className="min-h-screen bg-background">

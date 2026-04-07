@@ -1,3 +1,4 @@
+import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, ArrowRight, Package } from "lucide-react";
@@ -53,6 +54,8 @@ const relatedDevices = [
 ];
 
 export default function SmartScaleProduct() {
+  useSEO({ title: "Agatsa Smart Scale — 14 Body Composition Metrics | BMI, Body Fat, Muscle Mass", description: "14 body composition metrics in 5 seconds. Weight, BMI, body fat, visceral fat, muscle mass, metabolic age and more. 10 family profiles. Works with Nera AI. ₹2,499." });
+
   return (
     <SiteLayout>
       <section className="pt-28 pb-16 bg-background">
