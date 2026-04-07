@@ -10,7 +10,7 @@ const pressHighlights = [
   { date: "March 2025", title: "Agatsa One crosses 50,000 users across India", source: "Company Announcement" },
   { date: "January 2025", title: "Nera AI voice health assistant launches in public beta", source: "Product Launch" },
   { date: "November 2024", title: "SanketLife ECG validated at 98.15% sensitivity — Sri Jayadeva Institute", source: "Clinical Validation" },
-  { date: "September 2024", title: "EasyTouch Wellness optical glucose monitor validated at Medanta", source: "Clinical Validation" },
+  { date: "September 2024", title: "EasyTouch Wellness optical glucose monitor validated by 15,000 users", source: "Clinical Validation" },
   { date: "July 2024", title: "Agatsa receives CDSCO Class B certification for SanketLife ECG", source: "Regulatory" },
   { date: "March 2024", title: "Agatsa launches 5 AI-guided Care Programmes for chronic disease management", source: "Product Launch" },
   { date: "2023", title: "Agatsa wins mBillionth Award for Health Innovation", source: "Award" },

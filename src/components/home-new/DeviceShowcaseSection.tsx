@@ -20,7 +20,7 @@ const devices = [
     name: "EasyTouch Wellness",
     badge: null,
     tagline: "Optical glucose + BP + SpO2, no needles",
-    stat: "98.56% validated at Medanta",
+    stat: "Validated by 15,000 users",
     price: "₹3,499",
     link: "/devices/easytouch-wellness",
     image: easytouchImg,
