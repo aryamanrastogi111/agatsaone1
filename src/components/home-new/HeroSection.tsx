@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import sanketlifeHero from "@/assets/sanketlife-combo-main.png";
 
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
@@ -98,16 +99,7 @@ export function HeroSection() {
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                <div className="w-48 h-80 md:w-56 md:h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-[2rem] border border-primary/20 shadow-purple-lg flex flex-col items-center justify-center p-6">
-                  <div className="text-4xl mb-3">🫀</div>
-                  <p className="text-sm font-bold text-foreground text-center">Agatsa One</p>
-                  <p className="text-xs text-muted-foreground text-center mt-1">Powered by Nera AI</p>
-                  <div className="mt-4 w-full space-y-2">
-                    <div className="h-2 bg-primary/20 rounded-full w-full" />
-                    <div className="h-2 bg-primary/15 rounded-full w-4/5" />
-                    <div className="h-2 bg-primary/10 rounded-full w-3/5" />
-                  </div>
-                </div>
+                <img src={sanketlifeHero} alt="Agatsa One devices" className="w-64 md:w-80 object-contain drop-shadow-2xl" />
               </motion.div>
 
               {/* Floating device badges */}
