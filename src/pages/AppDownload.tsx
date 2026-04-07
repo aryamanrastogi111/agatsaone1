@@ -350,7 +350,7 @@ export default function AppDownloadPage() {
 
   return (
     <SiteLayout>
-      <section className="py-12 md:py-16">
+      <section className="py-8 md:py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {renderContent()}
         </div>

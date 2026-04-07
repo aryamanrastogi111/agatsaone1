@@ -23,7 +23,7 @@ export default function Contact() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="pt-16 pb-12 text-center" style={{ background: "linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 100%)" }}>
+      <section className="pt-8 pb-8 text-center" style={{ background: "linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 100%)" }}>
         <motion.div {...fade} className="max-w-3xl mx-auto px-4">
           <span className="inline-block text-xs font-semibold uppercase tracking-widest text-primary mb-4">Contact Us</span>
           <h1 className="text-4xl md:text-5xl font-extrabold text-foreground">We'd love to hear from you</h1>

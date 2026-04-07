@@ -178,7 +178,7 @@ export default function ProgrammesPage() {
 
   return (
     <SiteLayout>
-      <section className="pt-16 pb-12 bg-gradient-to-b from-background to-[hsl(260,100%,97%)]">
+      <section className="pt-8 pb-8 bg-gradient-to-b from-background to-[hsl(260,100%,97%)]">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Care Programmes</p>
           <h1 className="text-4xl md:text-5xl font-extrabold text-foreground leading-tight">
