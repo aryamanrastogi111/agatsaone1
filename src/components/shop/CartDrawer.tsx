@@ -97,7 +97,15 @@ function CustomModal({
   return createPortal(modal, document.body);
 }
 
-export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: boolean; onExternalClose?: () => void } = {}) => {
+export const CartDrawer = ({
+  externalOpen,
+  onExternalClose,
+  hideTrigger = false,
+}: {
+  externalOpen?: boolean;
+  onExternalClose?: () => void;
+  hideTrigger?: boolean;
+} = {}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const cartOpen = externalOpen || isOpen;
@@ -109,17 +117,14 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
   const [isPaying, setIsPaying] = useState(false);
   const [successData, setSuccessData] = useState<SuccessData | null>(null);
 
-  // Customer info form
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  // Shipping address
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
 
-  // Coupon state
   const [couponCode, setCouponCode] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   const [couponDiscount, setCouponDiscount] = useState(0);
@@ -131,10 +136,14 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
 
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
-  const finalTotal = Math.max(totalPrice - couponDiscount, 10); // minimum ₹10 (Razorpay min)
+  const finalTotal = Math.max(totalPrice - couponDiscount, 10);
 
   const formatINR = (amount: number) =>
-    new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(amount);
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(amount);
 
   const handleProceedToCheckout = () => {
     if (items.length === 0) return;
@@ -144,9 +153,11 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
 
   const handleApplyCoupon = async () => {
     const code = couponCode.trim().toUpperCase();
-    if (!code) { toast.error("Enter a coupon code first"); return; }
+    if (!code) {
+      toast.error("Enter a coupon code first");
+      return;
+    }
     if (couponApplied) {
-      // Remove coupon
       setCouponApplied(false);
       setCouponDiscount(0);
       setCouponData(null);
@@ -175,13 +186,34 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
   const handlePay = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name.trim()) { toast.error("Please enter your full name."); return; }
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast.error("Please enter a valid email address."); return; }
-    if (!phone.trim() || phone.replace(/\D/g, "").length < 10) { toast.error("Please enter a valid 10-digit phone number."); return; }
-    if (!address.trim()) { toast.error("Please enter your delivery address."); return; }
-    if (!city.trim()) { toast.error("Please enter your city."); return; }
-    if (!state.trim()) { toast.error("Please enter your state."); return; }
-    if (!/^\d{6}$/.test(pincode.trim())) { toast.error("Please enter a valid 6-digit PIN code."); return; }
+    if (!name.trim()) {
+      toast.error("Please enter your full name.");
+      return;
+    }
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    if (!phone.trim() || phone.replace(/\D/g, "").length < 10) {
+      toast.error("Please enter a valid 10-digit phone number.");
+      return;
+    }
+    if (!address.trim()) {
+      toast.error("Please enter your delivery address.");
+      return;
+    }
+    if (!city.trim()) {
+      toast.error("Please enter your city.");
+      return;
+    }
+    if (!state.trim()) {
+      toast.error("Please enter your state.");
+      return;
+    }
+    if (!/^\d{6}$/.test(pincode.trim())) {
+      toast.error("Please enter a valid 6-digit PIN code.");
+      return;
+    }
 
     setIsPaying(true);
 
@@ -194,8 +226,14 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
       }
 
       const orderData = await createRazorpayOrder(
-        items, name, email, phone,
-        address, city, state, pincode,
+        items,
+        name,
+        email,
+        phone,
+        address,
+        city,
+        state,
+        pincode,
         couponApplied ? finalTotal : undefined,
         couponApplied && couponData ? couponData.code : undefined,
         couponApplied ? couponDiscount : undefined
@@ -230,7 +268,7 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
               {
                 customerEmail: email,
                 customerName: name,
-                items: items,
+                items,
                 total: totalSnapshot,
                 shippingAddress: address,
                 shippingCity: city,
@@ -254,9 +292,17 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
                 shippingState: state,
                 shippingPincode: pincode,
               });
-              setName(""); setEmail(""); setPhone("");
-              setAddress(""); setCity(""); setState(""); setPincode("");
-              setCouponCode(""); setCouponApplied(false); setCouponDiscount(0); setCouponData(null);
+              setName("");
+              setEmail("");
+              setPhone("");
+              setAddress("");
+              setCity("");
+              setState("");
+              setPincode("");
+              setCouponCode("");
+              setCouponApplied(false);
+              setCouponDiscount(0);
+              setCouponData(null);
             } else {
               toast.error("Payment verification failed. Please contact support.");
             }
@@ -277,22 +323,22 @@ export const CartDrawer = ({ externalOpen, onExternalClose }: { externalOpen?: b
 
   return (
     <>
-      {/* Cart trigger button */}
-      <Button
-        variant="outline"
-        size="icon"
-        className="relative"
-        onClick={() => setCartOpen(true)}
-      >
-        <ShoppingCart className="h-5 w-5" />
-        {totalItems > 0 && (
-          <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-primary text-primary-foreground">
-            {totalItems}
-          </Badge>
-        )}
-      </Button>
+      {!hideTrigger && (
+        <Button
+          variant="outline"
+          size="icon"
+          className="relative"
+          onClick={() => setCartOpen(true)}
+        >
+          <ShoppingCart className="h-5 w-5" />
+          {totalItems > 0 && (
+            <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-primary text-primary-foreground">
+              {totalItems}
+            </Badge>
+          )}
+        </Button>
+      )}
 
-      {/* Cart drawer */}
       <Sheet open={cartOpen} onOpenChange={setCartOpen}>
         <SheetContent className="w-full sm:max-w-md flex flex-col h-full p-0">
           <SheetHeader className="flex-shrink-0 p-6 pb-4 border-b">

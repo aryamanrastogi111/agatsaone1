@@ -20,7 +20,7 @@ export function Layout({ children }: LayoutProps) {
       <Footer />
       <FloatingCouponPill />
       <FloatingCartButton onClick={() => setCartOpen(true)} />
-      <CartDrawer externalOpen={cartOpen} onExternalClose={() => setCartOpen(false)} />
+      <CartDrawer externalOpen={cartOpen} onExternalClose={() => setCartOpen(false)} hideTrigger />
     </div>
   );
 }
