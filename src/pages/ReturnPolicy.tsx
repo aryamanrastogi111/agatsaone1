@@ -204,7 +204,7 @@ const ReturnPolicy = () => {
                   <ol className="space-y-4 text-muted-foreground">
                     <li className="flex items-start gap-3">
                       <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center">1</span>
-                      <span>Contact our support team at <a href="mailto:care@agatsa.com" className="text-primary hover:underline">care@agatsa.com</a> with your order details and description of the issue</span>
+                      <span>Contact our support team at <a href="mailto:info@agatsa.com" className="text-primary hover:underline">info@agatsa.com</a> with your order details and description of the issue</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center">2</span>
@@ -234,9 +234,9 @@ const ReturnPolicy = () => {
                     For return or refund inquiries, please contact our support team:
                   </p>
                   <div className="space-y-3">
-                    <a href="mailto:care@agatsa.com" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
+                    <a href="mailto:info@agatsa.com" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
                       <Mail className="h-5 w-5 text-primary" />
-                      care@agatsa.com
+                      info@agatsa.com
                     </a>
                     <a href="tel:08069289999" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
                       <Phone className="h-5 w-5 text-primary" />

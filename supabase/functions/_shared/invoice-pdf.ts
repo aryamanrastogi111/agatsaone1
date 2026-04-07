@@ -64,7 +64,7 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
   const metaRight: [string, string][] = [
     ["Sold By", "Agatsa Software Pvt Ltd"],
     ["GSTIN", "09AAICA3515H1ZS"],
-    ["Email", "care@agatsa.com"],
+    ["Email", "info@agatsa.com"],
   ];
 
   let ly = y, ry = y;
@@ -215,7 +215,7 @@ export async function buildInvoicePdf(data: InvoicePdfData): Promise<Uint8Array>
     { x: margin, y: 36, font: regular, size: 7.5, color: rgb(0.6, 0.6, 0.6) }
   );
   page.drawText(
-    "Agatsa Software Pvt Ltd  Bengaluru, India  care@agatsa.com  agatsa.com",
+    "Agatsa Software Pvt Ltd  Bengaluru, India  info@agatsa.com  agatsa.com",
     { x: margin, y: 24, font: regular, size: 7.5, color: rgb(0.6, 0.6, 0.6) }
   );
 

@@ -167,7 +167,7 @@ serve(async (req) => {
                   <td style="padding:14px 18px;">
                     <p style="margin:0 0 4px;font-size:14px;color:#1e40af;font-weight:700;">Questions about your delivery?</p>
                     <p style="margin:0;font-size:13px;color:#1d4ed8;">
-                      Email us at <a href="mailto:care@agatsa.com" style="color:#0ea5e9;font-weight:600;text-decoration:none;">care@agatsa.com</a>
+                      Email us at <a href="mailto:info@agatsa.com" style="color:#0ea5e9;font-weight:600;text-decoration:none;">info@agatsa.com</a>
                     </p>
                   </td>
                 </tr>

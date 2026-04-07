@@ -95,11 +95,11 @@ export default function DataDeletion() {
                 complete the deletion within <strong className="text-foreground">30 days</strong>.
               </p>
               <a
-                href="mailto:care@agatsa.com?subject=Data%20Deletion%20Request"
+                href="mailto:info@agatsa.com?subject=Data%20Deletion%20Request"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                Email care@agatsa.com
+                Email info@agatsa.com
               </a>
             </div>
           </div>

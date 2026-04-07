@@ -255,7 +255,7 @@ export const CartDrawer = () => {
               toast.error("Payment verification failed. Please contact support.");
             }
           } catch {
-            toast.error("Payment verification error. Please contact care@agatsa.com");
+            toast.error("Payment verification error. Please contact info@agatsa.com");
           }
         },
         () => {
@@ -671,8 +671,8 @@ export const CartDrawer = () => {
               <p className="text-sm text-primary font-semibold mt-0.5">{successData.customerEmail}</p>
               <p className="text-xs text-muted-foreground mt-2">
                 Need help?{" "}
-                <a href="mailto:care@agatsa.com" className="text-primary hover:underline">
-                  care@agatsa.com
+                <a href="mailto:info@agatsa.com" className="text-primary hover:underline">
+                  info@agatsa.com
                 </a>
               </p>
             </div>

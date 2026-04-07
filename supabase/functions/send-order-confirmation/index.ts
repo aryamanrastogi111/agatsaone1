@@ -303,7 +303,7 @@ serve(async (req) => {
                   <td style="padding:16px 18px;">
                     <p style="margin:0 0 4px;font-size:14px;color:#1e40af;font-weight:700;">Need help with your order?</p>
                     <p style="margin:0;font-size:13px;color:#1d4ed8;">
-                      Email us at <a href="mailto:care@agatsa.com" style="color:#0ea5e9;text-decoration:none;font-weight:600;">care@agatsa.com</a>
+                      Email us at <a href="mailto:info@agatsa.com" style="color:#0ea5e9;text-decoration:none;font-weight:600;">info@agatsa.com</a>
                       &nbsp;|&nbsp;
                       <a href="https://agatsa.com/support" style="color:#0ea5e9;text-decoration:none;">agatsa.com/support</a>
                     </p>

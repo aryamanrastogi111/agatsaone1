@@ -11,7 +11,7 @@ import { toast } from "sonner";
 const fade = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
 export default function Contact() {
-  useSEO({ title: "Contact Us — Agatsa One", description: "Get in touch with Agatsa. Email care@agatsa.com or fill our contact form. We respond within 24 hours." });
+  useSEO({ title: "Contact Us — Agatsa One", description: "Get in touch with Agatsa. Email info@agatsa.com or fill our contact form. We respond within 24 hours." });
 
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const handleSubmit = (e: React.FormEvent) => {
@@ -35,7 +35,7 @@ export default function Contact() {
       <section className="py-16 bg-background">
         <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-6">
           {[
-            { icon: Mail, title: "Email Us", detail: "care@agatsa.com", sub: "We respond within 24 hours", href: "mailto:care@agatsa.com" },
+            { icon: Mail, title: "Email Us", detail: "info@agatsa.com", sub: "We respond within 24 hours", href: "mailto:info@agatsa.com" },
           ].map((c, i) => (
             <motion.a key={i} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" {...fade} transition={{ duration: 0.5, delay: i * 0.1 }} className="bg-card border border-border rounded-2xl p-6 text-center hover:shadow-lg transition-shadow">
               <c.icon className="h-8 w-8 mx-auto text-primary mb-3" />
