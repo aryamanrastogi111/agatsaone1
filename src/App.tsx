@@ -81,6 +81,7 @@ const App = () => (
           <Route path="/devices/sanketlife-ecg" element={<SanketLifeECGProduct />} />
           <Route path="/devices/easytouch-wellness" element={<EasyTouchWellnessProduct />} />
           <Route path="/devices/rhythm-band" element={<RhythmBandProduct />} />
+          <Route path="/devices/smart-scale" element={<SmartScaleProduct />} />
           <Route path="/programmes" element={<ProgrammesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/about" element={<About />} />
