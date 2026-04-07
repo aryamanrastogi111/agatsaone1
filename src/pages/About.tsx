@@ -1,548 +1,194 @@
-import { Link } from "react-router-dom";
+import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
-import { Target, Users, Lightbulb, Heart, ArrowRight, Home, Award, ShieldCheck, Star, Newspaper, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Layout } from "@/components/layout";
+import { Link } from "react-router-dom";
 
-const values = [
-  {
-    icon: Heart,
-    title: "Health First",
-    description: "Everything we do is driven by our commitment to improving people's health outcomes.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Innovation",
-    description: "We continuously push the boundaries of what's possible in home health monitoring.",
-  },
-  {
-    icon: Users,
-    title: "Accessibility",
-    description: "We believe everyone deserves access to quality health monitoring tools.",
-  },
-  {
-    icon: Target,
-    title: "Accuracy",
-    description: "Medical-grade precision is non-negotiable in everything we create.",
-  },
+const fade = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
+
+const team = [
+  { photo: "https://placehold.co/280x280/7C4DFF/FFFFFF?text=RR", name: "Rahul Rastogi", title: "Co-founder & CEO", bio: "Engineer, entrepreneur, and the person most likely to be found reviewing ECG waveforms at midnight. Rahul has spent a decade building medical hardware in India — from early SanketLife prototypes in a Delhi garage to a multi-device health ecosystem used by tens of thousands. He leads product, technology, and strategy at Agatsa.", edu: "IIT Delhi (B.Tech), Wharton (Executive Education)" },
+  { photo: "https://placehold.co/280x280/1A73E8/FFFFFF?text=NR", name: "Neha Rastogi", title: "Co-founder & COO", bio: "Neha oversees operations, partnerships, and the business systems that keep Agatsa running. She has built the distribution networks that put SanketLife devices into hospitals, clinics, and homes across 22 Indian states. Her background spans supply chain, healthcare operations, and scaling hardware businesses in emerging markets." },
+  { photo: "https://placehold.co/280x280/FF6D00/FFFFFF?text=AP", name: "Dr. Anbu Pandian, MD", title: "Chief Medical Officer", loc: "Based in Dallas, Texas, USA", bio: "Board-certified cardiologist with clinical practice in Dallas and a deep commitment to preventive cardiology in South Asian populations. Dr. Pandian leads clinical validation, medical AI oversight, and the design of Agatsa One's Care Programmes. He is a co-inventor on Agatsa's core AI patent applications and represents Agatsa Inc.'s US medical presence.", edu: "MBBS, MD (Cardiology), FACC" },
 ];
 
 const milestones = [
-  { year: "2016", event: "Agatsa founded with a vision to democratize health monitoring" },
-  { year: "2017", event: "Launched SanketLife, India's first pocket ECG device" },
-  { year: "2018", event: "Received ISO 13485 certification for medical devices" },
-  { year: "2019", event: "CDSCO licensing completed for Indian market" },
-  { year: "2020", event: "Crossed 100,000+ users across India" },
-  { year: "2021", event: "Launched EasyTouch Rhythm wellness band" },
-  { year: "2022", event: "Introduced Zlu Sleep Aid and CoreBalance BMI" },
-  { year: "2023", event: "Expanded to enterprise and clinical solutions" },
-  { year: "2024", event: "Serving 500,000+ users worldwide" },
+  { year: "2015", text: "Agatsa founded. SanketLife ECG prototype developed at IIT Delhi." },
+  { year: "2017", text: "First clinical validation at Sri Jayadeva Institute. 98.15% ECG sensitivity confirmed." },
+  { year: "2018", text: "CDSCO Class B Medical Device license received. Commercial launch." },
+  { year: "2020", text: "10,000 users milestone. EasyTouch Wellness Monitor launched." },
+  { year: "2022", text: "Medanta clinical validation for optical monitoring (98.56%)." },
+  { year: "2023", text: "Agatsa One app launched — unifying all devices in one platform." },
+  { year: "2024", text: "50,000 users. Nera AI engine launched. Delaware C-Corp (Nera AI Inc.) incorporated." },
+  { year: "2025", text: "Nera voice assistant launched. Care Programmes launched. B2B SaaS platform launched." },
+  { year: "2026", text: "50,000+ users. Worldwide app availability. Camp screening. AI multimodal pipeline live." },
 ];
 
-const team = [
-  { name: "Rahul Rastogi", role: "Co-Founder & CEO", bio: "Electronics Engineer" },
-  { name: "Neha Rastogi", role: "Co-Founder & COO", bio: "Electronics Engineer" },
+const regs = [
+  { title: "CDSCO License", sub: "MFG/MD/2023/000231", body: "Class B Medical Device under Medical Devices Rules, 2017" },
+  { title: "ISO 13485", sub: "Quality Management", body: "ISO 13485-compliant manufacturing quality management system" },
+  { title: "Clinical Validation", sub: "Two independent studies", body: "Sri Jayadeva Institute (ECG, 2022) — 98.15% sensitivity. Medanta — The Medicity (optical monitoring, 2023) — 98.56% accuracy." },
+  { title: "Data Privacy", sub: "DPDP Act compliant", body: "India's Digital Personal Data Protection Act (2023). Data stored on Indian servers. No data sold to third parties." },
 ];
 
-const awards = [
-  { title: "Best Health Tech Startup", year: "2023", org: "India Health Awards" },
-  { title: "Innovation Excellence", year: "2022", org: "Medical Device Summit" },
-  { title: "Make in India Champion", year: "2023", org: "Govt. of India" },
-  { title: "Top 50 Healthcare Startups", year: "2023", org: "HealthTech India" },
-  { title: "Digital Health Pioneer", year: "2022", org: "NASSCOM" },
-  { title: "Best ECG Innovation", year: "2021", org: "CardioTech Awards" },
-];
-
-const certifications = [
-  { name: "ISO 13485:2016", description: "Medical Device Quality", details: "Certified quality management system for medical devices" },
-  { name: "BIS Approved", description: "Bureau of Indian Standards", details: "Meets Indian safety and quality standards" },
-  { name: "CDSCO Licensed", description: "Central Drugs Standard Control", details: "Licensed for manufacture and sale in India" },
-  { name: "ISO 9001:2015", description: "Quality Management", details: "International standard for quality management systems" },
-];
-
-const testimonials = [
-  {
-    quote: "SanketLife has transformed how I monitor my heart health. The reports are so detailed and easy to share with my doctor.",
-    author: "Dr. Rajesh Kumar",
-    role: "Cardiologist, Delhi",
-    rating: 5,
-  },
-  {
-    quote: "As a busy professional, the EasyTouch Rhythm helps me stay on top of my wellness goals without any hassle.",
-    author: "Priya Sharma",
-    role: "IT Manager, Bangalore",
-    rating: 5,
-  },
-  {
-    quote: "The Zlu Sleep Aid has genuinely improved my sleep quality. I wake up feeling refreshed now.",
-    author: "Amit Patel",
-    role: "Entrepreneur, Mumbai",
-    rating: 5,
-  },
-  {
-    quote: "We've integrated SanketLife into our clinic workflow. The accuracy matches our traditional ECG machines.",
-    author: "Dr. Sunita Reddy",
-    role: "General Physician, Hyderabad",
-    rating: 5,
-  },
-  {
-    quote: "CoreBalance BMI gives such detailed body composition data. Perfect for tracking my fitness journey.",
-    author: "Vikram Singh",
-    role: "Fitness Enthusiast, Jaipur",
-    rating: 5,
-  },
-  {
-    quote: "The customer support team is exceptional. They helped us set up our corporate wellness program seamlessly.",
-    author: "Meera Krishnan",
-    role: "HR Director, Chennai",
-    rating: 5,
-  },
-];
-
-const mediaLogos = [
-  "The Economic Times",
-  "YourStory",
-  "Inc42",
-  "TechCrunch",
-  "The Hindu",
-  "Mint",
-  "Business Standard",
-  "Forbes India",
-];
-
-const qualityCommitments = [
-  "100% tested before shipping",
-  "Medical-grade component sourcing",
-  "Continuous clinical validation",
-  "Regular software updates",
-  "Dedicated quality control team",
-  "Traceable manufacturing process",
-];
-
-const About = () => {
+export default function About() {
   return (
-    <Layout>
+    <SiteLayout>
       {/* Hero */}
-      <section className="py-16 bg-muted/30">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <Button asChild variant="ghost" size="sm" className="mb-6">
-              <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
-                <Home className="h-4 w-4" /> Back to Home
-              </Link>
-            </Button>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              About Agatsa
+      <section className="pt-40 pb-24" style={{ background: "#1A1A2E" }}>
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>OUR MISSION</span>
+            <h1 className="mt-6 font-extrabold text-white leading-tight" style={{ fontSize: "clamp(34px,4vw,52px)" }}>
+              We believe preventable deaths are not inevitable.
             </h1>
-            <p className="text-lg text-muted-foreground">
-              We're on a mission to make health monitoring simple, accessible, and
-              actionable for everyone — from your home to the clinic.
-            </p>
           </motion.div>
         </div>
       </section>
 
       {/* Mission */}
-      <section className="py-16 bg-background">
-        <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl font-bold text-foreground mb-4">
-                Our Mission
-              </h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                To empower individuals with the tools and insights they need to
-                understand and improve their health, without the barriers of
-                traditional medical infrastructure.
-              </p>
-              <p className="text-muted-foreground mb-6">
-                We believe that everyone deserves access to medical-grade health
-                monitoring. By bringing clinical-quality devices into homes, we're
-                enabling early detection, better management of chronic conditions,
-                and ultimately — healthier lives.
-              </p>
-              <Button asChild>
-                <Link to="/products" className="flex items-center gap-2">
-                  Explore our products
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="grid grid-cols-2 gap-4"
-            >
-              <div className="bg-primary/10 rounded-2xl p-6 text-center">
-                <p className="text-4xl font-bold text-primary mb-2">500K+</p>
-                <p className="text-sm text-foreground">Users Worldwide</p>
-              </div>
-              <div className="bg-primary/10 rounded-2xl p-6 text-center">
-                <p className="text-4xl font-bold text-primary mb-2">4</p>
-                <p className="text-sm text-foreground">Product Lines</p>
-              </div>
-              <div className="bg-primary/10 rounded-2xl p-6 text-center">
-                <p className="text-4xl font-bold text-primary mb-2">50+</p>
-                <p className="text-sm text-foreground">Countries Served</p>
-              </div>
-              <div className="bg-primary/10 rounded-2xl p-6 text-center">
-                <p className="text-4xl font-bold text-primary mb-2">8</p>
-                <p className="text-sm text-foreground">Years of Innovation</p>
-              </div>
-            </motion.div>
-          </div>
+      <section className="py-20 bg-background">
+        <div className="max-w-[800px] mx-auto px-4">
+          <motion.p variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-lg md:text-xl leading-relaxed text-center" style={{ color: "#4A4A68" }}>
+            Every year, 2.8 million Indians die from cardiovascular disease — most of them preventable. Not because medicine doesn't know how to treat heart disease. Because most people never know they're at risk until it's too late. Agatsa One exists to change that. We build medical-grade health monitoring technology that is affordable, accessible, and intelligent — powered by AI, connected to doctors, and designed for the 1.4 billion people who deserve a fighting chance.
+          </motion.p>
         </div>
       </section>
 
-      {/* Certifications */}
-      <section className="py-16 bg-muted/30">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <div className="flex items-center gap-2 justify-center mb-4">
-              <ShieldCheck className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl font-bold text-foreground">Certifications</h2>
-            </div>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Our devices meet the highest international standards for medical device
-              manufacturing and quality assurance.
+      {/* Founding Story */}
+      <section className="py-20" style={{ background: "#F8F4FF" }}>
+        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+          <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>OUR STORY</span>
+            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>Why we built this</h2>
+            <p className="mt-6 text-base leading-relaxed" style={{ color: "#4A4A68" }}>
+              Agatsa was founded in 2014 by engineers and doctors who watched too many people die from conditions that were perfectly detectable — if only they had access to the right tools. The SanketLife ECG began as a clinical research project at IIT Delhi, designed to bring hospital-grade cardiac monitoring to remote villages. It was validated in ICUs. It was used in emergency rooms. Then we asked: why should this technology only be available in hospitals?
+            </p>
+            <p className="mt-4 text-base leading-relaxed" style={{ color: "#4A4A68" }}>
+              Today, SanketLife is used by more than 50,000 individuals — from cardiac ICU patients to village health workers to busy executives who want to know their hearts are okay. The next chapter — Agatsa One — brings everything together: devices, AI, data, and community. One app. One AI. One health story.
             </p>
           </motion.div>
+          <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <img src="https://placehold.co/560x420/7C4DFF/FFFFFF?text=Agatsa+Team" alt="Agatsa Team" className="rounded-3xl w-full" />
+          </motion.div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {certifications.map((cert, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-shadow"
-              >
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <ShieldCheck className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-1">
-                  {cert.name}
-                </h3>
-                <p className="text-sm text-primary font-medium mb-2">
-                  {cert.description}
-                </p>
-                <p className="text-sm text-muted-foreground">{cert.details}</p>
+      {/* Team */}
+      <section className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>THE TEAM</span>
+            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>The people behind Agatsa One</h2>
+            <p className="mt-2 text-base" style={{ color: "#4A4A68" }}>Three co-founders. Three disciplines. One mission.</p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-10">
+            {team.map((p, i) => (
+              <motion.div key={i} variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center">
+                <img src={p.photo} alt={p.name} className="w-48 h-48 rounded-full mx-auto object-cover" />
+                <h3 className="mt-6 text-2xl font-bold" style={{ color: "#1A1A2E" }}>{p.name}</h3>
+                <p className="text-base font-medium" style={{ color: "#7C4DFF" }}>{p.title}</p>
+                {"loc" in p && <p className="text-sm mt-1" style={{ color: "#4A4A68" }}>{(p as any).loc}</p>}
+                <p className="mt-3 text-sm leading-relaxed text-left" style={{ color: "#4A4A68" }}>{p.bio}</p>
+                {"edu" in p && p.edu && <p className="mt-2 text-xs italic" style={{ color: "rgba(74,74,104,0.7)" }}>{p.edu}</p>}
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Quality Commitment */}
-      <section className="py-16 bg-background">
-        <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl font-bold text-foreground mb-4">
-                Our Quality Commitment
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                Every Agatsa device goes through rigorous quality control
-                processes to ensure you receive a product that meets the highest
-                standards of accuracy and reliability.
-              </p>
-              <ul className="space-y-4">
-                {qualityCommitments.map((commitment, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-primary" />
-                    <span className="text-foreground">{commitment}</span>
-                  </li>
-                ))}
-              </ul>
+      {/* Corporate Structure */}
+      <section className="py-20" style={{ background: "#F8F4FF" }}>
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-12">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>CORPORATE STRUCTURE</span>
+            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>How we're structured</h2>
+          </motion.div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="rounded-2xl p-8 border" style={{ background: "#F8F4FF", borderColor: "rgba(124,77,255,0.2)" }}>
+              <p className="text-3xl">🇮🇳</p>
+              <h3 className="mt-3 text-xl font-bold" style={{ color: "#1A1A2E" }}>Agatsa Medical Technologies Pvt. Ltd.</h3>
+              <p className="text-sm font-medium mt-1" style={{ color: "#7C4DFF" }}>India — Hardware & Clinical Validation</p>
+              <p className="mt-3 text-sm" style={{ color: "#4A4A68" }}>Develops, manufactures, and validates all Agatsa medical devices. Holds CDSCO licenses. Manages India operations, distribution, and clinical partnerships. Based in Delhi, India.</p>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-card rounded-2xl p-8 border border-border"
-            >
-              <div className="text-center">
-                <p className="text-6xl font-bold text-primary mb-2">99.8%</p>
-                <p className="text-lg text-foreground font-medium mb-4">
-                  Accuracy Rate
-                </p>
-                <p className="text-muted-foreground">
-                  Our devices consistently deliver results that match
-                  professional medical equipment in clinical validation studies.
-                </p>
-              </div>
+            <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="rounded-2xl p-8" style={{ background: "#1A1A2E" }}>
+              <p className="text-3xl">🇺🇸</p>
+              <h3 className="mt-3 text-xl font-bold text-white">Nera AI Inc.</h3>
+              <p className="text-sm font-medium mt-1" style={{ color: "#7C4DFF" }}>Delaware, USA — AI Intellectual Property</p>
+              <p className="mt-3 text-sm text-white/75">Owns all AI intellectual property for the Nera AI health intelligence engine. Manages US operations, international expansion, and patent portfolio. Agatsa India holds 5% equity in Nera AI Inc.</p>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className="py-16 bg-muted/30">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-foreground mb-4">Our Values</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              These core principles guide everything we do at Agatsa.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => {
-              const Icon = value.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-card rounded-xl p-6 border border-border text-center"
-                >
-                  <div className="w-14 h-14 rounded-xl bg-accent flex items-center justify-center mx-auto mb-4">
-                    <Icon className="h-7 w-7 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">
-                    {value.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {value.description}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Awards */}
-      <section className="py-16 bg-background">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <div className="flex items-center gap-2 justify-center mb-4">
-              <Award className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl font-bold text-foreground">Awards & Recognition</h2>
-            </div>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {awards.map((award, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-card rounded-xl p-6 border border-border text-center hover:shadow-lg transition-shadow"
-              >
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <Award className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-1">{award.title}</h3>
-                <p className="text-sm text-muted-foreground">{award.org}</p>
-                <p className="text-xs text-primary mt-2 font-medium">{award.year}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-16 bg-muted/30">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <div className="flex items-center gap-2 justify-center mb-4">
-              <Star className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl font-bold text-foreground">What People Say</h2>
-            </div>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-card rounded-xl p-6 border border-border"
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-                  ))}
-                </div>
-                <p className="text-foreground mb-4 italic">"{testimonial.quote}"</p>
-                <div>
-                  <p className="font-semibold text-foreground">{testimonial.author}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Media Mentions */}
-      <section className="py-16 bg-background">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <div className="flex items-center gap-2 justify-center mb-4">
-              <Newspaper className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl font-bold text-foreground">As Seen In</h2>
-            </div>
-          </motion.div>
-
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-            {mediaLogos.map((logo, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="text-muted-foreground font-semibold text-lg hover:text-foreground transition-colors"
-              >
-                {logo}
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="py-16 bg-muted/30">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-foreground mb-4">Our Journey</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              From a small startup to a leading health tech company.
-            </p>
+      <section className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>OUR JOURNEY</span>
+            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>From a Delhi garage to 50,000 users.</h2>
           </motion.div>
-
-          <div className="max-w-3xl mx-auto">
-            {milestones.map((milestone, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="flex gap-4 mb-6"
+          <div className="relative max-w-3xl mx-auto">
+            <div className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5" style={{ background: "#7C4DFF", opacity: 0.2 }} />
+            {milestones.map((m, i) => (
+              <motion.div key={i} variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                className={`relative pl-12 md:pl-0 mb-10 md:w-1/2 ${i % 2 === 0 ? "md:pr-12 md:text-right" : "md:ml-auto md:pl-12"}`}
               >
-                <div className="flex-shrink-0 w-16 text-right">
-                  <span className="text-primary font-bold">{milestone.year}</span>
-                </div>
-                <div className="w-px bg-primary/30 relative">
-                  <div className="absolute top-1 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-primary" />
-                </div>
-                <div className="flex-1 pb-6">
-                  <p className="text-foreground">{milestone.event}</p>
-                </div>
+                <div className={`absolute w-3 h-3 rounded-full top-1.5 left-2.5 md:left-auto ${i % 2 === 0 ? "md:right-[-6.5px]" : "md:left-[-6.5px]"}`} style={{ background: "#7C4DFF" }} />
+                <p className="text-xl font-extrabold" style={{ color: "#7C4DFF" }}>{m.year}</p>
+                <p className="mt-1 text-sm" style={{ color: "#4A4A68" }}>{m.text}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Team */}
-      <section id="careers" className="py-16 bg-background">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-foreground mb-4">Leadership Team</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Meet the people driving innovation at Agatsa.
-            </p>
+      {/* Regulatory */}
+      <section className="py-20" style={{ background: "#F8F4FF" }}>
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-12">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>REGULATORY STANDING</span>
+            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>Regulated. Validated. Certified.</h2>
           </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-card rounded-xl p-6 border border-border text-center"
-              >
-                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary">
-                    {member.name.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
-                <h3 className="font-semibold text-foreground">{member.name}</h3>
-                <p className="text-sm text-primary font-medium mb-2">{member.role}</p>
-                <p className="text-xs text-muted-foreground">{member.bio}</p>
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {regs.map((r, i) => (
+              <motion.div key={i} variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="bg-card rounded-2xl p-8 border border-border">
+                <h3 className="text-lg font-bold" style={{ color: "#1A1A2E" }}>{r.title}</h3>
+                <p className="text-sm font-medium mt-1" style={{ color: "#7C4DFF" }}>{r.sub}</p>
+                <p className="mt-3 text-sm" style={{ color: "#4A4A68" }}>{r.body}</p>
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mt-12"
-          >
-            <p className="text-muted-foreground mb-4">
-              Interested in joining our team?
-            </p>
-            <Button asChild variant="outline">
-              <a href="mailto:careers@agatsa.com">View open positions</a>
-            </Button>
+      {/* Press */}
+      <section className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-12">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>PRESS</span>
+            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>In the news</h2>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {["Press coverage coming soon — contact press@agatsa.ai", "Media enquiry? We respond within 24 hours", "For partnership and investor enquiries: rahul.rastogi@agatsa.com"].map((t, i) => (
+              <motion.div key={i} variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="rounded-2xl p-8 border border-dashed border-border bg-muted/30 flex items-center justify-center text-center min-h-[120px]">
+                <p className="text-sm" style={{ color: "#4A4A68" }}>{t}</p>
+              </motion.div>
+            ))}
+          </div>
+          <p className="text-center mt-6 text-sm" style={{ color: "#4A4A68" }}>Media enquiries: press@agatsa.ai | Investor relations: rahul.rastogi@agatsa.com</p>
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="py-20" style={{ background: "#7C4DFF" }}>
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white">Be part of the mission.</h2>
+            <p className="mt-4 text-lg text-white/80">Join 50,000+ users taking control of their cardiac health.</p>
+            <Link to="/app"><Button className="mt-8 rounded-full px-10 py-5 text-base font-semibold" style={{ background: "white", color: "#7C4DFF" }}>Download Agatsa One Free</Button></Link>
           </motion.div>
         </div>
       </section>
-    </Layout>
+    </SiteLayout>
   );
-};
-
-export default About;
+}
