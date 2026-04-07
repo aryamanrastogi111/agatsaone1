@@ -15,6 +15,7 @@ import ForDoctors from "./pages/ForDoctors";
 import ForHospitals from "./pages/ForHospitals";
 import ForCorporates from "./pages/ForCorporates";
 import AppDownload from "./pages/AppDownload";
+import SanketLifeECGProduct from "./pages/products/SanketLifeECGProduct";
 import DeviceActivation from "./pages/DeviceActivation";
 import ReferralPage from "./pages/Referral";
 import Blog from "./pages/Blog";
