@@ -129,7 +129,7 @@ export default function DeviceActivationPage() {
             <AlertCircle className="h-14 w-14 mx-auto text-amber-500" />
             <h1 className="text-2xl font-extrabold text-foreground">This device has already been activated</h1>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Device code <span className="font-mono font-bold text-foreground">{code}</span> has already been used. If you believe this is an error, or if you received this device as a gift and need a new activation, please contact our support team at <a href="mailto:support@agatsa.ai" className="text-primary font-medium">support@agatsa.ai</a> or call <span className="font-medium text-foreground">08069289999</span>.
+              Device code <span className="font-mono font-bold text-foreground">{code}</span> has already been used. If you believe this is an error, or if you received this device as a gift and need a new activation, please contact our support team at <a href="mailto:support@agatsa.ai" className="text-primary font-medium">support@agatsa.ai</a>.
             </p>
             <a href="/app" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full font-bold text-sm">
               Download Agatsa One

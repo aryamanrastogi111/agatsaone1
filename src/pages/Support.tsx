@@ -390,35 +390,6 @@ const Support = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center flex-shrink-0">
-                    <Phone className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground">Phone</h3>
-                    <a href="tel:08069289999" className="text-primary hover:underline">
-                      08069289999
-                    </a>
-                    <p className="text-sm text-muted-foreground">
-                      Mon-Sat, 9 AM - 6 PM IST
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center flex-shrink-0">
-                    <MessageCircle className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground">WhatsApp</h3>
-                    <a href="https://wa.me/918069289999" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                      08069289999
-                    </a>
-                    <p className="text-sm text-muted-foreground">
-                      Quick responses during business hours
-                    </p>
-                  </div>
-                </div>
 
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center flex-shrink-0">

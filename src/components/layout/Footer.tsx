@@ -51,10 +51,6 @@ export const Footer = forwardRef<HTMLElement>((_, ref) => {
                 <Mail className="h-4 w-4" />
                 care@agatsa.com
               </a>
-              <a href="tel:08069289999" className="flex items-center gap-2 hover:text-primary transition-colors">
-                <Phone className="h-4 w-4" />
-                08069289999
-              </a>
               <div className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 mt-0.5" />
                 <span className="text-secondary-foreground/80">
