@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { CountdownTimer, SALE_CODE, isSaleActive } from "./CountdownTimer";
 
 const STORAGE_KEY = "republic-sale-bar-dismissed";
-const ALLOWED_PATHS = ["/", "/products", "/products/easytouch-rhythm"];
+const ALLOWED_PATHS = ["/", "/devices", "/devices/easytouch-wellness"];
 
 export const RepublicDayAnnouncementBar = () => {
   const location = useLocation();
@@ -111,7 +111,7 @@ export const RepublicDayAnnouncementBar = () => {
 
             {/* Shop Now link */}
             <Button asChild size="sm" variant="ghost" className="h-7 px-2 gap-1 text-primary hover:text-primary">
-              <Link to="/products/easytouch-rhythm">
+              <Link to="/devices/easytouch-wellness">
                 <span className="hidden sm:inline">Shop Now</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>

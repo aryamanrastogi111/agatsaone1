@@ -59,7 +59,7 @@ export function ProductHighlightSanketLife() {
 
             <div className="flex flex-wrap gap-4">
               <Button asChild size="lg" className="bg-rose-600 hover:bg-rose-700">
-                <Link to="/products/sanketlife" className="flex items-center gap-2">
+                <Link to="/devices/sanketlife-ecg" className="flex items-center gap-2">
                   Explore SanketLife
                   <ArrowRight className="h-4 w-4" />
                 </Link>
