@@ -57,6 +57,14 @@ const relatedDevices = [
 ];
 
 export default function SmartScaleProduct() {
+  const addItem = useCartStore((s) => s.addItem);
+  const [adding, setAdding] = useState(false);
+  const handleBuy = () => {
+    setAdding(true);
+    addItem({ productId: "smart-scale", productName: "Agatsa Smart Scale", variantTitle: "Default Title", price: 2499, quantity: 1 });
+    toast.success("Smart Scale added to cart", { position: "top-center" });
+    setTimeout(() => setAdding(false), 500);
+  };
   useSEO({ title: "Agatsa Smart Scale — 14 Body Composition Metrics | BMI, Body Fat, Muscle Mass", description: "14 body composition metrics in 5 seconds. Weight, BMI, body fat, visceral fat, muscle mass, metabolic age and more. 10 family profiles. Works with Nera AI. ₹2,499." });
 
   return (
@@ -84,7 +92,7 @@ export default function SmartScaleProduct() {
                 <span className="text-sm text-muted-foreground ml-1">4.7/5 (423 reviews)</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Smart Scale — ₹2,499</Button>
+                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Smart Scale — ₹2,499</Button>
                 <Button asChild variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">
                   <Link to="/app?device=scale">Download Agatsa One App (free)</Link>
                 </Button>
@@ -193,7 +201,7 @@ export default function SmartScaleProduct() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready to know your body?</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Step on. 5 seconds. 14 metrics. It's that simple.</p>
-          <Button className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Smart Scale — ₹2,499</Button>
+          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Smart Scale — ₹2,499</Button>
         </div>
       </section>
     </SiteLayout>
