@@ -25,10 +25,18 @@ const companyLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
+const supportLinks = [
+  { label: "Help Center", href: "/support" },
+  { label: "FAQs", href: "/support#faq" },
+  { label: "Device Activation", href: "/d/activate" },
+];
+
 const bottomLinks = [
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms-of-service" },
-  { label: "Cookie Policy", href: "/cookie-policy" },
+  { label: "Shipping Policy", href: "/shipping-policy" },
+  { label: "Return & Refund Policy", href: "/return-policy" },
+  { label: "Data Deletion", href: "/data-deletion" },
 ];
 
 export function SiteFooter() {
