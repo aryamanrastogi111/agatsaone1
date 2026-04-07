@@ -5,7 +5,7 @@ import { Mail, Phone, MapPin, MessageCircle, ChevronDown, ChevronUp, Shield, Pac
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Layout } from "@/components/layout";
+import { SiteLayout } from "@/components/SiteLayout";
 const faqs = [{
   question: "How accurate are Agatsa devices?",
   answer: "Our devices are designed to meet medical-grade accuracy standards. SanketLife, for example, has been clinically validated to match the accuracy of traditional 12-lead ECG machines. All our devices undergo rigorous testing and are certified by regulatory bodies including ISO 13485, BIS, and CDSCO."
@@ -128,7 +128,7 @@ const Support = () => {
       message: ""
     });
   };
-  return <Layout>
+  return <SiteLayout>
       {/* Hero */}
       <section className="py-16 bg-muted/30">
         <div className="container">
@@ -478,6 +478,6 @@ const Support = () => {
           </motion.div>
         </div>
       </section>
-    </Layout>;
+    </SiteLayout>;
 };
 export default Support;
