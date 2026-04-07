@@ -107,8 +107,13 @@ const App = () => (
           <Route path="/return-policy" element={<ReturnPolicy />} />
           <Route path="/data-deletion" element={<DataDeletion />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/press" element={<Press />} />
+          <Route path="/partner" element={<Partner />} />
+          <Route path="/demo" element={<Demo />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
 
-          {/* Deep link pages */}
           <Route path="/d/:code" element={<DeviceActivation />} />
           <Route path="/r/:code" element={<ReferralPage />} />
 
