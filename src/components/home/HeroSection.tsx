@@ -25,6 +25,7 @@ const heroProducts = [
     benefit: "Detect heart issues early",
     icon: Heart,
     accent: "from-rose-500/20 to-red-500/5",
+    route: "/devices/sanketlife-ecg",
   },
   {
     id: "easytouch-rhythm",
@@ -34,6 +35,7 @@ const heroProducts = [
     benefit: "Track metabolic health & vitals",
     icon: Activity,
     accent: "from-primary/20 to-cyan-500/5",
+    route: "/devices/easytouch-wellness",
   },
   {
     id: "zlu",
@@ -43,6 +45,7 @@ const heroProducts = [
     benefit: "Better sleep, naturally",
     icon: Moon,
     accent: "from-indigo-500/20 to-violet-500/5",
+    route: "/devices",
   },
   {
     id: "corebalance",
@@ -52,6 +55,7 @@ const heroProducts = [
     benefit: "Know your body metrics",
     icon: Scale,
     accent: "from-emerald-500/20 to-teal-500/5",
+    route: "/devices/smart-scale",
   },
 ];
 
@@ -131,7 +135,7 @@ export function HeroSection() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 * index }}
                   >
-                    <Link to={`/products/${product.id}`} className="block group">
+                    <Link to={product.route} className="block group">
                       <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white to-muted/30 dark:from-muted/20 dark:to-background border border-border/40 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.1)]">
                         {product.id === "easytouch-rhythm" && isSaleActive() && (
                           <RepublicDaySaleBadge size="sm" className="absolute top-3 right-3 z-10" />
@@ -304,7 +308,7 @@ export function HeroSection() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     className="absolute inset-0 flex items-center justify-center p-12"
                   >
-                    <Link to={`/products/${activeProduct.id}`} className="block group w-full h-full relative">
+                    <Link to={activeProduct.route} className="block group w-full h-full relative">
                       {/* Sale badge */}
                       {activeProduct.id === "easytouch-rhythm" && isSaleActive() && (
                         <RepublicDaySaleBadge size="md" className="absolute -top-2 right-8 z-10" />
@@ -329,7 +333,7 @@ export function HeroSection() {
                   transition={{ duration: 0.4 }}
                   className="mt-6 text-center"
                 >
-                  <Link to={`/products/${activeProduct.id}`} className="group inline-block">
+                  <Link to={activeProduct.route} className="group inline-block">
                     <div className="flex items-center justify-center gap-2 mb-2">
                       <activeProduct.icon className="w-5 h-5 text-primary" />
                       <span className="text-sm font-medium text-primary uppercase tracking-wider">
