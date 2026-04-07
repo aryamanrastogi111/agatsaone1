@@ -121,7 +121,7 @@ export default function SanketLifeECGProduct() {
       <section className="bg-[hsl(260,100%,97%)] py-10">
         <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           {[
-            { big: "98.15%", label: "ECG Sensitivity", sub: "Sri Jayadeva Study" },
+            { big: "98.5%", label: "ECG Accuracy", sub: "Narayana Health & Sri Jayadeva" },
             { big: "30 seconds", label: "Time for a 12-lead ECG", sub: "No gel, no preparation" },
             { big: "50,000+", label: "ECG readings analysed", sub: "By Nera AI to date" },
           ].map((s) => (
@@ -181,9 +181,10 @@ export default function SanketLifeECGProduct() {
         <div className="max-w-[800px] mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-10">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Clinical Validation</p>
-            <h2 className="text-3xl font-bold text-foreground">Validated at India's top cardiac hospital</h2>
+            <h2 className="text-3xl font-bold text-foreground">Validated at India's top cardiac hospitals</h2>
           </motion.div>
 
+          <div className="space-y-6">
           <motion.div {...fadeUp} className="bg-[hsl(260,100%,97%)] rounded-3xl p-8 md:p-10">
             <h3 className="text-lg font-bold text-foreground">Sri Jayadeva Institute of Cardiovascular Sciences & Research, Bengaluru</h3>
 
@@ -211,6 +212,34 @@ export default function SanketLifeECGProduct() {
               </footer>
             </blockquote>
           </motion.div>
+
+          <motion.div {...fadeUp} className="bg-[hsl(260,100%,97%)] rounded-3xl p-8 md:p-10">
+            <h3 className="text-lg font-bold text-foreground">Narayana Health, Bengaluru</h3>
+
+            <table className="w-full mt-6 text-sm">
+              <tbody>
+                {[
+                  ["Accuracy", "98.5%"],
+                  ["Study type", "Clinical validation study"],
+                ].map(([k, v]) => (
+                  <tr key={k} className="border-b border-border last:border-0">
+                    <td className="py-3 text-muted-foreground font-medium">{k}</td>
+                    <td className="py-3 text-foreground font-semibold text-right">{v}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <blockquote className="mt-8 bg-card rounded-2xl p-6 border-l-4 border-primary">
+              <p className="text-sm text-muted-foreground italic">
+                "SanketLife ECG readings demonstrated high concordance with hospital-grade equipment across a diverse patient population."
+              </p>
+              <footer className="mt-3 text-xs font-medium text-foreground">
+                — Narayana Health Validation Study
+              </footer>
+            </blockquote>
+          </motion.div>
+          </div>
         </div>
       </section>
 

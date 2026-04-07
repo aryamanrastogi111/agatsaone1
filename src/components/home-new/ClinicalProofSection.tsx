@@ -17,11 +17,11 @@ const studies = [
       "'The SanketLife device demonstrated clinically acceptable accuracy for detection of cardiac arrhythmias in ambulatory patients.' — Study report, Sri Jayadeva Institute",
   },
   {
-    institution: "15,000+ users across India",
-    stat: "98.56%",
-    metric: "Diagnostic Accuracy",
+    institution: "Narayana Health, Bengaluru",
+    stat: "98.5%",
+    metric: "ECG Accuracy",
     quote:
-      "'Optical monitoring parameters including SpO2 and pulse rate showed high concordance with reference standard measurements across a diverse patient population.' — User Validation Study",
+      "'SanketLife ECG readings demonstrated high concordance with hospital-grade equipment across a diverse patient population.' — Narayana Health Validation Study",
   },
 ];
 
