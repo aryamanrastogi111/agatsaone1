@@ -1,7 +1,7 @@
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, MessageCircle, Clock } from "lucide-react";
+import { Mail, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -36,8 +36,6 @@ export default function Contact() {
         <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-6">
           {[
             { icon: Mail, title: "Email Us", detail: "care@agatsa.com", sub: "We respond within 24 hours", href: "mailto:care@agatsa.com" },
-            { icon: Phone, title: "Call Us", detail: "08069289999", sub: "Mon–Sat, 9 AM – 6 PM IST", href: "tel:08069289999" },
-            { icon: MessageCircle, title: "WhatsApp", detail: "+91 88262 83840", sub: "Quick support via WhatsApp", href: "https://wa.me/918826283840" },
           ].map((c, i) => (
             <motion.a key={i} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" {...fade} transition={{ duration: 0.5, delay: i * 0.1 }} className="bg-card border border-border rounded-2xl p-6 text-center hover:shadow-lg transition-shadow">
               <c.icon className="h-8 w-8 mx-auto text-primary mb-3" />
@@ -70,19 +68,12 @@ export default function Contact() {
           {/* Address */}
           <motion.div {...fade} transition={{ duration: 0.5, delay: 0.2 }} className="space-y-6">
             <div>
-              <h3 className="font-bold text-foreground mb-2 flex items-center gap-2"><MapPin className="h-5 w-5 text-primary" /> Registered Office</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Agatsa Medical Technologies Pvt. Ltd.<br />
-                New Delhi, India
-              </p>
-            </div>
-            <div>
               <h3 className="font-bold text-foreground mb-2 flex items-center gap-2"><Clock className="h-5 w-5 text-primary" /> Business Hours</h3>
               <p className="text-sm text-muted-foreground">Monday – Saturday<br />9:00 AM – 6:00 PM IST</p>
             </div>
             <div className="bg-card border border-border rounded-2xl p-5">
               <h4 className="font-semibold text-foreground text-sm">For Enterprise & Hospital Enquiries</h4>
-              <p className="text-sm text-muted-foreground mt-1">Email: <a href="mailto:enterprise@agatsa.com" className="text-primary">enterprise@agatsa.com</a></p>
+              <p className="text-sm text-muted-foreground mt-1">Email: <a href="mailto:info@agatsa.com" className="text-primary">info@agatsa.com</a></p>
               <p className="text-sm text-muted-foreground">Or <a href="/for-hospitals" className="text-primary underline">book a hospital demo</a></p>
             </div>
           </motion.div>
