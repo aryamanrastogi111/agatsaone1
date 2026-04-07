@@ -11,7 +11,6 @@ const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0
 
 const measures = [
   { title: "Metabolic Load Index", desc: "Track how your body responds to food — see post-meal metabolic trends without any needles" },
-  { title: "Blood Pressure", desc: "Systolic and diastolic BP with hypertension stage indicator" },
   { title: "Blood Oxygen (SpO2)", desc: "Oxygen saturation with 94% alert threshold" },
   { title: "Heart Rate", desc: "Pulse rate real-time and trend" },
   { title: "HRV", desc: "Heart rate variability — key stress and recovery indicator" },
@@ -32,9 +31,9 @@ const boxItems = [
 ];
 
 const faqs = [
-  { q: "What does EasyTouch Wellness measure?", a: "EasyTouch Wellness is a non-invasive metabolic health monitor. It tracks your body's metabolic load — how your body responds to food, stress, and activity — along with BP, SpO2, heart rate, HRV, and more. It gives you a comprehensive metabolic and cardiovascular picture in 60 seconds." },
+  { q: "What does EasyTouch Wellness measure?", a: "EasyTouch Wellness is a non-invasive metabolic health monitor. It tracks your body's metabolic load — how your body responds to food, stress, and activity — along with SpO2, heart rate, HRV, and more. It gives you a comprehensive metabolic and cardiovascular picture in 60 seconds." },
   { q: "Is this a medical diagnostic device?", a: "EasyTouch Wellness is a health monitoring aid designed for daily wellness tracking. It provides metabolic trend insights that help you understand your body better. For medical diagnosis or treatment decisions, always consult your healthcare provider." },
-  { q: "Who should use the EasyTouch Wellness?", a: "Anyone who wants daily visibility into their metabolic and cardiovascular health — especially those managing lifestyle conditions, monitoring their diet's impact, or wanting to track BP and SpO2 without frequent clinic visits. It's designed for proactive health management." },
+  { q: "Who should use the EasyTouch Wellness?", a: "Anyone who wants daily visibility into their metabolic and cardiovascular health — especially those managing lifestyle conditions, monitoring their diet's impact, or wanting to track SpO2 and heart rate trends without frequent clinic visits. It's designed for proactive health management." },
   { q: "How does metabolic load tracking work?", a: "The EasyTouch uses advanced optical sensing to measure bioelectrical metabolic markers. When you log your meals in the app, Nera AI correlates your readings with your diet to show how your body processes food over time — building a personalised metabolic profile." },
   { q: "What happens if my readings show something unusual?", a: "Nera AI continuously monitors your trends. If any vital crosses a threshold, you'll receive an immediate alert with guidance. On Care Programmes, unusual patterns trigger an escalation protocol for timely medical consultation." },
 ];
@@ -46,7 +45,7 @@ const relatedDevices = [
 ];
 
 export default function EasyTouchWellnessProduct() {
-  useSEO({ title: "EasyTouch Wellness — Non-Invasive Metabolic Health Monitor | Agatsa One", description: "Track your metabolic health, BP, SpO2, HRV and more — no needles, no blood. 8 vitals in 60 seconds. ₹3,499. Powered by Nera AI." });
+  useSEO({ title: "EasyTouch Wellness — Non-Invasive Metabolic Health Monitor | Agatsa One", description: "Track your metabolic health, SpO2, HRV and more — no needles, no blood. Multiple vitals in 60 seconds. ₹3,499. Powered by Nera AI." });
 
   return (
     <SiteLayout>
@@ -76,7 +75,7 @@ export default function EasyTouchWellnessProduct() {
               </p>
 
               <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">
-                Track your metabolic load, blood pressure, SpO2, heart rate, and HRV — all in one device, in under 60 seconds. No needles. No blood. No discomfort. Just daily metabolic intelligence powered by Nera AI.
+                Track your metabolic load, SpO2, heart rate, and HRV — all in one device, in under 60 seconds. No needles. No blood. No discomfort. Just daily metabolic intelligence powered by Nera AI.
               </p>
 
               <div className="mt-6">
