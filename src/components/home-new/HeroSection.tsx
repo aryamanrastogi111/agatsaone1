@@ -1,7 +1,14 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import sanketlifeHero from "@/assets/sanketlife-combo-main.png";
+import { useState, useEffect } from "react";
+import appScreen1 from "@/assets/app-screen-1.png";
+import appScreen2 from "@/assets/app-screen-2.png";
+import appScreen3 from "@/assets/app-screen-3.png";
+import appScreen4 from "@/assets/app-screen-4.png";
+import appScreen5 from "@/assets/app-screen-5.png";
+
+const screens = [appScreen1, appScreen2, appScreen3, appScreen4, appScreen5];
 
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
@@ -16,6 +23,13 @@ const stagger = (i: number) => ({
 });
 
 export function HeroSection() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrent((c) => (c + 1) % screens.length), 3500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center bg-gradient-to-b from-background to-muted overflow-hidden">
       {/* Decorative blobs */}
@@ -83,47 +97,73 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right — floating mockups */}
+          {/* Right — iPhone mockup with sliding screens */}
           <motion.div
             {...stagger(2)}
             className="relative flex items-center justify-center"
           >
-            <div className="relative w-[320px] h-[320px] md:w-[420px] md:h-[420px]">
-              {/* Decorative ring */}
-              <div className="absolute inset-0 rounded-full border-2 border-primary/10 animate-pulse" />
-              <div className="absolute inset-4 rounded-full border border-primary/5" />
+            <div className="relative">
+              {/* iPhone frame */}
+              <div className="relative w-[260px] h-[530px] md:w-[300px] md:h-[612px] mx-auto">
+                {/* Outer shell */}
+                <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-b from-[#2a2a2e] to-[#1a1a1e] shadow-2xl" />
+                {/* Inner bezel */}
+                <div className="absolute inset-[3px] rounded-[2.8rem] bg-[#1a1a1e]" />
+                {/* Screen area */}
+                <div className="absolute inset-[6px] rounded-[2.6rem] overflow-hidden bg-white">
+                  {/* Notch */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[28px] md:h-[32px] bg-[#1a1a1e] rounded-b-2xl z-10" />
+                  {/* Sliding screenshots */}
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={current}
+                      src={screens[current]}
+                      alt="Agatsa One app screen"
+                      className="w-full h-full object-cover object-top"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5 }}
+                    />
+                  </AnimatePresence>
+                </div>
+                {/* Home indicator */}
+                <div className="absolute bottom-[10px] left-1/2 -translate-x-1/2 w-[100px] h-[4px] bg-white/30 rounded-full z-10" />
+              </div>
 
-              {/* Central phone mockup */}
-              <motion.div
-                animate={{ y: [-8, 8, -8] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <img src={sanketlifeHero} alt="Agatsa One devices" className="w-64 md:w-80 object-contain drop-shadow-2xl" />
-              </motion.div>
-
-              {/* Floating device badges */}
+              {/* Floating badges */}
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute top-4 right-0 bg-background rounded-2xl shadow-purple px-3 py-2 border border-border"
+                className="absolute top-8 -right-8 md:-right-16 bg-background rounded-2xl shadow-purple px-3 py-2 border border-border"
               >
                 <p className="text-xs font-semibold">📊 ECG Normal</p>
               </motion.div>
               <motion.div
                 animate={{ y: [0, 6, 0] }}
                 transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute bottom-8 left-0 bg-background rounded-2xl shadow-purple px-3 py-2 border border-border"
+                className="absolute bottom-24 -left-8 md:-left-16 bg-background rounded-2xl shadow-purple px-3 py-2 border border-border"
               >
                 <p className="text-xs font-semibold">💉 Glucose 98 mg/dL</p>
               </motion.div>
               <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                className="absolute bottom-4 right-4 bg-background rounded-2xl shadow-purple px-3 py-2 border border-border"
+                className="absolute bottom-12 -right-4 md:-right-12 bg-background rounded-2xl shadow-purple px-3 py-2 border border-border"
               >
                 <p className="text-xs font-semibold">❤️ HR 72 bpm</p>
               </motion.div>
+
+              {/* Slide indicators */}
+              <div className="flex justify-center gap-1.5 mt-6">
+                {screens.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrent(i)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${i === current ? "bg-primary w-5" : "bg-primary/25"}`}
+                  />
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
