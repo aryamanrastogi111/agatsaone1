@@ -6,6 +6,7 @@ import providerPortalImg from "@/assets/provider-portal-dashboard.jpg";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { BrochureLeadCapture } from "@/components/BrochureLeadCapture";
 
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 
@@ -143,9 +144,13 @@ export default function ForDoctorsPage() {
               <a href="mailto:info@agatsa.com?subject=Provider Demo Request">
                 <Button className="rounded-full px-8 py-4 text-base w-full">Book a Demo</Button>
               </a>
-              <a href="/agatsa-one-hospital-brochure.pdf" target="_blank" rel="noopener noreferrer">
+              <BrochureLeadCapture
+                brochureType="doctors"
+                brochurePath="/agatsa-one-doctors-brochure.pdf"
+                buttonText="Download Provider Guide"
+              >
                 <Button variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary w-full">Download Provider Guide</Button>
-              </a>
+              </BrochureLeadCapture>
             </div>
           </motion.div>
           <motion.img {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} src={providerPortalImg} alt="Agatsa One Provider Portal Dashboard" className="w-full rounded-3xl shadow-2xl" />
