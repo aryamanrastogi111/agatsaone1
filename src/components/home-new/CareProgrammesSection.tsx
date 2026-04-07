@@ -9,7 +9,7 @@ const programmes = [
     duration: "12 weeks",
     audience: "For patients 2–12 weeks post-MI or cardiac event",
     description: "Daily ECG monitoring + medication reminders + guided cardiac rehab exercises + weekly AI risk assessment",
-    link: "/programmes/post-heart-attack",
+    link: "/programmes#post-heart-attack",
   },
   {
     emoji: "💉",
@@ -17,7 +17,7 @@ const programmes = [
     duration: "16 weeks",
     audience: "For Type 2 diabetics with cardiac risk factors",
     description: "Glucose + ECG + BP monitoring unified. HbA1c prediction. Meal scoring. Cardiometabolic risk tracking.",
-    link: "/programmes/diabetic-cardiac",
+    link: "/programmes#diabetic-cardiac",
   },
   {
     emoji: "⚖️",
@@ -25,7 +25,7 @@ const programmes = [
     duration: "12 weeks",
     audience: "For individuals with BMI > 27.5 targeting sustainable weight loss",
     description: "Smart scale + band integration. Daily calorie guidance. Body composition tracking. Weekly progress milestones.",
-    link: "/programmes/obesity-reversal",
+    link: "/programmes#obesity-reversal",
   },
   {
     emoji: "🩺",
@@ -33,7 +33,7 @@ const programmes = [
     duration: "12 weeks",
     audience: "For Stage 1 or 2 hypertension patients",
     description: "Twice-daily BP logging with trend analysis. Medication adherence tracking. Stress and sleep correlation. DASH diet guidance.",
-    link: "/programmes/hypertension-control",
+    link: "/programmes#hypertension-control",
   },
   {
     emoji: "🏢",
@@ -41,10 +41,9 @@ const programmes = [
     duration: "8 weeks",
     audience: "For employer-sponsored employee health initiatives",
     description: "Team dashboards, anonymised aggregate health scores, biometric screening events, HR integration.",
-    link: "/programmes/corporate-wellness",
+    link: "/programmes#corporate-wellness",
   },
 ];
-
 export function CareProgrammesSection() {
   return (
     <section className="py-20 md:py-28 bg-muted">

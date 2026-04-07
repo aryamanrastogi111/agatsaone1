@@ -32,8 +32,9 @@ interface Programme {
   cta2: { label: string; link?: string };
 }
 
-const programmes: Programme[] = [
+const programmes: (Programme & { slug: string })[] = [
   {
+    slug: "post-heart-attack",
     icon: "❤️", accent: "#FF4B4B",
     name: "Post Heart Attack Recovery Programme",
     duration: "12 weeks · 84 daily check-ins",
@@ -51,6 +52,7 @@ const programmes: Programme[] = [
     cta2: { label: "Ask Your Doctor" },
   },
   {
+    slug: "diabetic-cardiac",
     icon: "💉", accent: "#1A73E8",
     name: "Diabetic Cardiac Care Programme",
     duration: "16 weeks · 112 daily check-ins",
@@ -68,6 +70,7 @@ const programmes: Programme[] = [
     cta2: { label: "Ask Your Doctor" },
   },
   {
+    slug: "obesity-reversal",
     icon: "⚖️", accent: "#00C853",
     name: "Obesity Reversal Programme",
     duration: "12 weeks · 84 daily check-ins",
@@ -85,6 +88,7 @@ const programmes: Programme[] = [
     cta2: { label: "Ask Your Doctor" },
   },
   {
+    slug: "hypertension-control",
     icon: "🩺", accent: "#FF6D00",
     name: "Hypertension Control Programme",
     duration: "12 weeks · 168 BP readings (2x daily)",
@@ -102,6 +106,7 @@ const programmes: Programme[] = [
     cta2: { label: "Ask Your Doctor" },
   },
   {
+    slug: "corporate-wellness",
     icon: "🏢", accent: "#7C4DFF",
     name: "Corporate Wellness Programme",
     duration: "8 weeks · 56 days of guided wellness",
@@ -120,13 +125,14 @@ const programmes: Programme[] = [
   },
 ];
 
-function ProgrammeCard({ p, index }: { p: Programme; index: number }) {
+function ProgrammeCard({ p, index }: { p: Programme & { slug: string }; index: number }) {
   const isInfo = p.alert.type === "info";
   return (
     <motion.div
+      id={p.slug}
       {...fadeUp}
       transition={{ duration: 0.6, delay: index * 0.08 }}
-      className="bg-card rounded-3xl shadow-md border border-border overflow-hidden flex"
+      className="bg-card rounded-3xl shadow-md border border-border overflow-hidden flex scroll-mt-24"
     >
       <div className="w-1 shrink-0" style={{ backgroundColor: p.accent }} />
       <div className="p-6 md:p-8 flex-1">
