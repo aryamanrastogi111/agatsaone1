@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { BarChart3, Mic, AlertTriangle, Star } from "lucide-react";
+import neraScreen from "@/assets/app-screen-nera.png";
 
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
@@ -89,24 +90,18 @@ export function NeraAISection() {
             <motion.div
               animate={{ y: [-8, 8, -8] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="w-[240px] h-[480px] md:w-[280px] md:h-[560px] rounded-[2.5rem] border-2 border-primary/30 bg-gradient-to-b from-primary/20 to-secondary/10 flex flex-col items-center justify-center p-8 relative"
+              className="relative w-[260px] h-[530px] md:w-[300px] md:h-[612px]"
             >
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-6 bg-dark-bg rounded-full" />
-              <div className="text-5xl mb-4">🧠</div>
-              <p className="text-lg font-bold text-center">Nera AI</p>
-              <p className="text-xs text-white/50 text-center mt-2">
-                Your personal health intelligence
-              </p>
-              <div className="mt-6 w-full space-y-3">
-                <div className="bg-white/10 rounded-xl p-3">
-                  <p className="text-[10px] text-white/40">Health Score</p>
-                  <p className="text-2xl font-bold text-primary">87</p>
-                </div>
-                <div className="bg-white/10 rounded-xl p-3">
-                  <p className="text-[10px] text-white/40">This week</p>
-                  <p className="text-xs text-white/70">ECG normal · BP improving</p>
-                </div>
+              {/* iPhone frame */}
+              <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-b from-[#2a2a2e] to-[#1a1a1e] shadow-2xl" />
+              <div className="absolute inset-[3px] rounded-[2.8rem] bg-[#1a1a1e]" />
+              <div className="absolute inset-[6px] rounded-[2.6rem] overflow-hidden bg-white">
+                {/* Notch */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[28px] md:h-[32px] bg-[#1a1a1e] rounded-b-2xl z-10" />
+                <img src={neraScreen} alt="Nera AI Health Score" className="w-full h-full object-cover object-top" />
               </div>
+              {/* Home indicator */}
+              <div className="absolute bottom-[10px] left-1/2 -translate-x-1/2 w-[100px] h-[4px] bg-white/30 rounded-full z-10" />
             </motion.div>
           </motion.div>
         </div>
