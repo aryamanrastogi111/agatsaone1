@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, Check, ArrowRight, Bluetooth, Clock, ShieldCheck, Package, Mic, ChevronDown } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import sanketlifeHero from "@/assets/sanketlife-device-app.png";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
@@ -60,7 +61,7 @@ export default function SanketLifeECGProduct() {
           <div className="grid lg:grid-cols-[55%_45%] gap-12 items-center">
             <motion.img
               {...fadeUp}
-              src="https://placehold.co/560x440/7C4DFF/FFFFFF?text=SanketLife+ECG"
+              src={sanketlifeHero}
               alt="SanketLife 12-Lead ECG Monitor"
               className="w-full rounded-3xl shadow-2xl"
             />

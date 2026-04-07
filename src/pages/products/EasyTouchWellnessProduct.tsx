@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, ArrowRight, Package } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import easytouchHero from "@/assets/easytouch-wellness-hero.png";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
@@ -56,7 +57,7 @@ export default function EasyTouchWellnessProduct() {
           </nav>
 
           <div className="grid lg:grid-cols-[55%_45%] gap-12 items-center">
-            <motion.img {...fadeUp} src="https://placehold.co/560x440/1A73E8/FFFFFF?text=EasyTouch+Wellness" alt="EasyTouch Wellness Optical Monitor" className="w-full rounded-3xl shadow-2xl" />
+            <motion.img {...fadeUp} src={easytouchHero} alt="EasyTouch Wellness Optical Monitor" className="w-full rounded-3xl shadow-2xl" />
 
             <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
               <span className="inline-block text-sm font-medium text-white bg-[hsl(217,82%,50%)] rounded-full px-4 py-1.5 mb-4">

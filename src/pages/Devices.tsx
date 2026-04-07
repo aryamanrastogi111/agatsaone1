@@ -4,6 +4,10 @@ import { motion } from "framer-motion";
 import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
+import sanketlifeImg from "@/assets/sanketlife-device-app.png";
+import easytouchImg from "@/assets/easytouch-wellness-hero.png";
+import rhythmImg from "@/assets/easytouch-rhythm-new.png";
+import scaleImg from "@/assets/corebalance-hero.png";
 
 interface DeviceData {
   id: string;
@@ -25,7 +29,7 @@ interface DeviceData {
 const devices: DeviceData[] = [
   {
     id: "sanketlife-ecg",
-    image: "https://placehold.co/600x320/7C4DFF/FFFFFF?text=SanketLife+ECG",
+    image: sanketlifeImg,
     badge: "CDSCO Class B Certified · MFG/MD/2023/000231",
     name: "SanketLife 12-Lead ECG Monitor",
     tagline: "Hospital-grade ECG in your shirt pocket",
@@ -55,7 +59,7 @@ const devices: DeviceData[] = [
   },
   {
     id: "easytouch-wellness",
-    image: "https://placehold.co/600x320/1A73E8/FFFFFF?text=EasyTouch+Wellness",
+    image: easytouchImg,
     badge: "Medanta Validated",
     name: "EasyTouch Wellness Optical Monitor",
     tagline: "Glucose, BP, SpO2 — no needles, no cuffs",
@@ -84,7 +88,7 @@ const devices: DeviceData[] = [
   },
   {
     id: "rhythm-band",
-    image: "https://placehold.co/600x320/00C853/FFFFFF?text=Rhythm+Band",
+    image: rhythmImg,
     name: "EasyTouch Rhythm Wellness Band",
     tagline: "24/7 health monitoring on your wrist",
     keyStat: "Sleep, HRV, steps, SpO2 — continuous 24/7 monitoring",
@@ -114,7 +118,7 @@ const devices: DeviceData[] = [
   },
   {
     id: "smart-scale",
-    image: "https://placehold.co/600x320/FF6D00/FFFFFF?text=Smart+Scale",
+    image: scaleImg,
     name: "Agatsa Smart Scale",
     tagline: "14 body metrics. One step. One app.",
     keyStat: "BMI, body fat, muscle mass — 14 metrics in 5 seconds",

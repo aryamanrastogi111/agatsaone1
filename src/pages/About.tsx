@@ -2,6 +2,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import agatsaProducts from "@/assets/agatsa-products-family.png";
 
 const fade = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
@@ -68,7 +69,7 @@ export default function About() {
             </p>
           </motion.div>
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <img src="https://placehold.co/560x420/7C4DFF/FFFFFF?text=Agatsa+Team" alt="Agatsa Team" className="rounded-3xl w-full" />
+            <img src={agatsaProducts} alt="Agatsa Team and Products" className="rounded-3xl w-full" />
           </motion.div>
         </div>
       </section>
