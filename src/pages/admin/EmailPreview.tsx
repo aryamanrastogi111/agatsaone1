@@ -58,7 +58,7 @@ function buildCustomerHtml(data: typeof SAMPLE) {
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
         <tr><td style="background:linear-gradient(135deg,#0ea5e9 0%,#0284c7 100%);padding:32px 40px;text-align:center;">
           <img src="https://agatsaone1.lovable.app/agatsa-favicon.png" alt="Agatsa" width="40" height="40" style="display:block;margin:0 auto 12px;border-radius:8px;"/>
-          <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;">Agatsa Medical Technologies</h1>
+          <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;">Agatsa Software</h1>
           <p style="color:#bae6fd;margin:6px 0 0;font-size:13px;letter-spacing:0.3px;">YOUR HEART, OUR PRIORITY</p>
         </td></tr>
         <tr><td style="background:#f0fdf4;padding:28px 40px 20px;text-align:center;border-bottom:2px solid #dcfce7;">
@@ -117,7 +117,7 @@ function buildCustomerHtml(data: typeof SAMPLE) {
           </table>
         </td></tr>
         <tr><td style="background:#f8fafc;padding:24px 40px;text-align:center;border-top:1px solid #e2e8f0;">
-          <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;font-weight:600;">© 2025 Agatsa Medical Technologies Pvt. Ltd.</p>
+          <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;font-weight:600;">© 2025 Agatsa Software Pvt. Ltd.</p>
           <p style="margin:0;font-size:11px;color:#cbd5e1;">Bengaluru, India · agatsa.com</p>
         </td></tr>
       </table>
@@ -206,7 +206,7 @@ function buildTeamHtml(data: typeof SAMPLE) {
           </table>
         </td></tr>
         <tr><td style="background:#f8fafc;padding:16px 32px;text-align:center;border-top:1px solid #e2e8f0;">
-          <p style="margin:0;font-size:11px;color:#94a3b8;">Agatsa Medical Technologies · Internal Use Only · Sent to info@agatsa.com</p>
+          <p style="margin:0;font-size:11px;color:#94a3b8;">Agatsa Software · Internal Use Only · Sent to info@agatsa.com</p>
         </td></tr>
       </table>
     </td></tr>
@@ -340,7 +340,7 @@ export default function EmailPreview() {
           <div className="flex items-center gap-2">
             <span className="font-semibold text-gray-400 uppercase tracking-wide">From</span>
             <span className="text-gray-700 font-medium">
-              {active === "customer" ? "Agatsa Medical Technologies" : "Agatsa Orders"}{" "}
+              {active === "customer" ? "Agatsa Software" : "Agatsa Orders"}{" "}
               <span className="text-gray-400">&lt;orders@notify.agatsa.in&gt;</span>
             </span>
           </div>

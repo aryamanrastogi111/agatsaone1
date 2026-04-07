@@ -110,7 +110,7 @@ export default function About() {
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="rounded-2xl p-8 border" style={{ background: "#F8F4FF", borderColor: "rgba(124,77,255,0.2)" }}>
               <p className="text-3xl">🇮🇳</p>
-              <h3 className="mt-3 text-xl font-bold" style={{ color: "#1A1A2E" }}>Agatsa Medical Technologies Pvt. Ltd.</h3>
+              <h3 className="mt-3 text-xl font-bold" style={{ color: "#1A1A2E" }}>Agatsa Software Pvt. Ltd.</h3>
               <p className="text-sm font-medium mt-1" style={{ color: "#7C4DFF" }}>India — Hardware & Clinical Validation</p>
               <p className="mt-3 text-sm" style={{ color: "#4A4A68" }}>Develops, manufactures, and validates all Agatsa medical devices. Holds CDSCO licenses. Manages India operations, distribution, and clinical partnerships. Based in Delhi, India.</p>
             </motion.div>
