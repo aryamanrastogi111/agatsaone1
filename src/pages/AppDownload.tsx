@@ -5,6 +5,7 @@ import { Copy, Check, Apple, Play } from "lucide-react";
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import qrApple from "@/assets/qr-apple.png";
+import qrGoogle from "@/assets/qr-google.png";
 import {
   Accordion,
   AccordionContent,
@@ -225,6 +226,23 @@ function DefaultState() {
             <div className="flex items-center gap-1.5">
               <Apple className="h-4 w-4 text-foreground" />
               <span className="text-sm font-medium text-foreground">App Store</span>
+            </div>
+          </div>
+
+          {/* Google QR */}
+          <div className="flex flex-col items-center gap-3">
+            <div className="bg-background rounded-2xl p-3 border border-border">
+              <img
+                src={qrGoogle}
+                alt="QR code to download Agatsa One on Google Play"
+                width={200}
+                height={200}
+                className="rounded-lg"
+              />
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Play className="h-4 w-4 text-foreground fill-current" />
+              <span className="text-sm font-medium text-foreground">Google Play</span>
             </div>
           </div>
         </div>
