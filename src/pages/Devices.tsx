@@ -2,7 +2,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package, Smartphone, Workflow, Brain, Stethoscope, Shield, Cpu, Users, HeartPulse } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import sanketlifeImg from "@/assets/sanketlife-device-app.png";
@@ -257,23 +257,145 @@ export default function DevicesPage() {
 
   return (
     <SiteLayout>
-      {/* Header */}
-      <section className="pt-8 pb-8 bg-background text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground leading-tight">
-            Medical-grade devices.
-            <br />
-            Zero complexity.
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mt-4 max-w-2xl mx-auto">
-            Every Agatsa One device is designed to work seamlessly with the Agatsa One app and Nera AI. Our ECG device is clinically validated and CDSCO-approved. Pair in minutes. Monitor for life.
-          </p>
-          <p className="text-base text-muted-foreground mt-4 max-w-[720px] mx-auto">
-            We believe the best health monitoring device is one you'll actually use. That's why
-            every device in the Agatsa One ecosystem is designed for real people — not hospitals.
-            Medical-grade accuracy. Consumer-grade simplicity. And when paired with Agatsa One,
-            every reading becomes part of your AI-powered health story.
-          </p>
+      {/* Hero Section */}
+      <section className="pt-16 pb-12 bg-gradient-to-b from-muted/40 to-background">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block text-xs font-semibold text-primary-foreground bg-primary rounded-full px-4 py-1.5 mb-6 uppercase tracking-wider">
+              The Agatsa One Ecosystem
+            </span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight">
+              Medical-grade devices that don't just measure —{" "}
+              <span className="text-primary">they continuously feed your health AI.</span>
+            </h1>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-8 max-w-3xl mx-auto"
+          >
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              Every Agatsa One device is built to work as part of a{" "}
+              <span className="font-semibold text-foreground">connected system</span> — not in isolation.
+              Our ECG device is clinically validated and CDSCO-approved.{" "}
+              <span className="font-semibold text-foreground">Pair in minutes. Monitor over time.</span>
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mt-8 max-w-3xl mx-auto bg-card border border-border rounded-2xl p-6 text-left"
+          >
+            <p className="text-base text-muted-foreground leading-relaxed">
+              Because a single reading is not enough. Every measurement — ECG, BP, sugar, SpO₂ — becomes part of a{" "}
+              <span className="font-semibold text-foreground">continuous health record</span>, captured through
+              Agatsa devices and analysed through{" "}
+              <span className="font-semibold text-primary">Nera AI</span>.
+            </p>
+            <p className="text-base text-muted-foreground leading-relaxed mt-4">
+              We believe the best health monitoring device is one you'll actually use. That's why everything
+              is designed for <span className="font-semibold text-foreground">real people</span> — not just hospitals.
+              Medical-grade accuracy. Consumer-grade simplicity. And a system that helps you understand
+              health <span className="font-semibold text-foreground">over time</span> — not just one report.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* How It Works — Visual Pipeline */}
+      <section className="py-16 bg-background">
+        <div className="max-w-5xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              From gadgets → to <span className="text-primary">health infrastructure</span>
+            </h2>
+            <p className="text-muted-foreground mt-3 text-lg">
+              How every device becomes part of your AI-powered health system
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-4 gap-6 relative">
+            {/* Connecting line (desktop) */}
+            <div className="hidden md:block absolute top-[60px] left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-primary/20 via-primary/60 to-primary/20" />
+
+            {[
+              {
+                icon: Smartphone,
+                step: "01",
+                title: "Devices capture real data",
+                desc: "ECG, BP, sugar, SpO₂, weight, sleep — medical-grade sensors capture what matters.",
+              },
+              {
+                icon: Workflow,
+                step: "02",
+                title: "Data flows automatically",
+                desc: "Every reading syncs to Agatsa One instantly via Bluetooth. No manual logging.",
+              },
+              {
+                icon: Brain,
+                step: "03",
+                title: "Nera AI analyses trends",
+                desc: "AI spots patterns across readings, flags anomalies, and builds your health timeline.",
+              },
+              {
+                icon: Stethoscope,
+                step: "04",
+                title: "Doctor sees only what matters",
+                desc: "Physicians receive structured insights — not raw data. Faster decisions, better outcomes.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.step}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.12 }}
+                className="relative flex flex-col items-center text-center"
+              >
+                <div className="relative z-10 w-[72px] h-[72px] rounded-2xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-4">
+                  <item.icon className="h-7 w-7 text-primary" />
+                </div>
+                <span className="text-xs font-bold text-primary uppercase tracking-widest mb-2">Step {item.step}</span>
+                <h3 className="text-base font-bold text-foreground mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Trust badges */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mt-14 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
+          >
+            {[
+              { icon: Shield, text: "CDSCO Approved" },
+              { icon: Cpu, text: "AI-Powered Analysis" },
+              { icon: Users, text: "2.1 Lac+ Users" },
+              { icon: HeartPulse, text: "Clinically Validated" },
+            ].map((badge) => (
+              <div key={badge.text} className="flex items-center gap-2 bg-muted/50 rounded-full px-4 py-2">
+                <badge.icon className="h-4 w-4 text-primary" />
+                <span className="font-medium">{badge.text}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
