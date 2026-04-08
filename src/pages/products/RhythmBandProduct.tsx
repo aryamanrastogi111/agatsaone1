@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Star, ArrowRight, Package, Moon, Activity, Bell } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import rhythmHero from "@/assets/easytouch-rhythm-new.png";
+import neraScreen from "@/assets/app-screen-nera.png";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useCartStore } from "@/stores/cartStore";
