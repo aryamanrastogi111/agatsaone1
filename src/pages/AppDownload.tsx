@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Copy, Check, Apple, Play } from "lucide-react";
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
+import qrApple from "@/assets/qr-apple.png";
 import {
   Accordion,
   AccordionContent,
@@ -204,20 +205,31 @@ function DefaultState() {
         </p>
       </motion.div>
 
-      {/* QR code — desktop only */}
+      {/* QR codes — desktop only */}
       <motion.div
         {...fadeUp}
-        className="hidden lg:flex flex-col items-center justify-center bg-muted rounded-3xl p-10 border border-border"
+        className="hidden lg:flex flex-col items-center justify-center bg-muted rounded-3xl p-10 border border-border gap-8"
       >
-        <img
-          src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://agatsaone.com/app"
-          alt="QR code to download Agatsa One"
-          width={160}
-          height={160}
-          className="rounded-xl"
-        />
-        <p className="text-sm font-medium text-muted-foreground mt-4 text-center">
-          Scan to download on your phone
+        <div className="flex gap-10">
+          {/* Apple QR */}
+          <div className="flex flex-col items-center gap-3">
+            <div className="bg-background rounded-2xl p-4 border border-border">
+              <img
+                src={qrApple}
+                alt="QR code to download Agatsa One on App Store"
+                width={140}
+                height={140}
+                className="rounded-lg"
+              />
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Apple className="h-4 w-4 text-foreground" />
+              <span className="text-sm font-medium text-foreground">App Store</span>
+            </div>
+          </div>
+        </div>
+        <p className="text-sm font-medium text-muted-foreground text-center">
+          Scan with your phone camera to download
         </p>
       </motion.div>
     </div>
