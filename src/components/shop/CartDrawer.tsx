@@ -35,19 +35,23 @@ import {
 } from "@/lib/razorpay";
 import type { RazorpayPaymentResponse } from "@/lib/razorpay";
 import { validateCoupon } from "@/lib/shop";
+import { getNeraAiLabel, getNeraAiPlan } from "@/lib/neraAiPlan";
+import { AppStoreBadges } from "@/components/AppStoreBadges";
 
 interface SuccessData {
   orderId: string;
   paymentId: string;
   customerName: string;
   customerEmail: string;
-  items: { productName: string; quantity: number; price: number; variantTitle?: string }[];
+  customerPhone: string;
+  items: { productName: string; quantity: number; price: number; variantTitle?: string; productId?: string }[];
   total: number;
   discountAmount: number;
   shippingAddress: string;
   shippingCity: string;
   shippingState: string;
   shippingPincode: string;
+  neraAiLabel: string | null;
 }
 
 // Custom modal that uses a plain fixed overlay — avoids Radix Dialog interfering with Razorpay
@@ -244,6 +248,7 @@ export const CartDrawer = ({
         quantity: i.quantity,
         price: i.price,
         variantTitle: i.variantTitle,
+        productId: i.productId,
       }));
       const totalSnapshot = finalTotal;
       const discountSnapshot = couponDiscount;
@@ -279,11 +284,15 @@ export const CartDrawer = ({
 
             if (verified) {
               clearCart();
+              // Determine Nera AI plan from cart items
+              const firstPlan = cartSnapshot.map(i => getNeraAiLabel(i.productId || "")).find(Boolean) || null;
+              
               setSuccessData({
                 orderId: response.razorpay_order_id,
                 paymentId: response.razorpay_payment_id,
                 customerName: name,
                 customerEmail: email,
+                customerPhone: phone,
                 items: cartSnapshot,
                 total: totalSnapshot,
                 discountAmount: discountSnapshot,
@@ -291,6 +300,7 @@ export const CartDrawer = ({
                 shippingCity: city,
                 shippingState: state,
                 shippingPincode: pincode,
+                neraAiLabel: firstPlan,
               });
               setName("");
               setEmail("");
@@ -501,7 +511,8 @@ export const CartDrawer = ({
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required
-                  />
+                   />
+                  <p className="text-xs text-muted-foreground mt-1">Use the same mobile number you'll log in with on the Agatsa One app</p>
                 </div>
               </div>
             </div>
@@ -604,19 +615,27 @@ export const CartDrawer = ({
             <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
               Order Summary
             </p>
-            {items.map((item) => (
-              <div
-                key={`${item.productId}-${item.variantTitle}`}
-                className="flex justify-between text-sm"
-              >
-                <span className="text-muted-foreground">
-                  {item.productName}
-                  {item.variantTitle && item.variantTitle !== "Default Title" && ` (${item.variantTitle})`}
-                  {" "}× {item.quantity}
-                </span>
-                <span className="font-medium">{formatINR(item.price * item.quantity)}</span>
-              </div>
-            ))}
+            {items.map((item) => {
+              const neraLabel = getNeraAiLabel(item.productId);
+              return (
+                <div key={`${item.productId}-${item.variantTitle}`}>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">
+                      {item.productName}
+                      {item.variantTitle && item.variantTitle !== "Default Title" && ` (${item.variantTitle})`}
+                      {" "}× {item.quantity}
+                    </span>
+                    <span className="font-medium">{formatINR(item.price * item.quantity)}</span>
+                  </div>
+                  {neraLabel && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-[hsl(270,80%,50%)] font-medium">{neraLabel}</span>
+                      <span className="text-[hsl(142,71%,35%)] font-semibold">FREE</span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
             {couponApplied && couponDiscount > 0 && (
               <div className="flex justify-between text-sm" style={{color: 'hsl(142 71% 35%)'}}>
                 <span>Discount ({couponData?.code})</span>
@@ -654,47 +673,36 @@ export const CartDrawer = ({
         maxWidth="max-w-md"
       >
         <div className="text-center py-2">
-        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
             <CheckCircle2 className="h-9 w-9 text-primary" />
           </div>
           <h2 className="text-2xl font-bold mb-1">Order Confirmed! 🎉</h2>
-          <p className="text-muted-foreground text-sm mb-5">
-            Thank you, <span className="font-medium text-foreground">{successData?.customerName}</span>!
-            Your order has been placed successfully.
-          </p>
         </div>
 
         {successData && (
           <div className="space-y-4">
-            {/* Order ID */}
-            <div className="bg-muted/40 rounded-lg p-3">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold mb-1">Order Reference</p>
-              <p className="font-mono text-xs text-foreground break-all">{successData.orderId}</p>
-              {successData.paymentId && (
-                <p className="font-mono text-xs text-muted-foreground mt-0.5 break-all">
-                  Payment: {successData.paymentId}
-                </p>
-              )}
-            </div>
-
-            {/* Items ordered */}
-            <div className="bg-muted/40 rounded-lg p-3">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold mb-2 flex items-center gap-1">
-                <Package className="h-3 w-3" /> Items Ordered
-              </p>
-              {successData.items.map((item, i) => (
-                <div key={i} className="flex justify-between text-sm py-0.5">
-                  <span className="text-muted-foreground">
-                    {item.productName}
-                    {item.variantTitle && item.variantTitle !== "Default Title" && ` (${item.variantTitle})`}
-                    {" "}× {item.quantity}
-                  </span>
-                  <span className="font-medium">{formatINR(item.price * item.quantity)}</span>
-                </div>
-              ))}
+            {/* Items + Nera AI line */}
+            <div className="bg-muted/40 rounded-lg p-3 space-y-1">
+              {successData.items.map((item, i) => {
+                const neraLabel = getNeraAiLabel(item.productId || "");
+                return (
+                  <div key={i}>
+                    <div className="flex justify-between text-sm py-0.5">
+                      <span className="text-foreground font-medium">{item.productName}</span>
+                      <span className="font-semibold">{formatINR(item.price * item.quantity)}</span>
+                    </div>
+                    {neraLabel && (
+                      <div className="flex justify-between text-sm py-0.5">
+                        <span className="text-[hsl(270,80%,50%)] font-medium">{neraLabel}</span>
+                        <span className="text-[hsl(142,71%,35%)] font-semibold">FREE</span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
               {successData.discountAmount > 0 && (
-                <div className="flex justify-between text-sm mt-1" style={{color: 'hsl(142 71% 35%)'}}>
-                  <span>Discount Applied</span>
+                <div className="flex justify-between text-sm mt-1" style={{ color: "hsl(142 71% 35%)" }}>
+                  <span>Discount</span>
                   <span>− {formatINR(successData.discountAmount)}</span>
                 </div>
               )}
@@ -704,29 +712,27 @@ export const CartDrawer = ({
               </div>
             </div>
 
-            {/* Delivery address */}
-            <div className="bg-muted/40 rounded-lg p-3">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold mb-1 flex items-center gap-1">
-                <MapPin className="h-3 w-3" /> Delivery To
-              </p>
-              <p className="text-sm text-foreground">
-                {successData.shippingAddress}, {successData.shippingCity},{" "}
-                {successData.shippingState} — {successData.shippingPincode}
-              </p>
+            {/* Shipping info */}
+            <div className="bg-muted/40 rounded-lg p-3 text-sm text-foreground">
+              <p>Your device ships to <span className="font-semibold">{successData.shippingCity}</span> in 2–4 business days.</p>
+              <p className="text-muted-foreground mt-1">Invoice + tracking sent to <span className="font-medium text-primary">{successData.customerEmail}</span></p>
             </div>
 
-            {/* Email confirmation */}
-            <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-center">
-              <p className="text-sm text-foreground font-medium">
-                📧 Order confirmation email sent to
-              </p>
-              <p className="text-sm text-primary font-semibold mt-0.5">{successData.customerEmail}</p>
-              <p className="text-xs text-muted-foreground mt-2">
-                Need help?{" "}
-                <a href="mailto:info@agatsa.com" className="text-primary hover:underline">
-                  info@agatsa.com
-                </a>
-              </p>
+            {/* Activation instructions */}
+            <div className="rounded-lg border border-[hsl(270,60%,80%)] bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,15%)] dark:border-[hsl(270,40%,40%)] p-4">
+              <p className="text-sm font-semibold text-foreground mb-3">Activate your device + Nera AI plan:</p>
+              <ol className="text-sm text-foreground space-y-2 list-decimal list-inside">
+                <li>Download the <span className="font-semibold">Agatsa One</span> app</li>
+                <li>Log in with this number: <span className="font-mono font-bold text-primary">{successData.customerPhone}</span></li>
+              </ol>
+              {successData.neraAiLabel && (
+                <p className="text-sm text-[hsl(270,80%,50%)] font-medium mt-3">
+                  Your {successData.neraAiLabel} activates automatically — no code needed.
+                </p>
+              )}
+              <div className="mt-4">
+                <AppStoreBadges />
+              </div>
             </div>
           </div>
         )}
