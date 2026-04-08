@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star, ArrowRight, Package } from "lucide-react";
+import { Star, ArrowRight, Package, Moon, Activity, Bell } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import rhythmHero from "@/assets/easytouch-rhythm-new.png";
 import { Button } from "@/components/ui/button";
@@ -144,6 +144,108 @@ export default function RhythmBandProduct() {
                 <p className="text-sm text-muted-foreground mt-2">{s.copy}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Nera AI Intelligence */}
+      <section className="py-20 bg-gradient-to-br from-[#0D0D1A] to-[#001A0D]">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#00C853]">POWERED BY NERA AI</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">Continuous data is only useful if someone's watching it.</h2>
+            <p className="text-[#A0A0C0] text-lg mt-4 max-w-2xl mx-auto">
+              The Rhythm Band runs 24/7. Nera AI runs with it — watching patterns across your sleep, recovery, stress, and activity so you don't have to.
+            </p>
+          </div>
+
+          {/* Morning Readiness Spotlight */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center mt-16">
+            {/* Left - App UI Card */}
+            <motion.div {...fadeUp}>
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-white font-medium">☀️ Good morning, Rahul</span>
+                  <span className="text-[#A0A0C0] text-sm">6:42 AM</span>
+                </div>
+                <div className="border-t border-white/10 my-4" />
+                <div className="text-center py-4">
+                  <p className="text-5xl font-bold text-[#00C853]">74</p>
+                  <p className="text-[#A0A0C0] text-sm mt-1">Readiness Score</p>
+                </div>
+                <div className="border-t border-white/10 my-4" />
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#A0A0C0] text-sm">Deep sleep</span>
+                    <span className="text-[#00C853] font-medium text-sm">1h 52m</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#A0A0C0] text-sm">HRV recovery</span>
+                    <span className="text-[#00C853] font-medium text-sm">+12% vs avg</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#A0A0C0] text-sm">Resting heart rate</span>
+                    <span className="text-white font-medium text-sm">61 bpm</span>
+                  </div>
+                </div>
+                <div className="border-t border-white/10 my-4" />
+                <p className="text-[#A0A0C0] text-xs italic">
+                  Nera AI: Good recovery night. Your stress score yesterday was high — but your body handled it well. A focused morning is within reach today.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Right - Content */}
+            <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
+              <span className="inline-block bg-[#00C853]/20 text-[#00C853] border border-[#00C853]/30 rounded-full px-4 py-1 text-sm font-medium">
+                Every morning, automatically
+              </span>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mt-4">
+                Wake up knowing how recovered you actually are.
+              </h3>
+              <p className="text-[#A0A0C0] text-base leading-relaxed mt-4">
+                Every morning, Nera AI analyses your overnight data — sleep stages, HRV trend, resting heart rate, SpO2 dips — and generates a Readiness Score before you even pick up your phone.
+              </p>
+              <p className="text-[#A0A0C0] text-base leading-relaxed mt-3">
+                Not a generic sleep score. A score built on your own baseline, your recent stress pattern, and how your body has been trending over the past week. On a hard day, it tells you to ease up. On a recovery day, it tells you you're ready.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-6">
+                {["🌙 Sleep stage analysis", "💓 HRV recovery score", "📊 7-day baseline comparison"].map((pill) => (
+                  <span key={pill} className="bg-white/5 border border-white/10 rounded-full px-3 py-1 text-sm text-white">{pill}</span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* 3 AI Feature Cards */}
+          <div className="grid md:grid-cols-3 gap-6 mt-16">
+            {[
+              { icon: Moon, title: "Nocturnal Pattern Detection", body: "While you sleep, Nera AI watches for SpO2 dips, irregular heart rate patterns, and unusually shallow sleep stages. Patterns that repeat across nights — not random noise — surface as a flag to discuss with your doctor." },
+              { icon: Activity, title: "Stress-Sleep Loop", body: "High stress score yesterday → poor sleep → elevated resting HR today. Nera AI maps this cycle and shows it to you in plain language. Not individual metrics — the loop that's affecting your health." },
+              { icon: Bell, title: "Passive Alerts, Not Noise", body: "Nera AI only alerts you when something changes from your personal pattern — not because a number crossed a generic threshold. You get fewer alerts. Every one matters." },
+            ].map((card) => (
+              <motion.div key={card.title} {...fadeUp} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#00C853]/50 transition-all">
+                <card.icon className="text-[#00C853]" size={28} />
+                <h4 className="text-white font-semibold text-lg mt-3">{card.title}</h4>
+                <p className="text-[#A0A0C0] text-sm mt-2 leading-relaxed">{card.body}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom Banner */}
+          <div className="bg-[#00C853]/10 border border-[#00C853]/30 rounded-2xl p-8 mt-16 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <p className="text-white font-semibold text-xl">
+                The Rhythm Band feeds the{" "}
+                <span className="text-[#00C853] font-bold">Nera Health Score — 24 hours a day.</span>
+              </p>
+              <p className="text-[#A0A0C0] text-sm mt-2">
+                Every step, every sleep cycle, every HRV data point updates your Nera Health Score in real time. It's the only health score that actually reflects how you lived today — not just how you measured once.
+              </p>
+            </div>
+            <Button asChild className="bg-[#00C853] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#00A843] transition-all whitespace-nowrap shrink-0">
+              <Link to="/features/health-score">See your Health Score →</Link>
+            </Button>
           </div>
         </div>
       </section>
