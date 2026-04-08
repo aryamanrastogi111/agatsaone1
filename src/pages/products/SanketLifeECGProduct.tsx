@@ -101,9 +101,11 @@ export default function SanketLifeECGProduct() {
               <div className="mt-6">
                 <span className="text-4xl font-extrabold text-foreground">₹4,999</span>
                 <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
-                <p className="text-sm font-medium text-green-600 dark:text-green-400 mt-1">
-                  Includes 3 months Nera AI Premium free (₹1,797 value)
-                </p>
+                <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
+                  <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
+                  <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
+                  <span className="text-xs text-muted-foreground">(worth ₹1,197)</span>
+                </div>
               </div>
 
               {/* Rating */}
