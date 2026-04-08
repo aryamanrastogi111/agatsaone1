@@ -1,7 +1,7 @@
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Monitor, Brain, TrendingUp, Star, ArrowRight } from "lucide-react";
+import { Monitor, Brain, TrendingUp, Star, ArrowRight, HeartPulse, Activity, Droplets, Moon } from "lucide-react";
 import providerPortalImg from "@/assets/provider-portal-dashboard.jpg";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
