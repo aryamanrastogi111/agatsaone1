@@ -138,7 +138,10 @@ export default function ForDoctorsPage() {
               <br className="hidden md:block" /> <span className="text-primary">Nera AI</span> does it for you.
             </h1>
             <p className="text-lg text-muted-foreground mt-4 max-w-[520px]">
-              Your patient's ECG from last Thursday. Their metabolic trend over the past 30 days. Their BP at 2 AM. Their sleep quality the night before they came to you complaining of fatigue. Agatsa One gives you the data you've always wanted but never had — without adding a single minute to your workflow.
+              Your patient's ECG from last Thursday. Their metabolic trend over the past 30 days. Their BP at 2 AM. Their sleep quality the night before they came to you complaining of fatigue. Nera AI gives you the data you've always wanted but never had — without adding a single minute to your workflow.
+            </p>
+            <p className="text-sm text-muted-foreground/80 mt-3 italic max-w-[520px]">
+              Trained on real patient data from Agatsa's devices — not simulated or limited datasets.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-8">
               <a href="mailto:info@agatsa.com?subject=Provider Demo Request">
