@@ -208,17 +208,17 @@ function DefaultState() {
       {/* QR codes — desktop only */}
       <motion.div
         {...fadeUp}
-        className="hidden lg:flex flex-col items-center justify-center bg-muted rounded-3xl p-10 border border-border gap-8"
+        className="hidden lg:flex flex-col items-center justify-center bg-muted rounded-3xl p-6 border border-border gap-6"
       >
         <div className="flex gap-10">
           {/* Apple QR */}
           <div className="flex flex-col items-center gap-3">
-            <div className="bg-background rounded-2xl p-4 border border-border">
+            <div className="bg-background rounded-2xl p-3 border border-border">
               <img
                 src={qrApple}
                 alt="QR code to download Agatsa One on App Store"
-                width={140}
-                height={140}
+                width={200}
+                height={200}
                 className="rounded-lg"
               />
             </div>
