@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star, ArrowRight, Package } from "lucide-react";
+import { Star, ArrowRight, Package, TrendingUp, Zap, MessageCircle } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import easytouchHero from "@/assets/easytouch-wellness-hero.png";
 import { Button } from "@/components/ui/button";
@@ -168,6 +168,101 @@ export default function EasyTouchWellnessProduct() {
                 <p className="text-sm text-muted-foreground mt-2">{s.copy}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Nera AI Intelligence */}
+      <section className="py-20 bg-gradient-to-br from-[#0D0D1A] to-[#1A1040]">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#7C4DFF]">POWERED BY NERA AI</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">Your readings become intelligence.</h2>
+            <p className="text-[#A0A0C0] text-lg mt-4 max-w-2xl mx-auto">
+              Most devices give you a number. Nera AI gives you meaning — patterns, predictions, and alerts built from every reading you take.
+            </p>
+          </div>
+
+          {/* Food Snap Spotlight */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center mt-16">
+            <motion.div {...fadeUp}>
+              <span className="inline-block bg-[#7C4DFF]/20 text-[#7C4DFF] border border-[#7C4DFF]/30 rounded-full px-4 py-1 text-sm font-medium">
+                Most loved feature
+              </span>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mt-4">
+                Snap your meal. See how your body responded.
+              </h3>
+              <p className="text-[#A0A0C0] text-base leading-relaxed mt-4">
+                Before you eat, open Agatsa One and photograph your plate. Nera AI analyses the meal and predicts how your body is likely to respond. Take a reading after your meal — and Nera AI shows you exactly how accurate the prediction was.
+              </p>
+              <p className="text-[#A0A0C0] text-base leading-relaxed mt-3">
+                Over weeks, it builds a personal map of how different foods affect your readings. Which meals cause spikes. Which don't. What time of day your body handles food best. All from a photo and a 60-second reading.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-6">
+                {["📸 Snap before eating", "🤖 AI response prediction", "🗺️ Personal food response map"].map((pill) => (
+                  <span key={pill} className="bg-white/5 border border-white/10 rounded-full px-3 py-1 text-sm text-white">{pill}</span>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-white font-medium">🍛 Dal Rice + Sabzi</span>
+                  <span className="text-[#A0A0C0] text-sm">Logged 1:15 PM</span>
+                </div>
+                <div className="border-t border-white/10 my-4" />
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#A0A0C0] text-sm">Predicted post-meal response</span>
+                    <span className="text-[#F59E0B] font-medium text-sm">Moderate ↑</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#A0A0C0] text-sm">Actual reading (2:45 PM)</span>
+                    <span className="text-[#10B981] font-medium text-sm">Within range</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#A0A0C0] text-sm">Prediction accuracy</span>
+                    <span className="text-[#7C4DFF] font-bold text-sm">91%</span>
+                  </div>
+                </div>
+                <div className="border-t border-white/10 my-4" />
+                <p className="text-[#A0A0C0] text-xs italic">
+                  Nera AI: Your post-meal readings after rice are consistently better at lunch than dinner. Your body responds differently by time of day.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* 3 AI Feature Cards */}
+          <div className="grid md:grid-cols-3 gap-6 mt-16">
+            {[
+              { icon: TrendingUp, title: "30-Day Trend Picture", body: "Nera AI builds a rolling picture of your metabolic readings over 30 days — so you can see the direction of travel, not just today's number. Share it with your doctor at your next visit." },
+              { icon: Zap, title: "Cross-Vital Pattern Detection", body: "One reading out of range is a data point. The same reading alongside elevated BP and low HRV is a pattern. Nera AI sees the combination and flags what matters — before it becomes a problem." },
+              { icon: MessageCircle, title: "Ask Nera", body: "\"Why are my post-meal readings higher at dinner?\" Voice or chat — Nera AI answers using your own data, not a generic response." },
+            ].map((card) => (
+              <motion.div key={card.title} {...fadeUp} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#7C4DFF]/50 transition-all">
+                <card.icon className="text-[#7C4DFF]" size={28} />
+                <h4 className="text-white font-semibold text-lg mt-3">{card.title}</h4>
+                <p className="text-[#A0A0C0] text-sm mt-2 leading-relaxed">{card.body}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom Banner */}
+          <div className="bg-[#7C4DFF]/10 border border-[#7C4DFF]/30 rounded-2xl p-8 mt-16 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <p className="text-white font-semibold text-xl">
+                EasyTouch Wellness is the core device for the{" "}
+                <span className="text-[#7C4DFF] font-bold">Diabetic Cardiac Care Programme</span>
+              </p>
+              <p className="text-[#A0A0C0] text-sm mt-2">
+                Nera AI monitors your vitals and ECG together, sends weekly AI-generated reports to your enrolled doctor, and alerts automatically when readings need attention.
+              </p>
+            </div>
+            <Button asChild className="bg-[#7C4DFF] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#6B3FE8] transition-all whitespace-nowrap shrink-0">
+              <Link to="/programmes">View the Programme →</Link>
+            </Button>
           </div>
         </div>
       </section>
