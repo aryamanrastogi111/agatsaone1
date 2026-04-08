@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Star, ArrowRight, Package, Moon, Activity, Bell } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import rhythmHero from "@/assets/easytouch-rhythm-new.png";
+import neraScreen from "@/assets/app-screen-nera.png";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useCartStore } from "@/stores/cartStore";
@@ -243,9 +244,12 @@ export default function RhythmBandProduct() {
                 Every step, every sleep cycle, every HRV data point updates your Nera Health Score in real time. It's the only health score that actually reflects how you lived today — not just how you measured once.
               </p>
             </div>
-            <Button asChild className="bg-[#00C853] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#00A843] transition-all whitespace-nowrap shrink-0">
-              <Link to="/features/health-score">See your Health Score →</Link>
-            </Button>
+            <div className="shrink-0">
+              <div className="relative w-[140px] h-[280px] rounded-[28px] border-[3px] border-white/20 bg-black overflow-hidden shadow-2xl">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60px] h-[18px] bg-black rounded-b-xl z-10" />
+                <img src={neraScreen} alt="Nera Health Score on iPhone" className="w-full h-full object-cover" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
