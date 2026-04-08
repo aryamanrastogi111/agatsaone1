@@ -173,6 +173,45 @@ export default function ForDoctorsPage() {
         </div>
       </section>
 
+      {/* Why Doctors Need This */}
+      <section className="py-20 bg-muted/30">
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">The Problem</p>
+            <h2 className="text-3xl font-bold text-foreground">Why Doctors Need This</h2>
+          </motion.div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="bg-primary text-primary-foreground">
+                  <th className="text-left p-4 rounded-tl-xl font-semibold">Problem Today</th>
+                  <th className="text-left p-4 font-semibold">What Happens</th>
+                  <th className="text-left p-4 rounded-tr-xl font-semibold">How We Solve It</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { problem: "Patients come only when symptoms appear", happens: "You miss early warning signs and only treat when it's serious", solve: "Get regular ECG updates + supporting vitals (BP, sugar, SpO₂, etc.) without asking so you can act earlier" },
+                  { problem: "One-time ECG is not enough", happens: "You only see a snapshot, not how the heart is changing", solve: "Track ECG over time to identify patterns, not just one reading" },
+                  { problem: "Other vitals are checked separately", happens: "No clear connection between heart and overall health", solve: "View ECG alongside BP, sugar, SpO₂, temperature, and sleep in one place" },
+                  { problem: "Data is scattered across reports and apps", happens: "Hard to get a complete patient picture", solve: "All ECG + vitals combined into a single view" },
+                  { problem: "Too many patients to track manually", happens: "Important cases can get overlooked", solve: "Automatically highlight patients with changes in ECG or vitals" },
+                  { problem: "Constant follow-ups take time", happens: "Calls, messages, and reminders add to your workload", solve: "Patient data comes to you remotely — no chasing required" },
+                  { problem: "No visibility between visits", happens: "You don't know what's happening after consultation", solve: "Stay updated with both ECG changes and daily health data from home" },
+                  { problem: "Sudden deterioration leads to emergencies", happens: "Patients return in worse condition", solve: "Catch risk early using ECG + supporting vitals together" },
+                ].map((row, i) => (
+                  <motion.tr key={i} {...fadeUp} transition={{ duration: 0.4, delay: i * 0.05 }} className={`border-b border-border ${i % 2 === 0 ? "bg-background" : "bg-card"}`}>
+                    <td className="p-4 font-medium text-foreground">{row.problem}</td>
+                    <td className="p-4 text-destructive/80">{row.happens}</td>
+                    <td className="p-4 text-primary font-medium">{row.solve}</td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       {/* Value Props */}
       <section className="py-20 bg-background">
         <div className="max-w-5xl mx-auto px-4">
