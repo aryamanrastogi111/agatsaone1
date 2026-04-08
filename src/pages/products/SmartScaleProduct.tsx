@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star, ArrowRight, Package } from "lucide-react";
+import { Star, ArrowRight, Package, Scale, TrendingDown, Users, Heart } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import scaleHero from "@/assets/corebalance-hero.png";
 import { Button } from "@/components/ui/button";
@@ -146,6 +146,110 @@ export default function SmartScaleProduct() {
                 <p className="text-sm text-muted-foreground mt-2">{s.copy}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Nera AI Intelligence */}
+      <section className="py-20 bg-gradient-to-br from-[#0D0D1A] to-[#1A0D00]">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#FF6D00]">POWERED BY NERA AI</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">Your weight is the least interesting thing about you.</h2>
+            <p className="text-[#A0A0C0] text-lg mt-4 max-w-2xl mx-auto">
+              Nera AI looks past the number on the scale to what it means for your heart — because visceral fat, metabolic age, and muscle loss are cardiac risk factors hiding in plain sight.
+            </p>
+          </div>
+
+          {/* Cardiac Risk Spotlight */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center mt-16">
+            {/* Left - Content */}
+            <motion.div {...fadeUp}>
+              <span className="inline-block bg-[#FF6D00]/20 text-[#FF6D00] border border-[#FF6D00]/30 rounded-full px-4 py-1 text-sm font-medium">
+                The number doctors actually care about
+              </span>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mt-4">
+                Visceral fat is the silent cardiac risk. Nera AI tracks it weekly.
+              </h3>
+              <p className="text-[#A0A0C0] text-base leading-relaxed mt-4">
+                You can look healthy on the outside and carry dangerous levels of fat around your heart, liver, and intestines. Visceral fat — not body weight — is one of the strongest predictors of heart disease, inflammation, and metabolic stress.
+              </p>
+              <p className="text-[#A0A0C0] text-base leading-relaxed mt-3">
+                Nera AI tracks your visceral fat trend week over week — not just the rank today, but whether it's moving in the right direction. When it combines with your ECG data and resting heart rate from the band, Nera AI shows you the full cardiac-body composition picture in one place.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-6">
+                {["❤️ Visceral fat → cardiac risk link", "📈 Weekly trend, not daily noise", "🔗 Crosses with ECG + band data"].map((pill) => (
+                  <span key={pill} className="bg-white/5 border border-white/10 rounded-full px-3 py-1 text-sm text-white">{pill}</span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right - App UI Card */}
+            <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-white font-medium">📊 Nera Cardiac-Body Report</span>
+                  <span className="text-[#A0A0C0] text-sm">This week</span>
+                </div>
+                <div className="border-t border-white/10 my-4" />
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#A0A0C0] text-sm">Visceral fat rank</span>
+                    <span className="text-[#10B981] font-medium text-sm">8 → 7 ↓</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#A0A0C0] text-sm">Metabolic age</span>
+                    <span className="text-[#10B981] font-medium text-sm">44 → 42 ↓</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#A0A0C0] text-sm">Muscle mass</span>
+                    <span className="text-[#F59E0B] font-medium text-sm">31.2kg ↔</span>
+                  </div>
+                </div>
+                <div className="border-t border-white/10 my-4" />
+                <div className="flex items-center justify-between">
+                  <span className="text-[#A0A0C0] text-sm flex items-center gap-1.5">
+                    <Heart className="text-[#FF6D00]" size={14} /> Resting HR this week
+                  </span>
+                  <span className="text-[#10B981] font-medium text-sm">64 bpm ↓ from 68</span>
+                </div>
+                <div className="border-t border-white/10 my-4" />
+                <p className="text-[#A0A0C0] text-xs italic">
+                  Nera AI: Visceral fat dropped one rank this week and your resting heart rate fell 4 bpm. These move together — keep this direction for 4 more weeks and your cardiac risk profile improves measurably.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* 3 AI Feature Cards */}
+          <div className="grid md:grid-cols-3 gap-6 mt-16">
+            {[
+              { icon: Scale, title: "Fat Loss vs Muscle Loss — Nera AI tells the difference", body: "The scale says you lost 2kg. But was it fat or muscle? Nera AI tracks your body fat %, lean mass, and muscle mass separately — so your programme is actually working, not just showing a lower number." },
+              { icon: TrendingDown, title: "Metabolic Age — Moving Backwards", body: "Metabolic age higher than your real age is a warning sign. Nera AI tracks it month over month and correlates it with your activity data from the Rhythm Band — showing you exactly what's moving the needle." },
+              { icon: Users, title: "10 Family Profiles, One Health Picture", body: "Every family member gets their own Nera AI trend line. Parents, kids, grandparents — each person's body composition is tracked separately. Nera AI flags when any profile shows a pattern worth paying attention to." },
+            ].map((card) => (
+              <motion.div key={card.title} {...fadeUp} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#FF6D00]/50 transition-all">
+                <card.icon className="text-[#FF6D00]" size={28} />
+                <h4 className="text-white font-semibold text-lg mt-3">{card.title}</h4>
+                <p className="text-[#A0A0C0] text-sm mt-2 leading-relaxed">{card.body}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom Banner */}
+          <div className="bg-[#FF6D00]/10 border border-[#FF6D00]/30 rounded-2xl p-8 mt-16 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <p className="text-white font-semibold text-xl">
+                Pair with the SanketLife ECG and get{" "}
+                <span className="text-[#FF6D00] font-bold">the most complete cardiac risk picture available at home.</span>
+              </p>
+              <p className="text-[#A0A0C0] text-sm mt-2">
+                Visceral fat trend + ECG rhythm + resting heart rate + HRV — Nera AI combines all four into a single weekly cardiac health summary. No clinic visit. No referral needed.
+              </p>
+            </div>
+            <Button asChild className="bg-[#FF6D00] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#E05A00] transition-all whitespace-nowrap shrink-0">
+              <Link to="/devices/sanketlife-ecg">See SanketLife ECG →</Link>
+            </Button>
           </div>
         </div>
       </section>
