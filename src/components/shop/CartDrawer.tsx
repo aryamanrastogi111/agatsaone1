@@ -511,7 +511,8 @@ export const CartDrawer = ({
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required
-                  />
+                   />
+                  <p className="text-xs text-muted-foreground mt-1">Use the same mobile number you'll log in with on the Agatsa One app</p>
                 </div>
               </div>
             </div>
