@@ -35,19 +35,23 @@ import {
 } from "@/lib/razorpay";
 import type { RazorpayPaymentResponse } from "@/lib/razorpay";
 import { validateCoupon } from "@/lib/shop";
+import { getNeraAiLabel, getNeraAiPlan } from "@/lib/neraAiPlan";
+import { AppStoreBadges } from "@/components/AppStoreBadges";
 
 interface SuccessData {
   orderId: string;
   paymentId: string;
   customerName: string;
   customerEmail: string;
-  items: { productName: string; quantity: number; price: number; variantTitle?: string }[];
+  customerPhone: string;
+  items: { productName: string; quantity: number; price: number; variantTitle?: string; productId?: string }[];
   total: number;
   discountAmount: number;
   shippingAddress: string;
   shippingCity: string;
   shippingState: string;
   shippingPincode: string;
+  neraAiLabel: string | null;
 }
 
 // Custom modal that uses a plain fixed overlay — avoids Radix Dialog interfering with Razorpay
