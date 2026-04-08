@@ -134,8 +134,8 @@ export default function ForDoctorsPage() {
           <motion.div {...fadeUp}>
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">For Doctors & Clinics</p>
             <h1 className="text-3xl md:text-5xl font-extrabold text-foreground leading-tight">
-              See your patients between appointments.
-              <br className="hidden md:block" /> Finally.
+              You don't have time to track every patient.
+              <br className="hidden md:block" /> <span className="text-primary">Nera AI</span> does it for you.
             </h1>
             <p className="text-lg text-muted-foreground mt-4 max-w-[520px]">
               Your patient's ECG from last Thursday. Their metabolic trend over the past 30 days. Their BP at 2 AM. Their sleep quality the night before they came to you complaining of fatigue. Agatsa One gives you the data you've always wanted but never had — without adding a single minute to your workflow.
