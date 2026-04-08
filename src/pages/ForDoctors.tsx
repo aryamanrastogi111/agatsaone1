@@ -137,10 +137,23 @@ export default function ForDoctorsPage() {
               You don't have time to track every patient.
               <br className="hidden md:block" /> <span className="text-primary">Nera AI</span> does it for you.
             </h1>
-            <p className="text-lg text-muted-foreground mt-4 max-w-[520px]">
-              Your patient's ECG from last Thursday. Their metabolic trend over the past 30 days. Their BP at 2 AM. Their sleep quality the night before they came to you complaining of fatigue. Nera AI gives you the data you've always wanted but never had — without adding a single minute to your workflow.
+            <p className="text-base text-muted-foreground mt-4 max-w-[540px]">
+              Nera AI gives you the data you've always wanted but never had — <span className="text-foreground font-semibold">without adding a single minute to your workflow.</span>
             </p>
-            <p className="text-sm text-muted-foreground/80 mt-3 italic max-w-[520px]">
+            <ul className="mt-5 space-y-2.5 max-w-[540px]">
+              {[
+                { icon: "📋", text: "Patient's ECG from last Thursday" },
+                { icon: "📈", text: "Metabolic trends over the past 30 days" },
+                { icon: "💓", text: "BP readings at 2 AM" },
+                { icon: "😴", text: "Sleep quality the night before a complaint" },
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                  <span className="text-base shrink-0">{item.icon}</span>
+                  <span><span className="text-foreground font-medium">{item.text}</span> — available before they walk in</span>
+                </li>
+              ))}
+            </ul>
+            <p className="text-xs text-muted-foreground/70 mt-4 italic max-w-[540px]">
               Trained on real patient data from Agatsa's devices — not simulated or limited datasets.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-8">
