@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import agatsaLogo from "@/assets/agatsa-logo.png";
 
 const navLinks = [
   { label: "Devices", href: "/devices" },
@@ -46,7 +47,8 @@ export function Nav() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[68px] md:h-[68px] h-[60px]">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-0.5 shrink-0">
+          <Link to="/" className="flex items-center gap-2 shrink-0">
+            <img src={agatsaLogo} alt="Agatsa Logo" className="h-7 w-auto" />
             <span className="text-xl font-bold text-foreground">Agatsa One</span>
             <span className="text-xl text-primary font-bold">●</span>
           </Link>
