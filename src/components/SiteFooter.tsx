@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { AppStoreBadges } from "./AppStoreBadges";
+import agatsaLogo from "@/assets/agatsa-logo.png";
 
 const productLinks = [
   { label: "Devices", href: "/devices" },
@@ -47,7 +48,8 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="space-y-4 lg:col-span-2">
-            <div className="flex items-center gap-0.5">
+            <div className="flex items-center gap-2">
+              <img src={agatsaLogo} alt="Agatsa Logo" className="h-7 w-auto" />
               <span className="text-xl font-bold">Agatsa One</span>
               <span className="text-xl text-primary font-bold">●</span>
             </div>
