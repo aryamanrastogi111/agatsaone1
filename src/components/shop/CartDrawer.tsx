@@ -248,6 +248,7 @@ export const CartDrawer = ({
         quantity: i.quantity,
         price: i.price,
         variantTitle: i.variantTitle,
+        productId: i.productId,
       }));
       const totalSnapshot = finalTotal;
       const discountSnapshot = couponDiscount;
@@ -283,11 +284,15 @@ export const CartDrawer = ({
 
             if (verified) {
               clearCart();
+              // Determine Nera AI plan from cart items
+              const firstPlan = cartSnapshot.map(i => getNeraAiLabel(i.productId || "")).find(Boolean) || null;
+              
               setSuccessData({
                 orderId: response.razorpay_order_id,
                 paymentId: response.razorpay_payment_id,
                 customerName: name,
                 customerEmail: email,
+                customerPhone: phone,
                 items: cartSnapshot,
                 total: totalSnapshot,
                 discountAmount: discountSnapshot,
@@ -295,6 +300,7 @@ export const CartDrawer = ({
                 shippingCity: city,
                 shippingState: state,
                 shippingPincode: pincode,
+                neraAiLabel: firstPlan,
               });
               setName("");
               setEmail("");
