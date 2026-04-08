@@ -99,40 +99,32 @@ serve(async (req) => {
       }
     }
 
-    // Fire-and-forget: register device activation in Agatsa backend
-    const SKU_TO_DEVICE_TYPE: Record<string, string> = {
-      ecg_bundle: "ecg",
-      wellness_sub: "easytouch",
-      band_sub: "rhythm",
-      scale_sub: "scale",
-      bundle_ecg_band: "ecg",
-    };
-
-    const customerPhone = order?.customer_phone;
+    // Fire-and-forget: call the website order completion endpoint
     const allItems: { variant_id?: string; quantity?: number; productId?: string; sku?: string }[] =
       items || order?.items || [];
+    const skus = allItems.map((i: any) => i.sku || i.productId || "").filter(Boolean);
 
-    if (customerPhone && allItems.length > 0) {
-      for (const item of allItems) {
-        const sku = item.sku || item.productId || "";
-        const deviceType = SKU_TO_DEVICE_TYPE[sku];
-        if (!deviceType) continue;
-        fetch(
-          "https://agatsa-one-api-651017108992.asia-south1.run.app/v1/device-activations/create",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "x-admin-secret": Deno.env.get("AGATSA_ADMIN_SECRET") ?? "",
-            },
-            body: JSON.stringify({
-              phone: customerPhone,
-              deviceType,
-              deviceOrderId: razorpay_order_id,
-            }),
-          }
-        ).catch((err) => console.error("Failed to register device activation:", err));
-      }
+    if (skus.length > 0) {
+      fetch(
+        "https://agatsa-one-api-651017108992.asia-south1.run.app/v1/orders/website/complete",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            skus,
+            recipientName: order?.customer_name || customerName || "",
+            recipientPhone: order?.customer_phone || "",
+            recipientEmail: order?.customer_email || customerEmail || "",
+            addressLine1: order?.shipping_address || shippingAddress || "",
+            city: order?.shipping_city || shippingCity || "",
+            state: order?.shipping_state || shippingState || "",
+            pincode: order?.shipping_pincode || shippingPincode || "",
+            razorpay_payment_id,
+            razorpay_order_id,
+            razorpay_signature,
+          }),
+        }
+      ).catch((err) => console.error("Failed to call website/complete:", err));
     }
 
     // Fire-and-forget: send order confirmation email
