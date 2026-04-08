@@ -2,7 +2,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package, Smartphone, Workflow, Brain, Stethoscope, Shield, Cpu, Users, HeartPulse } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import sanketlifeImg from "@/assets/sanketlife-device-app.png";
