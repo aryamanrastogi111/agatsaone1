@@ -176,38 +176,38 @@ export default function ForDoctorsPage() {
       {/* Why Doctors Need This */}
       <section className="py-20 bg-muted/30">
         <div className="max-w-6xl mx-auto px-4">
-          <motion.div {...fadeUp} className="text-center mb-12">
-            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">The Problem</p>
-            <h2 className="text-3xl font-bold text-foreground">Why Doctors Need This</h2>
+          <motion.div {...fadeUp} className="text-center mb-14">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">The Real Problem</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">You already know this. Now there's a fix.</h2>
+            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">Every row below is a daily frustration you've accepted as normal. It doesn't have to be.</p>
           </motion.div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="bg-primary text-primary-foreground">
-                  <th className="text-left p-4 rounded-tl-xl font-semibold">Problem Today</th>
-                  <th className="text-left p-4 font-semibold">What Happens</th>
-                  <th className="text-left p-4 rounded-tr-xl font-semibold">How We Solve It</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { problem: "Patients come only when symptoms appear", happens: "You miss early warning signs and only treat when it's serious", solve: "Get regular ECG updates + supporting vitals (BP, sugar, SpO₂, etc.) without asking so you can act earlier" },
-                  { problem: "One-time ECG is not enough", happens: "You only see a snapshot, not how the heart is changing", solve: "Track ECG over time to identify patterns, not just one reading" },
-                  { problem: "Other vitals are checked separately", happens: "No clear connection between heart and overall health", solve: "View ECG alongside BP, sugar, SpO₂, temperature, and sleep in one place" },
-                  { problem: "Data is scattered across reports and apps", happens: "Hard to get a complete patient picture", solve: "All ECG + vitals combined into a single view" },
-                  { problem: "Too many patients to track manually", happens: "Important cases can get overlooked", solve: "Automatically highlight patients with changes in ECG or vitals" },
-                  { problem: "Constant follow-ups take time", happens: "Calls, messages, and reminders add to your workload", solve: "Patient data comes to you remotely — no chasing required" },
-                  { problem: "No visibility between visits", happens: "You don't know what's happening after consultation", solve: "Stay updated with both ECG changes and daily health data from home" },
-                  { problem: "Sudden deterioration leads to emergencies", happens: "Patients return in worse condition", solve: "Catch risk early using ECG + supporting vitals together" },
-                ].map((row, i) => (
-                  <motion.tr key={i} {...fadeUp} transition={{ duration: 0.4, delay: i * 0.05 }} className={`border-b border-border ${i % 2 === 0 ? "bg-background" : "bg-card"}`}>
-                    <td className="p-4 font-medium text-foreground">{row.problem}</td>
-                    <td className="p-4 text-destructive/80">{row.happens}</td>
-                    <td className="p-4 text-primary font-medium">{row.solve}</td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
+
+          <div className="grid md:grid-cols-2 gap-5">
+            {[
+              { icon: AlertTriangle, problem: "Patients come only when symptoms appear", solve: "Get regular ECG + vitals updates automatically — act before it's serious" },
+              { icon: Clock, problem: "One-time ECG only shows a snapshot", solve: "Track ECG over time to catch patterns, not just a single moment" },
+              { icon: Eye, problem: "Vitals are checked separately from ECG", solve: "See ECG, BP, sugar, SpO₂, temp & sleep together in one dashboard" },
+              { icon: Zap, problem: "Data scattered across reports & apps", solve: "Everything combined into a single patient timeline" },
+              { icon: Users, problem: "Too many patients to track manually", solve: "Auto-alerts when any patient's ECG or vitals change significantly" },
+              { icon: PhoneOff, problem: "Follow-ups eat your time", solve: "Data comes to you remotely — no calls or chasing needed" },
+              { icon: EyeOff, problem: "Zero visibility between visits", solve: "Stay updated with daily ECG + health data from patients at home" },
+              { icon: Flame, problem: "Sudden deterioration → emergency visits", solve: "Catch risk early using ECG + supporting vitals together" },
+            ].map((item, i) => (
+              <motion.div key={i} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.06 }}
+                className="bg-card border border-border rounded-2xl p-5 flex gap-4 hover:shadow-md transition-shadow"
+              >
+                <div className="shrink-0 w-10 h-10 rounded-xl bg-destructive/10 flex items-center justify-center">
+                  <item.icon className="h-5 w-5 text-destructive" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground leading-snug">{item.problem}</p>
+                  <div className="flex items-start gap-2 mt-2.5">
+                    <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                    <p className="text-sm text-primary font-medium leading-snug">{item.solve}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
