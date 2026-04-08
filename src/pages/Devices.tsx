@@ -260,9 +260,6 @@ export default function DevicesPage() {
       {/* Header */}
       <section className="pt-8 pb-8 bg-background text-center">
         <div className="max-w-3xl mx-auto px-4">
-          <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
-            Medical Devices
-          </p>
           <h1 className="text-4xl md:text-5xl font-extrabold text-foreground leading-tight">
             Medical-grade devices.
             <br />
