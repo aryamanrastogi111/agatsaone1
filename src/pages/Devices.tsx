@@ -268,7 +268,6 @@ export default function DevicesPage() {
           <p className="text-lg md:text-xl text-muted-foreground mt-4 max-w-2xl mx-auto">
             Every Agatsa One device is designed to work seamlessly with the Agatsa One app and Nera AI. Our ECG device is clinically validated and CDSCO-approved. Pair in minutes. Monitor for life.
           </p>
-          </p>
           <p className="text-base text-muted-foreground mt-4 max-w-[720px] mx-auto">
             We believe the best health monitoring device is one you'll actually use. That's why
             every device in the Agatsa One ecosystem is designed for real people — not hospitals.
