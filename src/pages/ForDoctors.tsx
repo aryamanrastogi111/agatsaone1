@@ -142,13 +142,13 @@ export default function ForDoctorsPage() {
             </p>
             <ul className="mt-5 space-y-2.5 max-w-[540px]">
               {[
-                { icon: "📋", text: "Patient's ECG from last Thursday" },
-                { icon: "📈", text: "Metabolic trends over the past 30 days" },
-                { icon: "💓", text: "BP readings at 2 AM" },
-                { icon: "😴", text: "Sleep quality the night before a complaint" },
+                { icon: HeartPulse, text: "Patient's ECG from last Thursday" },
+                { icon: Activity, text: "Metabolic trends over the past 30 days" },
+                { icon: Droplets, text: "BP readings at 2 AM" },
+                { icon: Moon, text: "Sleep quality the night before a complaint" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                  <span className="text-base shrink-0">{item.icon}</span>
+                  <item.icon className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <span><span className="text-foreground font-medium">{item.text}</span> — available before they walk in</span>
                 </li>
               ))}
