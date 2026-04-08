@@ -218,9 +218,7 @@ function DefaultState() {
               <img
                 src={qrApple}
                 alt="QR code to download Agatsa One on App Store"
-                width={200}
-                height={200}
-                className="rounded-lg"
+                className="rounded-lg w-[240px] h-[240px] object-contain"
               />
             </div>
             <div className="flex items-center gap-1.5">
@@ -235,9 +233,7 @@ function DefaultState() {
               <img
                 src={qrGoogle}
                 alt="QR code to download Agatsa One on Google Play"
-                width={200}
-                height={200}
-                className="rounded-lg"
+                className="rounded-lg w-[240px] h-[240px] object-contain"
               />
             </div>
             <div className="flex items-center gap-1.5">
