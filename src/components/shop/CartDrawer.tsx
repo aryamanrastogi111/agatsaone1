@@ -615,19 +615,27 @@ export const CartDrawer = ({
             <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
               Order Summary
             </p>
-            {items.map((item) => (
-              <div
-                key={`${item.productId}-${item.variantTitle}`}
-                className="flex justify-between text-sm"
-              >
-                <span className="text-muted-foreground">
-                  {item.productName}
-                  {item.variantTitle && item.variantTitle !== "Default Title" && ` (${item.variantTitle})`}
-                  {" "}× {item.quantity}
-                </span>
-                <span className="font-medium">{formatINR(item.price * item.quantity)}</span>
-              </div>
-            ))}
+            {items.map((item) => {
+              const neraLabel = getNeraAiLabel(item.productId);
+              return (
+                <div key={`${item.productId}-${item.variantTitle}`}>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">
+                      {item.productName}
+                      {item.variantTitle && item.variantTitle !== "Default Title" && ` (${item.variantTitle})`}
+                      {" "}× {item.quantity}
+                    </span>
+                    <span className="font-medium">{formatINR(item.price * item.quantity)}</span>
+                  </div>
+                  {neraLabel && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-[hsl(270,80%,50%)] font-medium">{neraLabel}</span>
+                      <span className="text-[hsl(142,71%,35%)] font-semibold">FREE</span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
             {couponApplied && couponDiscount > 0 && (
               <div className="flex justify-between text-sm" style={{color: 'hsl(142 71% 35%)'}}>
                 <span>Discount ({couponData?.code})</span>
