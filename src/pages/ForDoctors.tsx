@@ -212,6 +212,83 @@ export default function ForDoctorsPage() {
         </div>
       </section>
 
+      {/* Three Pillars */}
+      <section className="py-20 bg-background">
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div {...fadeUp} className="text-center mb-14">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">How It Helps You</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Monitor patients remotely, save time on follow-ups, and act only when it matters.</h2>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-3 gap-6">
+            {/* Block 1 */}
+            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0 }} className="bg-card border border-border rounded-2xl p-7 flex flex-col">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
+                <Monitor className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-bold text-foreground">Remote patient monitoring that actually saves your time</h3>
+              <div className="mt-4 space-y-3 text-sm text-muted-foreground flex-1">
+                <p>Your patients generate health data through Agatsa devices — ECG, BP, sugar, SpO₂ and more — from home.</p>
+                <p>With Agatsa One, this data comes directly to you as a <span className="text-foreground font-medium">complete patient timeline</span>, not scattered reports.</p>
+                <p>Review patient status before the consultation — <span className="text-foreground font-medium">without follow-ups or repeated visits.</span></p>
+              </div>
+            </motion.div>
+
+            {/* Block 2 */}
+            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="bg-card border border-border rounded-2xl p-7 flex flex-col">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
+                <Brain className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-bold text-foreground">Nera AI filters the data, so you only see what matters</h3>
+              <div className="mt-4 space-y-3 text-sm text-muted-foreground flex-1">
+                <p>Continuous data means more readings — but not more work for you.</p>
+                <p>Nera AI analyses ECG and vitals over time, identifies changes, and classifies patients into:</p>
+                <div className="grid grid-cols-2 gap-2 mt-1">
+                  {[
+                    { label: "Normal", color: "bg-green-100 text-green-700" },
+                    { label: "Borderline", color: "bg-amber-100 text-amber-700" },
+                    { label: "Abnormal", color: "bg-orange-100 text-orange-700" },
+                    { label: "Critical", color: "bg-red-100 text-red-700" },
+                  ].map((s) => (
+                    <span key={s.label} className={`${s.color} rounded-full px-3 py-1 text-xs font-semibold text-center`}>{s.label}</span>
+                  ))}
+                </div>
+                <p className="mt-1">You don't go through every report — you focus only on patients who <span className="text-foreground font-medium">need attention.</span></p>
+              </div>
+            </motion.div>
+
+            {/* Block 3 */}
+            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.2 }} className="bg-card border border-border rounded-2xl p-7 flex flex-col">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
+                <TrendingUp className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-bold text-foreground">A smarter way to manage patients, not just appointments</h3>
+              <div className="mt-4 space-y-3 text-sm text-muted-foreground flex-1">
+                <p>Because data comes directly from your patients using Agatsa devices, you get visibility <span className="text-foreground font-medium">between visits</span> — not just during them.</p>
+                <ul className="space-y-2">
+                  {[
+                    "Track ECG trends along with BP, sugar, SpO₂, and other vitals",
+                    "See which patients are improving and which are deteriorating",
+                    "Spend consultation time on decisions, not data collection",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-foreground font-medium pt-1">From one-time visits → to continuous patient understanding.</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Closing line */}
+          <motion.p {...fadeUp} transition={{ duration: 0.5, delay: 0.3 }} className="text-center text-sm text-muted-foreground mt-10 italic">
+            Powered by real patient data captured through Agatsa devices — not disconnected apps or one-time reports.
+          </motion.p>
+        </div>
+      </section>
+
       {/* Value Props */}
       <section className="py-20 bg-background">
         <div className="max-w-5xl mx-auto px-4">
