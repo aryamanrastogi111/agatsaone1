@@ -49,7 +49,7 @@ export default function SanketLifeECGProduct() {
   return (
     <SiteLayout>
       {/* ─── SECTION 1: ABOVE THE FOLD ─── */}
-      <section className="pt-10 pb-14 bg-gradient-to-b from-muted/30 to-background">
+      <section className="pt-8 pb-10 bg-gradient-to-b from-muted/30 to-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="text-sm text-muted-foreground mb-8">
             <Link to="/devices" className="hover:text-primary">Devices</Link>
@@ -129,7 +129,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 2: PROBLEM AWARENESS ─── */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div {...fadeUp}>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -168,7 +168,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 3: WHY EARLY CHECK MATTERS ─── */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -247,7 +247,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 4: PRODUCT INTRODUCTION ─── */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-5xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div {...fadeUp}>
@@ -289,7 +289,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 5: HOW IT WORKS ─── */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -345,7 +345,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 6: TRUST & MEDICAL AUTHORITY ─── */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -405,7 +405,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 7: SOCIAL PROOF ─── */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-10 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -436,7 +436,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── NERA AI SECTION ─── */}
-      <section className="py-20 bg-gradient-to-br from-[hsl(240,30%,8%)] to-[hsl(260,40%,12%)]">
+      <section className="py-12 bg-gradient-to-br from-[hsl(240,30%,8%)] to-[hsl(260,40%,12%)]">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary">POWERED BY NERA AI</p>
@@ -532,7 +532,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
 
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-5xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -600,7 +600,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 9: PARENT CARE ─── */}
-      <section className="py-20 bg-gradient-to-b from-primary/5 to-background">
+      <section className="py-12 bg-gradient-to-b from-primary/5 to-background">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div {...fadeUp}>
             <Heart className="h-10 w-10 text-primary mx-auto mb-4" />
@@ -630,7 +630,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 10: COMPARISON ─── */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-3xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -670,7 +670,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 11: FEATURES ─── */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -703,7 +703,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 12: FAQ ─── */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-3xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-10">
             <h2 className="text-3xl font-bold text-foreground">
@@ -768,7 +768,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 13: OFFER FRAMING ─── */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div {...fadeUp}>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
@@ -811,7 +811,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── SECTION 14: FINAL TRUST REINFORCEMENT ─── */}
-      <section className="py-16 bg-background">
+      <section className="py-10 bg-background">
         <div className="max-w-4xl mx-auto px-4">
           <div className="grid sm:grid-cols-3 gap-6">
             {[
@@ -862,7 +862,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* What's in the box */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-10 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4">
           <h3 className="text-xl font-bold text-foreground text-center mb-6">What's in the box</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -887,7 +887,7 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* Related Devices */}
-      <section className="py-16 bg-background">
+      <section className="py-10 bg-background">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-2xl font-bold text-foreground text-center mb-8">Complete your health monitoring</h2>
           <div className="grid md:grid-cols-3 gap-6">
