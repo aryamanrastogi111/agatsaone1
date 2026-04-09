@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 40 },
+  initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true },
   transition: { duration: 0.6 },
@@ -9,106 +9,112 @@ const fadeUp = {
 
 export function ProblemSection() {
   return (
-    <section className="py-16 md:py-24 bg-background">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section 2 — Why This Matters */}
-        <motion.div {...fadeUp} className="text-center mb-16">
-          <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
-            Why This Matters
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
-            We all trust health reports.
-          </h2>
-          <div className="space-y-2 text-lg text-muted-foreground">
-            <p>A test.</p>
-            <p>A number.</p>
-            <p>A result.</p>
-          </div>
-        </motion.div>
+    <section className="py-16 md:py-24 bg-background overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
+        {/* Row 1 — Why This Matters + The moment problem */}
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start mb-12">
+          {/* Left — narrative hook */}
+          <motion.div {...fadeUp}>
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
+              Why This Matters
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
+              We all trust health reports.
+            </h2>
+            <div className="space-y-1.5 text-lg text-muted-foreground mb-6">
+              <p>A test. A number. A result.</p>
+            </div>
+            <p className="text-base text-foreground/80 leading-relaxed mb-4">
+              But every report shows just <span className="text-primary font-bold">one moment</span>.
+            </p>
+            <div className="space-y-1 text-sm text-muted-foreground pl-4 border-l-2 border-primary/20">
+              <p>One ECG is a moment.</p>
+              <p>One sugar reading is a moment.</p>
+              <p>One BP check is a moment.</p>
+            </div>
+          </motion.div>
+
+          {/* Right — the shift */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="bg-muted/50 rounded-3xl border border-border p-8 md:p-10"
+          >
+            <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">
+              But your health is not a moment.
+            </h3>
+            <p className="text-muted-foreground mb-6 leading-relaxed">
+              It's something that changes… slowly, quietly, continuously.
+            </p>
+            <p className="text-base text-foreground font-medium mb-5">
+              You can feel fine today. Your report may look normal. Nothing may seem urgent.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              But what if things have been shifting… little by little… over the last few weeks?
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Row 2 — 3 pattern cards */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="grid sm:grid-cols-3 gap-4 mb-10"
         >
-          <p className="text-lg md:text-xl text-foreground font-medium mb-6">
-            But every report shows just <span className="text-primary font-bold">one moment</span>.
-          </p>
-          <div className="space-y-1.5 text-muted-foreground">
-            <p>One ECG is a moment.</p>
-            <p>One sugar reading is a moment.</p>
-            <p>One BP check is a moment.</p>
-          </div>
-          <div className="w-16 h-px bg-primary/30 mx-auto my-8" />
-          <p className="text-xl md:text-2xl font-bold text-foreground">
-            But your health is not a moment.
-          </p>
-          <p className="text-muted-foreground mt-3">
-            It's something that changes…<br />
-            slowly, quietly, continuously.
-          </p>
+          {[
+            { label: "Heart rhythm", desc: "A slight change you didn't notice" },
+            { label: "Sugar levels", desc: "A gradual rise, week over week" },
+            { label: "Blood pressure", desc: "A pattern forming quietly" },
+          ].map((item, i) => (
+            <motion.div
+              key={item.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className="bg-card rounded-2xl border border-border p-5 text-center hover:border-primary/30 hover:shadow-md transition-all"
+            >
+              <p className="text-primary font-semibold text-sm mb-1">{item.label}</p>
+              <p className="text-muted-foreground text-xs">{item.desc}</p>
+            </motion.div>
+          ))}
         </motion.div>
 
-        {/* Section 3 — The Real Insight */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+        <motion.p
+          {...fadeUp}
+          className="text-center text-sm text-muted-foreground mb-10"
         >
-          <p className="text-lg md:text-xl text-foreground font-medium mb-6">
-            You can feel fine today.
-          </p>
-          <div className="space-y-1.5 text-muted-foreground mb-6">
-            <p>Your report may look normal.</p>
-            <p>Nothing may seem urgent.</p>
-          </div>
-          <p className="text-base text-foreground/80 max-w-xl mx-auto leading-relaxed">
-            But what if things have been shifting… little by little… over the last few weeks?
-          </p>
-          <div className="mt-8 grid sm:grid-cols-3 gap-4 text-sm">
-            <div className="bg-muted/50 rounded-2xl p-5 border border-border">
-              <p className="text-primary font-semibold mb-1">Heart rhythm</p>
-              <p className="text-muted-foreground">A slight change you didn't notice</p>
-            </div>
-            <div className="bg-muted/50 rounded-2xl p-5 border border-border">
-              <p className="text-primary font-semibold mb-1">Sugar levels</p>
-              <p className="text-muted-foreground">A gradual rise, week over week</p>
-            </div>
-            <div className="bg-muted/50 rounded-2xl p-5 border border-border">
-              <p className="text-primary font-semibold mb-1">Blood pressure</p>
-              <p className="text-muted-foreground">A pattern forming quietly</p>
-            </div>
-          </div>
-          <p className="text-muted-foreground text-sm mt-6">
-            Individually, they may not stand out.<br />
-            <span className="text-foreground font-medium">Together, they tell a different story.</span>
-          </p>
-        </motion.div>
+          Individually, they may not stand out.{" "}
+          <span className="text-foreground font-semibold">Together, they tell a different story.</span>
+        </motion.p>
 
-        {/* Section 4 — The Shift (Key Idea) */}
+        {/* Key insight banner */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
+          initial={{ opacity: 0, scale: 0.97 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-primary rounded-3xl p-8 md:p-12 text-center text-primary-foreground"
+          className="bg-primary rounded-3xl p-8 md:p-10 text-primary-foreground flex flex-col md:flex-row items-center gap-6 md:gap-10"
         >
-          <h3 className="text-2xl md:text-3xl font-bold mb-4">
-            Health problems don't appear suddenly.
-          </h3>
-          <p className="text-lg md:text-xl text-primary-foreground/80 font-medium">
-            They become visible when you see the pattern.
-          </p>
-          <div className="w-12 h-px bg-primary-foreground/30 mx-auto my-6" />
-          <p className="text-primary-foreground/70">
-            And patterns only appear<br />
-            when you look over time.
+          <div className="flex-1 text-center md:text-left">
+            <h3 className="text-2xl md:text-3xl font-bold mb-3">
+              Health problems don't appear suddenly.
+            </h3>
+            <p className="text-lg text-primary-foreground/80 font-medium">
+              They become visible when you see the pattern.
+            </p>
+          </div>
+          <div className="w-px h-12 bg-primary-foreground/20 hidden md:block" />
+          <p className="text-primary-foreground/60 text-sm md:text-base text-center md:text-left shrink-0 max-w-[200px]">
+            And patterns only appear when you look <span className="text-primary-foreground font-semibold">over time</span>.
           </p>
         </motion.div>
+
       </div>
     </section>
   );
