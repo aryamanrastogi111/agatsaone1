@@ -440,7 +440,7 @@ export function NeraAISection() {
 
       {/* ─── BLOCK 7 — AI OUTPUT ─── */}
       <div className="py-10 md:py-14 px-4 border-t border-white/5">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_auto] gap-8 items-center">
           <motion.div {...fadeUp} className="mb-8">
             <h3 className="text-2xl md:text-3xl font-bold mb-2 text-white">
               You don't see <span className="text-white/60 line-through decoration-white/20">everything</span>.
