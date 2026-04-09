@@ -192,6 +192,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
             {device.rating}/5 ({device.reviews} reviews)
           </span>
         </div>
+        <EmiLine price={parseInt(device.priceNum.replace(/,/g, ""))} />
 
         {/* What it measures */}
         <button

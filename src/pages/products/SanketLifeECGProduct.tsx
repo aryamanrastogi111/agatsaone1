@@ -100,6 +100,7 @@ export default function SanketLifeECGProduct() {
               <div className="mt-8">
                 <span className="text-4xl font-extrabold text-foreground">₹3,999</span>
                 <span className="text-sm text-muted-foreground ml-2">incl. GST</span>
+                <EmiLine price={3999} />
                 <div className="flex items-center gap-1 mt-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -122,6 +123,7 @@ export default function SanketLifeECGProduct() {
                   <Link to="/app?device=ecg">Download Agatsa One App (free)</Link>
                 </Button>
               </div>
+              <TrustBar />
               <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
                 <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
                 <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>

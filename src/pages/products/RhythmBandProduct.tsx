@@ -81,6 +81,7 @@ export default function RhythmBandProduct() {
               <div className="mt-6">
                 <span className="text-4xl font-extrabold text-foreground">₹2,999</span>
                 <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
+                <EmiLine price={2999} />
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                   <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
                   <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 3 months</span>
@@ -97,6 +98,7 @@ export default function RhythmBandProduct() {
                   <Link to="/app?device=rhythm">Download Agatsa One App (free)</Link>
                 </Button>
               </div>
+              <TrustBar />
             </motion.div>
           </div>
         </div>
