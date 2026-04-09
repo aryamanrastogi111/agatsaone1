@@ -879,7 +879,7 @@ export default function SanketLifeECGProduct() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               "SanketLife ECG device",
-              "USB-C charging cable",
+              "CR2032 coin battery (pre-installed)",
               "Carrying pouch",
               "Quick start guide (EN + HI)",
               "1-year warranty card",
