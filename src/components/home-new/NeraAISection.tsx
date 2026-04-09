@@ -75,7 +75,7 @@ export function NeraAISection() {
         <motion.h2
           {...fadeUp}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight max-w-3xl mx-auto"
+          className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight max-w-3xl mx-auto text-white"
         >
           Understanding your health —{" "}
           <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
