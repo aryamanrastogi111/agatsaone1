@@ -43,7 +43,7 @@ export default function SanketLifeECGProduct() {
   useSEO({
     title: "SanketLife ECG — Medical-Grade Heart Monitor at Home | Agatsa One",
     description:
-      "Take a 12-lead ECG at home in 30 seconds. 98.5% accuracy. Share instantly with your doctor. Peace of mind for your heart. ₹4,999.",
+      "Take a 12-lead ECG at home in 15 seconds. 98.5% accuracy. Share instantly with your doctor. Peace of mind for your heart. ₹4,999.",
   });
 
   return (
@@ -75,7 +75,7 @@ export default function SanketLifeECGProduct() {
               </h1>
 
               <p className="text-lg md:text-xl text-muted-foreground mt-4 leading-relaxed max-w-lg">
-                Take a medical-grade ECG at home in 30 seconds — and share it
+                Take a medical-grade ECG at home in 15 seconds — and share it
                 instantly with your doctor.
               </p>
 
@@ -212,7 +212,7 @@ export default function SanketLifeECGProduct() {
               <div className="space-y-4">
                 {[
                   "Symptoms appear",
-                  "Take ECG in 30 seconds",
+                  "Take ECG in 15 seconds",
                   "Nera AI analyses instantly",
                   "Share report with doctor",
                   "Get clarity. Take action.",
@@ -244,7 +244,7 @@ export default function SanketLifeECGProduct() {
               </h2>
               <p className="text-lg text-muted-foreground mt-4 leading-relaxed">
                 A pocket-sized, medical-grade ECG device that captures a full
-                12-lead reading in 30 seconds. No wires. No gel. No training needed.
+                12-lead reading in 15 seconds. No wires. No gel. No training needed.
               </p>
               <p className="text-base text-muted-foreground mt-3 leading-relaxed">
                 Capture your ECG the moment symptoms appear — at home, at work,
@@ -252,7 +252,7 @@ export default function SanketLifeECGProduct() {
                 instantly. That's it.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                {["12-Lead ECG", "30-Second Capture", "AI Analysis", "Doctor Sharing"].map((tag) => (
+                {["12-Lead ECG", "15-Second Capture", "AI Analysis", "Doctor Sharing"].map((tag) => (
                   <span key={tag} className="bg-primary/10 text-primary text-sm font-medium rounded-full px-4 py-1.5">
                     {tag}
                   </span>
@@ -299,7 +299,7 @@ export default function SanketLifeECGProduct() {
                 icon: Activity,
                 step: "02",
                 title: "Capture your ECG",
-                desc: "SanketLife records a medical-grade 12-lead ECG in just 30 seconds via Bluetooth.",
+                desc: "SanketLife records a medical-grade 12-lead ECG in just 15 seconds via Bluetooth.",
               },
               {
                 icon: Share2,
@@ -522,7 +522,7 @@ export default function SanketLifeECGProduct() {
               <tbody>
                 {[
                   ["Availability", "By appointment", "Anytime, anywhere"],
-                  ["Time to result", "Hours to days", "30 seconds"],
+                  ["Time to result", "Hours to days", "15 seconds"],
                   ["Monitoring", "One-time snapshot", "Daily, on-demand"],
                   ["Cost per ECG", "₹300–₹1,500", "Unlimited for ₹4,999"],
                   ["Report sharing", "Physical copy", "Instant digital PDF"],
@@ -552,7 +552,7 @@ export default function SanketLifeECGProduct() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: Zap, title: "30-Second Capture", desc: "Full 12-lead ECG faster than making a phone call." },
+              { icon: Zap, title: "15-Second Capture", desc: "Full 12-lead ECG faster than making a phone call." },
               { icon: ShieldCheck, title: "98.5% Accuracy", desc: "Clinically validated against hospital-grade equipment." },
               { icon: FileText, title: "Shareable Reports", desc: "Send a clinical PDF to any doctor via WhatsApp or email." },
               { icon: Brain, title: "Nera AI Analysis", desc: "Instant rhythm analysis, trend detection, and anomaly alerts." },
@@ -595,7 +595,7 @@ export default function SanketLifeECGProduct() {
               },
               {
                 q: "How fast is the recording?",
-                a: "30 seconds. Place your thumbs on both sensors, and SanketLife captures a complete 12-lead ECG transmitted via Bluetooth to the Agatsa One app.",
+                a: "15 seconds. Place your thumbs on both sensors, and SanketLife captures a complete 12-lead ECG transmitted via Bluetooth to the Agatsa One app.",
               },
               {
                 q: "Is it safe for home use?",
@@ -607,7 +607,7 @@ export default function SanketLifeECGProduct() {
               },
               {
                 q: "Do I need medical training to use it?",
-                a: "Not at all. Place your thumbs on the sensors, hold for 30 seconds, and Nera AI does the rest. It's simpler than using a blood pressure cuff.",
+                a: "Not at all. Place your thumbs on the sensors, hold for 15 seconds, and Nera AI does the rest. It's simpler than using a blood pressure cuff.",
               },
               {
                 q: "What happens if something abnormal is detected?",
@@ -638,7 +638,7 @@ export default function SanketLifeECGProduct() {
 
           <div className="mt-8 grid sm:grid-cols-3 gap-6">
             {[
-              { icon: Timer, title: "Time saved", desc: "No travel. No queues. No waiting rooms. ECG in 30 seconds at home." },
+              { icon: Timer, title: "Time saved", desc: "No travel. No queues. No waiting rooms. ECG in 15 seconds at home." },
               { icon: Heart, title: "Stress reduced", desc: "Stop guessing. Know what your heart is doing — whenever you need to." },
               { icon: RefreshCw, title: "Unlimited ECGs", desc: "One device. Unlimited readings. No per-test charges — ever." },
             ].map((v, i) => (
