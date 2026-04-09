@@ -88,7 +88,7 @@ export function NeraAISection() {
       <div className="py-10 md:py-14 px-4">
         <div className="max-w-5xl mx-auto">
           <motion.div {...fadeUp} className="text-center mb-8">
-            <p className="text-white/50 text-sm mb-1">From scattered data to connected intelligence</p>
+            <p className="text-white/80 text-sm mb-1">From scattered data to connected intelligence</p>
           </motion.div>
 
         <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6 md:gap-10 items-center">
@@ -106,7 +106,7 @@ export function NeraAISection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: card.delay }}
-                className={`bg-gradient-to-br ${card.color} border border-white/10 rounded-xl p-3 md:p-4 flex items-center gap-3 backdrop-blur-sm`}
+                className={`bg-gradient-to-br ${card.color} border border-white/10 rounded-xl p-3 md:p-4 flex items-center gap-3 `}
               >
                 <card.icon className="h-5 w-5 text-primary shrink-0" />
                 <p className="text-xs font-semibold text-white/80">{card.label}</p>
@@ -162,7 +162,7 @@ export function NeraAISection() {
             <h3 className="text-2xl md:text-3xl font-bold mb-3">
               ECG — <span className="text-primary">simplified.</span>
             </h3>
-            <p className="text-white/50 text-sm leading-relaxed mb-4">
+            <p className="text-white/80 text-sm leading-relaxed mb-4">
               Not just recorded. <span className="text-white font-semibold">Understood.</span> Nera AI reads your ECG,
               highlights what matters, and explains it in plain English.
             </p>
@@ -183,10 +183,10 @@ export function NeraAISection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="bg-white/5 border border-white/10 rounded-2xl p-6"
+            className="bg-white/10 border border-white/10 rounded-2xl p-6"
           >
             <div className="flex items-center justify-between mb-3">
-              <p className="text-xs text-white/40">Lead I · 25mm/s</p>
+              <p className="text-xs text-white/70">Lead I · 25mm/s</p>
               <Heart className="h-4 w-4 text-red-400" />
             </div>
             <EcgWave className="w-full h-16 text-primary" />
@@ -209,7 +209,7 @@ export function NeraAISection() {
         <div className="max-w-4xl mx-auto">
           <motion.div {...fadeUp} className="text-center mb-8">
             <h3 className="text-2xl md:text-3xl font-bold mb-2">
-              A single ECG is a <span className="text-white/50">moment</span>.
+              A single ECG is a <span className="text-white/80">moment</span>.
             </h3>
             <p className="text-xl md:text-2xl font-bold text-primary">A trend reveals change.</p>
           </motion.div>
@@ -219,11 +219,11 @@ export function NeraAISection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-6"
+            className="bg-white/10 border border-white/10 rounded-2xl p-5 md:p-6"
           >
             <div className="flex items-center justify-between mb-4">
-              <p className="text-xs text-white/40 font-semibold">30-Day ECG Timeline</p>
-              <div className="flex gap-4 text-xs text-white/30">
+              <p className="text-xs text-white/70 font-semibold">30-Day ECG Timeline</p>
+              <div className="flex gap-4 text-xs text-white/90">
                 {["Day 1", "Day 7", "Day 14", "Day 30"].map((d) => (
                   <span key={d}>{d}</span>
                 ))}
@@ -236,7 +236,7 @@ export function NeraAISection() {
                 { label: "QT Interval", points: [25, 25, 26, 26, 27, 28, 29, 30], color: "#fbbf24" },
               ].map((trend) => (
                 <div key={trend.label} className="flex items-center gap-3">
-                  <p className="text-xs text-white/40 w-24 shrink-0">{trend.label}</p>
+                  <p className="text-xs text-white/70 w-24 shrink-0">{trend.label}</p>
                   <TrendLine points={trend.points} color={trend.color} />
                 </div>
               ))}
@@ -272,14 +272,14 @@ export function NeraAISection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-5"
+              className="bg-white/10 border border-white/10 rounded-2xl p-5"
             >
               <div className="flex items-center gap-2 mb-3">
                 <Heart className="h-4 w-4 text-red-400" />
-                <p className="text-xs font-semibold text-white/60">Cardiac Data</p>
+                <p className="text-xs font-semibold text-white/90">Cardiac Data</p>
               </div>
               <EcgWave className="w-full h-12 text-red-400/80" />
-              <p className="text-xs text-white/30 mt-2">Post-meal HRV variability shift</p>
+              <p className="text-xs text-white/60 mt-2">Post-meal HRV variability shift</p>
             </motion.div>
 
             {/* Right — Sugar */}
@@ -288,14 +288,14 @@ export function NeraAISection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-5"
+              className="bg-white/10 border border-white/10 rounded-2xl p-5"
             >
               <div className="flex items-center gap-2 mb-3">
                 <Droplets className="h-4 w-4 text-amber-400" />
-                <p className="text-xs font-semibold text-white/60">Metabolic Data</p>
+                <p className="text-xs font-semibold text-white/90">Metabolic Data</p>
               </div>
               <TrendLine points={[20, 22, 35, 45, 40, 32, 25, 22]} color="#fbbf24" />
-              <p className="text-xs text-white/30 mt-2">Glucose spike pattern after meals</p>
+              <p className="text-xs text-white/60 mt-2">Glucose spike pattern after meals</p>
             </motion.div>
           </div>
 
@@ -309,7 +309,7 @@ export function NeraAISection() {
           >
             <Zap className="h-5 w-5 text-primary mx-auto mb-2" />
             <p className="text-sm font-semibold text-white/90 mb-1">Cross-System Insight</p>
-            <p className="text-xs text-white/50">
+            <p className="text-xs text-white/80">
               "After meals → ECG variability shift detected. Metabolic load correlates with cardiac rhythm changes over 14 days."
             </p>
           </motion.div>
@@ -322,10 +322,10 @@ export function NeraAISection() {
           <motion.div {...fadeUp}>
             <Scale className="h-6 w-6 text-primary mb-3" />
             <h3 className="text-2xl font-bold mb-2">
-              Weight is a <span className="text-white/50">number</span>.
+              Weight is a <span className="text-white/80">number</span>.
             </h3>
             <p className="text-xl font-bold text-primary mb-3">Direction is insight.</p>
-            <p className="text-sm text-white/50 leading-relaxed">
+            <p className="text-sm text-white/80 leading-relaxed">
               Nera AI tracks your body composition trends — not just weight — and connects changes
               to your cardiac and metabolic data for a complete picture.
             </p>
@@ -336,9 +336,9 @@ export function NeraAISection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="bg-white/5 border border-white/10 rounded-2xl p-5"
+            className="bg-white/10 border border-white/10 rounded-2xl p-5"
           >
-            <p className="text-xs text-white/40 mb-3">Body Composition · 90 Days</p>
+            <p className="text-xs text-white/70 mb-3">Body Composition · 90 Days</p>
             <div className="space-y-3">
               {[
                 { label: "Weight", val: "72.1 kg", pct: 68, color: "bg-primary" },
@@ -354,7 +354,7 @@ export function NeraAISection() {
                   transition={{ delay: 0.3 + i * 0.1 }}
                 >
                   <div className="flex justify-between text-xs mb-1">
-                    <span className="text-white/50">{item.label}</span>
+                    <span className="text-white/80">{item.label}</span>
                     <span className="text-white/70 font-medium">{item.val}</span>
                   </div>
                   <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -381,9 +381,9 @@ export function NeraAISection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="bg-white/5 border border-white/10 rounded-2xl p-5 order-2 md:order-1"
+            className="bg-white/10 border border-white/10 rounded-2xl p-5 order-2 md:order-1"
           >
-            <p className="text-xs text-white/40 mb-4">Daily Health Timeline</p>
+            <p className="text-xs text-white/70 mb-4">Daily Health Timeline</p>
             <div className="space-y-2">
               {[
                 { time: "6:00 AM", label: "Wake", icon: "☀️", width: "20%" },
@@ -400,13 +400,13 @@ export function NeraAISection() {
                   transition={{ delay: 0.2 + i * 0.1 }}
                   className="flex items-center gap-3"
                 >
-                  <span className="text-[10px] text-white/30 w-14 shrink-0 font-mono">{item.time}</span>
+                  <span className="text-[10px] text-white/60 w-14 shrink-0 font-mono">{item.time}</span>
                   <span className="text-sm">{item.icon}</span>
                   <div className="flex-1">
-                    <p className="text-xs text-white/60">{item.label}</p>
-                    <div className="h-1 bg-white/5 rounded-full mt-1 overflow-hidden">
+                    <p className="text-xs text-white/90">{item.label}</p>
+                    <div className="h-1 bg-white/10 rounded-full mt-1 overflow-hidden">
                       <motion.div
-                        className="h-full bg-primary/40 rounded-full"
+                        className="h-full bg-primary/60 rounded-full"
                         initial={{ width: 0 }}
                         whileInView={{ width: item.width }}
                         viewport={{ once: true }}
@@ -425,7 +425,7 @@ export function NeraAISection() {
             <p className="text-lg text-primary font-semibold mb-3">
               Nera AI connects them to everything else.
             </p>
-            <p className="text-sm text-white/50 leading-relaxed">
+            <p className="text-sm text-white/80 leading-relaxed">
               Sleep, activity, meals, stress — Nera builds a living map of your day and connects
               every data point to your cardiac and metabolic trends.
             </p>
@@ -469,7 +469,7 @@ export function NeraAISection() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.8 }}
-              className="text-xs text-white/30 mt-6"
+              className="text-xs text-white/60 mt-6"
             >
               From noise → to clarity. That's Nera AI.
             </motion.p>
@@ -516,7 +516,7 @@ export function NeraAISection() {
             transition={{ delay: 1.4, duration: 0.8 }}
             className="mt-8"
           >
-            <p className="text-sm text-white/30">
+            <p className="text-sm text-white/90">
               1.5 Crore+ Indian health records · 97.8% concordance with cardiologists · 13 Lac+ ECGs analysed
             </p>
           </motion.div>
