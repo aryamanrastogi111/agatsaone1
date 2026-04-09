@@ -230,6 +230,22 @@ export default function SanketLifeECGProduct() {
         </div>
       </section>
 
+      {/* ─── MID CTA 1 ─── */}
+      <section className="py-10 bg-primary">
+        <div className="max-w-3xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-primary-foreground font-semibold text-lg text-center sm:text-left">
+            Don't wait for the next episode. Be ready.
+          </p>
+          <Button
+            onClick={handleBuy}
+            disabled={adding}
+            className="rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold whitespace-nowrap shrink-0"
+          >
+            Check Your Heart Anytime — ₹4,999
+          </Button>
+        </div>
+      </section>
+
       {/* ─── SECTION 4: PRODUCT INTRODUCTION ─── */}
       <section className="py-20 bg-background">
         <div className="max-w-5xl mx-auto px-4">
