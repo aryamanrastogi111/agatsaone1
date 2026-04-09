@@ -1,6 +1,21 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Heart, Droplets, Activity, Moon, Scale, Brain, TrendingUp, Zap } from "lucide-react";
+import neraScreen from "@/assets/app-screen-nera.png";
+import appScreen1 from "@/assets/app-screen-1.png";
+
+/* ── Phone Mockup ── */
+const PhoneMockup = ({ src, alt, className = "" }: { src: string; alt: string; className?: string }) => (
+  <div className={`relative w-[200px] h-[410px] md:w-[240px] md:h-[490px] ${className}`}>
+    <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-b from-[#2a2a2e] to-[#1a1a1e] shadow-2xl" />
+    <div className="absolute inset-[3px] rounded-[2.3rem] bg-[#1a1a1e]" />
+    <div className="absolute inset-[5px] rounded-[2.2rem] overflow-hidden bg-white">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[90px] h-[22px] bg-[#1a1a1e] rounded-b-xl z-10" />
+      <img src={src} alt={alt} className="w-full h-full object-cover object-top" loading="lazy" />
+    </div>
+    <div className="absolute bottom-[8px] left-1/2 -translate-x-1/2 w-[80px] h-[3px] bg-white/30 rounded-full z-10" />
+  </div>
+);
 
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
