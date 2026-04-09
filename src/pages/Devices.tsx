@@ -35,8 +35,8 @@ const devices: DeviceData[] = [
     name: "SanketLife 12-Lead ECG Monitor",
     tagline: "Hospital-grade ECG in your shirt pocket",
     keyStat: "98.5% accuracy validated at Narayana Health & Sri Jayadeva Institute",
-    price: "₹4,999",
-    priceNum: "4,999",
+    price: "₹3,999",
+    priceNum: "3,999",
     rating: "4.8",
     reviews: "1,247",
     measures: [

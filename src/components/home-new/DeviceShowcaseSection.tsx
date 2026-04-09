@@ -12,7 +12,7 @@ const devices = [
     badge: "CDSCO Certified",
     tagline: "12-lead hospital-grade ECG in your pocket",
     stat: "98.15% sensitivity",
-    price: "₹4,999",
+    price: "₹3,999",
     link: "/devices/sanketlife-ecg",
     image: sanketlifeImg,
   },
