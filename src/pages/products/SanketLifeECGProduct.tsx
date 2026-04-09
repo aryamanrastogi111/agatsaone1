@@ -237,17 +237,18 @@ export default function SanketLifeECGProduct() {
 
       {/* ─── MID CTA 1 ─── */}
       <section className="py-10 bg-primary">
-        <div className="max-w-3xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-primary-foreground font-semibold text-lg text-center sm:text-left">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <p className="text-primary-foreground font-semibold text-lg">
             Don't wait for the next episode. Be ready.
           </p>
           <Button
             onClick={handleBuy}
             disabled={adding}
-            className="rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold whitespace-nowrap shrink-0"
+            className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
             Check Your Heart Anytime — ₹4,999
           </Button>
+          <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
         </div>
       </section>
 
@@ -590,17 +591,18 @@ export default function SanketLifeECGProduct() {
 
       {/* ─── MID CTA 2 ─── */}
       <section className="py-10 bg-primary">
-        <div className="max-w-3xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-primary-foreground font-semibold text-lg text-center sm:text-left">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <p className="text-primary-foreground font-semibold text-lg">
             Peace of mind for you. Safety for your family.
           </p>
           <Button
             onClick={handleBuy}
             disabled={adding}
-            className="rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold whitespace-nowrap shrink-0"
+            className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
             Buy SanketLife ECG — ₹4,999
           </Button>
+          <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
         </div>
       </section>
 
@@ -758,17 +760,18 @@ export default function SanketLifeECGProduct() {
 
       {/* ─── MID CTA 3 ─── */}
       <section className="py-10 bg-primary">
-        <div className="max-w-3xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-primary-foreground font-semibold text-lg text-center sm:text-left">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <p className="text-primary-foreground font-semibold text-lg">
             Still have questions? Your heart doesn't wait — and neither should you.
           </p>
           <Button
             onClick={handleBuy}
             disabled={adding}
-            className="rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold whitespace-nowrap shrink-0"
+            className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
             Check Your Heart Anytime — ₹4,999
           </Button>
+          <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
         </div>
       </section>
 
