@@ -91,7 +91,9 @@ export function NeraAISection() {
             <p className="text-white/50 text-sm mb-1">From scattered data to connected intelligence</p>
           </motion.div>
 
-          <div className="relative flex flex-wrap justify-center gap-4 md:gap-6 mb-8">
+        <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6 md:gap-10 items-center">
+          {/* Left — data cards */}
+          <div className="flex flex-col gap-4">
             {[
               { icon: Heart, label: "ECG", color: "from-red-500/20 to-red-600/10", delay: 0 },
               { icon: Droplets, label: "Sugar", color: "from-amber-500/20 to-amber-600/10", delay: 0.1 },
@@ -100,38 +102,55 @@ export function NeraAISection() {
             ].map((card) => (
               <motion.div
                 key={card.label}
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: card.delay }}
-                className={`bg-gradient-to-br ${card.color} border border-white/10 rounded-2xl p-4 md:p-5 w-[140px] md:w-[160px] text-center backdrop-blur-sm`}
+                transition={{ duration: 0.5, delay: card.delay }}
+                className={`bg-gradient-to-br ${card.color} border border-white/10 rounded-xl p-3 md:p-4 flex items-center gap-3 backdrop-blur-sm`}
               >
-                <card.icon className="h-6 w-6 mx-auto mb-2 text-primary" />
+                <card.icon className="h-5 w-5 text-primary shrink-0" />
                 <p className="text-xs font-semibold text-white/80">{card.label}</p>
               </motion.div>
             ))}
           </div>
 
-          {/* Connecting lines visual */}
+          {/* Center — Phone with Nera screen */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex justify-center mb-6"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex justify-center"
           >
-            <div className="relative">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/30">
-                <Brain className="h-7 w-7 text-white" />
-              </div>
-              <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" />
-            </div>
+            <motion.div
+              animate={{ y: [-6, 6, -6] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <PhoneMockup src={neraScreen} alt="Nera AI Health Score" />
+            </motion.div>
           </motion.div>
 
-          <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.6 }} className="text-center">
-            <p className="text-lg md:text-xl font-semibold text-white/90">Your data doesn't live in isolation.</p>
-            <p className="text-primary font-bold text-lg mt-1">It connects.</p>
-          </motion.div>
+          {/* Right — AI core + text */}
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <div className="relative">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/30">
+                  <Brain className="h-6 w-6 text-white" />
+                </div>
+                <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" />
+              </div>
+            </motion.div>
+            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.6 }}>
+              <p className="text-lg font-semibold text-white/90">Your data doesn't live in isolation.</p>
+              <p className="text-primary font-bold text-lg mt-1">It connects.</p>
+            </motion.div>
+          </div>
+        </div>
         </div>
       </div>
 
