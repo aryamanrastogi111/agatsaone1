@@ -477,6 +477,23 @@ export function NeraAISection() {
           >
             From noise → to clarity. That's Nera AI.
           </motion.p>
+          </div>
+
+          {/* Phone mockup */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="hidden md:flex justify-center"
+          >
+            <motion.div
+              animate={{ y: [-5, 5, -5] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <PhoneMockup src={appScreen1} alt="Agatsa One App Dashboard" />
+            </motion.div>
+          </motion.div>
         </div>
       </div>
 
