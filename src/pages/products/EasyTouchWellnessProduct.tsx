@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, ArrowRight, Package, TrendingUp, Zap, MessageCircle } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { EmiLine, TrustBar } from "@/components/EmiLine";
 import easytouchHero from "@/assets/easytouch-wellness-hero.png";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";

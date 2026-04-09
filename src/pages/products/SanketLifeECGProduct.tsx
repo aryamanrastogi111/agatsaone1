@@ -10,6 +10,7 @@ import {
   Award, RefreshCw, CheckCircle2, AlertTriangle, Brain,
 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { EmiLine, TrustBar } from "@/components/EmiLine";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useCartStore } from "@/stores/cartStore";
