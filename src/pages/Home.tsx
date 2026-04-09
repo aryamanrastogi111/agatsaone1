@@ -19,9 +19,9 @@ export default function HomePage() {
     <SiteLayout>
       <HeroSection />
       <ProblemSection />
+      <NeraAISection />
       <DeviceShowcaseSection />
       <TimelineInsightSection />
-      <NeraAISection />
       <ClinicalProofSection />
       <ProvidersSection />
       <TestimonialsSection />
