@@ -122,12 +122,7 @@ export function NeraAISection() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="flex justify-center"
           >
-            <motion.div
-              animate={{ y: [-6, 6, -6] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            >
               <PhoneMockup src={neraScreen} alt="Nera AI Health Score" />
-            </motion.div>
           </motion.div>
 
           {/* Right — AI core + text */}
@@ -488,12 +483,7 @@ export function NeraAISection() {
             transition={{ duration: 0.7 }}
             className="hidden md:flex justify-center"
           >
-            <motion.div
-              animate={{ y: [-5, 5, -5] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-            >
               <PhoneMockup src={appScreen1} alt="Agatsa One App Dashboard" />
-            </motion.div>
           </motion.div>
         </div>
       </div>
