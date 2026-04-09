@@ -1,6 +1,21 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Heart, Droplets, Activity, Moon, Scale, Brain, TrendingUp, Zap } from "lucide-react";
+import neraScreen from "@/assets/app-screen-nera.png";
+import appScreen1 from "@/assets/app-screen-1.png";
+
+/* ── Phone Mockup ── */
+const PhoneMockup = ({ src, alt, className = "" }: { src: string; alt: string; className?: string }) => (
+  <div className={`relative w-[200px] h-[410px] md:w-[240px] md:h-[490px] ${className}`}>
+    <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-b from-[#2a2a2e] to-[#1a1a1e] shadow-2xl" />
+    <div className="absolute inset-[3px] rounded-[2.3rem] bg-[#1a1a1e]" />
+    <div className="absolute inset-[5px] rounded-[2.2rem] overflow-hidden bg-white">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[90px] h-[22px] bg-[#1a1a1e] rounded-b-xl z-10" />
+      <img src={src} alt={alt} className="w-full h-full object-cover object-top" loading="lazy" />
+    </div>
+    <div className="absolute bottom-[8px] left-1/2 -translate-x-1/2 w-[80px] h-[3px] bg-white/30 rounded-full z-10" />
+  </div>
+);
 
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
@@ -76,7 +91,9 @@ export function NeraAISection() {
             <p className="text-white/50 text-sm mb-1">From scattered data to connected intelligence</p>
           </motion.div>
 
-          <div className="relative flex flex-wrap justify-center gap-4 md:gap-6 mb-8">
+        <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6 md:gap-10 items-center">
+          {/* Left — data cards */}
+          <div className="flex flex-col gap-4">
             {[
               { icon: Heart, label: "ECG", color: "from-red-500/20 to-red-600/10", delay: 0 },
               { icon: Droplets, label: "Sugar", color: "from-amber-500/20 to-amber-600/10", delay: 0.1 },
@@ -85,38 +102,55 @@ export function NeraAISection() {
             ].map((card) => (
               <motion.div
                 key={card.label}
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: card.delay }}
-                className={`bg-gradient-to-br ${card.color} border border-white/10 rounded-2xl p-4 md:p-5 w-[140px] md:w-[160px] text-center backdrop-blur-sm`}
+                transition={{ duration: 0.5, delay: card.delay }}
+                className={`bg-gradient-to-br ${card.color} border border-white/10 rounded-xl p-3 md:p-4 flex items-center gap-3 backdrop-blur-sm`}
               >
-                <card.icon className="h-6 w-6 mx-auto mb-2 text-primary" />
+                <card.icon className="h-5 w-5 text-primary shrink-0" />
                 <p className="text-xs font-semibold text-white/80">{card.label}</p>
               </motion.div>
             ))}
           </div>
 
-          {/* Connecting lines visual */}
+          {/* Center — Phone with Nera screen */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex justify-center mb-6"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex justify-center"
           >
-            <div className="relative">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/30">
-                <Brain className="h-7 w-7 text-white" />
-              </div>
-              <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" />
-            </div>
+            <motion.div
+              animate={{ y: [-6, 6, -6] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <PhoneMockup src={neraScreen} alt="Nera AI Health Score" />
+            </motion.div>
           </motion.div>
 
-          <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.6 }} className="text-center">
-            <p className="text-lg md:text-xl font-semibold text-white/90">Your data doesn't live in isolation.</p>
-            <p className="text-primary font-bold text-lg mt-1">It connects.</p>
-          </motion.div>
+          {/* Right — AI core + text */}
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <div className="relative">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/30">
+                  <Brain className="h-6 w-6 text-white" />
+                </div>
+                <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" />
+              </div>
+            </motion.div>
+            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.6 }}>
+              <p className="text-lg font-semibold text-white/90">Your data doesn't live in isolation.</p>
+              <p className="text-primary font-bold text-lg mt-1">It connects.</p>
+            </motion.div>
+          </div>
+        </div>
         </div>
       </div>
 
@@ -406,43 +440,61 @@ export function NeraAISection() {
 
       {/* ─── BLOCK 7 — AI OUTPUT ─── */}
       <div className="py-10 md:py-14 px-4 border-t border-white/5">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div {...fadeUp} className="mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold mb-2 text-white">
-              You don't see <span className="text-white/60 line-through decoration-white/20">everything</span>.
-            </h3>
-            <p className="text-xl md:text-2xl font-bold text-primary">You see what matters.</p>
-          </motion.div>
+        <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_auto] gap-8 items-center">
+          <div>
+            <motion.div {...fadeUp} className="mb-8">
+              <h3 className="text-2xl md:text-3xl font-bold mb-2 text-white">
+                You don't see <span className="text-white/60 line-through decoration-white/20">everything</span>.
+              </h3>
+              <p className="text-xl md:text-2xl font-bold text-primary">You see what matters.</p>
+            </motion.div>
 
-          <div className="grid sm:grid-cols-3 gap-4">
-            {[
-              { status: "All Normal", color: "bg-emerald-500/10 border-emerald-500/20", dot: "bg-emerald-400", text: "text-emerald-300" },
-              { status: "Slight Change Detected", color: "bg-amber-500/10 border-amber-500/20", dot: "bg-amber-400", text: "text-amber-300" },
-              { status: "Review Suggested", color: "bg-red-500/10 border-red-500/20", dot: "bg-red-400", text: "text-red-300" },
-            ].map((item, i) => (
-              <motion.div
-                key={item.status}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 + i * 0.15 }}
-                className={`${item.color} border rounded-2xl p-5 flex flex-col items-center gap-3`}
-              >
-                <div className={`w-3 h-3 rounded-full ${item.dot}`} />
-                <p className={`text-sm font-semibold ${item.text}`}>{item.status}</p>
-              </motion.div>
-            ))}
+            <div className="grid sm:grid-cols-3 gap-4">
+              {[
+                { status: "All Normal", color: "bg-emerald-500/10 border-emerald-500/20", dot: "bg-emerald-400", text: "text-emerald-300" },
+                { status: "Slight Change Detected", color: "bg-amber-500/10 border-amber-500/20", dot: "bg-amber-400", text: "text-amber-300" },
+                { status: "Review Suggested", color: "bg-red-500/10 border-red-500/20", dot: "bg-red-400", text: "text-red-300" },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.status}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 + i * 0.15 }}
+                  className={`${item.color} border rounded-2xl p-5 flex flex-col items-center gap-3`}
+                >
+                  <div className={`w-3 h-3 rounded-full ${item.dot}`} />
+                  <p className={`text-sm font-semibold ${item.text}`}>{item.status}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8 }}
+              className="text-xs text-white/30 mt-6"
+            >
+              From noise → to clarity. That's Nera AI.
+            </motion.p>
           </div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+          {/* Phone mockup */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.8 }}
-            className="text-xs text-white/30 mt-6"
+            transition={{ duration: 0.7 }}
+            className="hidden md:flex justify-center"
           >
-            From noise → to clarity. That's Nera AI.
-          </motion.p>
+            <motion.div
+              animate={{ y: [-5, 5, -5] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <PhoneMockup src={appScreen1} alt="Agatsa One App Dashboard" />
+            </motion.div>
+          </motion.div>
         </div>
       </div>
 
