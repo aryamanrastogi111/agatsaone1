@@ -441,42 +441,43 @@ export function NeraAISection() {
       {/* ─── BLOCK 7 — AI OUTPUT ─── */}
       <div className="py-10 md:py-14 px-4 border-t border-white/5">
         <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_auto] gap-8 items-center">
-          <motion.div {...fadeUp} className="mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold mb-2 text-white">
-              You don't see <span className="text-white/60 line-through decoration-white/20">everything</span>.
-            </h3>
-            <p className="text-xl md:text-2xl font-bold text-primary">You see what matters.</p>
-          </motion.div>
+          <div>
+            <motion.div {...fadeUp} className="mb-8">
+              <h3 className="text-2xl md:text-3xl font-bold mb-2 text-white">
+                You don't see <span className="text-white/60 line-through decoration-white/20">everything</span>.
+              </h3>
+              <p className="text-xl md:text-2xl font-bold text-primary">You see what matters.</p>
+            </motion.div>
 
-          <div className="grid sm:grid-cols-3 gap-4">
-            {[
-              { status: "All Normal", color: "bg-emerald-500/10 border-emerald-500/20", dot: "bg-emerald-400", text: "text-emerald-300" },
-              { status: "Slight Change Detected", color: "bg-amber-500/10 border-amber-500/20", dot: "bg-amber-400", text: "text-amber-300" },
-              { status: "Review Suggested", color: "bg-red-500/10 border-red-500/20", dot: "bg-red-400", text: "text-red-300" },
-            ].map((item, i) => (
-              <motion.div
-                key={item.status}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 + i * 0.15 }}
-                className={`${item.color} border rounded-2xl p-5 flex flex-col items-center gap-3`}
-              >
-                <div className={`w-3 h-3 rounded-full ${item.dot}`} />
-                <p className={`text-sm font-semibold ${item.text}`}>{item.status}</p>
-              </motion.div>
-            ))}
-          </div>
+            <div className="grid sm:grid-cols-3 gap-4">
+              {[
+                { status: "All Normal", color: "bg-emerald-500/10 border-emerald-500/20", dot: "bg-emerald-400", text: "text-emerald-300" },
+                { status: "Slight Change Detected", color: "bg-amber-500/10 border-amber-500/20", dot: "bg-amber-400", text: "text-amber-300" },
+                { status: "Review Suggested", color: "bg-red-500/10 border-red-500/20", dot: "bg-red-400", text: "text-red-300" },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.status}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 + i * 0.15 }}
+                  className={`${item.color} border rounded-2xl p-5 flex flex-col items-center gap-3`}
+                >
+                  <div className={`w-3 h-3 rounded-full ${item.dot}`} />
+                  <p className={`text-sm font-semibold ${item.text}`}>{item.status}</p>
+                </motion.div>
+              ))}
+            </div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.8 }}
-            className="text-xs text-white/30 mt-6"
-          >
-            From noise → to clarity. That's Nera AI.
-          </motion.p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8 }}
+              className="text-xs text-white/30 mt-6"
+            >
+              From noise → to clarity. That's Nera AI.
+            </motion.p>
           </div>
 
           {/* Phone mockup */}
