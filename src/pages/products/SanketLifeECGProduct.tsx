@@ -435,7 +435,103 @@ export default function SanketLifeECGProduct() {
         </div>
       </section>
 
-      {/* ─── SECTION 8: USE CASES ─── */}
+      {/* ─── NERA AI SECTION ─── */}
+      <section className="py-20 bg-gradient-to-br from-[hsl(240,30%,8%)] to-[hsl(260,40%,12%)]">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary">POWERED BY NERA AI</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-[hsl(0,0%,100%)] mt-2">
+              One ECG is a moment. Nera AI builds your cardiac story.
+            </h2>
+            <p className="text-[hsl(240,10%,70%)] text-lg mt-4 max-w-2xl mx-auto">
+              Trained on <span className="font-semibold text-[hsl(0,0%,100%)]">1.5 Crore+ Indian health records</span> from 2.1 Lac+ users.
+              97.8% concordance with cardiologist interpretations across 1.3 million+ ECGs analysed.
+            </p>
+          </div>
+
+          {/* Cardiac Timeline */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center mt-16">
+            <motion.div {...fadeUp}>
+              <div className="bg-[hsl(0,0%,100%)]/5 border border-[hsl(0,0%,100%)]/10 rounded-3xl p-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-[hsl(0,0%,100%)] font-medium">Your Cardiac Journal</span>
+                  <span className="text-[hsl(240,10%,70%)] text-sm">Last 30 days</span>
+                </div>
+                <div className="border-t border-[hsl(0,0%,100%)]/10 my-4" />
+                <div className="space-y-4">
+                  {[
+                    { date: "Today, 7:12 AM", status: "Normal sinus rhythm", color: "hsl(160,84%,39%)", sub: "HR 63 bpm · HRV 42ms · QTc 398ms" },
+                    { date: "Apr 5, 8:01 AM", status: "Normal sinus rhythm", color: "hsl(160,84%,39%)", sub: "HR 68 bpm · HRV 38ms · QTc 401ms" },
+                    { date: "Apr 3, 7:44 AM", status: "Occasional PVC", color: "hsl(38,92%,50%)", sub: "Nera AI: Single PVC detected. Isolated — no action needed." },
+                    { date: "Apr 1, 8:22 AM", status: "Occasional PVC", color: "hsl(38,92%,50%)", sub: "Nera AI: Second PVC this week. Flagged for monitoring." },
+                    { date: "Mar 28, 7:55 AM", status: "Normal sinus rhythm", color: "hsl(160,84%,39%)", sub: "HR 66 bpm · HRV 41ms" },
+                  ].map((row) => (
+                    <div key={row.date}>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[hsl(240,10%,70%)] text-sm">{row.date}</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: `${row.color}20`, color: row.color }}>{row.status}</span>
+                      </div>
+                      <p className="text-[hsl(240,10%,70%)] text-xs mt-1">{row.sub}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="border-t border-[hsl(0,0%,100%)]/10 my-4" />
+                <p className="text-[hsl(240,10%,70%)] text-xs italic">
+                  Nera AI: Two isolated PVCs in 7 days — below threshold for concern, but flagged for monitoring. Share with your cardiologist.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.15 }}>
+              <span className="inline-block bg-primary/20 text-primary border border-primary/30 rounded-full px-4 py-1 text-sm font-medium">
+                What most devices miss
+              </span>
+              <h3 className="text-2xl md:text-3xl font-bold text-[hsl(0,0%,100%)] mt-4">
+                Patterns only visible across time.
+              </h3>
+              <p className="text-[hsl(240,10%,70%)] text-base leading-relaxed mt-4">
+                One abnormal ECG can be noise. The same pattern three times in a week is a signal.
+                Nera AI compares every new ECG to your entire cardiac history — it knows your baseline, not just the population average.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-6">
+                {["Full cardiac journal", "Pattern repeat detection", "Share with cardiologist — 1 tap"].map((pill) => (
+                  <span key={pill} className="bg-[hsl(0,0%,100%)]/5 border border-[hsl(0,0%,100%)]/10 rounded-full px-3 py-1 text-sm text-[hsl(0,0%,100%)]">{pill}</span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* AI Feature Cards */}
+          <div className="grid md:grid-cols-3 gap-6 mt-16">
+            {[
+              { icon: AlertTriangle, title: "Real-Time STEMI Detection", body: "STEMI shows up in the ST segment before symptoms peak. Nera AI analyses every reading and sends an immediate alert if elevation is detected." },
+              { icon: FileText, title: "Cardiologist-Ready PDF", body: "Every reading generates a clinical PDF — waveform, findings, AI interpretation, and 30-day trend. Share via WhatsApp or email in one tap." },
+              { icon: Brain, title: "Dual-Algorithm Analysis", body: "Nera runs two independent engines — rhythm classification and waveform digitizer — and cross-checks results. Disagreements are flagged for review." },
+            ].map((card) => (
+              <motion.div key={card.title} {...fadeUp} className="bg-[hsl(0,0%,100%)]/5 border border-[hsl(0,0%,100%)]/10 rounded-2xl p-6 hover:border-primary/50 transition-all">
+                <card.icon className="text-primary" size={28} />
+                <h4 className="text-[hsl(0,0%,100%)] font-semibold text-lg mt-3">{card.title}</h4>
+                <p className="text-[hsl(240,10%,70%)] text-sm mt-2 leading-relaxed">{card.body}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* CTA inside Nera section */}
+          <div className="mt-14 text-center">
+            <Button
+              onClick={handleBuy}
+              disabled={adding}
+              size="lg"
+              className="rounded-full px-10 text-base bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
+            >
+              Get SanketLife + Nera AI — ₹4,999
+            </Button>
+            <p className="text-[hsl(240,10%,70%)] text-sm mt-3">Includes 3 months Nera AI Premium free</p>
+          </div>
+        </div>
+      </section>
+
+
       <section className="py-20 bg-background">
         <div className="max-w-5xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
