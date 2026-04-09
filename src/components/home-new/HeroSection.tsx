@@ -50,18 +50,21 @@ export function HeroSection() {
               {...stagger(1)}
               className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-[1.1]"
             >
-              Most health problems
+              Your Heart Doesn't
               <br />
-              don't announce
+              Take a Day Off.
               <br />
-              themselves.
+              Neither Does{" "}
+              <span className="text-primary">Nera</span>.
             </motion.h1>
 
             <motion.p
               {...stagger(1.5)}
               className="text-lg md:text-xl text-foreground/80 max-w-[580px] leading-relaxed font-medium"
             >
-              They build quietly — in your heart, your sugar, your nervous system.
+              Most health problems don't announce themselves.
+              <br />
+              They build quietly — in your <span className="text-primary font-bold">heart</span>, your <span className="text-primary font-bold">sugar</span>, your <span className="text-primary font-bold">nervous system</span>.
               <br />
               <span className="text-primary font-bold">Agatsa helps you catch them early.</span>
             </motion.p>
@@ -70,8 +73,8 @@ export function HeroSection() {
               {...stagger(2)}
               className="text-sm md:text-base text-muted-foreground max-w-[540px] leading-relaxed"
             >
-              Agatsa devices help you track your health at home, while Nera AI understands your health,
-              spots risks early, and guides you every day. Not just data. Intelligence.
+              Agatsa devices help you track your health at home, while <span className="text-foreground font-medium">Nera AI</span> understands your health,
+              spots <span className="text-foreground font-medium">risks early</span>, and guides you every day. Not just data. <span className="text-foreground font-medium">Intelligence</span>.
             </motion.p>
 
             <motion.ul {...stagger(2.5)} className="space-y-2 text-sm text-foreground/70">
@@ -114,6 +117,8 @@ export function HeroSection() {
               <span>2.1 Lac+ users</span>
               <span className="text-border">|</span>
               <span>CDSCO Class B certified</span>
+              <span className="text-border hidden md:inline">|</span>
+              <span className="hidden md:inline">AI-powered insights</span>
             </motion.div>
           </div>
 
