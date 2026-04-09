@@ -119,6 +119,11 @@ export default function SanketLifeECGProduct() {
                   Check Your Heart Anytime — ₹4,999
                 </Button>
               </div>
+              <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
+                <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
+                <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
+                <span className="text-xs text-muted-foreground">(worth ₹1,197)</span>
+              </div>
 
               <p className="text-xs text-muted-foreground mt-3">
                 CDSCO Class B Medical Device · Lic. MFG/MD/2023/000231
