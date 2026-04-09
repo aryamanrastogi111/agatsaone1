@@ -159,7 +159,7 @@ export function NeraAISection() {
             transition={{ duration: 0.7 }}
           >
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">ECG Intelligence</p>
-            <h3 className="text-2xl md:text-3xl font-bold mb-3">
+            <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">
               ECG — <span className="text-primary">simplified.</span>
             </h3>
             <p className="text-white/80 text-sm leading-relaxed mb-4">
@@ -208,7 +208,7 @@ export function NeraAISection() {
       <div className="py-10 md:py-14 px-4 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <motion.div {...fadeUp} className="text-center mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold mb-2">
+            <h3 className="text-2xl md:text-3xl font-bold mb-2 text-white">
               A single ECG is a <span className="text-white/80">moment</span>.
             </h3>
             <p className="text-xl md:text-2xl font-bold text-primary">A trend reveals change.</p>
@@ -259,7 +259,7 @@ export function NeraAISection() {
       <div className="py-10 md:py-14 px-4 border-t border-white/5">
         <div className="max-w-5xl mx-auto">
           <motion.div {...fadeUp} className="text-center mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold mb-2">
+            <h3 className="text-2xl md:text-3xl font-bold mb-2 text-white">
               Your heart and metabolism don't work separately.
             </h3>
             <p className="text-lg text-primary font-semibold">Nera AI reads them together.</p>
@@ -321,7 +321,7 @@ export function NeraAISection() {
         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center">
           <motion.div {...fadeUp}>
             <Scale className="h-6 w-6 text-primary mb-3" />
-            <h3 className="text-2xl font-bold mb-2">
+            <h3 className="text-2xl font-bold mb-2 text-white">
               Weight is a <span className="text-white/80">number</span>.
             </h3>
             <p className="text-xl font-bold text-primary mb-3">Direction is insight.</p>
@@ -421,7 +421,7 @@ export function NeraAISection() {
 
           <motion.div {...fadeUp} className="order-1 md:order-2">
             <Moon className="h-6 w-6 text-primary mb-3" />
-            <h3 className="text-2xl font-bold mb-2">Your daily habits shape your health.</h3>
+            <h3 className="text-2xl font-bold mb-2 text-white">Your daily habits shape your health.</h3>
             <p className="text-lg text-primary font-semibold mb-3">
               Nera AI connects them to everything else.
             </p>
@@ -496,7 +496,7 @@ export function NeraAISection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2 }}
-            className="text-2xl md:text-4xl font-extrabold leading-snug mb-4"
+            className="text-2xl md:text-4xl font-extrabold leading-snug mb-4 text-white"
           >
             Nera AI doesn't just read your data.
           </motion.h3>
