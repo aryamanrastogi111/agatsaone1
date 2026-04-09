@@ -47,7 +47,7 @@ const devices = [
 
 export function DeviceShowcaseSection() {
   return (
-    <section className="py-20 md:py-28 bg-background">
+    <section id="how-it-works" className="py-16 md:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -57,14 +57,14 @@ export function DeviceShowcaseSection() {
           className="text-center mb-16"
         >
           <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
-            The Devices
+            This Is Where Agatsa Comes In
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Medical-grade hardware. Consumer-grade simplicity.
+            Simple, easy-to-use devices to track your health regularly from home.
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Every Agatsa One device is clinically validated, CDSCO-approved, and designed to be
-            used by anyone — no medical training required.
+            Every Agatsa device is designed to work seamlessly with the Agatsa One app and Nera AI.
+            Clinically validated. CDSCO-approved. Pair in minutes. Monitor for life.
           </p>
         </motion.div>
 

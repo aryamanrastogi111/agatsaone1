@@ -50,37 +50,59 @@ export function HeroSection() {
               {...stagger(1)}
               className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-[1.1]"
             >
-              Your Heart Doesn't
+              Most health problems
               <br />
-              Take a Day Off.
+              don't announce
               <br />
-              Neither Does{" "}
-              <span className="text-primary">Nera</span>.
+              themselves.
             </motion.h1>
 
             <motion.p
-              {...stagger(2)}
-              className="text-base md:text-lg text-muted-foreground max-w-[580px] leading-relaxed"
+              {...stagger(1.5)}
+              className="text-lg md:text-xl text-foreground/80 max-w-[580px] leading-relaxed font-medium"
             >
-              Agatsa One connects to medical-grade ECG, metabolic health, and vital monitors — then
-              uses Nera AI to understand your health, spot risks early, and guide you every
-              day. Not just data. Intelligence.
+              They build quietly — in your heart, your sugar, your nervous system.
+              <br />
+              <span className="text-primary font-bold">Agatsa helps you catch them early.</span>
             </motion.p>
+
+            <motion.p
+              {...stagger(2)}
+              className="text-sm md:text-base text-muted-foreground max-w-[540px] leading-relaxed"
+            >
+              Agatsa devices help you track your health at home, while Nera AI understands your health,
+              spots risks early, and guides you every day. Not just data. Intelligence.
+            </motion.p>
+
+            <motion.ul {...stagger(2.5)} className="space-y-2 text-sm text-foreground/70">
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                Track ECG, BP, sugar, SpO₂ and more — from home
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                See how your health changes over time
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                Get simple insights, not confusing reports
+              </li>
+            </motion.ul>
 
             <motion.div {...stagger(3)} className="flex flex-wrap gap-4">
               <Link
-                to="/app"
+                to="/devices"
                 className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-8 py-4 font-semibold hover:opacity-90 transition-opacity text-sm md:text-base"
               >
-                Download Free
+                Explore Devices
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link
-                to="/devices"
+              <a
+                href="#how-it-works"
                 className="inline-flex items-center gap-2 bg-background text-primary border-2 border-primary/20 rounded-full px-8 py-4 font-semibold hover:border-primary/40 transition-colors text-sm md:text-base"
               >
-                Explore Devices
-              </Link>
+                See How It Works
+              </a>
             </motion.div>
 
             <motion.div
@@ -92,8 +114,6 @@ export function HeroSection() {
               <span>2.1 Lac+ users</span>
               <span className="text-border">|</span>
               <span>CDSCO Class B certified</span>
-              <span className="text-border hidden md:inline">|</span>
-              <span className="hidden md:inline">AI-powered insights</span>
             </motion.div>
           </div>
 

@@ -2,6 +2,7 @@ export { HeroSection } from "./HeroSection";
 export { ProblemSection } from "./ProblemSection";
 export { HowItWorksSection } from "./HowItWorksSection";
 export { DeviceShowcaseSection } from "./DeviceShowcaseSection";
+export { TimelineInsightSection } from "./TimelineInsightSection";
 export { CareProgrammesSection } from "./CareProgrammesSection";
 export { NeraAISection } from "./NeraAISection";
 export { ClinicalProofSection } from "./ClinicalProofSection";

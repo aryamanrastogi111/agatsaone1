@@ -3,9 +3,8 @@ import { SiteLayout } from "@/components/SiteLayout";
 import {
   HeroSection,
   ProblemSection,
-  HowItWorksSection,
   DeviceShowcaseSection,
-  CareProgrammesSection,
+  TimelineInsightSection,
   NeraAISection,
   ClinicalProofSection,
   ProvidersSection,
@@ -20,9 +19,8 @@ export default function HomePage() {
     <SiteLayout>
       <HeroSection />
       <ProblemSection />
-      <HowItWorksSection />
       <DeviceShowcaseSection />
-      <CareProgrammesSection />
+      <TimelineInsightSection />
       <NeraAISection />
       <ClinicalProofSection />
       <ProvidersSection />
