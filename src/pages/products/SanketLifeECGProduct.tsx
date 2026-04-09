@@ -293,7 +293,7 @@ export default function SanketLifeECGProduct() {
         <div className="max-w-4xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Three steps. Thirty seconds.{" "}
+              Three steps. Fifteen seconds.{" "}
               <span className="text-primary">Complete clarity.</span>
             </h2>
             <p className="text-lg text-muted-foreground mt-3">
