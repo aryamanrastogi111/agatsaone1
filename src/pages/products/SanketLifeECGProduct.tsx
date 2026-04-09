@@ -118,6 +118,9 @@ export default function SanketLifeECGProduct() {
                 >
                   Check Your Heart Anytime — ₹4,999
                 </Button>
+                <Button asChild variant="outline" className="rounded-full px-8 text-base border-2 border-primary text-primary">
+                  <Link to="/app?device=ecg">Download Agatsa One App (free)</Link>
+                </Button>
               </div>
               <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
                 <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
