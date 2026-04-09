@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package, Smartphone, Workflow, Brain, Stethoscope, Shield, Cpu, Users, HeartPulse } from "lucide-react";
+import { EmiLine } from "@/components/EmiLine";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import sanketlifeImg from "@/assets/sanketlife-device-app.png";
@@ -192,6 +193,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
             {device.rating}/5 ({device.reviews} reviews)
           </span>
         </div>
+        <EmiLine price={parseInt(device.priceNum.replace(/,/g, ""))} />
 
         {/* What it measures */}
         <button
