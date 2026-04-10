@@ -99,11 +99,11 @@ export function ProductHighlightEasyTouch() {
               <div className="flex items-center gap-2">
                 {isSaleActive() ? (
                   <>
-                    <span className="text-xl text-muted-foreground line-through">₹4,999</span>
-                    <span className="text-2xl font-bold text-foreground">₹4,499</span>
+                    <span className="text-xl text-muted-foreground line-through">₹3,999</span>
+                    <span className="text-2xl font-bold text-foreground">₹2,999</span>
                   </>
                 ) : (
-                  <span className="text-2xl font-bold text-foreground">₹4,999</span>
+                  <span className="text-2xl font-bold text-foreground">₹2,999</span>
                 )}
               </div>
             </div>
