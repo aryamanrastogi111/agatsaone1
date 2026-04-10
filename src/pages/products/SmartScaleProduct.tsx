@@ -66,7 +66,7 @@ export default function SmartScaleProduct() {
   useMetaPixelViewContent("SMART_SCALE", "Agatsa Smart Scale", 1999);
   const handleBuy = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["scale_sub"], content_name: "Agatsa Smart Scale", content_type: "product", value: 1999, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["scale_sub"], content_name: "Agatsa Smart Scale", content_type: "product", value: 2499, currency: "INR" }); } catch {}
     }
     navigate("/checkout?sku=scale_sub");
   };
