@@ -186,7 +186,7 @@ export default function ForDoctorsPage() {
             {[
               { icon: AlertTriangle, problem: "Patients come only when symptoms appear", solve: "Get regular ECG + vitals updates automatically — act before it's serious" },
               { icon: Clock, problem: "One-time ECG only shows a snapshot", solve: "Track ECG over time to catch patterns, not just a single moment" },
-              { icon: Eye, problem: "Vitals are checked separately from ECG", solve: "See ECG, BP, sugar, SpO₂, temp & sleep together in one dashboard" },
+              { icon: Eye, problem: "Vitals are checked separately from ECG", solve: "See ECG, BP, metabolic wellness, SpO₂, temp & sleep together in one dashboard" },
               { icon: Zap, problem: "Data scattered across reports & apps", solve: "Everything combined into a single patient timeline" },
               { icon: Users, problem: "Too many patients to track manually", solve: "Auto-alerts when any patient's ECG or vitals change significantly" },
               { icon: PhoneOff, problem: "Follow-ups eat your time", solve: "Data comes to you remotely — no calls or chasing needed" },
@@ -228,7 +228,7 @@ export default function ForDoctorsPage() {
               </div>
               <h3 className="text-lg font-bold text-foreground">Remote patient monitoring that actually saves your time</h3>
               <div className="mt-4 space-y-3 text-sm text-muted-foreground flex-1">
-                <p>Your patients generate health data through Agatsa devices — ECG, BP, sugar, SpO₂ and more — from home.</p>
+                <p>Your patients generate health data through Agatsa devices — ECG, BP, metabolic wellness, SpO₂ and more — from home.</p>
                 <p>With Agatsa One, this data comes directly to you as a <span className="text-foreground font-medium">complete patient timeline</span>, not scattered reports.</p>
                 <p>Review patient status before the consultation — <span className="text-foreground font-medium">without follow-ups or repeated visits.</span></p>
               </div>
@@ -267,7 +267,7 @@ export default function ForDoctorsPage() {
                 <p>Because data comes directly from your patients using Agatsa devices, you get visibility <span className="text-foreground font-medium">between visits</span> — not just during them.</p>
                 <ul className="space-y-2">
                   {[
-                    "Track ECG trends along with BP, sugar, SpO₂, and other vitals",
+                    "Track ECG trends along with BP, metabolic wellness, SpO₂, and other vitals",
                     "See which patients are improving and which are deteriorating",
                     "Spend consultation time on decisions, not data collection",
                   ].map((item, i) => (

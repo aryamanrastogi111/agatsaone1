@@ -10,7 +10,7 @@ const fadeUp = {
 
 const riskCards = [
   { icon: Heart, label: "Heart rhythm", desc: "A slight change you didn't notice" },
-  { icon: Droplets, label: "Sugar levels", desc: "A gradual rise, week over week" },
+  { icon: Droplets, label: "Metabolic wellness", desc: "A gradual rise, week over week" },
   { icon: Activity, label: "Blood pressure", desc: "A pattern forming quietly" },
 ];
 
@@ -51,7 +51,7 @@ export function ProblemSection() {
           </p>
           <div className="space-y-1 text-muted-foreground text-base">
             <p>One ECG is a moment.</p>
-            <p>One sugar reading is a moment.</p>
+            <p>One metabolic reading is a moment.</p>
             <p>One BP check is a moment.</p>
           </div>
           <div className="w-16 h-px bg-primary/30 mx-auto my-8" />

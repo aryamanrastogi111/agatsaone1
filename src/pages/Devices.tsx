@@ -297,7 +297,7 @@ export default function DevicesPage() {
             className="mt-8 max-w-3xl mx-auto bg-card border border-border rounded-2xl p-6 text-left"
           >
             <p className="text-base text-muted-foreground leading-relaxed">
-              Because a single reading is not enough. Every measurement — ECG, BP, sugar, SpO₂ — becomes part of a{" "}
+              Because a single reading is not enough. Every measurement — ECG, BP, metabolic wellness, SpO₂ — becomes part of a{" "}
               <span className="font-semibold text-foreground">continuous health record</span>, captured through
               Agatsa devices and analysed through{" "}
               <span className="font-semibold text-primary">Nera AI</span>.
@@ -339,7 +339,7 @@ export default function DevicesPage() {
                 icon: Smartphone,
                 step: "01",
                 title: "Devices capture real data",
-                desc: "ECG, BP, sugar, SpO₂, weight, sleep — medical-grade sensors capture what matters.",
+                desc: "ECG, BP, metabolic wellness, SpO₂, weight, sleep — medical-grade sensors capture what matters.",
               },
               {
                 icon: Workflow,
