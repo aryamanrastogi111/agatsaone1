@@ -3,8 +3,12 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   Users, ShoppingCart, CreditCard,
   Smartphone, Monitor, Globe, Clock, RefreshCw,
-  TrendingUp, Package, Eye, Zap, MapPin,
+  TrendingUp, Package, Eye, Zap, MapPin, BarChart3,
 } from "lucide-react";
+import {
+  ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid,
+} from "recharts";
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const db = supabase as any;
 
@@ -27,6 +31,15 @@ interface TodayOrder {
   created_at: string;
 }
 
+interface DailyStat {
+  stat_date: string;
+  total_orders: number;
+  total_revenue: number;
+  avg_order_value: number;
+  peak_visitors: number;
+  pending_payments: number;
+}
+
 // ─── Helpers ─────────────────────────────────────────────────
 function timeAgo(dateStr: string) {
   const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
@@ -41,8 +54,12 @@ const PAGE_LABELS: Record<string, string> = {
   "/devices": "Devices",
   "/devices/sanketlife-ecg": "SanketLife ECG",
   "/devices/easytouch-wellness": "EasyTouch Wellness",
+  "/devices/easytouch-plus": "EasyTouch Plus",
+  "/devices/easytouch-rhythm": "EasyTouch Rhythm",
   "/devices/rhythm-band": "Rhythm Band",
   "/devices/smart-scale": "Smart Scale",
+  "/devices/core-balance": "Core Balance",
+  "/devices/zlu": "ZLU",
   "/programmes": "Programmes",
   "/pricing": "Pricing",
   "/checkout": "Checkout",
@@ -69,6 +86,7 @@ function StatusDot({ color }: { color: string }) {
 
 // ─── Stat Card ───────────────────────────────────────────────
 function StatCard({ icon: Icon, label, value, sub, color }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any; label: string; value: string | number; sub?: string; color: string;
 }) {
   return (
@@ -80,6 +98,58 @@ function StatCard({ icon: Icon, label, value, sub, color }: {
         <p className="text-xs text-gray-500 font-medium">{label}</p>
         <p className="text-2xl font-bold text-gray-900">{value}</p>
         {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
+      </div>
+    </div>
+  );
+}
+
+// ─── Mini Chart Card ─────────────────────────────────────────
+function TrendChartCard({ title, dataKey, data, color, prefix = "" }: {
+  title: string; dataKey: string; data: DailyStat[]; color: string; prefix?: string;
+}) {
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <BarChart3 size={14} className="text-gray-400" />
+        <h4 className="text-sm font-semibold text-gray-700">{title}</h4>
+        <span className="text-xs text-gray-400 ml-auto">Last {data.length} days</span>
+      </div>
+      <div className="h-40">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={data}>
+            <defs>
+              <linearGradient id={`grad-${dataKey}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor={color} stopOpacity={0.3} />
+                <stop offset="95%" stopColor={color} stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <XAxis
+              dataKey="stat_date"
+              tick={{ fontSize: 10, fill: "#9ca3af" }}
+              tickFormatter={(d: string) => {
+                const date = new Date(d + "T00:00:00");
+                return `${date.getDate()}/${date.getMonth() + 1}`;
+              }}
+            />
+            <YAxis tick={{ fontSize: 10, fill: "#9ca3af" }} width={40} />
+            <Tooltip
+              contentStyle={{ fontSize: 12, borderRadius: 8 }}
+              formatter={(val: number) => [`${prefix}${val.toLocaleString("en-IN")}`, title]}
+              labelFormatter={(d: string) => {
+                const date = new Date(d + "T00:00:00");
+                return date.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+              }}
+            />
+            <Area
+              type="monotone"
+              dataKey={dataKey}
+              stroke={color}
+              strokeWidth={2}
+              fill={`url(#grad-${dataKey})`}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
@@ -223,16 +293,19 @@ function PendingCheckoutPanel({ orders }: { orders: TodayOrder[] }) {
   );
 }
 
+// ─── Time range selector ─────────────────────────────────────
+type TimeRange = "7d" | "30d" | "90d";
+
 // ─── Main Page ───────────────────────────────────────────────
 export default function LiveActivity() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
   const [pendingOrders, setPendingOrders] = useState<TodayOrder[]>([]);
   const [recentOrders, setRecentOrders] = useState<TodayOrder[]>([]);
-  const [todayStats, setTodayStats] = useState({
-    orders: 0, revenue: 0, avgOrder: 0,
-  });
+  const [todayStats, setTodayStats] = useState({ orders: 0, revenue: 0, avgOrder: 0 });
   const [lastRefresh, setLastRefresh] = useState(new Date());
   const [loading, setLoading] = useState(true);
+  const [historicalData, setHistoricalData] = useState<DailyStat[]>([]);
+  const [timeRange, setTimeRange] = useState<TimeRange>("30d");
 
   const STATUS_COLORS: Record<string, string> = {
     paid: "bg-green-100 text-green-700",
@@ -253,13 +326,16 @@ export default function LiveActivity() {
 
     channel
       .on("presence", { event: "sync" }, () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const state = channel.presenceState() as Record<string, any[]>;
         const list: Visitor[] = Object.values(state)
           .flat()
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .filter((p: any) => {
             const sid = p.session_id ?? "";
             return !sid.startsWith("admin") && sid.startsWith("v_");
           })
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .map((p: any) => ({
             session_id: p.session_id ?? p.presence_ref,
             current_page: p.current_page ?? "/",
@@ -281,15 +357,12 @@ export default function LiveActivity() {
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
 
     const [ordersRes, recentRes] = await Promise.all([
-      db
-        .from("orders")
+      db.from("orders")
         .select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created")
         .gte("created_at", twoHoursAgo)
         .order("created_at", { ascending: false }),
-
-      db
-        .from("orders")
+      db.from("orders")
         .select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .in("status", ["paid", "confirmed", "processing", "shipped", "delivered"])
         .gte("created_at", todayStart.toISOString())
@@ -312,8 +385,24 @@ export default function LiveActivity() {
     setLoading(false);
   }, []);
 
+  // ── Historical data ──
+  const fetchHistory = useCallback(async () => {
+    const days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
+    const since = new Date();
+    since.setDate(since.getDate() - days);
+
+    const { data } = await db
+      .from("daily_stats")
+      .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments")
+      .gte("stat_date", since.toISOString().split("T")[0])
+      .order("stat_date", { ascending: true });
+
+    setHistoricalData(data ?? []);
+  }, [timeRange]);
+
   useEffect(() => {
     fetchData();
+    fetchHistory();
     const interval = setInterval(fetchData, 30_000);
 
     const channel = supabase
@@ -325,9 +414,24 @@ export default function LiveActivity() {
       clearInterval(interval);
       supabase.removeChannel(channel);
     };
-  }, [fetchData]);
+  }, [fetchData, fetchHistory]);
 
-  // Derived: visitors on checkout
+  // Update peak visitors in daily_stats (client-side update)
+  useEffect(() => {
+    if (visitors.length === 0) return;
+    const checkoutCount = visitors.filter(v => v.current_page === "/checkout").length;
+    const today = new Date().toISOString().split("T")[0];
+
+    db.from("daily_stats")
+      .upsert({
+        stat_date: today,
+        peak_visitors: visitors.length,
+        peak_checkout_visitors: checkoutCount,
+      }, { onConflict: "stat_date", ignoreDuplicates: false })
+      .then(() => {});
+    // We only update peak if current > stored, handled by trigger or accepted as latest
+  }, [visitors]);
+
   const checkoutVisitors = visitors.filter((v) => v.current_page === "/checkout");
   const deviceVisitors = visitors.filter((v) => v.current_page.startsWith("/devices/"));
 
@@ -345,7 +449,7 @@ export default function LiveActivity() {
           </p>
         </div>
         <button
-          onClick={fetchData}
+          onClick={() => { fetchData(); fetchHistory(); }}
           className="flex items-center gap-2 bg-white border border-gray-200 text-gray-600 text-sm px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors shadow-sm"
         >
           <RefreshCw size={13} /> Refresh
@@ -357,41 +461,66 @@ export default function LiveActivity() {
 
       {/* Stats Row */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-        <StatCard
-          icon={Users}
-          label="Live Visitors"
-          value={visitors.length}
-          sub="on site right now"
-          color="bg-green-50 text-green-600"
-        />
-        <StatCard
-          icon={Eye}
-          label="Browsing Devices"
-          value={deviceVisitors.length}
-          sub="viewing product pages"
-          color="bg-blue-50 text-blue-600"
-        />
-        <StatCard
-          icon={ShoppingCart}
-          label="On Checkout"
-          value={checkoutVisitors.length}
-          sub="filling checkout form"
-          color="bg-purple-50 text-purple-600"
-        />
-        <StatCard
-          icon={TrendingUp}
-          label="Orders Today"
-          value={loading ? "—" : todayStats.orders}
-          sub={`₹${todayStats.revenue.toLocaleString("en-IN")} revenue`}
-          color="bg-emerald-50 text-emerald-600"
-        />
-        <StatCard
-          icon={CreditCard}
-          label="Pending Payment"
-          value={loading ? "—" : pendingOrders.length}
-          sub="awaiting Razorpay"
-          color="bg-yellow-50 text-yellow-600"
-        />
+        <StatCard icon={Users} label="Live Visitors" value={visitors.length} sub="on site right now" color="bg-green-50 text-green-600" />
+        <StatCard icon={Eye} label="Browsing Devices" value={deviceVisitors.length} sub="viewing product pages" color="bg-blue-50 text-blue-600" />
+        <StatCard icon={ShoppingCart} label="On Checkout" value={checkoutVisitors.length} sub="filling checkout form" color="bg-purple-50 text-purple-600" />
+        <StatCard icon={TrendingUp} label="Orders Today" value={loading ? "—" : todayStats.orders} sub={`₹${todayStats.revenue.toLocaleString("en-IN")} revenue`} color="bg-emerald-50 text-emerald-600" />
+        <StatCard icon={CreditCard} label="Pending Payment" value={loading ? "—" : pendingOrders.length} sub="awaiting Razorpay" color="bg-yellow-50 text-yellow-600" />
+      </div>
+
+      {/* Historical Trends */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+            <TrendingUp size={18} className="text-blue-500" />
+            Historical Trends
+          </h2>
+          <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
+            {(["7d", "30d", "90d"] as TimeRange[]).map((r) => (
+              <button
+                key={r}
+                onClick={() => setTimeRange(r)}
+                className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+                  timeRange === r
+                    ? "bg-white text-gray-900 shadow-sm"
+                    : "text-gray-500 hover:text-gray-700"
+                }`}
+              >
+                {r === "7d" ? "7 Days" : r === "30d" ? "30 Days" : "90 Days"}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {historicalData.length === 0 ? (
+          <div className="bg-white border border-gray-200 rounded-xl p-10 text-center text-gray-400">
+            <BarChart3 size={32} className="mx-auto mb-2 opacity-30" />
+            <p className="text-sm">No historical data yet. Stats are captured daily at 11 PM IST.</p>
+            <button
+              onClick={async () => {
+                const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/snapshot-daily-stats`;
+                await fetch(url, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+                  },
+                });
+                fetchHistory();
+              }}
+              className="mt-3 text-xs text-blue-600 hover:text-blue-800 font-medium"
+            >
+              Take snapshot now →
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <TrendChartCard title="Orders" dataKey="total_orders" data={historicalData} color="#10b981" />
+            <TrendChartCard title="Revenue" dataKey="total_revenue" data={historicalData} color="#3b82f6" prefix="₹" />
+            <TrendChartCard title="Avg Order Value" dataKey="avg_order_value" data={historicalData} color="#8b5cf6" prefix="₹" />
+            <TrendChartCard title="Peak Visitors" dataKey="peak_visitors" data={historicalData} color="#f59e0b" />
+          </div>
+        )}
       </div>
 
       {/* Live Visitors + Page Breakdown */}
