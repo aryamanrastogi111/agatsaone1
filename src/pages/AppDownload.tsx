@@ -2,6 +2,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Copy, Check, Apple, Play } from "lucide-react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import qrApple from "@/assets/qr-apple.png";

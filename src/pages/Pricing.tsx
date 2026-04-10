@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, X, Minus, ChevronDown, ChevronUp, Mic, Gift } from "lucide-react";
