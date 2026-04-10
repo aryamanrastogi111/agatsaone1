@@ -103,7 +103,7 @@ export function DeviceShowcaseSection() {
               <p className="text-xs font-medium text-primary mb-3">{device.stat}</p>
 
               <div className="mt-auto space-y-2">
-                <StockUrgencyBar productKey={device.link.split("/").pop() ?? ""} />
+                <StockUrgencyBar productKey={device.slug} />
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold text-foreground">{device.price}</span>
                   <Link
