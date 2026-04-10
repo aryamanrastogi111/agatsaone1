@@ -1462,7 +1462,7 @@ const EasyTouchRhythmProduct = () => {
                     <span className="text-4xl font-bold text-foreground">₹2,999</span>
                     <span className="text-xl text-muted-foreground line-through">₹4,999</span>
                     <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                      Save ₹3,000
+                      Save ₹2,000
                     </span>
                   </div>
                   <p className="text-orange-600 text-sm mb-6">Limited stock – Only 4 units left!</p>
@@ -1480,7 +1480,7 @@ const EasyTouchRhythmProduct = () => {
                 ) : (
                   <ShoppingCart className="h-5 w-5" />
                 )}
-                {isSaleActive() ? "Grab Yours — ₹4,499" : "Add to Cart"}
+                {isSaleActive() ? "Grab Yours — ₹2,999" : "Add to Cart"}
               </Button>
               
               {isSaleActive() && (
