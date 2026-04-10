@@ -133,9 +133,9 @@ const devices: DeviceData[] = [
     name: "Agatsa Smart Scale",
     tagline: "14 body metrics. One step. One app.",
     keyStat: "BMI, body fat, muscle mass — 14 metrics in 5 seconds",
-    price: "₹1,999",
-    priceNum: "1,999",
-    emiDisplay: "No-cost EMI from ₹167/month",
+    price: "₹2,499",
+    priceNum: "2,499",
+    emiDisplay: "No-cost EMI from ₹209/month",
     rating: "4.7",
     reviews: "423",
     measures: [

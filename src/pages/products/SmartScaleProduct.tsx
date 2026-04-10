@@ -88,9 +88,9 @@ export default function SmartScaleProduct() {
               <p className="text-xl md:text-2xl font-bold text-orange-500 dark:text-orange-400 mt-3">Step on. Know everything.</p>
               <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">The Agatsa Smart Scale measures 14 body composition metrics in a single 5-second reading — weight, body fat, muscle mass, bone density, visceral fat, metabolic age, and more. Syncs instantly to Nera AI via Bluetooth.</p>
               <div className="mt-6">
-                <span className="text-4xl font-extrabold text-foreground">₹1,999</span>
+                <span className="text-4xl font-extrabold text-foreground">₹2,499</span>
                 <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
-                <EmiLine price={1999} />
+                <EmiLine price={2499} />
                 <StockUrgencyBar productKey="corebalance" className="mt-3" />
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                   <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
@@ -103,7 +103,7 @@ export default function SmartScaleProduct() {
                 <span className="text-sm text-muted-foreground ml-1">4.7/5 (423 reviews)</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Smart Scale — ₹1,999</Button>
+                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Smart Scale — ₹2,499</Button>
                 <Button asChild variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">
                   <Link to="/app?device=scale">Download Agatsa One App (free)</Link>
                 </Button>
