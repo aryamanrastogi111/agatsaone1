@@ -16,6 +16,7 @@ const devices = [
     price: "₹3,999",
     emi: "No-cost EMI from ₹334/month",
     link: "/devices/sanketlife-ecg",
+    slug: "sanketlife",
     image: sanketlifeImg,
   },
   {
@@ -26,6 +27,7 @@ const devices = [
     price: "₹3,499",
     emi: "No-cost EMI from ₹292/month",
     link: "/devices/easytouch-wellness",
+    slug: "easytouch-wellness",
     image: easytouchImg,
   },
   {
@@ -36,6 +38,7 @@ const devices = [
     price: "₹2,999",
     emi: "No-cost EMI from ₹250/month",
     link: "/devices/rhythm-band",
+    slug: "easytouch-rhythm",
     image: rhythmImg,
   },
   {
@@ -46,6 +49,7 @@ const devices = [
     price: "₹2,499",
     emi: "No-cost EMI from ₹209/month",
     link: "/devices/smart-scale",
+    slug: "corebalance",
     image: scaleImg,
   },
 ];
