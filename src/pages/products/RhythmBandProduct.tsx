@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Star, ArrowRight, Package, Moon, Activity, Bell } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
+import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import rhythmHero from "@/assets/easytouch-rhythm-new.webp";
 import neraScreen from "@/assets/app-screen-nera.webp";
 import { Button } from "@/components/ui/button";
@@ -83,6 +84,7 @@ export default function RhythmBandProduct() {
                 <span className="text-4xl font-extrabold text-foreground">₹2,999</span>
                 <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
                 <EmiLine price={2999} />
+                <StockUrgencyBar productKey="rhythm-band" className="mt-3" />
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                   <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
                   <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 3 months</span>

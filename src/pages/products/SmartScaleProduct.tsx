@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Star, ArrowRight, Package, Scale, TrendingDown, Users, Heart } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
+import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import scaleHero from "@/assets/corebalance-hero.webp";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -87,6 +88,7 @@ export default function SmartScaleProduct() {
                 <span className="text-4xl font-extrabold text-foreground">₹2,499</span>
                 <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
                 <EmiLine price={2499} />
+                <StockUrgencyBar productKey="smart-scale" className="mt-3" />
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                   <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
                   <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 3 months</span>

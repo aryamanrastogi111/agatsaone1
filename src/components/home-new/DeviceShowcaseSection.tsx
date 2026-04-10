@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import sanketlifeImg from "@/assets/sanketlife-hero-new.webp";
 import easytouchImg from "@/assets/easytouch-wellness-device.webp";
 import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
@@ -97,7 +98,8 @@ export function DeviceShowcaseSection() {
               <p className="text-sm text-muted-foreground mb-2">{device.tagline}</p>
               <p className="text-xs font-medium text-primary mb-3">{device.stat}</p>
 
-              <div className="mt-auto">
+              <div className="mt-auto space-y-2">
+                <StockUrgencyBar productKey={device.link.split("/").pop() ?? ""} />
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold text-foreground">{device.price}</span>
                   <Link
