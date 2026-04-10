@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package, Smartphone, Workflow, Brain, Stethoscope, Shield, Cpu, Users, HeartPulse } from "lucide-react";
 import { EmiLine } from "@/components/EmiLine";
 import { SiteLayout } from "@/components/SiteLayout";
+import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { Button } from "@/components/ui/button";
 import sanketlifeImg from "@/assets/sanketlife-device-app.webp";
 import easytouchImg from "@/assets/easytouch-wellness-hero.webp";
@@ -200,7 +201,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
             </span>
           </div>
           <p className="text-xs text-primary font-medium mt-0.5">{device.emiDisplay}</p>
-        </div>
+          <StockUrgencyBar productKey={device.id} className="mt-3" />
 
         {/* What it measures */}
         <button
