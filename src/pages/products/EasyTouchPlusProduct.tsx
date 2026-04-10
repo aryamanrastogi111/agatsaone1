@@ -82,7 +82,7 @@ function StickyBuyBar({ onBuy }: { onBuy: () => void }) {
           <div className="container flex items-center justify-between h-12">
             <span className="font-semibold text-sm text-foreground">EasyTouch Wellness</span>
             <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-6" onClick={onBuy}>
-              Buy Now — ₹3,999
+              Buy Now — {wp}
             </Button>
           </div>
         </motion.div>
@@ -107,6 +107,8 @@ function FloatingWhatsApp() {
 }
 
 export default function EasyTouchPlusProduct() {
+  const { prices, fmt } = usePricing();
+  const wp = fmt(prices.wellness_sub);
   const navigate = useNavigate();
 
   const handleBuyNow = () => {
@@ -168,7 +170,7 @@ export default function EasyTouchPlusProduct() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-8 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
-                  Buy Now — ₹3,999 <ArrowRight className="ml-2 h-4 w-4" />
+                  Buy Now — {wp} <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button size="lg" variant="outline" className="rounded-full px-8 text-base border-teal-200 text-teal-700 hover:bg-teal-50" asChild>
                 <a href="#how-it-works">
@@ -504,13 +506,13 @@ export default function EasyTouchPlusProduct() {
           <AnimatedSection delay={0.2} className="text-center">
             <div className="inline-block bg-card border border-border rounded-2xl p-8 shadow-sm">
               <div className="flex items-center justify-center gap-3 mb-2">
-                <span className="text-2xl text-muted-foreground line-through">₹3,999</span>
-                <span className="text-4xl font-bold text-foreground">₹3,999</span>
+                <span className="text-2xl text-muted-foreground line-through">{wp}</span>
+                <span className="text-4xl font-bold text-foreground">{wp}</span>
               </div>
               <p className="text-teal-600 font-medium mb-1">Limited Time Offer</p>
               <p className="text-muted-foreground text-sm mb-6">Free shipping across India</p>
               <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
-                Buy Now — ₹3,999 <ArrowRight className="ml-2 h-4 w-4" />
+                Buy Now — {wp} <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </AnimatedSection>
@@ -614,10 +616,10 @@ export default function EasyTouchPlusProduct() {
               <span className="text-teal-600">Start reading it.</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-8">
-              EasyTouch Wellness — ₹3,999. Free shipping. 30-day returns.
+              EasyTouch Wellness — {wp}. Free shipping. 30-day returns.
             </p>
             <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
-                Buy EasyTouch Wellness — ₹3,999 <ArrowRight className="ml-2 h-4 w-4" />
+                Buy EasyTouch Wellness — {wp} <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <p className="text-muted-foreground text-sm mt-6">
               Questions?{" "}
