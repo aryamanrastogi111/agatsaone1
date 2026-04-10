@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Heart, Shield, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LowStockBadge } from "@/components/shop/LowStockBadge";
-import sanketlifeImg from "@/assets/sanketlife-hero.png";
+import sanketlifeImg from "@/assets/sanketlife-hero.webp";
 
 export function ProductHighlightSanketLife() {
   const features = [

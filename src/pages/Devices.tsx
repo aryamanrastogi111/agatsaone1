@@ -6,10 +6,10 @@ import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package, Smartphone, W
 import { EmiLine } from "@/components/EmiLine";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
-import sanketlifeImg from "@/assets/sanketlife-device-app.png";
-import easytouchImg from "@/assets/easytouch-wellness-hero.png";
-import rhythmImg from "@/assets/easytouch-rhythm-new.png";
-import scaleImg from "@/assets/corebalance-hero.png";
+import sanketlifeImg from "@/assets/sanketlife-device-app.webp";
+import easytouchImg from "@/assets/easytouch-wellness-hero.webp";
+import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
+import scaleImg from "@/assets/corebalance-hero.webp";
 
 interface DeviceData {
   id: string;

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Star, ArrowRight, Package, Scale, TrendingDown, Users, Heart } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
-import scaleHero from "@/assets/corebalance-hero.png";
+import scaleHero from "@/assets/corebalance-hero.webp";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useCartStore } from "@/stores/cartStore";

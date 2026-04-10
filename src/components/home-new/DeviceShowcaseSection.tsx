@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import sanketlifeImg from "@/assets/sanketlife-hero-new.png";
-import easytouchImg from "@/assets/easytouch-wellness-device.png";
-import rhythmImg from "@/assets/easytouch-rhythm-new.png";
-import scaleImg from "@/assets/core-balance.png";
+import sanketlifeImg from "@/assets/sanketlife-hero-new.webp";
+import easytouchImg from "@/assets/easytouch-wellness-device.webp";
+import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
+import scaleImg from "@/assets/core-balance.webp";
 
 const devices = [
   {

@@ -5,12 +5,12 @@ import { Check, ShoppingCart, Scale, Activity, Droplets, Zap, Heart, TrendingUp,
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
-import corebalanceHero from "@/assets/corebalance-hero.png";
-import corebalanceCard from "@/assets/corebalance-card.png";
-import appMuscle from "@/assets/corebalance-app-muscle.png";
-import appComposition from "@/assets/corebalance-app-composition.png";
-import appBmi from "@/assets/corebalance-app-bmi.png";
-import appMetrics from "@/assets/corebalance-app-metrics.png";
+import corebalanceHero from "@/assets/corebalance-hero.webp";
+import corebalanceCard from "@/assets/corebalance-card.webp";
+import appMuscle from "@/assets/corebalance-app-muscle.webp";
+import appComposition from "@/assets/corebalance-app-composition.webp";
+import appBmi from "@/assets/corebalance-app-bmi.webp";
+import appMetrics from "@/assets/corebalance-app-metrics.webp";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";

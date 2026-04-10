@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Lock, Mail, Eye, EyeOff } from "lucide-react";
-import agatsaLogo from "@/assets/agatsa-logo.png";
+import agatsaLogo from "@/assets/agatsa-logo.webp";
 
 export default function AdminLogin() {
   const navigate = useNavigate();

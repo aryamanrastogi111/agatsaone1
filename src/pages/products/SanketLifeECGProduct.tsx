@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
-import sanketlifeHero from "@/assets/sanketlife-device-app.png";
+import sanketlifeHero from "@/assets/sanketlife-device-app.webp";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },

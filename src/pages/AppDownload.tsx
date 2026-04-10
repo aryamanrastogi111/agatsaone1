@@ -5,8 +5,8 @@ import { Copy, Check, Apple, Play } from "lucide-react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
-import qrApple from "@/assets/qr-apple.png";
-import qrGoogle from "@/assets/qr-google.png";
+import qrApple from "@/assets/qr-apple.webp";
+import qrGoogle from "@/assets/qr-google.webp";
 import {
   Accordion,
   AccordionContent,

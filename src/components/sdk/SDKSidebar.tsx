@@ -16,7 +16,7 @@
  import { Button } from '@/components/ui/button';
  import { useState } from 'react';
  import { useAuth } from '@/hooks/useAuth';
- import agatsaLogo from '@/assets/agatsa-logo.png';
+ import agatsaLogo from '@/assets/agatsa-logo.webp';
  
  const navItems = [
    { href: '/sdk/dashboard', label: 'Overview', icon: LayoutDashboard },

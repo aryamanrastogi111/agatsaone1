@@ -2,11 +2,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
-import appScreen1 from "@/assets/app-screen-1.png";
-import appScreen2 from "@/assets/app-screen-2.png";
-import appScreen3 from "@/assets/app-screen-3.png";
-import appScreen4 from "@/assets/app-screen-4.png";
-import appScreen5 from "@/assets/app-screen-5.png";
+import appScreen1 from "@/assets/app-screen-1.webp";
+import appScreen2 from "@/assets/app-screen-2.webp";
+import appScreen3 from "@/assets/app-screen-3.webp";
+import appScreen4 from "@/assets/app-screen-4.webp";
+import appScreen5 from "@/assets/app-screen-5.webp";
 
 const screens = [appScreen1, appScreen2, appScreen3, appScreen4, appScreen5];
 
