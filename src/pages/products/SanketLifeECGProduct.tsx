@@ -101,7 +101,7 @@ export default function SanketLifeECGProduct() {
 
               {/* Price */}
               <div className="mt-8">
-                <span className="text-4xl font-extrabold text-foreground">>{fmt(ecgPrice)}</span>
+                <span className="text-4xl font-extrabold text-foreground">{fmt(ecgPrice)}</span>
                 <span className="text-sm text-muted-foreground ml-2">incl. GST</span>
                 <EmiLine price={ecgPrice} />
                 <StockUrgencyBar productKey="sanketlife" className="mt-3" />
