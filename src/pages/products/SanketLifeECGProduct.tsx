@@ -103,7 +103,7 @@ export default function SanketLifeECGProduct() {
                 <span className="text-4xl font-extrabold text-foreground">₹3,999</span>
                 <span className="text-sm text-muted-foreground ml-2">incl. GST</span>
                 <EmiLine price={3999} />
-                <StockUrgencyBar productKey="sanketlife-ecg" className="mt-3" />
+                <StockUrgencyBar productKey="sanketlife" className="mt-3" />
                 <div className="flex items-center gap-1 mt-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
