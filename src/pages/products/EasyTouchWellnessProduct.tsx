@@ -57,6 +57,9 @@ export default function EasyTouchWellnessProduct() {
   useMetaPixelViewContent("EASYTOUCH_WELLNESS", "EasyTouch Wellness", 3499);
 
   const handleBuy = () => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["EASYTOUCH_WELLNESS"], content_name: "EasyTouch Wellness", content_type: "product", value: 3499, currency: "INR" }); } catch {}
+    }
     navigate("/checkout?sku=EASYTOUCH_WELLNESS");
   };
 

@@ -59,6 +59,9 @@ export default function RhythmBandProduct() {
   const [adding, setAdding] = useState(false);
   useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 2999);
   const handleBuy = () => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["RHYTHM_BAND"], content_name: "EasyTouch Rhythm Band", content_type: "product", value: 2999, currency: "INR" }); } catch {}
+    }
     navigate("/checkout?sku=RHYTHM_BAND");
   };
   useSEO({ title: "EasyTouch Rhythm Band — 24/7 Sleep, HRV, SpO2 Monitoring | Agatsa One", description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Works with Nera AI. ₹2,999. Compatible with all 5 Care Programmes." });

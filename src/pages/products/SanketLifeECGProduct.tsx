@@ -33,6 +33,9 @@ export default function SanketLifeECGProduct() {
   useMetaPixelViewContent("SANKET_LIFE_ECG", "SanketLife 12-Lead ECG", 3999);
 
   const handleBuy = () => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["SANKET_LIFE_ECG"], content_name: "SanketLife 12-Lead ECG", content_type: "product", value: 3999, currency: "INR" }); } catch {}
+    }
     navigate("/checkout?sku=SANKET_LIFE_ECG");
   };
 
