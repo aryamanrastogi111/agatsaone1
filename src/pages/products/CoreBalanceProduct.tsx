@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addBusinessDays, format } from "date-fns";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
 import { Check, ShoppingCart, Scale, Activity, Droplets, Zap, Heart, TrendingUp, Users, Home, Dumbbell, Building2, Shield, ArrowRight, Star, Truck, ShieldCheck, Loader2 } from "lucide-react";
@@ -129,17 +129,14 @@ const testimonials = [
 ];
 
 const CoreBalanceProduct = () => {
-  const addItem = useCartStore((s) => s.addItem);
+  const navigate = useNavigate();
   const [addingToCart, setAddingToCart] = useState(false);
   const { isOutOfStock } = useInventory();
   const outOfStock = isOutOfStock("corebalance");
 
   const handleAddToCart = () => {
     if (outOfStock) return;
-    setAddingToCart(true);
-    addItem({ productId: "corebalance", productName: "CoreBalance Smart Scale", variantTitle: "Default Title", price: 3999, quantity: 1 });
-    toast.success("CoreBalance added to cart", { position: "top-center" });
-    setTimeout(() => setAddingToCart(false), 500);
+    navigate("/checkout?sku=scale_sub");
   };
 
   return (

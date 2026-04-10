@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addBusinessDays, format } from "date-fns";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
 import { Check, ShoppingCart, Moon, Plane, BedDouble, Building, Shield, Leaf, ArrowRight, Star, Truck, ShieldCheck, Scale, Loader2 } from "lucide-react";
@@ -103,17 +103,14 @@ const safetyPoints = [
 ];
 
 const ZluProduct = () => {
-  const addItem = useCartStore((s) => s.addItem);
+  const navigate = useNavigate();
   const [addingToCart, setAddingToCart] = useState(false);
   const { isOutOfStock } = useInventory();
   const outOfStock = isOutOfStock("zlu");
 
   const handleAddToCart = () => {
     if (outOfStock) return;
-    setAddingToCart(true);
-    addItem({ productId: "zlu", productName: "Zlu Sleep Aid Device", variantTitle: "Default Title", price: 4999, quantity: 1 });
-    toast.success("Zlu added to cart", { position: "top-center" });
-    setTimeout(() => setAddingToCart(false), 500);
+    navigate("/checkout?sku=ecg_bundle");
   };
 
   return (
