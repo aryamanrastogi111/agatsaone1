@@ -105,6 +105,21 @@ export function HeroSection() {
               </a>
             </motion.div>
 
+            <motion.div {...stagger(3.5)} className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mt-4 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1.5">
+                <span className="text-green-500 font-bold">✓</span> 50,000+ users
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-green-500 font-bold">✓</span> CDSCO certified
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-green-500 font-bold">✓</span> 7-day returns
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-green-500 font-bold">✓</span> Ships in 24h
+              </span>
+            </motion.div>
+
             <motion.div
               {...stagger(4)}
               className="flex flex-wrap items-center gap-4 text-xs md:text-sm font-bold pt-2"

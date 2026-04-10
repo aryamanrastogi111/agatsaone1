@@ -20,6 +20,7 @@ interface DeviceData {
   keyStat: string;
   price: string;
   priceNum: string;
+  emiDisplay: string;
   rating: string;
   reviews: string;
   measures: string[];
@@ -38,6 +39,7 @@ const devices: DeviceData[] = [
     keyStat: "98.5% accuracy validated at Narayana Health & Sri Jayadeva Institute",
     price: "₹3,999",
     priceNum: "3,999",
+    emiDisplay: "No-cost EMI from ₹334/month",
     rating: "4.8",
     reviews: "1,247",
     measures: [
@@ -68,6 +70,7 @@ const devices: DeviceData[] = [
     keyStat: "8 vitals in 60 seconds — 15,000+ active users across India",
     price: "₹3,499",
     priceNum: "3,499",
+    emiDisplay: "No-cost EMI from ₹292/month",
     rating: "4.6",
     reviews: "834",
     measures: [
@@ -96,6 +99,7 @@ const devices: DeviceData[] = [
     keyStat: "Sleep, HRV, steps, SpO2 — continuous 24/7 monitoring",
     price: "₹2,999",
     priceNum: "2,999",
+    emiDisplay: "No-cost EMI from ₹250/month",
     rating: "4.5",
     reviews: "612",
     measures: [
@@ -126,6 +130,7 @@ const devices: DeviceData[] = [
     keyStat: "BMI, body fat, muscle mass — 14 metrics in 5 seconds",
     price: "₹2,499",
     priceNum: "2,499",
+    emiDisplay: "No-cost EMI from ₹209/month",
     rating: "4.7",
     reviews: "423",
     measures: [
@@ -186,14 +191,16 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
         <p className="text-base font-medium text-muted-foreground mt-1">{device.tagline}</p>
         <p className="text-sm font-semibold text-primary mt-2">{device.keyStat}</p>
 
-        <div className="mt-4 flex items-baseline gap-3">
-          <span className="text-3xl font-extrabold text-foreground">{device.price}</span>
-          <span className="flex items-center gap-1 text-sm text-muted-foreground">
-            <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-            {device.rating}/5 ({device.reviews} reviews)
-          </span>
+        <div className="mt-4">
+          <div className="flex items-baseline gap-3">
+            <span className="text-3xl font-extrabold text-foreground">{device.price}</span>
+            <span className="flex items-center gap-1 text-sm text-muted-foreground">
+              <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+              {device.rating}/5 ({device.reviews} reviews)
+            </span>
+          </div>
+          <p className="text-xs text-primary font-medium mt-0.5">{device.emiDisplay}</p>
         </div>
-        <EmiLine price={parseInt(device.priceNum.replace(/,/g, ""))} />
 
         {/* What it measures */}
         <button
@@ -320,6 +327,17 @@ export default function DevicesPage() {
         </div>
       </section>
 
+      {/* Urgency bar */}
+      <div className="bg-primary py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-primary-foreground text-sm font-medium text-center">
+          <span>🎁 Free 1-year Nera AI included with every device (worth ₹3,999)</span>
+          <span className="hidden sm:block text-primary-foreground/40">|</span>
+          <span>🚚 Ships within 24 hours</span>
+          <span className="hidden sm:block text-primary-foreground/40">|</span>
+          <span>↩️ 7-day easy returns</span>
+        </div>
+      </div>
+
       {/* How It Works — Visual Pipeline */}
       <section className="py-16 bg-background">
         <div className="max-w-5xl mx-auto px-4">
@@ -414,10 +432,12 @@ export default function DevicesPage() {
         <div className="bg-[hsl(260,100%,97%)] border border-primary/20 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Package className="h-6 w-6 text-primary shrink-0" />
-            <p className="text-sm md:text-base font-medium text-foreground">
-              <span className="font-bold">Bundle & Save</span> — Buy SanketLife ECG + Rhythm Band
-              together from ₹7,499. Includes 3 months Nera AI Premium free.
-            </p>
+            <div>
+              <p className="text-sm md:text-base font-medium text-foreground">
+                <span className="font-bold">Complete Health Kit</span> — all 4 devices + Nera AI. Save ₹3,996.
+              </p>
+              <p className="text-primary text-sm mt-1">No-cost EMI from ₹834/month · Free shipping</p>
+            </div>
           </div>
           <Link
             to="/devices/sanketlife-ecg"
