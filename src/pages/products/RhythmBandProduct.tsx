@@ -7,6 +7,7 @@ import { Star, ArrowRight, Package, Moon, Activity, Bell } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
+import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import rhythmHero from "@/assets/easytouch-rhythm-new.webp";
 import neraScreen from "@/assets/app-screen-nera.webp";
 import { Button } from "@/components/ui/button";
@@ -106,6 +107,29 @@ export default function RhythmBandProduct() {
               <TrustBar />
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* ─── WATCH IT IN ACTION ─── */}
+      <section className="py-16 md:py-20 bg-gray-950">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Watch It In Action</h2>
+          {/* Hero video */}
+          <div className="mb-6">
+            <VideoCard video={{ id: "j8QwXnQwozg", title: "How to Set Up & Pair EasyTouch Rhythm" }} hero />
+          </div>
+          {/* Supporting videos */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <VideoCard video={{ id: "m57UYezHL0U", title: "Why Rhythm, Not Just Numbers" }} />
+            <VideoCard video={{ id: "Y1uqW-9hbQQ", title: "The Band That Understands Your Body" }} />
+            <VideoCard video={{ id: "lvJMaIAO4mo", title: "Stop Tracking Numbers" }} />
+            <VideoCard video={{ id: "FSstgD0nujQ", title: "Stop Tracking, Start Understanding" }} />
+            <VideoCard video={{ id: "hyl6mvSf-Ew", title: "It Doesn't Just Track — It Explains" }} />
+            <VideoCard video={{ id: "4U9wV6nHflI", title: "India's First Rhythm Band" }} />
+            <VideoCard video={{ id: "-DumCEShm0w", title: "Your Daily Rhythm Tells a Story" }} />
+            <VideoCard video={{ id: "ZMOBfNFOwXY", title: "India's First Daily Rhythm Band" }} />
+          </div>
+          <YouTubeChannelLink />
         </div>
       </section>
 
