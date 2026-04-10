@@ -45,7 +45,7 @@ export default function Analytics() {
   const [kpiStats, setKpiStats] = useState({
     totalRevenue: 0, totalOrders: 0, paidOrders: 0,
     monthRevenue: 0, monthOrders: 0, avgOrderValue: 0,
-    todayRevenue: 0, todayOrders: 0,
+    todayRevenue: 0, todayOrders: 0, totalVisitors: 0,
   });
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
@@ -88,7 +88,7 @@ export default function Analytics() {
         .in("status", PAID_STATUSES)
         .gte("created_at", todayStart.toISOString()),
       db.from("daily_stats")
-        .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments")
+        .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments, total_visitors")
         .gte("stat_date", subDays(now, Math.max(days, 7)).toISOString().split("T")[0])
         .order("stat_date", { ascending: true }),
     ]);
