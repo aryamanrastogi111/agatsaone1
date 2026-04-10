@@ -53,6 +53,36 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_analysis_history: {
+        Row: {
+          analysis_data: Json
+          created_at: string
+          headline: string
+          id: string
+          metrics_snapshot: Json
+          overall_health: string
+          suggestion_outcomes: Json | null
+        }
+        Insert: {
+          analysis_data?: Json
+          created_at?: string
+          headline?: string
+          id?: string
+          metrics_snapshot?: Json
+          overall_health?: string
+          suggestion_outcomes?: Json | null
+        }
+        Update: {
+          analysis_data?: Json
+          created_at?: string
+          headline?: string
+          id?: string
+          metrics_snapshot?: Json
+          overall_health?: string
+          suggestion_outcomes?: Json | null
+        }
+        Relationships: []
+      }
       cart_sessions: {
         Row: {
           converted_order_id: string | null
