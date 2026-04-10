@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, X, Minus, ChevronDown, ChevronUp, Mic, Gift } from "lucide-react";
@@ -212,6 +212,15 @@ export default function PricingPage() {
     title: "Pricing — Agatsa One | Nera AI Health Plans from ₹0",
     description: "Start free. Get weekly AI health reports, Nera Health Score, and voice assistant. Plans from ₹149/month with 7-day free trial. No credit card required.",
   });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'ViewContent', {
+        content_name: 'Pricing Page',
+        content_category: 'Health Devices',
+      });
+    }
+  }, []);
 
   return (
     <SiteLayout>

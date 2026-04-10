@@ -2,6 +2,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Copy, Check, Apple, Play } from "lucide-react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import qrApple from "@/assets/qr-apple.png";
@@ -363,6 +364,12 @@ function DeviceState({ device }: { device: string }) {
 /* ─── Main page ─── */
 export default function AppDownloadPage() {
   useSEO({ title: "Download Agatsa One — Free AI Health Monitoring App", description: "Download Agatsa One free on iOS and Android. Connect your health devices. Get AI insights from Nera. Start monitoring your heart, metabolic health, and vitals today." });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'Lead');
+    }
+  }, []);
 
   const [searchParams] = useSearchParams();
   const ref = searchParams.get("ref");
