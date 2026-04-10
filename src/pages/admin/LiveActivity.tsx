@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
-  Users, ShoppingCart, AlertTriangle, CreditCard,
+  Users, ShoppingCart, CreditCard,
   Smartphone, Monitor, Globe, Clock, RefreshCw,
-  TrendingUp, Package, Eye, Zap,
+  TrendingUp, Package, Eye, Zap, MapPin,
 } from "lucide-react";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const db = supabase as any;
@@ -15,20 +15,6 @@ interface Visitor {
   device: "mobile" | "desktop";
   referrer: string;
   started_at: string;
-}
-
-interface CartSession {
-  id: string;
-  session_id: string;
-  items: { variant_id?: string; product_name?: string; productName?: string; quantity: number; price: number }[];
-  email: string | null;
-  phone: string | null;
-  subtotal: number;
-  item_count: number;
-  last_page: string | null;
-  converted_order_id: string | null;
-  created_at: string;
-  updated_at: string;
 }
 
 interface TodayOrder {
@@ -50,26 +36,29 @@ function timeAgo(dateStr: string) {
   return `${Math.floor(diff / 86400)}d ago`;
 }
 
+const PAGE_LABELS: Record<string, string> = {
+  "/": "Home",
+  "/devices": "Devices",
+  "/devices/sanketlife-ecg": "SanketLife ECG",
+  "/devices/easytouch-wellness": "EasyTouch Wellness",
+  "/devices/rhythm-band": "Rhythm Band",
+  "/devices/smart-scale": "Smart Scale",
+  "/programmes": "Programmes",
+  "/pricing": "Pricing",
+  "/checkout": "Checkout",
+  "/about": "About",
+  "/blog": "Blog",
+  "/support": "Support",
+  "/app": "App Download",
+  "/for-doctors": "For Doctors",
+  "/for-hospitals": "For Hospitals",
+  "/for-corporates": "For Corporates",
+  "/compare": "Compare",
+  "/contact": "Contact",
+};
+
 function pageLabel(path: string) {
-  const map: Record<string, string> = {
-    "/": "Home",
-    "/devices": "Devices",
-    "/devices/sanketlife-ecg": "SanketLife ECG",
-    "/devices/easytouch-wellness": "EasyTouch Wellness",
-    "/devices/rhythm-band": "Rhythm Band",
-    "/devices/smart-scale": "Smart Scale",
-    "/programmes": "Programmes",
-    "/pricing": "Pricing",
-    "/checkout": "Checkout",
-    "/about": "About",
-    "/blog": "Blog",
-    "/support": "Support",
-    "/app": "App Download",
-    "/for-doctors": "For Doctors",
-    "/for-hospitals": "For Hospitals",
-    "/for-corporates": "For Corporates",
-  };
-  return map[path] ?? path;
+  return PAGE_LABELS[path] ?? path;
 }
 
 function StatusDot({ color }: { color: string }) {
@@ -97,41 +86,7 @@ function StatCard({ icon: Icon, label, value, sub, color }: {
 }
 
 // ─── Live Visitors Panel ─────────────────────────────────────
-function LiveVisitorsPanel() {
-  const [visitors, setVisitors] = useState<Visitor[]>([]);
-
-  useEffect(() => {
-    // Join the SAME "live-visitors" channel so we can read its presence state.
-    // We filter out any admin session IDs so admins don't appear as visitors.
-    const channel = supabase.channel("live-visitors", {
-      config: { presence: { key: `admin_${Date.now()}` } },
-    });
-
-    channel
-      .on("presence", { event: "sync" }, () => {
-        const state = channel.presenceState() as Record<string, any[]>;
-        const list: Visitor[] = Object.values(state)
-          .flat()
-          .filter((p: any) => {
-            const sid = p.session_id ?? "";
-            return !sid.startsWith("admin") && sid.startsWith("v_");
-          })
-          .map((p: any) => ({
-            session_id: p.session_id ?? p.presence_ref,
-            current_page: p.current_page ?? "/",
-            device: p.device ?? "desktop",
-            referrer: p.referrer ?? "direct",
-            started_at: p.started_at ?? new Date().toISOString(),
-          }));
-        setVisitors(list);
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
+function LiveVisitorsPanel({ visitors }: { visitors: Visitor[] }) {
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
       <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
@@ -142,7 +97,7 @@ function LiveVisitorsPanel() {
             {visitors.length}
           </span>
         </div>
-        <span className="text-xs text-gray-400">Auto-updates</span>
+        <span className="text-xs text-gray-400">Auto-updates via presence</span>
       </div>
 
       {visitors.length === 0 ? (
@@ -151,7 +106,7 @@ function LiveVisitorsPanel() {
           <p className="text-sm">No active visitors right now</p>
         </div>
       ) : (
-        <ul className="divide-y divide-gray-50">
+        <ul className="divide-y divide-gray-50 max-h-80 overflow-y-auto">
           {visitors.map((v) => (
             <li key={v.session_id} className="flex items-center gap-3 px-5 py-3">
               <div className="w-7 h-7 rounded-lg bg-green-50 flex items-center justify-center shrink-0">
@@ -168,7 +123,13 @@ function LiveVisitorsPanel() {
                 </p>
               </div>
               <div className="text-right shrink-0">
-                <span className="text-xs text-gray-500">{v.device}</span>
+                <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${
+                  v.current_page === "/checkout"
+                    ? "bg-purple-100 text-purple-700"
+                    : "text-gray-500"
+                }`}>
+                  {v.current_page === "/checkout" ? "Checking out" : v.device}
+                </span>
                 <p className="text-xs text-gray-400">{timeAgo(v.started_at)}</p>
               </div>
             </li>
@@ -179,62 +140,43 @@ function LiveVisitorsPanel() {
   );
 }
 
-// ─── Active Carts Panel ──────────────────────────────────────
-function CartPanel({
-  title, icon: Icon, color, dotColor, carts, emptyMsg,
-}: {
-  title: string; icon: any; color: string; dotColor: string;
-  carts: CartSession[]; emptyMsg: string;
-}) {
+// ─── Page Breakdown Panel ────────────────────────────────────
+function PageBreakdownPanel({ visitors }: { visitors: Visitor[] }) {
+  const pageCounts: Record<string, number> = {};
+  visitors.forEach((v) => {
+    const label = pageLabel(v.current_page);
+    pageCounts[label] = (pageCounts[label] || 0) + 1;
+  });
+  const sorted = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]);
+
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
       <div className="flex items-center gap-2 px-5 py-4 border-b border-gray-100">
-        <StatusDot color={dotColor} />
-        <Icon size={15} className={color} />
-        <h3 className="font-semibold text-gray-900">{title}</h3>
-        <span className={`text-xs font-bold px-2 py-0.5 rounded-full ml-auto ${
-          dotColor === "bg-orange-400" ? "bg-orange-100 text-orange-700" : "bg-blue-100 text-blue-700"
-        }`}>
-          {carts.length}
-        </span>
+        <MapPin size={15} className="text-blue-600" />
+        <h3 className="font-semibold text-gray-900">Visitors by Page</h3>
       </div>
 
-      {carts.length === 0 ? (
+      {sorted.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-10 text-gray-400">
-          <ShoppingCart size={24} className="mb-2 opacity-30" />
-          <p className="text-sm">{emptyMsg}</p>
+          <Globe size={24} className="mb-2 opacity-30" />
+          <p className="text-sm">No visitors to break down</p>
         </div>
       ) : (
-        <ul className="divide-y divide-gray-50 max-h-72 overflow-y-auto">
-          {carts.map((cart) => {
-            const firstItem = cart.items?.[0];
-            const productName = (firstItem as any)?.product_name ?? (firstItem as any)?.productName ?? "Unknown product";
-            const extra = (cart.item_count ?? 0) - 1;
-            return (
-              <li key={cart.id} className="px-5 py-3">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-800 truncate">
-                      {productName}{extra > 0 ? ` +${extra} more` : ""}
-                    </p>
-                    <p className="text-xs text-gray-400 mt-0.5">
-                      {cart.item_count} item{cart.item_count !== 1 ? "s" : ""} ·{" "}
-                      {cart.last_page ? pageLabel(cart.last_page) : "—"}
-                    </p>
-                    {cart.email && (
-                      <p className="text-xs text-blue-500 mt-0.5 truncate">{cart.email}</p>
-                    )}
-                  </div>
-                  <div className="text-right shrink-0">
-                    <p className="text-sm font-bold text-gray-900">
-                      ₹{cart.subtotal.toLocaleString("en-IN")}
-                    </p>
-                    <p className="text-xs text-gray-400">{timeAgo(cart.updated_at)}</p>
-                  </div>
+        <ul className="divide-y divide-gray-50">
+          {sorted.map(([page, count]) => (
+            <li key={page} className="flex items-center justify-between px-5 py-3">
+              <span className="text-sm text-gray-800">{page}</span>
+              <div className="flex items-center gap-2">
+                <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-blue-500 rounded-full"
+                    style={{ width: `${Math.min(100, (count / visitors.length) * 100)}%` }}
+                  />
                 </div>
-              </li>
-            );
-          })}
+                <span className="text-xs font-bold text-gray-600 w-6 text-right">{count}</span>
+              </div>
+            </li>
+          ))}
         </ul>
       )}
     </div>
@@ -283,12 +225,11 @@ function PendingCheckoutPanel({ orders }: { orders: TodayOrder[] }) {
 
 // ─── Main Page ───────────────────────────────────────────────
 export default function LiveActivity() {
-  const [activeCarts, setActiveCarts] = useState<CartSession[]>([]);
-  const [abandonedCarts, setAbandonedCarts] = useState<CartSession[]>([]);
+  const [visitors, setVisitors] = useState<Visitor[]>([]);
   const [pendingOrders, setPendingOrders] = useState<TodayOrder[]>([]);
   const [recentOrders, setRecentOrders] = useState<TodayOrder[]>([]);
   const [todayStats, setTodayStats] = useState({
-    orders: 0, revenue: 0, avgOrder: 0, abandoned: 0,
+    orders: 0, revenue: 0, avgOrder: 0,
   });
   const [lastRefresh, setLastRefresh] = useState(new Date());
   const [loading, setLoading] = useState(true);
@@ -304,23 +245,42 @@ export default function LiveActivity() {
     refunded: "bg-gray-100 text-gray-600",
   };
 
+  // ── Presence: live visitors ──
+  useEffect(() => {
+    const channel = supabase.channel("live-visitors", {
+      config: { presence: { key: `admin_${Date.now()}` } },
+    });
+
+    channel
+      .on("presence", { event: "sync" }, () => {
+        const state = channel.presenceState() as Record<string, any[]>;
+        const list: Visitor[] = Object.values(state)
+          .flat()
+          .filter((p: any) => {
+            const sid = p.session_id ?? "";
+            return !sid.startsWith("admin") && sid.startsWith("v_");
+          })
+          .map((p: any) => ({
+            session_id: p.session_id ?? p.presence_ref,
+            current_page: p.current_page ?? "/",
+            device: p.device ?? "desktop",
+            referrer: p.referrer ?? "direct",
+            started_at: p.started_at ?? new Date().toISOString(),
+          }));
+        setVisitors(list);
+      })
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, []);
+
+  // ── DB data: orders ──
   const fetchData = useCallback(async () => {
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
-    const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
 
-    const [cartsRes, ordersRes, recentRes] = await Promise.all([
-      // All non-converted carts with items
-      db
-        .from("cart_sessions")
-        .select("*")
-        .is("converted_order_id", null)
-        .gt("item_count", 0)
-        .order("updated_at", { ascending: false })
-        .limit(100),
-
-      // Pending payment orders (created in last 2 hours)
+    const [ordersRes, recentRes] = await Promise.all([
       db
         .from("orders")
         .select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
@@ -328,7 +288,6 @@ export default function LiveActivity() {
         .gte("created_at", twoHoursAgo)
         .order("created_at", { ascending: false }),
 
-      // Today's paid orders
       db
         .from("orders")
         .select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
@@ -338,12 +297,6 @@ export default function LiveActivity() {
         .limit(20),
     ]);
 
-    const allCarts: CartSession[] = cartsRes.data ?? [];
-    const active = allCarts.filter((c) => c.updated_at >= thirtyMinAgo);
-    const abandoned = allCarts.filter((c) => c.updated_at < thirtyMinAgo);
-
-    setActiveCarts(active);
-    setAbandonedCarts(abandoned);
     setPendingOrders(ordersRes.data ?? []);
     setRecentOrders(recentRes.data ?? []);
 
@@ -353,7 +306,6 @@ export default function LiveActivity() {
       orders: paid.length,
       revenue,
       avgOrder: paid.length ? Math.round(revenue / paid.length) : 0,
-      abandoned: abandoned.length,
     });
 
     setLastRefresh(new Date());
@@ -362,12 +314,10 @@ export default function LiveActivity() {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 30_000); // refresh every 30s
+    const interval = setInterval(fetchData, 30_000);
 
-    // Realtime: refresh immediately when a cart session or order changes
     const channel = supabase
       .channel("live-activity-db")
-      .on("postgres_changes", { event: "*", schema: "public", table: "cart_sessions" }, () => { fetchData(); })
       .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, () => { fetchData(); })
       .subscribe();
 
@@ -376,6 +326,10 @@ export default function LiveActivity() {
       supabase.removeChannel(channel);
     };
   }, [fetchData]);
+
+  // Derived: visitors on checkout
+  const checkoutVisitors = visitors.filter((v) => v.current_page === "/checkout");
+  const deviceVisitors = visitors.filter((v) => v.current_page.startsWith("/devices/"));
 
   return (
     <div className="space-y-6">
@@ -387,7 +341,7 @@ export default function LiveActivity() {
             Live Activity
           </h1>
           <p className="text-sm text-gray-400 mt-0.5">
-            Real-time store pulse · refreshes every 30s
+            Real-time store pulse · auto-updates via presence
           </p>
         </div>
         <button
@@ -401,69 +355,59 @@ export default function LiveActivity() {
         </button>
       </div>
 
-      {/* Today's Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Stats Row */}
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard
-          icon={TrendingUp}
-          label="Orders Today"
-          value={loading ? "—" : todayStats.orders}
-          sub="paid & confirmed"
+          icon={Users}
+          label="Live Visitors"
+          value={visitors.length}
+          sub="on site right now"
           color="bg-green-50 text-green-600"
         />
         <StatCard
-          icon={Package}
-          label="Revenue Today"
-          value={loading ? "—" : `₹${todayStats.revenue.toLocaleString("en-IN")}`}
-          sub="from paid orders"
+          icon={Eye}
+          label="Browsing Devices"
+          value={deviceVisitors.length}
+          sub="viewing product pages"
           color="bg-blue-50 text-blue-600"
         />
         <StatCard
           icon={ShoppingCart}
-          label="Active Carts"
-          value={loading ? "—" : activeCarts.length}
-          sub="updated in last 30m"
+          label="On Checkout"
+          value={checkoutVisitors.length}
+          sub="filling checkout form"
           color="bg-purple-50 text-purple-600"
         />
         <StatCard
-          icon={AlertTriangle}
-          label="Abandoned"
-          value={loading ? "—" : todayStats.abandoned}
-          sub="carts gone cold"
-          color="bg-orange-50 text-orange-600"
+          icon={TrendingUp}
+          label="Orders Today"
+          value={loading ? "—" : todayStats.orders}
+          sub={`₹${todayStats.revenue.toLocaleString("en-IN")} revenue`}
+          color="bg-emerald-50 text-emerald-600"
+        />
+        <StatCard
+          icon={CreditCard}
+          label="Pending Payment"
+          value={loading ? "—" : pendingOrders.length}
+          sub="awaiting Razorpay"
+          color="bg-yellow-50 text-yellow-600"
         />
       </div>
 
-      {/* Live Visitors + Checkout Row */}
+      {/* Live Visitors + Page Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <LiveVisitorsPanel />
-        <PendingCheckoutPanel orders={pendingOrders} />
+        <LiveVisitorsPanel visitors={visitors} />
+        <PageBreakdownPanel visitors={visitors} />
       </div>
 
-      {/* Carts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <CartPanel
-          title="Active Carts"
-          icon={ShoppingCart}
-          color="text-blue-600"
-          dotColor="bg-blue-400"
-          carts={activeCarts}
-          emptyMsg="No active carts right now"
-        />
-        <CartPanel
-          title="Abandoned Carts"
-          icon={AlertTriangle}
-          color="text-orange-500"
-          dotColor="bg-orange-400"
-          carts={abandonedCarts}
-          emptyMsg="No abandoned carts — great!"
-        />
-      </div>
+      {/* Pending Payments */}
+      <PendingCheckoutPanel orders={pendingOrders} />
 
       {/* Recent Orders */}
       <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
         <div className="flex items-center gap-2 px-5 py-4 border-b border-gray-100">
-          <Globe size={15} className="text-gray-500" />
-          <h3 className="font-semibold text-gray-900">Today's Orders</h3>
+          <Package size={15} className="text-green-600" />
+          <h3 className="font-semibold text-gray-900">Today's Purchases</h3>
           <span className="text-xs text-gray-400 ml-auto">Last 20</span>
         </div>
 

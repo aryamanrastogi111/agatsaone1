@@ -1,6 +1,6 @@
 // Tracks visitor presence via Supabase Realtime — no DB writes needed.
 // Each browser tab joins the 'live-visitors' presence channel.
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -19,39 +19,39 @@ export function useVisitorTracking() {
   const sessionId = useRef(getSessionId());
   const subscribedRef = useRef(false);
 
-  // Skip tracking for admin and SDK portal routes
   const isAdminOrInternal =
     location.pathname.startsWith("/admin") ||
     location.pathname.startsWith("/sdk");
 
+  const device = typeof window !== "undefined" && window.innerWidth < 768 ? "mobile" : "desktop";
+
+  const trackPage = useCallback((pathname: string) => {
+    if (!channelRef.current || !subscribedRef.current) return;
+    channelRef.current.track({
+      session_id: sessionId.current,
+      current_page: pathname,
+      device,
+      referrer: document.referrer
+        ? document.referrer.includes(window.location.hostname) ? "internal" : document.referrer
+        : "direct",
+      started_at: sessionStorage.getItem("agatsa_vsid_start") ?? new Date().toISOString(),
+    });
+  }, [device]);
+
+  // Subscribe once on mount (for public pages)
   useEffect(() => {
     if (isAdminOrInternal) return;
-
-    subscribedRef.current = false;
-
-    const device = window.innerWidth < 768 ? "mobile" : "desktop";
-    const referrer = document.referrer
-      ? document.referrer.includes(window.location.hostname)
-        ? "internal"
-        : document.referrer
-      : "direct";
 
     const channel = supabase.channel("live-visitors", {
       config: { presence: { key: sessionId.current } },
     });
-
     channelRef.current = channel;
 
     channel.subscribe(async (status) => {
       if (status === "SUBSCRIBED") {
         subscribedRef.current = true;
-        await channel.track({
-          session_id: sessionId.current,
-          current_page: location.pathname,
-          device,
-          referrer,
-          started_at: new Date().toISOString(),
-        });
+        // Track initial page
+        trackPage(location.pathname);
       }
     });
 
@@ -60,19 +60,13 @@ export function useVisitorTracking() {
       supabase.removeChannel(channel);
       channelRef.current = null;
     };
-  }, [isAdminOrInternal]); // re-init when switching between admin/public
+    // Only re-init when switching between admin/public
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAdminOrInternal]);
 
-  // Update presence on page navigation (public pages only)
+  // Update presence on EVERY page navigation
   useEffect(() => {
     if (isAdminOrInternal) return;
-    if (channelRef.current && subscribedRef.current) {
-      channelRef.current.track({
-        session_id: sessionId.current,
-        current_page: location.pathname,
-        device: window.innerWidth < 768 ? "mobile" : "desktop",
-        referrer: document.referrer || "direct",
-        started_at: sessionStorage.getItem("agatsa_vsid_start") ?? new Date().toISOString(),
-      });
-    }
-  }, [location.pathname, isAdminOrInternal]);
+    trackPage(location.pathname);
+  }, [location.pathname, isAdminOrInternal, trackPage]);
 }
