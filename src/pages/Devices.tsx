@@ -202,6 +202,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
           </div>
           <p className="text-xs text-primary font-medium mt-0.5">{device.emiDisplay}</p>
           <StockUrgencyBar productKey={device.id} className="mt-3" />
+        </div>
 
         {/* What it measures */}
         <button
