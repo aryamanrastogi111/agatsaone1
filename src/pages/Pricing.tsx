@@ -177,12 +177,7 @@ const faqs = [
   { q: "Is Agatsa One a medical device?", a: "The Agatsa One app is a wellness monitoring aid. The hardware devices (SanketLife ECG, EasyTouch Wellness) are CDSCO Class B certified medical devices. AI insights from Nera are for informational purposes and do not constitute a diagnosis. Always consult your doctor for medical decisions." },
 ];
 
-const deviceBonuses = [
-  { device: "SanketLife ECG (₹3,999)", bonus: "3 months Nera AI Premium free — ₹897 value", color: "bg-green-100 text-green-700" },
-  { device: "EasyTouch Wellness (₹3,999)", bonus: "3 months Nera AI Weekly free — ₹447 value", color: "bg-purple-100 text-purple-700" },
-  { device: "Rhythm Band (₹3,999)", bonus: "3 months Nera AI Weekly free — ₹447 value", color: "bg-purple-100 text-purple-700" },
-  { device: "ECG + Band Bundle (₹7,499)", bonus: "3 months Nera AI Premium free — ₹897 value", color: "bg-green-100 text-green-700" },
-];
+// deviceBonuses moved inside component for dynamic pricing
 
 function CellContent({ value }: { value: CellValue }) {
   if (value === true) return <Check className="h-4 w-4 text-green-500 mx-auto" />;
