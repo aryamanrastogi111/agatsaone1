@@ -100,22 +100,20 @@ export default function Analytics() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const todayOrders = (todayRes.data ?? []) as any[];
 
-    // KPI stats
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const allPaid = allOrders.filter((o: any) => PAID_STATUSES.includes(o.status));
+    // KPI stats — all scoped to selected range
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rangePaid = rangeOrders.filter((o: any) => PAID_STATUSES.includes(o.status));
-    const totalRevenue = allPaid.reduce((s: number, o: { amount: number }) => s + (o.amount ?? 0), 0);
     const rangeRevenue = rangePaid.reduce((s: number, o: { amount: number }) => s + (o.amount ?? 0), 0);
+    const rangeAvg = rangePaid.length ? Math.round(rangeRevenue / rangePaid.length) : 0;
     const todayRevenue = todayOrders.reduce((s: number, o: { amount: number }) => s + (o.amount ?? 0), 0);
 
     setKpiStats({
-      totalRevenue,
-      totalOrders: allOrders.length,
-      paidOrders: allPaid.length,
+      totalRevenue: rangeRevenue,
+      totalOrders: rangeOrders.length,
+      paidOrders: rangePaid.length,
       monthRevenue: rangeRevenue,
       monthOrders: rangePaid.length,
-      avgOrderValue: allPaid.length ? Math.round(totalRevenue / allPaid.length) : 0,
+      avgOrderValue: rangeAvg,
       todayRevenue,
       todayOrders: todayOrders.length,
     });
@@ -204,10 +202,10 @@ export default function Analytics() {
   const rangeLabel = timeRange === "today" ? "today" : timeRange === "yesterday" ? "yesterday" : timeRange === "7d" ? "7 days" : timeRange === "30d" ? "30 days" : timeRange === "90d" ? "90 days" : "all time";
 
   const kpis = [
-    { label: "Total Revenue", value: fmt(kpiStats.totalRevenue), sub: `${fmt(kpiStats.monthRevenue)} in last ${rangeLabel}`, icon: IndianRupee, accent: "bg-green-100 text-green-600" },
+    { label: `Revenue (${rangeLabel})`, value: fmt(kpiStats.totalRevenue), sub: `${kpiStats.paidOrders} paid orders`, icon: IndianRupee, accent: "bg-green-100 text-green-600" },
     { label: "Today", value: fmt(kpiStats.todayRevenue), sub: `${kpiStats.todayOrders} orders today`, icon: Calendar, accent: "bg-orange-100 text-orange-600" },
-    { label: "Paid Orders", value: String(kpiStats.paidOrders), sub: `${kpiStats.monthOrders} in last ${rangeLabel}`, icon: TrendingUp, accent: "bg-emerald-100 text-emerald-600" },
-    { label: "Avg Order Value", value: kpiStats.paidOrders ? fmt(kpiStats.avgOrderValue) : "₹0", sub: "per paid order", icon: Package, accent: "bg-purple-100 text-purple-600" },
+    { label: `Paid Orders (${rangeLabel})`, value: String(kpiStats.paidOrders), sub: `of ${kpiStats.totalOrders} total`, icon: TrendingUp, accent: "bg-emerald-100 text-emerald-600" },
+    { label: `Avg Order Value (${rangeLabel})`, value: kpiStats.paidOrders ? fmt(kpiStats.avgOrderValue) : "₹0", sub: "per paid order", icon: Package, accent: "bg-purple-100 text-purple-600" },
   ];
 
   if (loading) return (
