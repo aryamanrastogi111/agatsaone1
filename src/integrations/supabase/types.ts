@@ -1132,6 +1132,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_daily_visitor: {
+        Args: { target_date: string }
+        Returns: undefined
+      }
       move_to_dlq: {
         Args: {
           dlq_name: string
