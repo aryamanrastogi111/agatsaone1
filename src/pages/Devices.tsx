@@ -447,10 +447,10 @@ export default function DevicesPage() {
             </div>
           </div>
           <Link
-            to="/devices/sanketlife-ecg"
+            to="/checkout?sku=SANKET_LIFE_ECG,EASYTOUCH_WELLNESS,RHYTHM_BAND,SMART_SCALE"
             className="text-sm font-semibold text-primary hover:underline whitespace-nowrap flex items-center gap-1"
           >
-            View Bundle <ArrowRight className="h-3.5 w-3.5" />
+            Buy Bundle <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>
