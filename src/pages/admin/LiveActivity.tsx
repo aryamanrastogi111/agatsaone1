@@ -287,6 +287,92 @@ function AIInsightsCard({ data, loading, onRefresh }: {
             </div>
           )}
 
+          {/* Compared to Last Analysis */}
+          {data.analysis.comparedToLast && data.analysis.comparedToLast.overallDirection !== "first_analysis" && (
+            <div className={`rounded-lg p-3 border ${
+              data.analysis.comparedToLast.overallDirection === "improving" ? "bg-green-50 border-green-200" :
+              data.analysis.comparedToLast.overallDirection === "declining" ? "bg-red-50 border-red-200" :
+              "bg-gray-50 border-gray-200"
+            }`}>
+              <h4 className="text-xs font-semibold uppercase tracking-wider mb-2 flex items-center gap-1.5 text-gray-600">
+                📊 Since Last Analysis
+              </h4>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div><span className="text-gray-500">Revenue:</span> <span className="font-medium">{data.analysis.comparedToLast.revenueChange}</span></div>
+                <div><span className="text-gray-500">Orders:</span> <span className="font-medium">{data.analysis.comparedToLast.orderChange}</span></div>
+              </div>
+              <p className={`text-xs font-bold mt-1.5 ${
+                data.analysis.comparedToLast.overallDirection === "improving" ? "text-green-700" :
+                data.analysis.comparedToLast.overallDirection === "declining" ? "text-red-700" : "text-gray-600"
+              }`}>
+                Overall: {data.analysis.comparedToLast.overallDirection === "improving" ? "📈 Improving" :
+                  data.analysis.comparedToLast.overallDirection === "declining" ? "📉 Declining" : "➡️ Stable"}
+              </p>
+            </div>
+          )}
+
+          {/* Past Suggestion Review */}
+          {data.analysis.pastSuggestionReview && data.analysis.pastSuggestionReview.length > 0 && (
+            <div>
+              <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                🔄 Past Suggestion Outcomes
+              </h4>
+              <div className="space-y-2">
+                {data.analysis.pastSuggestionReview.map((review, i) => {
+                  const outcomeStyles: Record<string, string> = {
+                    improved: "bg-green-100 text-green-700 border-green-200",
+                    worsened: "bg-red-100 text-red-700 border-red-200",
+                    unchanged: "bg-gray-100 text-gray-600 border-gray-200",
+                    too_early: "bg-blue-100 text-blue-600 border-blue-200",
+                  };
+                  const outcomeEmoji: Record<string, string> = {
+                    improved: "✅", worsened: "❌", unchanged: "➖", too_early: "⏳",
+                  };
+                  return (
+                    <div key={i} className="bg-white rounded-lg border border-gray-200 p-3">
+                      <div className="flex items-start gap-2">
+                        <span className={`text-xs px-2 py-0.5 rounded-full font-bold border shrink-0 ${outcomeStyles[review.outcome] ?? ""}`}>
+                          {outcomeEmoji[review.outcome] ?? ""} {review.outcome}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-gray-700">{review.suggestion}</p>
+                          <p className="text-xs text-gray-500 mt-1">📊 {review.evidence}</p>
+                          <p className="text-xs text-blue-600 font-medium mt-1">→ {review.nextStep}</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Analysis History */}
+          {data.pastAnalyses && data.pastAnalyses.length > 0 && (
+            <details className="group">
+              <summary className="text-xs text-gray-400 cursor-pointer hover:text-gray-600 flex items-center gap-1">
+                <ChevronDown size={12} className="group-open:rotate-180 transition-transform" />
+                Analysis History ({data.pastAnalyses.length} past analyses)
+              </summary>
+              <div className="mt-2 space-y-1.5">
+                {data.pastAnalyses.map((pa) => {
+                  const healthDot = pa.overall_health === "good" ? "bg-green-500" : pa.overall_health === "critical" ? "bg-red-500" : "bg-yellow-500";
+                  return (
+                    <div key={pa.id} className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2">
+                      <span className={`w-2 h-2 rounded-full shrink-0 ${healthDot}`} />
+                      <span className="text-xs text-gray-500 shrink-0">
+                        {new Date(pa.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
+                        {" "}
+                        {new Date(pa.created_at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}
+                      </span>
+                      <span className="text-xs text-gray-700 truncate flex-1">{pa.headline}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </details>
+          )}
+
           {/* Raw data summary */}
           {data.rawData && (
             <details className="group">
