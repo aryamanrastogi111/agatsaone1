@@ -52,8 +52,9 @@ type PageState = "form" | "processing" | "success" | "error";
 
 export default function CheckoutPage() {
   const [searchParams] = useSearchParams();
+  const { prices, fmt } = usePricing();
   const skuParam = searchParams.get("sku") || "";
-  const skus = skuParam.split(",").filter((s) => DEVICE_CATALOG[s]);
+  const skus = skuParam.split(",").filter((s) => s in DEVICE_NAMES);
 
   // ─── Form state ────────────────────────────────────────────
   const [step, setStep] = useState<CheckoutStep>(1);
@@ -77,7 +78,7 @@ export default function CheckoutPage() {
   const [paying, setPaying] = useState(false);
 
   // ─── Computed ──────────────────────────────────────────────
-  const items = skus.map((s) => ({ sku: s, ...DEVICE_CATALOG[s] }));
+  const items = skus.map((s) => ({ sku: s, name: DEVICE_NAMES[s], amountPaise: (prices[s as DeviceSku] || 0) * 100 }));
   const totalPaise = items.reduce((sum, d) => sum + d.amountPaise, 0);
   const totalRupees = totalPaise / 100;
 
