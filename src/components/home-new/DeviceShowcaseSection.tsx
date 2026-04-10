@@ -2,52 +2,49 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
+import { usePricing } from "@/hooks/useDevicePricing";
 import sanketlifeImg from "@/assets/sanketlife-hero-new.webp";
 import easytouchImg from "@/assets/easytouch-wellness-device.webp";
 import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
 import scaleImg from "@/assets/core-balance.webp";
 
-const devices = [
+const deviceDefs = [
   {
     name: "SanketLife ECG",
+    sku: "ecg_bundle" as const,
     badge: "CDSCO Certified",
     tagline: "12-lead hospital-grade ECG in your pocket",
     stat: "98.15% sensitivity",
-    price: "₹4,999",
-    emi: "No-cost EMI from ₹417/month",
     link: "/devices/sanketlife-ecg",
     slug: "sanketlife",
     image: sanketlifeImg,
   },
   {
     name: "EasyTouch Wellness",
+    sku: "wellness_sub" as const,
     badge: null,
     tagline: "Non-invasive metabolic health + BP + SpO2, no needles",
     stat: "8 vitals in 60 seconds",
-    price: "₹3,999",
-    emi: "No-cost EMI from ₹334/month",
     link: "/devices/easytouch-wellness",
     slug: "easytouch-wellness",
     image: easytouchImg,
   },
   {
     name: "EasyTouch Rhythm Band",
+    sku: "band_sub" as const,
     badge: null,
     tagline: "24/7 wellness monitoring on your wrist",
     stat: "Sleep, HRV, steps, SpO2",
-    price: "₹3,999",
-    emi: "No-cost EMI from ₹334/month",
     link: "/devices/rhythm-band",
     slug: "easytouch-rhythm",
     image: rhythmImg,
   },
   {
     name: "Agatsa Smart Scale",
+    sku: "scale_sub" as const,
     badge: null,
     tagline: "14 body metrics. One step. One app.",
     stat: "BMI, body fat, muscle mass",
-    price: "₹2,499",
-    emi: "No-cost EMI from ₹209/month",
     link: "/devices/smart-scale",
     slug: "corebalance",
     image: scaleImg,
@@ -55,6 +52,8 @@ const devices = [
 ];
 
 export function DeviceShowcaseSection() {
+  const { prices, fmt, emi, loading } = usePricing();
+
   return (
     <section id="how-it-works" className="py-16 md:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,7 +78,7 @@ export function DeviceShowcaseSection() {
 
         {/* Cards — horizontal scroll on mobile, 4-col grid on desktop */}
         <div className="flex gap-5 overflow-x-auto pb-4 md:grid md:grid-cols-4 md:overflow-visible scrollbar-hide">
-          {devices.map((device, i) => (
+          {deviceDefs.map((device, i) => (
             <motion.div
               key={device.name}
               initial={{ opacity: 0, y: 30 }}
@@ -105,7 +104,11 @@ export function DeviceShowcaseSection() {
               <div className="mt-auto space-y-2">
                 <StockUrgencyBar productKey={device.slug} />
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-foreground">{device.price}</span>
+                  {loading ? (
+                    <span className="h-6 w-16 bg-muted animate-pulse rounded" />
+                  ) : (
+                    <span className="text-lg font-bold text-foreground">{fmt(prices[device.sku])}</span>
+                  )}
                   <Link
                     to={device.link}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
@@ -113,7 +116,7 @@ export function DeviceShowcaseSection() {
                     Learn more <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
-                <p className="text-xs text-primary font-medium mt-0.5">{device.emi}</p>
+                <p className="text-xs text-primary font-medium mt-0.5">{emi(prices[device.sku])}</p>
               </div>
             </motion.div>
           ))}
