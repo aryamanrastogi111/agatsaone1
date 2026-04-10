@@ -179,7 +179,8 @@ export default function CheckoutPage() {
 
       if (!createRes.ok) {
         const errData = await createRes.json().catch(() => ({}));
-        throw new Error(errData.message || `Order creation failed (${createRes.status})`);
+        console.error("Order creation failed:", createRes.status, errData);
+        throw new Error(errData.message || errData.error || `Order creation failed (${createRes.status})`);
       }
 
       const orderData = await createRes.json();
