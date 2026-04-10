@@ -29,6 +29,17 @@ const REASON_OPTIONS = [
   { value: "inventory_count", label: "Inventory Count" },
 ];
 
+// Quick Restock Modal state
+interface RestockState {
+  open: boolean;
+  variantId: string;
+  productName: string;
+  currentQty: number;
+  addQty: string;
+  reason: string;
+  notes: string;
+}
+
 export default function Inventory() {
   const [rows, setRows] = useState<VariantRow[]>([]);
   const [loading, setLoading] = useState(true);
