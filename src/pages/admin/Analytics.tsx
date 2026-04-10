@@ -4,7 +4,7 @@ import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
-import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar } from "lucide-react";
+import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown } from "lucide-react";
 import { format, subDays } from "date-fns";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,6 +41,7 @@ export default function Analytics() {
   const [statusData, setStatusData] = useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [dailyStatsData, setDailyStatsData] = useState<any[]>([]);
+  const [funnelData, setFunnelData] = useState<{ stage: string; count: number; color: string }[]>([]);
   const [kpiStats, setKpiStats] = useState({
     totalRevenue: 0, totalOrders: 0, paidOrders: 0,
     monthRevenue: 0, monthOrders: 0, avgOrderValue: 0,
@@ -124,7 +125,20 @@ export default function Analytics() {
     rangeOrders.forEach((o: any) => { statusMap[o.status] = (statusMap[o.status] ?? 0) + 1; });
     setStatusData(Object.entries(statusMap).map(([name, value]) => ({ name, value })));
 
-    // Top products
+    // Conversion funnel
+    const avgDailyVisitors = (dailyRes.data ?? []).length > 0
+      ? Math.round((dailyRes.data ?? []).reduce((s: number, d: any) => s + (d.peak_visitors || 0), 0) / (dailyRes.data ?? []).length) * days
+      : rangeOrders.length * 5; // estimate if no daily stats
+    const totalCheckouts = rangeOrders.length; // all orders created = checkout attempts
+    const totalPaid = rangePaid.length;
+    const totalCancelled = rangeOrders.filter((o: any) => ["cancelled", "refunded"].includes(o.status)).length;
+    setFunnelData([
+      { stage: "Visitors (est.)", count: avgDailyVisitors, color: "#3b82f6" },
+      { stage: "Checkout Started", count: totalCheckouts, color: "#8b5cf6" },
+      { stage: "Payment Completed", count: totalPaid, color: "#10b981" },
+      { stage: "Cancelled/Refunded", count: totalCancelled, color: "#ef4444" },
+    ]);
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const pMap: Record<string, { name: string; revenue: number; qty: number }> = {};
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -213,7 +227,48 @@ export default function Analytics() {
         ))}
       </div>
 
-      {/* Revenue & Orders trend */}
+      {/* Conversion Funnel */}
+      <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+        <h3 className="font-semibold text-gray-900 mb-1">Conversion Funnel — Last {rangeLabel}</h3>
+        <p className="text-xs text-gray-400 mb-4">Track where visitors drop off in the purchase journey</p>
+        {funnelData.length > 0 && funnelData[0].count > 0 ? (
+          <div className="space-y-3">
+            {funnelData.map((stage, i) => {
+              const maxCount = funnelData[0].count;
+              const pct = maxCount > 0 ? Math.round((stage.count / maxCount) * 100) : 0;
+              const prevCount = i > 0 ? funnelData[i - 1].count : stage.count;
+              const dropPct = prevCount > 0 && i > 0 ? Math.round(((prevCount - stage.count) / prevCount) * 100) : 0;
+              return (
+                <div key={stage.stage}>
+                  {i > 0 && dropPct > 0 && (
+                    <div className="flex items-center gap-2 ml-4 mb-1 text-xs text-red-500">
+                      <ArrowDown size={12} />
+                      <span>{dropPct}% drop-off ({(prevCount - stage.count).toLocaleString("en-IN")} lost)</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-medium text-gray-700 w-40 shrink-0">{stage.stage}</span>
+                    <div className="flex-1 h-8 bg-gray-100 rounded-lg overflow-hidden relative">
+                      <div
+                        className="h-full rounded-lg transition-all duration-500 flex items-center px-3"
+                        style={{ width: `${Math.max(5, pct)}%`, backgroundColor: stage.color }}
+                      >
+                        <span className="text-xs font-bold text-white whitespace-nowrap">
+                          {stage.count.toLocaleString("en-IN")} ({pct}%)
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="text-gray-400 text-sm text-center py-8">Not enough data to show funnel</p>
+        )}
+      </div>
+
+
       <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
         <h3 className="font-semibold text-gray-900 mb-4">Revenue & Orders — Last {rangeLabel}</h3>
         <ResponsiveContainer width="100%" height={280}>
