@@ -661,27 +661,29 @@ export default function LiveActivity() {
   // ── DB data: orders ──
   const fetchData = useCallback(async () => {
     const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
+    const today = new Date().toISOString().split("T")[0];
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
     const last24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-    const [ordersRes, recentRes, lostRes] = await Promise.all([
+    const [ordersRes, recentRes, lostRes, todayVisRes] = await Promise.all([
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created").gte("created_at", twoHoursAgo).order("created_at", { ascending: false }),
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .in("status", ["paid", "confirmed", "processing", "shipped", "delivered"])
         .gte("created_at", todayStart.toISOString()).order("created_at", { ascending: false }).limit(20),
-      // Lost checkouts: created > 10 min ago but never paid, within last 24h
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created")
         .gte("created_at", last24h)
         .lt("created_at", new Date(Date.now() - 10 * 60 * 1000).toISOString())
         .order("created_at", { ascending: false }),
+      db.from("daily_stats").select("total_visitors").eq("stat_date", today).maybeSingle(),
     ]);
     setPendingOrders(ordersRes.data ?? []);
     setRecentOrders(recentRes.data ?? []);
     setLostCheckouts(lostRes.data ?? []);
     const paid: TodayOrder[] = recentRes.data ?? [];
     const revenue = paid.reduce((s: number, o: TodayOrder) => s + o.amount, 0);
-    setTodayStats({ orders: paid.length, revenue, avgOrder: paid.length ? Math.round(revenue / paid.length) : 0 });
+    const tv = todayVisRes.data?.total_visitors ?? 0;
+    setTodayStats({ orders: paid.length, revenue, avgOrder: paid.length ? Math.round(revenue / paid.length) : 0, totalVisitors: tv });
     setLastRefresh(new Date());
     setLoading(false);
   }, []);
