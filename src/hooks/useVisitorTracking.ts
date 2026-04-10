@@ -44,17 +44,7 @@ function incrementDailyVisitor() {
   if (sessionStorage.getItem(key)) return;
   sessionStorage.setItem(key, "1");
 
-  db.from("daily_stats")
-    .select("total_visitors")
-    .eq("stat_date", today)
-    .maybeSingle()
-    .then(({ data }: { data: { total_visitors: number } | null }) => {
-      const current = data?.total_visitors ?? 0;
-      db.from("daily_stats").upsert(
-        { stat_date: today, total_visitors: current + 1 },
-        { onConflict: "stat_date" }
-      );
-    });
+  supabase.rpc("increment_daily_visitor", { target_date: today });
 }
 
 // Create or update visitor session
