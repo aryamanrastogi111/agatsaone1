@@ -178,6 +178,7 @@ export type Database = {
           stat_date: string
           total_orders: number
           total_revenue: number
+          total_visitors: number
         }
         Insert: {
           avg_order_value?: number
@@ -189,6 +190,7 @@ export type Database = {
           stat_date: string
           total_orders?: number
           total_revenue?: number
+          total_visitors?: number
         }
         Update: {
           avg_order_value?: number
@@ -200,6 +202,7 @@ export type Database = {
           stat_date?: string
           total_orders?: number
           total_revenue?: number
+          total_visitors?: number
         }
         Relationships: []
       }

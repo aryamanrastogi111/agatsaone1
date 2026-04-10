@@ -4,7 +4,7 @@ import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
-import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown } from "lucide-react";
+import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown, Users } from "lucide-react";
 import { format, subDays } from "date-fns";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,7 +45,7 @@ export default function Analytics() {
   const [kpiStats, setKpiStats] = useState({
     totalRevenue: 0, totalOrders: 0, paidOrders: 0,
     monthRevenue: 0, monthOrders: 0, avgOrderValue: 0,
-    todayRevenue: 0, todayOrders: 0,
+    todayRevenue: 0, todayOrders: 0, totalVisitors: 0,
   });
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
@@ -88,7 +88,7 @@ export default function Analytics() {
         .in("status", PAID_STATUSES)
         .gte("created_at", todayStart.toISOString()),
       db.from("daily_stats")
-        .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments")
+        .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments, total_visitors")
         .gte("stat_date", subDays(now, Math.max(days, 7)).toISOString().split("T")[0])
         .order("stat_date", { ascending: true }),
     ]);
@@ -106,6 +106,7 @@ export default function Analytics() {
     const rangeRevenue = rangePaid.reduce((s: number, o: { amount: number }) => s + (o.amount ?? 0), 0);
     const rangeAvg = rangePaid.length ? Math.round(rangeRevenue / rangePaid.length) : 0;
     const todayRevenue = todayOrders.reduce((s: number, o: { amount: number }) => s + (o.amount ?? 0), 0);
+    const rangeVisitors = (dailyRes.data ?? []).reduce((s: number, d: any) => s + (d.total_visitors || 0), 0);
 
     setKpiStats({
       totalRevenue: rangeRevenue,
@@ -116,6 +117,7 @@ export default function Analytics() {
       avgOrderValue: rangeAvg,
       todayRevenue,
       todayOrders: todayOrders.length,
+      totalVisitors: rangeVisitors,
     });
 
     // Revenue chart from orders data
@@ -203,9 +205,10 @@ export default function Analytics() {
 
   const kpis = [
     { label: `Revenue (${rangeLabel})`, value: fmt(kpiStats.totalRevenue), sub: `${kpiStats.paidOrders} paid orders`, icon: IndianRupee, accent: "bg-green-100 text-green-600" },
-    { label: "Today", value: fmt(kpiStats.todayRevenue), sub: `${kpiStats.todayOrders} orders today`, icon: Calendar, accent: "bg-orange-100 text-orange-600" },
+    { label: `Visitors (${rangeLabel})`, value: kpiStats.totalVisitors.toLocaleString("en-IN"), sub: "total unique visitors", icon: Users, accent: "bg-blue-100 text-blue-600" },
     { label: `Paid Orders (${rangeLabel})`, value: String(kpiStats.paidOrders), sub: `of ${kpiStats.totalOrders} total`, icon: TrendingUp, accent: "bg-emerald-100 text-emerald-600" },
     { label: `Avg Order Value (${rangeLabel})`, value: kpiStats.paidOrders ? fmt(kpiStats.avgOrderValue) : "₹0", sub: "per paid order", icon: Package, accent: "bg-purple-100 text-purple-600" },
+    { label: "Today", value: fmt(kpiStats.todayRevenue), sub: `${kpiStats.todayOrders} orders today`, icon: Calendar, accent: "bg-orange-100 text-orange-600" },
   ];
 
   if (loading) return (
@@ -246,7 +249,7 @@ export default function Analytics() {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {kpis.map(k => (
           <div key={k.label} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
             <div className="flex items-start justify-between">
@@ -338,6 +341,10 @@ export default function Analytics() {
           <ResponsiveContainer width="100%" height={240}>
             <AreaChart data={dailyStatsData} margin={{ top: 4, right: 4, bottom: 0, left: 0 }}>
               <defs>
+                <linearGradient id="totalVisGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                </linearGradient>
                 <linearGradient id="visGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.2} />
                   <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
@@ -365,7 +372,8 @@ export default function Analytics() {
                   return date.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
                 }}
               />
-              <Area type="monotone" dataKey="peak_visitors" name="Peak Visitors" stroke="#f59e0b" strokeWidth={2} fill="url(#visGrad)" />
+              <Area type="monotone" dataKey="total_visitors" name="Total Visitors" stroke="#3b82f6" strokeWidth={2} fill="url(#totalVisGrad)" />
+              <Area type="monotone" dataKey="peak_visitors" name="Peak Concurrent" stroke="#f59e0b" strokeWidth={2} fill="url(#visGrad)" />
               <Area type="monotone" dataKey="total_orders" name="Orders" stroke="#8b5cf6" strokeWidth={2} fill="url(#ordSnapGrad)" />
             </AreaChart>
           </ResponsiveContainer>

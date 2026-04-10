@@ -567,7 +567,7 @@ export default function LiveActivity() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
   const [pendingOrders, setPendingOrders] = useState<TodayOrder[]>([]);
   const [recentOrders, setRecentOrders] = useState<TodayOrder[]>([]);
-  const [todayStats, setTodayStats] = useState({ orders: 0, revenue: 0, avgOrder: 0 });
+  const [todayStats, setTodayStats] = useState({ orders: 0, revenue: 0, avgOrder: 0, totalVisitors: 0 });
   const [lastRefresh, setLastRefresh] = useState(new Date());
   const [loading, setLoading] = useState(true);
   const [historicalData, setHistoricalData] = useState<DailyStat[]>([]);
@@ -661,27 +661,29 @@ export default function LiveActivity() {
   // ── DB data: orders ──
   const fetchData = useCallback(async () => {
     const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
+    const today = new Date().toISOString().split("T")[0];
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
     const last24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-    const [ordersRes, recentRes, lostRes] = await Promise.all([
+    const [ordersRes, recentRes, lostRes, todayVisRes] = await Promise.all([
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created").gte("created_at", twoHoursAgo).order("created_at", { ascending: false }),
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .in("status", ["paid", "confirmed", "processing", "shipped", "delivered"])
         .gte("created_at", todayStart.toISOString()).order("created_at", { ascending: false }).limit(20),
-      // Lost checkouts: created > 10 min ago but never paid, within last 24h
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created")
         .gte("created_at", last24h)
         .lt("created_at", new Date(Date.now() - 10 * 60 * 1000).toISOString())
         .order("created_at", { ascending: false }),
+      db.from("daily_stats").select("total_visitors").eq("stat_date", today).maybeSingle(),
     ]);
     setPendingOrders(ordersRes.data ?? []);
     setRecentOrders(recentRes.data ?? []);
     setLostCheckouts(lostRes.data ?? []);
     const paid: TodayOrder[] = recentRes.data ?? [];
     const revenue = paid.reduce((s: number, o: TodayOrder) => s + o.amount, 0);
-    setTodayStats({ orders: paid.length, revenue, avgOrder: paid.length ? Math.round(revenue / paid.length) : 0 });
+    const tv = todayVisRes.data?.total_visitors ?? 0;
+    setTodayStats({ orders: paid.length, revenue, avgOrder: paid.length ? Math.round(revenue / paid.length) : 0, totalVisitors: tv });
     setLastRefresh(new Date());
     setLoading(false);
   }, []);
@@ -691,7 +693,7 @@ export default function LiveActivity() {
     const days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
     const since = new Date(); since.setDate(since.getDate() - days);
     const { data } = await db.from("daily_stats")
-      .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments")
+      .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments, total_visitors")
       .gte("stat_date", since.toISOString().split("T")[0]).order("stat_date", { ascending: true });
     setHistoricalData(data ?? []);
   }, [timeRange]);
@@ -738,8 +740,9 @@ export default function LiveActivity() {
       <AIInsightsCard data={aiData} loading={aiLoading} onRefresh={fetchAIAnalysis} />
 
       {/* Stats Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
         <StatCard icon={Users} label="Live Visitors" value={visitors.length} sub="on site right now" color="bg-green-50 text-green-600" />
+        <StatCard icon={Globe} label="Today's Visitors" value={loading ? "—" : todayStats.totalVisitors} sub="unique visitors today" color="bg-blue-50 text-blue-600" />
         <StatCard icon={Eye} label="Browsing Devices" value={deviceVisitors.length} sub="viewing product pages" color="bg-blue-50 text-blue-600" />
         <StatCard icon={ShoppingCart} label="On Checkout" value={checkoutVisitors.length} sub="filling checkout form" color="bg-purple-50 text-purple-600" />
         <StatCard icon={TrendingUp} label="Orders Today" value={loading ? "—" : todayStats.orders} sub={`₹${todayStats.revenue.toLocaleString("en-IN")} revenue`} color="bg-emerald-50 text-emerald-600" />
@@ -771,10 +774,10 @@ export default function LiveActivity() {
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <TrendChartCard title="Total Visitors" dataKey="total_visitors" data={historicalData} color="#3b82f6" />
             <TrendChartCard title="Orders" dataKey="total_orders" data={historicalData} color="#10b981" />
-            <TrendChartCard title="Revenue" dataKey="total_revenue" data={historicalData} color="#3b82f6" prefix="₹" />
-            <TrendChartCard title="Avg Order Value" dataKey="avg_order_value" data={historicalData} color="#8b5cf6" prefix="₹" />
-            <TrendChartCard title="Peak Visitors" dataKey="peak_visitors" data={historicalData} color="#f59e0b" />
+            <TrendChartCard title="Revenue" dataKey="total_revenue" data={historicalData} color="#8b5cf6" prefix="₹" />
+            <TrendChartCard title="Peak Concurrent" dataKey="peak_visitors" data={historicalData} color="#f59e0b" />
           </div>
         )}
       </div>
