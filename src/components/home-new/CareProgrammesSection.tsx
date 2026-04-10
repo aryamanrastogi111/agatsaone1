@@ -16,7 +16,7 @@ const programmes = [
     name: "Diabetic Cardiac Care",
     duration: "16 weeks",
     audience: "For Type 2 diabetics with cardiac risk factors",
-    description: "Glucose + ECG + BP monitoring unified. HbA1c prediction. Meal scoring. Cardiometabolic risk tracking.",
+    description: "Metabolic wellness + ECG + BP monitoring unified. HbA1c prediction. Meal scoring. Cardiometabolic risk tracking.",
     link: "/programmes#diabetic-cardiac",
   },
   {

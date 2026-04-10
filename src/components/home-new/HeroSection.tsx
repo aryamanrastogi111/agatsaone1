@@ -78,7 +78,7 @@ export function HeroSection() {
 
             <motion.ul {...stagger(2.5)} className="space-y-3 text-sm md:text-base">
               {[
-                "Track ECG, BP, sugar, SpO₂ and more — from home",
+                "Track ECG, BP, metabolic wellness, SpO₂ and more — from home",
                 "See how your health changes over time",
                 "Get simple insights, not confusing reports",
               ].map((text) => (
