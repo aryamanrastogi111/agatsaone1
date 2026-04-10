@@ -572,6 +572,8 @@ export default function LiveActivity() {
   const [loading, setLoading] = useState(true);
   const [historicalData, setHistoricalData] = useState<DailyStat[]>([]);
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
+  const [lostCheckouts, setLostCheckouts] = useState<TodayOrder[]>([]);
+  const [lostExpanded, setLostExpanded] = useState(false);
 
   // AI Analysis state
   const [aiData, setAiData] = useState<AIResponse | null>(null);
