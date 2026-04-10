@@ -7,6 +7,7 @@ import { Star, ArrowRight, Package, Scale, TrendingDown, Users, Heart } from "lu
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
+import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import scaleHero from "@/assets/corebalance-hero.webp";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -110,6 +111,19 @@ export default function SmartScaleProduct() {
               <TrustBar />
             </motion.div>
           </div>
+        </div>
+      </section>
+
+
+      {/* ─── WATCH IT IN ACTION ─── */}
+      <section className="py-16 md:py-20 bg-gray-950">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Watch It In Action</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <VideoCard video={{ id: "e9f0DR890zM", title: "India: The Diabetes Capital" }} />
+            <VideoCard video={{ id: "ZkLv3wyVtfg", title: "Real Story: What the Numbers Showed" }} />
+          </div>
+          <YouTubeChannelLink />
         </div>
       </section>
 

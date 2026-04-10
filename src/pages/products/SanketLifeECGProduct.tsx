@@ -14,6 +14,7 @@ import {
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
+import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useCartStore } from "@/stores/cartStore";
@@ -138,7 +139,24 @@ export default function SanketLifeECGProduct() {
         </div>
       </section>
 
-      {/* ─── SECTION 2: PROBLEM AWARENESS ─── */}
+      {/* ─── WATCH IT IN ACTION ─── */}
+      <section className="py-16 md:py-20 bg-gray-950">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Watch It In Action</h2>
+          {/* Hero video */}
+          <div className="mb-6">
+            <VideoCard video={{ id: "Lehu-0DV-74", title: "SanketLife ECG — Official Demo" }} hero />
+          </div>
+          {/* Supporting videos */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <VideoCard video={{ id: "Ck8syb2uQdo", title: "Why Watch ECGs Aren't Enough" }} />
+            <VideoCard video={{ id: "ZkLv3wyVtfg", title: "Real Story: What the ECG Revealed" }} />
+            <VideoCard video={{ id: "4nldXDM1w7w", title: "Heart Problems Don't Check Your Age" }} />
+          </div>
+          <YouTubeChannelLink />
+        </div>
+      </section>
+
       <section className="py-12 bg-background">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div {...fadeUp}>
