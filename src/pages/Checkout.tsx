@@ -3,19 +3,20 @@ import { useSearchParams, Link } from "react-router-dom";
 import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock, MapPin, User, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
 
-// ─── Exact backend SKUs — do NOT change these strings ──────────
-const DEVICE_CATALOG: Record<string, { name: string; amountPaise: number }> = {
-  ecg_bundle:      { name: "SanketLife ECG",           amountPaise: 499900 },
-  band_sub:        { name: "EasyTouch Rhythm Band",    amountPaise: 399900 },
-  scale_sub:       { name: "Agatsa Smart Scale",       amountPaise: 249900 },
-  wellness_sub:    { name: "EasyTouch Wellness",       amountPaise: 399900 },
-  multivital:      { name: "Agatsa MultiVital",        amountPaise: 399900 },
-  bundle_ecg_band: { name: "ECG + Rhythm Band Bundle", amountPaise: 749900 },
+// ─── Device display names ───────────────────────────────────────
+const DEVICE_NAMES: Record<string, string> = {
+  ecg_bundle:      "SanketLife ECG",
+  band_sub:        "EasyTouch Rhythm Band",
+  scale_sub:       "Agatsa Smart Scale",
+  wellness_sub:    "EasyTouch Wellness",
+  multivital:      "Agatsa MultiVital",
+  bundle_ecg_band: "ECG + Rhythm Band Bundle",
 };
 
-const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
+const VALID_SKUS = Object.keys(DEVICE_NAMES);
 
 // ─── Pincode lookup ─────────────────────────────────────────────
 async function lookupPincode(pincode: string): Promise<{ city: string; state: string } | null> {
