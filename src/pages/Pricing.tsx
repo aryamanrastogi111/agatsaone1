@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, X, Minus, ChevronDown, ChevronUp, Mic, Gift } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
 
 const fade = (delay = 0) => ({
