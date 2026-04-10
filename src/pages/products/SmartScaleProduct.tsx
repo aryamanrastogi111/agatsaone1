@@ -70,7 +70,7 @@ export default function SmartScaleProduct() {
     }
     navigate("/checkout?sku=scale_sub");
   };
-  useSEO({ title: "Agatsa Smart Scale — 14 Body Composition Metrics | BMI, Body Fat, Muscle Mass", description: "14 body composition metrics in 5 seconds. Weight, BMI, body fat, visceral fat, muscle mass, metabolic age and more. 10 family profiles. Works with Nera AI. ₹1,999." });
+  useSEO({ title: "Agatsa Smart Scale — 14 Body Composition Metrics | BMI, Body Fat, Muscle Mass", description: "14 body composition metrics in 5 seconds. Weight, BMI, body fat, visceral fat, muscle mass, metabolic age and more. 10 family profiles. Works with Nera AI. ₹2,499." });
 
   return (
     <SiteLayout>
@@ -330,7 +330,7 @@ export default function SmartScaleProduct() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready to know your body?</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Step on. 5 seconds. 14 metrics. It's that simple.</p>
-          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Smart Scale — ₹1,999</Button>
+          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Smart Scale — ₹2,499</Button>
         </div>
       </section>
     </SiteLayout>
