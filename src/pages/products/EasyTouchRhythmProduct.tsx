@@ -171,14 +171,11 @@ const EasyTouchRhythmProduct = () => {
   // Fire PageView and ViewContent on mount for Facebook Pixel
   useEasyTouchRhythmPixelPageView();
 
+  const navigate = (await import("react-router-dom")).useNavigate();
   const handleAddToCart = () => {
     if (outOfStock) return;
-    setAddingToCart(true);
-    addItem({ productId: "easytouch-rhythm", productName: "EasyTouch Rhythm", variantTitle: "Default Title", price: 4999, quantity: 1 });
-    toast.success("EasyTouch Rhythm added to cart", { position: "top-center" });
-    // Track AddToCart event for Facebook Pixel
     trackAddToCart(1);
-    setTimeout(() => setAddingToCart(false), 500);
+    navigate("/checkout?sku=band_sub");
   };
 
   return (
