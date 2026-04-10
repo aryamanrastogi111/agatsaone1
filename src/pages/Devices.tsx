@@ -257,6 +257,14 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
 export default function DevicesPage() {
   useSEO({ title: "Health Monitoring Devices — SanketLife ECG, EasyTouch, Rhythm Band | Agatsa One", description: "Medical-grade ECG, metabolic health monitor, wellness band, and smart scale. All CDSCO-approved, clinically validated, and integrated with Nera AI. Shop now from ₹2,499." });
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'ViewContent', {
+        content_name: 'Devices Page',
+        content_category: 'Health Devices',
+      });
+    }
+  }, []);
   return (
     <SiteLayout>
       {/* Hero Section */}
