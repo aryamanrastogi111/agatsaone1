@@ -38,7 +38,7 @@ export default function SanketLifeECGProduct() {
 
   const handleBuy = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["ecg_bundle"], content_name: "SanketLife ECG", content_type: "product", value: 4999, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["ecg_bundle"], content_name: "SanketLife ECG", content_type: "product", value: ecgPrice, currency: "INR" }); } catch {}
     }
     navigate("/checkout?sku=ecg_bundle");
   };
@@ -101,9 +101,9 @@ export default function SanketLifeECGProduct() {
 
               {/* Price */}
               <div className="mt-8">
-                <span className="text-4xl font-extrabold text-foreground">₹4,999</span>
+                <span className="text-4xl font-extrabold text-foreground">>{fmt(ecgPrice)}</span>
                 <span className="text-sm text-muted-foreground ml-2">incl. GST</span>
-                <EmiLine price={4999} />
+                <EmiLine price={ecgPrice} />
                 <StockUrgencyBar productKey="sanketlife" className="mt-3" />
                 <div className="flex items-center gap-1 mt-2">
                   {[...Array(5)].map((_, i) => (
@@ -685,7 +685,7 @@ export default function SanketLifeECGProduct() {
                   ["Availability", "By appointment", "Anytime, anywhere"],
                   ["Time to result", "Hours to days", "15 seconds"],
                   ["Monitoring", "One-time snapshot", "Daily, on-demand"],
-                  ["Cost per ECG", "₹300–₹1,500", "Unlimited for ₹4,999"],
+                  ["Cost per ECG", "₹300–₹1,500", "Unlimited for ` + fmt(ecgPrice)"],
                   ["Report sharing", "Physical copy", "Instant digital PDF"],
                   ["AI analysis", "Not available", "Nera AI included"],
                   ["Trend tracking", "No", "Continuous timeline"],
@@ -810,7 +810,7 @@ export default function SanketLifeECGProduct() {
               <span className="text-primary">without waiting for appointments.</span>
             </h2>
             <p className="text-lg text-muted-foreground mt-4">
-              Think about what you get for ₹4,999:
+              Think about what you get for {fmt(ecgPrice)}:
             </p>
           </motion.div>
 
