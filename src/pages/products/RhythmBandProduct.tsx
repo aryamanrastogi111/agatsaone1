@@ -57,6 +57,7 @@ const relatedDevices = [
 export default function RhythmBandProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
+  useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 2999);
   const handleBuy = () => {
     navigate("/checkout?sku=RHYTHM_BAND");
   };

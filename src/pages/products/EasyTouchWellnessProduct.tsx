@@ -54,6 +54,7 @@ const relatedDevices = [
 export default function EasyTouchWellnessProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
+  useMetaPixelViewContent("EASYTOUCH_WELLNESS", "EasyTouch Wellness", 3499);
 
   const handleBuy = () => {
     navigate("/checkout?sku=EASYTOUCH_WELLNESS");

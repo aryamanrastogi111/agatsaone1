@@ -62,6 +62,7 @@ const relatedDevices = [
 export default function SmartScaleProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
+  useMetaPixelViewContent("SMART_SCALE", "Agatsa Smart Scale", 1999);
   const handleBuy = () => {
     navigate("/checkout?sku=SMART_SCALE");
   };

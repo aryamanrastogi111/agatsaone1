@@ -30,6 +30,7 @@ const fadeUp = {
 export default function SanketLifeECGProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
+  useMetaPixelViewContent("SANKET_LIFE_ECG", "SanketLife 12-Lead ECG", 3999);
 
   const handleBuy = () => {
     navigate("/checkout?sku=SANKET_LIFE_ECG");
