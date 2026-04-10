@@ -12,7 +12,6 @@ import {
   TrustProofSection,
   FinalCTASection,
 } from "@/components/home";
-import { VideoShowcaseSection } from "@/components/home/VideoShowcaseSection";
 
 const Index = () => {
   return (
@@ -24,7 +23,6 @@ const Index = () => {
       <ProductHighlightEasyTouch />
       <ProductHighlightZlu />
       <ProductHighlightCoreBalance />
-      <VideoShowcaseSection />
       <WhyAgatsaSection />
       <AwardsSection />
       <TrustProofSection />
