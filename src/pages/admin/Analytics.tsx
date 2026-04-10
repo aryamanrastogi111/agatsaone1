@@ -86,7 +86,7 @@ export default function Analytics() {
       .order("created_at");
     if (rangeEnd) rangeQuery = rangeQuery.lt("created_at", rangeEnd);
 
-    const [allRes, rangeRes, todayRes, dailyRes, pageViewsRes] = await Promise.all([
+    const [allRes, rangeRes, todayRes, dailyRes, pageViewsRes, sessionsRes] = await Promise.all([
       db.from("orders").select("amount, status, created_at, items"),
       rangeQuery,
       db.from("orders")
@@ -98,10 +98,15 @@ export default function Analytics() {
         .gte("stat_date", subDays(now, Math.max(days, 7)).toISOString().split("T")[0])
         .order("stat_date", { ascending: true }),
       db.from("page_views")
-        .select("page_path, session_id, created_at")
+        .select("page_path, session_id, created_at, utm_source, utm_medium")
         .gte("created_at", rangeStart)
         .order("created_at", { ascending: false })
         .limit(5000),
+      db.from("visitor_sessions")
+        .select("session_id, started_at, last_seen_at, page_count, entry_page, exit_page, utm_source, utm_medium, utm_campaign, device, referrer")
+        .gte("started_at", rangeStart)
+        .order("started_at", { ascending: false })
+        .limit(2000),
     ]);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
