@@ -16,7 +16,7 @@ const DEVICE_NAMES: Record<string, string> = {
   bundle_ecg_band: "ECG + Rhythm Band Bundle",
 };
 
-const VALID_SKUS = Object.keys(DEVICE_NAMES);
+const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 
 // ─── Pincode lookup ─────────────────────────────────────────────
 async function lookupPincode(pincode: string): Promise<{ city: string; state: string } | null> {
