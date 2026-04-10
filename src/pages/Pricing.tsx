@@ -213,6 +213,15 @@ export default function PricingPage() {
     description: "Start free. Get weekly AI health reports, Nera Health Score, and voice assistant. Plans from ₹149/month with 7-day free trial. No credit card required.",
   });
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'ViewContent', {
+        content_name: 'Pricing Page',
+        content_category: 'Health Devices',
+      });
+    }
+  }, []);
+
   return (
     <SiteLayout>
       {/* SECTION 1 — HEADER */}
