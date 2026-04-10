@@ -61,6 +61,7 @@ const devices: DeviceData[] = [
       "Compatible with Post Heart Attack Recovery Programme",
     ],
     link: "/devices/sanketlife-ecg",
+    checkoutSku: "SANKET_LIFE_ECG",
     clinicalNote: "98.5% accuracy validated at Narayana Health & Sri Jayadeva Institute of Cardiovascular Sciences",
   },
   {
@@ -92,6 +93,7 @@ const devices: DeviceData[] = [
       "Compatible with Hypertension Control Programme",
     ],
     link: "/devices/easytouch-wellness",
+    checkoutSku: "EASYTOUCH_WELLNESS",
   },
   {
     id: "rhythm-band",
@@ -123,6 +125,7 @@ const devices: DeviceData[] = [
       "7-day battery life",
     ],
     link: "/devices/rhythm-band",
+    checkoutSku: "RHYTHM_BAND",
   },
   {
     id: "corebalance",
@@ -160,6 +163,7 @@ const devices: DeviceData[] = [
       "Compatible with Obesity Reversal Programme",
     ],
     link: "/devices/smart-scale",
+    checkoutSku: "SMART_SCALE",
   },
 ];
 
