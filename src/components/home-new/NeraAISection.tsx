@@ -295,7 +295,7 @@ export function NeraAISection() {
                 <p className="text-xs font-semibold text-white/90">Metabolic Data</p>
               </div>
               <TrendLine points={[20, 22, 35, 45, 40, 32, 25, 22]} color="#fbbf24" />
-              <p className="text-xs text-white/60 mt-2">Glucose spike pattern after meals</p>
+              <p className="text-xs text-white/60 mt-2">Metabolic wellness pattern after meals</p>
             </motion.div>
           </div>
 

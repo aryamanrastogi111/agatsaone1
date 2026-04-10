@@ -70,7 +70,7 @@ const deviceConfigs: Record<
     h1: "You have an EasyTouch Wellness Monitor",
     sub: "Download Agatsa One to activate your EasyTouch device and start tracking your metabolic health, BP, and SpO2 — all without needles.",
     highlight:
-      "EasyTouch Wellness · Optical Glucose + BP + SpO2 · No needles · No blood",
+      "EasyTouch Wellness · Metabolic Wellness + BP + SpO2 · No needles · No blood",
     steps: [
       "Download Agatsa One using the button below — it's free",
       "Create your account or sign in with your phone number",

@@ -363,7 +363,7 @@ export default function EasyTouchPlusProduct() {
 
           <AnimatedSection delay={0.3} className="text-center">
             <p className="text-xs text-muted-foreground max-w-xl mx-auto italic">
-              *EasyTouch Wellness measures bioelectrical metabolic markers. Not a blood glucose monitor.
+              *EasyTouch Wellness measures bioelectrical metabolic markers. Not a metabolic wellness monitor.
               Not intended to diagnose or treat any medical condition.
             </p>
           </AnimatedSection>
@@ -576,7 +576,7 @@ export default function EasyTouchPlusProduct() {
               {[
                 {
                   q: "Does it measure blood sugar?",
-                  a: "No. EasyTouch Wellness is not a blood glucose monitor. It measures bioelectrical metabolic markers that reflect how your body responds to food — what we call 'metabolic load'. It is not intended to diagnose or monitor any medical condition. If you need to monitor blood glucose, consult your doctor.",
+                  a: "No. EasyTouch Wellness is not a blood glucose monitor. It measures bioelectrical metabolic markers that reflect how your body responds to food — what we call 'metabolic load'. It is not intended to diagnose or monitor any medical condition. If you need medical-grade monitoring, consult your doctor.",
                 },
                 {
                   q: "Do I need to prick my finger?",
@@ -584,7 +584,7 @@ export default function EasyTouchPlusProduct() {
                 },
                 {
                   q: "How is this different from a glucometer?",
-                  a: "A glucometer measures blood sugar from a blood sample. EasyTouch Wellness measures your body's metabolic response through your fingertip — different measurement, different purpose.",
+                  a: "A glucometer measures blood from a sample. EasyTouch Wellness measures your body's metabolic response through your fingertip — different measurement, different purpose.",
                 },
                 {
                   q: "Do I need an Agatsa One subscription?",

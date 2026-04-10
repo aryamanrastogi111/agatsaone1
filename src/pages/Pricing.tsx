@@ -27,7 +27,7 @@ const plans = [
     features: [
       "Connect any Agatsa device",
       "Store and view all your readings",
-      "Manual health log (glucose, BP, weight, SpO₂)",
+      "Manual health log (metabolic wellness, BP, weight, SpO₂)",
       "Basic reading history — last 7 days",
       "10 minutes/month with Nera AI voice",
       "Nera AI analysis on readings",
@@ -66,7 +66,7 @@ const plans = [
       "All 5 Care Programmes (Cardiac, Hypertension, Diabetes, Weight, Corporate)",
       "Sleep intelligence — with Rhythm Band",
       "3-day recovery forecast — with Rhythm Band",
-      "3 lifestyle correlations (sleep vs ECG, glucose vs activity, etc.) — with Rhythm Band",
+      "3 lifestyle correlations (sleep vs ECG, metabolic wellness vs activity, etc.) — with Rhythm Band",
       "30 minutes/month with Nera AI voice assistant",
       "Share readings with doctors",
     ],
@@ -170,9 +170,9 @@ const faqs = [
   { q: "Is the free plan actually free? No credit card?", a: "Yes — completely free, forever. No credit card, no trial expiry. You get device connection, reading storage, manual health logging, and 10 minutes with Nera AI voice every month. No strings." },
   { q: "What is the 7-day free trial?", a: "When you first subscribe to any paid plan, you get 7 days completely free. The trial is handled by Apple App Store or Google Play — we never see your card details. You can cancel before day 7 and pay nothing." },
   { q: "What happens if I cancel?", a: "Your subscription ends at the billing period. Your reading history, device connections, and health data stay in the app forever — on the free plan. You never lose your data." },
-  { q: "Do I need a device to benefit from the paid plans?", a: "No. You can use Nera AI Weekly with manual health logs alone — no device needed. If you log your BP and glucose manually, Nera AI still generates your weekly report, health score, and city rank. Devices make it more convenient and add more signals, but they're optional." },
+  { q: "Do I need a device to benefit from the paid plans?", a: "No. You can use Nera AI Weekly with manual health logs alone — no device needed. If you log your BP and metabolic wellness data manually, Nera AI still generates your weekly report, health score, and city rank. Devices make it more convenient and add more signals, but they're optional." },
   { q: "What's the difference between Weekly and Premium? Do I need Premium?", a: "Most users are best served by Nera AI Weekly (₹149/month). Premium is specifically for rhythm band users who want deeper sleep science — chronotype analysis, temperature cycle tracking, predictive warnings based on HRV + temp patterns. If you don't have the rhythm band, Weekly gives you everything meaningful." },
-  { q: "What are 'lifestyle correlations'?", a: "Nera AI finds hidden patterns between your habits and your vitals. For example — 'Your ECG quality is 23% better on nights after 7,000+ steps' or 'Your fasting glucose is 18 mg/dL lower on days you sleep before 11pm'. Weekly gives you 3 correlations. Premium gives you unlimited." },
+  { q: "What are 'lifestyle correlations'?", a: "Nera AI finds hidden patterns between your habits and your vitals. For example — 'Your ECG quality is 23% better on nights after 7,000+ steps' or 'Your fasting metabolic score is better on days you sleep before 11pm'. Weekly gives you 3 correlations. Premium gives you unlimited." },
   { q: "Is Agatsa One a medical device?", a: "The Agatsa One app is a wellness monitoring aid. The hardware devices (SanketLife ECG, EasyTouch Wellness) are CDSCO Class B certified medical devices. AI insights from Nera are for informational purposes and do not constitute a diagnosis. Always consult your doctor for medical decisions." },
 ];
 
@@ -349,7 +349,7 @@ export default function PricingPage() {
               Talk to your health AI.<br />Not a chatbot.
             </h2>
             <p className="mt-4 text-white/70 text-[16px] max-w-md leading-relaxed">
-              Nera voice understands your readings, your history, and your health goals. Ask it anything — "Is my heart rate normal for my age?", "Why is my glucose high after lunch?", "Should I be worried about last night's ECG?". Real answers. Real time.
+              Nera voice understands your readings, your history, and your health goals. Ask it anything — "Is my heart rate normal for my age?", "Why is my metabolic load high after lunch?", "Should I be worried about last night's ECG?". Real answers. Real time.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               <span className="px-3 py-1.5 rounded-full bg-white/10 text-sm text-white/80">10 min free</span>
