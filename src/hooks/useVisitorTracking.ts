@@ -141,12 +141,14 @@ export function useVisitorTracking() {
   const sessionId = useRef(getSessionId());
   const subscribedRef = useRef(false);
   const isFirstPage = useRef(true);
-
-  const isAdminOrInternal =
-    location.pathname.startsWith("/admin") ||
-    location.pathname.startsWith("/sdk");
+  const isAdminRef = useRef(false);
 
   const device = typeof window !== "undefined" && window.innerWidth < 768 ? "mobile" : "desktop";
+
+  // Update admin check ref every render (no hook count change)
+  isAdminRef.current =
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/sdk");
 
   const trackPage = useCallback((pathname: string) => {
     if (!channelRef.current || !subscribedRef.current) return;
@@ -163,7 +165,7 @@ export function useVisitorTracking() {
 
   // Subscribe once on mount (for public pages)
   useEffect(() => {
-    if (isAdminOrInternal) return;
+    if (isAdminRef.current) return;
 
     captureUtmParams();
     incrementDailyVisitor();
@@ -190,11 +192,11 @@ export function useVisitorTracking() {
       channelRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAdminOrInternal]);
+  }, []);
 
   // Update presence and log page view on every navigation
   useEffect(() => {
-    if (isAdminOrInternal) return;
+    if (isAdminRef.current) return;
     trackPage(location.pathname);
     logPageView(location.pathname, sessionId.current);
 
@@ -203,5 +205,5 @@ export function useVisitorTracking() {
     } else {
       upsertSession(sessionId.current, location.pathname, false);
     }
-  }, [location.pathname, isAdminOrInternal, trackPage]);
+  }, [location.pathname, trackPage]);
 }
