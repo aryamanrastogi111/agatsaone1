@@ -205,9 +205,10 @@ export default function Analytics() {
 
   const kpis = [
     { label: `Revenue (${rangeLabel})`, value: fmt(kpiStats.totalRevenue), sub: `${kpiStats.paidOrders} paid orders`, icon: IndianRupee, accent: "bg-green-100 text-green-600" },
-    { label: "Today", value: fmt(kpiStats.todayRevenue), sub: `${kpiStats.todayOrders} orders today`, icon: Calendar, accent: "bg-orange-100 text-orange-600" },
+    { label: `Visitors (${rangeLabel})`, value: kpiStats.totalVisitors.toLocaleString("en-IN"), sub: "total unique visitors", icon: Users, accent: "bg-blue-100 text-blue-600" },
     { label: `Paid Orders (${rangeLabel})`, value: String(kpiStats.paidOrders), sub: `of ${kpiStats.totalOrders} total`, icon: TrendingUp, accent: "bg-emerald-100 text-emerald-600" },
     { label: `Avg Order Value (${rangeLabel})`, value: kpiStats.paidOrders ? fmt(kpiStats.avgOrderValue) : "₹0", sub: "per paid order", icon: Package, accent: "bg-purple-100 text-purple-600" },
+    { label: "Today", value: fmt(kpiStats.todayRevenue), sub: `${kpiStats.todayOrders} orders today`, icon: Calendar, accent: "bg-orange-100 text-orange-600" },
   ];
 
   if (loading) return (
