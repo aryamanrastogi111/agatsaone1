@@ -7,6 +7,7 @@ import { EmiLine } from "@/components/EmiLine";
 import { SiteLayout } from "@/components/SiteLayout";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { Button } from "@/components/ui/button";
+import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
 import sanketlifeImg from "@/assets/sanketlife-device-app.webp";
 import easytouchImg from "@/assets/easytouch-wellness-hero.webp";
 import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
