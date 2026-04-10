@@ -457,9 +457,18 @@ export default function Inventory() {
                         </div>
                       </td>
                       <td className="px-4 py-3 text-right">
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${isOut ? "bg-red-100 text-red-700" : isLow ? "bg-yellow-100 text-yellow-700" : "bg-green-100 text-green-700"}`}>
-                          {isOut ? "Out of Stock" : isLow ? "Low Stock" : "In Stock"}
-                        </span>
+                        <div className="flex items-center justify-end gap-2">
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${isOut ? "bg-red-100 text-red-700" : isLow ? "bg-yellow-100 text-yellow-700" : "bg-green-100 text-green-700"}`}>
+                            {isOut ? "Out of Stock" : isLow ? "Low Stock" : "In Stock"}
+                          </span>
+                          <button
+                            onClick={() => openRestock(row)}
+                            className="text-xs px-2.5 py-1 bg-green-50 text-green-700 hover:bg-green-100 rounded-lg font-medium transition-colors border border-green-200"
+                            title="Quick Restock"
+                          >
+                            + Restock
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
