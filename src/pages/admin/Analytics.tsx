@@ -125,7 +125,20 @@ export default function Analytics() {
     rangeOrders.forEach((o: any) => { statusMap[o.status] = (statusMap[o.status] ?? 0) + 1; });
     setStatusData(Object.entries(statusMap).map(([name, value]) => ({ name, value })));
 
-    // Top products
+    // Conversion funnel
+    const avgDailyVisitors = (dailyRes.data ?? []).length > 0
+      ? Math.round((dailyRes.data ?? []).reduce((s: number, d: any) => s + (d.peak_visitors || 0), 0) / (dailyRes.data ?? []).length) * days
+      : rangeOrders.length * 5; // estimate if no daily stats
+    const totalCheckouts = rangeOrders.length; // all orders created = checkout attempts
+    const totalPaid = rangePaid.length;
+    const totalCancelled = rangeOrders.filter((o: any) => ["cancelled", "refunded"].includes(o.status)).length;
+    setFunnelData([
+      { stage: "Visitors (est.)", count: avgDailyVisitors, color: "#3b82f6" },
+      { stage: "Checkout Started", count: totalCheckouts, color: "#8b5cf6" },
+      { stage: "Payment Completed", count: totalPaid, color: "#10b981" },
+      { stage: "Cancelled/Refunded", count: totalCancelled, color: "#ef4444" },
+    ]);
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const pMap: Record<string, { name: string; revenue: number; qty: number }> = {};
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
