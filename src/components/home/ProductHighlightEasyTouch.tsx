@@ -100,10 +100,10 @@ export function ProductHighlightEasyTouch() {
                 {isSaleActive() ? (
                   <>
                     <span className="text-xl text-muted-foreground line-through">₹3,999</span>
-                    <span className="text-2xl font-bold text-foreground">₹2,999</span>
+                    <span className="text-2xl font-bold text-foreground">₹3,999</span>
                   </>
                 ) : (
-                  <span className="text-2xl font-bold text-foreground">₹2,999</span>
+                  <span className="text-2xl font-bold text-foreground">₹3,999</span>
                 )}
               </div>
             </div>

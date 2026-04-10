@@ -8,7 +8,7 @@ import agatsaLogo from "@/assets/agatsa-logo.webp";
 // ─── Exact backend SKUs — do NOT change these strings ──────────
 const DEVICE_CATALOG: Record<string, { name: string; amountPaise: number }> = {
   ecg_bundle:      { name: "SanketLife ECG",           amountPaise: 499900 },
-  band_sub:        { name: "EasyTouch Rhythm Band",    amountPaise: 299900 },
+  band_sub:        { name: "EasyTouch Rhythm Band",    amountPaise: 399900 },
   scale_sub:       { name: "Agatsa Smart Scale",       amountPaise: 249900 },
   wellness_sub:    { name: "EasyTouch Wellness",       amountPaise: 399900 },
   multivital:      { name: "Agatsa MultiVital",        amountPaise: 399900 },

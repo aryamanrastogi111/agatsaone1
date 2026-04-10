@@ -58,14 +58,14 @@ const relatedDevices = [
 export default function RhythmBandProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
-  useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 2999);
+  useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 3999);
   const handleBuy = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["band_sub"], content_name: "EasyTouch Rhythm Band", content_type: "product", value: 2999, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["band_sub"], content_name: "EasyTouch Rhythm Band", content_type: "product", value: 3999, currency: "INR" }); } catch {}
     }
     navigate("/checkout?sku=band_sub");
   };
-  useSEO({ title: "EasyTouch Rhythm Band — 24/7 Sleep, HRV, SpO2 Monitoring | Agatsa One", description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Works with Nera AI. ₹2,999. Compatible with all 5 Care Programmes." });
+  useSEO({ title: "EasyTouch Rhythm Band — 24/7 Sleep, HRV, SpO2 Monitoring | Agatsa One", description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Works with Nera AI. ₹3,999. Compatible with all 5 Care Programmes." });
 
   return (
     <SiteLayout>
@@ -84,9 +84,9 @@ export default function RhythmBandProduct() {
               <p className="text-xl md:text-2xl font-bold text-green-600 dark:text-green-400 mt-3">24/7 health monitoring that never sleeps.</p>
               <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">The EasyTouch Rhythm Band tracks your heart, sleep, steps, SpO2, and stress score around the clock — providing Nera AI with the continuous data it needs to build a complete picture of your health and recovery.</p>
               <div className="mt-6">
-                <span className="text-4xl font-extrabold text-foreground">₹2,999</span>
+                <span className="text-4xl font-extrabold text-foreground">₹3,999</span>
                 <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
-                <EmiLine price={2999} />
+                <EmiLine price={3999} />
                 <StockUrgencyBar productKey="easytouch-rhythm" className="mt-3" />
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                   <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
@@ -99,7 +99,7 @@ export default function RhythmBandProduct() {
                 <span className="text-sm text-muted-foreground ml-1">4.5/5 (612 reviews)</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Rhythm Band — ₹2,999</Button>
+                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Rhythm Band — ₹3,999</Button>
                 <Button asChild variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">
                   <Link to="/app?device=rhythm">Download Agatsa One App (free)</Link>
                 </Button>
@@ -344,7 +344,7 @@ export default function RhythmBandProduct() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready for 24/7 health monitoring?</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Pair in 30 seconds. Wear it all week. Let Nera AI do the rest.</p>
-          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Rhythm Band — ₹2,999</Button>
+          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Rhythm Band — ₹3,999</Button>
         </div>
       </section>
     </SiteLayout>
