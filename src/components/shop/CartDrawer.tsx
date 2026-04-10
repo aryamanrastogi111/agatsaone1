@@ -454,6 +454,9 @@ export const CartDrawer = ({
                   ))}
                 </div>
 
+                {/* Cross-sell / Upsell */}
+                <CartCrossSell />
+
                 {/* Footer */}
                 <div className="flex-shrink-0 p-6 pt-4 border-t space-y-3 bg-background">
                   <div className="flex justify-between items-center">
