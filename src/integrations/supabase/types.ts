@@ -503,6 +503,36 @@ export type Database = {
         }
         Relationships: []
       }
+      page_views: {
+        Row: {
+          created_at: string
+          id: string
+          page_path: string
+          session_id: string
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          page_path: string
+          session_id: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          page_path?: string
+          session_id?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       product_images: {
         Row: {
           created_at: string
@@ -1034,6 +1064,51 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      visitor_sessions: {
+        Row: {
+          device: string | null
+          entry_page: string | null
+          exit_page: string | null
+          id: string
+          last_seen_at: string
+          page_count: number
+          referrer: string | null
+          session_id: string
+          started_at: string
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          device?: string | null
+          entry_page?: string | null
+          exit_page?: string | null
+          id?: string
+          last_seen_at?: string
+          page_count?: number
+          referrer?: string | null
+          session_id: string
+          started_at?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          device?: string | null
+          entry_page?: string | null
+          exit_page?: string | null
+          id?: string
+          last_seen_at?: string
+          page_count?: number
+          referrer?: string | null
+          session_id?: string
+          started_at?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
         }
         Relationships: []
       }
