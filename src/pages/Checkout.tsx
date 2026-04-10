@@ -436,7 +436,9 @@ export default function CheckoutPage() {
             <Button
               onClick={() => setStep(2)}
               disabled={!step1Valid}
-              className="w-full rounded-xl py-6 text-base font-semibold mt-2"
+              className={`w-full rounded-xl py-6 text-base font-semibold mt-2 ${
+                !step1Valid ? "!bg-gray-300 !text-gray-500 !opacity-100 cursor-not-allowed" : ""
+              }`}
             >
               Continue to Payment
             </Button>
