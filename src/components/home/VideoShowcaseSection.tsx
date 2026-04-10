@@ -59,7 +59,7 @@ export function VideoShowcaseSection() {
             See It In Action
           </h2>
           <p className="mt-3 text-lg text-white/60">
-            Real demos, real results
+            Real people, real results
           </p>
         </div>
 
