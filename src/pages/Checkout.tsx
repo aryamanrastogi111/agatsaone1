@@ -74,9 +74,22 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState("");
   const [paying, setPaying] = useState(false);
 
-  // ─── Preload Razorpay ──────────────────────────────────────
+  // ─── Preload Razorpay + InitiateCheckout pixel ──────────────
   useEffect(() => {
     loadRazorpay();
+    if (typeof window !== "undefined" && (window as any).fbq && skus.length > 0) {
+      try {
+        (window as any).fbq("track", "InitiateCheckout", {
+          content_ids: skus,
+          content_type: "product",
+          num_items: skus.length,
+          value: totalRupees,
+          currency: "INR",
+        });
+      } catch (e) {
+        console.error("Meta Pixel InitiateCheckout error:", e);
+      }
+    }
   }, []);
 
   // ─── Pincode auto-fill ─────────────────────────────────────
