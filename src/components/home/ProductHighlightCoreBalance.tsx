@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Scale, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import corebalanceImg from "@/assets/corebalance-hero.webp";
 
 export function ProductHighlightCoreBalance() {
+  const { prices, fmt } = usePricing();
   const features = [
     { icon: Scale, text: "10+ body composition metrics" },
     { icon: TrendingUp, text: "Track muscle, fat & water" },
@@ -79,7 +81,7 @@ export function ProductHighlightCoreBalance() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <span className="text-2xl font-bold text-foreground">₹2,499</span>
+              <span className="text-2xl font-bold text-foreground">{fmt(prices.scale_sub)}</span>
             </div>
           </motion.div>
         </div>

@@ -231,8 +231,8 @@ const EasyTouchRhythmProduct = () => {
                       <ShoppingCart className="h-5 w-5" />
                     )}
                     <span className="hidden sm:inline">Grab Yours —</span>
-                    <span className="line-through text-primary-foreground/60">₹3,999</span>
-                    <span className="font-bold">₹3,999</span>
+                    <span className="line-through text-primary-foreground/60">{bp}</span>
+                    <span className="font-bold">{bp}</span>
                   </Button>
                 )}
               </div>
@@ -288,9 +288,9 @@ const EasyTouchRhythmProduct = () => {
                     <ShoppingCart className="h-5 w-5" />
                   )}
                   {isSaleActive() ? (
-                    <>Add to Cart — ₹3,999</>
+                    <>Add to Cart — {bp}</>
                   ) : (
-                    "Add to Cart — ₹3,999"
+                    "Add to Cart — {bp}"
                   )}
                 </Button>
                 <Button 
@@ -384,8 +384,8 @@ const EasyTouchRhythmProduct = () => {
                   <>
                     <div className="text-xs text-primary font-medium mb-1">🇮🇳 Republic Day Offer</div>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-foreground">₹3,999</span>
-                      <span className="text-sm text-muted-foreground line-through">₹3,999</span>
+                      <span className="text-2xl font-bold text-foreground">{bp}</span>
+                      <span className="text-sm text-muted-foreground line-through">{bp}</span>
                     </div>
                     <p className="text-[10px] text-muted-foreground mt-1">Use code {SALE_CODE}</p>
                   </>
@@ -393,7 +393,7 @@ const EasyTouchRhythmProduct = () => {
                   <>
                     <div className="text-xs text-primary font-medium mb-1">Introductory Offer</div>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-foreground">₹3,999</span>
+                      <span className="text-2xl font-bold text-foreground">{bp}</span>
                       <span className="text-sm text-muted-foreground line-through">₹4,999</span>
                     </div>
                   </>
@@ -458,7 +458,7 @@ const EasyTouchRhythmProduct = () => {
                   ) : (
                     <ShoppingCart className="h-5 w-5" />
                   )}
-                  Buy Rhythm Band — ₹3,999
+                  Buy Rhythm Band — {bp}
                 </Button>
               </motion.div>
             </div>
@@ -1022,7 +1022,7 @@ const EasyTouchRhythmProduct = () => {
                     <th className="p-4 bg-primary text-primary-foreground font-semibold min-w-[180px]">
                       <div className="flex flex-col items-center gap-1">
                         <span className="text-lg">EasyTouch Rhythm</span>
-                        <span className="text-xs font-normal opacity-80">₹3,999</span>
+                        <span className="text-xs font-normal opacity-80">{bp}</span>
                       </div>
                     </th>
                     <th className="p-4 bg-muted/50 font-semibold text-muted-foreground min-w-[140px]">
@@ -1447,8 +1447,8 @@ const EasyTouchRhythmProduct = () => {
                     <span className="text-sm font-medium text-primary">Republic Day Discount Active</span>
                   </div>
                   <div className="flex items-center justify-center gap-4 mb-2">
-                    <span className="text-4xl font-bold text-foreground">₹3,999</span>
-                    <span className="text-xl text-muted-foreground line-through">₹3,999</span>
+                    <span className="text-4xl font-bold text-foreground">{bp}</span>
+                    <span className="text-xl text-muted-foreground line-through">{bp}</span>
                     <span className="bg-gradient-to-r from-orange-500 to-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                       10% OFF
                     </span>
@@ -1459,7 +1459,7 @@ const EasyTouchRhythmProduct = () => {
               ) : (
                 <>
                   <div className="flex items-center justify-center gap-4 mb-4">
-                    <span className="text-4xl font-bold text-foreground">₹3,999</span>
+                    <span className="text-4xl font-bold text-foreground">{bp}</span>
                     <span className="text-xl text-muted-foreground line-through">₹4,999</span>
                     <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
                       Save ₹2,000
@@ -1480,7 +1480,7 @@ const EasyTouchRhythmProduct = () => {
                 ) : (
                   <ShoppingCart className="h-5 w-5" />
                 )}
-                {isSaleActive() ? "Grab Yours — ₹3,999" : "Add to Cart"}
+                {isSaleActive() ? "Grab Yours — {bp}" : "Add to Cart"}
               </Button>
               
               {isSaleActive() && (
@@ -1509,7 +1509,7 @@ const EasyTouchRhythmProduct = () => {
       </section>
       <StickyAddToCart
         productName="EasyTouch Rhythm"
-        price={isSaleActive() ? "₹3,999" : "₹3,999"}
+        price={isSaleActive() ? bp : bp}
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="primary"

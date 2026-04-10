@@ -3,16 +3,17 @@ import { useSearchParams, Link } from "react-router-dom";
 import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock, MapPin, User, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
 
-// ─── Exact backend SKUs — do NOT change these strings ──────────
-const DEVICE_CATALOG: Record<string, { name: string; amountPaise: number }> = {
-  ecg_bundle:      { name: "SanketLife ECG",           amountPaise: 499900 },
-  band_sub:        { name: "EasyTouch Rhythm Band",    amountPaise: 399900 },
-  scale_sub:       { name: "Agatsa Smart Scale",       amountPaise: 249900 },
-  wellness_sub:    { name: "EasyTouch Wellness",       amountPaise: 399900 },
-  multivital:      { name: "Agatsa MultiVital",        amountPaise: 399900 },
-  bundle_ecg_band: { name: "ECG + Rhythm Band Bundle", amountPaise: 749900 },
+// ─── Device display names ───────────────────────────────────────
+const DEVICE_NAMES: Record<string, string> = {
+  ecg_bundle:      "SanketLife ECG",
+  band_sub:        "EasyTouch Rhythm Band",
+  scale_sub:       "Agatsa Smart Scale",
+  wellness_sub:    "EasyTouch Wellness",
+  multivital:      "Agatsa MultiVital",
+  bundle_ecg_band: "ECG + Rhythm Band Bundle",
 };
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
@@ -51,8 +52,9 @@ type PageState = "form" | "processing" | "success" | "error";
 
 export default function CheckoutPage() {
   const [searchParams] = useSearchParams();
+  const { prices, fmt } = usePricing();
   const skuParam = searchParams.get("sku") || "";
-  const skus = skuParam.split(",").filter((s) => DEVICE_CATALOG[s]);
+  const skus = skuParam.split(",").filter((s) => s in DEVICE_NAMES);
 
   // ─── Form state ────────────────────────────────────────────
   const [step, setStep] = useState<CheckoutStep>(1);
@@ -76,7 +78,7 @@ export default function CheckoutPage() {
   const [paying, setPaying] = useState(false);
 
   // ─── Computed ──────────────────────────────────────────────
-  const items = skus.map((s) => ({ sku: s, ...DEVICE_CATALOG[s] }));
+  const items = skus.map((s) => ({ sku: s, name: DEVICE_NAMES[s], amountPaise: (prices[s as DeviceSku] || 0) * 100 }));
   const totalPaise = items.reduce((sum, d) => sum + d.amountPaise, 0);
   const totalRupees = totalPaise / 100;
 

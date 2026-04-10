@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useNavigate } from "react-router-dom";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -31,11 +32,13 @@ const fadeUp = {
 export default function SanketLifeECGProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
-  useMetaPixelViewContent("SANKET_LIFE_ECG", "SanketLife 12-Lead ECG", 4999);
+  const { prices, fmt } = usePricing();
+  const ecgPrice = prices.ecg_bundle;
+  useMetaPixelViewContent("SANKET_LIFE_ECG", "SanketLife 12-Lead ECG", ecgPrice);
 
   const handleBuy = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["ecg_bundle"], content_name: "SanketLife ECG", content_type: "product", value: 4999, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["ecg_bundle"], content_name: "SanketLife ECG", content_type: "product", value: ecgPrice, currency: "INR" }); } catch {}
     }
     navigate("/checkout?sku=ecg_bundle");
   };
@@ -98,9 +101,9 @@ export default function SanketLifeECGProduct() {
 
               {/* Price */}
               <div className="mt-8">
-                <span className="text-4xl font-extrabold text-foreground">₹4,999</span>
+                <span className="text-4xl font-extrabold text-foreground">{fmt(ecgPrice)}</span>
                 <span className="text-sm text-muted-foreground ml-2">incl. GST</span>
-                <EmiLine price={4999} />
+                <EmiLine price={ecgPrice} />
                 <StockUrgencyBar productKey="sanketlife" className="mt-3" />
                 <div className="flex items-center gap-1 mt-2">
                   {[...Array(5)].map((_, i) => (
@@ -118,7 +121,7 @@ export default function SanketLifeECGProduct() {
                   size="lg"
                   className="rounded-full px-8 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.35)]"
                 >
-                  Check Your Heart Anytime — ₹4,999
+                  Check Your Heart Anytime — {fmt(ecgPrice)}
                 </Button>
                 <Button asChild variant="outline" className="rounded-full px-8 text-base border-2 border-primary text-primary">
                   <Link to="/app?device=ecg">Download Agatsa One App (free)</Link>
@@ -269,7 +272,7 @@ export default function SanketLifeECGProduct() {
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
-            Check Your Heart Anytime — ₹4,999
+            Check Your Heart Anytime — {fmt(ecgPrice)}
           </Button>
           <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
         </div>
@@ -553,7 +556,7 @@ export default function SanketLifeECGProduct() {
               size="lg"
               className="rounded-full px-10 text-base bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
             >
-              Get SanketLife + Nera AI — ₹4,999
+              Get SanketLife + Nera AI — {fmt(ecgPrice)}
             </Button>
             <p className="text-[hsl(240,10%,70%)] text-sm mt-3">Includes 3 months Nera AI Premium free</p>
           </div>
@@ -623,7 +626,7 @@ export default function SanketLifeECGProduct() {
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
-            Buy SanketLife ECG — ₹4,999
+            Buy SanketLife ECG — {fmt(ecgPrice)}
           </Button>
           <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
         </div>
@@ -682,7 +685,7 @@ export default function SanketLifeECGProduct() {
                   ["Availability", "By appointment", "Anytime, anywhere"],
                   ["Time to result", "Hours to days", "15 seconds"],
                   ["Monitoring", "One-time snapshot", "Daily, on-demand"],
-                  ["Cost per ECG", "₹300–₹1,500", "Unlimited for ₹4,999"],
+                  ["Cost per ECG", "₹300–₹1,500", `Unlimited for ${fmt(ecgPrice)}`],
                   ["Report sharing", "Physical copy", "Instant digital PDF"],
                   ["AI analysis", "Not available", "Nera AI included"],
                   ["Trend tracking", "No", "Continuous timeline"],
@@ -792,7 +795,7 @@ export default function SanketLifeECGProduct() {
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
-            Check Your Heart Anytime — ₹4,999
+            Check Your Heart Anytime — {fmt(ecgPrice)}
           </Button>
           <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
         </div>
@@ -807,7 +810,7 @@ export default function SanketLifeECGProduct() {
               <span className="text-primary">without waiting for appointments.</span>
             </h2>
             <p className="text-lg text-muted-foreground mt-4">
-              Think about what you get for ₹4,999:
+              Think about what you get for {fmt(ecgPrice)}:
             </p>
           </motion.div>
 
@@ -883,7 +886,7 @@ export default function SanketLifeECGProduct() {
               size="lg"
               className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
             >
-              Check Your Heart Anytime — ₹4,999
+              Check Your Heart Anytime — {fmt(ecgPrice)}
             </Button>
             <p className="text-primary-foreground/60 text-sm mt-4">
               Free shipping · 1-year warranty · 3 months Nera AI Premium included

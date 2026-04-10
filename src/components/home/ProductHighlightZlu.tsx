@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Moon, Leaf, Battery } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import zluImg from "@/assets/zlu-device-new.webp";
 
 export function ProductHighlightZlu() {
+  const { prices, fmt } = usePricing();
   const features = [
     { icon: Moon, text: "Gentle, natural sleep induction" },
     { icon: Leaf, text: "No medication needed" },
@@ -64,7 +66,7 @@ export function ProductHighlightZlu() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <span className="text-2xl font-bold text-foreground">₹4,999</span>
+              <span className="text-2xl font-bold text-foreground">{fmt(prices.ecg_bundle)}</span>
             </div>
           </motion.div>
 

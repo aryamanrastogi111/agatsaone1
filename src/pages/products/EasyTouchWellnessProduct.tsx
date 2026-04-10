@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useNavigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
@@ -54,11 +55,13 @@ const relatedDevices = [
 export default function EasyTouchWellnessProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
-  useMetaPixelViewContent("EASYTOUCH_WELLNESS", "EasyTouch Wellness", 3999);
+  const { prices, fmt } = usePricing();
+  const wellnessPrice = prices.wellness_sub;
+  useMetaPixelViewContent("EASYTOUCH_WELLNESS", "EasyTouch Wellness", wellnessPrice);
 
   const handleBuy = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["wellness_sub"], content_name: "EasyTouch Wellness", content_type: "product", value: 3999, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["wellness_sub"], content_name: "EasyTouch Wellness", content_type: "product", value: wellnessPrice, currency: "INR" }); } catch {}
     }
     navigate("/checkout?sku=wellness_sub");
   };
@@ -97,9 +100,9 @@ export default function EasyTouchWellnessProduct() {
               </p>
 
               <div className="mt-6">
-                <span className="text-4xl font-extrabold text-foreground">₹3,999</span>
+                <span className="text-4xl font-extrabold text-foreground">{fmt(wellnessPrice)}</span>
                 <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
-                <EmiLine price={3999} />
+                <EmiLine price={wellnessPrice} />
                 <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                   <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
@@ -117,7 +120,7 @@ export default function EasyTouchWellnessProduct() {
 
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
                 <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-                  Buy EasyTouch Wellness — ₹3,999
+                  Buy EasyTouch Wellness — {fmt(wellnessPrice)}
                 </Button>
                 <Button asChild variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">
                   <Link to="/app?device=easytouch">Download Agatsa One App (free)</Link>
@@ -363,7 +366,7 @@ export default function EasyTouchWellnessProduct() {
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Your metabolic health, in your hands.</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Your first reading takes under 15 seconds. No needles. No blood. Just insight.</p>
           <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">
-            Buy EasyTouch Wellness — ₹3,999
+            Buy EasyTouch Wellness — {fmt(wellnessPrice)}
           </Button>
         </div>
       </section>

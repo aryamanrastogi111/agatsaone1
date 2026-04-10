@@ -7,6 +7,7 @@ import { EmiLine } from "@/components/EmiLine";
 import { SiteLayout } from "@/components/SiteLayout";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { Button } from "@/components/ui/button";
+import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
 import sanketlifeImg from "@/assets/sanketlife-device-app.webp";
 import easytouchImg from "@/assets/easytouch-wellness-hero.webp";
 import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
@@ -19,9 +20,7 @@ interface DeviceData {
   name: string;
   tagline: string;
   keyStat: string;
-  price: string;
-  priceNum: string;
-  emiDisplay: string;
+  sku: DeviceSku;
   rating: string;
   reviews: string;
   measures: string[];
@@ -39,9 +38,7 @@ const devices: DeviceData[] = [
     name: "SanketLife 12-Lead ECG Monitor",
     tagline: "Hospital-grade ECG in your shirt pocket",
     keyStat: "98.5% accuracy validated at Narayana Health & Sri Jayadeva Institute",
-    price: "₹4,999",
-    priceNum: "4,999",
-    emiDisplay: "No-cost EMI from ₹417/month",
+    sku: "ecg_bundle",
     rating: "4.8",
     reviews: "1,247",
     measures: [
@@ -71,9 +68,7 @@ const devices: DeviceData[] = [
     name: "EasyTouch Wellness Metabolic Health Monitor",
     tagline: "Metabolic health, BP, SpO2 — no needles, no cuffs",
     keyStat: "8 vitals in 60 seconds — 15,000+ active users across India",
-    price: "₹3,999",
-    priceNum: "3,999",
-    emiDisplay: "No-cost EMI from ₹334/month",
+    sku: "wellness_sub",
     rating: "4.6",
     reviews: "834",
     measures: [
@@ -101,9 +96,7 @@ const devices: DeviceData[] = [
     name: "EasyTouch Rhythm Wellness Band",
     tagline: "24/7 health monitoring on your wrist",
     keyStat: "Sleep, HRV, steps, SpO2 — continuous 24/7 monitoring",
-    price: "₹3,999",
-    priceNum: "3,999",
-    emiDisplay: "No-cost EMI from ₹334/month",
+    sku: "band_sub",
     rating: "4.5",
     reviews: "612",
     measures: [
@@ -133,9 +126,7 @@ const devices: DeviceData[] = [
     name: "Agatsa Smart Scale",
     tagline: "14 body metrics. One step. One app.",
     keyStat: "BMI, body fat, muscle mass — 14 metrics in 5 seconds",
-    price: "₹2,499",
-    priceNum: "2,499",
-    emiDisplay: "No-cost EMI from ₹209/month",
+    sku: "scale_sub",
     rating: "4.7",
     reviews: "423",
     measures: [
@@ -170,6 +161,8 @@ const devices: DeviceData[] = [
 function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
   const [measuresOpen, setMeasuresOpen] = useState(false);
   const [featuresOpen, setFeaturesOpen] = useState(false);
+  const { prices, fmt, emi, loading } = usePricing();
+  const price = prices[device.sku];
 
   return (
     <motion.div
@@ -199,13 +192,17 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
 
         <div className="mt-4">
           <div className="flex items-baseline gap-3">
-            <span className="text-3xl font-extrabold text-foreground">{device.price}</span>
+            {loading ? (
+              <span className="h-8 w-24 bg-muted animate-pulse rounded" />
+            ) : (
+              <span className="text-3xl font-extrabold text-foreground">{fmt(price)}</span>
+            )}
             <span className="flex items-center gap-1 text-sm text-muted-foreground">
               <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
               {device.rating}/5 ({device.reviews} reviews)
             </span>
           </div>
-          <p className="text-xs text-primary font-medium mt-0.5">{device.emiDisplay}</p>
+          <p className="text-xs text-primary font-medium mt-0.5">{emi(price)}</p>
           <StockUrgencyBar productKey={device.id} className="mt-3" />
         </div>
 
@@ -249,7 +246,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
 
         <div className="flex gap-3 mt-6">
           <Button asChild className="flex-1 rounded-full">
-            <Link to={`/checkout?sku=${device.checkoutSku}`}>Buy Now — {device.price}</Link>
+            <Link to={`/checkout?sku=${device.checkoutSku}`}>Buy Now — {fmt(price)}</Link>
           </Button>
           <Button asChild variant="outline" className="flex-1 rounded-full">
             <Link to={device.link}>Learn More</Link>

@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { useVisitorTracking } from "@/hooks/useVisitorTracking";
+import { useDevicePricingFetch, PricingProvider } from "@/hooks/useDevicePricing";
 
 // New Agatsa One pages
 import Home from "./pages/Home";
@@ -84,97 +85,106 @@ function VisitorTracker() {
   return null;
 }
 
+function AppWithPricing() {
+  const pricing = useDevicePricingFetch();
+  return (
+    <PricingProvider value={pricing}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <VisitorTracker />
+          <Routes>
+            {/* Public marketing pages */}
+            <Route path="/" element={<Home />} />
+<Route path="/devices" element={<DevicesPage />} />
+            <Route path="/devices/sanketlife-ecg" element={<SanketLifeECGProduct />} />
+            <Route path="/devices/easytouch-wellness" element={<EasyTouchWellnessProduct />} />
+            <Route path="/devices/rhythm-band" element={<RhythmBandProduct />} />
+            <Route path="/devices/smart-scale" element={<SmartScaleProduct />} />
+            <Route path="/programmes" element={<ProgrammesPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/for-doctors" element={<ForDoctors />} />
+            <Route path="/for-hospitals" element={<ForHospitals />} />
+            <Route path="/for-corporates" element={<ForCorporates />} />
+            <Route path="/app" element={<AppDownload />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/shipping-policy" element={<ShippingPolicy />} />
+            <Route path="/return-policy" element={<ReturnPolicy />} />
+            <Route path="/data-deletion" element={<DataDeletion />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/partner" element={<Partner />} />
+            <Route path="/demo" element={<Demo />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+
+            <Route path="/d/:code" element={<DeviceActivation />} />
+            <Route path="/r/:code" element={<ReferralPage />} />
+
+            {/* Redirects */}
+            <Route path="/download" element={<Navigate to="/app" replace />} />
+            <Route path="/ecg" element={<Navigate to="/devices/sanketlife-ecg" replace />} />
+            <Route path="/band" element={<Navigate to="/devices/rhythm-band" replace />} />
+
+            {/* SDK Portal */}
+            <Route path="/sdk" element={<SDKLanding />} />
+            <Route path="/sdk/auth" element={<SDKAuth />} />
+            <Route path="/sdk/dashboard" element={<SDKDashboard />} />
+            <Route path="/sdk/devices" element={<SDKDevices />} />
+            <Route path="/sdk/downloads" element={<SDKDownloads />} />
+            <Route path="/sdk/credits" element={<SDKCredits />} />
+            <Route path="/sdk/docs" element={<SDKDocs />} />
+            <Route path="/sdk/support" element={<SDKSupport />} />
+            <Route path="/sdk/admin" element={<SDKAdmin />} />
+
+            {/* Admin Panel */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="products" element={<ProductsList />} />
+              <Route path="products/new" element={<ProductForm />} />
+              <Route path="products/:id/edit" element={<ProductForm />} />
+              <Route path="orders" element={<OrdersList />} />
+              <Route path="orders/:id" element={<OrderDetail />} />
+              <Route path="customers" element={<AdminCustomers />} />
+              <Route path="coupons" element={<AdminCoupons />} />
+              <Route path="reviews" element={<AdminReviews />} />
+              <Route path="inventory" element={<AdminInventory />} />
+              <Route path="subscriptions" element={<AdminSubscriptions />} />
+              <Route path="shipping" element={<AdminShipping />} />
+              <Route path="delivery-slips" element={<AdminDeliverySlips />} />
+              <Route path="returns" element={<AdminReturns />} />
+              <Route path="leads" element={<AdminLeads />} />
+              <Route path="tickets" element={<AdminTickets />} />
+              <Route path="analytics" element={<AdminAnalytics />} />
+              <Route path="team" element={<AdminTeam />} />
+              <Route path="settings" element={<AdminSettings />} />
+              <Route path="integrations" element={<AdminIntegrations />} />
+              <Route path="activity-logs" element={<AdminActivityLogs />} />
+              <Route path="live" element={<AdminLiveActivity />} />
+              <Route path="email-preview" element={<AdminEmailPreview />} />
+              <Route path="pixels" element={<AdminPixels />} />
+            </Route>
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </PricingProvider>
+  );
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <VisitorTracker />
-        <Routes>
-          {/* Public marketing pages */}
-          <Route path="/" element={<Home />} />
-<Route path="/devices" element={<DevicesPage />} />
-          <Route path="/devices/sanketlife-ecg" element={<SanketLifeECGProduct />} />
-          <Route path="/devices/easytouch-wellness" element={<EasyTouchWellnessProduct />} />
-          <Route path="/devices/rhythm-band" element={<RhythmBandProduct />} />
-          <Route path="/devices/smart-scale" element={<SmartScaleProduct />} />
-          <Route path="/programmes" element={<ProgrammesPage />} />
-          <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/for-doctors" element={<ForDoctors />} />
-          <Route path="/for-hospitals" element={<ForHospitals />} />
-          <Route path="/for-corporates" element={<ForCorporates />} />
-          <Route path="/app" element={<AppDownload />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/shipping-policy" element={<ShippingPolicy />} />
-          <Route path="/return-policy" element={<ReturnPolicy />} />
-          <Route path="/data-deletion" element={<DataDeletion />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/press" element={<Press />} />
-          <Route path="/partner" element={<Partner />} />
-          <Route path="/demo" element={<Demo />} />
-          <Route path="/cookie-policy" element={<CookiePolicy />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-
-          <Route path="/d/:code" element={<DeviceActivation />} />
-          <Route path="/r/:code" element={<ReferralPage />} />
-
-          {/* Redirects */}
-          <Route path="/download" element={<Navigate to="/app" replace />} />
-          <Route path="/ecg" element={<Navigate to="/devices/sanketlife-ecg" replace />} />
-          <Route path="/band" element={<Navigate to="/devices/rhythm-band" replace />} />
-
-          {/* SDK Portal */}
-          <Route path="/sdk" element={<SDKLanding />} />
-          <Route path="/sdk/auth" element={<SDKAuth />} />
-          <Route path="/sdk/dashboard" element={<SDKDashboard />} />
-          <Route path="/sdk/devices" element={<SDKDevices />} />
-          <Route path="/sdk/downloads" element={<SDKDownloads />} />
-          <Route path="/sdk/credits" element={<SDKCredits />} />
-          <Route path="/sdk/docs" element={<SDKDocs />} />
-          <Route path="/sdk/support" element={<SDKSupport />} />
-          <Route path="/sdk/admin" element={<SDKAdmin />} />
-
-          {/* Admin Panel */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="products" element={<ProductsList />} />
-            <Route path="products/new" element={<ProductForm />} />
-            <Route path="products/:id/edit" element={<ProductForm />} />
-            <Route path="orders" element={<OrdersList />} />
-            <Route path="orders/:id" element={<OrderDetail />} />
-            <Route path="customers" element={<AdminCustomers />} />
-            <Route path="coupons" element={<AdminCoupons />} />
-            <Route path="reviews" element={<AdminReviews />} />
-            <Route path="inventory" element={<AdminInventory />} />
-            <Route path="subscriptions" element={<AdminSubscriptions />} />
-            <Route path="shipping" element={<AdminShipping />} />
-            <Route path="delivery-slips" element={<AdminDeliverySlips />} />
-            <Route path="returns" element={<AdminReturns />} />
-            <Route path="leads" element={<AdminLeads />} />
-            <Route path="tickets" element={<AdminTickets />} />
-            <Route path="analytics" element={<AdminAnalytics />} />
-            <Route path="team" element={<AdminTeam />} />
-            <Route path="settings" element={<AdminSettings />} />
-            <Route path="integrations" element={<AdminIntegrations />} />
-            <Route path="activity-logs" element={<AdminActivityLogs />} />
-            <Route path="live" element={<AdminLiveActivity />} />
-            <Route path="email-preview" element={<AdminEmailPreview />} />
-            <Route path="pixels" element={<AdminPixels />} />
-          </Route>
-
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <AppWithPricing />
   </QueryClientProvider>
 );
 

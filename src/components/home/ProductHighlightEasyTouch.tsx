@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Brain, Zap, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { RepublicDaySaleBadge, CountdownTimer, CouponCodeBox, isSaleActive } from "@/components/sale";
 import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import easytouchImg from "@/assets/easytouch-rhythm-new.webp";
 
 export function ProductHighlightEasyTouch() {
+  const { prices, fmt } = usePricing();
   const features = [
     { icon: Brain, text: "5 Body Rhythms tracking (Nervous, Kinetic, Circadian, Circulatory, Metabolic)" },
     { icon: Zap, text: "Reveals hidden patterns behind your energy & fatigue" },
@@ -99,11 +101,11 @@ export function ProductHighlightEasyTouch() {
               <div className="flex items-center gap-2">
                 {isSaleActive() ? (
                   <>
-                    <span className="text-xl text-muted-foreground line-through">₹3,999</span>
-                    <span className="text-2xl font-bold text-foreground">₹3,999</span>
+                    <span className="text-xl text-muted-foreground line-through">{fmt(prices.band_sub)}</span>
+                    <span className="text-2xl font-bold text-foreground">{fmt(prices.band_sub)}</span>
                   </>
                 ) : (
-                  <span className="text-2xl font-bold text-foreground">₹3,999</span>
+                  <span className="text-2xl font-bold text-foreground">{fmt(prices.band_sub)}</span>
                 )}
               </div>
             </div>
