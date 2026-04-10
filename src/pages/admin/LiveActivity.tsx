@@ -662,18 +662,20 @@ export default function LiveActivity() {
   const fetchData = useCallback(async () => {
     const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
     const today = new Date().toISOString().split("T")[0];
-    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
-    const last24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const tenMinAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+    const last7d = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
     const [ordersRes, recentRes, lostRes, todayVisRes] = await Promise.all([
+      // Pending: created in last 10 min (still actively paying)
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
-        .eq("status", "created").gte("created_at", twoHoursAgo).order("created_at", { ascending: false }),
+        .eq("status", "created").gte("created_at", tenMinAgo).order("created_at", { ascending: false }),
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .in("status", ["paid", "confirmed", "processing", "shipped", "delivered"])
         .gte("created_at", todayStart.toISOString()).order("created_at", { ascending: false }).limit(20),
+      // Lost: created > 10 min ago within last 7 days
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created")
-        .gte("created_at", last24h)
-        .lt("created_at", new Date(Date.now() - 10 * 60 * 1000).toISOString())
+        .gte("created_at", last7d)
+        .lt("created_at", tenMinAgo)
         .order("created_at", { ascending: false }),
       db.from("daily_stats").select("total_visitors").eq("stat_date", today).maybeSingle(),
     ]);
@@ -808,13 +810,13 @@ export default function LiveActivity() {
               </h3>
               <p className="text-xs text-gray-500 mt-0.5">
                 {lostCheckouts.length > 0
-                  ? `₹${lostCheckouts.reduce((s, o) => s + o.amount, 0).toLocaleString("en-IN")} potential revenue lost in last 24h`
-                  : "No lost checkouts in the last 24 hours"}
+                  ? `₹${lostCheckouts.reduce((s, o) => s + o.amount, 0).toLocaleString("en-IN")} potential revenue lost in last 7 days`
+                  : "No lost checkouts in the last 7 days"}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-400">Last 24h</span>
+            <span className="text-xs text-gray-400">Last 7 days</span>
             {lostExpanded ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
           </div>
         </button>
