@@ -31,7 +31,7 @@ const fadeUp = {
 export default function SanketLifeECGProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
-  useMetaPixelViewContent("SANKET_LIFE_ECG", "SanketLife 12-Lead ECG", 3999);
+  useMetaPixelViewContent("SANKET_LIFE_ECG", "SanketLife 12-Lead ECG", 4999);
 
   const handleBuy = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
@@ -43,7 +43,7 @@ export default function SanketLifeECGProduct() {
   useSEO({
     title: "SanketLife ECG — Medical-Grade Heart Monitor at Home | Agatsa One",
     description:
-      "Take a 12-lead ECG at home in 15 seconds. 98.5% accuracy. Share instantly with your doctor. Peace of mind for your heart. ₹3,999.",
+      "Take a 12-lead ECG at home in 15 seconds. 98.5% accuracy. Share instantly with your doctor. Peace of mind for your heart. ₹4,999.",
   });
 
   return (
@@ -98,9 +98,9 @@ export default function SanketLifeECGProduct() {
 
               {/* Price */}
               <div className="mt-8">
-                <span className="text-4xl font-extrabold text-foreground">₹3,999</span>
+                <span className="text-4xl font-extrabold text-foreground">₹4,999</span>
                 <span className="text-sm text-muted-foreground ml-2">incl. GST</span>
-                <EmiLine price={3999} />
+                <EmiLine price={4999} />
                 <StockUrgencyBar productKey="sanketlife" className="mt-3" />
                 <div className="flex items-center gap-1 mt-2">
                   {[...Array(5)].map((_, i) => (
@@ -118,7 +118,7 @@ export default function SanketLifeECGProduct() {
                   size="lg"
                   className="rounded-full px-8 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.35)]"
                 >
-                  Check Your Heart Anytime — ₹3,999
+                  Check Your Heart Anytime — ₹4,999
                 </Button>
                 <Button asChild variant="outline" className="rounded-full px-8 text-base border-2 border-primary text-primary">
                   <Link to="/app?device=ecg">Download Agatsa One App (free)</Link>
@@ -269,7 +269,7 @@ export default function SanketLifeECGProduct() {
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
-            Check Your Heart Anytime — ₹3,999
+            Check Your Heart Anytime — ₹4,999
           </Button>
           <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
         </div>
@@ -553,7 +553,7 @@ export default function SanketLifeECGProduct() {
               size="lg"
               className="rounded-full px-10 text-base bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
             >
-              Get SanketLife + Nera AI — ₹3,999
+              Get SanketLife + Nera AI — ₹4,999
             </Button>
             <p className="text-[hsl(240,10%,70%)] text-sm mt-3">Includes 3 months Nera AI Premium free</p>
           </div>
@@ -623,7 +623,7 @@ export default function SanketLifeECGProduct() {
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
-            Buy SanketLife ECG — ₹3,999
+            Buy SanketLife ECG — ₹4,999
           </Button>
           <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
         </div>
@@ -682,7 +682,7 @@ export default function SanketLifeECGProduct() {
                   ["Availability", "By appointment", "Anytime, anywhere"],
                   ["Time to result", "Hours to days", "15 seconds"],
                   ["Monitoring", "One-time snapshot", "Daily, on-demand"],
-                  ["Cost per ECG", "₹300–₹1,500", "Unlimited for ₹3,999"],
+                  ["Cost per ECG", "₹300–₹1,500", "Unlimited for ₹4,999"],
                   ["Report sharing", "Physical copy", "Instant digital PDF"],
                   ["AI analysis", "Not available", "Nera AI included"],
                   ["Trend tracking", "No", "Continuous timeline"],
@@ -792,7 +792,7 @@ export default function SanketLifeECGProduct() {
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
-            Check Your Heart Anytime — ₹3,999
+            Check Your Heart Anytime — ₹4,999
           </Button>
           <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
         </div>
@@ -807,7 +807,7 @@ export default function SanketLifeECGProduct() {
               <span className="text-primary">without waiting for appointments.</span>
             </h2>
             <p className="text-lg text-muted-foreground mt-4">
-              Think about what you get for ₹3,999:
+              Think about what you get for ₹4,999:
             </p>
           </motion.div>
 
@@ -883,7 +883,7 @@ export default function SanketLifeECGProduct() {
               size="lg"
               className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
             >
-              Check Your Heart Anytime — ₹3,999
+              Check Your Heart Anytime — ₹4,999
             </Button>
             <p className="text-primary-foreground/60 text-sm mt-4">
               Free shipping · 1-year warranty · 3 months Nera AI Premium included
