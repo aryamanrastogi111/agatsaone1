@@ -48,6 +48,41 @@ export default function Inventory() {
   const [filter, setFilter] = useState<"all" | "low" | "out">("all");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [tab, setTab] = useState<"stock" | "logs">("stock");
+  const [restock, setRestock] = useState<RestockState>({
+    open: false, variantId: "", productName: "", currentQty: 0, addQty: "", reason: "stock_received", notes: "",
+  });
+
+  const openRestock = (row: VariantRow) => setRestock({
+    open: true, variantId: row.id, productName: row.product_name, currentQty: row.pendingQty, addQty: "", reason: "stock_received", notes: "",
+  });
+
+  const submitRestock = async () => {
+    const qty = parseInt(restock.addQty);
+    if (!qty || qty <= 0) { toast.error("Enter a valid quantity"); return; }
+    setSaving(true);
+    const newQty = restock.currentQty + qty;
+    const row = rows.find(r => r.id === restock.variantId);
+    await Promise.all([
+      sb.from("product_variants").update({ inventory_quantity: newQty }).eq("id", restock.variantId),
+      sb.from("inventory_logs").insert({
+        variant_id: restock.variantId,
+        product_id: row?.product_id || null,
+        product_name: restock.productName,
+        variant_name: row?.variant_name,
+        sku: row?.sku,
+        adjustment: qty,
+        before_quantity: restock.currentQty,
+        after_quantity: newQty,
+        reason: restock.reason,
+        notes: restock.notes || null,
+      }),
+    ]);
+    invalidateInventoryCache();
+    toast.success(`Added ${qty} units to ${restock.productName}`);
+    setRestock(r => ({ ...r, open: false }));
+    await fetchData();
+    setSaving(false);
+  };
 
   // Logs
   const [logs, setLogs] = useState<any[]>([]);
