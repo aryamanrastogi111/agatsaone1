@@ -111,7 +111,23 @@ export default function CheckoutPage() {
   const step1Valid = pincode.length === 6 && addressLine1.trim().length >= 4 && city.trim().length > 0 && state.trim().length > 0;
   const step2Valid = fullName.trim().length >= 2 && /^\d{10}$/.test(phone);
 
-  // ─── No valid SKUs ─────────────────────────────────────────
+  // ─── Meta Pixel Purchase event on success ───────────────────
+  useEffect(() => {
+    if (pageState === "success" && typeof window !== "undefined" && (window as any).fbq) {
+      try {
+        (window as any).fbq("track", "Purchase", {
+          value: totalRupees,
+          currency: "INR",
+          content_ids: skus,
+          content_type: "product",
+          num_items: skus.length,
+        });
+      } catch (e) {
+        console.error("Meta Pixel Purchase error:", e);
+      }
+    }
+  }, [pageState, totalRupees, skus]);
+
   if (skus.length === 0) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
