@@ -145,7 +145,7 @@ export default function SanketLifeECGProduct() {
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Watch It In Action</h2>
           {/* Hero video */}
           <div className="mb-6">
-            <VideoCard video={{ id: "Lehu-0DV-74", title: "SanketLife ECG — Official Demo" }} hero />
+            <VideoCard video={{ id: "1UIKpA7H4O4", title: "SanketLife ECG — Official Demo" }} hero />
           </div>
           {/* Supporting videos */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
