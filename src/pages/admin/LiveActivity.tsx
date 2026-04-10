@@ -810,13 +810,13 @@ export default function LiveActivity() {
               </h3>
               <p className="text-xs text-gray-500 mt-0.5">
                 {lostCheckouts.length > 0
-                  ? `₹${lostCheckouts.reduce((s, o) => s + o.amount, 0).toLocaleString("en-IN")} potential revenue lost in last 24h`
-                  : "No lost checkouts in the last 24 hours"}
+                  ? `₹${lostCheckouts.reduce((s, o) => s + o.amount, 0).toLocaleString("en-IN")} potential revenue lost in last 7 days`
+                  : "No lost checkouts in the last 7 days"}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-400">Last 24h</span>
+            <span className="text-xs text-gray-400">Last 7 days</span>
             {lostExpanded ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
           </div>
         </button>
