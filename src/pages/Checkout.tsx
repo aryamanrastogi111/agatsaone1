@@ -231,6 +231,30 @@ export default function CheckoutPage() {
               });
               const verifyData = await verifyRes.json().catch(() => ({}));
               if (!verifyRes.ok) throw new Error(verifyData.error || "Payment verification failed");
+
+              // Sync order to Supabase for admin dashboard
+              try {
+                await db.from("orders").insert({
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  amount: totalPaise / 100,
+                  currency: "INR",
+                  status: "paid",
+                  paid_at: new Date().toISOString(),
+                  customer_name: fullName.trim(),
+                  customer_email: recipientEmail,
+                  customer_phone: "+91" + cleanPhone,
+                  items: items.map((d) => ({ sku: d.sku, name: d.name, price: d.amountPaise / 100 })),
+                  shipping_address: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
+                  shipping_city: city.trim(),
+                  shipping_state: state.trim(),
+                  shipping_pincode: pincode.trim(),
+                });
+              } catch (syncErr) {
+                console.error("Order sync to DB failed:", syncErr);
+              }
+
               setPageState("success");
               resolve();
             } catch (err: any) {
