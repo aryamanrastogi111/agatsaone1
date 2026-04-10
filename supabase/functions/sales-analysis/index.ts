@@ -17,87 +17,59 @@ Deno.serve(async (req) => {
 
     if (!lovableApiKey) {
       return new Response(JSON.stringify({ error: "LOVABLE_API_KEY not configured" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
     const sb = createClient(supabaseUrl, serviceKey);
+    const paidStatuses = ["paid", "confirmed", "processing", "shipped", "delivered"];
 
-    // Gather data for AI analysis
+    // ── 1. Gather current data ──
     const now = new Date();
-    const todayStart = new Date(now);
-    todayStart.setHours(0, 0, 0, 0);
+    const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
     const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     const prevWeekStart = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
     const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-    const paidStatuses = ["paid", "confirmed", "processing", "shipped", "delivered"];
-
-    // Parallel data fetches
     const [
-      thisWeekOrders,
-      prevWeekOrders,
-      monthOrders,
-      pendingOrders,
-      dailyStats,
-      recentCancelledOrders,
+      thisWeekOrders, prevWeekOrders, monthOrders,
+      pendingOrders, dailyStats, cancelledOrders, pastAnalyses,
     ] = await Promise.all([
-      // This week's paid orders
-      sb.from("orders")
-        .select("amount, status, created_at, items, customer_name")
-        .gte("created_at", weekAgo.toISOString())
-        .in("status", paidStatuses),
-      // Previous week's paid orders
-      sb.from("orders")
-        .select("amount, status, created_at")
-        .gte("created_at", prevWeekStart.toISOString())
-        .lt("created_at", weekAgo.toISOString())
-        .in("status", paidStatuses),
-      // Last 30 days all orders
-      sb.from("orders")
-        .select("amount, status, created_at, items")
+      sb.from("orders").select("amount, status, created_at, items, customer_name")
+        .gte("created_at", weekAgo.toISOString()).in("status", paidStatuses),
+      sb.from("orders").select("amount, status, created_at")
+        .gte("created_at", prevWeekStart.toISOString()).lt("created_at", weekAgo.toISOString()).in("status", paidStatuses),
+      sb.from("orders").select("amount, status, created_at, items")
         .gte("created_at", monthAgo.toISOString()),
-      // Currently pending/abandoned
-      sb.from("orders")
-        .select("amount, status, created_at")
-        .eq("status", "created")
-        .gte("created_at", weekAgo.toISOString()),
-      // Daily stats snapshots
-      sb.from("daily_stats")
-        .select("*")
-        .gte("stat_date", monthAgo.toISOString().split("T")[0])
-        .order("stat_date", { ascending: true }),
-      // Cancelled/refunded orders
-      sb.from("orders")
-        .select("amount, status, created_at")
-        .in("status", ["cancelled", "refunded"])
-        .gte("created_at", monthAgo.toISOString()),
+      sb.from("orders").select("amount, status, created_at")
+        .eq("status", "created").gte("created_at", weekAgo.toISOString()),
+      sb.from("daily_stats").select("*")
+        .gte("stat_date", monthAgo.toISOString().split("T")[0]).order("stat_date", { ascending: true }),
+      sb.from("orders").select("amount, status, created_at")
+        .in("status", ["cancelled", "refunded"]).gte("created_at", monthAgo.toISOString()),
+      // ── Fetch last 5 past analyses for self-awareness ──
+      sb.from("ai_analysis_history")
+        .select("id, created_at, headline, overall_health, analysis_data, metrics_snapshot, suggestion_outcomes")
+        .order("created_at", { ascending: false }).limit(5),
     ]);
 
-    // Compute metrics
+    // ── 2. Compute metrics ──
     const thisWeekData = thisWeekOrders.data ?? [];
     const prevWeekData = prevWeekOrders.data ?? [];
     const monthData = monthOrders.data ?? [];
-    const pendingData = pendingOrders.data ?? [];
     const statsData = dailyStats.data ?? [];
-    const cancelledData = recentCancelledOrders.data ?? [];
+    const cancelledData = cancelledOrders.data ?? [];
 
-    const thisWeekRevenue = thisWeekData.reduce((s, o) => s + Number(o.amount), 0);
-    const prevWeekRevenue = prevWeekData.reduce((s, o) => s + Number(o.amount), 0);
+    const thisWeekRevenue = thisWeekData.reduce((s: number, o: any) => s + Number(o.amount), 0);
+    const prevWeekRevenue = prevWeekData.reduce((s: number, o: any) => s + Number(o.amount), 0);
     const revenueChange = prevWeekRevenue > 0
       ? Math.round(((thisWeekRevenue - prevWeekRevenue) / prevWeekRevenue) * 100)
       : thisWeekRevenue > 0 ? 100 : 0;
 
-    const monthPaid = monthData.filter(o => paidStatuses.includes(o.status));
-    const monthAllCount = monthData.length;
-    const monthPaidCount = monthPaid.length;
-    const monthPendingCount = monthData.filter(o => o.status === "created").length;
-    const monthCancelledCount = cancelledData.length;
-
-    // Conversion rate: paid / (paid + pending + cancelled)
-    const totalAttempts = monthPaidCount + monthPendingCount + monthCancelledCount;
-    const conversionRate = totalAttempts > 0 ? Math.round((monthPaidCount / totalAttempts) * 100) : 0;
+    const monthPaid = monthData.filter((o: any) => paidStatuses.includes(o.status));
+    const monthPendingCount = monthData.filter((o: any) => o.status === "created").length;
+    const conversionRate = (monthPaid.length + monthPendingCount + cancelledData.length) > 0
+      ? Math.round((monthPaid.length / (monthPaid.length + monthPendingCount + cancelledData.length)) * 100) : 0;
 
     // Product performance
     const productMap: Record<string, { name: string; qty: number; revenue: number }> = {};
@@ -112,48 +84,55 @@ Deno.serve(async (req) => {
     });
     const topProducts = Object.values(productMap).sort((a, b) => b.revenue - a.revenue).slice(0, 5);
 
-    // Peak visitors trend
-    const peakVisitorsTrend = statsData.map((d: any) => ({
-      date: d.stat_date,
-      visitors: d.peak_visitors,
-      orders: d.total_orders,
-      revenue: Number(d.total_revenue),
-    }));
-
-    // Dropout/funnel estimate
     const avgDailyVisitors = statsData.length > 0
-      ? Math.round(statsData.reduce((s: number, d: any) => s + (d.peak_visitors || 0), 0) / statsData.length)
-      : 0;
+      ? Math.round(statsData.reduce((s: number, d: any) => s + (d.peak_visitors || 0), 0) / statsData.length) : 0;
     const avgDailyOrders = statsData.length > 0
-      ? Math.round(statsData.reduce((s: number, d: any) => s + (d.total_orders || 0), 0) / statsData.length)
-      : 0;
+      ? Math.round(statsData.reduce((s: number, d: any) => s + (d.total_orders || 0), 0) / statsData.length) : 0;
 
-    // Build context for AI
+    // Today's numbers
+    const todayOrders = monthData.filter((o: any) => new Date(o.created_at) >= todayStart && paidStatuses.includes(o.status));
+    const todayRevenue = todayOrders.reduce((s: number, o: any) => s + Number(o.amount), 0);
+
     const dataContext = {
       period: "Last 7 days vs previous 7 days",
+      today: { orders: todayOrders.length, revenue: todayRevenue },
       thisWeek: { orders: thisWeekData.length, revenue: thisWeekRevenue },
       prevWeek: { orders: prevWeekData.length, revenue: prevWeekRevenue },
       revenueChangePercent: revenueChange,
       last30Days: {
-        totalOrders: monthAllCount,
-        paidOrders: monthPaidCount,
+        totalOrders: monthData.length,
+        paidOrders: monthPaid.length,
         pendingAbandoned: monthPendingCount,
-        cancelled: monthCancelledCount,
+        cancelled: cancelledData.length,
         conversionRate: `${conversionRate}%`,
       },
       avgDailyVisitors,
       avgDailyOrders,
       topProducts,
-      dailyTrend: peakVisitorsTrend.slice(-14), // last 14 days
+      dailyTrend: (statsData as any[]).slice(-14).map((d: any) => ({
+        date: d.stat_date, visitors: d.peak_visitors, orders: d.total_orders, revenue: Number(d.total_revenue),
+      })),
     };
 
-    // Call Lovable AI
+    // ── 3. Build past suggestions context ──
+    const pastAnalysesData = pastAnalyses.data ?? [];
+    let pastContext = "";
+    if (pastAnalysesData.length > 0) {
+      pastContext = `\n\n## YOUR PREVIOUS ANALYSES (most recent first)\nYou must review these and evaluate whether your past recommendations helped or hurt. Be honest.\n\n`;
+      pastAnalysesData.forEach((pa: any, i: number) => {
+        const prevMetrics = pa.metrics_snapshot ?? {};
+        pastContext += `### Analysis #${i + 1} — ${new Date(pa.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
+Health: ${pa.overall_health} | Headline: ${pa.headline}
+Metrics at that time: Week revenue ₹${prevMetrics.thisWeek?.revenue ?? "?"}, Orders: ${prevMetrics.thisWeek?.orders ?? "?"}, Conversion: ${prevMetrics.last30Days?.conversionRate ?? "?"}
+Recommendations given: ${JSON.stringify((pa.analysis_data?.recommendations ?? []).map((r: any) => r.action))}
+---\n`;
+      });
+    }
+
+    // ── 4. Call AI with full context ──
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${lovableApiKey}`,
-        "Content-Type": "application/json",
-      },
+      headers: { Authorization: `Bearer ${lovableApiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
         messages: [
@@ -161,12 +140,16 @@ Deno.serve(async (req) => {
             role: "system",
             content: `You are a senior e-commerce analytics consultant for Agatsa, a health-tech company selling ECG devices and wellness products in India.
 
-Analyze the sales data provided and give actionable insights. Be specific and data-driven.
+CRITICAL: You have MEMORY. You can see your past analyses and recommendations below. You MUST:
+1. Compare current metrics against metrics from your last analysis to see if things improved or worsened
+2. Explicitly call out which of your past suggestions worked and which didn't
+3. Adjust your recommendations based on what you've learned
+4. Never repeat a suggestion that already backfired unless you have a different approach
 
 Your response MUST be valid JSON with this exact structure:
 {
   "overallHealth": "good" | "warning" | "critical",
-  "headline": "One-line summary of the current situation",
+  "headline": "One-line summary including comparison to last analysis",
   "keyMetrics": [
     { "label": "string", "value": "string", "trend": "up" | "down" | "flat", "insight": "string" }
   ],
@@ -177,15 +160,23 @@ Your response MUST be valid JSON with this exact structure:
     "biggestDropoff": "string",
     "possibleReasons": ["string"]
   },
-  "recommendations": [
-    { "priority": "high" | "medium" | "low", "action": "string", "expectedImpact": "string", "reasoning": "string" }
+  "pastSuggestionReview": [
+    { "suggestion": "what you previously recommended", "outcome": "improved" | "worsened" | "unchanged" | "too_early", "evidence": "data-backed explanation", "nextStep": "what to do now" }
   ],
-  "alerts": ["string"]
-}`
+  "recommendations": [
+    { "priority": "high" | "medium" | "low", "action": "string", "expectedImpact": "string", "reasoning": "string", "timeframe": "immediate | this_week | this_month" }
+  ],
+  "alerts": ["string"],
+  "comparedToLast": {
+    "revenueChange": "string describing change since last analysis",
+    "orderChange": "string describing change",
+    "overallDirection": "improving" | "declining" | "stable" | "first_analysis"
+  }
+}${pastContext}`
           },
           {
             role: "user",
-            content: `Here is the current sales data for analysis:\n\n${JSON.stringify(dataContext, null, 2)}`
+            content: `Here is the CURRENT sales data (${new Date().toLocaleString("en-IN")}):\n\n${JSON.stringify(dataContext, null, 2)}`
           },
         ],
         temperature: 0.3,
@@ -196,28 +187,24 @@ Your response MUST be valid JSON with this exact structure:
       const status = aiResponse.status;
       if (status === 429) {
         return new Response(JSON.stringify({ error: "Rate limited. Please try again in a minute." }), {
-          status: 429,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       if (status === 402) {
-        return new Response(JSON.stringify({ error: "AI credits exhausted. Please add funds in workspace settings." }), {
-          status: 402,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        return new Response(JSON.stringify({ error: "AI credits exhausted. Please add funds." }), {
+          status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       const errText = await aiResponse.text();
       console.error("AI gateway error:", status, errText);
       return new Response(JSON.stringify({ error: "AI analysis failed" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
     const aiResult = await aiResponse.json();
     const rawContent = aiResult.choices?.[0]?.message?.content ?? "";
 
-    // Parse AI response (handle markdown code blocks)
     let analysis;
     try {
       const cleaned = rawContent.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
@@ -226,25 +213,39 @@ Your response MUST be valid JSON with this exact structure:
       analysis = {
         overallHealth: "warning",
         headline: "Unable to parse AI analysis. Raw data is still available.",
-        keyMetrics: [],
-        dropoutAnalysis: { funnelStages: [], biggestDropoff: "Unknown", possibleReasons: [] },
-        recommendations: [],
-        alerts: [],
+        keyMetrics: [], dropoutAnalysis: { funnelStages: [], biggestDropoff: "Unknown", possibleReasons: [] },
+        pastSuggestionReview: [], recommendations: [], alerts: [],
+        comparedToLast: { revenueChange: "N/A", orderChange: "N/A", overallDirection: "first_analysis" },
       };
     }
 
+    // ── 5. Save to history ──
+    await sb.from("ai_analysis_history").insert({
+      analysis_data: analysis,
+      metrics_snapshot: dataContext,
+      overall_health: analysis.overallHealth ?? "warning",
+      headline: analysis.headline ?? "",
+      suggestion_outcomes: analysis.pastSuggestionReview ?? null,
+    });
+
+    // ── 6. Return with history ──
     return new Response(JSON.stringify({
       analysis,
       rawData: dataContext,
       generatedAt: new Date().toISOString(),
+      pastAnalyses: pastAnalysesData.map((pa: any) => ({
+        id: pa.id,
+        created_at: pa.created_at,
+        headline: pa.headline,
+        overall_health: pa.overall_health,
+      })),
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {
     console.error("sales-analysis error:", err);
     return new Response(JSON.stringify({ error: String(err) }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 });
