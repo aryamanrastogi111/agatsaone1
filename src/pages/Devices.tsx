@@ -71,9 +71,9 @@ const devices: DeviceData[] = [
     name: "EasyTouch Wellness Metabolic Health Monitor",
     tagline: "Metabolic health, BP, SpO2 — no needles, no cuffs",
     keyStat: "8 vitals in 60 seconds — 15,000+ active users across India",
-    price: "₹3,499",
+    price: "₹3,999",
     priceNum: "3,499",
-    emiDisplay: "No-cost EMI from ₹292/month",
+    emiDisplay: "No-cost EMI from ₹334/month",
     rating: "4.6",
     reviews: "834",
     measures: [
