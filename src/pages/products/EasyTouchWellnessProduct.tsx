@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useNavigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
@@ -53,6 +54,7 @@ const relatedDevices = [
 export default function EasyTouchWellnessProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
+  useMetaPixelViewContent("EASYTOUCH_WELLNESS", "EasyTouch Wellness", 3499);
 
   const handleBuy = () => {
     navigate("/checkout?sku=EASYTOUCH_WELLNESS");

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useNavigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
@@ -29,6 +30,7 @@ const fadeUp = {
 export default function SanketLifeECGProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
+  useMetaPixelViewContent("SANKET_LIFE_ECG", "SanketLife 12-Lead ECG", 3999);
 
   const handleBuy = () => {
     navigate("/checkout?sku=SANKET_LIFE_ECG");

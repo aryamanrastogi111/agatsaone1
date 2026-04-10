@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -56,6 +57,7 @@ const relatedDevices = [
 export default function RhythmBandProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
+  useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 2999);
   const handleBuy = () => {
     navigate("/checkout?sku=RHYTHM_BAND");
   };

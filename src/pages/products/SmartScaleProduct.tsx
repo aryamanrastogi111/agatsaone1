@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -61,6 +62,7 @@ const relatedDevices = [
 export default function SmartScaleProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
+  useMetaPixelViewContent("SMART_SCALE", "Agatsa Smart Scale", 1999);
   const handleBuy = () => {
     navigate("/checkout?sku=SMART_SCALE");
   };
