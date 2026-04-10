@@ -577,6 +577,29 @@ export default function LiveActivity() {
   const [aiData, setAiData] = useState<AIResponse | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
 
+  // ── Load last cached AI analysis on mount ──
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await db.from("ai_analysis_history")
+          .select("id, created_at, headline, overall_health, analysis_data, metrics_snapshot, suggestion_outcomes")
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .single();
+        if (data) {
+          setAiData({
+            analysis: data.analysis_data as AIAnalysis,
+            rawData: data.metrics_snapshot,
+            generatedAt: data.created_at,
+            pastAnalyses: [],
+          });
+        }
+      } catch {
+        // No cached analysis yet — that's fine
+      }
+    })();
+  }, []);
+
   const STATUS_COLORS: Record<string, string> = {
     paid: "bg-green-100 text-green-700", delivered: "bg-green-100 text-green-700",
     shipped: "bg-cyan-100 text-cyan-700", confirmed: "bg-blue-100 text-blue-700",
