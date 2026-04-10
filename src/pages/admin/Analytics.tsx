@@ -171,15 +171,13 @@ export default function Analytics() {
     // Conversion funnel
     const totalVisitorsForFunnel = rangeVisitors > 0 ? rangeVisitors : rangeOrders.length * 5;
     const totalCheckouts = rangeOrders.length;
-    const totalPaid = rangePaid.length;
-    const totalCancelled = rangeOrders.filter((o: any) => ["cancelled", "refunded"].includes(o.status)).length;
-    const totalPaid = rangePaid.length;
-    const totalCancelled = rangeOrders.filter((o: any) => ["cancelled", "refunded"].includes(o.status)).length;
+    const funnelPaid = rangePaid.length;
+    const funnelCancelled = rangeOrders.filter((o: any) => ["cancelled", "refunded"].includes(o.status)).length;
     setFunnelData([
-      { stage: "Visitors (est.)", count: avgDailyVisitors, color: "#3b82f6" },
+      { stage: rangeVisitors > 0 ? "Visitors" : "Visitors (est.)", count: totalVisitorsForFunnel, color: "#3b82f6" },
       { stage: "Checkout Started", count: totalCheckouts, color: "#8b5cf6" },
-      { stage: "Payment Completed", count: totalPaid, color: "#10b981" },
-      { stage: "Cancelled/Refunded", count: totalCancelled, color: "#ef4444" },
+      { stage: "Payment Completed", count: funnelPaid, color: "#10b981" },
+      { stage: "Cancelled/Refunded", count: funnelCancelled, color: "#ef4444" },
     ]);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
