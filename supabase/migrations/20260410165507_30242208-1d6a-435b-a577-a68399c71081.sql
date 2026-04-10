@@ -1,0 +1,1 @@
+ALTER TABLE public.daily_stats ADD COLUMN IF NOT EXISTS total_visitors integer NOT NULL DEFAULT 0;
