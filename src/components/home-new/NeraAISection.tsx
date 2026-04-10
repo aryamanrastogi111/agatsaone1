@@ -96,7 +96,7 @@ export function NeraAISection() {
           <div className="flex flex-col gap-4">
             {[
               { icon: Heart, label: "ECG", color: "from-red-500/20 to-red-600/10", delay: 0 },
-              { icon: Droplets, label: "Sugar", color: "from-amber-500/20 to-amber-600/10", delay: 0.1 },
+              { icon: Droplets, label: "Metabolic Wellness", color: "from-amber-500/20 to-amber-600/10", delay: 0.1 },
               { icon: Activity, label: "Blood Pressure", color: "from-blue-500/20 to-blue-600/10", delay: 0.2 },
               { icon: Moon, label: "Sleep", color: "from-indigo-500/20 to-indigo-600/10", delay: 0.3 },
             ].map((card) => (
@@ -282,7 +282,7 @@ export function NeraAISection() {
               <p className="text-xs text-white/60 mt-2">Post-meal HRV variability shift</p>
             </motion.div>
 
-            {/* Right — Sugar */}
+            {/* Right — Metabolic Wellness */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}

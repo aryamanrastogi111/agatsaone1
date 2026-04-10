@@ -58,7 +58,7 @@ export function HeroSection() {
               className="text-lg md:text-xl max-w-[580px] leading-relaxed"
             >
               <span className="text-foreground/80">
-                They build quietly — in your heart, your sugar, your nervous system.
+                They build quietly — in your heart, your metabolism, your nervous system.
               </span>
               <br />
               <span className="text-primary font-bold text-xl md:text-2xl">
