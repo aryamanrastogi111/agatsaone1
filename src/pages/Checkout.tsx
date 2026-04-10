@@ -158,33 +158,30 @@ export default function CheckoutPage() {
     setPageState("processing");
 
     try {
-      // 1. Create order via API
-      const createRes = await fetch(`${API_BASE}/v1/orders/website/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          skus,
-          recipientName: fullName.trim(),
-          recipientPhone: "+91" + phone,
-          recipientEmail: email.trim() || phone + "@noemail.agatsa.com",
-          addressLine1: addressLine1.trim(),
-          addressLine2: addressLine2.trim() || undefined,
-          city: city.trim(),
-          state: state.trim(),
-          pincode: pincode.trim(),
-        }),
-      });
+      // 1. Create order via Supabase Edge Function
+      const { data: orderData, error: createError } = await supabase.functions.invoke(
+        "razorpay-create-order",
+        {
+          body: {
+            items: items.map((d) => ({ sku: d.sku, name: d.name, quantity: 1 })),
+            customerName: fullName.trim(),
+            customerEmail: email.trim() || undefined,
+            customerPhone: "+91" + phone,
+            amountInPaise: totalPaise,
+            shippingAddress: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
+            shippingCity: city.trim(),
+            shippingState: state.trim(),
+            shippingPincode: pincode.trim(),
+          },
+        }
+      );
 
-      if (!createRes.ok) {
-        const errData = await createRes.json().catch(() => ({}));
-        console.error("Order creation failed:", createRes.status, errData);
-        throw new Error(errData.message || errData.error || `Order creation failed (${createRes.status})`);
+      if (createError) {
+        console.error("Order creation failed:", createError);
+        throw new Error(createError.message || "Order creation failed");
       }
 
-      const orderData = await createRes.json();
-      const razorpayOrderId = orderData.razorpayOrderId || orderData.razorpay_order_id;
-
-      if (!razorpayOrderId) throw new Error("Missing Razorpay order ID in response");
+      if (!orderData?.orderId) throw new Error("Missing Razorpay order ID in response");
 
       // 2. Open Razorpay
       const razorpayLoaded = await loadRazorpay();
@@ -193,12 +190,12 @@ export default function CheckoutPage() {
       setPageState("form"); // hide processing overlay while Razorpay modal is open
 
       const rzp = new (window as any).Razorpay({
-        key: orderData.razorpayKeyId || RAZORPAY_KEY,
+        key: orderData.keyId,
         amount: orderData.amount || totalPaise,
         currency: orderData.currency || "INR",
         name: "Agatsa Software Pvt Ltd",
         description: items.map((d) => d.name).join(", "),
-        order_id: razorpayOrderId,
+        order_id: orderData.orderId,
         prefill: {
           name: fullName.trim(),
           email: email.trim() || undefined,
@@ -206,19 +203,28 @@ export default function CheckoutPage() {
         },
         theme: { color: "#7C4DFF" },
         handler: async (response: any) => {
-          // 3. Verify payment
+          // 3. Verify payment via Supabase Edge Function
           setPageState("processing");
           try {
-            const verifyRes = await fetch(`${API_BASE}/v1/orders/website/verify`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-              }),
-            });
-            if (!verifyRes.ok) throw new Error("Payment verification failed");
+            const { data: verifyData, error: verifyError } = await supabase.functions.invoke(
+              "razorpay-verify-payment",
+              {
+                body: {
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  customerEmail: email.trim() || undefined,
+                  customerName: fullName.trim(),
+                  items: items.map((d) => ({ sku: d.sku, name: d.name, quantity: 1 })),
+                  total: totalRupees,
+                  shippingAddress: addressLine1.trim(),
+                  shippingCity: city.trim(),
+                  shippingState: state.trim(),
+                  shippingPincode: pincode.trim(),
+                },
+              }
+            );
+            if (verifyError) throw new Error(verifyError.message || "Payment verification failed");
             setPageState("success");
           } catch (err: any) {
             setErrorMsg(err.message || "Payment verification failed");
