@@ -42,6 +42,8 @@ export default function Analytics() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [dailyStatsData, setDailyStatsData] = useState<any[]>([]);
   const [funnelData, setFunnelData] = useState<{ stage: string; count: number; color: string }[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [pageViewsData, setPageViewsData] = useState<any[]>([]);
   const [kpiStats, setKpiStats] = useState({
     totalRevenue: 0, totalOrders: 0, paidOrders: 0,
     monthRevenue: 0, monthOrders: 0, avgOrderValue: 0,
