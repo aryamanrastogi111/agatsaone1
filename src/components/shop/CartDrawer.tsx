@@ -283,6 +283,18 @@ export const CartDrawer = ({
             );
 
             if (verified) {
+              // Fire Meta Pixel Purchase event
+              if (typeof window !== 'undefined' && window.fbq) {
+                try {
+                  window.fbq('track', 'Purchase', {
+                    value: totalSnapshot,
+                    currency: 'INR',
+                    content_ids: cartSnapshot.map(i => i.productId || i.productName),
+                    content_type: 'product',
+                    num_items: cartSnapshot.reduce((s, i) => s + (i.quantity || 1), 0),
+                  });
+                } catch {}
+              }
               clearCart();
               // Determine Nera AI plan from cart items
               const firstPlan = cartSnapshot.map(i => getNeraAiLabel(i.productId || "")).find(Boolean) || null;
