@@ -3,9 +3,7 @@
 import { useEffect, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const db = supabase as any;
+import { db } from "@/integrations/supabase/db";
 
 function getSessionId(): string {
   let id = sessionStorage.getItem("agatsa_vsid");
@@ -26,7 +24,6 @@ function getUtmParams() {
   };
 }
 
-// Persist UTM params from first landing
 function captureUtmParams() {
   const url = new URL(window.location.href);
   const src = url.searchParams.get("utm_source");
@@ -38,17 +35,22 @@ function captureUtmParams() {
 }
 
 // Increment total_visitors once per unique visitor per day
-function incrementDailyVisitor() {
+async function incrementDailyVisitor() {
   const today = new Date().toISOString().split("T")[0];
   const key = `agatsa_counted_${today}`;
   if (sessionStorage.getItem(key)) return;
   sessionStorage.setItem(key, "1");
 
-  supabase.rpc("increment_daily_visitor", { target_date: today });
+  const { error } = await supabase.rpc("increment_daily_visitor", { target_date: today });
+  if (error) {
+    console.error("[Tracking] increment_daily_visitor failed:", error.message);
+    // Remove flag so it retries next navigation
+    sessionStorage.removeItem(key);
+  }
 }
 
 // Create or update visitor session
-function upsertSession(sessionId: string, pagePath: string, isFirst: boolean) {
+async function upsertSession(sessionId: string, pagePath: string, isFirst: boolean) {
   const utm = getUtmParams();
   const device = window.innerWidth < 768 ? "mobile" : "desktop";
   const referrer = document.referrer
@@ -56,7 +58,7 @@ function upsertSession(sessionId: string, pagePath: string, isFirst: boolean) {
     : "direct";
 
   if (isFirst) {
-    db.from("visitor_sessions").upsert({
+    const { error } = await db.from("visitor_sessions").upsert({
       session_id: sessionId,
       started_at: new Date().toISOString(),
       last_seen_at: new Date().toISOString(),
@@ -69,59 +71,60 @@ function upsertSession(sessionId: string, pagePath: string, isFirst: boolean) {
       device,
       referrer,
     }, { onConflict: "session_id" });
+    if (error) console.error("[Tracking] upsert session failed:", error.message);
   } else {
-    // Update last_seen_at, exit_page, and increment page_count
-    db.from("visitor_sessions")
+    const { data, error: readErr } = await db
+      .from("visitor_sessions")
       .select("page_count")
       .eq("session_id", sessionId)
-      .maybeSingle()
-      .then(({ data }: { data: { page_count: number } | null }) => {
-        if (data) {
-          db.from("visitor_sessions")
-            .update({
-              last_seen_at: new Date().toISOString(),
-              exit_page: pagePath,
-              page_count: (data.page_count || 1) + 1,
-            })
-            .eq("session_id", sessionId)
-            .then(() => {});
-        }
-      });
+      .maybeSingle();
+
+    if (readErr) {
+      console.error("[Tracking] read session failed:", readErr.message);
+      return;
+    }
+    if (data) {
+      const { error: updErr } = await db
+        .from("visitor_sessions")
+        .update({
+          last_seen_at: new Date().toISOString(),
+          exit_page: pagePath,
+          page_count: (data.page_count || 1) + 1,
+        })
+        .eq("session_id", sessionId);
+      if (updErr) console.error("[Tracking] update session failed:", updErr.message);
+    }
   }
 }
 
 // Log page view
-function logPageView(pagePath: string, sessionId: string) {
+async function logPageView(pagePath: string, sessionId: string) {
   const utm = getUtmParams();
-  db.from("page_views").insert({
+  const { error } = await db.from("page_views").insert({
     page_path: pagePath,
     session_id: sessionId,
     ...utm,
   });
+  if (error) console.error("[Tracking] page_view insert failed:", error.message);
 }
 
-// Update last_seen on beforeunload for accurate session duration
+// Periodically update last_seen for accurate session duration
 function setupBeaconTracking(sessionId: string) {
   const key = `agatsa_beacon_set`;
   if (sessionStorage.getItem(key)) return;
   sessionStorage.setItem(key, "1");
 
-  // Periodically update last_seen (every 30s) for accurate duration
   const interval = setInterval(() => {
     db.from("visitor_sessions")
       .update({ last_seen_at: new Date().toISOString() })
       .eq("session_id", sessionId)
-      .then(() => {});
+      .then(({ error }: { error: { message: string } | null }) => {
+        if (error) console.error("[Tracking] heartbeat failed:", error.message);
+      });
   }, 30000);
 
   window.addEventListener("beforeunload", () => {
     clearInterval(interval);
-    // Final update via sendBeacon if available
-    const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/visitor_sessions?session_id=eq.${sessionId}`;
-    const body = JSON.stringify({ last_seen_at: new Date().toISOString() });
-    try {
-      navigator.sendBeacon(url, ""); // beacon doesn't support PATCH well, rely on interval
-    } catch { /* ignore */ }
   });
 }
 
@@ -135,7 +138,6 @@ export function useVisitorTracking() {
 
   const device = typeof window !== "undefined" && window.innerWidth < 768 ? "mobile" : "desktop";
 
-  // Update admin check ref every render (no hook count change)
   isAdminRef.current =
     location.pathname.startsWith("/admin") ||
     location.pathname.startsWith("/sdk");
@@ -172,7 +174,6 @@ export function useVisitorTracking() {
       }
     });
 
-    // Create session record
     upsertSession(sessionId.current, location.pathname, true);
     setupBeaconTracking(sessionId.current);
 

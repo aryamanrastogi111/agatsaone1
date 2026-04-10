@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { useNavigate } from "react-router-dom";
 import easytouchWellnessImg from "@/assets/easytouch-wellness-hero.webp";
 import easytouchFingerImg from "@/assets/easytouch-wellness-finger.webp";
@@ -67,7 +68,7 @@ function AnimatedSection({
 }
 
 /* ── Sticky header buy button ── */
-function StickyBuyBar({ onBuy }: { onBuy: () => void }) {
+function StickyBuyBar({ onBuy, wp }: { onBuy: () => void; wp: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: false });
   return (
@@ -120,7 +121,7 @@ export default function EasyTouchPlusProduct() {
 
   return (
     <Layout>
-      <StickyBuyBar onBuy={handleBuyNow} />
+      <StickyBuyBar onBuy={handleBuyNow} wp={wp} />
       <FloatingWhatsApp />
 
       {/* ═══ SECTION 1 — HERO ═══ */}
