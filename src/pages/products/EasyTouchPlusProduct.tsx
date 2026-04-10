@@ -121,7 +121,7 @@ export default function EasyTouchPlusProduct() {
 
   return (
     <Layout>
-      <StickyBuyBar onBuy={handleBuyNow} />
+      <StickyBuyBar onBuy={handleBuyNow} wp={wp} />
       <FloatingWhatsApp />
 
       {/* ═══ SECTION 1 — HERO ═══ */}
