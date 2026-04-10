@@ -106,6 +106,7 @@ export default function Analytics() {
     const rangeRevenue = rangePaid.reduce((s: number, o: { amount: number }) => s + (o.amount ?? 0), 0);
     const rangeAvg = rangePaid.length ? Math.round(rangeRevenue / rangePaid.length) : 0;
     const todayRevenue = todayOrders.reduce((s: number, o: { amount: number }) => s + (o.amount ?? 0), 0);
+    const rangeVisitors = (dailyRes.data ?? []).reduce((s: number, d: any) => s + (d.total_visitors || 0), 0);
 
     setKpiStats({
       totalRevenue: rangeRevenue,
@@ -116,6 +117,7 @@ export default function Analytics() {
       avgOrderValue: rangeAvg,
       todayRevenue,
       todayOrders: todayOrders.length,
+      totalVisitors: rangeVisitors,
     });
 
     // Revenue chart from orders data
