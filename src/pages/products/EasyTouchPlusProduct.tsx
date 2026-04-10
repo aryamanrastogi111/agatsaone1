@@ -88,9 +88,6 @@ function StickyBuyBar({ onBuy, wp }: { onBuy: () => void; wp: string }) {
           </div>
         </motion.div>
       )}
-          </div>
-        </motion.div>
-      )}
     </>
   );
 }
