@@ -662,15 +662,23 @@ export default function LiveActivity() {
   const fetchData = useCallback(async () => {
     const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
-    const [ordersRes, recentRes] = await Promise.all([
+    const last24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const [ordersRes, recentRes, lostRes] = await Promise.all([
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created").gte("created_at", twoHoursAgo).order("created_at", { ascending: false }),
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .in("status", ["paid", "confirmed", "processing", "shipped", "delivered"])
         .gte("created_at", todayStart.toISOString()).order("created_at", { ascending: false }).limit(20),
+      // Lost checkouts: created > 10 min ago but never paid, within last 24h
+      db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
+        .eq("status", "created")
+        .gte("created_at", last24h)
+        .lt("created_at", new Date(Date.now() - 10 * 60 * 1000).toISOString())
+        .order("created_at", { ascending: false }),
     ]);
     setPendingOrders(ordersRes.data ?? []);
     setRecentOrders(recentRes.data ?? []);
+    setLostCheckouts(lostRes.data ?? []);
     const paid: TodayOrder[] = recentRes.data ?? [];
     const revenue = paid.reduce((s: number, o: TodayOrder) => s + o.amount, 0);
     setTodayStats({ orders: paid.length, revenue, avgOrder: paid.length ? Math.round(revenue / paid.length) : 0 });
