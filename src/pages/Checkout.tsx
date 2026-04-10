@@ -230,23 +230,6 @@ export default function CheckoutPage() {
     }
   };
 
-  // ─── Meta Pixel Purchase event on success ───────────────────
-  useEffect(() => {
-    if (pageState === "success" && typeof window !== "undefined" && (window as any).fbq) {
-      try {
-        (window as any).fbq("track", "Purchase", {
-          value: totalRupees,
-          currency: "INR",
-          content_ids: skus,
-          content_type: "product",
-          num_items: skus.length,
-        });
-      } catch (e) {
-        console.error("Meta Pixel Purchase error:", e);
-      }
-    }
-  }, [pageState, totalRupees, skus]);
-
   // ─── Success state ─────────────────────────────────────────
   if (pageState === "success") {
     return (
