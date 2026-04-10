@@ -169,10 +169,10 @@ export default function Analytics() {
     setStatusData(Object.entries(statusMap).map(([name, value]) => ({ name, value })));
 
     // Conversion funnel
-    const avgDailyVisitors = (dailyRes.data ?? []).length > 0
-      ? Math.round((dailyRes.data ?? []).reduce((s: number, d: any) => s + (d.peak_visitors || 0), 0) / (dailyRes.data ?? []).length) * days
-      : rangeOrders.length * 5; // estimate if no daily stats
-    const totalCheckouts = rangeOrders.length; // all orders created = checkout attempts
+    const totalVisitorsForFunnel = rangeVisitors > 0 ? rangeVisitors : rangeOrders.length * 5;
+    const totalCheckouts = rangeOrders.length;
+    const totalPaid = rangePaid.length;
+    const totalCancelled = rangeOrders.filter((o: any) => ["cancelled", "refunded"].includes(o.status)).length;
     const totalPaid = rangePaid.length;
     const totalCancelled = rangeOrders.filter((o: any) => ["cancelled", "refunded"].includes(o.status)).length;
     setFunnelData([
