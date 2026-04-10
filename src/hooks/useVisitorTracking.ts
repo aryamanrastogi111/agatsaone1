@@ -1,6 +1,7 @@
 // Tracks visitor presence via Supabase Realtime — no DB writes needed.
 // Each browser tab joins the 'live-visitors' presence channel.
 // Also increments today's total_visitors count once per unique session per day.
+// Logs each page view to the page_views table for analytics.
 import { useEffect, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -23,7 +24,6 @@ function incrementDailyVisitor() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const db = supabase as any;
-  // Try to read current value then upsert with +1
   db.from("daily_stats")
     .select("total_visitors")
     .eq("stat_date", today)
@@ -35,6 +35,13 @@ function incrementDailyVisitor() {
         { onConflict: "stat_date" }
       );
     });
+}
+
+// Log page view to page_views table (fire-and-forget)
+function logPageView(pagePath: string, sessionId: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const db = supabase as any;
+  db.from("page_views").insert({ page_path: pagePath, session_id: sessionId });
 }
 
 export function useVisitorTracking() {
@@ -89,9 +96,10 @@ export function useVisitorTracking() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdminOrInternal]);
 
-  // Update presence on EVERY page navigation
+  // Update presence and log page view on EVERY page navigation
   useEffect(() => {
     if (isAdminOrInternal) return;
     trackPage(location.pathname);
+    logPageView(location.pathname, sessionId.current);
   }, [location.pathname, isAdminOrInternal, trackPage]);
 }

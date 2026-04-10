@@ -42,6 +42,8 @@ export default function Analytics() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [dailyStatsData, setDailyStatsData] = useState<any[]>([]);
   const [funnelData, setFunnelData] = useState<{ stage: string; count: number; color: string }[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [pageViewsData, setPageViewsData] = useState<any[]>([]);
   const [kpiStats, setKpiStats] = useState({
     totalRevenue: 0, totalOrders: 0, paidOrders: 0,
     monthRevenue: 0, monthOrders: 0, avgOrderValue: 0,
@@ -80,7 +82,7 @@ export default function Analytics() {
       .order("created_at");
     if (rangeEnd) rangeQuery = rangeQuery.lt("created_at", rangeEnd);
 
-    const [allRes, rangeRes, todayRes, dailyRes] = await Promise.all([
+    const [allRes, rangeRes, todayRes, dailyRes, pageViewsRes] = await Promise.all([
       db.from("orders").select("amount, status, created_at, items"),
       rangeQuery,
       db.from("orders")
@@ -91,6 +93,11 @@ export default function Analytics() {
         .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments, total_visitors")
         .gte("stat_date", subDays(now, Math.max(days, 7)).toISOString().split("T")[0])
         .order("stat_date", { ascending: true }),
+      db.from("page_views")
+        .select("page_path, session_id, created_at")
+        .gte("created_at", rangeStart)
+        .order("created_at", { ascending: false })
+        .limit(5000),
     ]);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -162,17 +169,15 @@ export default function Analytics() {
     setStatusData(Object.entries(statusMap).map(([name, value]) => ({ name, value })));
 
     // Conversion funnel
-    const avgDailyVisitors = (dailyRes.data ?? []).length > 0
-      ? Math.round((dailyRes.data ?? []).reduce((s: number, d: any) => s + (d.peak_visitors || 0), 0) / (dailyRes.data ?? []).length) * days
-      : rangeOrders.length * 5; // estimate if no daily stats
-    const totalCheckouts = rangeOrders.length; // all orders created = checkout attempts
-    const totalPaid = rangePaid.length;
-    const totalCancelled = rangeOrders.filter((o: any) => ["cancelled", "refunded"].includes(o.status)).length;
+    const totalVisitorsForFunnel = rangeVisitors > 0 ? rangeVisitors : rangeOrders.length * 5;
+    const totalCheckouts = rangeOrders.length;
+    const funnelPaid = rangePaid.length;
+    const funnelCancelled = rangeOrders.filter((o: any) => ["cancelled", "refunded"].includes(o.status)).length;
     setFunnelData([
-      { stage: "Visitors (est.)", count: avgDailyVisitors, color: "#3b82f6" },
+      { stage: rangeVisitors > 0 ? "Visitors" : "Visitors (est.)", count: totalVisitorsForFunnel, color: "#3b82f6" },
       { stage: "Checkout Started", count: totalCheckouts, color: "#8b5cf6" },
-      { stage: "Payment Completed", count: totalPaid, color: "#10b981" },
-      { stage: "Cancelled/Refunded", count: totalCancelled, color: "#ef4444" },
+      { stage: "Payment Completed", count: funnelPaid, color: "#10b981" },
+      { stage: "Cancelled/Refunded", count: funnelCancelled, color: "#ef4444" },
     ]);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -193,6 +198,22 @@ export default function Analytics() {
         .sort((a, b) => b.revenue - a.revenue)
         .slice(0, 6)
         .map(p => ({ ...p, name: p.name.length > 22 ? p.name.slice(0, 22) + "…" : p.name }))
+    );
+
+    // Page views by page
+    const pvMap: Record<string, { page: string; views: number; unique: Set<string> }> = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (pageViewsRes.data ?? []).forEach((pv: any) => {
+      const p = pv.page_path || "/";
+      if (!pvMap[p]) pvMap[p] = { page: p, views: 0, unique: new Set() };
+      pvMap[p].views += 1;
+      pvMap[p].unique.add(pv.session_id);
+    });
+    setPageViewsData(
+      Object.values(pvMap)
+        .map(p => ({ page: p.page.length > 30 ? p.page.slice(0, 30) + "…" : p.page, views: p.views, unique_visitors: p.unique.size }))
+        .sort((a, b) => b.views - a.views)
+        .slice(0, 15)
     );
 
     setLoading(false);
@@ -379,6 +400,73 @@ export default function Analytics() {
           </ResponsiveContainer>
         </div>
       )}
+
+      {/* Daily Visitor Details Table */}
+      {dailyStatsData.length > 0 && (
+        <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <h3 className="font-semibold text-gray-900 mb-1">Daily Visitor Details</h3>
+          <p className="text-xs text-gray-400 mb-4">Historic daily breakdown — total visitors, peak concurrent, orders & revenue</p>
+          <div className="overflow-x-auto max-h-[350px] overflow-y-auto">
+            <table className="w-full text-sm">
+              <thead className="sticky top-0 bg-white">
+                <tr className="border-b text-left text-gray-500 text-xs">
+                  <th className="pb-2 pr-4">Date</th>
+                  <th className="pb-2 pr-4 text-right">Total Visitors</th>
+                  <th className="pb-2 pr-4 text-right">Peak Concurrent</th>
+                  <th className="pb-2 pr-4 text-right">Orders</th>
+                  <th className="pb-2 pr-4 text-right">Revenue</th>
+                  <th className="pb-2 text-right">Avg Order</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[...dailyStatsData].reverse().map((d: any, i: number) => {
+                  const prev = [...dailyStatsData].reverse()[i + 1];
+                  const visitorChange = prev ? d.total_visitors - (prev.total_visitors || 0) : 0;
+                  return (
+                    <tr key={d.stat_date} className="border-b border-gray-50 hover:bg-gray-50/50">
+                      <td className="py-2 pr-4 text-gray-700">
+                        {new Date(d.stat_date + "T00:00:00").toLocaleDateString("en-IN", { day: "numeric", month: "short", weekday: "short" })}
+                      </td>
+                      <td className="py-2 pr-4 text-right font-medium">
+                        {(d.total_visitors || 0).toLocaleString("en-IN")}
+                        {visitorChange !== 0 && (
+                          <span className={`ml-1 text-xs ${visitorChange > 0 ? "text-green-500" : "text-red-500"}`}>
+                            {visitorChange > 0 ? "↑" : "↓"}{Math.abs(visitorChange)}
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-2 pr-4 text-right text-gray-600">{d.peak_visitors || 0}</td>
+                      <td className="py-2 pr-4 text-right text-gray-600">{d.total_orders || 0}</td>
+                      <td className="py-2 pr-4 text-right text-gray-600">₹{(d.total_revenue || 0).toLocaleString("en-IN")}</td>
+                      <td className="py-2 text-right text-gray-600">₹{(d.avg_order_value || 0).toLocaleString("en-IN")}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Visitors by Page */}
+      <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+        <h3 className="font-semibold text-gray-900 mb-1">Visitors by Page — {rangeLabel}</h3>
+        <p className="text-xs text-gray-400 mb-4">Top pages by total views and unique visitors</p>
+        {pageViewsData.length === 0 ? (
+          <p className="text-gray-400 text-sm text-center py-8">No page view data yet — data starts collecting now</p>
+        ) : (
+          <ResponsiveContainer width="100%" height={Math.max(200, pageViewsData.length * 32)}>
+            <BarChart data={pageViewsData} layout="vertical" margin={{ left: 10, right: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" horizontal={false} />
+              <XAxis type="number" tick={{ fill: "#9ca3af", fontSize: 11 }} tickLine={false} axisLine={false} />
+              <YAxis type="category" dataKey="page" tick={{ fill: "#6b7280", fontSize: 11 }} tickLine={false} axisLine={false} width={160} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar dataKey="views" name="Page Views" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+              <Bar dataKey="unique_visitors" name="Unique Visitors" fill="#10b981" radius={[0, 4, 4, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top Products */}
