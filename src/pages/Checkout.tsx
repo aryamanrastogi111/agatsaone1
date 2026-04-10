@@ -3,6 +3,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { supabase } from "@/integrations/supabase/client";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
 
 // ─── Device catalogue ──────────────────────────────────────────
@@ -12,9 +13,6 @@ const DEVICES: Record<string, { name: string; amountPaise: number; sku: string }
   RHYTHM_BAND:       { name: "EasyTouch Rhythm Band", amountPaise: 299900, sku: "RHYTHM_BAND" },
   SMART_SCALE:       { name: "Agatsa Smart Scale", amountPaise: 249900, sku: "SMART_SCALE" },
 };
-
-const API_BASE = import.meta.env.VITE_API_BASE || "https://agatsa-one-api-651017108992.asia-south1.run.app";
-const RAZORPAY_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_live_SVjGEVthft6CGI";
 
 // ─── Pincode lookup ─────────────────────────────────────────────
 async function lookupPincode(pincode: string): Promise<{ city: string; state: string } | null> {
