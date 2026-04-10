@@ -13,6 +13,7 @@ const devices = [
     tagline: "12-lead hospital-grade ECG in your pocket",
     stat: "98.15% sensitivity",
     price: "₹3,999",
+    emi: "No-cost EMI from ₹334/month",
     link: "/devices/sanketlife-ecg",
     image: sanketlifeImg,
   },
@@ -22,6 +23,7 @@ const devices = [
     tagline: "Non-invasive metabolic health + BP + SpO2, no needles",
     stat: "8 vitals in 60 seconds",
     price: "₹3,499",
+    emi: "No-cost EMI from ₹292/month",
     link: "/devices/easytouch-wellness",
     image: easytouchImg,
   },
@@ -31,6 +33,7 @@ const devices = [
     tagline: "24/7 wellness monitoring on your wrist",
     stat: "Sleep, HRV, steps, SpO2",
     price: "₹2,999",
+    emi: "No-cost EMI from ₹250/month",
     link: "/devices/rhythm-band",
     image: rhythmImg,
   },
@@ -40,6 +43,7 @@ const devices = [
     tagline: "14 body metrics. One step. One app.",
     stat: "BMI, body fat, muscle mass",
     price: "₹2,499",
+    emi: "No-cost EMI from ₹209/month",
     link: "/devices/smart-scale",
     image: scaleImg,
   },
@@ -93,14 +97,17 @@ export function DeviceShowcaseSection() {
               <p className="text-sm text-muted-foreground mb-2">{device.tagline}</p>
               <p className="text-xs font-medium text-primary mb-3">{device.stat}</p>
 
-              <div className="mt-auto flex items-center justify-between">
-                <span className="text-lg font-bold text-foreground">{device.price}</span>
-                <Link
-                  to={device.link}
-                  className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
-                >
-                  Learn more <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
+              <div className="mt-auto">
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-foreground">{device.price}</span>
+                  <Link
+                    to={device.link}
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+                  >
+                    Learn more <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+                <p className="text-xs text-primary font-medium mt-0.5">{device.emi}</p>
               </div>
             </motion.div>
           ))}
