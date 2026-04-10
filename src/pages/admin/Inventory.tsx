@@ -550,6 +550,75 @@ export default function Inventory() {
           </div>
         </div>
       )}
+
+      {/* Quick Restock Modal */}
+      {restock.open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setRestock(r => ({ ...r, open: false }))}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 p-6 space-y-4" onClick={e => e.stopPropagation()}>
+            <div>
+              <h3 className="text-lg font-bold text-gray-900">Quick Restock</h3>
+              <p className="text-sm text-gray-500">{restock.productName} · Current stock: <span className="font-semibold">{restock.currentQty}</span></p>
+            </div>
+
+            <div>
+              <label className="text-xs text-gray-500 block mb-1 font-medium">Add Quantity</label>
+              <input
+                type="number"
+                value={restock.addQty}
+                onChange={e => setRestock(r => ({ ...r, addQty: e.target.value }))}
+                placeholder="e.g. 50"
+                min={1}
+                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:border-blue-500"
+                autoFocus
+              />
+              {restock.addQty && parseInt(restock.addQty) > 0 && (
+                <p className="text-xs text-green-600 mt-1 font-medium">
+                  New stock will be: {restock.currentQty + parseInt(restock.addQty)}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="text-xs text-gray-500 block mb-1 font-medium">Reason</label>
+              <select
+                value={restock.reason}
+                onChange={e => setRestock(r => ({ ...r, reason: e.target.value }))}
+                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:border-blue-500 bg-white"
+              >
+                {REASON_OPTIONS.map(o => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs text-gray-500 block mb-1 font-medium">Notes (optional)</label>
+              <input
+                value={restock.notes}
+                onChange={e => setRestock(r => ({ ...r, notes: e.target.value }))}
+                placeholder="e.g. Batch #1234 from warehouse"
+                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:border-blue-500"
+              />
+            </div>
+
+            <div className="flex gap-2 pt-2">
+              <button
+                onClick={() => setRestock(r => ({ ...r, open: false }))}
+                className="flex-1 px-4 py-2.5 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-700 font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={submitRestock}
+                disabled={saving || !restock.addQty || parseInt(restock.addQty) <= 0}
+                className="flex-1 px-4 py-2.5 text-sm bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white rounded-lg font-medium"
+              >
+                {saving ? "Adding…" : "Add Stock"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
