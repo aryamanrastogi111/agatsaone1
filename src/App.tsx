@@ -35,6 +35,7 @@ import Press from "./pages/Press";
 import Partner from "./pages/Partner";
 import Demo from "./pages/Demo";
 import CookiePolicy from "./pages/CookiePolicy";
+import CheckoutPage from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 
 // SDK Portal Pages
@@ -113,6 +114,7 @@ const App = () => (
           <Route path="/partner" element={<Partner />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
 
           <Route path="/d/:code" element={<DeviceActivation />} />
           <Route path="/r/:code" element={<ReferralPage />} />
