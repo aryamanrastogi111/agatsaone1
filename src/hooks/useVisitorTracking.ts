@@ -1,5 +1,6 @@
 // Tracks visitor presence via Supabase Realtime — no DB writes needed.
 // Each browser tab joins the 'live-visitors' presence channel.
+// Also increments today's total_visitors count once per unique session per day.
 import { useEffect, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,6 +12,29 @@ function getSessionId(): string {
     sessionStorage.setItem("agatsa_vsid", id);
   }
   return id;
+}
+
+// Increment total_visitors once per unique visitor per day
+function incrementDailyVisitor() {
+  const today = new Date().toISOString().split("T")[0];
+  const key = `agatsa_counted_${today}`;
+  if (sessionStorage.getItem(key)) return;
+  sessionStorage.setItem(key, "1");
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const db = supabase as any;
+  // Try to read current value then upsert with +1
+  db.from("daily_stats")
+    .select("total_visitors")
+    .eq("stat_date", today)
+    .maybeSingle()
+    .then(({ data }: { data: { total_visitors: number } | null }) => {
+      const current = data?.total_visitors ?? 0;
+      db.from("daily_stats").upsert(
+        { stat_date: today, total_visitors: current + 1 },
+        { onConflict: "stat_date" }
+      );
+    });
 }
 
 export function useVisitorTracking() {
@@ -42,6 +66,9 @@ export function useVisitorTracking() {
   useEffect(() => {
     if (isAdminOrInternal) return;
 
+    // Count this visitor for today's total
+    incrementDailyVisitor();
+
     const channel = supabase.channel("live-visitors", {
       config: { presence: { key: sessionId.current } },
     });
@@ -50,7 +77,6 @@ export function useVisitorTracking() {
     channel.subscribe(async (status) => {
       if (status === "SUBSCRIBED") {
         subscribedRef.current = true;
-        // Track initial page
         trackPage(location.pathname);
       }
     });
@@ -60,7 +86,6 @@ export function useVisitorTracking() {
       supabase.removeChannel(channel);
       channelRef.current = null;
     };
-    // Only re-init when switching between admin/public
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdminOrInternal]);
 
