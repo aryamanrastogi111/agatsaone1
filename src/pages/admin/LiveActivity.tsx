@@ -42,6 +42,19 @@ interface DailyStat {
   pending_payments: number;
 }
 
+interface PastSuggestionReview {
+  suggestion: string;
+  outcome: "improved" | "worsened" | "unchanged" | "too_early";
+  evidence: string;
+  nextStep: string;
+}
+
+interface ComparedToLast {
+  revenueChange: string;
+  orderChange: string;
+  overallDirection: "improving" | "declining" | "stable" | "first_analysis";
+}
+
 interface AIAnalysis {
   overallHealth: "good" | "warning" | "critical";
   headline: string;
@@ -51,12 +64,21 @@ interface AIAnalysis {
     biggestDropoff: string;
     possibleReasons: string[];
   };
-  recommendations: Array<{ priority: "high" | "medium" | "low"; action: string; expectedImpact: string; reasoning: string }>;
+  pastSuggestionReview?: PastSuggestionReview[];
+  recommendations: Array<{ priority: "high" | "medium" | "low"; action: string; expectedImpact: string; reasoning: string; timeframe?: string }>;
   alerts: string[];
+  comparedToLast?: ComparedToLast;
+}
+
+interface PastAnalysisEntry {
+  id: string;
+  created_at: string;
+  headline: string;
+  overall_health: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface AIResponse { analysis: AIAnalysis; rawData: any; generatedAt: string }
+interface AIResponse { analysis: AIAnalysis; rawData: any; generatedAt: string; pastAnalyses?: PastAnalysisEntry[] }
 
 // ─── Helpers ─────────────────────────────────────────────────
 function timeAgo(dateStr: string) {
