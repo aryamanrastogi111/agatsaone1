@@ -289,7 +289,7 @@ export const CartDrawer = ({
                   window.fbq('track', 'Purchase', {
                     value: totalSnapshot,
                     currency: 'INR',
-                    content_ids: cartSnapshot.map(i => i.productId || i.title),
+                    content_ids: cartSnapshot.map(i => i.productId || i.productName),
                     content_type: 'product',
                     num_items: cartSnapshot.reduce((s, i) => s + (i.quantity || 1), 0),
                   });
