@@ -66,9 +66,9 @@ export default function SmartScaleProduct() {
   useMetaPixelViewContent("SMART_SCALE", "Agatsa Smart Scale", 1999);
   const handleBuy = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["SMART_SCALE"], content_name: "Agatsa Smart Scale", content_type: "product", value: 1999, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["scale_sub"], content_name: "Agatsa Smart Scale", content_type: "product", value: 2499, currency: "INR" }); } catch {}
     }
-    navigate("/checkout?sku=SMART_SCALE");
+    navigate("/checkout?sku=scale_sub");
   };
   useSEO({ title: "Agatsa Smart Scale — 14 Body Composition Metrics | BMI, Body Fat, Muscle Mass", description: "14 body composition metrics in 5 seconds. Weight, BMI, body fat, visceral fat, muscle mass, metabolic age and more. 10 family profiles. Works with Nera AI. ₹2,499." });
 

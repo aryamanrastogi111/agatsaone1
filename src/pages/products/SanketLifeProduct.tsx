@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addBusinessDays, format } from "date-fns";
 import { motion, useInView, animate } from "framer-motion";
 import { 
@@ -266,19 +266,14 @@ const SANKETLIFE_PRODUCTS: Record<string, { name: string; price: number; image: 
 };
 
 const SanketLifeProduct = () => {
-  const addItem = useCartStore((s) => s.addItem);
+  const navigate = useNavigate();
   const [addingToCart, setAddingToCart] = useState(false);
   const { isOutOfStock } = useInventory();
   const outOfStock = isOutOfStock("sanketlife");
 
   const handleAddToCart = (productId: string = "sanketlife-2") => {
     if (outOfStock) return;
-    const p = SANKETLIFE_PRODUCTS[productId];
-    if (!p) return;
-    setAddingToCart(true);
-    addItem({ productId, productName: p.name, variantTitle: "Default Title", price: p.price, quantity: 1, imageUrl: p.image });
-    toast.success(`${p.name} added to cart`, { position: "top-center" });
-    setTimeout(() => setAddingToCart(false), 500);
+    navigate("/checkout?sku=ecg_bundle");
   };
 
   return (

@@ -58,9 +58,9 @@ export default function EasyTouchWellnessProduct() {
 
   const handleBuy = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["EASYTOUCH_WELLNESS"], content_name: "EasyTouch Wellness", content_type: "product", value: 3499, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["wellness_sub"], content_name: "EasyTouch Wellness", content_type: "product", value: 3499, currency: "INR" }); } catch {}
     }
-    navigate("/checkout?sku=EASYTOUCH_WELLNESS");
+    navigate("/checkout?sku=wellness_sub");
   };
 
   useSEO({ title: "EasyTouch Wellness — Non-Invasive Metabolic Health Monitor | Agatsa One", description: "Track your metabolic health, SpO2, HRV and more — no needles, no blood. Multiple vitals in 15 seconds. ₹3,499. Powered by Nera AI." });

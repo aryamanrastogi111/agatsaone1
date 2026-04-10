@@ -1,18 +1,21 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock } from "lucide-react";
+import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock, MapPin, User, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { supabase } from "@/integrations/supabase/client";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
 
-// ─── Device catalogue ──────────────────────────────────────────
-const DEVICES: Record<string, { name: string; amountPaise: number; sku: string }> = {
-  SANKET_LIFE_ECG:   { name: "SanketLife 12-Lead ECG", amountPaise: 399900, sku: "SANKET_LIFE_ECG" },
-  EASYTOUCH_WELLNESS: { name: "EasyTouch Wellness", amountPaise: 349900, sku: "EASYTOUCH_WELLNESS" },
-  RHYTHM_BAND:       { name: "EasyTouch Rhythm Band", amountPaise: 299900, sku: "RHYTHM_BAND" },
-  SMART_SCALE:       { name: "Agatsa Smart Scale", amountPaise: 249900, sku: "SMART_SCALE" },
+// ─── Exact backend SKUs — do NOT change these strings ──────────
+const DEVICE_CATALOG: Record<string, { name: string; amountPaise: number }> = {
+  ecg_bundle:      { name: "SanketLife ECG",           amountPaise: 499900 },
+  band_sub:        { name: "EasyTouch Rhythm Band",    amountPaise: 299900 },
+  scale_sub:       { name: "Agatsa Smart Scale",       amountPaise: 249900 },
+  wellness_sub:    { name: "EasyTouch Wellness",       amountPaise: 349900 },
+  multivital:      { name: "Agatsa MultiVital",        amountPaise: 399900 },
+  bundle_ecg_band: { name: "ECG + Rhythm Band Bundle", amountPaise: 749900 },
 };
+
+const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 
 // ─── Pincode lookup ─────────────────────────────────────────────
 async function lookupPincode(pincode: string): Promise<{ city: string; state: string } | null> {
@@ -49,7 +52,7 @@ type PageState = "form" | "processing" | "success" | "error";
 export default function CheckoutPage() {
   const [searchParams] = useSearchParams();
   const skuParam = searchParams.get("sku") || "";
-  const skus = skuParam.split(",").filter((s) => DEVICES[s]);
+  const skus = skuParam.split(",").filter((s) => DEVICE_CATALOG[s]);
 
   // ─── Form state ────────────────────────────────────────────
   const [step, setStep] = useState<CheckoutStep>(1);
@@ -71,6 +74,11 @@ export default function CheckoutPage() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [paying, setPaying] = useState(false);
+
+  // ─── Computed ──────────────────────────────────────────────
+  const items = skus.map((s) => ({ sku: s, ...DEVICE_CATALOG[s] }));
+  const totalPaise = items.reduce((sum, d) => sum + d.amountPaise, 0);
+  const totalRupees = totalPaise / 100;
 
   // ─── Preload Razorpay + InitiateCheckout pixel ──────────────
   useEffect(() => {
@@ -114,11 +122,6 @@ export default function CheckoutPage() {
     }
   }, []);
 
-  // ─── Computed ──────────────────────────────────────────────
-  const items = skus.map((s) => DEVICES[s]);
-  const totalPaise = items.reduce((sum, d) => sum + d.amountPaise, 0);
-  const totalRupees = totalPaise / 100;
-
   const step1Valid = pincode.length === 6 && addressLine1.trim().length >= 4 && city.trim().length > 0 && state.trim().length > 0;
   const step2Valid = fullName.trim().length >= 2 && /^\d{10}$/.test(phone);
 
@@ -156,32 +159,38 @@ export default function CheckoutPage() {
   const handlePay = async () => {
     setPaying(true);
     setPageState("processing");
+    setErrorMsg("");
 
     try {
-      // 1. Create order via Supabase Edge Function
-      const { data: orderData, error: createError } = await supabase.functions.invoke(
-        "razorpay-create-order",
-        {
-          body: {
-            items: items.map((d) => ({ sku: d.sku, name: d.name, quantity: 1 })),
-            customerName: fullName.trim(),
-            customerEmail: email.trim() || undefined,
-            customerPhone: "+91" + phone,
-            amountInPaise: totalPaise,
-            shippingAddress: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
-            shippingCity: city.trim(),
-            shippingState: state.trim(),
-            shippingPincode: pincode.trim(),
-          },
-        }
-      );
+      const cleanPhone = phone.replace(/\D/g, "").slice(-10);
+      const recipientEmail = email.trim() || `${cleanPhone}@noemail.agatsa.com`;
 
-      if (createError) {
-        console.error("Order creation failed:", createError);
-        throw new Error(createError.message || "Order creation failed");
+      // 1. Create order via backend API
+      const createRes = await fetch(`${API_BASE}/v1/orders/website/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          skus,
+          recipientName: fullName.trim(),
+          recipientPhone: "+91" + cleanPhone,
+          recipientEmail: recipientEmail,
+          addressLine1: addressLine1.trim(),
+          addressLine2: addressLine2.trim() || undefined,
+          city: city.trim(),
+          state: state.trim(),
+          pincode: pincode.trim(),
+        }),
+      });
+
+      const createData = await createRes.json().catch(() => ({}));
+      if (!createRes.ok) {
+        console.error("Order creation failed:", createRes.status, createData);
+        throw new Error(createData.error || createData.message || `Order creation failed (${createRes.status})`);
       }
 
-      if (!orderData?.orderId) throw new Error("Missing Razorpay order ID in response");
+      const razorpayOrderId = createData.razorpayOrderId || createData.razorpay_order_id;
+      const websiteOrderId = createData.websiteOrderId;
+      if (!razorpayOrderId) throw new Error("Missing Razorpay order ID in response");
 
       // 2. Open Razorpay
       const razorpayLoaded = await loadRazorpay();
@@ -189,61 +198,61 @@ export default function CheckoutPage() {
 
       setPageState("form"); // hide processing overlay while Razorpay modal is open
 
-      const rzp = new (window as any).Razorpay({
-        key: orderData.keyId,
-        amount: orderData.amount || totalPaise,
-        currency: orderData.currency || "INR",
-        name: "Agatsa Software Pvt Ltd",
-        description: items.map((d) => d.name).join(", "),
-        order_id: orderData.orderId,
-        prefill: {
-          name: fullName.trim(),
-          email: email.trim() || undefined,
-          contact: "+91" + phone,
-        },
-        theme: { color: "#7C4DFF" },
-        handler: async (response: any) => {
-          // 3. Verify payment via Supabase Edge Function
-          setPageState("processing");
-          try {
-            const { data: verifyData, error: verifyError } = await supabase.functions.invoke(
-              "razorpay-verify-payment",
-              {
-                body: {
+      await new Promise<void>((resolve, reject) => {
+        const rzp = new (window as any).Razorpay({
+          key: createData.keyId || "rzp_live_SVjGEVthft6CGI",
+          amount: createData.amount || totalPaise,
+          currency: createData.currency || "INR",
+          name: "Agatsa One",
+          description: items.map((d) => d.name).join(", "),
+          order_id: razorpayOrderId,
+          prefill: {
+            name: fullName.trim(),
+            email: recipientEmail,
+            contact: "+91" + cleanPhone,
+          },
+          theme: { color: "#7C4DFF" },
+          handler: async (response: any) => {
+            // 3. Verify payment
+            setPageState("processing");
+            try {
+              const verifyRes = await fetch(`${API_BASE}/v1/orders/website/verify`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  websiteOrderId,
                   razorpay_order_id: response.razorpay_order_id,
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_signature: response.razorpay_signature,
-                  customerEmail: email.trim() || undefined,
-                  customerName: fullName.trim(),
-                  items: items.map((d) => ({ sku: d.sku, name: d.name, quantity: 1 })),
-                  total: totalRupees,
-                  shippingAddress: addressLine1.trim(),
-                  shippingCity: city.trim(),
-                  shippingState: state.trim(),
-                  shippingPincode: pincode.trim(),
-                },
-              }
-            );
-            if (verifyError) throw new Error(verifyError.message || "Payment verification failed");
-            setPageState("success");
-          } catch (err: any) {
-            setErrorMsg(err.message || "Payment verification failed");
-            setPageState("error");
-          }
-        },
-        modal: {
-          ondismiss: () => {
-            setPaying(false);
-            setPageState("form");
+                }),
+              });
+              const verifyData = await verifyRes.json().catch(() => ({}));
+              if (!verifyRes.ok) throw new Error(verifyData.error || "Payment verification failed");
+              setPageState("success");
+              resolve();
+            } catch (err: any) {
+              setErrorMsg(err.message || "Payment verification failed");
+              setPageState("error");
+              reject(err);
+            }
           },
-          backdropclose: false,
-          escape: false,
-        },
+          modal: {
+            ondismiss: () => {
+              setPaying(false);
+              setPageState("form");
+              reject(new Error("cancelled"));
+            },
+            backdropclose: false,
+            escape: false,
+          },
+        });
+        rzp.open();
       });
-      rzp.open();
     } catch (err: any) {
-      setErrorMsg(err.message || "Something went wrong");
-      setPageState("error");
+      if (err.message !== "cancelled") {
+        setErrorMsg(err.message || "Something went wrong");
+        setPageState("error");
+      }
       setPaying(false);
     }
   };
@@ -258,7 +267,7 @@ export default function CheckoutPage() {
           </div>
           <h1 className="text-2xl font-bold text-foreground">Order Confirmed!</h1>
           <p className="text-muted-foreground">
-            Your order has been placed successfully. You'll receive a confirmation on your phone shortly.
+            Your device ships within 2–4 business days. You'll receive a confirmation on your phone shortly.
           </p>
           <div className="bg-muted/50 rounded-xl p-4 text-sm space-y-1">
             <p className="font-medium text-foreground">Shipping to</p>
