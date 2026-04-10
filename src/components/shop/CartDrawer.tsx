@@ -37,6 +37,7 @@ import type { RazorpayPaymentResponse } from "@/lib/razorpay";
 import { validateCoupon } from "@/lib/shop";
 import { getNeraAiLabel, getNeraAiPlan } from "@/lib/neraAiPlan";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
+import { CartCrossSell } from "@/components/shop/CartCrossSell";
 
 interface SuccessData {
   orderId: string;
@@ -452,6 +453,9 @@ export const CartDrawer = ({
                     </div>
                   ))}
                 </div>
+
+                {/* Cross-sell / Upsell */}
+                <CartCrossSell />
 
                 {/* Footer */}
                 <div className="flex-shrink-0 p-6 pt-4 border-t space-y-3 bg-background">
