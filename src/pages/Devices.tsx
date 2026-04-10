@@ -32,7 +32,7 @@ interface DeviceData {
 
 const devices: DeviceData[] = [
   {
-    id: "sanketlife-ecg",
+    id: "sanketlife",
     image: sanketlifeImg,
     badge: "CDSCO Class B Certified · MFG/MD/2023/000231",
     name: "SanketLife 12-Lead ECG Monitor",
@@ -124,7 +124,7 @@ const devices: DeviceData[] = [
     link: "/devices/rhythm-band",
   },
   {
-    id: "smart-scale",
+    id: "corebalance",
     image: scaleImg,
     name: "Agatsa Smart Scale",
     tagline: "14 body metrics. One step. One app.",
