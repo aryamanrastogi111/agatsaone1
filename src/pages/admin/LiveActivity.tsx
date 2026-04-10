@@ -53,16 +53,21 @@ function timeAgo(dateStr: string) {
 function pageLabel(path: string) {
   const map: Record<string, string> = {
     "/": "Home",
-    "/products": "Products",
-    "/products/sanketlife": "SanketLife",
-    "/products/zlu": "Zlu",
-    "/products/corebalance": "CoreBalance",
-    "/products/easytouch-rhythm": "EasyTouch Rhythm",
-    "/products/easytouch-plus": "EasyTouch+",
-    "/blog": "Blog",
+    "/devices": "Devices",
+    "/devices/sanketlife-ecg": "SanketLife ECG",
+    "/devices/easytouch-wellness": "EasyTouch Wellness",
+    "/devices/rhythm-band": "Rhythm Band",
+    "/devices/smart-scale": "Smart Scale",
+    "/programmes": "Programmes",
+    "/pricing": "Pricing",
+    "/checkout": "Checkout",
     "/about": "About",
+    "/blog": "Blog",
     "/support": "Support",
-    "/device-finder": "Device Finder",
+    "/app": "App Download",
+    "/for-doctors": "For Doctors",
+    "/for-hospitals": "For Hospitals",
+    "/for-corporates": "For Corporates",
   };
   return map[path] ?? path;
 }
