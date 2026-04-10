@@ -774,10 +774,10 @@ export default function LiveActivity() {
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <TrendChartCard title="Total Visitors" dataKey="total_visitors" data={historicalData} color="#3b82f6" />
             <TrendChartCard title="Orders" dataKey="total_orders" data={historicalData} color="#10b981" />
-            <TrendChartCard title="Revenue" dataKey="total_revenue" data={historicalData} color="#3b82f6" prefix="₹" />
-            <TrendChartCard title="Avg Order Value" dataKey="avg_order_value" data={historicalData} color="#8b5cf6" prefix="₹" />
-            <TrendChartCard title="Peak Visitors" dataKey="peak_visitors" data={historicalData} color="#f59e0b" />
+            <TrendChartCard title="Revenue" dataKey="total_revenue" data={historicalData} color="#8b5cf6" prefix="₹" />
+            <TrendChartCard title="Peak Concurrent" dataKey="peak_visitors" data={historicalData} color="#f59e0b" />
           </div>
         )}
       </div>
