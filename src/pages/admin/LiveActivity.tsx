@@ -693,7 +693,7 @@ export default function LiveActivity() {
     const days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
     const since = new Date(); since.setDate(since.getDate() - days);
     const { data } = await db.from("daily_stats")
-      .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments")
+      .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments, total_visitors")
       .gte("stat_date", since.toISOString().split("T")[0]).order("stat_date", { ascending: true });
     setHistoricalData(data ?? []);
   }, [timeRange]);
