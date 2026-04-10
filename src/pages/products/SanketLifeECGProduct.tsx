@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -26,20 +27,11 @@ const fadeUp = {
 };
 
 export default function SanketLifeECGProduct() {
-  const addItem = useCartStore((s) => s.addItem);
+  const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
 
   const handleBuy = () => {
-    setAdding(true);
-    addItem({
-      productId: "sanketlife-ecg",
-      productName: "SanketLife 12-Lead ECG",
-      variantTitle: "Default Title",
-      price: 3999,
-      quantity: 1,
-    });
-    toast.success("SanketLife ECG added to cart", { position: "top-center" });
-    setTimeout(() => setAdding(false), 500);
+    navigate("/checkout?sku=SANKET_LIFE_ECG");
   };
 
   useSEO({

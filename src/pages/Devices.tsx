@@ -27,6 +27,7 @@ interface DeviceData {
   measures: string[];
   appFeatures: string[];
   link: string;
+  checkoutSku: string;
   clinicalNote?: string;
 }
 
@@ -60,6 +61,7 @@ const devices: DeviceData[] = [
       "Compatible with Post Heart Attack Recovery Programme",
     ],
     link: "/devices/sanketlife-ecg",
+    checkoutSku: "SANKET_LIFE_ECG",
     clinicalNote: "98.5% accuracy validated at Narayana Health & Sri Jayadeva Institute of Cardiovascular Sciences",
   },
   {
@@ -91,6 +93,7 @@ const devices: DeviceData[] = [
       "Compatible with Hypertension Control Programme",
     ],
     link: "/devices/easytouch-wellness",
+    checkoutSku: "EASYTOUCH_WELLNESS",
   },
   {
     id: "rhythm-band",
@@ -122,6 +125,7 @@ const devices: DeviceData[] = [
       "7-day battery life",
     ],
     link: "/devices/rhythm-band",
+    checkoutSku: "RHYTHM_BAND",
   },
   {
     id: "corebalance",
@@ -159,6 +163,7 @@ const devices: DeviceData[] = [
       "Compatible with Obesity Reversal Programme",
     ],
     link: "/devices/smart-scale",
+    checkoutSku: "SMART_SCALE",
   },
 ];
 
@@ -244,7 +249,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
 
         <div className="flex gap-3 mt-6">
           <Button asChild className="flex-1 rounded-full">
-            <Link to={device.link}>Buy Now — {device.price}</Link>
+            <Link to={`/checkout?sku=${device.checkoutSku}`}>Buy Now — {device.price}</Link>
           </Button>
           <Button asChild variant="outline" className="flex-1 rounded-full">
             <Link to={device.link}>Learn More</Link>
@@ -442,10 +447,10 @@ export default function DevicesPage() {
             </div>
           </div>
           <Link
-            to="/devices/sanketlife-ecg"
+            to="/checkout?sku=SANKET_LIFE_ECG,EASYTOUCH_WELLNESS,RHYTHM_BAND,SMART_SCALE"
             className="text-sm font-semibold text-primary hover:underline whitespace-nowrap flex items-center gap-1"
           >
-            View Bundle <ArrowRight className="h-3.5 w-3.5" />
+            Buy Bundle <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>

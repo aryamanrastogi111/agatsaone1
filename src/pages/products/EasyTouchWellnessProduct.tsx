@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -50,14 +51,11 @@ const relatedDevices = [
 ];
 
 export default function EasyTouchWellnessProduct() {
-  const addItem = useCartStore((s) => s.addItem);
+  const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
 
   const handleBuy = () => {
-    setAdding(true);
-    addItem({ productId: "easytouch-wellness", productName: "EasyTouch Wellness", variantTitle: "Default Title", price: 3499, quantity: 1 });
-    toast.success("EasyTouch Wellness added to cart", { position: "top-center" });
-    setTimeout(() => setAdding(false), 500);
+    navigate("/checkout?sku=EASYTOUCH_WELLNESS");
   };
 
   useSEO({ title: "EasyTouch Wellness — Non-Invasive Metabolic Health Monitor | Agatsa One", description: "Track your metabolic health, SpO2, HRV and more — no needles, no blood. Multiple vitals in 15 seconds. ₹3,499. Powered by Nera AI." });

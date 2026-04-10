@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, ArrowRight, Package, Moon, Activity, Bell } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -54,13 +54,10 @@ const relatedDevices = [
 ];
 
 export default function RhythmBandProduct() {
-  const addItem = useCartStore((s) => s.addItem);
+  const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
   const handleBuy = () => {
-    setAdding(true);
-    addItem({ productId: "rhythm-band", productName: "EasyTouch Rhythm Band", variantTitle: "Default Title", price: 2999, quantity: 1 });
-    toast.success("Rhythm Band added to cart", { position: "top-center" });
-    setTimeout(() => setAdding(false), 500);
+    navigate("/checkout?sku=RHYTHM_BAND");
   };
   useSEO({ title: "EasyTouch Rhythm Band — 24/7 Sleep, HRV, SpO2 Monitoring | Agatsa One", description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Works with Nera AI. ₹2,999. Compatible with all 5 Care Programmes." });
 
