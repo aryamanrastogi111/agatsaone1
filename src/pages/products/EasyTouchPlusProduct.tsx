@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { useNavigate } from "react-router-dom";
 import easytouchWellnessImg from "@/assets/easytouch-wellness-hero.webp";
 import easytouchFingerImg from "@/assets/easytouch-wellness-finger.webp";

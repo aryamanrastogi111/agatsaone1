@@ -167,6 +167,8 @@ const EasyTouchRhythmProduct = () => {
   const { trackAddToCart } = useFacebookPixel();
   const { isOutOfStock } = useInventory();
   const outOfStock = isOutOfStock("easytouch-rhythm");
+  const { prices, fmt } = usePricing();
+  const bp = fmt(prices.band_sub);
   
   // Fire PageView and ViewContent on mount for Facebook Pixel
   useEasyTouchRhythmPixelPageView();
