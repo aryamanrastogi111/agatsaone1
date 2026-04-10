@@ -249,7 +249,7 @@ export default function Analytics() {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {kpis.map(k => (
           <div key={k.label} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
             <div className="flex items-start justify-between">
@@ -341,6 +341,10 @@ export default function Analytics() {
           <ResponsiveContainer width="100%" height={240}>
             <AreaChart data={dailyStatsData} margin={{ top: 4, right: 4, bottom: 0, left: 0 }}>
               <defs>
+                <linearGradient id="totalVisGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                </linearGradient>
                 <linearGradient id="visGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.2} />
                   <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
@@ -368,7 +372,8 @@ export default function Analytics() {
                   return date.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
                 }}
               />
-              <Area type="monotone" dataKey="peak_visitors" name="Peak Visitors" stroke="#f59e0b" strokeWidth={2} fill="url(#visGrad)" />
+              <Area type="monotone" dataKey="total_visitors" name="Total Visitors" stroke="#3b82f6" strokeWidth={2} fill="url(#totalVisGrad)" />
+              <Area type="monotone" dataKey="peak_visitors" name="Peak Concurrent" stroke="#f59e0b" strokeWidth={2} fill="url(#visGrad)" />
               <Area type="monotone" dataKey="total_orders" name="Orders" stroke="#8b5cf6" strokeWidth={2} fill="url(#ordSnapGrad)" />
             </AreaChart>
           </ResponsiveContainer>
