@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link, useNavigate } from "react-router-dom";
@@ -63,10 +64,12 @@ const relatedDevices = [
 export default function SmartScaleProduct() {
   const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
+  const { prices, fmt } = usePricing();
+  const scalePrice = prices.scale_sub;
   useMetaPixelViewContent("SMART_SCALE", "Agatsa Smart Scale", 1999);
   const handleBuy = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["scale_sub"], content_name: "Agatsa Smart Scale", content_type: "product", value: 2499, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["scale_sub"], content_name: "Agatsa Smart Scale", content_type: "product", value: scalePrice, currency: "INR" }); } catch {}
     }
     navigate("/checkout?sku=scale_sub");
   };
@@ -88,9 +91,9 @@ export default function SmartScaleProduct() {
               <p className="text-xl md:text-2xl font-bold text-orange-500 dark:text-orange-400 mt-3">Step on. Know everything.</p>
               <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">The Agatsa Smart Scale measures 14 body composition metrics in a single 5-second reading — weight, body fat, muscle mass, bone density, visceral fat, metabolic age, and more. Syncs instantly to Nera AI via Bluetooth.</p>
               <div className="mt-6">
-                <span className="text-4xl font-extrabold text-foreground">₹2,499</span>
+                <span className="text-4xl font-extrabold text-foreground">{fmt(scalePrice)}</span>
                 <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
-                <EmiLine price={2499} />
+                <EmiLine price={scalePrice} />
                 <StockUrgencyBar productKey="corebalance" className="mt-3" />
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                   <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
@@ -103,7 +106,7 @@ export default function SmartScaleProduct() {
                 <span className="text-sm text-muted-foreground ml-1">4.7/5 (423 reviews)</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Smart Scale — ₹2,499</Button>
+                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Smart Scale — {fmt(scalePrice)}</Button>
                 <Button asChild variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">
                   <Link to="/app?device=scale">Download Agatsa One App (free)</Link>
                 </Button>
@@ -330,7 +333,7 @@ export default function SmartScaleProduct() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready to know your body?</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Step on. 5 seconds. 14 metrics. It's that simple.</p>
-          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Smart Scale — ₹2,499</Button>
+          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Smart Scale — {fmt(scalePrice)}</Button>
         </div>
       </section>
     </SiteLayout>
