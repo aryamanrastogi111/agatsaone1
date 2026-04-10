@@ -390,10 +390,9 @@ export default function CheckoutPage() {
                 <input
                   type="text"
                   value={city}
-                  onChange={(e) => { if (!cityAutoFilled) setCity(e.target.value); }}
-                  readOnly={cityAutoFilled}
+                  onChange={(e) => setCity(e.target.value)}
                   placeholder="City"
-                  className={`w-full px-4 py-3 border border-border rounded-xl text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary ${cityAutoFilled ? "bg-muted cursor-not-allowed" : "bg-background"}`}
+                  className="w-full px-4 py-3 border border-border rounded-xl text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-background"
                 />
               </div>
               <div>
@@ -401,10 +400,9 @@ export default function CheckoutPage() {
                 <input
                   type="text"
                   value={state}
-                  onChange={(e) => { if (!cityAutoFilled) setState(e.target.value); }}
-                  readOnly={cityAutoFilled}
+                  onChange={(e) => setState(e.target.value)}
                   placeholder="State"
-                  className={`w-full px-4 py-3 border border-border rounded-xl text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary ${cityAutoFilled ? "bg-muted cursor-not-allowed" : "bg-background"}`}
+                  className="w-full px-4 py-3 border border-border rounded-xl text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-background"
                 />
               </div>
             </div>
