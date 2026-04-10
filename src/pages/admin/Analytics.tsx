@@ -4,7 +4,7 @@ import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
-import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown, Users } from "lucide-react";
+import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown, Users, Clock, MousePointerClick, Globe } from "lucide-react";
 import { format, subDays } from "date-fns";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,6 +44,10 @@ export default function Analytics() {
   const [funnelData, setFunnelData] = useState<{ stage: string; count: number; color: string }[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [pageViewsData, setPageViewsData] = useState<any[]>([]);
+  const [audienceQuality, setAudienceQuality] = useState({
+    avgDuration: 0, bounceRate: 0, avgPages: 0, totalSessions: 0,
+    bySource: [] as { source: string; sessions: number; avgDuration: number; bounceRate: number; avgPages: number }[],
+  });
   const [kpiStats, setKpiStats] = useState({
     totalRevenue: 0, totalOrders: 0, paidOrders: 0,
     monthRevenue: 0, monthOrders: 0, avgOrderValue: 0,
@@ -82,7 +86,7 @@ export default function Analytics() {
       .order("created_at");
     if (rangeEnd) rangeQuery = rangeQuery.lt("created_at", rangeEnd);
 
-    const [allRes, rangeRes, todayRes, dailyRes, pageViewsRes] = await Promise.all([
+    const [allRes, rangeRes, todayRes, dailyRes, pageViewsRes, sessionsRes] = await Promise.all([
       db.from("orders").select("amount, status, created_at, items"),
       rangeQuery,
       db.from("orders")
@@ -94,10 +98,15 @@ export default function Analytics() {
         .gte("stat_date", subDays(now, Math.max(days, 7)).toISOString().split("T")[0])
         .order("stat_date", { ascending: true }),
       db.from("page_views")
-        .select("page_path, session_id, created_at")
+        .select("page_path, session_id, created_at, utm_source, utm_medium")
         .gte("created_at", rangeStart)
         .order("created_at", { ascending: false })
         .limit(5000),
+      db.from("visitor_sessions")
+        .select("session_id, started_at, last_seen_at, page_count, entry_page, exit_page, utm_source, utm_medium, utm_campaign, device, referrer")
+        .gte("started_at", rangeStart)
+        .order("started_at", { ascending: false })
+        .limit(2000),
     ]);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -216,6 +225,45 @@ export default function Analytics() {
         .slice(0, 15)
     );
 
+    // Audience quality from visitor_sessions
+    const sessions = (sessionsRes.data ?? []) as any[];
+    if (sessions.length > 0) {
+      const durations = sessions.map((s: any) => {
+        const started = new Date(s.started_at).getTime();
+        const lastSeen = new Date(s.last_seen_at).getTime();
+        return Math.max(0, (lastSeen - started) / 1000); // seconds
+      });
+      const avgDuration = Math.round(durations.reduce((a: number, b: number) => a + b, 0) / durations.length);
+      const bounces = sessions.filter((s: any) => (s.page_count || 1) <= 1).length;
+      const bounceRate = Math.round((bounces / sessions.length) * 100);
+      const avgPages = +(sessions.reduce((a: number, s: any) => a + (s.page_count || 1), 0) / sessions.length).toFixed(1);
+
+      // By source
+      const srcMap: Record<string, { sessions: any[] }> = {};
+      sessions.forEach((s: any) => {
+        const src = s.utm_source || s.referrer || "direct";
+        if (!srcMap[src]) srcMap[src] = { sessions: [] };
+        srcMap[src].sessions.push(s);
+      });
+      const bySource = Object.entries(srcMap)
+        .map(([source, { sessions: srcSessions }]) => {
+          const srcDurations = srcSessions.map((s: any) => Math.max(0, (new Date(s.last_seen_at).getTime() - new Date(s.started_at).getTime()) / 1000));
+          const srcAvgDur = Math.round(srcDurations.reduce((a: number, b: number) => a + b, 0) / srcDurations.length);
+          const srcBounces = srcSessions.filter((s: any) => (s.page_count || 1) <= 1).length;
+          return {
+            source,
+            sessions: srcSessions.length,
+            avgDuration: srcAvgDur,
+            bounceRate: Math.round((srcBounces / srcSessions.length) * 100),
+            avgPages: +(srcSessions.reduce((a: number, s: any) => a + (s.page_count || 1), 0) / srcSessions.length).toFixed(1),
+          };
+        })
+        .sort((a, b) => b.sessions - a.sessions)
+        .slice(0, 10);
+
+      setAudienceQuality({ avgDuration, bounceRate, avgPages, totalSessions: sessions.length, bySource });
+    }
+
     setLoading(false);
   }, [timeRange]);
 
@@ -283,6 +331,108 @@ export default function Analytics() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Audience Quality */}
+      <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+        <h3 className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
+          <Users size={18} /> Audience Quality — {rangeLabel}
+        </h3>
+        <p className="text-xs text-gray-400 mb-4">How engaged are your visitors? Helps evaluate ad traffic quality.</p>
+
+        {audienceQuality.totalSessions === 0 ? (
+          <p className="text-gray-400 text-sm text-center py-8">No session data yet — data starts collecting now as visitors browse your site</p>
+        ) : (
+          <>
+            {/* Quality Score Cards */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+              <div className="rounded-lg border p-3">
+                <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                  <Clock size={13} /> Avg. Session Duration
+                </div>
+                <div className="text-xl font-bold">
+                  {audienceQuality.avgDuration >= 60
+                    ? `${Math.floor(audienceQuality.avgDuration / 60)}m ${audienceQuality.avgDuration % 60}s`
+                    : `${audienceQuality.avgDuration}s`}
+                </div>
+                <div className={`text-xs mt-0.5 ${audienceQuality.avgDuration >= 60 ? "text-green-600" : audienceQuality.avgDuration >= 15 ? "text-yellow-600" : "text-red-600"}`}>
+                  {audienceQuality.avgDuration >= 60 ? "✓ Good engagement" : audienceQuality.avgDuration >= 15 ? "⚠ Moderate" : "✗ Very low — likely bot/bad traffic"}
+                </div>
+              </div>
+
+              <div className="rounded-lg border p-3">
+                <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                  <MousePointerClick size={13} /> Bounce Rate
+                </div>
+                <div className="text-xl font-bold">{audienceQuality.bounceRate}%</div>
+                <div className={`text-xs mt-0.5 ${audienceQuality.bounceRate <= 40 ? "text-green-600" : audienceQuality.bounceRate <= 60 ? "text-yellow-600" : "text-red-600"}`}>
+                  {audienceQuality.bounceRate <= 40 ? "✓ Healthy" : audienceQuality.bounceRate <= 60 ? "⚠ Average" : "✗ High — visitors leaving immediately"}
+                </div>
+              </div>
+
+              <div className="rounded-lg border p-3">
+                <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                  <Globe size={13} /> Pages / Session
+                </div>
+                <div className="text-xl font-bold">{audienceQuality.avgPages}</div>
+                <div className={`text-xs mt-0.5 ${audienceQuality.avgPages >= 3 ? "text-green-600" : audienceQuality.avgPages >= 1.5 ? "text-yellow-600" : "text-red-600"}`}>
+                  {audienceQuality.avgPages >= 3 ? "✓ Deep browsing" : audienceQuality.avgPages >= 1.5 ? "⚠ Moderate interest" : "✗ Minimal exploration"}
+                </div>
+              </div>
+
+              <div className="rounded-lg border p-3">
+                <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                  <Users size={13} /> Total Sessions
+                </div>
+                <div className="text-xl font-bold">{audienceQuality.totalSessions.toLocaleString("en-IN")}</div>
+                <div className="text-xs mt-0.5 text-gray-500">tracked in this period</div>
+              </div>
+            </div>
+
+            {/* Quality by Traffic Source */}
+            {audienceQuality.bySource.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-gray-700 mb-2">Quality by Traffic Source</h4>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b text-left text-gray-500 text-xs">
+                        <th className="pb-2 pr-4">Source</th>
+                        <th className="pb-2 pr-4 text-right">Sessions</th>
+                        <th className="pb-2 pr-4 text-right">Avg Duration</th>
+                        <th className="pb-2 pr-4 text-right">Bounce Rate</th>
+                        <th className="pb-2 text-right">Pages/Session</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {audienceQuality.bySource.map(src => (
+                        <tr key={src.source} className="border-b border-gray-50 hover:bg-gray-50/50">
+                          <td className="py-2 pr-4 font-medium text-gray-700">{src.source}</td>
+                          <td className="py-2 pr-4 text-right">{src.sessions}</td>
+                          <td className="py-2 pr-4 text-right">
+                            <span className={src.avgDuration >= 30 ? "text-green-600" : "text-red-600"}>
+                              {src.avgDuration >= 60 ? `${Math.floor(src.avgDuration / 60)}m ${src.avgDuration % 60}s` : `${src.avgDuration}s`}
+                            </span>
+                          </td>
+                          <td className="py-2 pr-4 text-right">
+                            <span className={src.bounceRate <= 50 ? "text-green-600" : "text-red-600"}>
+                              {src.bounceRate}%
+                            </span>
+                          </td>
+                          <td className="py-2 text-right">
+                            <span className={src.avgPages >= 2 ? "text-green-600" : "text-red-600"}>
+                              {src.avgPages}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </div>
 
       {/* Conversion Funnel */}
