@@ -68,7 +68,7 @@ function AnimatedSection({
 }
 
 /* ── Sticky header buy button ── */
-function StickyBuyBar({ onBuy }: { onBuy: () => void }) {
+function StickyBuyBar({ onBuy, wp }: { onBuy: () => void; wp: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: false });
   return (
@@ -85,6 +85,9 @@ function StickyBuyBar({ onBuy }: { onBuy: () => void }) {
             <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-6" onClick={onBuy}>
               Buy Now — {wp}
             </Button>
+          </div>
+        </motion.div>
+      )}
           </div>
         </motion.div>
       )}
