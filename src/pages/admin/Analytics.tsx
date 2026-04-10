@@ -30,7 +30,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   );
 };
 
-type TimeRange = "7d" | "30d" | "90d" | "all";
+type TimeRange = "today" | "yesterday" | "7d" | "30d" | "90d" | "all";
 
 export default function Analytics() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,24 +52,44 @@ export default function Analytics() {
 
   const fetchData = useCallback(async () => {
     setLoading(true);
-    const days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : timeRange === "90d" ? 90 : 365;
-    const rangeStart = subDays(new Date(), days).toISOString();
+    const now = new Date();
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
+    const yesterdayStart = new Date(todayStart);
+    yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+    const yesterdayEnd = new Date(todayStart);
+
+    let days: number;
+    let rangeStart: string;
+    let rangeEnd: string | null = null;
+    if (timeRange === "today") {
+      days = 1;
+      rangeStart = todayStart.toISOString();
+    } else if (timeRange === "yesterday") {
+      days = 1;
+      rangeStart = yesterdayStart.toISOString();
+      rangeEnd = yesterdayEnd.toISOString();
+    } else {
+      days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : timeRange === "90d" ? 90 : 365;
+      rangeStart = subDays(now, days).toISOString();
+    }
+
+    let rangeQuery = db.from("orders")
+      .select("amount, status, created_at, items")
+      .gte("created_at", rangeStart)
+      .order("created_at");
+    if (rangeEnd) rangeQuery = rangeQuery.lt("created_at", rangeEnd);
 
     const [allRes, rangeRes, todayRes, dailyRes] = await Promise.all([
       db.from("orders").select("amount, status, created_at, items"),
-      db.from("orders")
-        .select("amount, status, created_at, items")
-        .gte("created_at", rangeStart)
-        .order("created_at"),
+      rangeQuery,
       db.from("orders")
         .select("amount, status")
         .in("status", PAID_STATUSES)
         .gte("created_at", todayStart.toISOString()),
       db.from("daily_stats")
         .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments")
-        .gte("stat_date", subDays(new Date(), days).toISOString().split("T")[0])
+        .gte("stat_date", subDays(now, Math.max(days, 7)).toISOString().split("T")[0])
         .order("stat_date", { ascending: true }),
     ]);
 
@@ -102,18 +122,34 @@ export default function Analytics() {
 
     // Revenue chart from orders data
     const byDay: Record<string, { date: string; revenue: number; orders: number }> = {};
-    for (let i = days - 1; i >= 0; i--) {
-      const d = format(subDays(new Date(), i), "MMM d");
-      byDay[d] = { date: d, revenue: 0, orders: 0 };
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    rangeOrders.forEach((o: any) => {
-      const d = format(new Date(o.created_at), "MMM d");
-      if (byDay[d]) {
-        if (PAID_STATUSES.includes(o.status)) byDay[d].revenue += o.amount ?? 0;
-        byDay[d].orders += 1;
+    if (timeRange === "today" || timeRange === "yesterday") {
+      // Show hourly breakdown for single-day views
+      const baseDate = timeRange === "today" ? todayStart : yesterdayStart;
+      for (let h = 0; h < 24; h++) {
+        const label = `${h.toString().padStart(2, "0")}:00`;
+        byDay[label] = { date: label, revenue: 0, orders: 0 };
       }
-    });
+      rangeOrders.forEach((o: any) => {
+        const h = new Date(o.created_at).getHours();
+        const label = `${h.toString().padStart(2, "0")}:00`;
+        if (byDay[label]) {
+          if (PAID_STATUSES.includes(o.status)) byDay[label].revenue += o.amount ?? 0;
+          byDay[label].orders += 1;
+        }
+      });
+    } else {
+      for (let i = days - 1; i >= 0; i--) {
+        const d = format(subDays(now, i), "MMM d");
+        byDay[d] = { date: d, revenue: 0, orders: 0 };
+      }
+      rangeOrders.forEach((o: any) => {
+        const d = format(new Date(o.created_at), "MMM d");
+        if (byDay[d]) {
+          if (PAID_STATUSES.includes(o.status)) byDay[d].revenue += o.amount ?? 0;
+          byDay[d].orders += 1;
+        }
+      });
+    }
     setRevenueData(Object.values(byDay));
 
     // Daily stats history
@@ -165,7 +201,7 @@ export default function Analytics() {
   useEffect(() => { fetchData(); }, [fetchData]);
 
   const fmt = (n: number) => `₹${(n ?? 0).toLocaleString("en-IN")}`;
-  const rangeLabel = timeRange === "7d" ? "7 days" : timeRange === "30d" ? "30 days" : timeRange === "90d" ? "90 days" : "all time";
+  const rangeLabel = timeRange === "today" ? "today" : timeRange === "yesterday" ? "yesterday" : timeRange === "7d" ? "7 days" : timeRange === "30d" ? "30 days" : timeRange === "90d" ? "90 days" : "all time";
 
   const kpis = [
     { label: "Total Revenue", value: fmt(kpiStats.totalRevenue), sub: `${fmt(kpiStats.monthRevenue)} in last ${rangeLabel}`, icon: IndianRupee, accent: "bg-green-100 text-green-600" },
@@ -190,7 +226,7 @@ export default function Analytics() {
         </div>
         <div className="flex items-center gap-3">
           <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
-            {(["7d", "30d", "90d", "all"] as TimeRange[]).map((r) => (
+            {(["today", "yesterday", "7d", "30d", "90d", "all"] as TimeRange[]).map((r) => (
               <button
                 key={r}
                 onClick={() => setTimeRange(r)}
@@ -198,7 +234,7 @@ export default function Analytics() {
                   timeRange === r ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700"
                 }`}
               >
-                {r === "7d" ? "7D" : r === "30d" ? "30D" : r === "90d" ? "90D" : "All"}
+                {r === "today" ? "Today" : r === "yesterday" ? "Yesterday" : r === "7d" ? "7D" : r === "30d" ? "30D" : r === "90d" ? "90D" : "All"}
               </button>
             ))}
           </div>
