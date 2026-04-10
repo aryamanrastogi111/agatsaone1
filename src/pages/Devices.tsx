@@ -27,6 +27,7 @@ interface DeviceData {
   measures: string[];
   appFeatures: string[];
   link: string;
+  checkoutSku: string;
   clinicalNote?: string;
 }
 
