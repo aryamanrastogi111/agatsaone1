@@ -202,6 +202,22 @@ export default function Analytics() {
         .map(p => ({ ...p, name: p.name.length > 22 ? p.name.slice(0, 22) + "…" : p.name }))
     );
 
+    // Page views by page
+    const pvMap: Record<string, { page: string; views: number; unique: Set<string> }> = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (pageViewsRes.data ?? []).forEach((pv: any) => {
+      const p = pv.page_path || "/";
+      if (!pvMap[p]) pvMap[p] = { page: p, views: 0, unique: new Set() };
+      pvMap[p].views += 1;
+      pvMap[p].unique.add(pv.session_id);
+    });
+    setPageViewsData(
+      Object.values(pvMap)
+        .map(p => ({ page: p.page.length > 30 ? p.page.slice(0, 30) + "…" : p.page, views: p.views, unique_visitors: p.unique.size }))
+        .sort((a, b) => b.views - a.views)
+        .slice(0, 15)
+    );
+
     setLoading(false);
   }, [timeRange]);
 
