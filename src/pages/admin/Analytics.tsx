@@ -333,6 +333,108 @@ export default function Analytics() {
         ))}
       </div>
 
+      {/* Audience Quality */}
+      <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+        <h3 className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
+          <Users size={18} /> Audience Quality — {rangeLabel}
+        </h3>
+        <p className="text-xs text-gray-400 mb-4">How engaged are your visitors? Helps evaluate ad traffic quality.</p>
+
+        {audienceQuality.totalSessions === 0 ? (
+          <p className="text-gray-400 text-sm text-center py-8">No session data yet — data starts collecting now as visitors browse your site</p>
+        ) : (
+          <>
+            {/* Quality Score Cards */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+              <div className="rounded-lg border p-3">
+                <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                  <Clock size={13} /> Avg. Session Duration
+                </div>
+                <div className="text-xl font-bold">
+                  {audienceQuality.avgDuration >= 60
+                    ? `${Math.floor(audienceQuality.avgDuration / 60)}m ${audienceQuality.avgDuration % 60}s`
+                    : `${audienceQuality.avgDuration}s`}
+                </div>
+                <div className={`text-xs mt-0.5 ${audienceQuality.avgDuration >= 60 ? "text-green-600" : audienceQuality.avgDuration >= 15 ? "text-yellow-600" : "text-red-600"}`}>
+                  {audienceQuality.avgDuration >= 60 ? "✓ Good engagement" : audienceQuality.avgDuration >= 15 ? "⚠ Moderate" : "✗ Very low — likely bot/bad traffic"}
+                </div>
+              </div>
+
+              <div className="rounded-lg border p-3">
+                <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                  <MousePointerClick size={13} /> Bounce Rate
+                </div>
+                <div className="text-xl font-bold">{audienceQuality.bounceRate}%</div>
+                <div className={`text-xs mt-0.5 ${audienceQuality.bounceRate <= 40 ? "text-green-600" : audienceQuality.bounceRate <= 60 ? "text-yellow-600" : "text-red-600"}`}>
+                  {audienceQuality.bounceRate <= 40 ? "✓ Healthy" : audienceQuality.bounceRate <= 60 ? "⚠ Average" : "✗ High — visitors leaving immediately"}
+                </div>
+              </div>
+
+              <div className="rounded-lg border p-3">
+                <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                  <Globe size={13} /> Pages / Session
+                </div>
+                <div className="text-xl font-bold">{audienceQuality.avgPages}</div>
+                <div className={`text-xs mt-0.5 ${audienceQuality.avgPages >= 3 ? "text-green-600" : audienceQuality.avgPages >= 1.5 ? "text-yellow-600" : "text-red-600"}`}>
+                  {audienceQuality.avgPages >= 3 ? "✓ Deep browsing" : audienceQuality.avgPages >= 1.5 ? "⚠ Moderate interest" : "✗ Minimal exploration"}
+                </div>
+              </div>
+
+              <div className="rounded-lg border p-3">
+                <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                  <Users size={13} /> Total Sessions
+                </div>
+                <div className="text-xl font-bold">{audienceQuality.totalSessions.toLocaleString("en-IN")}</div>
+                <div className="text-xs mt-0.5 text-gray-500">tracked in this period</div>
+              </div>
+            </div>
+
+            {/* Quality by Traffic Source */}
+            {audienceQuality.bySource.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-gray-700 mb-2">Quality by Traffic Source</h4>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b text-left text-gray-500 text-xs">
+                        <th className="pb-2 pr-4">Source</th>
+                        <th className="pb-2 pr-4 text-right">Sessions</th>
+                        <th className="pb-2 pr-4 text-right">Avg Duration</th>
+                        <th className="pb-2 pr-4 text-right">Bounce Rate</th>
+                        <th className="pb-2 text-right">Pages/Session</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {audienceQuality.bySource.map(src => (
+                        <tr key={src.source} className="border-b border-gray-50 hover:bg-gray-50/50">
+                          <td className="py-2 pr-4 font-medium text-gray-700">{src.source}</td>
+                          <td className="py-2 pr-4 text-right">{src.sessions}</td>
+                          <td className="py-2 pr-4 text-right">
+                            <span className={src.avgDuration >= 30 ? "text-green-600" : "text-red-600"}>
+                              {src.avgDuration >= 60 ? `${Math.floor(src.avgDuration / 60)}m ${src.avgDuration % 60}s` : `${src.avgDuration}s`}
+                            </span>
+                          </td>
+                          <td className="py-2 pr-4 text-right">
+                            <span className={src.bounceRate <= 50 ? "text-green-600" : "text-red-600"}>
+                              {src.bounceRate}%
+                            </span>
+                          </td>
+                          <td className="py-2 text-right">
+                            <span className={src.avgPages >= 2 ? "text-green-600" : "text-red-600"}>
+                              {src.avgPages}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+
       {/* Conversion Funnel */}
       <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
         <h3 className="font-semibold text-gray-900 mb-1">Conversion Funnel — Last {rangeLabel}</h3>
