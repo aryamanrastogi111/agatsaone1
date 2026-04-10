@@ -179,7 +179,7 @@ const faqs = [
 const deviceBonuses = [
   { device: "SanketLife ECG (₹3,999)", bonus: "3 months Nera AI Premium free — ₹897 value", color: "bg-green-100 text-green-700" },
   { device: "EasyTouch Wellness (₹3,999)", bonus: "3 months Nera AI Weekly free — ₹447 value", color: "bg-purple-100 text-purple-700" },
-  { device: "Rhythm Band (₹2,999)", bonus: "3 months Nera AI Weekly free — ₹447 value", color: "bg-purple-100 text-purple-700" },
+  { device: "Rhythm Band (₹3,999)", bonus: "3 months Nera AI Weekly free — ₹447 value", color: "bg-purple-100 text-purple-700" },
   { device: "ECG + Band Bundle (₹7,499)", bonus: "3 months Nera AI Premium free — ₹897 value", color: "bg-green-100 text-green-700" },
 ];
 

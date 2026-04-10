@@ -101,9 +101,9 @@ const devices: DeviceData[] = [
     name: "EasyTouch Rhythm Wellness Band",
     tagline: "24/7 health monitoring on your wrist",
     keyStat: "Sleep, HRV, steps, SpO2 — continuous 24/7 monitoring",
-    price: "₹2,999",
-    priceNum: "2,999",
-    emiDisplay: "No-cost EMI from ₹250/month",
+    price: "₹3,999",
+    priceNum: "3,999",
+    emiDisplay: "No-cost EMI from ₹334/month",
     rating: "4.5",
     reviews: "612",
     measures: [
