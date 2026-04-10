@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import easytouchWellnessImg from "@/assets/easytouch-wellness-hero.webp";
 import easytouchFingerImg from "@/assets/easytouch-wellness-finger.webp";
 import { motion, useInView } from "framer-motion";
@@ -106,7 +107,7 @@ function FloatingWhatsApp() {
 }
 
 export default function EasyTouchPlusProduct() {
-  const navigate = (await import("react-router-dom")).useNavigate();
+  const navigate = useNavigate();
 
   const handleBuyNow = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {

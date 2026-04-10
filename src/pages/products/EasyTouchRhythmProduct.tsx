@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addBusinessDays, format } from "date-fns";
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { Check, ShoppingCart, ChevronRight, Play, Star, Truck, ShieldCheck, ArrowRight, Loader2, HelpCircle } from "lucide-react";
@@ -171,7 +171,7 @@ const EasyTouchRhythmProduct = () => {
   // Fire PageView and ViewContent on mount for Facebook Pixel
   useEasyTouchRhythmPixelPageView();
 
-  const navigate = (await import("react-router-dom")).useNavigate();
+  const navigate = useNavigate();
   const handleAddToCart = () => {
     if (outOfStock) return;
     trackAddToCart(1);
