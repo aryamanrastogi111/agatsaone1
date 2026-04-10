@@ -1,8 +1,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Heart, Droplets, Activity, Moon, Scale, Brain, TrendingUp, Zap } from "lucide-react";
-import neraScreen from "@/assets/app-screen-nera.png";
-import appScreen1 from "@/assets/app-screen-1.png";
+import neraScreen from "@/assets/app-screen-nera.webp";
+import appScreen1 from "@/assets/app-screen-1.webp";
 
 /* ── Phone Mockup ── */
 const PhoneMockup = ({ src, alt, className = "" }: { src: string; alt: string; className?: string }) => (

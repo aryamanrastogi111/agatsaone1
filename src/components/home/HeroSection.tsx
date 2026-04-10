@@ -11,9 +11,9 @@ import Autoplay from "embla-carousel-autoplay";
 import { ArrowRight, Heart, Activity, Moon, Scale, Check, ChevronRight } from "lucide-react";
 import { RepublicDaySaleBadge, isSaleActive } from "@/components/sale";
 
-import zluHeroImg from "@/assets/zlu-hero.png";
-import corebalanceHeroImg from "@/assets/corebalance-hero.png";
-import sanketlifeHeroImg from "@/assets/sanketlife-hero.png";
+import zluHeroImg from "@/assets/zlu-hero.webp";
+import corebalanceHeroImg from "@/assets/corebalance-hero.webp";
+import sanketlifeHeroImg from "@/assets/sanketlife-hero.webp";
 import easytouchHeroImg from "@/assets/easytouch-hero.webp";
 
 const heroProducts = [

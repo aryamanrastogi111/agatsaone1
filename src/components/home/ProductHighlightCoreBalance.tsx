@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Scale, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LowStockBadge } from "@/components/shop/LowStockBadge";
-import corebalanceImg from "@/assets/corebalance-hero.png";
+import corebalanceImg from "@/assets/corebalance-hero.webp";
 
 export function ProductHighlightCoreBalance() {
   const features = [

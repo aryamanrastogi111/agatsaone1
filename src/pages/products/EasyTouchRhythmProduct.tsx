@@ -33,19 +33,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import kineticFlowImg from "@/assets/easytouch-kinetic-flow.png";
-import kineticTrendsImg from "@/assets/easytouch-kinetic-trends.png";
-import mealLoadImg from "@/assets/easytouch-meal-load.png";
-import mealTimelineImg from "@/assets/easytouch-meal-timeline.png";
-import mealAftermathImg from "@/assets/easytouch-meal-aftermath.png";
-import fitnessBgImg from "@/assets/easytouch-fitness-bg.png";
-import mealBgImg from "@/assets/easytouch-meal-bg.png";
-import reviewImg1 from "@/assets/review-image-1.png";
-import reviewImg2 from "@/assets/review-image-2.png";
-import reviewImg3 from "@/assets/review-image-3.png";
-import reviewImg4 from "@/assets/review-image-4.png";
-import republicDayHeroBanner from "@/assets/republic-day-banner-hero.jpeg";
-import republicDayOfferBanner from "@/assets/republic-day-banner-offer.jpeg";
+import kineticFlowImg from "@/assets/easytouch-kinetic-flow.webp";
+import kineticTrendsImg from "@/assets/easytouch-kinetic-trends.webp";
+import mealLoadImg from "@/assets/easytouch-meal-load.webp";
+import mealTimelineImg from "@/assets/easytouch-meal-timeline.webp";
+import mealAftermathImg from "@/assets/easytouch-meal-aftermath.webp";
+import fitnessBgImg from "@/assets/easytouch-fitness-bg.webp";
+import mealBgImg from "@/assets/easytouch-meal-bg.webp";
+import reviewImg1 from "@/assets/review-image-1.webp";
+import reviewImg2 from "@/assets/review-image-2.webp";
+import reviewImg3 from "@/assets/review-image-3.webp";
+import reviewImg4 from "@/assets/review-image-4.webp";
+import republicDayHeroBanner from "@/assets/republic-day-banner-hero.webp";
+import republicDayOfferBanner from "@/assets/republic-day-banner-offer.webp";
 
 // Image assets from shop.myeasytouch.com
 const images = {

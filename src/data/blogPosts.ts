@@ -16,7 +16,7 @@ export interface BlogPost {
   ctaLink?: string;
 }
 
-import blogSmartwatchEcg from "@/assets/blog-smartwatch-ecg.png";
+import blogSmartwatchEcg from "@/assets/blog-smartwatch-ecg.webp";
 
 export const blogPosts: BlogPost[] = [
   {

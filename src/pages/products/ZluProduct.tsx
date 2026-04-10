@@ -5,10 +5,10 @@ import { Check, ShoppingCart, Moon, Plane, BedDouble, Building, Shield, Leaf, Ar
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
-import zluHero from "@/assets/zlu-hero.png";
+import zluHero from "@/assets/zlu-hero.webp";
 import zluDevice from "@/assets/zlu-device.webp";
-import zluLifestyle from "@/assets/zlu-lifestyle.png";
-import zluTravel from "@/assets/zlu-travel.png";
+import zluLifestyle from "@/assets/zlu-lifestyle.webp";
+import zluTravel from "@/assets/zlu-travel.webp";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";

@@ -27,9 +27,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import doctorsHeroImg from "@/assets/doctors-hero.jpg";
+import doctorsHeroImg from "@/assets/doctors-hero.webp";
 
-import doctorsPortalImg from "@/assets/doctors-portal-dashboard.jpg";
+import doctorsPortalImg from "@/assets/doctors-portal-dashboard.webp";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },

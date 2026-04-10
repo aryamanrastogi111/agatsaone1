@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { AppStoreBadges } from "./AppStoreBadges";
-import agatsaLogo from "@/assets/agatsa-logo.png";
+import agatsaLogo from "@/assets/agatsa-logo.webp";
 
 const productLinks = [
   { label: "Devices", href: "/devices" },

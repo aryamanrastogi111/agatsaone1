@@ -41,18 +41,18 @@ import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import { useInventory } from "@/hooks/useInventory";
 
 // Image imports
-import sanketlifeHeroV2 from "@/assets/sanketlife-device-app.png";
-import sanketlifeGallery from "@/assets/sanketlife-2.0-display.png";
+import sanketlifeHeroV2 from "@/assets/sanketlife-device-app.webp";
+import sanketlifeGallery from "@/assets/sanketlife-2.0-display.webp";
 import sanketlifeHand from "@/assets/sanketlife-hand.jpg";
-import sanketlife2Product from "@/assets/sanketlife-2-product-new.jpg";
-import sanketlifeProplus from "@/assets/sanketlife-proplus-new.jpg";
+import sanketlife2Product from "@/assets/sanketlife-2-product-new.webp";
+import sanketlifeProplus from "@/assets/sanketlife-proplus-new.webp";
 import sanketlifeCombo from "@/assets/sanketlife-combo.png";
 import sanketlifeComparison from "@/assets/sanketlife-comparison.png";
 import hospitalEcg from "@/assets/hospital-ecg.png";
 import smartwatchComparison from "@/assets/smartwatch-comparison.png";
 import awardMbillionth from "@/assets/award-mbillionth.png";
-import awardAegisGrahambell from "@/assets/award-aegis-grahambell.png";
-import awardAnjaniMashelkar from "@/assets/award-anjani-mashelkar.png";
+import awardAegisGrahambell from "@/assets/award-aegis-grahambell.webp";
+import awardAnjaniMashelkar from "@/assets/award-anjani-mashelkar.webp";
 
 // Counting number animation component
 const CountingNumber = ({ value, suffix = "", delay = 0, className = "" }: { value: number; suffix?: string; delay?: number; className?: string }) => {

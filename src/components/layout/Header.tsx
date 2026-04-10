@@ -4,7 +4,7 @@ import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart, Code2, Steth
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import agatsaLogo from "@/assets/agatsa-logo.png";
+import agatsaLogo from "@/assets/agatsa-logo.webp";
 import { CartDrawer } from "@/components/shop/CartDrawer";
 
 const navItems = [

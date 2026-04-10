@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import agatsaLogo from "@/assets/agatsa-logo.png";
+import agatsaLogo from "@/assets/agatsa-logo.webp";
 
 const navLinks = [
   { label: "Devices", href: "/devices" },

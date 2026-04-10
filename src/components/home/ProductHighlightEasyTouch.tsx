@@ -4,7 +4,7 @@ import { ArrowRight, Brain, Zap, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RepublicDaySaleBadge, CountdownTimer, CouponCodeBox, isSaleActive } from "@/components/sale";
 import { LowStockBadge } from "@/components/shop/LowStockBadge";
-import easytouchImg from "@/assets/easytouch-rhythm-new.png";
+import easytouchImg from "@/assets/easytouch-rhythm-new.webp";
 
 export function ProductHighlightEasyTouch() {
   const features = [

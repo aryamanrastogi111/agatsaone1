@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 
 // Import award images
-import awardAegisImg from "@/assets/award-aegis-grahambell.png";
-import awardBioIndiaImg from "@/assets/award-bio-india.jpg";
-import awardIgpImg from "@/assets/award-igp.jpg";
-import awardMashelkarImg from "@/assets/award-anjani-mashelkar.png";
+import awardAegisImg from "@/assets/award-aegis-grahambell.webp";
+import awardBioIndiaImg from "@/assets/award-bio-india.webp";
+import awardIgpImg from "@/assets/award-igp.webp";
+import awardMashelkarImg from "@/assets/award-anjani-mashelkar.webp";
 
 // Awards data with imported images
 const awards = [

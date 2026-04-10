@@ -9,7 +9,7 @@
  import { ArrowLeft, Loader2, Eye, EyeOff } from 'lucide-react';
  import { Link } from 'react-router-dom';
  import { z } from 'zod';
- import agatsaLogo from '@/assets/agatsa-logo.png';
+ import agatsaLogo from '@/assets/agatsa-logo.webp';
  
  const loginSchema = z.object({
    email: z.string().email('Please enter a valid email address'),
