@@ -4,6 +4,7 @@ import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock, Map
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
+import { db } from "@/integrations/supabase/db";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
 
 // ─── Device display names ───────────────────────────────────────
