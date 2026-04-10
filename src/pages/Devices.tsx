@@ -161,6 +161,8 @@ const devices: DeviceData[] = [
 function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
   const [measuresOpen, setMeasuresOpen] = useState(false);
   const [featuresOpen, setFeaturesOpen] = useState(false);
+  const { prices, fmt, emi, loading } = usePricing();
+  const price = prices[device.sku];
 
   return (
     <motion.div
@@ -190,13 +192,17 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
 
         <div className="mt-4">
           <div className="flex items-baseline gap-3">
-            <span className="text-3xl font-extrabold text-foreground">{device.price}</span>
+            {loading ? (
+              <span className="h-8 w-24 bg-muted animate-pulse rounded" />
+            ) : (
+              <span className="text-3xl font-extrabold text-foreground">{fmt(price)}</span>
+            )}
             <span className="flex items-center gap-1 text-sm text-muted-foreground">
               <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
               {device.rating}/5 ({device.reviews} reviews)
             </span>
           </div>
-          <p className="text-xs text-primary font-medium mt-0.5">{device.emiDisplay}</p>
+          <p className="text-xs text-primary font-medium mt-0.5">{emi(price)}</p>
           <StockUrgencyBar productKey={device.id} className="mt-3" />
         </div>
 
