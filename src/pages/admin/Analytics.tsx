@@ -225,6 +225,45 @@ export default function Analytics() {
         .slice(0, 15)
     );
 
+    // Audience quality from visitor_sessions
+    const sessions = (sessionsRes.data ?? []) as any[];
+    if (sessions.length > 0) {
+      const durations = sessions.map((s: any) => {
+        const started = new Date(s.started_at).getTime();
+        const lastSeen = new Date(s.last_seen_at).getTime();
+        return Math.max(0, (lastSeen - started) / 1000); // seconds
+      });
+      const avgDuration = Math.round(durations.reduce((a: number, b: number) => a + b, 0) / durations.length);
+      const bounces = sessions.filter((s: any) => (s.page_count || 1) <= 1).length;
+      const bounceRate = Math.round((bounces / sessions.length) * 100);
+      const avgPages = +(sessions.reduce((a: number, s: any) => a + (s.page_count || 1), 0) / sessions.length).toFixed(1);
+
+      // By source
+      const srcMap: Record<string, { sessions: any[] }> = {};
+      sessions.forEach((s: any) => {
+        const src = s.utm_source || s.referrer || "direct";
+        if (!srcMap[src]) srcMap[src] = { sessions: [] };
+        srcMap[src].sessions.push(s);
+      });
+      const bySource = Object.entries(srcMap)
+        .map(([source, { sessions: srcSessions }]) => {
+          const srcDurations = srcSessions.map((s: any) => Math.max(0, (new Date(s.last_seen_at).getTime() - new Date(s.started_at).getTime()) / 1000));
+          const srcAvgDur = Math.round(srcDurations.reduce((a: number, b: number) => a + b, 0) / srcDurations.length);
+          const srcBounces = srcSessions.filter((s: any) => (s.page_count || 1) <= 1).length;
+          return {
+            source,
+            sessions: srcSessions.length,
+            avgDuration: srcAvgDur,
+            bounceRate: Math.round((srcBounces / srcSessions.length) * 100),
+            avgPages: +(srcSessions.reduce((a: number, s: any) => a + (s.page_count || 1), 0) / srcSessions.length).toFixed(1),
+          };
+        })
+        .sort((a, b) => b.sessions - a.sessions)
+        .slice(0, 10);
+
+      setAudienceQuality({ avgDuration, bounceRate, avgPages, totalSessions: sessions.length, bySource });
+    }
+
     setLoading(false);
   }, [timeRange]);
 
