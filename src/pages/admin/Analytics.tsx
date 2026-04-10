@@ -176,7 +176,7 @@ export default function Analytics() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const pMap: Record<string, { name: string; revenue: number; qty: number }> = {};
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    allOrders.forEach((o: any) => {
+    rangeOrders.forEach((o: any) => {
       if (!Array.isArray(o.items)) return;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       o.items.forEach((item: any) => {
