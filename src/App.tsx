@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 
 // New Agatsa One pages
 import Home from "./pages/Home";
@@ -78,6 +79,11 @@ import AdminPixels from "./pages/admin/Pixels";
 
 const queryClient = new QueryClient();
 
+function VisitorTracker() {
+  useVisitorTracking();
+  return null;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -85,6 +91,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <VisitorTracker />
         <Routes>
           {/* Public marketing pages */}
           <Route path="/" element={<Home />} />
