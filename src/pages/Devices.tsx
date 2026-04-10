@@ -246,7 +246,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
 
         <div className="flex gap-3 mt-6">
           <Button asChild className="flex-1 rounded-full">
-            <Link to={`/checkout?sku=${device.checkoutSku}`}>Buy Now — {device.price}</Link>
+            <Link to={`/checkout?sku=${device.checkoutSku}`}>Buy Now — {fmt(price)}</Link>
           </Button>
           <Button asChild variant="outline" className="flex-1 rounded-full">
             <Link to={device.link}>Learn More</Link>
