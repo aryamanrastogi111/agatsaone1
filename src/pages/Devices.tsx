@@ -79,7 +79,7 @@ const devices: DeviceData[] = [
       "Waveform quality index",
     ],
     appFeatures: [
-      "Glucose trend analysis and HbA1c prediction",
+      "Metabolic wellness trend analysis and HbA1c prediction",
       "Post-meal metabolic scoring (log meals, see impact)",
       "BP trend analysis with hypertension stage tracking",
       "SpO2 alerts below 94%",

@@ -295,7 +295,7 @@ export function NeraAISection() {
                 <p className="text-xs font-semibold text-white/90">Metabolic Data</p>
               </div>
               <TrendLine points={[20, 22, 35, 45, 40, 32, 25, 22]} color="#fbbf24" />
-              <p className="text-xs text-white/60 mt-2">Glucose spike pattern after meals</p>
+              <p className="text-xs text-white/60 mt-2">Metabolic wellness pattern after meals</p>
             </motion.div>
           </div>
 
@@ -388,7 +388,7 @@ export function NeraAISection() {
               {[
                 { time: "6:00 AM", label: "Wake", icon: "☀️", width: "20%" },
                 { time: "7:30 AM", label: "Morning walk · 4,200 steps", icon: "🚶", width: "45%" },
-                { time: "12:00 PM", label: "Post-lunch glucose spike", icon: "🍽️", width: "70%" },
+                { time: "12:00 PM", label: "Post-lunch metabolic spike", icon: "🍽️", width: "70%" },
                 { time: "3:00 PM", label: "HRV dip detected", icon: "💓", width: "55%" },
                 { time: "10:30 PM", label: "Sleep · 6h 40m", icon: "😴", width: "85%" },
               ].map((item, i) => (

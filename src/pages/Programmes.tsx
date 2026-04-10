@@ -58,7 +58,7 @@ const programmes: (Programme & { slug: string })[] = [
     duration: "16 weeks · 112 daily check-ins",
     who: "Type 2 diabetics with one or more cardiac risk factors — hypertension, elevated LDL, ECG abnormalities, or family history of heart disease",
     included: [
-      "Glucose + ECG + BP triple monitoring, unified in Nera AI",
+      "Metabolic wellness + ECG + BP triple monitoring, unified in Nera AI",
       "Post-meal metabolic impact scoring for every meal logged",
       "HbA1c trend prediction (estimated from 30-day metabolic patterns)",
       "Cardiometabolic risk score — updated after every reading",
