@@ -20,9 +20,7 @@ interface DeviceData {
   name: string;
   tagline: string;
   keyStat: string;
-  price: string;
-  priceNum: string;
-  emiDisplay: string;
+  sku: DeviceSku;
   rating: string;
   reviews: string;
   measures: string[];
