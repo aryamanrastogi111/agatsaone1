@@ -133,9 +133,9 @@ const devices: DeviceData[] = [
     name: "Agatsa Smart Scale",
     tagline: "14 body metrics. One step. One app.",
     keyStat: "BMI, body fat, muscle mass — 14 metrics in 5 seconds",
-    price: "₹2,499",
-    priceNum: "2,499",
-    emiDisplay: "No-cost EMI from ₹209/month",
+    price: "₹1,999",
+    priceNum: "1,999",
+    emiDisplay: "No-cost EMI from ₹167/month",
     rating: "4.7",
     reviews: "423",
     measures: [
@@ -269,7 +269,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
 }
 
 export default function DevicesPage() {
-  useSEO({ title: "Health Monitoring Devices — SanketLife ECG, EasyTouch, Rhythm Band | Agatsa One", description: "Medical-grade ECG, metabolic health monitor, wellness band, and smart scale. All CDSCO-approved, clinically validated, and integrated with Nera AI. Shop now from ₹2,499." });
+  useSEO({ title: "Health Monitoring Devices — SanketLife ECG, EasyTouch, Rhythm Band | Agatsa One", description: "Medical-grade ECG, metabolic health monitor, wellness band, and smart scale. All CDSCO-approved, clinically validated, and integrated with Nera AI. Shop now from ₹1,999." });
 
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).fbq) {
