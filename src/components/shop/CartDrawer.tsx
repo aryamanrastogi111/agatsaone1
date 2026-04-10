@@ -395,67 +395,69 @@ export const CartDrawer = ({
             ) : (
               <>
                 {/* Items list */}
-                <div className="flex-1 overflow-y-auto p-6 space-y-4">
-                  {items.map((item) => (
-                    <div
-                      key={`${item.productId}-${item.variantTitle}`}
-                      className="flex gap-3 p-3 bg-muted/30 rounded-xl border border-border/50"
-                    >
-                      {item.imageUrl && (
-                        <div className="w-14 h-14 rounded-lg overflow-hidden bg-muted flex-shrink-0">
-                          <img
-                            src={item.imageUrl}
-                            alt={item.productName}
-                            className="w-full h-full object-contain p-1"
-                          />
-                        </div>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm leading-tight">{item.productName}</p>
-                        {item.variantTitle && item.variantTitle !== "Default Title" && (
-                          <p className="text-xs text-muted-foreground">{item.variantTitle}</p>
+                <div className="flex-1 overflow-y-auto">
+                  <div className="p-6 space-y-4">
+                    {items.map((item) => (
+                      <div
+                        key={`${item.productId}-${item.variantTitle}`}
+                        className="flex gap-3 p-3 bg-muted/30 rounded-xl border border-border/50"
+                      >
+                        {item.imageUrl && (
+                          <div className="w-14 h-14 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                            <img
+                              src={item.imageUrl}
+                              alt={item.productName}
+                              className="w-full h-full object-contain p-1"
+                            />
+                          </div>
                         )}
-                        <p className="text-sm font-semibold text-primary mt-0.5">
-                          {formatINR(item.price)}
-                        </p>
-                      </div>
-                      <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6 text-muted-foreground hover:text-destructive"
-                          onClick={() => removeItem(item.productId)}
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm leading-tight">{item.productName}</p>
+                          {item.variantTitle && item.variantTitle !== "Default Title" && (
+                            <p className="text-xs text-muted-foreground">{item.variantTitle}</p>
+                          )}
+                          <p className="text-sm font-semibold text-primary mt-0.5">
+                            {formatINR(item.price)}
+                          </p>
+                        </div>
+                        <div className="flex flex-col items-end gap-2 flex-shrink-0">
                           <Button
-                            variant="outline"
+                            variant="ghost"
                             size="icon"
-                            className="h-6 w-6"
-                            onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                            className="h-6 w-6 text-muted-foreground hover:text-destructive"
+                            onClick={() => removeItem(item.productId)}
                           >
-                            <Minus className="h-3 w-3" />
+                            <Trash2 className="h-3 w-3" />
                           </Button>
-                          <span className="w-6 text-center text-sm font-medium">
-                            {item.quantity}
-                          </span>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-6 w-6"
-                            onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                          >
-                            <Plus className="h-3 w-3" />
-                          </Button>
+                          <div className="flex items-center gap-1.5">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-6 w-6"
+                              onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="w-6 text-center text-sm font-medium">
+                              {item.quantity}
+                            </span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-6 w-6"
+                              onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
 
-                {/* Cross-sell / Upsell */}
-                <CartCrossSell />
+                  {/* Cross-sell / Upsell */}
+                  <CartCrossSell />
+                </div>
 
                 {/* Footer */}
                 <div className="flex-shrink-0 p-6 pt-4 border-t space-y-3 bg-background">
