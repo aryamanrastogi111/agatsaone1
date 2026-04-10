@@ -470,6 +470,7 @@ export default function Analytics() {
         )}
       </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top Products */}
         <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
           <h3 className="font-semibold text-gray-900 mb-4">Revenue by Product</h3>
