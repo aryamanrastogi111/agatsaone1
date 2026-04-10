@@ -79,7 +79,7 @@ export function ProductHighlightCoreBalance() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <span className="text-2xl font-bold text-foreground">₹1,999</span>
+              <span className="text-2xl font-bold text-foreground">₹2,499</span>
             </div>
           </motion.div>
         </div>
