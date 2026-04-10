@@ -37,6 +37,7 @@ import type { RazorpayPaymentResponse } from "@/lib/razorpay";
 import { validateCoupon } from "@/lib/shop";
 import { getNeraAiLabel, getNeraAiPlan } from "@/lib/neraAiPlan";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
+import { CartCrossSell } from "@/components/shop/CartCrossSell";
 
 interface SuccessData {
   orderId: string;
