@@ -271,7 +271,14 @@ function AIInsightsCard({ data, loading, onRefresh }: {
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-gray-800">{rec.action}</p>
                         <p className="text-xs text-gray-500 mt-1">{rec.reasoning}</p>
-                        <p className="text-xs text-green-600 font-medium mt-1">Expected: {rec.expectedImpact}</p>
+                        <div className="flex items-center gap-3 mt-1">
+                          <p className="text-xs text-green-600 font-medium">Expected: {rec.expectedImpact}</p>
+                          {rec.timeframe && (
+                            <span className="text-xs bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">
+                              {rec.timeframe === "immediate" ? "⚡ Now" : rec.timeframe === "this_week" ? "📅 This week" : "📆 This month"}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
