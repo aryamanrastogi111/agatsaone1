@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useNavigate } from "react-router-dom";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
