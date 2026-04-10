@@ -567,7 +567,7 @@ export default function LiveActivity() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
   const [pendingOrders, setPendingOrders] = useState<TodayOrder[]>([]);
   const [recentOrders, setRecentOrders] = useState<TodayOrder[]>([]);
-  const [todayStats, setTodayStats] = useState({ orders: 0, revenue: 0, avgOrder: 0 });
+  const [todayStats, setTodayStats] = useState({ orders: 0, revenue: 0, avgOrder: 0, totalVisitors: 0 });
   const [lastRefresh, setLastRefresh] = useState(new Date());
   const [loading, setLoading] = useState(true);
   const [historicalData, setHistoricalData] = useState<DailyStat[]>([]);
