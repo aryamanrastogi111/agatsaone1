@@ -572,6 +572,8 @@ export default function LiveActivity() {
   const [loading, setLoading] = useState(true);
   const [historicalData, setHistoricalData] = useState<DailyStat[]>([]);
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
+  const [lostCheckouts, setLostCheckouts] = useState<TodayOrder[]>([]);
+  const [lostExpanded, setLostExpanded] = useState(false);
 
   // AI Analysis state
   const [aiData, setAiData] = useState<AIResponse | null>(null);
@@ -660,15 +662,23 @@ export default function LiveActivity() {
   const fetchData = useCallback(async () => {
     const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
     const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
-    const [ordersRes, recentRes] = await Promise.all([
+    const last24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const [ordersRes, recentRes, lostRes] = await Promise.all([
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created").gte("created_at", twoHoursAgo).order("created_at", { ascending: false }),
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .in("status", ["paid", "confirmed", "processing", "shipped", "delivered"])
         .gte("created_at", todayStart.toISOString()).order("created_at", { ascending: false }).limit(20),
+      // Lost checkouts: created > 10 min ago but never paid, within last 24h
+      db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
+        .eq("status", "created")
+        .gte("created_at", last24h)
+        .lt("created_at", new Date(Date.now() - 10 * 60 * 1000).toISOString())
+        .order("created_at", { ascending: false }),
     ]);
     setPendingOrders(ordersRes.data ?? []);
     setRecentOrders(recentRes.data ?? []);
+    setLostCheckouts(lostRes.data ?? []);
     const paid: TodayOrder[] = recentRes.data ?? [];
     const revenue = paid.reduce((s: number, o: TodayOrder) => s + o.amount, 0);
     setTodayStats({ orders: paid.length, revenue, avgOrder: paid.length ? Math.round(revenue / paid.length) : 0 });
@@ -777,6 +787,76 @@ export default function LiveActivity() {
 
       {/* Pending Payments */}
       <PendingCheckoutPanel orders={pendingOrders} />
+
+      {/* Lost Checkouts */}
+      <div className="bg-white border-2 border-red-200 rounded-xl shadow-sm overflow-hidden">
+        <button
+          onClick={() => setLostExpanded(!lostExpanded)}
+          className="w-full flex items-center justify-between px-5 py-4 hover:bg-red-50/50 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-red-100 flex items-center justify-center">
+              <AlertTriangle size={18} className="text-red-600" />
+            </div>
+            <div className="text-left">
+              <h3 className="font-bold text-gray-900 text-sm flex items-center gap-2">
+                Lost Checkouts
+                <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded-full">{lostCheckouts.length}</span>
+              </h3>
+              <p className="text-xs text-gray-500 mt-0.5">
+                {lostCheckouts.length > 0
+                  ? `₹${lostCheckouts.reduce((s, o) => s + o.amount, 0).toLocaleString("en-IN")} potential revenue lost in last 24h`
+                  : "No lost checkouts in the last 24 hours"}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-400">Last 24h</span>
+            {lostExpanded ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
+          </div>
+        </button>
+
+        {lostExpanded && (
+          <div className="border-t border-red-100">
+            {lostCheckouts.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-10 text-gray-400">
+                <CheckCircle size={24} className="mb-2 text-green-400" />
+                <p className="text-sm">No lost checkouts — great job!</p>
+              </div>
+            ) : (
+              <div className="max-h-80 overflow-y-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-red-50 border-b border-red-100 text-gray-500 text-xs">
+                      <th className="text-left px-5 py-2.5 font-medium">Customer</th>
+                      <th className="text-left px-5 py-2.5 font-medium hidden md:table-cell">Order ID</th>
+                      <th className="text-right px-5 py-2.5 font-medium">Amount Lost</th>
+                      <th className="text-right px-5 py-2.5 font-medium">Abandoned</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-red-50">
+                    {lostCheckouts.map((o) => (
+                      <tr key={o.id} className="hover:bg-red-50/50 transition-colors">
+                        <td className="px-5 py-3">
+                          <p className="font-medium text-gray-800">{o.customer_name ?? o.customer_email ?? "Anonymous"}</p>
+                          <p className="text-xs text-gray-400">{o.customer_email ?? ""}</p>
+                        </td>
+                        <td className="px-5 py-3 hidden md:table-cell">
+                          <span className="font-mono text-xs text-gray-400">{o.razorpay_order_id ?? o.id.slice(0, 8)}</span>
+                        </td>
+                        <td className="px-5 py-3 text-right font-bold text-red-600">₹{o.amount.toLocaleString("en-IN")}</td>
+                        <td className="px-5 py-3 text-right">
+                          <span className="flex items-center justify-end gap-1 text-xs text-gray-400"><Clock size={11} /> {timeAgo(o.created_at)}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* Recent Orders */}
       <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
