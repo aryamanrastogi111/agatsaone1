@@ -137,6 +137,42 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_stats: {
+        Row: {
+          avg_order_value: number
+          created_at: string
+          id: string
+          peak_checkout_visitors: number
+          peak_visitors: number
+          pending_payments: number
+          stat_date: string
+          total_orders: number
+          total_revenue: number
+        }
+        Insert: {
+          avg_order_value?: number
+          created_at?: string
+          id?: string
+          peak_checkout_visitors?: number
+          peak_visitors?: number
+          pending_payments?: number
+          stat_date: string
+          total_orders?: number
+          total_revenue?: number
+        }
+        Update: {
+          avg_order_value?: number
+          created_at?: string
+          id?: string
+          peak_checkout_visitors?: number
+          peak_visitors?: number
+          pending_payments?: number
+          stat_date?: string
+          total_orders?: number
+          total_revenue?: number
+        }
+        Relationships: []
+      }
       ecg_credits: {
         Row: {
           created_at: string
