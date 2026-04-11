@@ -54,18 +54,18 @@ const relatedDevices = [
 ];
 
 export default function EasyTouchWellnessProduct() {
-  const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
   const { prices, fmt } = usePricing();
   const wellnessPrice = prices.wellness_sub;
   useMetaPixelViewContent("EASYTOUCH_WELLNESS", "EasyTouch Wellness", wellnessPrice);
 
-  const handleBuy = (qtyOrEvent?: number | React.MouseEvent) => {
+  const handleAddToCart = (qtyOrEvent?: number | React.MouseEvent) => {
     const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
     if (typeof window !== "undefined" && (window as any).fbq) {
       try { (window as any).fbq("track", "AddToCart", { content_ids: ["wellness_sub"], content_name: "EasyTouch Wellness", content_type: "product", value: wellnessPrice * qty, currency: "INR" }); } catch {}
     }
-    navigate(`/checkout?sku=${Array(qty).fill("wellness_sub").join(",")}`);
+    useCartStore.getState().addItem({ productId: "wellness_sub", productName: "EasyTouch Wellness", variantTitle: "Default Title", price: wellnessPrice, quantity: qty });
+    toast.success(qty > 1 ? `${qty} EasyTouch Wellness devices added to cart` : "EasyTouch Wellness added to cart");
   };
 
   useSEO({ title: "EasyTouch Wellness — Non-Invasive Metabolic Health Monitor | Agatsa One", description: "Track your metabolic health, SpO2, HRV and more — no needles, no blood. Multiple vitals in 15 seconds. ₹3,999. Powered by Nera AI." });
@@ -121,14 +121,8 @@ export default function EasyTouchWellnessProduct() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-                  Buy EasyTouch Wellness — {fmt(wellnessPrice)}
-                </Button>
-                <Button variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary" onClick={() => {
-                  useCartStore.getState().addItem({ productId: "wellness_sub", productName: "EasyTouch Wellness", variantTitle: "Default Title", price: wellnessPrice, quantity: 1 });
-                  toast.success("Added to cart! Browse more devices or checkout.");
-                }}>
-                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart
+                <Button onClick={handleAddToCart} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart — {fmt(wellnessPrice)}
                 </Button>
               </div>
               <TrustBar />
@@ -370,8 +364,8 @@ export default function EasyTouchWellnessProduct() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Your metabolic health, in your hands.</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Your first reading takes under 15 seconds. No needles. No blood. Just insight.</p>
-          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">
-            Buy EasyTouch Wellness — {fmt(wellnessPrice)}
+          <Button onClick={handleAddToCart} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">
+            Add EasyTouch Wellness to Cart — {fmt(wellnessPrice)}
           </Button>
         </div>
       </section>
@@ -379,11 +373,8 @@ export default function EasyTouchWellnessProduct() {
         productName="EasyTouch Wellness"
         price={fmt(wellnessPrice)}
         unitPrice={wellnessPrice}
-        onBuyNow={handleBuy}
-        onAddToCart={(qty) => {
-          useCartStore.getState().addItem({ productId: "wellness_sub", productName: "EasyTouch Wellness", variantTitle: "Default Title", price: wellnessPrice, quantity: qty });
-          toast.success("Added to cart");
-        }}
+        onBuyNow={handleAddToCart}
+        onAddToCart={handleAddToCart}
         themeColor="primary"
       />
     </SiteLayout>

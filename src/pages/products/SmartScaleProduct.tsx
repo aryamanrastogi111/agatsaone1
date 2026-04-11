@@ -63,18 +63,17 @@ const relatedDevices = [
 ];
 
 export default function SmartScaleProduct() {
-  const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
   const { prices, fmt } = usePricing();
   const scalePrice = prices.scale_sub;
   useMetaPixelViewContent("SMART_SCALE", "Agatsa Smart Scale", 1999);
-  const handleBuy = (qtyOrEvent?: number | React.MouseEvent) => {
+  const handleAddToCart = (qtyOrEvent?: number | React.MouseEvent) => {
     const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
     if (typeof window !== "undefined" && (window as any).fbq) {
       try { (window as any).fbq("track", "AddToCart", { content_ids: ["scale_sub"], content_name: "Agatsa Smart Scale", content_type: "product", value: scalePrice * qty, currency: "INR" }); } catch {}
     }
-    const skus = Array(qty).fill("scale_sub").join(",");
-    navigate(`/checkout?sku=${skus}`);
+    useCartStore.getState().addItem({ productId: "scale_sub", productName: "Agatsa Smart Scale", variantTitle: "Default Title", price: scalePrice, quantity: qty });
+    toast.success(qty > 1 ? `${qty} Agatsa Smart Scales added to cart` : "Agatsa Smart Scale added to cart");
   };
   useSEO({ title: "Agatsa Smart Scale — 14 Body Composition Metrics | BMI, Body Fat, Muscle Mass", description: "14 body composition metrics in 5 seconds. Weight, BMI, body fat, visceral fat, muscle mass, metabolic age and more. 10 family profiles. Works with Nera AI. ₹1,899." });
 
@@ -109,12 +108,8 @@ export default function SmartScaleProduct() {
                 <span className="text-sm text-muted-foreground ml-1">4.7/5 (423 reviews)</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Smart Scale — {fmt(scalePrice)}</Button>
-                <Button variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary" onClick={() => {
-                  useCartStore.getState().addItem({ productId: "scale_sub", productName: "Agatsa Smart Scale", variantTitle: "Default Title", price: scalePrice, quantity: 1 });
-                  toast.success("Added to cart! Browse more devices or checkout.");
-                }}>
-                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart
+                <Button onClick={handleAddToCart} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart — {fmt(scalePrice)}
                 </Button>
               </div>
               <TrustBar />
@@ -339,18 +334,15 @@ export default function SmartScaleProduct() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready to know your body?</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Step on. 5 seconds. 14 metrics. It's that simple.</p>
-          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Smart Scale — {fmt(scalePrice)}</Button>
+          <Button onClick={handleAddToCart} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Add Smart Scale to Cart — {fmt(scalePrice)}</Button>
         </div>
       </section>
       <StickyAddToCart
         productName="Agatsa Smart Scale"
         price={fmt(scalePrice)}
         unitPrice={scalePrice}
-        onBuyNow={handleBuy}
-        onAddToCart={(qty) => {
-          useCartStore.getState().addItem({ productId: "scale_sub", productName: "Agatsa Smart Scale", variantTitle: "Default Title", price: scalePrice, quantity: qty });
-          toast.success("Added to cart");
-        }}
+        onBuyNow={handleAddToCart}
+        onAddToCart={handleAddToCart}
         themeColor="primary"
       />
     </SiteLayout>

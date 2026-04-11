@@ -4,6 +4,7 @@ import { Footer } from "./Footer";
 import { RepublicDayAnnouncementBar, FloatingCouponPill } from "@/components/sale";
 import { FloatingCartButton } from "@/components/shop/FloatingCartButton";
 import { CartDrawer } from "@/components/shop/CartDrawer";
+import { StickyCartBar } from "@/components/shop/StickyCartBar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ export function Layout({ children }: LayoutProps) {
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
+      <StickyCartBar />
       <FloatingCouponPill />
       <FloatingCartButton onClick={() => setCartOpen(true)} />
       <CartDrawer externalOpen={cartOpen} onExternalClose={() => setCartOpen(false)} hideTrigger />

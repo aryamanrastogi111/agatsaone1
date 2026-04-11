@@ -174,11 +174,11 @@ const EasyTouchRhythmProduct = () => {
   // Fire PageView and ViewContent on mount for Facebook Pixel
   useEasyTouchRhythmPixelPageView();
 
-  const navigate = useNavigate();
   const handleAddToCart = () => {
     if (outOfStock) return;
     trackAddToCart(1);
-    navigate("/checkout?sku=band_sub");
+    addItem({ productId: "band_sub", productName: "EasyTouch Rhythm", variantTitle: "Default Title", price: prices.band_sub, quantity: 1 });
+    toast.success("EasyTouch Rhythm added to cart");
   };
 
   return (
@@ -1513,7 +1513,7 @@ const EasyTouchRhythmProduct = () => {
       <StickyAddToCart
         productName="EasyTouch Rhythm"
         price={isSaleActive() ? bp : bp}
-        onBuyNow={() => window.location.href = "/checkout?sku=band_sub"}
+        onBuyNow={() => handleAddToCart()}
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="primary"
