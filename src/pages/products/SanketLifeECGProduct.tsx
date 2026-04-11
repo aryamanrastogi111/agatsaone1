@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { StrikePrice } from "@/components/StrikePrice";
+import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
 import { useNavigate } from "react-router-dom";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
@@ -108,6 +109,10 @@ export default function SanketLifeECGProduct() {
                 <span className="text-sm text-muted-foreground ml-1">incl. GST</span>
                 <EmiLine price={ecgPrice} />
                 <StockUrgencyBar productKey="sanketlife" className="mt-3" />
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
+                  <span>📦</span>
+                  <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
+                </div>
                 <div className="flex items-center gap-1 mt-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />

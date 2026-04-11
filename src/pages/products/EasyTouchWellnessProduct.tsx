@@ -11,6 +11,7 @@ import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine } from "@/components/EmiLine";
 import { StrikePrice } from "@/components/StrikePrice";
+import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
 
 const WellnessTrustBar = () => (
   <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center text-xs text-muted-foreground mt-3">
@@ -198,6 +199,10 @@ export default function EasyTouchWellnessProduct() {
               <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
               <EmiLine price={wellnessPrice} />
               <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2 justify-center">
+                <span>📦</span>
+                <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
+              </div>
             </div>
 
             <div className="flex items-center gap-1 mt-3 justify-center">
