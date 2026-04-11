@@ -5,7 +5,8 @@ import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, ArrowRight, Package, ShoppingCart, ChevronDown } from "lucide-react";
+import { Check, ArrowRight, Package, ShoppingCart, ChevronDown, Star } from "lucide-react";
+import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
 import { Button } from "@/components/ui/button";
@@ -95,7 +96,7 @@ const trustItems = ["Made in India", "1-year warranty", "30-day returns", "Free 
 export default function EasyTouchWellnessProduct() {
   const [adding, setAdding] = useState(false);
   const { prices, fmt } = usePricing();
-  const wellnessPrice = 9999;
+  const wellnessPrice = prices.wellness_sub;
   useMetaPixelViewContent("EASYTOUCH_WELLNESS", "EasyTouch Wellness", wellnessPrice);
 
   const handleAddToCart = (qtyOrEvent?: number | React.MouseEvent) => {
@@ -111,7 +112,7 @@ export default function EasyTouchWellnessProduct() {
     document.getElementById("introduce-device")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useSEO({ title: "EasyTouch Wellness — No Needle. No Blood. Know Why Your Sugar Goes Up. | Agatsa One", description: "EasyTouch Wellness measures your Metabolic Score in 15 seconds — no needles, no strips. Nera AI explains why your readings change. ₹9,999 with free delivery." });
+  useSEO({ title: "EasyTouch Wellness — No Needle. No Blood. Know Why Your Sugar Goes Up. | Agatsa One", description: `EasyTouch Wellness measures your Metabolic Score in 15 seconds — no needles, no strips. Nera AI explains why your readings change. ${fmt(wellnessPrice)} with free delivery.` });
 
   return (
     <SiteLayout>
@@ -147,9 +148,32 @@ export default function EasyTouchWellnessProduct() {
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.45 }} className="mt-12">
             <div className="w-16 h-px bg-border mx-auto mb-8" />
             <p className="text-3xl md:text-4xl font-bold text-foreground">There is a better way.</p>
-            <Button onClick={scrollToIntro} size="lg" className="mt-8 rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-              Show Me <ArrowRight className="h-5 w-5 ml-1" />
-            </Button>
+
+            {/* Price + Add to Cart */}
+            <div className="mt-8">
+              <span className="text-4xl font-extrabold text-foreground">{fmt(wellnessPrice)}</span>
+              <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
+              <EmiLine price={wellnessPrice} />
+              <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
+            </div>
+
+            <div className="flex items-center gap-1 mt-3 justify-center">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+              ))}
+              <span className="text-sm text-muted-foreground ml-1">4.6/5 (834 reviews)</span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+              <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                <ShoppingCart className="h-5 w-5 mr-2" />
+                Add to Cart — {fmt(wellnessPrice)}
+              </Button>
+              <Button onClick={scrollToIntro} variant="outline" size="lg" className="rounded-full px-8 py-5 text-lg">
+                Show Me <ArrowRight className="h-5 w-5 ml-1" />
+              </Button>
+            </div>
+            <TrustBar />
           </motion.div>
         </div>
       </section>
@@ -350,9 +374,9 @@ export default function EasyTouchWellnessProduct() {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
           <motion.div {...fadeUp}>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">EasyTouch Wellness</h2>
-            <p className="text-5xl font-extrabold text-foreground mt-6">₹9,999</p>
+            <p className="text-5xl font-extrabold text-foreground mt-6">{fmt(wellnessPrice)}</p>
+            <EmiLine price={wellnessPrice} />
             <p className="text-muted-foreground mt-2">Free delivery across India · 1-year warranty · 30-day return policy</p>
-            <p className="text-sm text-muted-foreground/70 mt-1">Or ₹834/month — no cost EMI available at checkout</p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
               <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
@@ -366,13 +390,7 @@ export default function EasyTouchWellnessProduct() {
               <p className="text-xs text-muted-foreground mt-2">Download the App First (Free)</p>
             </div>
 
-            <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center text-xs text-muted-foreground mt-6">
-              {trustItems.map((item) => (
-                <span key={item}>
-                  <span className="text-green-600">✓</span> {item}
-                </span>
-              ))}
-            </div>
+            <TrustBar />
           </motion.div>
         </div>
       </section>
@@ -398,7 +416,7 @@ export default function EasyTouchWellnessProduct() {
 
       <StickyAddToCart
         productName="EasyTouch Wellness"
-        price="₹9,999"
+        price={fmt(wellnessPrice)}
         unitPrice={wellnessPrice}
         onBuyNow={handleAddToCart}
         onAddToCart={handleAddToCart}
