@@ -245,7 +245,7 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      <AwardsTrustSection />
+      <Suspense fallback={<div className="py-12" />}><AwardsTrustSection /></Suspense>
 
       {/* ── SECTION 3 — HOW DOES IT WORK ── */}
       <section className="py-12 bg-background">
@@ -424,10 +424,10 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      <TrustVideosSection />
+      <Suspense fallback={<div className="py-12" />}><TrustVideosSection /></Suspense>
 
       {/* ── SECTION 9B — USER REVIEWS ── */}
-      <WellnessReviewsSection />
+      <Suspense fallback={<div className="py-12" />}><WellnessReviewsSection /></Suspense>
 
       {/* ── OBJECTION HANDLING — "We Know What You Are Thinking" ── */}
       <section className="py-12 bg-muted/30">
