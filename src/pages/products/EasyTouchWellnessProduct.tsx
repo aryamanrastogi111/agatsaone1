@@ -148,32 +148,9 @@ export default function EasyTouchWellnessProduct() {
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.45 }} className="mt-12">
             <div className="w-16 h-px bg-border mx-auto mb-8" />
             <p className="text-3xl md:text-4xl font-bold text-foreground">There is a better way.</p>
-
-            {/* Price + Add to Cart */}
-            <div className="mt-8">
-              <span className="text-4xl font-extrabold text-foreground">{fmt(wellnessPrice)}</span>
-              <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
-              <EmiLine price={wellnessPrice} />
-              <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
-            </div>
-
-            <div className="flex items-center gap-1 mt-3 justify-center">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              ))}
-              <span className="text-sm text-muted-foreground ml-1">4.6/5 (834 reviews)</span>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
-              <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-                <ShoppingCart className="h-5 w-5 mr-2" />
-                Add to Cart — {fmt(wellnessPrice)}
-              </Button>
-              <Button onClick={scrollToIntro} variant="outline" size="lg" className="rounded-full px-8 py-5 text-lg">
-                Show Me <ArrowRight className="h-5 w-5 ml-1" />
-              </Button>
-            </div>
-            <TrustBar />
+            <Button onClick={scrollToIntro} size="lg" className="mt-8 rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+              Show Me <ArrowRight className="h-5 w-5 ml-1" />
+            </Button>
           </motion.div>
         </div>
       </section>
@@ -195,6 +172,31 @@ export default function EasyTouchWellnessProduct() {
               That sensor shines a gentle light through your fingertip and reads how your blood is moving. Nera AI — our health intelligence system — then calculates your <strong className="text-foreground">Metabolic Score: a simple number from 0 to 100</strong> that shows how your body is responding right now.
             </p>
             <p className="text-foreground font-semibold text-xl">Not just a reading. An explanation.</p>
+          </motion.div>
+
+          {/* Price + Add to Cart block */}
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.25 }} className="mt-12 text-center">
+            <div>
+              <span className="text-4xl font-extrabold text-foreground">{fmt(wellnessPrice)}</span>
+              <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
+              <EmiLine price={wellnessPrice} />
+              <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
+            </div>
+
+            <div className="flex items-center gap-1 mt-3 justify-center">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+              ))}
+              <span className="text-sm text-muted-foreground ml-1">4.6/5 (834 reviews)</span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+              <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                <ShoppingCart className="h-5 w-5 mr-2" />
+                Add to Cart — {fmt(wellnessPrice)}
+              </Button>
+            </div>
+            <TrustBar />
           </motion.div>
         </div>
       </section>
