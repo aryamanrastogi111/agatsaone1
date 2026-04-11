@@ -8,6 +8,8 @@ import { Layout } from "@/components/layout";
 import { useRef, useEffect, useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
+import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
+import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
 import { useFacebookPixel, useEasyTouchRhythmPixelPageView } from "@/hooks/useFacebookPixel";
 import { useInventory } from "@/hooks/useInventory";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
@@ -1519,6 +1521,8 @@ const EasyTouchRhythmProduct = () => {
         themeColor="primary"
         outOfStock={outOfStock}
       />
+
+      <ProductReviewsSection reviews={easytouchRhythmReviews} />
     </Layout>
   );
 };
