@@ -722,17 +722,21 @@ export default function LiveActivity() {
 
   // ── DB data: orders ──
   const fetchData = useCallback(async () => {
-    const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
-    const today = new Date().toISOString().split("T")[0];
+    const istOffsetMs = 5.5 * 60 * 60 * 1000;
+    const now = new Date();
+    const istNow = new Date(now.getTime() + istOffsetMs);
+    const today = istNow.toISOString().split("T")[0];
+    const todayStartIso = new Date(`${today}T00:00:00+05:30`).toISOString();
     const tenMinAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
     const last7d = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
     const [ordersRes, recentRes, lostRes, todayVisRes] = await Promise.all([
       // Pending: created in last 10 min (still actively paying)
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created").gte("created_at", tenMinAgo).order("created_at", { ascending: false }),
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .in("status", ["paid", "confirmed", "processing", "shipped", "delivered"])
-        .gte("created_at", todayStart.toISOString()).order("created_at", { ascending: false }).limit(20),
+        .gte("created_at", todayStartIso).order("created_at", { ascending: false }).limit(20),
       // Lost: created > 10 min ago within last 7 days
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, customer_phone, amount, status, created_at")
         .eq("status", "created")
@@ -741,6 +745,7 @@ export default function LiveActivity() {
         .order("created_at", { ascending: false }),
       db.from("daily_stats").select("total_visitors").eq("stat_date", today).maybeSingle(),
     ]);
+
     setPendingOrders(ordersRes.data ?? []);
     setRecentOrders(recentRes.data ?? []);
     setLostCheckouts(lostRes.data ?? []);
@@ -755,10 +760,14 @@ export default function LiveActivity() {
   // ── Historical data ──
   const fetchHistory = useCallback(async () => {
     const days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
-    const since = new Date(); since.setDate(since.getDate() - days);
+    const istOffsetMs = 5.5 * 60 * 60 * 1000;
+    const sinceIstDate = new Date(Date.now() + istOffsetMs - days * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0];
+
     const { data } = await db.from("daily_stats")
       .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments, total_visitors")
-      .gte("stat_date", since.toISOString().split("T")[0]).order("stat_date", { ascending: true });
+      .gte("stat_date", sinceIstDate).order("stat_date", { ascending: true });
     setHistoricalData(data ?? []);
   }, [timeRange]);
 
@@ -774,7 +783,7 @@ export default function LiveActivity() {
   useEffect(() => {
     if (visitors.length === 0) return;
     const checkoutCount = visitors.filter(v => v.current_page === "/checkout").length;
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date(Date.now() + 5.5 * 60 * 60 * 1000).toISOString().split("T")[0];
     db.from("daily_stats").upsert({ stat_date: today, peak_visitors: visitors.length, peak_checkout_visitors: checkoutCount }, { onConflict: "stat_date", ignoreDuplicates: false }).then(() => {});
   }, [visitors]);
 
