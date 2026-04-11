@@ -44,6 +44,8 @@ export default function Analytics() {
   const [funnelData, setFunnelData] = useState<{ stage: string; count: number; color: string }[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [pageViewsData, setPageViewsData] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [cityData, setCityData] = useState<any[]>([]);
   const [audienceQuality, setAudienceQuality] = useState({
     avgDuration: 0, bounceRate: 0, avgPages: 0, totalSessions: 0,
     bySource: [] as { source: string; sessions: number; avgDuration: number; bounceRate: number; avgPages: number }[],
