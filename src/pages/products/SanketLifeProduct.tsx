@@ -266,14 +266,15 @@ const SANKETLIFE_PRODUCTS: Record<string, { name: string; price: number; image: 
 };
 
 const SanketLifeProduct = () => {
-  const navigate = useNavigate();
   const [addingToCart, setAddingToCart] = useState(false);
   const { isOutOfStock } = useInventory();
   const outOfStock = isOutOfStock("sanketlife");
 
   const handleAddToCart = (productId: string = "sanketlife-2") => {
     if (outOfStock) return;
-    navigate("/checkout?sku=ecg_bundle");
+    const product = SANKETLIFE_PRODUCTS[productId] ?? SANKETLIFE_PRODUCTS["sanketlife-2"];
+    useCartStore.getState().addItem({ productId: "ecg_bundle", productName: product.name, variantTitle: "Default Title", price: product.price, quantity: 1 });
+    toast.success(`${product.name} added to cart`);
   };
 
   return (
@@ -1077,7 +1078,7 @@ const SanketLifeProduct = () => {
       <StickyAddToCart
         productName="SanketLife 2.0"
         price="₹4,999"
-        onBuyNow={() => window.location.href = "/checkout?sku=ecg_bundle"}
+        onBuyNow={() => handleAddToCart("sanketlife-2")}
         onAddToCart={() => handleAddToCart("sanketlife-2")}
         isLoading={addingToCart}
         themeColor="cyan"

@@ -58,17 +58,17 @@ const relatedDevices = [
 ];
 
 export default function RhythmBandProduct() {
-  const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
   const { prices, fmt } = usePricing();
   const bandPrice = prices.band_sub;
   useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 3999);
-  const handleBuy = (qtyOrEvent?: number | React.MouseEvent) => {
+  const handleAddToCart = (qtyOrEvent?: number | React.MouseEvent) => {
     const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
     if (typeof window !== "undefined" && (window as any).fbq) {
       try { (window as any).fbq("track", "AddToCart", { content_ids: ["band_sub"], content_name: "EasyTouch Rhythm Band", content_type: "product", value: bandPrice * qty, currency: "INR" }); } catch {}
     }
-    navigate(`/checkout?sku=${Array(qty).fill("band_sub").join(",")}`);
+    useCartStore.getState().addItem({ productId: "band_sub", productName: "EasyTouch Rhythm Band", variantTitle: "Default Title", price: bandPrice, quantity: qty });
+    toast.success(qty > 1 ? `${qty} EasyTouch Rhythm Bands added to cart` : "EasyTouch Rhythm Band added to cart");
   };
   useSEO({ title: "EasyTouch Rhythm Band — 24/7 Sleep, HRV, SpO2 Monitoring | Agatsa One", description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Works with Nera AI. ₹3,999. Compatible with all 5 Care Programmes." });
 
@@ -104,12 +104,8 @@ export default function RhythmBandProduct() {
                 <span className="text-sm text-muted-foreground ml-1">4.5/5 (612 reviews)</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Rhythm Band — {fmt(bandPrice)}</Button>
-                <Button variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary" onClick={() => {
-                  useCartStore.getState().addItem({ productId: "band_sub", productName: "EasyTouch Rhythm Band", variantTitle: "Default Title", price: bandPrice, quantity: 1 });
-                  toast.success("Added to cart! Browse more devices or checkout.");
-                }}>
-                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart
+                <Button onClick={handleAddToCart} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart — {fmt(bandPrice)}
                 </Button>
               </div>
               <TrustBar />
@@ -352,18 +348,15 @@ export default function RhythmBandProduct() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready for 24/7 health monitoring?</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Pair in 30 seconds. Wear it all week. Let Nera AI do the rest.</p>
-          <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Rhythm Band — {fmt(bandPrice)}</Button>
+          <Button onClick={handleAddToCart} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Add Rhythm Band to Cart — {fmt(bandPrice)}</Button>
         </div>
       </section>
       <StickyAddToCart
         productName="EasyTouch Rhythm Band"
         price={fmt(bandPrice)}
         unitPrice={bandPrice}
-        onBuyNow={handleBuy}
-        onAddToCart={(qty) => {
-          useCartStore.getState().addItem({ productId: "band_sub", productName: "EasyTouch Rhythm Band", variantTitle: "Default Title", price: bandPrice, quantity: qty });
-          toast.success("Added to cart");
-        }}
+        onBuyNow={handleAddToCart}
+        onAddToCart={handleAddToCart}
         themeColor="primary"
       />
     </SiteLayout>

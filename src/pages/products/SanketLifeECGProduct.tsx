@@ -31,18 +31,18 @@ const fadeUp = {
 };
 
 export default function SanketLifeECGProduct() {
-  const navigate = useNavigate();
   const [adding, setAdding] = useState(false);
   const { prices, fmt } = usePricing();
   const ecgPrice = prices.ecg_bundle;
   useMetaPixelViewContent("SANKET_LIFE_ECG", "SanketLife 12-Lead ECG", ecgPrice);
 
-  const handleBuy = (qtyOrEvent?: number | React.MouseEvent) => {
+  const handleAddToCart = (qtyOrEvent?: number | React.MouseEvent) => {
     const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
     if (typeof window !== "undefined" && (window as any).fbq) {
       try { (window as any).fbq("track", "AddToCart", { content_ids: ["ecg_bundle"], content_name: "SanketLife ECG", content_type: "product", value: ecgPrice * qty, currency: "INR" }); } catch {}
     }
-    navigate(`/checkout?sku=${Array(qty).fill("ecg_bundle").join(",")}`);
+    useCartStore.getState().addItem({ productId: "ecg_bundle", productName: "SanketLife 12-Lead ECG", variantTitle: "Default Title", price: ecgPrice, quantity: qty });
+    toast.success(qty > 1 ? `${qty} SanketLife ECG devices added to cart` : "SanketLife ECG added to cart");
   };
 
   useSEO({
@@ -118,18 +118,12 @@ export default function SanketLifeECGProduct() {
               {/* CTA */}
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
                 <Button
-                  onClick={handleBuy}
+                  onClick={handleAddToCart}
                   disabled={adding}
                   size="lg"
                   className="rounded-full px-8 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.35)]"
                 >
-                  Check Your Heart Anytime — {fmt(ecgPrice)}
-                </Button>
-                <Button variant="outline" className="rounded-full px-8 text-base border-2 border-primary text-primary" onClick={() => {
-                  useCartStore.getState().addItem({ productId: "ecg_bundle", productName: "SanketLife 12-Lead ECG", variantTitle: "Default Title", price: ecgPrice, quantity: 1 });
-                  toast.success("Added to cart! Browse more devices or checkout.");
-                }}>
-                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart
+                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart — {fmt(ecgPrice)}
                 </Button>
               </div>
               <TrustBar />
@@ -273,11 +267,11 @@ export default function SanketLifeECGProduct() {
             Don't wait for the next episode. Be ready.
           </p>
           <Button
-            onClick={handleBuy}
+            onClick={handleAddToCart}
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
-            Check Your Heart Anytime — {fmt(ecgPrice)}
+            Add SanketLife ECG to Cart — {fmt(ecgPrice)}
           </Button>
           <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
         </div>
@@ -556,7 +550,7 @@ export default function SanketLifeECGProduct() {
           {/* CTA inside Nera section */}
           <div className="mt-14 text-center">
             <Button
-              onClick={handleBuy}
+              onClick={handleAddToCart}
               disabled={adding}
               size="lg"
               className="rounded-full px-10 text-base bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
@@ -627,7 +621,7 @@ export default function SanketLifeECGProduct() {
             Peace of mind for you. Safety for your family.
           </p>
           <Button
-            onClick={handleBuy}
+            onClick={handleAddToCart}
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
@@ -796,7 +790,7 @@ export default function SanketLifeECGProduct() {
             Still have questions? Your heart doesn't wait — and neither should you.
           </p>
           <Button
-            onClick={handleBuy}
+            onClick={handleAddToCart}
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
@@ -886,7 +880,7 @@ export default function SanketLifeECGProduct() {
               Safe. Simple. Reliable.
             </p>
             <Button
-              onClick={handleBuy}
+              onClick={handleAddToCart}
               disabled={adding}
               size="lg"
               className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
@@ -950,11 +944,8 @@ export default function SanketLifeECGProduct() {
         productName="SanketLife 12-Lead ECG"
         price={fmt(ecgPrice)}
         unitPrice={ecgPrice}
-        onBuyNow={handleBuy}
-        onAddToCart={(qty) => {
-          useCartStore.getState().addItem({ productId: "ecg_bundle", productName: "SanketLife 12-Lead ECG", variantTitle: "Default Title", price: ecgPrice, quantity: qty });
-          toast.success("Added to cart");
-        }}
+        onBuyNow={handleAddToCart}
+        onAddToCart={handleAddToCart}
         themeColor="primary"
       />
     </SiteLayout>

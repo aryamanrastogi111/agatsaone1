@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { addBusinessDays, format } from "date-fns";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
 import { Check, ShoppingCart, Moon, Plane, BedDouble, Building, Shield, Leaf, ArrowRight, Star, Truck, ShieldCheck, Scale, Loader2 } from "lucide-react";
@@ -103,14 +103,14 @@ const safetyPoints = [
 ];
 
 const ZluProduct = () => {
-  const navigate = useNavigate();
   const [addingToCart, setAddingToCart] = useState(false);
   const { isOutOfStock } = useInventory();
   const outOfStock = isOutOfStock("zlu");
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (qty: number = 1) => {
     if (outOfStock) return;
-    navigate("/checkout?sku=ecg_bundle");
+    useCartStore.getState().addItem({ productId: "multivital", productName: "Zlu Sleep Aid", variantTitle: "Default Title", price: 5999, quantity: qty });
+    toast.success(qty > 1 ? `${qty} Zlu devices added to cart` : "Zlu added to cart");
   };
 
   return (
@@ -151,7 +151,7 @@ const ZluProduct = () => {
                   <Button 
                     size="lg" 
                     className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
-                    onClick={handleAddToCart}
+                    onClick={() => handleAddToCart()}
                     disabled={addingToCart}
                   >
                     {addingToCart ? (
@@ -714,7 +714,7 @@ const ZluProduct = () => {
                 <Button 
                   size="lg" 
                   className="text-lg px-12 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
-                  onClick={handleAddToCart}
+                  onClick={() => handleAddToCart()}
                   disabled={addingToCart}
                 >
                   {addingToCart ? (
@@ -722,7 +722,7 @@ const ZluProduct = () => {
                   ) : (
                     <ShoppingCart className="h-5 w-5" />
                   )}
-                  Buy Zlu Now
+                  Add Zlu to Cart
                 </Button>
               </div>
               
@@ -747,7 +747,7 @@ const ZluProduct = () => {
       <StickyAddToCart
         productName="Zlu Sleep Aid"
         price="₹4,999"
-        onBuyNow={() => window.location.href = "/checkout?sku=multivital"}
+        onBuyNow={handleAddToCart}
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="cyan"

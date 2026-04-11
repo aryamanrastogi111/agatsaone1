@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { addBusinessDays, format } from "date-fns";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
 import { Check, ShoppingCart, Scale, Activity, Droplets, Zap, Heart, TrendingUp, Users, Home, Dumbbell, Building2, Shield, ArrowRight, Star, Truck, ShieldCheck, Loader2 } from "lucide-react";
@@ -129,14 +129,14 @@ const testimonials = [
 ];
 
 const CoreBalanceProduct = () => {
-  const navigate = useNavigate();
   const [addingToCart, setAddingToCart] = useState(false);
   const { isOutOfStock } = useInventory();
   const outOfStock = isOutOfStock("corebalance");
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (qty: number = 1) => {
     if (outOfStock) return;
-    navigate("/checkout?sku=scale_sub");
+    useCartStore.getState().addItem({ productId: "scale_sub", productName: "CoreBalance BMI Scale", variantTitle: "Default Title", price: 1899, quantity: qty });
+    toast.success(qty > 1 ? `${qty} CoreBalance scales added to cart` : "CoreBalance added to cart");
   };
 
   return (
@@ -178,7 +178,7 @@ const CoreBalanceProduct = () => {
                   <Button 
                     size="lg" 
                     className="text-lg px-8 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700"
-                    onClick={handleAddToCart}
+                    onClick={() => handleAddToCart()}
                     disabled={addingToCart}
                   >
                     {addingToCart ? (
@@ -686,7 +686,7 @@ const CoreBalanceProduct = () => {
               />
               <div className="text-3xl font-bold text-foreground mb-2">₹1,899</div>
               <p className="text-sm text-muted-foreground mb-6">Includes scale, app access & 1-year warranty</p>
-              <Button size="lg" className="text-lg px-10 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700">
+              <Button size="lg" className="text-lg px-10 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700" onClick={() => handleAddToCart()}>
                 <ShoppingCart className="h-5 w-5" />
                 Add to Cart
               </Button>
@@ -712,7 +712,7 @@ const CoreBalanceProduct = () => {
       <StickyAddToCart
         productName="CoreBalance BMI Scale"
         price="₹1,899"
-        onBuyNow={() => window.location.href = "/checkout?sku=scale_sub"}
+        onBuyNow={handleAddToCart}
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="emerald"
