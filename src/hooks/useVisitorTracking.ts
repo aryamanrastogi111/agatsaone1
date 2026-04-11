@@ -78,6 +78,7 @@ async function upsertSession(sessionId: string, pagePath: string, isFirst: boole
   const referrer = document.referrer
     ? document.referrer.includes(window.location.hostname) ? "internal" : new URL(document.referrer).hostname
     : "direct";
+  const geo = await fetchGeoInfo();
 
   if (isFirst) {
     const { error } = await db.from("visitor_sessions").upsert({
@@ -92,6 +93,8 @@ async function upsertSession(sessionId: string, pagePath: string, isFirst: boole
       utm_campaign: utm.utm_campaign,
       device,
       referrer,
+      city: geo.city,
+      region: geo.region,
     }, { onConflict: "session_id" });
     if (error) console.error("[Tracking] upsert session failed:", error.message);
   } else {
