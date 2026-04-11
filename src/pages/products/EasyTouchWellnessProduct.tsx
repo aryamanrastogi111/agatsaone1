@@ -124,8 +124,11 @@ export default function EasyTouchWellnessProduct() {
                 <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
                   Buy EasyTouch Wellness — {fmt(wellnessPrice)}
                 </Button>
-                <Button asChild variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">
-                  <Link to="/app?device=easytouch">Download Agatsa One App (free)</Link>
+                <Button variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary" onClick={() => {
+                  useCartStore.getState().addItem({ productId: "wellness_sub", productName: "EasyTouch Wellness", variantTitle: "Default Title", price: wellnessPrice, quantity: 1 });
+                  toast.success("Added to cart! Browse more devices or checkout.");
+                }}>
+                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart
                 </Button>
               </div>
               <TrustBar />
