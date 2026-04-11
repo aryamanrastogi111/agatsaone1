@@ -165,6 +165,13 @@ export default function EasyTouchWellnessProduct() {
               Show Me <ArrowRight className="h-5 w-5 ml-1" />
             </Button>
           </motion.div>
+
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.6 }} className="mt-10">
+            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-5 py-2.5">
+              <span className="text-base">🛡️</span>
+              <span className="text-sm font-semibold text-primary">50% fewer needle pricks in 30 days — or your money back.</span>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -425,6 +432,24 @@ export default function EasyTouchWellnessProduct() {
               </AccordionItem>
             ))}
           </Accordion>
+        </div>
+      </section>
+
+      {/* ── GUARANTEE BANNER ── */}
+      <section className="py-10 bg-primary/5">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <motion.div {...fadeUp}>
+            <div className="bg-card border-2 border-primary/20 rounded-2xl p-8 md:p-10 shadow-sm">
+              <p className="text-4xl mb-4">🛡️</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">Our Promise</h3>
+              <p className="text-xl md:text-2xl font-semibold text-primary mt-3">
+                50% fewer needle pricks in 30 days — or your money back.
+              </p>
+              <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
+                Use EasyTouch Wellness daily for 30 days. If it doesn't cut your finger pricks by half, we'll refund every rupee. No questions asked.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
