@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Brain, Zap, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePricing } from "@/hooks/useDevicePricing";
+import { StrikePrice } from "@/components/StrikePrice";
 import { RepublicDaySaleBadge, CountdownTimer, CouponCodeBox, isSaleActive } from "@/components/sale";
 import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import easytouchImg from "@/assets/easytouch-rhythm-new.webp";
@@ -99,7 +100,6 @@ export function ProductHighlightEasyTouch() {
                 </Link>
               </Button>
               <StrikePrice sku="band_sub" price={prices.band_sub} size="md" showLabel={false} />
-            </div>
             </div>
           </motion.div>
         </div>

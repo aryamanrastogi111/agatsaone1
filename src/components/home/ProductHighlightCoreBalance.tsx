@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Scale, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePricing } from "@/hooks/useDevicePricing";
+import { StrikePrice } from "@/components/StrikePrice";
 import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import corebalanceImg from "@/assets/corebalance-hero.webp";
 
