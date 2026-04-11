@@ -847,10 +847,11 @@ export default function LiveActivity() {
         )}
       </div>
 
-      {/* Live Visitors + Page Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      {/* Live Visitors + Page Breakdown + City Breakdown */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <LiveVisitorsPanel visitors={visitors} />
         <PageBreakdownPanel visitors={visitors} />
+        <CityBreakdownPanel visitors={visitors} />
       </div>
 
       {/* Pending Payments */}
