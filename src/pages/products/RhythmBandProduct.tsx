@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
