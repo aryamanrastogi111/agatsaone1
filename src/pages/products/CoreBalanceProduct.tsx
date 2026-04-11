@@ -712,6 +712,7 @@ const CoreBalanceProduct = () => {
       <StickyAddToCart
         productName="CoreBalance BMI Scale"
         price="₹1,899"
+        onBuyNow={() => window.location.href = "/checkout?sku=scale_sub"}
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="emerald"

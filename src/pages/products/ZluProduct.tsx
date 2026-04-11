@@ -747,6 +747,7 @@ const ZluProduct = () => {
       <StickyAddToCart
         productName="Zlu Sleep Aid"
         price="₹4,999"
+        onBuyNow={() => window.location.href = "/checkout?sku=multivital"}
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="cyan"

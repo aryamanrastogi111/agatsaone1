@@ -5,7 +5,7 @@ import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star, ArrowRight, Package, Scale, TrendingDown, Users, Heart } from "lucide-react";
+import { Star, ArrowRight, Package, Scale, TrendingDown, Users, Heart, ShoppingCart } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
@@ -110,8 +110,11 @@ export default function SmartScaleProduct() {
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
                 <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Smart Scale — {fmt(scalePrice)}</Button>
-                <Button asChild variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">
-                  <Link to="/app?device=scale">Download Agatsa One App (free)</Link>
+                <Button variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary" onClick={() => {
+                  useCartStore.getState().addItem({ productId: "scale_sub", productName: "Agatsa Smart Scale", variantTitle: "Default Title", price: scalePrice, quantity: 1 });
+                  toast.success("Added to cart! Browse more devices or checkout.");
+                }}>
+                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart
                 </Button>
               </div>
               <TrustBar />
@@ -343,7 +346,11 @@ export default function SmartScaleProduct() {
         productName="Agatsa Smart Scale"
         price={fmt(scalePrice)}
         unitPrice={scalePrice}
-        onAddToCart={handleBuy}
+        onBuyNow={handleBuy}
+        onAddToCart={(qty) => {
+          useCartStore.getState().addItem({ productId: "scale_sub", productName: "Agatsa Smart Scale", variantTitle: "Default Title", price: scalePrice, quantity: qty });
+          toast.success("Added to cart");
+        }}
         themeColor="primary"
       />
     </SiteLayout>

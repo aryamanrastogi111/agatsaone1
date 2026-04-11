@@ -5,30 +5,30 @@ import { Button } from "@/components/ui/button";
 
 interface StickyAddToCartProps {
   productName: string;
-  /** Formatted unit price string e.g. "₹2,499" */
+  /** Formatted unit price string e.g. "₹1,899" */
   price: string;
   /** Raw numeric unit price for quantity calculation */
   unitPrice?: number;
-  onAddToCart: (quantity: number) => void;
+  /** Called when "Buy Now" is clicked — receives quantity */
+  onBuyNow: (quantity: number) => void;
+  /** Called when "Add to Cart" is clicked — receives quantity */
+  onAddToCart?: (quantity: number) => void;
   isLoading?: boolean;
   themeColor?: string;
   outOfStock?: boolean;
-  /** Label for the buy button. Defaults to "Buy Now" */
-  buyLabel?: string;
 }
 
 export const StickyAddToCart = ({
   productName,
   price,
   unitPrice,
+  onBuyNow,
   onAddToCart,
   isLoading = false,
   themeColor = "primary",
   outOfStock = false,
-  buyLabel = "Buy Now",
 }: StickyAddToCartProps) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [addingToCart, setAddingToCart] = useState(false);
   const [qty, setQty] = useState(1);
 
   useEffect(() => {
@@ -38,12 +38,6 @@ export const StickyAddToCart = ({
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleClick = () => {
-    setAddingToCart(true);
-    onAddToCart(qty);
-    setTimeout(() => setAddingToCart(false), 500);
-  };
 
   const colorClasses: Record<string, string> = {
     primary: "bg-primary hover:bg-primary/90",
@@ -66,10 +60,10 @@ export const StickyAddToCart = ({
           className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-t shadow-lg"
         >
           <div className="container py-3">
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center justify-between gap-2">
               {/* Product info */}
               <div className="min-w-0 flex-shrink">
-                <p className="font-semibold text-foreground truncate text-sm sm:text-base">{productName}</p>
+                <p className="font-semibold text-foreground truncate text-sm">{productName}</p>
                 <p className="text-sm font-bold text-foreground">{totalDisplay}</p>
               </div>
 
@@ -79,39 +73,48 @@ export const StickyAddToCart = ({
                   Out of Stock
                 </div>
               ) : (
-                <div className="flex items-center gap-2 sm:gap-3">
+                <div className="flex items-center gap-1.5 sm:gap-2">
                   {/* Quantity selector */}
                   <div className="flex items-center border border-border rounded-lg overflow-hidden">
                     <button
                       onClick={() => setQty((q) => Math.max(1, q - 1))}
-                      className="w-8 h-9 flex items-center justify-center text-muted-foreground hover:bg-muted transition-colors"
+                      className="w-7 h-8 flex items-center justify-center text-muted-foreground hover:bg-muted transition-colors"
                       aria-label="Decrease quantity"
                     >
-                      <Minus className="h-3.5 w-3.5" />
+                      <Minus className="h-3 w-3" />
                     </button>
-                    <span className="w-8 h-9 flex items-center justify-center text-sm font-semibold text-foreground">{qty}</span>
+                    <span className="w-6 h-8 flex items-center justify-center text-xs font-semibold text-foreground">{qty}</span>
                     <button
-                      onClick={() => setQty((q) => Math.min(10, q + 1))}
-                      className="w-8 h-9 flex items-center justify-center text-muted-foreground hover:bg-muted transition-colors"
+                      onClick={() => setQty((q) => Math.min(5, q + 1))}
+                      className="w-7 h-8 flex items-center justify-center text-muted-foreground hover:bg-muted transition-colors"
                       aria-label="Increase quantity"
                     >
-                      <Plus className="h-3.5 w-3.5" />
+                      <Plus className="h-3 w-3" />
                     </button>
                   </div>
 
-                  {/* Buy button */}
+                  {/* Add to Cart — secondary */}
+                  {onAddToCart && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-1 px-3 text-xs border-primary text-primary shrink-0"
+                      onClick={() => onAddToCart(qty)}
+                      disabled={isLoading}
+                    >
+                      <ShoppingCart className="h-3.5 w-3.5" />
+                      <span className="hidden sm:inline">Cart</span>
+                    </Button>
+                  )}
+
+                  {/* Buy Now — primary */}
                   <Button
-                    size="lg"
-                    className={`gap-2 px-5 sm:px-6 ${colorClasses[themeColor] || colorClasses.primary}`}
-                    onClick={handleClick}
-                    disabled={addingToCart || isLoading}
+                    size="sm"
+                    className={`gap-1 px-3 sm:px-5 text-xs sm:text-sm ${colorClasses[themeColor] || colorClasses.primary}`}
+                    onClick={() => onBuyNow(qty)}
+                    disabled={isLoading}
                   >
-                    {addingToCart ? (
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                    ) : (
-                      <ShoppingCart className="h-5 w-5" />
-                    )}
-                    <span className="hidden sm:inline">{buyLabel}</span>
+                    Buy Now
                   </Button>
                 </div>
               )}

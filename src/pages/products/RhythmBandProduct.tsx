@@ -5,7 +5,7 @@ import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star, ArrowRight, Package, Moon, Activity, Bell } from "lucide-react";
+import { Star, ArrowRight, Package, Moon, Activity, Bell, ShoppingCart } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
@@ -105,8 +105,11 @@ export default function RhythmBandProduct() {
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
                 <Button onClick={handleBuy} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">Buy Rhythm Band — {fmt(bandPrice)}</Button>
-                <Button asChild variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary">
-                  <Link to="/app?device=rhythm">Download Agatsa One App (free)</Link>
+                <Button variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary" onClick={() => {
+                  useCartStore.getState().addItem({ productId: "band_sub", productName: "EasyTouch Rhythm Band", variantTitle: "Default Title", price: bandPrice, quantity: 1 });
+                  toast.success("Added to cart! Browse more devices or checkout.");
+                }}>
+                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart
                 </Button>
               </div>
               <TrustBar />
@@ -356,7 +359,11 @@ export default function RhythmBandProduct() {
         productName="EasyTouch Rhythm Band"
         price={fmt(bandPrice)}
         unitPrice={bandPrice}
-        onAddToCart={handleBuy}
+        onBuyNow={handleBuy}
+        onAddToCart={(qty) => {
+          useCartStore.getState().addItem({ productId: "band_sub", productName: "EasyTouch Rhythm Band", variantTitle: "Default Title", price: bandPrice, quantity: qty });
+          toast.success("Added to cart");
+        }}
         themeColor="primary"
       />
     </SiteLayout>
