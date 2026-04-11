@@ -399,6 +399,7 @@ export default function CheckoutPage() {
               }
 
               setPageState("success");
+              useCartStore.getState().clearCart();
               resolve();
             } catch (err: any) {
               setErrorMsg(err.message || "Payment verification failed");
