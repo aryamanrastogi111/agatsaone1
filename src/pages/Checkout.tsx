@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
 import { db } from "@/integrations/supabase/db";
+import { useCartStore } from "@/stores/cartStore";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
 
 // ─── Device display names ───────────────────────────────────────
@@ -398,6 +399,7 @@ export default function CheckoutPage() {
               }
 
               setPageState("success");
+              useCartStore.getState().clearCart();
               resolve();
             } catch (err: any) {
               setErrorMsg(err.message || "Payment verification failed");
