@@ -66,7 +66,7 @@ export function ProductHighlightZlu() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <span className="text-2xl font-bold text-foreground">{fmt(prices.ecg_bundle)}</span>
+              <StrikePrice sku="ecg_bundle" price={prices.ecg_bundle} size="md" showLabel={false} />
             </div>
           </motion.div>
 

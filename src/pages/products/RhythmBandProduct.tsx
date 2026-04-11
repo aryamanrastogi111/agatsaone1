@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { Star, ArrowRight, Package, Moon, Activity, Bell, ShoppingCart } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
+import { StrikePrice } from "@/components/StrikePrice";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import rhythmHero from "@/assets/easytouch-rhythm-new.webp";

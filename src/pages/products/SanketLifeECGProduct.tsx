@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
+import { StrikePrice } from "@/components/StrikePrice";
 import { useNavigate } from "react-router-dom";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";

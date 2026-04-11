@@ -10,6 +10,7 @@ import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine } from "@/components/EmiLine";
+import { StrikePrice } from "@/components/StrikePrice";
 
 const WellnessTrustBar = () => (
   <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center text-xs text-muted-foreground mt-3">
