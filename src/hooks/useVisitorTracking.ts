@@ -257,7 +257,7 @@ export function useVisitorTracking() {
 
   // Update presence and log page view on every navigation
   useEffect(() => {
-    if (isAdminRef.current) return;
+    if (isAdminRef.current || isBot()) return;
     trackPage(location.pathname);
     logPageView(location.pathname, sessionId.current);
 
