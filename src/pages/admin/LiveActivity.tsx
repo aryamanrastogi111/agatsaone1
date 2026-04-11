@@ -660,6 +660,16 @@ export default function LiveActivity() {
     return () => { supabase.removeChannel(channel); };
   }, []);
 
+  // ── Add to Cart broadcast listener ──
+  useEffect(() => {
+    const channel = supabase.channel("add-to-cart-events")
+      .on("broadcast", { event: "add_to_cart" }, () => {
+        setAddToCartCount((c) => c + 1);
+      })
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, []);
+
   // ── DB data: orders ──
   const fetchData = useCallback(async () => {
     const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
