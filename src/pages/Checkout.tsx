@@ -80,6 +80,8 @@ export default function CheckoutPage() {
   const [couponApplied, setCouponApplied] = useState<string | null>(null);
   const [couponMessage, setCouponMessage] = useState("");
   const [couponValid, setCouponValid] = useState(false);
+  const [couponType, setCouponType] = useState<"percent" | "fixed" | null>(null);
+  const [couponValue, setCouponValue] = useState(0);
   const [applyingCoupon, setApplyingCoupon] = useState(false);
 
   // Server-confirmed pricing
@@ -144,12 +146,12 @@ export default function CheckoutPage() {
     setQuoteLoading(false);
   }, []);
 
-  // Re-fetch quote on qty or coupon change
+  // Re-fetch quote on qty change only (no coupon — quote is called at pay time)
   useEffect(() => {
     if (uniqueSkus.length > 0) {
-      fetchQuote(cartItems, couponApplied);
+      fetchQuote(cartItems, null);
     }
-  }, [JSON.stringify(cartItems), couponApplied]);
+  }, [JSON.stringify(cartItems)]);
 
   // ─── Quantity helpers ─────────────────────────────────────
   const changeQty = (sku: string, delta: number) => {
@@ -166,23 +168,28 @@ export default function CheckoutPage() {
     setApplyingCoupon(true);
     setCouponMessage("");
     try {
-      const res = await fetch(`${API_BASE}/v1/orders/website/quote`, {
+      const res = await fetch(`${API_BASE}/v1/orders/website/validate-coupon`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: cartItems, couponCode: code }),
+        body: JSON.stringify({ couponCode: code }),
       });
       const data = await res.json();
-      if (res.ok && data.couponValid) {
+      if (res.ok && data.valid) {
         setCouponApplied(code);
         setCouponValid(true);
-        setCouponMessage(data.couponMessage || "Coupon applied!");
-        setSubtotalPaise(data.subtotalPaise);
-        setDiscountPaise(data.discountPaise || 0);
-        setServerTotalPaise(data.totalPaise);
-        setQuoteLoaded(true);
+        setCouponType(data.type);
+        setCouponValue(data.value);
+        setCouponMessage(data.message || "Coupon applied!");
+        // Estimate discount for display (confirmed total comes from /quote at pay time)
+        if (data.type === "percent") {
+          const est = Math.round(clientTotalPaise * data.value / 100);
+          setDiscountPaise(est);
+        } else if (data.type === "fixed") {
+          setDiscountPaise(data.value * 100);
+        }
       } else {
         setCouponValid(false);
-        setCouponMessage(data.couponMessage || "Invalid coupon code");
+        setCouponMessage(data.message || "Invalid coupon code");
       }
     } catch {
       setCouponMessage("Could not validate coupon. Try again.");
@@ -194,6 +201,8 @@ export default function CheckoutPage() {
     setCouponApplied(null);
     setCouponInput("");
     setCouponValid(false);
+    setCouponType(null);
+    setCouponValue(0);
     setCouponMessage("");
     setDiscountPaise(0);
   };
