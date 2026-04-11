@@ -1,12 +1,6 @@
 import { useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
 
-declare global {
-  interface Window {
-    fbq?: (action: string, event: string, params?: Record<string, unknown>) => void;
-  }
-}
-
 const APPSTORE_URL = "https://apps.apple.com/app/id6760245564";
 const PLAYSTORE_URL = "https://play.google.com/store/apps/details?id=com.agatsakone";
 
