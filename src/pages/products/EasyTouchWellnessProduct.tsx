@@ -165,6 +165,13 @@ export default function EasyTouchWellnessProduct() {
               Show Me <ArrowRight className="h-5 w-5 ml-1" />
             </Button>
           </motion.div>
+
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.6 }} className="mt-10">
+            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-5 py-2.5">
+              <span className="text-base">🛡️</span>
+              <span className="text-sm font-semibold text-primary">50% fewer needle pricks in 30 days — or your money back.</span>
+            </div>
+          </motion.div>
         </div>
       </section>
 
