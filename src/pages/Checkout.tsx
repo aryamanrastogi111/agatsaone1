@@ -58,7 +58,7 @@ type CheckoutStep = 1 | 2;
 type PageState = "form" | "processing" | "success" | "error";
 
 export default function CheckoutPage() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { prices } = usePricing();
   const skuParam = searchParams.get("sku") || "";
   // Deduplicate SKUs — count occurrences as initial quantities
@@ -182,13 +182,8 @@ export default function CheckoutPage() {
         setCouponType(data.type);
         setCouponValue(data.value);
         setCouponMessage(data.message || "Coupon applied!");
-        // Estimate discount for display (confirmed total comes from /quote at pay time)
-        if (data.type === "percent") {
-          const est = Math.round(clientTotalPaise * data.value / 100);
-          setDiscountPaise(est);
-        } else if (data.type === "fixed") {
-          setDiscountPaise(data.value * 100);
-        }
+        // Re-fetch quote with coupon to get server-confirmed total
+        await fetchQuote(cartItems, code);
       } else {
         setCouponValid(false);
         setCouponMessage(data.message || "Invalid coupon code");
@@ -207,6 +202,8 @@ export default function CheckoutPage() {
     setCouponValue(0);
     setCouponMessage("");
     setDiscountPaise(0);
+    // Re-fetch quote without coupon
+    fetchQuote(cartItems, null);
   };
 
   // ─── Preload Razorpay + InitiateCheckout pixel ──────────────
@@ -428,6 +425,8 @@ export default function CheckoutPage() {
 
               setPageState("success");
               useCartStore.getState().clearCart();
+              // Clear URL params so reopening doesn't reload old checkout
+              setSearchParams({}, { replace: true });
               resolve();
             } catch (err: any) {
               setErrorMsg(err.message || "Payment verification failed");
