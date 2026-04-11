@@ -4,7 +4,7 @@ import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
-import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown, Users, Clock, MousePointerClick, Globe } from "lucide-react";
+import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown, Users, Clock, MousePointerClick, Globe, MapPin } from "lucide-react";
 import { format, subDays } from "date-fns";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
