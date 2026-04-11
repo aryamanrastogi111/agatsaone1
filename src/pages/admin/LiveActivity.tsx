@@ -689,6 +689,14 @@ export default function LiveActivity() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .filter((p: any) => { const sid = p.session_id ?? ""; return !sid.startsWith("admin") && sid.startsWith("v_"); })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .filter((p: any) => {
+          // Filter out known bot/monitoring sessions (single-page, from known bot-farm cities)
+          const city = (p.city ?? "").toLowerCase();
+          const knownBotCities = ["mountain view", "ashburn", "boardman", "council bluffs", "the dalles"];
+          if (knownBotCities.includes(city) && (p.referrer === "direct" || !p.referrer)) return false;
+          return true;
+        })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .map((p: any) => ({
           session_id: p.session_id ?? p.presence_ref, current_page: p.current_page ?? "/",
           device: p.device ?? "desktop", referrer: p.referrer ?? "direct",
