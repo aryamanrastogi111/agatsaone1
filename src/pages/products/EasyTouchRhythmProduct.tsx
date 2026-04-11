@@ -1524,6 +1524,7 @@ const EasyTouchRhythmProduct = () => {
         outOfStock={outOfStock}
       />
 
+      <TrustVideosSection />
       <AwardsTrustSection />
       <ProductReviewsSection reviews={easytouchRhythmReviews} />
     </Layout>

@@ -420,6 +420,7 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
+      <TrustVideosSection />
       <AwardsTrustSection />
 
       {/* ── SECTION 9B — USER REVIEWS ── */}

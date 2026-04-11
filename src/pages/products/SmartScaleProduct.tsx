@@ -356,6 +356,7 @@ export default function SmartScaleProduct() {
         themeColor="primary"
       />
 
+      <TrustVideosSection />
       <AwardsTrustSection />
       <ProductReviewsSection reviews={smartScaleReviews} />
     </SiteLayout>

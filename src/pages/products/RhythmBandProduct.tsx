@@ -362,6 +362,7 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
+      <TrustVideosSection />
       <AwardsTrustSection />
       <ProductReviewsSection reviews={easytouchRhythmReviews} />
 

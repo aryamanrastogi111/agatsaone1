@@ -959,6 +959,7 @@ export default function SanketLifeECGProduct() {
         themeColor="primary"
       />
 
+      <TrustVideosSection />
       <AwardsTrustSection />
       <ProductReviewsSection reviews={sanketLifeEcgReviews} />
     </SiteLayout>
