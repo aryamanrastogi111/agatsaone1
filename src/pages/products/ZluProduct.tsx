@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { addBusinessDays, format } from "date-fns";
+import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
 import { Check, ShoppingCart, Moon, Plane, BedDouble, Building, Shield, Leaf, ArrowRight, Star, Truck, ShieldCheck, Scale, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -198,7 +198,7 @@ const ZluProduct = () => {
                 {/* Delivery Estimate */}
                 <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                   <span>📦</span>
-                  <span>Delivers by <span className="font-medium text-foreground">{format(addBusinessDays(new Date(), 3), "EEE, MMM d")}</span></span>
+                  <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
                 </div>
               </div>
             </motion.div>
