@@ -72,6 +72,7 @@ const AdminShipping = lazy(() => import("./pages/admin/Shipping"));
 const AdminDeliverySlips = lazy(() => import("./pages/admin/DeliverySlips"));
 const AdminReturns = lazy(() => import("./pages/admin/Returns"));
 const AdminLeads = lazy(() => import("./pages/admin/Leads"));
+const AdminHeritage = lazy(() => import("./pages/admin/Heritage"));
 const AdminTickets = lazy(() => import("./pages/admin/Tickets"));
 const AdminAnalytics = lazy(() => import("./pages/admin/Analytics"));
 const AdminTeam = lazy(() => import("./pages/admin/Team"));
