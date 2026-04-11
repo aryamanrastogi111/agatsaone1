@@ -209,7 +209,7 @@ export function useVisitorTracking() {
 
   // Subscribe once on mount (for public pages) — deferred to avoid blocking first paint
   useEffect(() => {
-    if (isAdminRef.current) return;
+    if (isAdminRef.current || isBot()) return;
 
     captureUtmParams();
 
