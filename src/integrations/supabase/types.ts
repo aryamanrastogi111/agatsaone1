@@ -323,6 +323,51 @@ export type Database = {
         }
         Relationships: []
       }
+      heritage_visits: {
+        Row: {
+          city: string | null
+          clicked_at: string | null
+          clicked_store: string | null
+          created_at: string
+          device: string | null
+          email: string | null
+          id: string
+          landed_at: string
+          session_id: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          city?: string | null
+          clicked_at?: string | null
+          clicked_store?: string | null
+          created_at?: string
+          device?: string | null
+          email?: string | null
+          id?: string
+          landed_at?: string
+          session_id?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          city?: string | null
+          clicked_at?: string | null
+          clicked_store?: string | null
+          created_at?: string
+          device?: string | null
+          email?: string | null
+          id?: string
+          landed_at?: string
+          session_id?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       inventory_logs: {
         Row: {
           adjustment: number
