@@ -10,6 +10,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
 import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
+import { AwardsTrustSection } from "@/components/AwardsTrustSection";
 import { useFacebookPixel, useEasyTouchRhythmPixelPageView } from "@/hooks/useFacebookPixel";
 import { useInventory } from "@/hooks/useInventory";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
@@ -1522,6 +1523,7 @@ const EasyTouchRhythmProduct = () => {
         outOfStock={outOfStock}
       />
 
+      <AwardsTrustSection />
       <ProductReviewsSection reviews={easytouchRhythmReviews} />
     </Layout>
   );
