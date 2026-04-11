@@ -51,6 +51,14 @@ export const useCartStore = create<CartStore>()(
         } else {
           set({ items: [...items, item], lastUpdatedAt: Date.now() });
         }
+        // Broadcast add-to-cart event for admin live activity tracking
+        try {
+          supabase.channel('add-to-cart-events').send({
+            type: 'broadcast',
+            event: 'add_to_cart',
+            payload: { productName: item.productName, price: item.price, quantity: item.quantity, timestamp: new Date().toISOString() },
+          });
+        } catch {}
       },
 
       updateQuantity: (productId, quantity) => {
