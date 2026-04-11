@@ -160,6 +160,7 @@ export function useVisitorTracking() {
   const subscribedRef = useRef(false);
   const isFirstPage = useRef(true);
   const isAdminRef = useRef(false);
+  const geoRef = useRef<GeoInfo>({ city: null, region: null });
 
   const device = typeof window !== "undefined" && window.innerWidth < 768 ? "mobile" : "desktop";
 
@@ -173,6 +174,8 @@ export function useVisitorTracking() {
       session_id: sessionId.current,
       current_page: pathname,
       device,
+      city: geoRef.current.city || undefined,
+      region: geoRef.current.region || undefined,
       referrer: document.referrer
         ? document.referrer.includes(window.location.hostname) ? "internal" : document.referrer
         : "direct",
