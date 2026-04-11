@@ -151,7 +151,7 @@ const ZluProduct = () => {
                   <Button 
                     size="lg" 
                     className="text-lg px-8 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
-                    onClick={handleAddToCart}
+                    onClick={() => handleAddToCart()}
                     disabled={addingToCart}
                   >
                     {addingToCart ? (
@@ -714,7 +714,7 @@ const ZluProduct = () => {
                 <Button 
                   size="lg" 
                   className="text-lg px-12 py-6 gap-2 bg-cyan-600 hover:bg-cyan-700"
-                  onClick={handleAddToCart}
+                  onClick={() => handleAddToCart()}
                   disabled={addingToCart}
                 >
                   {addingToCart ? (

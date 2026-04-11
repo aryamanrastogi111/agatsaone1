@@ -550,7 +550,7 @@ export default function SanketLifeECGProduct() {
           {/* CTA inside Nera section */}
           <div className="mt-14 text-center">
             <Button
-              onClick={handleBuy}
+              onClick={handleAddToCart}
               disabled={adding}
               size="lg"
               className="rounded-full px-10 text-base bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
@@ -621,7 +621,7 @@ export default function SanketLifeECGProduct() {
             Peace of mind for you. Safety for your family.
           </p>
           <Button
-            onClick={handleBuy}
+            onClick={handleAddToCart}
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
@@ -790,7 +790,7 @@ export default function SanketLifeECGProduct() {
             Still have questions? Your heart doesn't wait — and neither should you.
           </p>
           <Button
-            onClick={handleBuy}
+            onClick={handleAddToCart}
             disabled={adding}
             className="mt-3 rounded-full px-8 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
           >
@@ -880,7 +880,7 @@ export default function SanketLifeECGProduct() {
               Safe. Simple. Reliable.
             </p>
             <Button
-              onClick={handleBuy}
+              onClick={handleAddToCart}
               disabled={adding}
               size="lg"
               className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"

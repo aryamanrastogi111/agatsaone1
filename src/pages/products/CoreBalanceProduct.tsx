@@ -178,7 +178,7 @@ const CoreBalanceProduct = () => {
                   <Button 
                     size="lg" 
                     className="text-lg px-8 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700"
-                    onClick={handleAddToCart}
+                    onClick={() => handleAddToCart()}
                     disabled={addingToCart}
                   >
                     {addingToCart ? (
