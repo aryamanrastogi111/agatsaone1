@@ -398,6 +398,33 @@ export default function CheckoutPage() {
                 console.error("Order sync to DB failed:", syncErr);
               }
 
+              // Send order confirmation emails (customer + team)
+              try {
+                await supabase.functions.invoke("send-order-confirmation", {
+                  body: {
+                    customerEmail: recipientEmail,
+                    customerName: fullName.trim(),
+                    customerPhone: "+91" + cleanPhone,
+                    orderId: response.razorpay_order_id,
+                    paymentId: response.razorpay_payment_id,
+                    items: items.map((d) => ({
+                      productName: d.name,
+                      quantity: d.qty,
+                      price: d.unitPricePaise / 100,
+                    })),
+                    total: confirmedTotalPaise / 100,
+                    discountAmount: discountPaise / 100,
+                    couponCode: couponApplied || null,
+                    shippingAddress: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
+                    shippingCity: city.trim(),
+                    shippingState: state.trim(),
+                    shippingPincode: pincode.trim(),
+                  },
+                });
+              } catch (emailErr) {
+                console.error("Order confirmation email failed:", emailErr);
+              }
+
               setPageState("success");
               useCartStore.getState().clearCart();
               resolve();
