@@ -22,6 +22,8 @@ interface Visitor {
   device: "mobile" | "desktop";
   referrer: string;
   started_at: string;
+  city?: string;
+  region?: string;
 }
 
 interface TodayOrder {
