@@ -243,6 +243,8 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
+      <AwardsTrustSection />
+
       {/* ── SECTION 3 — HOW DOES IT WORK ── */}
       <section className="py-12 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
@@ -421,7 +423,6 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       <TrustVideosSection />
-      <AwardsTrustSection />
 
       {/* ── SECTION 9B — USER REVIEWS ── */}
       <WellnessReviewsSection />
