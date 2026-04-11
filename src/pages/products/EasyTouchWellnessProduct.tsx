@@ -377,6 +377,9 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
+      {/* ── SECTION 9B — USER REVIEWS ── */}
+      <WellnessReviewsSection />
+
       {/* ── OBJECTION HANDLING — "We Know What You Are Thinking" ── */}
       <section className="py-12 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
