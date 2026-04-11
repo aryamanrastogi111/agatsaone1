@@ -105,7 +105,10 @@ export default function Analytics() {
         .gte("created_at", todayStart.toISOString()),
       db.from("daily_stats")
         .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments, total_visitors")
-        .gte("stat_date", subDays(now, Math.max(days, 7)).toISOString().split("T")[0])
+        .gte("stat_date", (() => {
+          const d = new Date(istNow.getTime() - Math.max(days, 7) * 86400000);
+          return d.toISOString().split("T")[0];
+        })())
         .order("stat_date", { ascending: true }),
       db.from("page_views")
         .select("page_path, session_id, created_at, utm_source, utm_medium")
