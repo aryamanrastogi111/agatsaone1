@@ -74,7 +74,7 @@ export function DeviceShowcaseSection() {
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Every Agatsa device is designed to work seamlessly with the Agatsa One app and Nera AI.
-            Clinically validated. CDSCO-approved. Pair in minutes. Monitor for life.
+            Clinically validated. Pair in minutes. Monitor for life.
           </p>
         </motion.div>
 

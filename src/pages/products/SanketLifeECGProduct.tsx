@@ -132,7 +132,7 @@ export default function SanketLifeECGProduct() {
                   <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart — {fmt(ecgPrice)}
                 </Button>
               </div>
-              <TrustBar />
+              <TrustBar showCDSCO />
               <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
                 <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
                 <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
