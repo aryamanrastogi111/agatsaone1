@@ -58,7 +58,10 @@ function captureUtmParams() {
 
 // Increment total_visitors once per unique visitor per day
 async function incrementDailyVisitor() {
-  const today = new Date().toISOString().split("T")[0];
+  // Use IST date to match the snapshot edge function
+  const now = new Date();
+  const istDate = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
+  const today = istDate.toISOString().split("T")[0];
   const key = `agatsa_counted_${today}`;
   if (sessionStorage.getItem(key)) return;
   sessionStorage.setItem(key, "1");
