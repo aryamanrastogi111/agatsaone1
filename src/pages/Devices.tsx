@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package, Smartphone, Workflow, Brain, Stethoscope, Shield, Cpu, Users, HeartPulse, ShoppingCart } from "lucide-react";
 import { EmiLine } from "@/components/EmiLine";
+import { StrikePrice } from "@/components/StrikePrice";
+import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
 import { SiteLayout } from "@/components/SiteLayout";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { Button } from "@/components/ui/button";
@@ -194,11 +196,11 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
         <p className="text-sm font-semibold text-primary mt-2">{device.keyStat}</p>
 
         <div className="mt-4">
-          <div className="flex items-baseline gap-3">
+          <div className="flex items-baseline gap-3 flex-wrap">
             {loading ? (
               <span className="h-8 w-24 bg-muted animate-pulse rounded" />
             ) : (
-              <span className="text-3xl font-extrabold text-foreground">{fmt(price)}</span>
+              <StrikePrice sku={device.sku} price={price} size="md" showLabel={false} />
             )}
             <span className="flex items-center gap-1 text-sm text-muted-foreground">
               <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
@@ -207,6 +209,10 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
           </div>
           <p className="text-xs text-primary font-medium mt-0.5">{emi(price)}</p>
           <StockUrgencyBar productKey={device.id} className="mt-3" />
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
+            <span>📦</span>
+            <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
+          </div>
         </div>
 
         {/* What it measures */}
