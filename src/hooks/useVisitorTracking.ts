@@ -18,7 +18,7 @@ function isBot(): boolean {
   if (cachedIsBot !== null) return cachedIsBot;
   try {
     const ua = navigator.userAgent.toLowerCase();
-    const botPatterns = /bot|crawl|spider|slurp|facebookexternalhit|bingpreview|googlebot|yandex|baidu|duckduck|semrush|ahref|mj12bot|dotbot|petalbot|bytespider|gptbot|claudebot|headlesschrome|phantomjs|prerender|lighthouse|pagespeed|pingdom|uptimerobot|statuspage|monitoring/;
+    const botPatterns = /bot|crawl|spider|slurp|facebookexternalhit|bingpreview|googlebot|yandex|baidu|duckduck|semrush|ahref|mj12bot|dotbot|petalbot|bytespider|gptbot|claudebot|headlesschrome|phantomjs|prerender|lighthouse|pagespeed|pingdom|uptimerobot|statuspage|monitoring|screaming|dataforseo|zoominfobot|applebot|twitterbot|linkedinbot|discordbot|telegrambot|whatsapp|mediapartners|adsbot|feedfetcher|site24x7|newrelic|datadog|catchpoint|gtmetrix|webpagetest|chrome-lighthouse/;
     if (botPatterns.test(ua)) { cachedIsBot = true; return true; }
     // Headless / automated browsers
     if ((navigator as any).webdriver === true) { cachedIsBot = true; return true; }
@@ -26,6 +26,10 @@ function isBot(): boolean {
     if (!ua || ua.length < 20) { cachedIsBot = true; return true; }
     // No language set (common in bots)
     if (!navigator.language) { cachedIsBot = true; return true; }
+    // No plugins and zero screen dimensions (headless indicators)
+    if (navigator.plugins && navigator.plugins.length === 0 && screen.width === 0) { cachedIsBot = true; return true; }
+    // No pointer device (synthetic environments)
+    if (typeof window.matchMedia === "function" && !window.matchMedia("(pointer: fine)").matches && !window.matchMedia("(pointer: coarse)").matches) { cachedIsBot = true; return true; }
   } catch {
     // If navigator isn't available, skip
   }
