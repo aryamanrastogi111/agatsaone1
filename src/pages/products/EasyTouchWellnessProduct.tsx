@@ -126,7 +126,7 @@ export default function EasyTouchWellnessProduct() {
   return (
     <SiteLayout>
       {/* ── SECTION 1 — HERO ── */}
-      <section className="pt-12 pb-16 md:pt-20 md:pb-24 bg-background">
+      <section className="pt-8 pb-10 md:pt-14 md:pb-16 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <motion.div {...fadeUp}>
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-foreground leading-[1.1] tracking-tight">
@@ -165,7 +165,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── SECTION 2 — INTRODUCE THE DEVICE ── */}
-      <section id="introduce-device" className="py-20 bg-muted/30">
+      <section id="introduce-device" className="py-12 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Meet EasyTouch Wellness.</h2>
@@ -216,7 +216,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── SECTION 3 — HOW DOES IT WORK ── */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">How does it work — in plain language</motion.h2>
           <div className="mt-14 space-y-12">
@@ -242,7 +242,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── SECTION 4 — METABOLIC LOAD ZONES ── */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Metabolic Load Zones</p>
@@ -279,7 +279,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── SECTION 5 — SNAP YOUR MEAL ── */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp}>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center">Know before you eat.</h2>
@@ -294,7 +294,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── SECTION 6 — NERA AI ── */}
-      <section className="py-20 bg-gradient-to-br from-[#0D0D1A] to-[#1A1040]">
+      <section className="py-12 bg-gradient-to-br from-[#0D0D1A] to-[#1A1040]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white">Your health — explained in plain language, every single day.</h2>
@@ -327,7 +327,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── SECTION 7 — WHO IS THIS FOR ── */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">This is for you if...</motion.h2>
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 space-y-4">
@@ -342,7 +342,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── SECTION 8 — WHAT'S IN THE BOX ── */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-10 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center">Everything you need. Nothing extra.</motion.h2>
           <div className="grid sm:grid-cols-2 gap-4 mt-10">
@@ -360,7 +360,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── SECTION 9 — TESTIMONIALS ── */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">4 lakh+ health readings tracked. Across India.</motion.h2>
           <div className="grid md:grid-cols-3 gap-6 mt-12">
@@ -377,7 +377,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── OBJECTION HANDLING — "We Know What You Are Thinking" ── */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">We know what you are thinking. Let us be honest.</h2>
@@ -397,7 +397,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── SECTION 10 — PRICE + CTA ── */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
           <motion.div {...fadeUp}>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">EasyTouch Wellness</h2>
@@ -423,7 +423,7 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── SECTION 11 — FAQ ── */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center mb-10">Questions people usually ask</motion.h2>
           <Accordion type="single" collapsible className="w-full">
