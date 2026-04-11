@@ -24,6 +24,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import sanketlifeHero from "@/assets/sanketlife-device-app.webp";
+import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
+import { sanketLifeEcgReviews } from "@/data/sanketLifeEcgReviews";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -954,6 +956,8 @@ export default function SanketLifeECGProduct() {
         onAddToCart={handleAddToCart}
         themeColor="primary"
       />
+
+      <ProductReviewsSection reviews={sanketLifeEcgReviews} />
     </SiteLayout>
   );
 }
