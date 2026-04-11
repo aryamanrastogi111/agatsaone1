@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import type { CartItem } from '@/lib/razorpay';
+import { supabase } from '@/integrations/supabase/client';
 
 const CART_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
