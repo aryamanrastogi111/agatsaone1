@@ -2,61 +2,100 @@ import { useState } from "react";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
-import { useNavigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star, ArrowRight, Package, TrendingUp, Zap, MessageCircle, ShoppingCart } from "lucide-react";
+import { Check, ArrowRight, Package, ShoppingCart, ChevronDown } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
-import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
-import easytouchHero from "@/assets/easytouch-wellness-hero.webp";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 
-const measures = [
-  { title: "Metabolic Load Index", desc: "Track how your body responds to food — see post-meal metabolic trends without any needles" },
-  { title: "Blood Oxygen (SpO2)", desc: "Oxygen saturation with 94% alert threshold" },
-  { title: "Heart Rate", desc: "Pulse rate real-time and trend" },
-  { title: "HRV", desc: "Heart rate variability — key stress and recovery indicator" },
-  { title: "Perfusion Index", desc: "Signal quality indicator for accurate readings" },
+const zones = [
+  { color: "#22c55e", name: "Calm", meaning: "Your body handled that well. You're in a good place." },
+  { color: "#3b82f6", name: "Active", meaning: "Normal response. Mild activity. Nothing to worry about." },
+  { color: "#f59e0b", name: "Elevated", meaning: "Your body is working harder than usual. Keep an eye on your next meal." },
+  { color: "#ef4444", name: "High", meaning: "Your body is under stress right now. Time to act — rest, walk, or speak to your doctor." },
 ];
 
-const steps = [
-  { n: "1", title: "Position your finger on the sensor", copy: "Rest your index finger gently on the EasyTouch sensor. Advanced optical sensing captures your metabolic, cardiovascular, and oxygen data simultaneously. No pain. No preparation." },
-  { n: "2", title: "Hold for 15 seconds", copy: "The device takes a 15-second reading, capturing optical data across multiple wavelengths. The Agatsa One app shows a live progress indicator and guides you through the process." },
-  { n: "3", title: "Get your complete health picture", copy: "Nera AI processes all vitals simultaneously — comparing them to your historical trends, flagging anything unusual, and updating your Nera Health Score. Log your meal before readings for metabolic impact scoring." },
+const whoIsThisFor = [
+  "You check your sugar regularly and want to reduce how often you prick your finger",
+  "You have been told you are pre-diabetic and want to understand your body before it becomes a bigger problem",
+  "You know your readings but never understand why they change",
+  "You want to know which foods work for your body — not a generic diet plan",
+  "A family member has sugar issues and you want to help them monitor without the daily needle routine",
+  "You are health-conscious and want to track your body's response to food, stress, and sleep",
 ];
 
 const boxItems = [
-  "EasyTouch Wellness device (1 unit)",
-  "2× AAA batteries (included)",
-  "Quick start guide (English + Hindi)",
-  "1-year manufacturer warranty card",
+  "EasyTouch Wellness device",
+  "USB charging cable",
+  "Carry case",
+  "Free Agatsa One app (Android + iOS)",
+  "Nera AI — 3-day free access included with device",
+];
+
+const testimonials = [
+  { quote: "I used to prick my finger 4 times a day. Now I scan once in the morning and once after lunch. Nera tells me what is actually happening. I finally feel like I understand my own body.", name: "Meena R.", city: "Hyderabad" },
+  { quote: "My doctor was more interested in my EasyTouch report than my manual readings. She said the pattern data gave her something she had never seen before from a home device.", name: "Suresh K.", city: "Pune" },
+  { quote: "I realised my sugar spikes every Tuesday evening. Nera helped me figure out it was stress from my weekly office review. Nothing to do with food at all.", name: "Anita M.", city: "Delhi" },
+];
+
+const objections = [
+  {
+    q: "\"A light through my finger can tell me about my sugar? That sounds impossible.\"",
+    a: "It does sound that way. Here is the honest explanation.\n\nDuring COVID, everyone used a pulse oximeter — the small device clipped to your finger that checked your oxygen without drawing blood. It works by shining a light through your fingertip and reading how your blood is absorbing that light.\n\nEasyTouch uses the same proven technology. When your body is under metabolic stress — after a heavy meal, after a spike, during fatigue — your blood flow patterns change in ways that light can detect.\n\nEasyTouch does not measure sugar molecules directly the way a strip test does. What it does is read how your body is responding — and Nera AI, trained on millions of Indian health readings, translates that into a zone that tells you whether your body is handling the situation well or struggling.\n\nNot magic. Science that has been in hospitals for decades — now brought home.",
+  },
+  {
+    q: "\"My glucometer cost ₹800. This costs ₹9,999. Why would I spend this much?\"",
+    a: "Your glucometer costs ₹800. But your strips cost ₹10–20 each.\n\nIf you test 3 times a day:\n• That is ₹1,200–1,800 every month\n• ₹15,000–21,000 every year\n• Just on strips. Year after year.\n\nEasyTouch has no strips. No consumables. One purchase — and you are done.\n\nFor most people who test regularly, EasyTouch pays for itself in 6 to 8 months. After that, you are saving money every single month.",
+  },
+  {
+    q: "\"My doctor needs proper glucometer readings. This cannot replace that.\"",
+    a: "You are right — and we are not asking you to replace your doctor's protocol.\n\nUse EasyTouch for your daily monitoring. Keep your traditional test for doctor visits or when something feels off.\n\nWhat most users find is that when they do visit their doctor, they bring a full PDF report — every reading, every zone, patterns over weeks — and their doctor gets more useful information than from a handful of manual readings.\n\nYou do not have to choose one or the other.",
+  },
+  {
+    q: "\"Sounds too good to be true. What is the catch?\"",
+    a: "Fair. Here is the honest version.\n\nThe first few readings are directional — not perfectly precise. EasyTouch gets better as it learns your personal pattern. Most users say it becomes consistent with their strip tests within 2–3 weeks of regular use.\n\nIt is not a medical diagnostic device. It is a wellness monitoring device that tells you which zone your body is in — and gets more accurate over time as it learns you specifically.\n\nWe back this with a 30-day return policy because we would rather you try it and decide for yourself than trust our word alone.",
+  },
+  {
+    q: "\"I am not good with technology. Apps confuse me.\"",
+    a: "The Agatsa One app was designed specifically for this.\n\nLarge text. One tap to start a reading. No charts to decode. No numbers to interpret. Nera AI speaks to you in plain sentences — like a knowledgeable friend, not a doctor's report.\n\nIf you can take a photo on your phone, you can use EasyTouch.",
+  },
+  {
+    q: "\"I have been doing the same routine for 20 years. This feels like too big a change.\"",
+    a: "You do not have to change everything at once.\n\nStart by taking one EasyTouch reading alongside your usual morning strip test. See if the zone matches what you would expect from that reading.\n\nDo that for a week. Let yourself build confidence. Most people naturally start reducing their pricks within 2 weeks — not because we told them to, but because they started trusting what they were seeing.\n\nYour pace. Your call.",
+  },
+  {
+    q: "\"What if it breaks or the app stops working? Then I have wasted ₹9,999.\"",
+    a: "• 1-year warranty on the device. If anything goes wrong in the first year, we replace it.\n• 30-day return policy. If you are not satisfied, send it back. No questions.\n• The app works for readings even without internet. Your data is backed up on our servers — you never lose your history even if you change phones.\n• We are an Indian company with real support. Not a marketplace seller. If something goes wrong, you are not on your own.",
+  },
+  {
+    q: "\"My family will think I bought some gimmick.\"",
+    a: "Show them the Nera AI report after your first week.\n\n4 lakh+ health readings tracked. Users across India. A PDF report that doctors are actually asking to see at appointments.\n\nThe best way to convince anyone is to use it for 7 days and show them the results yourself.",
+  },
 ];
 
 const faqs = [
-  { q: "What does EasyTouch Wellness measure?", a: "EasyTouch Wellness is a non-invasive metabolic health monitor. It tracks your body's metabolic load — how your body responds to food, stress, and activity — along with SpO2, heart rate, HRV, and more. It gives you a comprehensive metabolic and cardiovascular picture in 15 seconds." },
-  { q: "Is this a medical diagnostic device?", a: "EasyTouch Wellness is a health monitoring aid designed for daily wellness tracking. It provides metabolic trend insights that help you understand your body better. For medical diagnosis or treatment decisions, always consult your healthcare provider." },
-  { q: "Who should use the EasyTouch Wellness?", a: "Anyone who wants daily visibility into their metabolic and cardiovascular health — especially those managing lifestyle conditions, monitoring their diet's impact, or wanting to track SpO2 and heart rate trends without frequent clinic visits. It's designed for proactive health management." },
-  { q: "How does metabolic load tracking work?", a: "The EasyTouch uses advanced optical sensing to measure bioelectrical metabolic markers. When you log your meals in the app, Nera AI correlates your readings with your diet to show how your body processes food over time — building a personalised metabolic profile." },
-  { q: "What happens if my readings show something unusual?", a: "Nera AI continuously monitors your trends. If any vital crosses a threshold, you'll receive an immediate alert with guidance. On Care Programmes, unusual patterns trigger an escalation protocol for timely medical consultation." },
+  { q: "Does this replace my glucometer completely?", a: "For many people, it significantly reduces how often they need to prick. However, if your doctor has prescribed a specific testing schedule, follow that. EasyTouch works best alongside — and gradually in place of — your daily routine." },
+  { q: "How accurate is it?", a: "The first few readings are directional. As you take more readings and occasionally confirm with a reference test, the system builds a personal model of your body. After 8+ readings, most users find the zone tracking highly consistent with their traditional tests." },
+  { q: "Is this easy to use if I am not good with technology?", a: "Yes. Clip it to your finger. Open the app. That is it. The app is in simple English. Nera AI speaks in plain language. No settings to configure." },
+  { q: "What if my reading seems wrong?", a: "Take another reading after 5 minutes. If it still seems off, do a traditional test and enter the result in the app — this actually helps EasyTouch learn your body better." },
+  { q: "Does it work for older people who are not used to smartphones?", a: "The Agatsa One app is designed to be simple. Large text, clear zones, plain language. Most users above 60 are comfortable with it within the first day." },
+  { q: "What is Nera AI?", a: "Nera is the health intelligence system built into the Agatsa One app. It reads all your data — EasyTouch scores, meal snaps, sleep, activity — and explains what is happening in your body in plain language. Think of it as a knowledgeable friend who is always available and never makes you feel judged." },
 ];
 
-const relatedDevices = [
-  { name: "SanketLife ECG", desc: "Add ECG for complete cardiac + metabolic monitoring", link: "/devices/sanketlife-ecg" },
-  { name: "EasyTouch Rhythm Band", desc: "Add 24/7 continuous monitoring", link: "/devices/rhythm-band" },
-  { name: "Agatsa Smart Scale", desc: "Complete the picture with body composition", link: "/devices/smart-scale" },
-];
+const trustItems = ["Made in India", "1-year warranty", "30-day returns", "Free delivery", "Secure payment"];
 
 export default function EasyTouchWellnessProduct() {
   const [adding, setAdding] = useState(false);
   const { prices, fmt } = usePricing();
-  const wellnessPrice = prices.wellness_sub;
+  const wellnessPrice = 9999;
   useMetaPixelViewContent("EASYTOUCH_WELLNESS", "EasyTouch Wellness", wellnessPrice);
 
   const handleAddToCart = (qtyOrEvent?: number | React.MouseEvent) => {
@@ -68,264 +107,280 @@ export default function EasyTouchWellnessProduct() {
     toast.success(qty > 1 ? `${qty} EasyTouch Wellness devices added to cart` : "EasyTouch Wellness added to cart");
   };
 
-  useSEO({ title: "EasyTouch Wellness — Non-Invasive Metabolic Health Monitor | Agatsa One", description: "Track your metabolic health, SpO2, HRV and more — no needles, no blood. Multiple vitals in 15 seconds. ₹3,999. Powered by Nera AI." });
+  const scrollToIntro = () => {
+    document.getElementById("introduce-device")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useSEO({ title: "EasyTouch Wellness — No Needle. No Blood. Know Why Your Sugar Goes Up. | Agatsa One", description: "EasyTouch Wellness measures your Metabolic Score in 15 seconds — no needles, no strips. Nera AI explains why your readings change. ₹9,999 with free delivery." });
 
   return (
     <SiteLayout>
-      {/* Hero */}
-      <section className="pt-8 pb-8 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="text-sm text-muted-foreground mb-6">
-            <Link to="/devices" className="hover:text-primary">Devices</Link>
-            <span className="mx-2">/</span>
-            <span className="text-foreground font-medium">EasyTouch Wellness</span>
-          </nav>
-
-          <div className="grid lg:grid-cols-[55%_45%] gap-12 items-center">
-            <motion.img {...fadeUp} src={easytouchHero} alt="EasyTouch Wellness Non-Invasive Metabolic Health Monitor" className="w-full rounded-3xl shadow-2xl" />
-
-            <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
-              <span className="inline-block text-sm font-medium text-white bg-[hsl(217,82%,50%)] rounded-full px-4 py-1.5 mb-4">
-                Non-Invasive Metabolic Health
-              </span>
-
-              <h1 className="text-3xl md:text-5xl font-extrabold text-foreground leading-tight">
-                EasyTouch Wellness<br />Metabolic Health Monitor
-              </h1>
-
-              <p className="text-xl md:text-2xl font-bold text-[hsl(217,82%,50%)] mt-3">
-                See how your body responds to food, stress & activity.
-              </p>
-
-              <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">
-                Track your metabolic load, SpO2, heart rate, and HRV — all in one device, in under 15 seconds. No needles. No blood. No discomfort. Just daily metabolic intelligence powered by Nera AI.
-              </p>
-
-              <div className="mt-6">
-                <span className="text-4xl font-extrabold text-foreground">{fmt(wellnessPrice)}</span>
-                <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
-                <EmiLine price={wellnessPrice} />
-                <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
-                <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
-                  <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
-                  <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 3 months</span>
-                  <span className="text-xs text-muted-foreground">(worth ₹897)</span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-1 mt-3">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                ))}
-                <span className="text-sm text-muted-foreground ml-1">4.6/5 (834 reviews)</span>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button onClick={handleAddToCart} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart — {fmt(wellnessPrice)}
-                </Button>
-              </div>
-              <TrustBar />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Bar */}
-      <section className="bg-[hsl(260,100%,97%)] py-10">
-        <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          {[
-            { big: "8 Vitals", label: "In one reading", sub: "Metabolic + cardiovascular + respiratory" },
-            { big: "15 Sec", label: "Complete reading time", sub: "No needles, no prep" },
-            { big: "15,000+", label: "Active users", sub: "Across India" },
-          ].map((s) => (
-            <motion.div key={s.big} {...fadeUp}>
-              <p className="text-4xl md:text-5xl font-extrabold text-primary">{s.big}</p>
-              <p className="text-base font-medium text-muted-foreground mt-1">{s.label}</p>
-              <p className="text-xs text-muted-foreground/60 mt-0.5">{s.sub}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* What It Measures */}
-      <section className="py-20 bg-background">
-        <div className="max-w-5xl mx-auto px-4 text-center">
+      {/* ── SECTION 1 — HERO ── */}
+      <section className="pt-12 pb-16 md:pt-20 md:pb-24 bg-background">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <motion.div {...fadeUp}>
-            <h2 className="text-3xl font-bold text-foreground">Your daily metabolic health snapshot</h2>
-            <p className="text-lg text-muted-foreground mt-3 max-w-xl mx-auto">
-              EasyTouch Wellness captures a comprehensive picture of your metabolic and cardiovascular health in a single 15-second reading. No needles. No blood.
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-foreground leading-[1.1] tracking-tight">
+              <span className="block">Needle.</span>
+              <span className="block">Blood.</span>
+              <span className="block">Strip.</span>
+              <span className="block">Number.</span>
+              <span className="block text-primary">Repeat.</span>
+            </h1>
+          </motion.div>
+
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-muted-foreground font-medium leading-relaxed">
+              You have been doing this 3 times a day, every day, for years.
+            </p>
+            <p className="text-xl md:text-2xl text-foreground font-semibold mt-2">
+              You know your number. But you still don't know why it goes up.
             </p>
           </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-            {measures.map((m, i) => (
-              <motion.div key={m.title} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.08 }} className="bg-card border border-border rounded-2xl p-6 text-left">
-                <h3 className="text-base font-bold text-foreground">{m.title}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{m.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* How It Works */}
-      <section className="py-20 bg-[hsl(260,100%,97%)]">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.h2 {...fadeUp} className="text-3xl font-bold text-foreground text-center">How to take a reading in 15 seconds</motion.h2>
-          <div className="mt-12 grid md:grid-cols-3 gap-8">
-            {steps.map((s, i) => (
-              <motion.div key={s.n} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.12 }} className="text-center md:text-left">
-                <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-bold mx-auto md:mx-0">{s.n}</div>
-                <h3 className="text-lg font-bold text-foreground mt-4">{s.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2">{s.copy}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.3 }} className="mt-10 max-w-xl mx-auto space-y-3 text-lg text-muted-foreground">
+            <p>Why did it spike after that meal you thought was fine?</p>
+            <p>Why is it high every morning before you've even eaten anything?</p>
+            <p>Why does it behave some days and not others?</p>
+            <p className="font-medium text-foreground/70">The strip gives you a number. It never gives you a reason.</p>
+          </motion.div>
 
-      {/* Nera AI Intelligence */}
-      <section className="py-20 bg-gradient-to-br from-[#0D0D1A] to-[#1A1040]">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#7C4DFF]">POWERED BY NERA AI</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">Your readings become intelligence.</h2>
-            <p className="text-[#A0A0C0] text-lg mt-4 max-w-2xl mx-auto">
-              Most devices give you a number. Nera AI gives you meaning — patterns, predictions, and alerts built from every reading you take.
-            </p>
-          </div>
-
-          {/* Food Snap Spotlight */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center mt-16">
-            <motion.div {...fadeUp}>
-              <span className="inline-block bg-[#7C4DFF]/20 text-[#7C4DFF] border border-[#7C4DFF]/30 rounded-full px-4 py-1 text-sm font-medium">
-                Most loved feature
-              </span>
-              <h3 className="text-2xl md:text-3xl font-bold text-white mt-4">
-                Snap your meal. See how your body responded.
-              </h3>
-              <p className="text-[#A0A0C0] text-base leading-relaxed mt-4">
-                Before you eat, open Agatsa One and photograph your plate. Nera AI analyses the meal and predicts how your body is likely to respond. Take a reading after your meal — and Nera AI shows you exactly how accurate the prediction was.
-              </p>
-              <p className="text-[#A0A0C0] text-base leading-relaxed mt-3">
-                Over weeks, it builds a personal map of how different foods affect your readings. Which meals cause spikes. Which don't. What time of day your body handles food best. All from a photo and a 60-second reading.
-              </p>
-              <div className="flex flex-wrap gap-2 mt-6">
-                {["📸 Snap before eating", "🤖 AI response prediction", "🗺️ Personal food response map"].map((pill) => (
-                  <span key={pill} className="bg-white/5 border border-white/10 rounded-full px-3 py-1 text-sm text-white">{pill}</span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-white font-medium">🍛 Dal Rice + Sabzi</span>
-                  <span className="text-[#A0A0C0] text-sm">Logged 1:15 PM</span>
-                </div>
-                <div className="border-t border-white/10 my-4" />
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#A0A0C0] text-sm">Predicted post-meal response</span>
-                    <span className="text-[#F59E0B] font-medium text-sm">Moderate ↑</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#A0A0C0] text-sm">Actual reading (2:45 PM)</span>
-                    <span className="text-[#10B981] font-medium text-sm">Within range</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#A0A0C0] text-sm">Prediction accuracy</span>
-                    <span className="text-[#7C4DFF] font-bold text-sm">91%</span>
-                  </div>
-                </div>
-                <div className="border-t border-white/10 my-4" />
-                <p className="text-[#A0A0C0] text-xs italic">
-                  Nera AI: Your post-meal readings after rice are consistently better at lunch than dinner. Your body responds differently by time of day.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* 3 AI Feature Cards */}
-          <div className="grid md:grid-cols-3 gap-6 mt-16">
-            {[
-              { icon: TrendingUp, title: "30-Day Trend Picture", body: "Nera AI builds a rolling picture of your metabolic readings over 30 days — so you can see the direction of travel, not just today's number. Share it with your doctor at your next visit." },
-              { icon: Zap, title: "Cross-Vital Pattern Detection", body: "One reading out of range is a data point. The same reading alongside elevated BP and low HRV is a pattern. Nera AI sees the combination and flags what matters — before it becomes a problem." },
-              { icon: MessageCircle, title: "Ask Nera", body: "\"Why are my post-meal readings higher at dinner?\" Voice or chat — Nera AI answers using your own data, not a generic response." },
-            ].map((card) => (
-              <motion.div key={card.title} {...fadeUp} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#7C4DFF]/50 transition-all">
-                <card.icon className="text-[#7C4DFF]" size={28} />
-                <h4 className="text-white font-semibold text-lg mt-3">{card.title}</h4>
-                <p className="text-[#A0A0C0] text-sm mt-2 leading-relaxed">{card.body}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Bottom Banner */}
-          <div className="bg-[#7C4DFF]/10 border border-[#7C4DFF]/30 rounded-2xl p-8 mt-16 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <p className="text-white font-semibold text-xl">
-                EasyTouch Wellness is the core device for the{" "}
-                <span className="text-[#7C4DFF] font-bold">Diabetic Cardiac Care Programme</span>
-              </p>
-              <p className="text-[#A0A0C0] text-sm mt-2">
-                Nera AI monitors your vitals and ECG together, sends weekly AI-generated reports to your enrolled doctor, and alerts automatically when readings need attention.
-              </p>
-            </div>
-            <Button asChild className="bg-[#7C4DFF] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#6B3FE8] transition-all whitespace-nowrap shrink-0">
-              <Link to="/programmes">View the Programme →</Link>
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.45 }} className="mt-12">
+            <div className="w-16 h-px bg-border mx-auto mb-8" />
+            <p className="text-3xl md:text-4xl font-bold text-foreground">There is a better way.</p>
+            <Button onClick={scrollToIntro} size="lg" className="mt-8 rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+              Show Me <ArrowRight className="h-5 w-5 ml-1" />
             </Button>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Why Metabolic Health Matters */}
+      {/* ── SECTION 2 — INTRODUCE THE DEVICE ── */}
+      <section id="introduce-device" className="py-20 bg-muted/30">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Meet EasyTouch Wellness.</h2>
+            <p className="text-xl text-primary font-semibold mt-3">
+              Clip it to your finger. Wait 15 seconds. No needle. No blood. No strip.
+            </p>
+          </motion.div>
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 space-y-5 text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p>
+              EasyTouch Wellness uses the same light sensor that hospitals use in pulse oximeters — the small device they clipped to your finger during COVID to check your oxygen.
+            </p>
+            <p>
+              That sensor shines a gentle light through your fingertip and reads how your blood is moving. Nera AI — our health intelligence system — then calculates your <strong className="text-foreground">Metabolic Score: a simple number from 0 to 100</strong> that shows how your body is responding right now.
+            </p>
+            <p className="text-foreground font-semibold text-xl">Not just a reading. An explanation.</p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── SECTION 3 — HOW DOES IT WORK ── */}
       <section className="py-20 bg-background">
-        <div className="max-w-[800px] mx-auto px-4">
-          <motion.div {...fadeUp} className="text-center mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Why This Matters</p>
-            <h2 className="text-3xl font-bold text-foreground">Your body talks. EasyTouch listens.</h2>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">How does it work — in plain language</motion.h2>
+          <div className="mt-14 space-y-12">
+            {[
+              { n: "1", title: "Clip it on", copy: "Attach EasyTouch Wellness to your fingertip. Same as a pulse oximeter. No setup. No calibration the first time." },
+              { n: "2", title: "15 seconds", copy: "A gentle light passes through your finger. You feel nothing. The sensor reads your blood flow patterns." },
+              { n: "3", title: "Your Metabolic Score appears", copy: "The Agatsa One app shows you a score from 0 to 100 and tells you which zone you are in — in plain language, not medical terms." },
+              { n: "4", title: "Nera AI explains", copy: "Our AI tells you what the score means right now, why it may have changed since your last reading, and what to do next — in simple sentences, like a knowledgeable friend." },
+            ].map((step, i) => (
+              <motion.div key={step.n} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }} className="flex gap-5 items-start">
+                <div className="w-11 h-11 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-bold shrink-0">{step.n}</div>
+                <div>
+                  <h3 className="text-xl font-bold text-foreground">Step {step.n} — {step.title}</h3>
+                  <p className="text-muted-foreground mt-1">{step.copy}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <motion.p {...fadeUp} className="mt-10 text-sm text-muted-foreground/70 text-center italic max-w-2xl mx-auto">
+            The first few readings are directional. As you take more readings and occasionally confirm with a traditional test, EasyTouch learns your personal pattern and becomes more accurate over time.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* ── SECTION 4 — THE ZONES ── */}
+      <section className="py-20 bg-muted/30">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">One number. One zone. No confusion.</h2>
+            <p className="text-lg text-muted-foreground mt-3 max-w-2xl mx-auto">
+              Instead of trying to figure out if 168 is good or bad after a meal, EasyTouch shows you something anyone can understand:
+            </p>
           </motion.div>
-          <motion.div {...fadeUp} className="bg-[hsl(260,100%,97%)] rounded-3xl p-8 md:p-10 space-y-6">
-            <p className="text-muted-foreground leading-relaxed">
-              Most health problems don't appear overnight — they build up silently over months and years. Your metabolic health is one of the earliest indicators of how your body is doing. How you process food, how your cardiovascular system responds to stress, how efficiently your blood carries oxygen.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              EasyTouch Wellness gives you a window into these signals — daily, painlessly, in just 15 seconds. Combined with Nera AI, it builds your personalised metabolic profile over time, helping you and your doctor make informed decisions before problems escalate.
-            </p>
-            <blockquote className="bg-card rounded-2xl p-6 border-l-4 border-primary">
-              <p className="text-sm text-muted-foreground italic">
-                "The ability to track metabolic trends daily — without any invasive procedure — fundamentally changes how patients engage with their health."
-              </p>
-              <footer className="mt-3 text-xs font-medium text-foreground">— Nera AI Clinical Advisory</footer>
-            </blockquote>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+            {zones.map((z, i) => (
+              <motion.div key={z.name} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="bg-card rounded-2xl border border-border p-6 text-center hover:shadow-lg transition-shadow"
+              >
+                <div className="w-10 h-10 rounded-full mx-auto mb-3" style={{ backgroundColor: z.color }} />
+                <h3 className="text-lg font-bold text-foreground">{z.name}</h3>
+                <p className="text-sm text-muted-foreground mt-2">{z.meaning}</p>
+              </motion.div>
+            ))}
+          </div>
+          <motion.p {...fadeUp} className="mt-10 text-muted-foreground text-center max-w-2xl mx-auto">
+            EasyTouch knows whether you just ate or haven't eaten in hours — and adjusts what each zone means accordingly. A post-meal reading is judged differently than a fasting morning reading. The context is always built in.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* ── SECTION 5 — SNAP YOUR MEAL ── */}
+      <section className="py-20 bg-background">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp}>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center">Know before you eat.</h2>
+          </motion.div>
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 space-y-5 text-lg text-muted-foreground">
+            <p>Open the Agatsa One app. Take a photo of your plate.</p>
+            <p>Nera AI identifies what is on your plate, estimates the portion, and tells you what kind of metabolic response to expect — before you take a bite.</p>
+            <p>Then, 90 minutes after eating, take a quick EasyTouch reading. See exactly how your body actually responded.</p>
+            <p>Do this a few times and you will start to see patterns. You will know which foods push you into the Elevated zone and which ones keep you Calm — <strong className="text-foreground">for your body specifically.</strong> Not a general diet chart. Your chart.</p>
           </motion.div>
         </div>
       </section>
 
-      {/* In The Box */}
-      <section className="py-16 bg-[hsl(260,100%,97%)]">
-        <div className="max-w-3xl mx-auto px-4">
-          <motion.h2 {...fadeUp} className="text-2xl font-bold text-foreground text-center mb-8">What's included</motion.h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* ── SECTION 6 — NERA AI ── */}
+      <section className="py-20 bg-gradient-to-br from-[#0D0D1A] to-[#1A1040]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Your health — explained in plain language, every single day.</h2>
+            <p className="text-[#A0A0C0] text-lg mt-4 max-w-2xl mx-auto">
+              Most health apps give you data. Nera AI gives you understanding.
+            </p>
+            <p className="text-[#A0A0C0] mt-2">
+              After every reading, Nera explains what is happening and why — in simple sentences you don't need a medical degree to understand.
+            </p>
+          </motion.div>
+
+          <div className="mt-12 space-y-5 max-w-2xl mx-auto">
+            {[
+              "\"Your morning reading is elevated — but this is likely the dawn effect. Your body naturally releases stored energy just before you wake up. This is common and not caused by anything you ate last night.\"",
+              "\"Your score went into Elevated zone 2 hours after lunch. The roti portion may have been larger than your body handles easily. Try a smaller portion or a 10-minute walk after your next meal.\"",
+              "\"Great — your last 5 readings have all been in Calm or Active zone. Your body is responding well this week.\"",
+            ].map((msg, i) => (
+              <motion.div key={i} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-white/5 border border-white/10 rounded-2xl p-5"
+              >
+                <p className="text-white/90 text-sm leading-relaxed italic">{msg}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p {...fadeUp} className="mt-10 text-[#A0A0C0] text-center max-w-2xl mx-auto">
+            Nera also sends you a weekly summary, tracks your patterns over time, and generates a PDF report you can share with your doctor — with all your readings, zones, and trends in one place.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* ── SECTION 7 — WHO IS THIS FOR ── */}
+      <section className="py-20 bg-background">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">This is for you if...</motion.h2>
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 space-y-4">
+            {whoIsThisFor.map((item, i) => (
+              <div key={i} className="flex gap-3 items-start">
+                <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <p className="text-muted-foreground">{item}</p>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── SECTION 8 — WHAT'S IN THE BOX ── */}
+      <section className="py-16 bg-muted/30">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center">Everything you need. Nothing extra.</motion.h2>
+          <div className="grid sm:grid-cols-2 gap-4 mt-10">
             {boxItems.map((item) => (
               <div key={item} className="flex items-center gap-3 bg-card rounded-xl border border-border p-4">
                 <Package className="h-5 w-5 text-primary shrink-0" />
                 <span className="text-sm text-foreground">{item}</span>
               </div>
             ))}
-            <div className="flex items-center gap-3 bg-primary/10 rounded-xl border border-primary/20 p-4">
-              <Package className="h-5 w-5 text-primary shrink-0" />
-              <span className="text-sm font-semibold text-primary">3-month Nera AI subscription (₹1,797 value)</span>
-            </div>
+          </div>
+          <motion.p {...fadeUp} className="mt-6 text-sm text-muted-foreground text-center">
+            The device pairs with your phone in under 2 minutes. No technical setup.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* ── SECTION 9 — TESTIMONIALS ── */}
+      <section className="py-20 bg-background">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">4 lakh+ health readings tracked. Across India.</motion.h2>
+          <div className="grid md:grid-cols-3 gap-6 mt-12">
+            {testimonials.map((t, i) => (
+              <motion.div key={i} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-card rounded-2xl border border-border p-6"
+              >
+                <p className="text-muted-foreground text-sm leading-relaxed italic">"{t.quote}"</p>
+                <p className="mt-4 text-sm font-semibold text-foreground">— {t.name}, {t.city}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* ── OBJECTION HANDLING — "We Know What You Are Thinking" ── */}
+      <section className="py-20 bg-muted/30">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">We know what you are thinking. Let us be honest.</h2>
+            <p className="text-lg text-muted-foreground mt-3">
+              These are the real questions people ask before buying EasyTouch Wellness. Here are straight answers — no marketing spin.
+            </p>
+          </motion.div>
+          <Accordion type="single" collapsible className="w-full space-y-3">
+            {objections.map((obj, i) => (
+              <AccordionItem key={i} value={`obj-${i}`} className="bg-card border border-border rounded-xl px-5">
+                <AccordionTrigger className="text-left text-foreground font-semibold text-base py-5">{obj.q}</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground whitespace-pre-line pb-5">{obj.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      {/* ── SECTION 10 — PRICE + CTA ── */}
       <section className="py-20 bg-background">
-        <div className="max-w-3xl mx-auto px-4">
-          <motion.h2 {...fadeUp} className="text-2xl font-bold text-foreground text-center mb-8">Frequently asked questions</motion.h2>
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+          <motion.div {...fadeUp}>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">EasyTouch Wellness</h2>
+            <p className="text-5xl font-extrabold text-foreground mt-6">₹9,999</p>
+            <p className="text-muted-foreground mt-2">Free delivery across India · 1-year warranty · 30-day return policy</p>
+            <p className="text-sm text-muted-foreground/70 mt-1">Or ₹834/month — no cost EMI available at checkout</p>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
+              <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                <ShoppingCart className="h-5 w-5 mr-2" />
+                Order Now — Free Delivery
+              </Button>
+            </div>
+
+            <div className="mt-4">
+              <AppStoreBadges className="justify-center" />
+              <p className="text-xs text-muted-foreground mt-2">Download the App First (Free)</p>
+            </div>
+
+            <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center text-xs text-muted-foreground mt-6">
+              {trustItems.map((item) => (
+                <span key={item}>
+                  <span className="text-green-600">✓</span> {item}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── SECTION 11 — FAQ ── */}
+      <section className="py-20 bg-muted/30">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center mb-10">Questions people usually ask</motion.h2>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((f, i) => (
               <AccordionItem key={i} value={`faq-${i}`}>
@@ -335,43 +390,15 @@ export default function EasyTouchWellnessProduct() {
             ))}
           </Accordion>
 
-          <p className="text-xs text-muted-foreground mt-6 text-center italic">
-            *EasyTouch Wellness is a metabolic health monitoring aid. It is not a medical diagnostic device and is not intended to diagnose, treat, or cure any medical condition.
+          <p className="text-xs text-muted-foreground mt-8 text-center italic">
+            *EasyTouch Wellness measures bioelectrical metabolic markers. It is not a blood glucose monitor and is not intended to diagnose, treat, or monitor any medical condition.
           </p>
         </div>
       </section>
 
-      {/* Related Devices */}
-      <section className="py-16 bg-[hsl(260,100%,97%)]">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-foreground text-center mb-8">Complete your health monitoring setup</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {relatedDevices.map((d) => (
-              <Link key={d.name} to={d.link} className="bg-card rounded-2xl border border-border p-6 hover:shadow-lg hover:border-primary/20 transition-all group">
-                <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">{d.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{d.desc}</p>
-                <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary mt-3">
-                  Learn more <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Bottom CTA */}
-      <section className="bg-primary py-20">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Your metabolic health, in your hands.</h2>
-          <p className="text-primary-foreground/80 mt-3 text-lg">Your first reading takes under 15 seconds. No needles. No blood. Just insight.</p>
-          <Button onClick={handleAddToCart} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">
-            Add EasyTouch Wellness to Cart — {fmt(wellnessPrice)}
-          </Button>
-        </div>
-      </section>
       <StickyAddToCart
         productName="EasyTouch Wellness"
-        price={fmt(wellnessPrice)}
+        price="₹9,999"
         unitPrice={wellnessPrice}
         onBuyNow={handleAddToCart}
         onAddToCart={handleAddToCart}
