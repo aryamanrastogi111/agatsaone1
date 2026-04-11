@@ -520,13 +520,8 @@ export default function CheckoutPage() {
     }
   };
 
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="max-w-md w-full text-center space-y-6">
-          <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto">
-            <CheckCircle2 className="h-10 w-10 text-green-600" />
-          </div>
-          <h1 className="text-2xl font-bold text-foreground">Order Confirmed!</h1>
+
+
           <p className="text-muted-foreground">
             Your device ships within 2–4 business days. You'll receive a confirmation on your phone shortly.
           </p>
