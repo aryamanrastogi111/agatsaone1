@@ -372,6 +372,13 @@ export default function EasyTouchWellnessProduct() {
           </Button>
         </div>
       </section>
+      <StickyAddToCart
+        productName="EasyTouch Wellness"
+        price={fmt(wellnessPrice)}
+        unitPrice={wellnessPrice}
+        onAddToCart={handleBuy}
+        themeColor="primary"
+      />
     </SiteLayout>
   );
 }

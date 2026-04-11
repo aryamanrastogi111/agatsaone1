@@ -352,6 +352,13 @@ export default function RhythmBandProduct() {
           <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Rhythm Band — {fmt(bandPrice)}</Button>
         </div>
       </section>
+      <StickyAddToCart
+        productName="EasyTouch Rhythm Band"
+        price={fmt(bandPrice)}
+        unitPrice={bandPrice}
+        onAddToCart={handleBuy}
+        themeColor="primary"
+      />
     </SiteLayout>
   );
 }

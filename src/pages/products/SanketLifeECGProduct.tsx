@@ -943,6 +943,13 @@ export default function SanketLifeECGProduct() {
           </div>
         </div>
       </section>
+      <StickyAddToCart
+        productName="SanketLife 12-Lead ECG"
+        price={fmt(ecgPrice)}
+        unitPrice={ecgPrice}
+        onAddToCart={handleBuy}
+        themeColor="primary"
+      />
     </SiteLayout>
   );
 }
