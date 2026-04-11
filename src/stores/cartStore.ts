@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import type { CartItem } from '@/lib/razorpay';
+import { supabase } from '@/integrations/supabase/client';
 
 const CART_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -50,6 +51,14 @@ export const useCartStore = create<CartStore>()(
         } else {
           set({ items: [...items, item], lastUpdatedAt: Date.now() });
         }
+        // Broadcast add-to-cart event for admin live activity tracking
+        try {
+          supabase.channel('add-to-cart-events').send({
+            type: 'broadcast',
+            event: 'add_to_cart',
+            payload: { productName: item.productName, price: item.price, quantity: item.quantity, timestamp: new Date().toISOString() },
+          });
+        } catch {}
       },
 
       updateQuantity: (productId, quantity) => {

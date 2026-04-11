@@ -575,6 +575,7 @@ export default function LiveActivity() {
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
   const [lostCheckouts, setLostCheckouts] = useState<TodayOrder[]>([]);
   const [lostExpanded, setLostExpanded] = useState(false);
+  const [addToCartCount, setAddToCartCount] = useState(0);
 
   // AI Analysis state
   const [aiData, setAiData] = useState<AIResponse | null>(null);
@@ -656,6 +657,16 @@ export default function LiveActivity() {
         }));
       setVisitors(list);
     }).subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, []);
+
+  // ── Add to Cart broadcast listener ──
+  useEffect(() => {
+    const channel = supabase.channel("add-to-cart-events")
+      .on("broadcast", { event: "add_to_cart" }, () => {
+        setAddToCartCount((c) => c + 1);
+      })
+      .subscribe();
     return () => { supabase.removeChannel(channel); };
   }, []);
 
@@ -743,10 +754,11 @@ export default function LiveActivity() {
       <AIInsightsCard data={aiData} loading={aiLoading} onRefresh={fetchAIAnalysis} />
 
       {/* Stats Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-7 gap-4">
         <StatCard icon={Users} label="Live Visitors" value={visitors.length} sub="on site right now" color="bg-green-50 text-green-600" />
         <StatCard icon={Globe} label="Today's Visitors" value={loading ? "—" : todayStats.totalVisitors} sub="unique visitors today" color="bg-blue-50 text-blue-600" />
         <StatCard icon={Eye} label="Browsing Devices" value={deviceVisitors.length} sub="viewing product pages" color="bg-blue-50 text-blue-600" />
+        <StatCard icon={ShoppingCart} label="Add to Cart" value={addToCartCount} sub="clicks this session" color="bg-orange-50 text-orange-600" />
         <StatCard icon={ShoppingCart} label="On Checkout" value={checkoutVisitors.length} sub="filling checkout form" color="bg-purple-50 text-purple-600" />
         <StatCard icon={TrendingUp} label="Orders Today" value={loading ? "—" : todayStats.orders} sub={`₹${todayStats.revenue.toLocaleString("en-IN")} revenue`} color="bg-emerald-50 text-emerald-600" />
         <StatCard icon={CreditCard} label="Pending Payment" value={loading ? "—" : pendingOrders.length} sub="awaiting Razorpay" color="bg-yellow-50 text-yellow-600" />
