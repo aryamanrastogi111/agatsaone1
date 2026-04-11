@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { StrikePrice } from "@/components/StrikePrice";
+import { shipDateLabel } from "@/lib/shipDate";
 import { usePricing } from "@/hooks/useDevicePricing";
 import sanketlifeImg from "@/assets/sanketlife-hero-new.webp";
 import easytouchImg from "@/assets/easytouch-wellness-device.webp";
@@ -117,8 +118,10 @@ export function DeviceShowcaseSection() {
                     Learn more <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
-                <p className="text-xs text-primary font-medium mt-0.5">{emi(prices[device.sku])}</p>
-              </div>
+                <div className="flex items-center justify-between text-xs mt-0.5">
+                  <p className="text-primary font-medium">{emi(prices[device.sku])}</p>
+                  <span className="font-semibold text-green-600">📦 {shipDateLabel()}</span>
+                </div>
             </motion.div>
           ))}
         </div>
