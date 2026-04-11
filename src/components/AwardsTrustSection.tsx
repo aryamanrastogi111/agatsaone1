@@ -5,7 +5,7 @@ import awardAegisImg from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndiaImg from "@/assets/award-bio-india.webp";
 import awardIgpImg from "@/assets/award-igp.webp";
 import awardMashelkarImg from "@/assets/award-anjani-mashelkar.webp";
-import awardMbillionthImg from "@/assets/award-mbillionth.png";
+import awardMbillionthImg from "@/assets/award-mbillionth-new.png";
 
 /* ── Featured awards with images ── */
 const featuredAwards = [
