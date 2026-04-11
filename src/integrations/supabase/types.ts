@@ -1069,6 +1069,7 @@ export type Database = {
       }
       visitor_sessions: {
         Row: {
+          city: string | null
           device: string | null
           entry_page: string | null
           exit_page: string | null
@@ -1076,6 +1077,7 @@ export type Database = {
           last_seen_at: string
           page_count: number
           referrer: string | null
+          region: string | null
           session_id: string
           started_at: string
           utm_campaign: string | null
@@ -1083,6 +1085,7 @@ export type Database = {
           utm_source: string | null
         }
         Insert: {
+          city?: string | null
           device?: string | null
           entry_page?: string | null
           exit_page?: string | null
@@ -1090,6 +1093,7 @@ export type Database = {
           last_seen_at?: string
           page_count?: number
           referrer?: string | null
+          region?: string | null
           session_id: string
           started_at?: string
           utm_campaign?: string | null
@@ -1097,6 +1101,7 @@ export type Database = {
           utm_source?: string | null
         }
         Update: {
+          city?: string | null
           device?: string | null
           entry_page?: string | null
           exit_page?: string | null
@@ -1104,6 +1109,7 @@ export type Database = {
           last_seen_at?: string
           page_count?: number
           referrer?: string | null
+          region?: string | null
           session_id?: string
           started_at?: string
           utm_campaign?: string | null

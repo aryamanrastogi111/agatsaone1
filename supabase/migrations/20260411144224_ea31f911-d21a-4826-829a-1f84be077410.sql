@@ -1,0 +1,1 @@
+ALTER TABLE public.visitor_sessions ADD COLUMN city text, ADD COLUMN region text;
