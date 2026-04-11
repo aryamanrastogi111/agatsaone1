@@ -657,6 +657,8 @@ export default function LiveActivity() {
           session_id: p.session_id ?? p.presence_ref, current_page: p.current_page ?? "/",
           device: p.device ?? "desktop", referrer: p.referrer ?? "direct",
           started_at: p.started_at ?? new Date().toISOString(),
+          city: p.city ?? undefined,
+          region: p.region ?? undefined,
         }));
       setVisitors(list);
     }).subscribe();
