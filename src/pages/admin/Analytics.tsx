@@ -84,7 +84,10 @@ export default function Analytics() {
       rangeEnd = yesterdayEnd.toISOString();
     } else {
       days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : timeRange === "90d" ? 90 : 365;
-      rangeStart = subDays(now, days).toISOString();
+      // Use IST-aligned start date
+      const rangeIstDate = new Date(istNow.getTime() - days * 86400000);
+      const rangeIstStr = rangeIstDate.toISOString().split("T")[0];
+      rangeStart = new Date(`${rangeIstStr}T00:00:00+05:30`).toISOString();
     }
 
     let rangeQuery = db.from("orders")
@@ -102,7 +105,10 @@ export default function Analytics() {
         .gte("created_at", todayStart.toISOString()),
       db.from("daily_stats")
         .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments, total_visitors")
-        .gte("stat_date", subDays(now, Math.max(days, 7)).toISOString().split("T")[0])
+        .gte("stat_date", (() => {
+          const d = new Date(istNow.getTime() - Math.max(days, 7) * 86400000);
+          return d.toISOString().split("T")[0];
+        })())
         .order("stat_date", { ascending: true }),
       db.from("page_views")
         .select("page_path, session_id, created_at, utm_source, utm_medium")
