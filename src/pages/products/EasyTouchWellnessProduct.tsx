@@ -192,7 +192,7 @@ export default function EasyTouchWellnessProduct() {
               That sensor shines a gentle light through your fingertip and reads how your blood is moving. But here's what makes it truly powerful:
             </p>
             <p>
-              The first few days, you use EasyTouch Wellness alongside your regular glucometer — like training wheels. Every time you measure both together, Nera AI — our health intelligence system — learns how <strong className="text-foreground">YOUR body</strong> works. Snap a photo of what you ate, and it connects the dots even faster.
+              The first few days, you use EasyTouch Wellness with the Agatsa One app — and do two simple things alongside: snap a photo of your glucometer reading, and snap a photo of what you ate. Think of it like training wheels. Every time you do this, Nera AI learns how <strong className="text-foreground">YOUR body</strong> responds to different foods.
             </p>
             <p>
               After just a few days, it knows your body's patterns so well that your glucometer usage reduces — and gradually becomes optional. One touch, 15 seconds — and you get your <strong className="text-foreground">Metabolic Score: a simple number from 0 to 100</strong> that tells you exactly how your body is responding to what you ate. No strip. No blood. Just answers.
