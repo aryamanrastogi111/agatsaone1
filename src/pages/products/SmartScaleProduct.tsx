@@ -68,7 +68,8 @@ export default function SmartScaleProduct() {
   const { prices, fmt } = usePricing();
   const scalePrice = prices.scale_sub;
   useMetaPixelViewContent("SMART_SCALE", "Agatsa Smart Scale", 1999);
-  const handleBuy = (qty: number = 1) => {
+  const handleBuy = (qtyOrEvent?: number | React.MouseEvent) => {
+    const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
     if (typeof window !== "undefined" && (window as any).fbq) {
       try { (window as any).fbq("track", "AddToCart", { content_ids: ["scale_sub"], content_name: "Agatsa Smart Scale", content_type: "product", value: scalePrice * qty, currency: "INR" }); } catch {}
     }
