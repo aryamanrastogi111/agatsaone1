@@ -139,6 +139,7 @@ function AppWithPricing() {
 
               <Route path="/d/:code" element={<DeviceActivation />} />
               <Route path="/r/:code" element={<ReferralPage />} />
+              <Route path="/heritage" element={<Heritage />} />
 
               {/* Redirects */}
               <Route path="/download" element={<Navigate to="/app" replace />} />
