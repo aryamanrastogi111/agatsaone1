@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
-import { CartDrawer } from "@/components/shop/CartDrawer";
+
 
 const navItems = [
   { label: "Products", href: "/products" },
@@ -114,12 +114,11 @@ export function Header() {
           >
             For Doctors
           </Link>
-          <CartDrawer />
         </nav>
 
         {/* Mobile Menu Button + Cart */}
         <div className="md:hidden flex items-center gap-2">
-          <CartDrawer />
+          
           <motion.button
             whileTap={{ scale: 0.9 }}
             className="p-2"

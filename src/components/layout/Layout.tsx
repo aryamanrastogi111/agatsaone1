@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { RepublicDayAnnouncementBar, FloatingCouponPill } from "@/components/sale";
-import { FloatingCartButton } from "@/components/shop/FloatingCartButton";
-import { CartDrawer } from "@/components/shop/CartDrawer";
 import { StickyCartBar } from "@/components/shop/StickyCartBar";
 
 interface LayoutProps {
@@ -11,8 +8,6 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps) {
-  const [cartOpen, setCartOpen] = useState(false);
-
   return (
     <div className="flex min-h-screen flex-col">
       <RepublicDayAnnouncementBar />
@@ -21,8 +16,6 @@ export function Layout({ children }: LayoutProps) {
       <Footer />
       <StickyCartBar />
       <FloatingCouponPill />
-      <FloatingCartButton onClick={() => setCartOpen(true)} />
-      <CartDrawer externalOpen={cartOpen} onExternalClose={() => setCartOpen(false)} hideTrigger />
     </div>
   );
 }
