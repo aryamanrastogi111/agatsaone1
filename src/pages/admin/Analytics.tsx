@@ -84,7 +84,10 @@ export default function Analytics() {
       rangeEnd = yesterdayEnd.toISOString();
     } else {
       days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : timeRange === "90d" ? 90 : 365;
-      rangeStart = subDays(now, days).toISOString();
+      // Use IST-aligned start date
+      const rangeIstDate = new Date(istNow.getTime() - days * 86400000);
+      const rangeIstStr = rangeIstDate.toISOString().split("T")[0];
+      rangeStart = new Date(`${rangeIstStr}T00:00:00+05:30`).toISOString();
     }
 
     let rangeQuery = db.from("orders")
