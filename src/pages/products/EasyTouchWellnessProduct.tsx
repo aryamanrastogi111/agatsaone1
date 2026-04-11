@@ -8,7 +8,15 @@ import { motion } from "framer-motion";
 import { Check, ArrowRight, Package, ShoppingCart, ChevronDown, Star } from "lucide-react";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { SiteLayout } from "@/components/SiteLayout";
-import { EmiLine, TrustBar } from "@/components/EmiLine";
+import { EmiLine } from "@/components/EmiLine";
+
+const WellnessTrustBar = () => (
+  <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center text-xs text-muted-foreground mt-3">
+    {["Free Shipping", "7-Day Return", "12-Month Warranty"].map((item) => (
+      <span key={item}><span className="text-green-600">✓</span> {item}</span>
+    ))}
+  </div>
+);
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
@@ -196,7 +204,7 @@ export default function EasyTouchWellnessProduct() {
                 Add to Cart — {fmt(wellnessPrice)}
               </Button>
             </div>
-            <TrustBar />
+            <WellnessTrustBar />
           </motion.div>
         </div>
       </section>
@@ -392,7 +400,7 @@ export default function EasyTouchWellnessProduct() {
               <p className="text-xs text-muted-foreground mt-2">Download the App First (Free)</p>
             </div>
 
-            <TrustBar />
+            <WellnessTrustBar />
           </motion.div>
         </div>
       </section>
