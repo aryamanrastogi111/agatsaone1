@@ -6,6 +6,7 @@ import {
   TrendingUp, Package, Eye, Zap, MapPin, BarChart3,
   ChevronDown, ChevronUp, AlertTriangle, CheckCircle, XCircle,
   Brain, ArrowRight, Lightbulb, TrendingDown,
+  Phone, MessageCircle,
 } from "lucide-react";
 import {
   ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid,
@@ -837,24 +838,50 @@ export default function LiveActivity() {
                       <th className="text-left px-5 py-2.5 font-medium hidden md:table-cell">Order ID</th>
                       <th className="text-right px-5 py-2.5 font-medium">Amount Lost</th>
                       <th className="text-right px-5 py-2.5 font-medium">Abandoned</th>
+                      <th className="text-center px-5 py-2.5 font-medium">Recover</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-red-50">
-                    {lostCheckouts.map((o) => (
-                      <tr key={o.id} className="hover:bg-red-50/50 transition-colors">
-                        <td className="px-5 py-3">
-                          <p className="font-medium text-gray-800">{o.customer_name ?? o.customer_email ?? "Anonymous"}</p>
-                          <p className="text-xs text-gray-400">{o.customer_email ?? ""}</p>
-                        </td>
-                        <td className="px-5 py-3 hidden md:table-cell">
-                          <span className="font-mono text-xs text-gray-400">{o.razorpay_order_id ?? o.id.slice(0, 8)}</span>
-                        </td>
-                        <td className="px-5 py-3 text-right font-bold text-red-600">₹{o.amount.toLocaleString("en-IN")}</td>
-                        <td className="px-5 py-3 text-right">
-                          <span className="flex items-center justify-end gap-1 text-xs text-gray-400"><Clock size={11} /> {timeAgo(o.created_at)}</span>
-                        </td>
-                      </tr>
-                    ))}
+                    {lostCheckouts.map((o) => {
+                      const phone = (o as any).customer_phone;
+                      const name = o.customer_name ?? "there";
+                      const waMsg = encodeURIComponent(`Hi ${name}, we noticed you were checking out on Agatsa (₹${o.amount.toLocaleString("en-IN")}). Can we help you complete your order?`);
+                      const waLink = phone ? `https://wa.me/91${phone.replace(/\D/g, "").slice(-10)}?text=${waMsg}` : null;
+                      const callLink = phone ? `tel:+91${phone.replace(/\D/g, "").slice(-10)}` : null;
+                      return (
+                        <tr key={o.id} className="hover:bg-red-50/50 transition-colors">
+                          <td className="px-5 py-3">
+                            <p className="font-medium text-gray-800">{o.customer_name ?? o.customer_email ?? "Anonymous"}</p>
+                            <p className="text-xs text-gray-400">{o.customer_email ?? ""}</p>
+                            {phone && <p className="text-xs text-gray-400">{phone}</p>}
+                          </td>
+                          <td className="px-5 py-3 hidden md:table-cell">
+                            <span className="font-mono text-xs text-gray-400">{o.razorpay_order_id ?? o.id.slice(0, 8)}</span>
+                          </td>
+                          <td className="px-5 py-3 text-right font-bold text-red-600">₹{o.amount.toLocaleString("en-IN")}</td>
+                          <td className="px-5 py-3 text-right">
+                            <span className="flex items-center justify-end gap-1 text-xs text-gray-400"><Clock size={11} /> {timeAgo(o.created_at)}</span>
+                          </td>
+                          <td className="px-5 py-3">
+                            <div className="flex items-center justify-center gap-1.5">
+                              {waLink ? (
+                                <a href={waLink} target="_blank" rel="noopener noreferrer" title="WhatsApp" className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-green-100 text-green-700 hover:bg-green-200 transition-colors">
+                                  <MessageCircle size={15} />
+                                </a>
+                              ) : null}
+                              {callLink ? (
+                                <a href={callLink} title="Call" className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors">
+                                  <Phone size={15} />
+                                </a>
+                              ) : null}
+                              {!waLink && !callLink && (
+                                <span className="text-xs text-gray-300">No contact</span>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
