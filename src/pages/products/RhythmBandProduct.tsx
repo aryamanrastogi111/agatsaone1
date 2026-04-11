@@ -12,6 +12,8 @@ import { StrikePrice } from "@/components/StrikePrice";
 import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
+import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
+import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
 import rhythmHero from "@/assets/easytouch-rhythm-new.webp";
 import neraScreen from "@/assets/app-screen-nera.webp";
 import { Button } from "@/components/ui/button";
