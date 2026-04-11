@@ -635,6 +635,27 @@ export default function Analytics() {
         )}
       </div>
 
+      {/* Visitors by City */}
+      <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+        <h3 className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
+          <MapPin size={18} /> Visitors by City — {rangeLabel}
+        </h3>
+        <p className="text-xs text-gray-400 mb-4">Top cities by session count from visitor geolocation</p>
+        {cityData.length === 0 || (cityData.length === 1 && cityData[0].city === "Unknown") ? (
+          <p className="text-gray-400 text-sm text-center py-8">No city data yet — data starts collecting as visitors browse your site</p>
+        ) : (
+          <ResponsiveContainer width="100%" height={Math.max(200, cityData.length * 32)}>
+            <BarChart data={cityData} layout="vertical" margin={{ left: 10, right: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" horizontal={false} />
+              <XAxis type="number" tick={{ fill: "#9ca3af", fontSize: 11 }} tickLine={false} axisLine={false} />
+              <YAxis type="category" dataKey="city" tick={{ fill: "#6b7280", fontSize: 11 }} tickLine={false} axisLine={false} width={120} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar dataKey="sessions" name="Sessions" fill="#f97316" radius={[0, 4, 4, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top Products */}
         <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
