@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
   Users, ShoppingCart, CreditCard,
@@ -575,6 +575,7 @@ export default function LiveActivity() {
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
   const [lostCheckouts, setLostCheckouts] = useState<TodayOrder[]>([]);
   const [lostExpanded, setLostExpanded] = useState(false);
+  const addToCartTimestamps = useRef<number[]>([]);
   const [addToCartCount, setAddToCartCount] = useState(0);
 
   // AI Analysis state
@@ -660,15 +661,24 @@ export default function LiveActivity() {
     return () => { supabase.removeChannel(channel); };
   }, []);
 
-  // ── Add to Cart broadcast listener ──
+  // ── Add to Cart broadcast listener (rolling 5-min window) ──
+  const pruneAddToCart = useCallback(() => {
+    const cutoff = Date.now() - 5 * 60 * 1000;
+    addToCartTimestamps.current = addToCartTimestamps.current.filter((t) => t > cutoff);
+    setAddToCartCount(addToCartTimestamps.current.length);
+  }, []);
+
   useEffect(() => {
     const channel = supabase.channel("add-to-cart-events")
       .on("broadcast", { event: "add_to_cart" }, () => {
-        setAddToCartCount((c) => c + 1);
+        addToCartTimestamps.current.push(Date.now());
+        pruneAddToCart();
       })
       .subscribe();
-    return () => { supabase.removeChannel(channel); };
-  }, []);
+    // Prune every 30s so stale events decay
+    const pruneInterval = setInterval(pruneAddToCart, 30_000);
+    return () => { clearInterval(pruneInterval); supabase.removeChannel(channel); };
+  }, [pruneAddToCart]);
 
   // ── DB data: orders ──
   const fetchData = useCallback(async () => {
@@ -758,7 +768,7 @@ export default function LiveActivity() {
         <StatCard icon={Users} label="Live Visitors" value={visitors.length} sub="on site right now" color="bg-green-50 text-green-600" />
         <StatCard icon={Globe} label="Today's Visitors" value={loading ? "—" : todayStats.totalVisitors} sub="unique visitors today" color="bg-blue-50 text-blue-600" />
         <StatCard icon={Eye} label="Browsing Devices" value={deviceVisitors.length} sub="viewing product pages" color="bg-blue-50 text-blue-600" />
-        <StatCard icon={ShoppingCart} label="Add to Cart" value={addToCartCount} sub="clicks this session" color="bg-orange-50 text-orange-600" />
+        <StatCard icon={ShoppingCart} label="Add to Cart" value={addToCartCount} sub="in last 5 minutes" color="bg-orange-50 text-orange-600" />
         <StatCard icon={ShoppingCart} label="On Checkout" value={checkoutVisitors.length} sub="filling checkout form" color="bg-purple-50 text-purple-600" />
         <StatCard icon={TrendingUp} label="Orders Today" value={loading ? "—" : todayStats.orders} sub={`₹${todayStats.revenue.toLocaleString("en-IN")} revenue`} color="bg-emerald-50 text-emerald-600" />
         <StatCard icon={CreditCard} label="Pending Payment" value={loading ? "—" : pendingOrders.length} sub="awaiting Razorpay" color="bg-yellow-50 text-yellow-600" />
