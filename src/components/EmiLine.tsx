@@ -7,9 +7,9 @@ export function EmiLine({ price }: { price: number }) {
   );
 }
 
-export function TrustBar() {
+export function TrustBar({ showCDSCO = false }: { showCDSCO?: boolean } = {}) {
   const items = [
-    "CDSCO Approved",
+    ...(showCDSCO ? ["CDSCO Approved"] : []),
     "Free Shipping",
     "7-Day Return",
     "12-Month Warranty",
