@@ -521,7 +521,6 @@ export default function CheckoutPage() {
   };
 
 
-
           <p className="text-muted-foreground">
             Your device ships within 2–4 business days. You'll receive a confirmation on your phone shortly.
           </p>
