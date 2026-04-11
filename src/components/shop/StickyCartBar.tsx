@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingCart, ArrowRight } from "lucide-react";
+import { ShoppingCart, ArrowRight, X } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -13,12 +13,12 @@ export const StickyCartBar = () => {
   const items = useCartStore((s) => s.items);
   const totalItems = useCartStore((s) => s.getTotalItems());
   const totalPrice = useCartStore((s) => s.getTotalPrice());
+  const clearCart = useCartStore((s) => s.clearCart);
 
   const formatINR = (amount: number) =>
     "₹" + amount.toLocaleString("en-IN");
 
   const handleCheckout = () => {
-    // Build comma-separated SKU list from cart items (repeat for qty)
     const skuList = items.flatMap((item) =>
       Array(item.quantity).fill(item.productId)
     );
@@ -40,6 +40,13 @@ export const StickyCartBar = () => {
           <div className="container py-3">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2 min-w-0">
+                <button
+                  onClick={clearCart}
+                  className="shrink-0 rounded-full p-1 hover:bg-primary-foreground/20 transition-colors"
+                  aria-label="Clear cart"
+                >
+                  <X className="h-4 w-4" />
+                </button>
                 <div className="relative shrink-0">
                   <ShoppingCart className="h-5 w-5" />
                   <span className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full h-4 min-w-4 flex items-center justify-center px-1">
