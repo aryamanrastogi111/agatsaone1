@@ -309,6 +309,9 @@ export default function EasyTouchWellnessProduct() {
           </div>
           <YouTubeChannelLink />
         </div>
+      </section>
+
+      {/* ── SECTION 6 — NERA AI ── */}
       <section className="py-12 bg-gradient-to-br from-[#0D0D1A] to-[#1A1040]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center">
