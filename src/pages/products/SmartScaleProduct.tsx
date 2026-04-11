@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
@@ -336,6 +337,12 @@ export default function SmartScaleProduct() {
           <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Smart Scale — {fmt(scalePrice)}</Button>
         </div>
       </section>
+      <StickyAddToCart
+        productName="Agatsa Smart Scale"
+        price={fmt(scalePrice)}
+        onAddToCart={handleBuy}
+        themeColor="primary"
+      />
     </SiteLayout>
   );
 }
