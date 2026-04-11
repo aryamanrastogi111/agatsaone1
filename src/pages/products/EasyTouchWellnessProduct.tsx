@@ -193,8 +193,8 @@ export default function EasyTouchWellnessProduct() {
           {/* Price + Add to Cart block */}
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.25 }} className="mt-12 text-center">
             <div>
-              <span className="text-4xl font-extrabold text-foreground">{fmt(wellnessPrice)}</span>
-              <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
+              <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center" />
+              <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
               <EmiLine price={wellnessPrice} />
               <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
             </div>
