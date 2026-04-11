@@ -44,7 +44,7 @@ const whoIsThisFor = [
 
 const boxItems = [
   "EasyTouch Wellness device",
-  "USB charging cable",
+  "2× AAA batteries (included)",
   "Carry case",
   "Free Agatsa One app (Android + iOS)",
   "Nera AI — 3-day free access included with device",
