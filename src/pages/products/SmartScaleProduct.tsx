@@ -2,6 +2,7 @@ import { useState } from "react";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { StrikePrice } from "@/components/StrikePrice";
+import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link, useNavigate } from "react-router-dom";
@@ -98,6 +99,10 @@ export default function SmartScaleProduct() {
                 <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
                 <EmiLine price={scalePrice} />
                 <StockUrgencyBar productKey="corebalance" className="mt-3" />
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
+                  <span>📦</span>
+                  <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
+                </div>
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                   <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
                   <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 3 months</span>
