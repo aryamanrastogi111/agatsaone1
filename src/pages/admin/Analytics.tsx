@@ -61,10 +61,15 @@ export default function Analytics() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     const now = new Date();
-    const todayStart = new Date();
-    todayStart.setHours(0, 0, 0, 0);
-    const yesterdayStart = new Date(todayStart);
-    yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+    // Use IST (UTC+5:30) for day boundaries to match backend
+    const istOffsetMs = 5.5 * 60 * 60 * 1000;
+    const istNow = new Date(now.getTime() + istOffsetMs);
+    const istTodayStr = istNow.toISOString().split("T")[0];
+    const todayStart = new Date(`${istTodayStr}T00:00:00+05:30`);
+    const yesterdayDate = new Date(istNow);
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+    const istYesterdayStr = yesterdayDate.toISOString().split("T")[0];
+    const yesterdayStart = new Date(`${istYesterdayStr}T00:00:00+05:30`);
     const yesterdayEnd = new Date(todayStart);
 
     let days: number;
