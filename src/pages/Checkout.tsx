@@ -292,7 +292,21 @@ export default function CheckoutPage() {
       const cleanPhone = phone.replace(/\D/g, "").slice(-10);
       const recipientEmail = email.trim() || `${cleanPhone}@noemail.agatsa.com`;
 
-      // 1. Create order via backend API with items array + coupon
+      // 1. Get server-confirmed total via /quote (with coupon if applied)
+      const quoteRes = await fetch(`${API_BASE}/v1/orders/website/quote`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: cartItems, couponCode: couponApplied || undefined }),
+      });
+      const quoteData = await quoteRes.json().catch(() => ({}));
+      if (quoteRes.ok) {
+        setSubtotalPaise(quoteData.subtotalPaise);
+        setDiscountPaise(quoteData.discountPaise || 0);
+        setServerTotalPaise(quoteData.totalPaise);
+        setQuoteLoaded(true);
+      }
+
+      // 2. Create order via backend API with items array + coupon
       const createRes = await fetch(`${API_BASE}/v1/orders/website/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
