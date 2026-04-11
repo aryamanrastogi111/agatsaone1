@@ -356,7 +356,11 @@ export default function RhythmBandProduct() {
         productName="EasyTouch Rhythm Band"
         price={fmt(bandPrice)}
         unitPrice={bandPrice}
-        onAddToCart={handleBuy}
+        onBuyNow={handleBuy}
+        onAddToCart={(qty) => {
+          useCartStore.getState().addItem({ productId: "band_sub", productName: "EasyTouch Rhythm Band", variantTitle: "Default Title", price: bandPrice, quantity: qty });
+          toast.success("Added to cart");
+        }}
         themeColor="primary"
       />
     </SiteLayout>

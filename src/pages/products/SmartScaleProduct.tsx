@@ -343,7 +343,11 @@ export default function SmartScaleProduct() {
         productName="Agatsa Smart Scale"
         price={fmt(scalePrice)}
         unitPrice={scalePrice}
-        onAddToCart={handleBuy}
+        onBuyNow={handleBuy}
+        onAddToCart={(qty) => {
+          useCartStore.getState().addItem({ productId: "scale_sub", productName: "Agatsa Smart Scale", variantTitle: "Default Title", price: scalePrice, quantity: qty });
+          toast.success("Added to cart");
+        }}
         themeColor="primary"
       />
     </SiteLayout>

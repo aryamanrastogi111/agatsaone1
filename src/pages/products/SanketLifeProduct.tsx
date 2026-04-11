@@ -1077,6 +1077,7 @@ const SanketLifeProduct = () => {
       <StickyAddToCart
         productName="SanketLife 2.0"
         price="₹4,999"
+        onBuyNow={() => window.location.href = "/checkout?sku=ecg_bundle"}
         onAddToCart={() => handleAddToCart("sanketlife-2")}
         isLoading={addingToCart}
         themeColor="cyan"

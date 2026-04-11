@@ -376,7 +376,11 @@ export default function EasyTouchWellnessProduct() {
         productName="EasyTouch Wellness"
         price={fmt(wellnessPrice)}
         unitPrice={wellnessPrice}
-        onAddToCart={handleBuy}
+        onBuyNow={handleBuy}
+        onAddToCart={(qty) => {
+          useCartStore.getState().addItem({ productId: "wellness_sub", productName: "EasyTouch Wellness", variantTitle: "Default Title", price: wellnessPrice, quantity: qty });
+          toast.success("Added to cart");
+        }}
         themeColor="primary"
       />
     </SiteLayout>

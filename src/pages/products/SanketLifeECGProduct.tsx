@@ -947,7 +947,11 @@ export default function SanketLifeECGProduct() {
         productName="SanketLife 12-Lead ECG"
         price={fmt(ecgPrice)}
         unitPrice={ecgPrice}
-        onAddToCart={handleBuy}
+        onBuyNow={handleBuy}
+        onAddToCart={(qty) => {
+          useCartStore.getState().addItem({ productId: "ecg_bundle", productName: "SanketLife 12-Lead ECG", variantTitle: "Default Title", price: ecgPrice, quantity: qty });
+          toast.success("Added to cart");
+        }}
         themeColor="primary"
       />
     </SiteLayout>

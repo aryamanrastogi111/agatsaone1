@@ -127,7 +127,11 @@ export default function EasyTouchPlusProduct() {
         productName="EasyTouch Wellness"
         price={wp}
         unitPrice={prices.wellness_sub}
-        onAddToCart={handleBuyNow}
+        onBuyNow={handleBuyNow}
+        onAddToCart={(qty) => {
+          useCartStore.getState().addItem({ productId: "wellness_sub", productName: "EasyTouch Wellness", variantTitle: "Default Title", price: prices.wellness_sub, quantity: qty });
+          toast.success("Added to cart");
+        }}
         themeColor="primary"
       />
 

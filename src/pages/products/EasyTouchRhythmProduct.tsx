@@ -1513,6 +1513,7 @@ const EasyTouchRhythmProduct = () => {
       <StickyAddToCart
         productName="EasyTouch Rhythm"
         price={isSaleActive() ? bp : bp}
+        onBuyNow={() => window.location.href = "/checkout?sku=band_sub"}
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="primary"
