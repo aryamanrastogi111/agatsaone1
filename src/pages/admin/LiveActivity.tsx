@@ -480,7 +480,7 @@ function LiveVisitorsPanel({ visitors }: { visitors: Visitor[] }) {
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-800 truncate">{pageLabel(v.current_page)}</p>
                 <p className="text-xs text-gray-400 truncate">
-                  {v.referrer === "direct" ? "Direct" : v.referrer === "internal" ? "Internal link" : v.referrer}
+                  {v.city ? `${v.city}${v.region ? `, ${v.region}` : ""}` : v.referrer === "direct" ? "Direct" : v.referrer === "internal" ? "Internal link" : v.referrer}
                 </p>
               </div>
               <div className="text-right shrink-0">
