@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useNavigate } from "react-router-dom";
 import easytouchWellnessImg from "@/assets/easytouch-wellness-hero.webp";
@@ -122,8 +123,13 @@ export default function EasyTouchPlusProduct() {
 
   return (
     <Layout>
-      <StickyBuyBar onBuy={handleBuyNow} wp={wp} />
-      <FloatingWhatsApp />
+      <StickyAddToCart
+        productName="EasyTouch Wellness"
+        price={wp}
+        unitPrice={prices.wellness_sub}
+        onAddToCart={handleBuyNow}
+        themeColor="primary"
+      />
 
       {/* ═══ SECTION 1 — HERO ═══ */}
       <section className="bg-gradient-to-b from-teal-50/60 to-background pt-20 pb-16">
