@@ -268,6 +268,71 @@ export default function CheckoutPage() {
     }
   }, [pageState]);
 
+  // ─── Success state ─────────────────────────────────────────
+  if (pageState === "success") {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="max-w-md w-full text-center space-y-6">
+          <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto">
+            <CheckCircle2 className="h-10 w-10 text-green-600" />
+          </div>
+          <h1 className="text-2xl font-bold text-foreground">Order Confirmed!</h1>
+          <p className="text-muted-foreground">
+            Your device ships within 2–4 business days. You'll receive a confirmation on your phone shortly.
+          </p>
+          <div className="bg-muted/50 rounded-xl p-4 text-sm space-y-1">
+            <p className="font-medium text-foreground">Shipping to</p>
+            <p className="text-muted-foreground">{fullName}</p>
+            <p className="text-muted-foreground">{addressLine1}, {city}, {state} - {pincode}</p>
+            <p className="text-muted-foreground">+91 {phone}</p>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            📱 Download the <strong>Agatsa One</strong> app and log in with <strong>+91 {phone}</strong> to activate your device and Nera AI plan.
+          </p>
+          <div className="flex gap-3 justify-center">
+            <Button asChild variant="outline" className="rounded-full">
+              <Link to="/app">Download App</Link>
+            </Button>
+            <Button asChild className="rounded-full">
+              <Link to="/">Back to Home</Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── Error state ───────────────────────────────────────────
+  if (pageState === "error") {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="max-w-md w-full text-center space-y-6">
+          <div className="w-20 h-20 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
+            <AlertTriangle className="h-10 w-10 text-destructive" />
+          </div>
+          <h1 className="text-2xl font-bold text-foreground">Payment Failed</h1>
+          <p className="text-muted-foreground">{errorMsg || "Something went wrong. Please try again."}</p>
+          <Button onClick={() => { setPageState("form"); setPaying(false); setErrorMsg(""); }} className="rounded-full px-8">
+            Try Again
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── Processing overlay ────────────────────────────────────
+  if (pageState === "processing") {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-10 w-10 text-primary animate-spin mx-auto" />
+          <p className="text-foreground font-medium">Processing your order…</p>
+          <p className="text-sm text-muted-foreground">Please don't close this page.</p>
+        </div>
+      </div>
+    );
+  }
+
   if (uniqueSkus.length === 0) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -455,70 +520,6 @@ export default function CheckoutPage() {
     }
   };
 
-  // ─── Success state ─────────────────────────────────────────
-  if (pageState === "success") {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="max-w-md w-full text-center space-y-6">
-          <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto">
-            <CheckCircle2 className="h-10 w-10 text-green-600" />
-          </div>
-          <h1 className="text-2xl font-bold text-foreground">Order Confirmed!</h1>
-          <p className="text-muted-foreground">
-            Your device ships within 2–4 business days. You'll receive a confirmation on your phone shortly.
-          </p>
-          <div className="bg-muted/50 rounded-xl p-4 text-sm space-y-1">
-            <p className="font-medium text-foreground">Shipping to</p>
-            <p className="text-muted-foreground">{fullName}</p>
-            <p className="text-muted-foreground">{addressLine1}, {city}, {state} - {pincode}</p>
-            <p className="text-muted-foreground">+91 {phone}</p>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            📱 Download the <strong>Agatsa One</strong> app and log in with <strong>+91 {phone}</strong> to activate your device and Nera AI plan.
-          </p>
-          <div className="flex gap-3 justify-center">
-            <Button asChild variant="outline" className="rounded-full">
-              <Link to="/app">Download App</Link>
-            </Button>
-            <Button asChild className="rounded-full">
-              <Link to="/">Back to Home</Link>
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // ─── Error state ───────────────────────────────────────────
-  if (pageState === "error") {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="max-w-md w-full text-center space-y-6">
-          <div className="w-20 h-20 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
-            <AlertTriangle className="h-10 w-10 text-destructive" />
-          </div>
-          <h1 className="text-2xl font-bold text-foreground">Payment Failed</h1>
-          <p className="text-muted-foreground">{errorMsg || "Something went wrong. Please try again."}</p>
-          <Button onClick={() => { setPageState("form"); setPaying(false); setErrorMsg(""); }} className="rounded-full px-8">
-            Try Again
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  // ─── Processing overlay ────────────────────────────────────
-  if (pageState === "processing") {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="text-center space-y-4">
-          <Loader2 className="h-10 w-10 text-primary animate-spin mx-auto" />
-          <p className="text-foreground font-medium">Processing your order…</p>
-          <p className="text-sm text-muted-foreground">Please don't close this page.</p>
-        </div>
-      </div>
-    );
-  }
 
   // ─── Main form ─────────────────────────────────────────────
   return (
