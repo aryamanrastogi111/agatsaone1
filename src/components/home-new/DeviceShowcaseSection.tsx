@@ -122,6 +122,7 @@ export function DeviceShowcaseSection() {
                   <p className="text-primary font-medium">{emi(prices[device.sku])}</p>
                   <span className="font-semibold text-green-600">📦 {shipDateLabel()}</span>
                 </div>
+              </div>
             </motion.div>
           ))}
         </div>
