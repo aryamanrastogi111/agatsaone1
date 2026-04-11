@@ -673,7 +673,7 @@ export default function LiveActivity() {
         .in("status", ["paid", "confirmed", "processing", "shipped", "delivered"])
         .gte("created_at", todayStart.toISOString()).order("created_at", { ascending: false }).limit(20),
       // Lost: created > 10 min ago within last 7 days
-      db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
+      db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, customer_phone, amount, status, created_at")
         .eq("status", "created")
         .gte("created_at", last7d)
         .lt("created_at", tenMinAgo)
