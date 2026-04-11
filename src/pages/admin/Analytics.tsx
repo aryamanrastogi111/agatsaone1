@@ -153,7 +153,8 @@ export default function Analytics() {
         byDay[label] = { date: label, revenue: 0, orders: 0 };
       }
       rangeOrders.forEach((o: any) => {
-        const h = new Date(o.created_at).getHours();
+        const istTime = new Date(new Date(o.created_at).getTime() + istOffsetMs);
+        const h = istTime.getUTCHours();
         const label = `${h.toString().padStart(2, "0")}:00`;
         if (byDay[label]) {
           if (PAID_STATUSES.includes(o.status)) byDay[label].revenue += o.amount ?? 0;
