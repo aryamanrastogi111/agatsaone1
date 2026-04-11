@@ -264,6 +264,21 @@ export default function Analytics() {
         .slice(0, 10);
 
       setAudienceQuality({ avgDuration, bounceRate, avgPages, totalSessions: sessions.length, bySource });
+
+      // City-wise breakdown
+      const cityMap: Record<string, number> = {};
+      sessions.forEach((s: any) => {
+        const city = s.city || "Unknown";
+        cityMap[city] = (cityMap[city] || 0) + 1;
+      });
+      setCityData(
+        Object.entries(cityMap)
+          .map(([city, count]) => ({ city, sessions: count }))
+          .sort((a, b) => b.sessions - a.sessions)
+          .slice(0, 20)
+      );
+    } else {
+      setCityData([]);
     }
 
     setLoading(false);
