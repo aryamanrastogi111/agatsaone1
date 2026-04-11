@@ -182,13 +182,8 @@ export default function CheckoutPage() {
         setCouponType(data.type);
         setCouponValue(data.value);
         setCouponMessage(data.message || "Coupon applied!");
-        // Estimate discount for display (confirmed total comes from /quote at pay time)
-        if (data.type === "percent") {
-          const est = Math.round(clientTotalPaise * data.value / 100);
-          setDiscountPaise(est);
-        } else if (data.type === "fixed") {
-          setDiscountPaise(data.value * 100);
-        }
+        // Re-fetch quote with coupon to get server-confirmed total
+        await fetchQuote(cartItems, code);
       } else {
         setCouponValid(false);
         setCouponMessage(data.message || "Invalid coupon code");
@@ -207,6 +202,8 @@ export default function CheckoutPage() {
     setCouponValue(0);
     setCouponMessage("");
     setDiscountPaise(0);
+    // Re-fetch quote without coupon
+    fetchQuote(cartItems, null);
   };
 
   // ─── Preload Razorpay + InitiateCheckout pixel ──────────────
