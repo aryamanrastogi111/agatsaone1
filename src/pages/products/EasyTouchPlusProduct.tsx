@@ -112,11 +112,12 @@ export default function EasyTouchPlusProduct() {
   const wp = fmt(prices.wellness_sub);
   const navigate = useNavigate();
 
-  const handleBuyNow = () => {
+  const handleBuyNow = (qtyOrEvent?: number | React.MouseEvent) => {
+    const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["wellness_sub"], content_name: "EasyTouch Wellness", content_type: "product", value: 3999, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["wellness_sub"], content_name: "EasyTouch Wellness", content_type: "product", value: 3999 * qty, currency: "INR" }); } catch {}
     }
-    navigate("/checkout?sku=wellness_sub");
+    navigate(`/checkout?sku=${Array(qty).fill("wellness_sub").join(",")}`);
   };
 
   return (
