@@ -575,6 +575,7 @@ export default function LiveActivity() {
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
   const [lostCheckouts, setLostCheckouts] = useState<TodayOrder[]>([]);
   const [lostExpanded, setLostExpanded] = useState(false);
+  const addToCartTimestamps = useRef<number[]>([]);
   const [addToCartCount, setAddToCartCount] = useState(0);
 
   // AI Analysis state
