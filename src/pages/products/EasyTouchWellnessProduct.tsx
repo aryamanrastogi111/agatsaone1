@@ -20,6 +20,7 @@ const WellnessTrustBar = () => (
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
+import { WellnessReviewsSection } from "@/components/products/WellnessReviewsSection";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
@@ -375,6 +376,9 @@ export default function EasyTouchWellnessProduct() {
           </div>
         </div>
       </section>
+
+      {/* ── SECTION 9B — USER REVIEWS ── */}
+      <WellnessReviewsSection />
 
       {/* ── OBJECTION HANDLING — "We Know What You Are Thinking" ── */}
       <section className="py-12 bg-muted/30">
