@@ -1,11 +1,46 @@
 import { useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
+
+declare global {
+  interface Window {
+    fbq?: (action: string, event: string, params?: Record<string, unknown>) => void;
+  }
+}
 
 const APPSTORE_URL = "https://apps.apple.com/app/id6760245564";
 const PLAYSTORE_URL = "https://play.google.com/store/apps/details?id=com.agatsakone";
 
+function trackDownloadClick(store: "app_store" | "play_store") {
+  // GA4
+  trackEvent("heritage_download_click", {
+    store,
+    campaign: "heritage_email",
+    content_name: "Agatsa One",
+  });
+
+  // Meta Pixel — Lead event (download intent from email campaign)
+  if (window.fbq) {
+    window.fbq("track", "Lead", {
+      content_name: "Heritage Report — App Download",
+      content_category: "heritage_email",
+      value: 0,
+      currency: "INR",
+    });
+  }
+}
+
 export default function Heritage() {
   useEffect(() => {
     document.title = "Your Heritage Report — Agatsa One";
+
+    // Fire ViewContent on page load for campaign attribution
+    trackEvent("heritage_page_view", { campaign: "heritage_email" });
+    if (window.fbq) {
+      window.fbq("track", "ViewContent", {
+        content_name: "Heritage Report Landing",
+        content_category: "heritage_email",
+      });
+    }
   }, []);
 
   return (
@@ -60,6 +95,7 @@ export default function Heritage() {
               href={APPSTORE_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackDownloadClick("app_store")}
               className="inline-flex items-center justify-center gap-2.5 bg-foreground text-background rounded-xl px-6 py-3.5 text-sm font-semibold hover:opacity-90 transition-opacity w-full sm:w-auto"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 shrink-0">
@@ -72,6 +108,7 @@ export default function Heritage() {
               href={PLAYSTORE_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackDownloadClick("play_store")}
               className="inline-flex items-center justify-center gap-2.5 bg-foreground/90 text-background rounded-xl px-6 py-3.5 text-sm font-semibold hover:opacity-90 transition-opacity w-full sm:w-auto"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 shrink-0">
