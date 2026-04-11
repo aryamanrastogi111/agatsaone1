@@ -22,6 +22,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
+import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
 
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 
@@ -180,6 +181,11 @@ export default function EasyTouchWellnessProduct() {
               That sensor shines a gentle light through your fingertip and reads how your blood is moving. Nera AI — our health intelligence system — then calculates your <strong className="text-foreground">Metabolic Score: a simple number from 0 to 100</strong> that shows how your body is responding right now.
             </p>
             <p className="text-foreground font-semibold text-xl">Not just a reading. An explanation.</p>
+          </motion.div>
+
+          {/* Product image */}
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.2 }} className="mt-12 flex justify-center">
+            <img src={easytouchDeviceImg} alt="EasyTouch Wellness device clipped to finger" className="w-full max-w-md drop-shadow-2xl" />
           </motion.div>
 
           {/* Price + Add to Cart block */}
