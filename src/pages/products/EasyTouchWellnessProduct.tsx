@@ -6,6 +6,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, ArrowRight, Package, ShoppingCart, ChevronDown, Star } from "lucide-react";
+import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine } from "@/components/EmiLine";
@@ -291,6 +292,22 @@ export default function EasyTouchWellnessProduct() {
             <p>Then, 90 minutes after eating, take a quick EasyTouch reading. See exactly how your body actually responded.</p>
             <p>Do this a few times and you will start to see patterns. You will know which foods push you into the Elevated zone and which ones keep you Calm — <strong className="text-foreground">for your body specifically.</strong> Not a general diet chart. Your chart.</p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── SECTION 5B — WATCH IT IN ACTION ── */}
+      <section className="py-12 bg-muted/30">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">Watch It In Action</h2>
+            <p className="text-muted-foreground mt-2">Real people, real results</p>
+          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <VideoCard video={{ id: "e9f0DR890zM", title: "India: The Diabetes Capital" }} />
+            <VideoCard video={{ id: "ZkLv3wyVtfg", title: "Real Story: What the Numbers Showed" }} />
+            <VideoCard video={{ id: "4nldXDM1w7w", title: "Heart Problems Don't Check Your Age" }} />
+          </div>
+          <YouTubeChannelLink />
         </div>
       </section>
 
