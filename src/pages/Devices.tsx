@@ -489,6 +489,7 @@ export default function DevicesPage() {
           </p>
         </div>
       </section>
+      <StickyCartBar />
     </SiteLayout>
   );
 }
