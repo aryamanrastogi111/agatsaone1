@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
+import { smartScaleReviews } from "@/data/smartScaleReviews";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { StrikePrice } from "@/components/StrikePrice";
@@ -351,6 +353,8 @@ export default function SmartScaleProduct() {
         onAddToCart={handleAddToCart}
         themeColor="primary"
       />
+
+      <ProductReviewsSection reviews={smartScaleReviews} />
     </SiteLayout>
   );
 }
