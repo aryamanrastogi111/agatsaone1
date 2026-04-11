@@ -27,6 +27,7 @@ import sanketlifeHero from "@/assets/sanketlife-device-app.webp";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
 import { sanketLifeEcgReviews } from "@/data/sanketLifeEcgReviews";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
+import { TrustVideosSection } from "@/components/TrustVideosSection";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -958,6 +959,7 @@ export default function SanketLifeECGProduct() {
         themeColor="primary"
       />
 
+      <TrustVideosSection />
       <AwardsTrustSection />
       <ProductReviewsSection reviews={sanketLifeEcgReviews} />
     </SiteLayout>

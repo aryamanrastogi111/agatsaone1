@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
 import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
+import { TrustVideosSection } from "@/components/TrustVideosSection";
 import { useFacebookPixel, useEasyTouchRhythmPixelPageView } from "@/hooks/useFacebookPixel";
 import { useInventory } from "@/hooks/useInventory";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
@@ -1523,6 +1524,7 @@ const EasyTouchRhythmProduct = () => {
         outOfStock={outOfStock}
       />
 
+      <TrustVideosSection />
       <AwardsTrustSection />
       <ProductReviewsSection reviews={easytouchRhythmReviews} />
     </Layout>
