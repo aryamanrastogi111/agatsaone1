@@ -69,8 +69,6 @@ const allAwards: { name: string; org: string; year?: string; icon: typeof Award 
 
 const certifications = [
   "ISO 13485",
-  "BIS Approved",
-  "CDSCO Licensed",
   "ISO 9001:2015",
   "UL Certified",
   "AIMED Member",
