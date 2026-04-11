@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock, MapPin, User, Phone, Mail } from "lucide-react";
+import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock, Plus, Minus, Tag, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
@@ -48,19 +48,46 @@ function loadRazorpay(): Promise<boolean> {
   });
 }
 
+function fmtPaise(paise: number) {
+  return "₹" + (paise / 100).toLocaleString("en-IN");
+}
+
 type CheckoutStep = 1 | 2;
 type PageState = "form" | "processing" | "success" | "error";
 
 export default function CheckoutPage() {
   const [searchParams] = useSearchParams();
-  const { prices, fmt } = usePricing();
+  const { prices } = usePricing();
   const skuParam = searchParams.get("sku") || "";
-  const skus = skuParam.split(",").filter((s) => s in DEVICE_NAMES);
+  // Deduplicate SKUs — count occurrences as initial quantities
+  const skuList = skuParam.split(",").filter((s) => s in DEVICE_NAMES);
+  const uniqueSkus = [...new Set(skuList)];
+  const initialQty: Record<string, number> = {};
+  for (const s of skuList) {
+    initialQty[s] = Math.min((initialQty[s] || 0) + 1, 5);
+  }
 
   // ─── Form state ────────────────────────────────────────────
   const [step, setStep] = useState<CheckoutStep>(1);
   const [pageState, setPageState] = useState<PageState>("form");
   const [errorMsg, setErrorMsg] = useState("");
+
+  // Quantities
+  const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
+
+  // Coupon
+  const [couponInput, setCouponInput] = useState("");
+  const [couponApplied, setCouponApplied] = useState<string | null>(null);
+  const [couponMessage, setCouponMessage] = useState("");
+  const [couponValid, setCouponValid] = useState(false);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
+
+  // Server-confirmed pricing
+  const [subtotalPaise, setSubtotalPaise] = useState(0);
+  const [discountPaise, setDiscountPaise] = useState(0);
+  const [serverTotalPaise, setServerTotalPaise] = useState(0);
+  const [quoteLoading, setQuoteLoading] = useState(false);
+  const [quoteLoaded, setQuoteLoaded] = useState(false);
 
   // Step 1
   const [pincode, setPincode] = useState("");
@@ -79,20 +106,108 @@ export default function CheckoutPage() {
   const [paying, setPaying] = useState(false);
 
   // ─── Computed ──────────────────────────────────────────────
-  const items = skus.map((s) => ({ sku: s, name: DEVICE_NAMES[s], amountPaise: (prices[s as DeviceSku] || 0) * 100 }));
-  const totalPaise = items.reduce((sum, d) => sum + d.amountPaise, 0);
-  const totalRupees = totalPaise / 100;
+  const cartItems = uniqueSkus.map((s) => ({ sku: s, qty: quantities[s] || 1 }));
+  const clientTotalPaise = uniqueSkus.reduce(
+    (sum, s) => sum + (prices[s as DeviceSku] || 0) * 100 * (quantities[s] || 1),
+    0
+  );
+  // Use server total if available, else client-computed
+  const displayTotalPaise = quoteLoaded ? serverTotalPaise : clientTotalPaise;
+  const displayTotalRupees = displayTotalPaise / 100;
+
+  const items = uniqueSkus.map((s) => ({
+    sku: s,
+    name: DEVICE_NAMES[s],
+    unitPricePaise: (prices[s as DeviceSku] || 0) * 100,
+    qty: quantities[s] || 1,
+  }));
+
+  // ─── Quote fetch ──────────────────────────────────────────
+  const fetchQuote = useCallback(async (itemsArr: { sku: string; qty: number }[], coupon: string | null) => {
+    setQuoteLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/v1/orders/website/quote`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: itemsArr, couponCode: coupon || undefined }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setSubtotalPaise(data.subtotalPaise);
+        setDiscountPaise(data.discountPaise || 0);
+        setServerTotalPaise(data.totalPaise);
+        setQuoteLoaded(true);
+      }
+    } catch (e) {
+      console.warn("Quote fetch failed:", e);
+    }
+    setQuoteLoading(false);
+  }, []);
+
+  // Re-fetch quote on qty or coupon change
+  useEffect(() => {
+    if (uniqueSkus.length > 0) {
+      fetchQuote(cartItems, couponApplied);
+    }
+  }, [JSON.stringify(cartItems), couponApplied]);
+
+  // ─── Quantity helpers ─────────────────────────────────────
+  const changeQty = (sku: string, delta: number) => {
+    setQuantities((q) => ({
+      ...q,
+      [sku]: Math.max(1, Math.min(5, (q[sku] || 1) + delta)),
+    }));
+  };
+
+  // ─── Coupon helpers ───────────────────────────────────────
+  const applyCoupon = async () => {
+    const code = couponInput.trim().toUpperCase();
+    if (!code) return;
+    setApplyingCoupon(true);
+    setCouponMessage("");
+    try {
+      const res = await fetch(`${API_BASE}/v1/orders/website/quote`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: cartItems, couponCode: code }),
+      });
+      const data = await res.json();
+      if (res.ok && data.couponValid) {
+        setCouponApplied(code);
+        setCouponValid(true);
+        setCouponMessage(data.couponMessage || "Coupon applied!");
+        setSubtotalPaise(data.subtotalPaise);
+        setDiscountPaise(data.discountPaise || 0);
+        setServerTotalPaise(data.totalPaise);
+        setQuoteLoaded(true);
+      } else {
+        setCouponValid(false);
+        setCouponMessage(data.couponMessage || "Invalid coupon code");
+      }
+    } catch {
+      setCouponMessage("Could not validate coupon. Try again.");
+    }
+    setApplyingCoupon(false);
+  };
+
+  const removeCoupon = () => {
+    setCouponApplied(null);
+    setCouponInput("");
+    setCouponValid(false);
+    setCouponMessage("");
+    setDiscountPaise(0);
+  };
 
   // ─── Preload Razorpay + InitiateCheckout pixel ──────────────
   useEffect(() => {
     loadRazorpay();
-    if (typeof window !== "undefined" && (window as any).fbq && skus.length > 0) {
+    if (typeof window !== "undefined" && (window as any).fbq && uniqueSkus.length > 0) {
       try {
         (window as any).fbq("track", "InitiateCheckout", {
-          content_ids: skus,
+          content_ids: uniqueSkus,
           content_type: "product",
-          num_items: skus.length,
-          value: totalRupees,
+          num_items: cartItems.reduce((s, i) => s + i.qty, 0),
+          value: displayTotalRupees,
           currency: "INR",
         });
       } catch (e) {
@@ -133,19 +248,19 @@ export default function CheckoutPage() {
     if (pageState === "success" && typeof window !== "undefined" && (window as any).fbq) {
       try {
         (window as any).fbq("track", "Purchase", {
-          value: totalRupees,
+          value: displayTotalRupees,
           currency: "INR",
-          content_ids: skus,
+          content_ids: uniqueSkus,
           content_type: "product",
-          num_items: skus.length,
+          num_items: cartItems.reduce((s, i) => s + i.qty, 0),
         });
       } catch (e) {
         console.error("Meta Pixel Purchase error:", e);
       }
     }
-  }, [pageState, totalRupees, skus]);
+  }, [pageState]);
 
-  if (skus.length === 0) {
+  if (uniqueSkus.length === 0) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="text-center space-y-4">
@@ -168,15 +283,16 @@ export default function CheckoutPage() {
       const cleanPhone = phone.replace(/\D/g, "").slice(-10);
       const recipientEmail = email.trim() || `${cleanPhone}@noemail.agatsa.com`;
 
-      // 1. Create order via backend API
+      // 1. Create order via backend API with items array + coupon
       const createRes = await fetch(`${API_BASE}/v1/orders/website/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          skus,
+          items: cartItems,
+          couponCode: couponApplied || undefined,
           recipientName: fullName.trim(),
           recipientPhone: "+91" + cleanPhone,
-          recipientEmail: recipientEmail,
+          recipientEmail,
           addressLine1: addressLine1.trim(),
           addressLine2: addressLine2.trim() || undefined,
           city: city.trim(),
@@ -193,6 +309,7 @@ export default function CheckoutPage() {
 
       const razorpayOrderId = createData.razorpayOrderId || createData.razorpay_order_id;
       const websiteOrderId = createData.websiteOrderId;
+      const confirmedTotalPaise = createData.totalAmountPaise || displayTotalPaise;
       if (!razorpayOrderId) throw new Error("Missing Razorpay order ID in response");
 
       // 2. Open Razorpay
@@ -204,10 +321,10 @@ export default function CheckoutPage() {
       await new Promise<void>((resolve, reject) => {
         const rzp = new (window as any).Razorpay({
           key: createData.keyId || "rzp_live_SVjGEVthft6CGI",
-          amount: createData.amount || totalPaise,
+          amount: confirmedTotalPaise,
           currency: createData.currency || "INR",
           name: "Agatsa One",
-          description: items.map((d) => d.name).join(", "),
+          description: items.map((d) => d.qty > 1 ? `${d.name} ×${d.qty}` : d.name).join(", "),
           order_id: razorpayOrderId,
           prefill: {
             name: fullName.trim(),
@@ -238,18 +355,20 @@ export default function CheckoutPage() {
                   razorpay_order_id: response.razorpay_order_id,
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_signature: response.razorpay_signature,
-                  amount: totalPaise / 100,
+                  amount: confirmedTotalPaise / 100,
                   currency: "INR",
                   status: "paid",
                   paid_at: new Date().toISOString(),
                   customer_name: fullName.trim(),
                   customer_email: recipientEmail,
                   customer_phone: "+91" + cleanPhone,
-                  items: items.map((d) => ({ sku: d.sku, name: d.name, price: d.amountPaise / 100 })),
+                  items: items.map((d) => ({ sku: d.sku, name: d.name, price: d.unitPricePaise / 100, qty: d.qty })),
                   shipping_address: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
                   shipping_city: city.trim(),
                   shipping_state: state.trim(),
                   shipping_pincode: pincode.trim(),
+                  coupon_code: couponApplied || null,
+                  discount_amount: discountPaise / 100,
                 });
               } catch (syncErr) {
                 console.error("Order sync to DB failed:", syncErr);
@@ -369,16 +488,96 @@ export default function CheckoutPage() {
           <Progress value={step === 1 ? 50 : 100} className="h-2" />
         </div>
 
-        {/* Order summary pill */}
-        <div className="bg-muted/50 rounded-xl p-4 mb-8 border border-border">
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              {items.map((d) => (
-                <p key={d.sku} className="text-sm font-medium text-foreground">{d.name}</p>
-              ))}
-              <p className="text-xs text-primary font-medium">+ Free 1-year Nera AI Plan</p>
+        {/* ─── Order summary with quantity controls ─────────── */}
+        <div className="bg-muted/50 rounded-xl p-4 mb-4 border border-border space-y-3">
+          {items.map((d) => (
+            <div key={d.sku} className="flex items-center justify-between gap-2">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground truncate">{d.name}</p>
+                <p className="text-xs text-muted-foreground">{fmtPaise(d.unitPricePaise)} each</p>
+              </div>
+              {/* Qty controls */}
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  onClick={() => changeQty(d.sku, -1)}
+                  disabled={d.qty <= 1}
+                  className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted disabled:opacity-30 transition-colors"
+                >
+                  <Minus className="h-3.5 w-3.5 text-foreground" />
+                </button>
+                <span className="w-6 text-center text-sm font-semibold text-foreground">{d.qty}</span>
+                <button
+                  onClick={() => changeQty(d.sku, 1)}
+                  disabled={d.qty >= 5}
+                  className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted disabled:opacity-30 transition-colors"
+                >
+                  <Plus className="h-3.5 w-3.5 text-foreground" />
+                </button>
+              </div>
+              <p className="text-sm font-semibold text-foreground w-20 text-right">{fmtPaise(d.unitPricePaise * d.qty)}</p>
             </div>
-            <span className="text-xl font-bold text-foreground">₹{totalRupees.toLocaleString("en-IN")}</span>
+          ))}
+          <p className="text-xs text-primary font-medium">+ Free 1-year Nera AI Plan</p>
+        </div>
+
+        {/* ─── Coupon code input ─────────────────────────────── */}
+        <div className="mb-6">
+          {!couponApplied ? (
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <input
+                  type="text"
+                  value={couponInput}
+                  onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                  onKeyDown={(e) => e.key === "Enter" && applyCoupon()}
+                  placeholder="Coupon code"
+                  className="w-full pl-9 pr-3 py-2.5 text-sm border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-background text-foreground"
+                />
+              </div>
+              <Button
+                onClick={applyCoupon}
+                disabled={!couponInput.trim() || applyingCoupon}
+                variant="outline"
+                className="rounded-xl px-4 shrink-0"
+              >
+                {applyingCoupon ? <Loader2 className="h-4 w-4 animate-spin" /> : "Apply"}
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl px-3 py-2.5">
+              <div className="flex items-center gap-2 min-w-0">
+                <Tag className="h-4 w-4 text-green-600 shrink-0" />
+                <span className="text-sm font-semibold text-green-700 dark:text-green-400">{couponApplied}</span>
+                {couponMessage && <span className="text-xs text-green-600 dark:text-green-500 truncate">— {couponMessage}</span>}
+              </div>
+              <button onClick={removeCoupon} className="text-muted-foreground hover:text-foreground ml-2 shrink-0">
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+          {couponMessage && !couponValid && !couponApplied && (
+            <p className="text-xs text-destructive mt-1.5">{couponMessage}</p>
+          )}
+        </div>
+
+        {/* ─── Pricing summary ──────────────────────────────── */}
+        <div className="bg-muted/30 rounded-xl p-4 mb-8 border border-border space-y-2">
+          {discountPaise > 0 && quoteLoaded && (
+            <>
+              <div className="flex justify-between text-sm text-muted-foreground">
+                <span>Subtotal</span>
+                <span>{fmtPaise(subtotalPaise)}</span>
+              </div>
+              <div className="flex justify-between text-sm text-green-600">
+                <span>Discount ({couponApplied})</span>
+                <span>−{fmtPaise(discountPaise)}</span>
+              </div>
+            </>
+          )}
+          <div className="flex justify-between text-base font-bold text-foreground">
+            <span>Total</span>
+            <span>{quoteLoading ? "…" : fmtPaise(displayTotalPaise)}</span>
           </div>
         </div>
 
@@ -543,7 +742,7 @@ export default function CheckoutPage() {
               {paying ? (
                 <span className="flex items-center gap-2"><Loader2 className="h-4 w-4 animate-spin" /> Processing…</span>
               ) : (
-                <span className="flex items-center gap-2"><Lock className="h-4 w-4" /> Pay ₹{totalRupees.toLocaleString("en-IN")} securely</span>
+                <span className="flex items-center gap-2"><Lock className="h-4 w-4" /> Pay {fmtPaise(displayTotalPaise)} securely</span>
               )}
             </Button>
 

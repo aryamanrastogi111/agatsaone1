@@ -186,7 +186,7 @@ const CoreBalanceProduct = () => {
                     ) : (
                       <ShoppingCart className="h-5 w-5" />
                     )}
-                    Add to Cart — ₹2,499
+                    Add to Cart — ₹1,899
                   </Button>
                 )}
               </div>
@@ -684,7 +684,7 @@ const CoreBalanceProduct = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               />
-              <div className="text-3xl font-bold text-foreground mb-2">₹2,499</div>
+              <div className="text-3xl font-bold text-foreground mb-2">₹1,899</div>
               <p className="text-sm text-muted-foreground mb-6">Includes scale, app access & 1-year warranty</p>
               <Button size="lg" className="text-lg px-10 py-6 gap-2 bg-emerald-600 hover:bg-emerald-700">
                 <ShoppingCart className="h-5 w-5" />
@@ -711,7 +711,7 @@ const CoreBalanceProduct = () => {
       </section>
       <StickyAddToCart
         productName="CoreBalance BMI Scale"
-        price="₹2,499"
+        price="₹1,899"
         onAddToCart={handleAddToCart}
         isLoading={addingToCart}
         themeColor="emerald"
