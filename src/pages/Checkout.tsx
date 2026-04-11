@@ -425,6 +425,8 @@ export default function CheckoutPage() {
 
               setPageState("success");
               useCartStore.getState().clearCart();
+              // Clear URL params so reopening doesn't reload old checkout
+              setSearchParams({}, { replace: true });
               resolve();
             } catch (err: any) {
               setErrorMsg(err.message || "Payment verification failed");
