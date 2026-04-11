@@ -661,15 +661,24 @@ export default function LiveActivity() {
     return () => { supabase.removeChannel(channel); };
   }, []);
 
-  // ── Add to Cart broadcast listener ──
+  // ── Add to Cart broadcast listener (rolling 5-min window) ──
+  const pruneAddToCart = useCallback(() => {
+    const cutoff = Date.now() - 5 * 60 * 1000;
+    addToCartTimestamps.current = addToCartTimestamps.current.filter((t) => t > cutoff);
+    setAddToCartCount(addToCartTimestamps.current.length);
+  }, []);
+
   useEffect(() => {
     const channel = supabase.channel("add-to-cart-events")
       .on("broadcast", { event: "add_to_cart" }, () => {
-        setAddToCartCount((c) => c + 1);
+        addToCartTimestamps.current.push(Date.now());
+        pruneAddToCart();
       })
       .subscribe();
-    return () => { supabase.removeChannel(channel); };
-  }, []);
+    // Prune every 30s so stale events decay
+    const pruneInterval = setInterval(pruneAddToCart, 30_000);
+    return () => { clearInterval(pruneInterval); supabase.removeChannel(channel); };
+  }, [pruneAddToCart]);
 
   // ── DB data: orders ──
   const fetchData = useCallback(async () => {
