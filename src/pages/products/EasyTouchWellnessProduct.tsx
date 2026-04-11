@@ -6,6 +6,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, ArrowRight, Package, ShoppingCart, ChevronDown, Star } from "lucide-react";
+import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine } from "@/components/EmiLine";
