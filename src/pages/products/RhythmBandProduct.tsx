@@ -15,6 +15,7 @@ import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
 import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
+import { TrustVideosSection } from "@/components/TrustVideosSection";
 import rhythmHero from "@/assets/easytouch-rhythm-new.webp";
 import neraScreen from "@/assets/app-screen-nera.webp";
 import { Button } from "@/components/ui/button";

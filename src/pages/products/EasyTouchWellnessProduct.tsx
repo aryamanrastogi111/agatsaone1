@@ -25,6 +25,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { WellnessReviewsSection } from "@/components/products/WellnessReviewsSection";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
+import { TrustVideosSection } from "@/components/TrustVideosSection";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";

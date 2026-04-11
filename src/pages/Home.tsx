@@ -29,6 +29,7 @@ export default function HomePage() {
       <ClinicalProofSection />
       <ProvidersSection />
       <TestimonialsSection />
+      <TrustVideosSection />
       <AwardsTrustSection />
       <FinalCTASection />
     </SiteLayout>
