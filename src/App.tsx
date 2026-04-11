@@ -41,6 +41,7 @@ const Partner = lazy(() => import("./pages/Partner"));
 const Demo = lazy(() => import("./pages/Demo"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const CheckoutPage = lazy(() => import("./pages/Checkout"));
+const Heritage = lazy(() => import("./pages/Heritage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // SDK Portal
