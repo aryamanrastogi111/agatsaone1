@@ -176,6 +176,7 @@ function AppWithPricing() {
                 <Route path="delivery-slips" element={<AdminDeliverySlips />} />
                 <Route path="returns" element={<AdminReturns />} />
                 <Route path="leads" element={<AdminLeads />} />
+                <Route path="heritage" element={<AdminHeritage />} />
                 <Route path="tickets" element={<AdminTickets />} />
                 <Route path="analytics" element={<AdminAnalytics />} />
                 <Route path="team" element={<AdminTeam />} />
