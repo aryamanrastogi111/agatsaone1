@@ -2,12 +2,15 @@ import { useSEO } from "@/hooks/useSEO";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package, Smartphone, Workflow, Brain, Stethoscope, Shield, Cpu, Users, HeartPulse } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Star, ArrowRight, Package, Smartphone, Workflow, Brain, Stethoscope, Shield, Cpu, Users, HeartPulse, ShoppingCart } from "lucide-react";
 import { EmiLine } from "@/components/EmiLine";
 import { SiteLayout } from "@/components/SiteLayout";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { Button } from "@/components/ui/button";
 import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
+
 import sanketlifeImg from "@/assets/sanketlife-device-app.webp";
 import easytouchImg from "@/assets/easytouch-wellness-hero.webp";
 import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
@@ -245,8 +248,12 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
         )}
 
         <div className="flex gap-3 mt-6">
-          <Button asChild className="flex-1 rounded-full">
-            <Link to={`/checkout?sku=${device.checkoutSku}`}>Buy Now — {fmt(price)}</Link>
+          <Button className="flex-1 rounded-full gap-2" onClick={() => {
+            useCartStore.getState().addItem({ productId: device.checkoutSku, productName: device.name, variantTitle: "Default Title", price, quantity: 1 });
+            toast.success(`${device.name} added to cart`);
+          }}>
+            <ShoppingCart className="h-4 w-4" />
+            Add to Cart — {fmt(price)}
           </Button>
           <Button asChild variant="outline" className="flex-1 rounded-full">
             <Link to={device.link}>Learn More</Link>
