@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
+import { StrikePrice } from "@/components/StrikePrice";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link, useNavigate } from "react-router-dom";
@@ -93,8 +94,8 @@ export default function SmartScaleProduct() {
               <p className="text-xl md:text-2xl font-bold text-orange-500 dark:text-orange-400 mt-3">Step on. Know everything.</p>
               <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">The Agatsa Smart Scale measures 14 body composition metrics in a single 5-second reading — weight, body fat, muscle mass, bone density, visceral fat, metabolic age, and more. Syncs instantly to Nera AI via Bluetooth.</p>
               <div className="mt-6">
-                <span className="text-4xl font-extrabold text-foreground">{fmt(scalePrice)}</span>
-                <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
+                <StrikePrice sku="scale_sub" price={scalePrice} />
+                <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
                 <EmiLine price={scalePrice} />
                 <StockUrgencyBar productKey="corebalance" className="mt-3" />
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
+import { StrikePrice } from "@/components/StrikePrice";
 import { usePricing } from "@/hooks/useDevicePricing";
 import sanketlifeImg from "@/assets/sanketlife-hero-new.webp";
 import easytouchImg from "@/assets/easytouch-wellness-device.webp";
@@ -103,11 +104,11 @@ export function DeviceShowcaseSection() {
 
               <div className="mt-auto space-y-2">
                 <StockUrgencyBar productKey={device.slug} />
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   {loading ? (
                     <span className="h-6 w-16 bg-muted animate-pulse rounded" />
                   ) : (
-                    <span className="text-lg font-bold text-foreground">{fmt(prices[device.sku])}</span>
+                    <StrikePrice sku={device.sku} price={prices[device.sku]} size="sm" showLabel={false} />
                   )}
                   <Link
                     to={device.link}

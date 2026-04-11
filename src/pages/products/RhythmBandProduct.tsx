@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { Star, ArrowRight, Package, Moon, Activity, Bell, ShoppingCart } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
+import { StrikePrice } from "@/components/StrikePrice";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import rhythmHero from "@/assets/easytouch-rhythm-new.webp";
@@ -89,8 +90,8 @@ export default function RhythmBandProduct() {
               <p className="text-xl md:text-2xl font-bold text-green-600 dark:text-green-400 mt-3">24/7 health monitoring that never sleeps.</p>
               <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">The EasyTouch Rhythm Band tracks your heart, sleep, steps, SpO2, and stress score around the clock — providing Nera AI with the continuous data it needs to build a complete picture of your health and recovery.</p>
               <div className="mt-6">
-                <span className="text-4xl font-extrabold text-foreground">{fmt(bandPrice)}</span>
-                <span className="text-sm text-muted-foreground ml-2">inclusive of GST</span>
+                <StrikePrice sku="band_sub" price={bandPrice} />
+                <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
                 <EmiLine price={bandPrice} />
                 <StockUrgencyBar productKey="easytouch-rhythm" className="mt-3" />
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">

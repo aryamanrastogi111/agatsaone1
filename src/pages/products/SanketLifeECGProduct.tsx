@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
+import { StrikePrice } from "@/components/StrikePrice";
 import { useNavigate } from "react-router-dom";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
@@ -103,8 +104,8 @@ export default function SanketLifeECGProduct() {
 
               {/* Price */}
               <div className="mt-8">
-                <span className="text-4xl font-extrabold text-foreground">{fmt(ecgPrice)}</span>
-                <span className="text-sm text-muted-foreground ml-2">incl. GST</span>
+                <StrikePrice sku="ecg_bundle" price={ecgPrice} />
+                <span className="text-sm text-muted-foreground ml-1">incl. GST</span>
                 <EmiLine price={ecgPrice} />
                 <StockUrgencyBar productKey="sanketlife" className="mt-3" />
                 <div className="flex items-center gap-1 mt-2">

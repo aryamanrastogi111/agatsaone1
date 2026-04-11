@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Brain, Zap, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePricing } from "@/hooks/useDevicePricing";
+import { StrikePrice } from "@/components/StrikePrice";
 import { RepublicDaySaleBadge, CountdownTimer, CouponCodeBox, isSaleActive } from "@/components/sale";
 import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import easytouchImg from "@/assets/easytouch-rhythm-new.webp";
@@ -98,16 +99,7 @@ export function ProductHighlightEasyTouch() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <div className="flex items-center gap-2">
-                {isSaleActive() ? (
-                  <>
-                    <span className="text-xl text-muted-foreground line-through">{fmt(prices.band_sub)}</span>
-                    <span className="text-2xl font-bold text-foreground">{fmt(prices.band_sub)}</span>
-                  </>
-                ) : (
-                  <span className="text-2xl font-bold text-foreground">{fmt(prices.band_sub)}</span>
-                )}
-              </div>
+              <StrikePrice sku="band_sub" price={prices.band_sub} size="md" showLabel={false} />
             </div>
           </motion.div>
         </div>

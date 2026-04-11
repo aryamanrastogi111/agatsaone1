@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Scale, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePricing } from "@/hooks/useDevicePricing";
+import { StrikePrice } from "@/components/StrikePrice";
 import { LowStockBadge } from "@/components/shop/LowStockBadge";
 import corebalanceImg from "@/assets/corebalance-hero.webp";
 
@@ -81,7 +82,7 @@ export function ProductHighlightCoreBalance() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <span className="text-2xl font-bold text-foreground">{fmt(prices.scale_sub)}</span>
+              <StrikePrice sku="scale_sub" price={prices.scale_sub} size="md" showLabel={false} />
             </div>
           </motion.div>
         </div>
