@@ -5,6 +5,28 @@ import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { db } from "@/integrations/supabase/db";
 
+interface GeoInfo {
+  city: string | null;
+  region: string | null;
+}
+
+let cachedGeo: GeoInfo | null = null;
+
+async function fetchGeoInfo(): Promise<GeoInfo> {
+  if (cachedGeo) return cachedGeo;
+  try {
+    const res = await fetch("https://ip-api.com/json/?fields=city,regionName");
+    if (res.ok) {
+      const data = await res.json();
+      cachedGeo = { city: data.city || null, region: data.regionName || null };
+      return cachedGeo;
+    }
+  } catch {
+    // Geolocation not critical
+  }
+  return { city: null, region: null };
+}
+
 function getSessionId(): string {
   let id = sessionStorage.getItem("agatsa_vsid");
   if (!id) {
@@ -56,6 +78,7 @@ async function upsertSession(sessionId: string, pagePath: string, isFirst: boole
   const referrer = document.referrer
     ? document.referrer.includes(window.location.hostname) ? "internal" : new URL(document.referrer).hostname
     : "direct";
+  const geo = await fetchGeoInfo();
 
   if (isFirst) {
     const { error } = await db.from("visitor_sessions").upsert({
@@ -70,6 +93,8 @@ async function upsertSession(sessionId: string, pagePath: string, isFirst: boole
       utm_campaign: utm.utm_campaign,
       device,
       referrer,
+      city: geo.city,
+      region: geo.region,
     }, { onConflict: "session_id" });
     if (error) console.error("[Tracking] upsert session failed:", error.message);
   } else {
@@ -135,6 +160,7 @@ export function useVisitorTracking() {
   const subscribedRef = useRef(false);
   const isFirstPage = useRef(true);
   const isAdminRef = useRef(false);
+  const geoRef = useRef<GeoInfo>({ city: null, region: null });
 
   const device = typeof window !== "undefined" && window.innerWidth < 768 ? "mobile" : "desktop";
 
@@ -148,6 +174,8 @@ export function useVisitorTracking() {
       session_id: sessionId.current,
       current_page: pathname,
       device,
+      city: geoRef.current.city || undefined,
+      region: geoRef.current.region || undefined,
       referrer: document.referrer
         ? document.referrer.includes(window.location.hostname) ? "internal" : document.referrer
         : "direct",
@@ -161,6 +189,11 @@ export function useVisitorTracking() {
 
     captureUtmParams();
     incrementDailyVisitor();
+
+    // Fetch geo info early
+    fetchGeoInfo().then((geo) => {
+      geoRef.current = geo;
+    });
 
     const channel = supabase.channel("live-visitors", {
       config: { presence: { key: sessionId.current } },

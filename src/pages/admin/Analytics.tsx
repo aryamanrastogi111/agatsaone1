@@ -4,7 +4,7 @@ import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
-import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown, Users, Clock, MousePointerClick, Globe } from "lucide-react";
+import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown, Users, Clock, MousePointerClick, Globe, MapPin } from "lucide-react";
 import { format, subDays } from "date-fns";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,6 +44,8 @@ export default function Analytics() {
   const [funnelData, setFunnelData] = useState<{ stage: string; count: number; color: string }[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [pageViewsData, setPageViewsData] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [cityData, setCityData] = useState<any[]>([]);
   const [audienceQuality, setAudienceQuality] = useState({
     avgDuration: 0, bounceRate: 0, avgPages: 0, totalSessions: 0,
     bySource: [] as { source: string; sessions: number; avgDuration: number; bounceRate: number; avgPages: number }[],
@@ -103,7 +105,7 @@ export default function Analytics() {
         .order("created_at", { ascending: false })
         .limit(5000),
       db.from("visitor_sessions")
-        .select("session_id, started_at, last_seen_at, page_count, entry_page, exit_page, utm_source, utm_medium, utm_campaign, device, referrer")
+        .select("session_id, started_at, last_seen_at, page_count, entry_page, exit_page, utm_source, utm_medium, utm_campaign, device, referrer, city, region")
         .gte("started_at", rangeStart)
         .order("started_at", { ascending: false })
         .limit(2000),
@@ -262,6 +264,21 @@ export default function Analytics() {
         .slice(0, 10);
 
       setAudienceQuality({ avgDuration, bounceRate, avgPages, totalSessions: sessions.length, bySource });
+
+      // City-wise breakdown
+      const cityMap: Record<string, number> = {};
+      sessions.forEach((s: any) => {
+        const city = s.city || "Unknown";
+        cityMap[city] = (cityMap[city] || 0) + 1;
+      });
+      setCityData(
+        Object.entries(cityMap)
+          .map(([city, count]) => ({ city, sessions: count }))
+          .sort((a, b) => b.sessions - a.sessions)
+          .slice(0, 20)
+      );
+    } else {
+      setCityData([]);
     }
 
     setLoading(false);
@@ -613,6 +630,27 @@ export default function Analytics() {
               <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="views" name="Page Views" fill="#3b82f6" radius={[0, 4, 4, 0]} />
               <Bar dataKey="unique_visitors" name="Unique Visitors" fill="#10b981" radius={[0, 4, 4, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
+      </div>
+
+      {/* Visitors by City */}
+      <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+        <h3 className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
+          <MapPin size={18} /> Visitors by City — {rangeLabel}
+        </h3>
+        <p className="text-xs text-gray-400 mb-4">Top cities by session count from visitor geolocation</p>
+        {cityData.length === 0 || (cityData.length === 1 && cityData[0].city === "Unknown") ? (
+          <p className="text-gray-400 text-sm text-center py-8">No city data yet — data starts collecting as visitors browse your site</p>
+        ) : (
+          <ResponsiveContainer width="100%" height={Math.max(200, cityData.length * 32)}>
+            <BarChart data={cityData} layout="vertical" margin={{ left: 10, right: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" horizontal={false} />
+              <XAxis type="number" tick={{ fill: "#9ca3af", fontSize: 11 }} tickLine={false} axisLine={false} />
+              <YAxis type="category" dataKey="city" tick={{ fill: "#6b7280", fontSize: 11 }} tickLine={false} axisLine={false} width={120} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar dataKey="sessions" name="Sessions" fill="#f97316" radius={[0, 4, 4, 0]} />
             </BarChart>
           </ResponsiveContainer>
         )}

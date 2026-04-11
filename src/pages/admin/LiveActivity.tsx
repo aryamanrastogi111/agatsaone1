@@ -22,6 +22,8 @@ interface Visitor {
   device: "mobile" | "desktop";
   referrer: string;
   started_at: string;
+  city?: string;
+  region?: string;
 }
 
 interface TodayOrder {
@@ -478,7 +480,7 @@ function LiveVisitorsPanel({ visitors }: { visitors: Visitor[] }) {
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-800 truncate">{pageLabel(v.current_page)}</p>
                 <p className="text-xs text-gray-400 truncate">
-                  {v.referrer === "direct" ? "Direct" : v.referrer === "internal" ? "Internal link" : v.referrer}
+                  {v.city ? `${v.city}${v.region ? `, ${v.region}` : ""}` : v.referrer === "direct" ? "Direct" : v.referrer === "internal" ? "Internal link" : v.referrer}
                 </p>
               </div>
               <div className="text-right shrink-0">
@@ -517,6 +519,42 @@ function PageBreakdownPanel({ visitors }: { visitors: Visitor[] }) {
               <div className="flex items-center gap-2">
                 <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                   <div className="h-full bg-blue-500 rounded-full" style={{ width: `${Math.min(100, (count / visitors.length) * 100)}%` }} />
+                </div>
+                <span className="text-xs font-bold text-gray-600 w-6 text-right">{count}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+// ─── City Breakdown Panel ────────────────────────────────────
+function CityBreakdownPanel({ visitors }: { visitors: Visitor[] }) {
+  const cityCounts: Record<string, number> = {};
+  visitors.forEach((v) => {
+    const city = v.city || "Unknown";
+    cityCounts[city] = (cityCounts[city] || 0) + 1;
+  });
+  const sorted = Object.entries(cityCounts).sort((a, b) => b[1] - a[1]);
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+      <div className="flex items-center gap-2 px-5 py-4 border-b border-gray-100">
+        <MapPin size={15} className="text-orange-600" /><h3 className="font-semibold text-gray-900">Visitors by City</h3>
+      </div>
+      {sorted.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-10 text-gray-400">
+          <MapPin size={24} className="mb-2 opacity-30" /><p className="text-sm">No city data yet</p>
+        </div>
+      ) : (
+        <ul className="divide-y divide-gray-50">
+          {sorted.map(([city, count]) => (
+            <li key={city} className="flex items-center justify-between px-5 py-3">
+              <span className="text-sm text-gray-800">{city}</span>
+              <div className="flex items-center gap-2">
+                <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-orange-500 rounded-full" style={{ width: `${Math.min(100, (count / visitors.length) * 100)}%` }} />
                 </div>
                 <span className="text-xs font-bold text-gray-600 w-6 text-right">{count}</span>
               </div>
@@ -655,6 +693,8 @@ export default function LiveActivity() {
           session_id: p.session_id ?? p.presence_ref, current_page: p.current_page ?? "/",
           device: p.device ?? "desktop", referrer: p.referrer ?? "direct",
           started_at: p.started_at ?? new Date().toISOString(),
+          city: p.city ?? undefined,
+          region: p.region ?? undefined,
         }));
       setVisitors(list);
     }).subscribe();
@@ -807,10 +847,11 @@ export default function LiveActivity() {
         )}
       </div>
 
-      {/* Live Visitors + Page Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      {/* Live Visitors + Page Breakdown + City Breakdown */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <LiveVisitorsPanel visitors={visitors} />
         <PageBreakdownPanel visitors={visitors} />
+        <CityBreakdownPanel visitors={visitors} />
       </div>
 
       {/* Pending Payments */}
