@@ -41,6 +41,7 @@ const Partner = lazy(() => import("./pages/Partner"));
 const Demo = lazy(() => import("./pages/Demo"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const CheckoutPage = lazy(() => import("./pages/Checkout"));
+const Heritage = lazy(() => import("./pages/Heritage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // SDK Portal
@@ -138,6 +139,7 @@ function AppWithPricing() {
 
               <Route path="/d/:code" element={<DeviceActivation />} />
               <Route path="/r/:code" element={<ReferralPage />} />
+              <Route path="/heritage" element={<Heritage />} />
 
               {/* Redirects */}
               <Route path="/download" element={<Navigate to="/app" replace />} />
