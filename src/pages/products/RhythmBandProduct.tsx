@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
@@ -62,11 +63,12 @@ export default function RhythmBandProduct() {
   const { prices, fmt } = usePricing();
   const bandPrice = prices.band_sub;
   useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 3999);
-  const handleBuy = () => {
+  const handleBuy = (qtyOrEvent?: number | React.MouseEvent) => {
+    const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["band_sub"], content_name: "EasyTouch Rhythm Band", content_type: "product", value: bandPrice, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["band_sub"], content_name: "EasyTouch Rhythm Band", content_type: "product", value: bandPrice * qty, currency: "INR" }); } catch {}
     }
-    navigate("/checkout?sku=band_sub");
+    navigate(`/checkout?sku=${Array(qty).fill("band_sub").join(",")}`);
   };
   useSEO({ title: "EasyTouch Rhythm Band — 24/7 Sleep, HRV, SpO2 Monitoring | Agatsa One", description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Works with Nera AI. ₹3,999. Compatible with all 5 Care Programmes." });
 
@@ -350,6 +352,13 @@ export default function RhythmBandProduct() {
           <Button onClick={handleBuy} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Buy Rhythm Band — {fmt(bandPrice)}</Button>
         </div>
       </section>
+      <StickyAddToCart
+        productName="EasyTouch Rhythm Band"
+        price={fmt(bandPrice)}
+        unitPrice={bandPrice}
+        onAddToCart={handleBuy}
+        themeColor="primary"
+      />
     </SiteLayout>
   );
 }

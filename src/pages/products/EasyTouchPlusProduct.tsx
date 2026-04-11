@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useNavigate } from "react-router-dom";
 import easytouchWellnessImg from "@/assets/easytouch-wellness-hero.webp";
@@ -112,17 +113,23 @@ export default function EasyTouchPlusProduct() {
   const wp = fmt(prices.wellness_sub);
   const navigate = useNavigate();
 
-  const handleBuyNow = () => {
+  const handleBuyNow = (qtyOrEvent?: number | React.MouseEvent) => {
+    const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["wellness_sub"], content_name: "EasyTouch Wellness", content_type: "product", value: 3999, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["wellness_sub"], content_name: "EasyTouch Wellness", content_type: "product", value: 3999 * qty, currency: "INR" }); } catch {}
     }
-    navigate("/checkout?sku=wellness_sub");
+    navigate(`/checkout?sku=${Array(qty).fill("wellness_sub").join(",")}`);
   };
 
   return (
     <Layout>
-      <StickyBuyBar onBuy={handleBuyNow} wp={wp} />
-      <FloatingWhatsApp />
+      <StickyAddToCart
+        productName="EasyTouch Wellness"
+        price={wp}
+        unitPrice={prices.wellness_sub}
+        onAddToCart={handleBuyNow}
+        themeColor="primary"
+      />
 
       {/* ═══ SECTION 1 — HERO ═══ */}
       <section className="bg-gradient-to-b from-teal-50/60 to-background pt-20 pb-16">
