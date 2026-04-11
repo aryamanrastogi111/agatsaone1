@@ -183,37 +183,50 @@ export function useVisitorTracking() {
     });
   }, [device]);
 
-  // Subscribe once on mount (for public pages)
+  // Subscribe once on mount (for public pages) — deferred to avoid blocking first paint
   useEffect(() => {
     if (isAdminRef.current) return;
 
     captureUtmParams();
-    incrementDailyVisitor();
 
-    // Fetch geo info early
-    fetchGeoInfo().then((geo) => {
-      geoRef.current = geo;
+    // Defer all tracking work until after first paint
+    const schedule = typeof requestIdleCallback === "function"
+      ? requestIdleCallback
+      : (cb: () => void) => setTimeout(cb, 1500);
+
+    const handle = schedule(() => {
+      incrementDailyVisitor();
+
+      // Fetch geo info
+      fetchGeoInfo().then((geo) => {
+        geoRef.current = geo;
+      });
+
+      const channel = supabase.channel("live-visitors", {
+        config: { presence: { key: sessionId.current } },
+      });
+      channelRef.current = channel;
+
+      channel.subscribe(async (status) => {
+        if (status === "SUBSCRIBED") {
+          subscribedRef.current = true;
+          trackPage(location.pathname);
+        }
+      });
+
+      upsertSession(sessionId.current, location.pathname, true);
+      setupBeaconTracking(sessionId.current);
     });
-
-    const channel = supabase.channel("live-visitors", {
-      config: { presence: { key: sessionId.current } },
-    });
-    channelRef.current = channel;
-
-    channel.subscribe(async (status) => {
-      if (status === "SUBSCRIBED") {
-        subscribedRef.current = true;
-        trackPage(location.pathname);
-      }
-    });
-
-    upsertSession(sessionId.current, location.pathname, true);
-    setupBeaconTracking(sessionId.current);
 
     return () => {
+      if (typeof cancelIdleCallback === "function" && typeof handle === "number") {
+        cancelIdleCallback(handle);
+      }
       subscribedRef.current = false;
-      supabase.removeChannel(channel);
-      channelRef.current = null;
+      if (channelRef.current) {
+        supabase.removeChannel(channelRef.current);
+        channelRef.current = null;
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
