@@ -248,8 +248,12 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
         )}
 
         <div className="flex gap-3 mt-6">
-          <Button asChild className="flex-1 rounded-full">
-            <Link to={`/checkout?sku=${device.checkoutSku}`}>Buy Now — {fmt(price)}</Link>
+          <Button className="flex-1 rounded-full gap-2" onClick={() => {
+            useCartStore.getState().addItem({ productId: device.checkoutSku, productName: device.name, variantTitle: "Default Title", price, quantity: 1 });
+            toast.success(`${device.name} added to cart`);
+          }}>
+            <ShoppingCart className="h-4 w-4" />
+            Add to Cart — {fmt(price)}
           </Button>
           <Button asChild variant="outline" className="flex-1 rounded-full">
             <Link to={device.link}>Learn More</Link>
