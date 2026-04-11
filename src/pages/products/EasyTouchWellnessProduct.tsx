@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
@@ -23,12 +23,14 @@ const WellnessTrustBar = () => (
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
-import { WellnessReviewsSection } from "@/components/products/WellnessReviewsSection";
-import { AwardsTrustSection } from "@/components/AwardsTrustSection";
-import { TrustVideosSection } from "@/components/TrustVideosSection";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
+
+// Lazy-load heavy below-fold sections
+const WellnessReviewsSection = lazy(() => import("@/components/products/WellnessReviewsSection").then(m => ({ default: m.WellnessReviewsSection })));
+const AwardsTrustSection = lazy(() => import("@/components/AwardsTrustSection").then(m => ({ default: m.AwardsTrustSection })));
+const TrustVideosSection = lazy(() => import("@/components/TrustVideosSection").then(m => ({ default: m.TrustVideosSection })));
 
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 
