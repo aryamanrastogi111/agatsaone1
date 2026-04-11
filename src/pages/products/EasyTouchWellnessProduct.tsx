@@ -167,9 +167,9 @@ export default function EasyTouchWellnessProduct() {
           </motion.div>
 
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.6 }} className="mt-10">
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-5 py-2.5">
-              <span className="text-base">🛡️</span>
-              <span className="text-sm font-semibold text-primary">50% fewer needle pricks in 30 days — or your money back.</span>
+            <div className="inline-flex items-center gap-2 bg-primary border border-primary rounded-full px-6 py-3 shadow-[0_4px_20px_hsl(var(--primary)/0.4)] animate-pulse">
+              <span className="text-lg">🛡️</span>
+              <span className="text-sm md:text-base font-bold text-primary-foreground tracking-wide">50% FEWER NEEDLE PRICKS IN 30 DAYS — OR YOUR MONEY BACK</span>
             </div>
           </motion.div>
         </div>
@@ -436,18 +436,24 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* ── GUARANTEE BANNER ── */}
-      <section className="py-10 bg-primary/5">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <section className="py-14 bg-gradient-to-b from-primary/10 to-primary/5 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.08),transparent_70%)]" />
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <motion.div {...fadeUp}>
-            <div className="bg-card border-2 border-primary/20 rounded-2xl p-8 md:p-10 shadow-sm">
-              <p className="text-4xl mb-4">🛡️</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground">Our Promise</h3>
-              <p className="text-xl md:text-2xl font-semibold text-primary mt-3">
-                50% fewer needle pricks in 30 days — or your money back.
+            <div className="bg-card border-2 border-primary rounded-2xl p-10 md:p-14 shadow-[0_8px_40px_hsl(var(--primary)/0.2)]">
+              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                <span className="text-5xl">🛡️</span>
+              </div>
+              <p className="text-xs font-bold tracking-[0.3em] uppercase text-primary mb-3">The Agatsa Guarantee</p>
+              <h3 className="text-3xl md:text-5xl font-black text-foreground leading-tight">
+                50% Fewer Pricks.<br />
+                <span className="text-primary">Or 100% Money Back.</span>
+              </h3>
+              <div className="w-16 h-1 bg-primary mx-auto my-6 rounded-full" />
+              <p className="text-lg md:text-xl text-muted-foreground max-w-lg mx-auto leading-relaxed">
+                Use EasyTouch Wellness daily for 30 days. If it doesn't cut your needle pricks by half — we refund every single rupee. No questions. No fine print.
               </p>
-              <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
-                Use EasyTouch Wellness daily for 30 days. If it doesn't cut your finger pricks by half, we'll refund every rupee. No questions asked.
-              </p>
+              <p className="mt-6 text-sm font-semibold text-foreground/60 tracking-wide uppercase">That's how confident we are.</p>
             </div>
           </motion.div>
         </div>
