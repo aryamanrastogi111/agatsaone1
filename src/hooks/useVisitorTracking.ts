@@ -15,10 +15,10 @@ let cachedGeo: GeoInfo | null = null;
 async function fetchGeoInfo(): Promise<GeoInfo> {
   if (cachedGeo) return cachedGeo;
   try {
-    const res = await fetch("https://ip-api.com/json/?fields=city,regionName");
+    const res = await fetch("https://ipapi.co/json/");
     if (res.ok) {
       const data = await res.json();
-      cachedGeo = { city: data.city || null, region: data.regionName || null };
+      cachedGeo = { city: data.city || null, region: data.region || null };
       return cachedGeo;
     }
   } catch {
