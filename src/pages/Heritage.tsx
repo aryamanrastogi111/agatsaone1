@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { supabase } from "@/integrations/supabase/client";
 
-const APPSTORE_URL = "https://apps.apple.com/app/id6760245564";
-const PLAYSTORE_URL = "https://play.google.com/store/apps/details?id=com.agatsakone";
+const APPSTORE_URL = "https://agatsa-one-api-651017108992.asia-south1.run.app/v1/track/app-download?platform=ios&campaign=heritage_apr12";
+const PLAYSTORE_URL = "https://agatsa-one-api-651017108992.asia-south1.run.app/v1/track/app-download?platform=android&campaign=heritage_apr12";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const db = supabase as any;
