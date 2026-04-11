@@ -10,7 +10,7 @@ const FALLBACK_PRICES: Record<DeviceSku, number> = {
   ecg_bundle: 4999,
   wellness_sub: 3999,
   band_sub: 3999,
-  scale_sub: 2499,
+  scale_sub: 1899,
   bundle_ecg_band: 5999,
   multivital: 5999,
 };
