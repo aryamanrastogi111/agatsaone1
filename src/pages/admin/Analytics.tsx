@@ -105,7 +105,7 @@ export default function Analytics() {
         .order("created_at", { ascending: false })
         .limit(5000),
       db.from("visitor_sessions")
-        .select("session_id, started_at, last_seen_at, page_count, entry_page, exit_page, utm_source, utm_medium, utm_campaign, device, referrer")
+        .select("session_id, started_at, last_seen_at, page_count, entry_page, exit_page, utm_source, utm_medium, utm_campaign, device, referrer, city, region")
         .gte("started_at", rangeStart)
         .order("started_at", { ascending: false })
         .limit(2000),
