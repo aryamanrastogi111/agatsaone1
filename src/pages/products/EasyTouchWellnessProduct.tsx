@@ -20,6 +20,7 @@ const WellnessTrustBar = () => (
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
+import { WellnessReviewsSection } from "@/components/products/WellnessReviewsSection";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
