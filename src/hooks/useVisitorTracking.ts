@@ -11,6 +11,27 @@ interface GeoInfo {
 }
 
 let cachedGeo: GeoInfo | null = null;
+let cachedIsBot: boolean | null = null;
+
+/** Detect bots via user-agent patterns, webdriver flag, and missing browser features */
+function isBot(): boolean {
+  if (cachedIsBot !== null) return cachedIsBot;
+  try {
+    const ua = navigator.userAgent.toLowerCase();
+    const botPatterns = /bot|crawl|spider|slurp|facebookexternalhit|bingpreview|googlebot|yandex|baidu|duckduck|semrush|ahref|mj12bot|dotbot|petalbot|bytespider|gptbot|claudebot|headlesschrome|phantomjs|prerender|lighthouse|pagespeed|pingdom|uptimerobot|statuspage|monitoring/;
+    if (botPatterns.test(ua)) { cachedIsBot = true; return true; }
+    // Headless / automated browsers
+    if ((navigator as any).webdriver === true) { cachedIsBot = true; return true; }
+    // Very short or missing user-agent
+    if (!ua || ua.length < 20) { cachedIsBot = true; return true; }
+    // No language set (common in bots)
+    if (!navigator.language) { cachedIsBot = true; return true; }
+  } catch {
+    // If navigator isn't available, skip
+  }
+  cachedIsBot = false;
+  return false;
+}
 
 async function fetchGeoInfo(): Promise<GeoInfo> {
   if (cachedGeo) return cachedGeo;
@@ -188,7 +209,7 @@ export function useVisitorTracking() {
 
   // Subscribe once on mount (for public pages) — deferred to avoid blocking first paint
   useEffect(() => {
-    if (isAdminRef.current) return;
+    if (isAdminRef.current || isBot()) return;
 
     captureUtmParams();
 
@@ -236,7 +257,7 @@ export function useVisitorTracking() {
 
   // Update presence and log page view on every navigation
   useEffect(() => {
-    if (isAdminRef.current) return;
+    if (isAdminRef.current || isBot()) return;
     trackPage(location.pathname);
     logPageView(location.pathname, sessionId.current);
 
