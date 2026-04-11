@@ -58,7 +58,7 @@ type CheckoutStep = 1 | 2;
 type PageState = "form" | "processing" | "success" | "error";
 
 export default function CheckoutPage() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { prices } = usePricing();
   const skuParam = searchParams.get("sku") || "";
   // Deduplicate SKUs — count occurrences as initial quantities
