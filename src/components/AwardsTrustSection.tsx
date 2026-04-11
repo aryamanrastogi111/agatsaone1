@@ -154,7 +154,7 @@ export function AwardsTrustSection() {
             <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-muted/20 to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-muted/20 to-transparent z-10 pointer-events-none" />
             <div className="overflow-hidden">
-              <div className="flex gap-3 animate-marquee-left">
+              <div className="flex gap-3 animate-marquee-left will-change-transform">
                 {scrollAwards.slice(0, scrollAwards.length / 2 + 6).map((award, i) => (
                   <AwardPill key={`r1-${i}`} award={award} />
                 ))}
@@ -169,7 +169,7 @@ export function AwardsTrustSection() {
             <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-muted/20 to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-muted/20 to-transparent z-10 pointer-events-none" />
             <div className="overflow-hidden">
-              <div className="flex gap-3 animate-marquee-right">
+              <div className="flex gap-3 animate-marquee-right will-change-transform">
                 {[...scrollAwards.slice(scrollAwards.length / 2 - 6), ...scrollAwards.slice(0, 12)].map((award, i) => (
                   <AwardPill key={`r2-${i}`} award={award} />
                 ))}
