@@ -61,10 +61,15 @@ export default function Analytics() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     const now = new Date();
-    const todayStart = new Date();
-    todayStart.setHours(0, 0, 0, 0);
-    const yesterdayStart = new Date(todayStart);
-    yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+    // Use IST (UTC+5:30) for day boundaries to match backend
+    const istOffsetMs = 5.5 * 60 * 60 * 1000;
+    const istNow = new Date(now.getTime() + istOffsetMs);
+    const istTodayStr = istNow.toISOString().split("T")[0];
+    const todayStart = new Date(`${istTodayStr}T00:00:00+05:30`);
+    const yesterdayDate = new Date(istNow);
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+    const istYesterdayStr = yesterdayDate.toISOString().split("T")[0];
+    const yesterdayStart = new Date(`${istYesterdayStr}T00:00:00+05:30`);
     const yesterdayEnd = new Date(todayStart);
 
     let days: number;
@@ -148,7 +153,8 @@ export default function Analytics() {
         byDay[label] = { date: label, revenue: 0, orders: 0 };
       }
       rangeOrders.forEach((o: any) => {
-        const h = new Date(o.created_at).getHours();
+        const istTime = new Date(new Date(o.created_at).getTime() + istOffsetMs);
+        const h = istTime.getUTCHours();
         const label = `${h.toString().padStart(2, "0")}:00`;
         if (byDay[label]) {
           if (PAID_STATUSES.includes(o.status)) byDay[label].revenue += o.amount ?? 0;
@@ -157,11 +163,13 @@ export default function Analytics() {
       });
     } else {
       for (let i = days - 1; i >= 0; i--) {
-        const d = format(subDays(now, i), "MMM d");
+        const istD = new Date(istNow.getTime() - i * 86400000);
+        const d = format(istD, "MMM d");
         byDay[d] = { date: d, revenue: 0, orders: 0 };
       }
       rangeOrders.forEach((o: any) => {
-        const d = format(new Date(o.created_at), "MMM d");
+        const istOrderDate = new Date(new Date(o.created_at).getTime() + istOffsetMs);
+        const d = format(istOrderDate, "MMM d");
         if (byDay[d]) {
           if (PAID_STATUSES.includes(o.status)) byDay[d].revenue += o.amount ?? 0;
           byDay[d].orders += 1;
