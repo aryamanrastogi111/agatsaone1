@@ -190,6 +190,11 @@ export function useVisitorTracking() {
     captureUtmParams();
     incrementDailyVisitor();
 
+    // Fetch geo info early
+    fetchGeoInfo().then((geo) => {
+      geoRef.current = geo;
+    });
+
     const channel = supabase.channel("live-visitors", {
       config: { presence: { key: sessionId.current } },
     });
