@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
-import { StickyCartBar } from "@/components/shop/StickyCartBar";
+
 import sanketlifeImg from "@/assets/sanketlife-device-app.webp";
 import easytouchImg from "@/assets/easytouch-wellness-hero.webp";
 import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
