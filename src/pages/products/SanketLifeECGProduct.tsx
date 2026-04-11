@@ -37,11 +37,12 @@ export default function SanketLifeECGProduct() {
   const ecgPrice = prices.ecg_bundle;
   useMetaPixelViewContent("SANKET_LIFE_ECG", "SanketLife 12-Lead ECG", ecgPrice);
 
-  const handleBuy = () => {
+  const handleBuy = (qtyOrEvent?: number | React.MouseEvent) => {
+    const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["ecg_bundle"], content_name: "SanketLife ECG", content_type: "product", value: ecgPrice, currency: "INR" }); } catch {}
+      try { (window as any).fbq("track", "AddToCart", { content_ids: ["ecg_bundle"], content_name: "SanketLife ECG", content_type: "product", value: ecgPrice * qty, currency: "INR" }); } catch {}
     }
-    navigate("/checkout?sku=ecg_bundle");
+    navigate(`/checkout?sku=${Array(qty).fill("ecg_bundle").join(",")}`);
   };
 
   useSEO({
