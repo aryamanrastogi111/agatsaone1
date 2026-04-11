@@ -27,10 +27,10 @@ import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 
 const zones = [
-  { color: "#22c55e", name: "Calm", meaning: "Your body handled that well. You're in a good place." },
-  { color: "#3b82f6", name: "Active", meaning: "Normal response. Mild activity. Nothing to worry about." },
-  { color: "#f59e0b", name: "Elevated", meaning: "Your body is working harder than usual. Keep an eye on your next meal." },
-  { color: "#ef4444", name: "High", meaning: "Your body is under stress right now. Time to act — rest, walk, or speak to your doctor." },
+  { color: "#22c55e", name: "Calm", range: "0–25", meaning: "Your body processed that meal smoothly. Everything is in balance — like a normal fasting morning reading.", familiar: "Steady and stable" },
+  { color: "#3b82f6", name: "Active", range: "26–50", meaning: "A mild response — your body is working as expected after eating. Nothing to worry about.", familiar: "Within a healthy range" },
+  { color: "#f59e0b", name: "Elevated", range: "51–75", meaning: "Your body is working harder than usual to process what you ate. Pay attention to your next meal.", familiar: "Higher than your usual pattern" },
+  { color: "#ef4444", name: "High", range: "76–100", meaning: "Your body is under metabolic stress right now. Time to act — rest, take a walk, or speak to your doctor.", familiar: "Needs immediate attention" },
 ];
 
 const whoIsThisFor = [
@@ -241,29 +241,40 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* ── SECTION 4 — THE ZONES ── */}
+      {/* ── SECTION 4 — METABOLIC LOAD ZONES ── */}
       <section className="py-20 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">One number. One zone. No confusion.</h2>
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Metabolic Load Zones</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Your Metabolic Score — one number, one zone.</h2>
             <p className="text-lg text-muted-foreground mt-3 max-w-2xl mx-auto">
-              Instead of trying to figure out if 168 is good or bad after a meal, EasyTouch shows you something anyone can understand:
+              Instead of staring at a number and wondering "is this good or bad?", EasyTouch places you in a zone you can instantly understand — whether you just ate or haven't eaten in hours.
             </p>
           </motion.div>
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
             {zones.map((z, i) => (
               <motion.div key={z.name} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.08 }}
                 className="bg-card rounded-2xl border border-border p-6 text-center hover:shadow-lg transition-shadow"
               >
-                <div className="w-10 h-10 rounded-full mx-auto mb-3" style={{ backgroundColor: z.color }} />
+                <div className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ backgroundColor: z.color }}>
+                  <span className="text-white text-xs font-bold">{z.range}</span>
+                </div>
                 <h3 className="text-lg font-bold text-foreground">{z.name}</h3>
+                <p className="text-xs font-medium text-muted-foreground/60 mt-0.5">{z.familiar}</p>
                 <p className="text-sm text-muted-foreground mt-2">{z.meaning}</p>
               </motion.div>
             ))}
           </div>
-          <motion.p {...fadeUp} className="mt-10 text-muted-foreground text-center max-w-2xl mx-auto">
-            EasyTouch knows whether you just ate or haven't eaten in hours — and adjusts what each zone means accordingly. A post-meal reading is judged differently than a fasting morning reading. The context is always built in.
-          </motion.p>
+
+          <motion.div {...fadeUp} className="mt-10 max-w-2xl mx-auto text-center space-y-4">
+            <p className="text-muted-foreground">
+              EasyTouch knows whether you just ate or haven't eaten in hours — and adjusts what each zone means accordingly. A post-meal reading is judged differently than a fasting morning reading. The context is always built in.
+            </p>
+            <p className="text-foreground font-medium italic">
+              If you've ever checked your sugar after a meal, you already know what these zones mean. The difference is — no needle.
+            </p>
+          </motion.div>
         </div>
       </section>
 
