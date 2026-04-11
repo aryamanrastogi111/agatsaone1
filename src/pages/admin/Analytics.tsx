@@ -163,11 +163,13 @@ export default function Analytics() {
       });
     } else {
       for (let i = days - 1; i >= 0; i--) {
-        const d = format(subDays(now, i), "MMM d");
+        const istD = new Date(istNow.getTime() - i * 86400000);
+        const d = format(istD, "MMM d");
         byDay[d] = { date: d, revenue: 0, orders: 0 };
       }
       rangeOrders.forEach((o: any) => {
-        const d = format(new Date(o.created_at), "MMM d");
+        const istOrderDate = new Date(new Date(o.created_at).getTime() + istOffsetMs);
+        const d = format(istOrderDate, "MMM d");
         if (byDay[d]) {
           if (PAID_STATUSES.includes(o.status)) byDay[d].revenue += o.amount ?? 0;
           byDay[d].orders += 1;
