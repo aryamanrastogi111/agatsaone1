@@ -11,7 +11,7 @@ import {
   Clock, Activity, Smartphone, Share2, Stethoscope, Users,
   MapPin, Building2, Shield, Zap, FileText, Phone, HeartPulse,
   Moon, Eye, UserCheck, Timer, CalendarCheck, Headphones,
-  Award, RefreshCw, CheckCircle2, AlertTriangle, Brain,
+  Award, RefreshCw, CheckCircle2, AlertTriangle, Brain, ShoppingCart,
 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
