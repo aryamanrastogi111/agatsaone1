@@ -278,7 +278,7 @@ export default function CheckoutPage() {
           </div>
           <h1 className="text-2xl font-bold text-foreground">Order Confirmed!</h1>
           <p className="text-muted-foreground">
-            Your device ships within 2–4 business days. You'll receive a confirmation on your phone shortly.
+            Your device ships within 24 hours on business days. You'll receive a confirmation on your phone shortly.
           </p>
           <div className="bg-muted/50 rounded-xl p-4 text-sm space-y-1">
             <p className="font-medium text-foreground">Shipping to</p>
