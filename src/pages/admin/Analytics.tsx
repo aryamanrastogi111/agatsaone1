@@ -75,19 +75,32 @@ export default function Analytics() {
     let days: number;
     let rangeStart: string;
     let rangeEnd: string | null = null;
+    let rangeStartStatDate: string;
+    let rangeEndStatDateExclusive: string;
+
+    const tomorrowDate = new Date(istNow);
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    const istTomorrowStr = tomorrowDate.toISOString().split("T")[0];
+
     if (timeRange === "today") {
       days = 1;
       rangeStart = todayStart.toISOString();
+      rangeEnd = new Date(`${istTomorrowStr}T00:00:00+05:30`).toISOString();
+      rangeStartStatDate = istTodayStr;
+      rangeEndStatDateExclusive = istTomorrowStr;
     } else if (timeRange === "yesterday") {
       days = 1;
       rangeStart = yesterdayStart.toISOString();
       rangeEnd = yesterdayEnd.toISOString();
+      rangeStartStatDate = istYesterdayStr;
+      rangeEndStatDateExclusive = istTodayStr;
     } else {
       days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : timeRange === "90d" ? 90 : 365;
-      // Use IST-aligned start date
-      const rangeIstDate = new Date(istNow.getTime() - days * 86400000);
+      const rangeIstDate = new Date(istNow.getTime() - (days - 1) * 86400000);
       const rangeIstStr = rangeIstDate.toISOString().split("T")[0];
       rangeStart = new Date(`${rangeIstStr}T00:00:00+05:30`).toISOString();
+      rangeStartStatDate = rangeIstStr;
+      rangeEndStatDateExclusive = istTomorrowStr;
     }
 
     let rangeQuery = db.from("orders")
@@ -96,30 +109,35 @@ export default function Analytics() {
       .order("created_at");
     if (rangeEnd) rangeQuery = rangeQuery.lt("created_at", rangeEnd);
 
+    let dailyStatsQuery = db.from("daily_stats")
+      .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments, total_visitors")
+      .gte("stat_date", rangeStartStatDate)
+      .lt("stat_date", rangeEndStatDateExclusive)
+      .order("stat_date", { ascending: true });
+
+    let pageViewsQuery = db.from("page_views")
+      .select("page_path, session_id, created_at, utm_source, utm_medium")
+      .gte("created_at", rangeStart);
+    if (rangeEnd) pageViewsQuery = pageViewsQuery.lt("created_at", rangeEnd);
+    pageViewsQuery = pageViewsQuery.order("created_at", { ascending: false }).limit(5000);
+
+    let sessionsQuery = db.from("visitor_sessions")
+      .select("session_id, started_at, last_seen_at, page_count, entry_page, exit_page, utm_source, utm_medium, utm_campaign, device, referrer, city, region")
+      .gte("started_at", rangeStart);
+    if (rangeEnd) sessionsQuery = sessionsQuery.lt("started_at", rangeEnd);
+    sessionsQuery = sessionsQuery.order("started_at", { ascending: false }).limit(2000);
+
     const [allRes, rangeRes, todayRes, dailyRes, pageViewsRes, sessionsRes] = await Promise.all([
       db.from("orders").select("amount, status, created_at, items"),
       rangeQuery,
       db.from("orders")
         .select("amount, status")
         .in("status", PAID_STATUSES)
-        .gte("created_at", todayStart.toISOString()),
-      db.from("daily_stats")
-        .select("stat_date, total_orders, total_revenue, avg_order_value, peak_visitors, pending_payments, total_visitors")
-        .gte("stat_date", (() => {
-          const d = new Date(istNow.getTime() - Math.max(days, 7) * 86400000);
-          return d.toISOString().split("T")[0];
-        })())
-        .order("stat_date", { ascending: true }),
-      db.from("page_views")
-        .select("page_path, session_id, created_at, utm_source, utm_medium")
-        .gte("created_at", rangeStart)
-        .order("created_at", { ascending: false })
-        .limit(5000),
-      db.from("visitor_sessions")
-        .select("session_id, started_at, last_seen_at, page_count, entry_page, exit_page, utm_source, utm_medium, utm_campaign, device, referrer, city, region")
-        .gte("started_at", rangeStart)
-        .order("started_at", { ascending: false })
-        .limit(2000),
+        .gte("created_at", todayStart.toISOString())
+        .lt("created_at", new Date(`${istTomorrowStr}T00:00:00+05:30`).toISOString()),
+      dailyStatsQuery,
+      pageViewsQuery,
+      sessionsQuery,
     ]);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
