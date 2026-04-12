@@ -2,30 +2,45 @@
 
 ## Problem
 
-The "Know before you eat" section (lines 348-360) is another wall of 4 paragraphs of plain text. After the user just scrolled through the Metabolic Score zones, they hit more dense reading. The content is valuable but the format doesn't match the scannable pattern we've established above.
+On mobile (375px), the hero section stacks ~12 elements vertically before the product image appears: headline, stats, subheadline, "Show Me How" button, guarantee badge, price block, EMI, urgency bar, shipping, Add to Cart, free bonus badge, then finally the image. This creates a wall of text/buttons spanning 2+ full scrolls before the user sees the product. On desktop this is fine because the split-column layout shows text and image side by side.
 
-## Plan — Convert "Know before you eat" into a visual step flow
+## Plan — Streamline mobile hero only (no desktop changes)
 
-### What changes
+### Changes to `src/pages/products/EasyTouchWellnessProduct.tsx`
 
-**Replace the 4 paragraphs with a compact 4-step visual flow** — horizontal on desktop, vertical on mobile. Each step gets an icon, a bold micro-title, and one short sentence:
+**1. Reorder: move product image above the pricing block on mobile**
+- Use CSS `order` classes to place the image between the subheadline/CTA area and the pricing block on mobile only
+- Wrap the grid in `flex flex-col md:grid md:grid-cols-2` so we can control mobile ordering
+- Image gets `order-1 md:order-none` to appear after headline + CTA but before price details on mobile
 
-| Step | Icon | Title | Content |
-|------|------|-------|---------|
-| 1 | Camera | Snap your plate | Open the app, take a photo of your meal |
-| 2 | Brain/Sparkles | Get a prediction | Nera AI estimates your metabolic response — before you eat |
-| 3 | ScanLine | Scan after 90 min | Take a quick EasyTouch reading to see how your body actually responded |
-| 4 | TrendingUp | See your patterns | Learn which foods keep you Calm vs push you Elevated — for YOUR body |
+**2. Hide non-essential elements on mobile**
+- Hide the "Show Me How" scroll button on mobile (`hidden md:flex`) — the Add to Cart is right there, no need for a scroll prompt
+- Hide the EMI line on mobile (`hidden md:block`) — secondary info
+- Hide the shipping date line on mobile (`hidden md:flex`) — it's in the checkout section below too
+- Keep: headline, stats, subheadline, guarantee badge, price, urgency bar, Add to Cart, free badge
 
-**Add a bold closer line** below: *"Not a generic diet chart. Your chart."*
+**3. Compact mobile image**
+- Add `max-w-[200px] md:max-w-sm` to the product image so it's smaller on mobile, keeping the scroll depth tight
 
-### Result
+### Mobile layout after changes (top to bottom)
 
-- Section goes from ~4 paragraphs to a scannable 4-step grid
-- Consistent with the card-based pattern from Section 2
-- Key message preserved in ~40% of the space
+```text
+Headline (smaller: text-3xl on mobile)
+Stats strip (2 items)
+Subheadline ("You know your number...")
+Guarantee badge
+── Product Image (compact, ~200px) ──
+Price (₹3,999 with strike)
+Urgency bar
+Add to Cart button
+Free Nera AI badge
+```
+
+### What stays untouched
+- All desktop styles (everything behind `md:` breakpoints)
+- All sections below the hero
+- All functionality (buttons, cart logic, tracking)
 
 ### File to edit
-
-- `src/pages/products/EasyTouchWellnessProduct.tsx` — Section 5 only (lines 348-360)
+- `src/pages/products/EasyTouchWellnessProduct.tsx` — Section 1 (hero) only, lines 137-213
 
