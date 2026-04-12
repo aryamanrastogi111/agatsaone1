@@ -6,16 +6,16 @@ export interface NeraAiPlan {
 }
 
 const PLAN_MAP: Record<string, NeraAiPlan> = {
-  "ecg_bundle":       { plan: "Premium", duration: "3 months", value: "₹1,197" },
-  "bundle_ecg_band":  { plan: "Premium", duration: "3 months", value: "₹1,197" },
-  "sanketlife-ecg":   { plan: "Premium", duration: "3 months", value: "₹1,197" },
-  "wellness_sub":     { plan: "Weekly",  duration: "3 months", value: "₹897" },
-  "easytouch-wellness": { plan: "Weekly", duration: "3 months", value: "₹897" },
-  "band_sub":         { plan: "Weekly",  duration: "3 months", value: "₹897" },
-  "rhythm-band":      { plan: "Weekly",  duration: "3 months", value: "₹897" },
-  "scale_sub":        { plan: "Weekly",  duration: "3 months", value: "₹897" },
-  "smart-scale":      { plan: "Weekly",  duration: "3 months", value: "₹897" },
-  "multivital":       { plan: "Weekly",  duration: "3 months", value: "₹897" },
+  "ecg_bundle":       { plan: "Premium", duration: "1 year", value: "₹1,197" },
+  "bundle_ecg_band":  { plan: "Premium", duration: "1 year", value: "₹1,197" },
+  "sanketlife-ecg":   { plan: "Premium", duration: "1 year", value: "₹1,197" },
+  "wellness_sub":     { plan: "Weekly",  duration: "1 year", value: "₹897" },
+  "easytouch-wellness": { plan: "Weekly", duration: "1 year", value: "₹897" },
+  "band_sub":         { plan: "Weekly",  duration: "1 year", value: "₹897" },
+  "rhythm-band":      { plan: "Weekly",  duration: "1 year", value: "₹897" },
+  "scale_sub":        { plan: "Weekly",  duration: "1 year", value: "₹897" },
+  "smart-scale":      { plan: "Weekly",  duration: "1 year", value: "₹897" },
+  "multivital":       { plan: "Weekly",  duration: "1 year", value: "₹897" },
 };
 
 export function getNeraAiPlan(productId: string): NeraAiPlan | null {

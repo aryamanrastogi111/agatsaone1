@@ -109,8 +109,8 @@ export default function SmartScaleProduct() {
                 </div>
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                   <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
-                  <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 3 months</span>
-                  <span className="text-xs text-muted-foreground">(worth ₹897)</span>
+                  <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 1 year</span>
+                  <span className="text-xs text-muted-foreground">No subscription needed</span>
                 </div>
               </div>
               <div className="flex items-center gap-1 mt-3">

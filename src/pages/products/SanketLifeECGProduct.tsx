@@ -139,8 +139,8 @@ export default function SanketLifeECGProduct() {
               <TrustBar showCDSCO />
               <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
                 <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
-                <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
-                <span className="text-xs text-muted-foreground">(worth ₹1,197)</span>
+                <span className="text-sm font-semibold text-foreground">Nera AI Premium — 1 year</span>
+                <span className="text-xs text-muted-foreground">No subscription needed</span>
               </div>
 
               <p className="text-xs text-muted-foreground mt-3">
@@ -283,7 +283,7 @@ export default function SanketLifeECGProduct() {
           >
             Add SanketLife ECG to Cart — {fmt(ecgPrice)}
           </Button>
-          <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
+          <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 1 year · No subscription needed</p>
         </div>
       </section>
 
@@ -637,7 +637,7 @@ export default function SanketLifeECGProduct() {
           >
             Buy SanketLife ECG — {fmt(ecgPrice)}
           </Button>
-          <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
+          <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 1 year · No subscription needed</p>
         </div>
       </section>
 
@@ -806,7 +806,7 @@ export default function SanketLifeECGProduct() {
           >
             Check Your Heart Anytime — {fmt(ecgPrice)}
           </Button>
-          <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 3 months (worth ₹1,197)</p>
+          <p className="text-primary-foreground/70 text-xs mt-2 font-medium">Included FREE: Nera AI Premium — 1 year · No subscription needed</p>
         </div>
       </section>
 
