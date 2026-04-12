@@ -346,16 +346,31 @@ export default function EasyTouchWellnessProduct() {
 
       {/* ── SECTION 5 — SNAP YOUR MEAL ── */}
       <section className="py-12 bg-background">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp}>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center">Know before you eat.</h2>
           </motion.div>
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 space-y-5 text-lg text-muted-foreground">
-            <p>Open the Agatsa One app. Take a photo of your plate.</p>
-            <p>Nera AI identifies what is on your plate, estimates the portion, and tells you what kind of metabolic response to expect — before you take a bite.</p>
-            <p>Then, 90 minutes after eating, take a quick EasyTouch reading. See exactly how your body actually responded.</p>
-            <p>Do this a few times and you will start to see patterns. You will know which foods push you into the Elevated zone and which ones keep you Calm — <strong className="text-foreground">for your body specifically.</strong> Not a general diet chart. Your chart.</p>
-          </motion.div>
+
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { icon: Camera, title: "Snap your plate", desc: "Open the app, take a photo of your meal." },
+              { icon: Sparkles, title: "Get a prediction", desc: "Nera AI estimates your metabolic response — before you eat." },
+              { icon: ScanLine, title: "Scan after 90 min", desc: "Take a quick EasyTouch reading to see how your body actually responded." },
+              { icon: TrendingUp, title: "See your patterns", desc: "Learn which foods keep you Calm vs push you Elevated — for YOUR body." },
+            ].map((step, i) => (
+              <motion.div key={step.title} {...fadeUp} transition={{ duration: 0.5, delay: 0.1 * i }} className="bg-card border border-border rounded-xl p-5 text-center">
+                <div className="mx-auto w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                  <step.icon className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">{step.title}</h3>
+                <p className="text-sm text-muted-foreground">{step.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p {...fadeUp} transition={{ duration: 0.5, delay: 0.5 }} className="mt-8 text-center text-lg font-semibold text-foreground italic">
+            Not a generic diet chart. Your chart.
+          </motion.p>
         </div>
       </section>
 
