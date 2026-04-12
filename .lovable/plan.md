@@ -2,33 +2,30 @@
 
 ## Problem
 
-Section 2 ("Introduce the Device") dumps 5 dense paragraphs of text (lines 204-218) — roughly 2 full mobile scrolls of unbroken reading before the product image and Add to Cart. The content is good but the format guarantees nobody reads it.
+The "Know before you eat" section (lines 348-360) is another wall of 4 paragraphs of plain text. After the user just scrolled through the Metabolic Score zones, they hit more dense reading. The content is valuable but the format doesn't match the scannable pattern we've established above.
 
-## Plan — Convert Section 2 text wall into scannable visual blocks
+## Plan — Convert "Know before you eat" into a visual step flow
 
 ### What changes
 
-**Replace the 5 paragraphs (lines 204-218) with 3 compact visual cards** arranged in a horizontal row on desktop, vertical stack on mobile. Each card has an icon/emoji, a bold 1-line title, and 1-2 short sentences max:
+**Replace the 4 paragraphs with a compact 4-step visual flow** — horizontal on desktop, vertical on mobile. Each step gets an icon, a bold micro-title, and one short sentence:
 
-| Card | Icon | Title | Content (condensed) |
-|------|------|-------|---------------------|
-| 1 | 🔬 | Same tech as hospitals | Uses light sensors like the pulse oximeter from COVID — reads blood flow through your fingertip |
-| 2 | 📸 | Train it in days | Snap your glucometer + meal photos for a few days. Nera AI learns YOUR body's patterns |
-| 3 | ✅ | Then just scan | One touch, 15 seconds → Metabolic Score 0-100. No strip. No blood. Glucometer becomes optional |
+| Step | Icon | Title | Content |
+|------|------|-------|---------|
+| 1 | Camera | Snap your plate | Open the app, take a photo of your meal |
+| 2 | Brain/Sparkles | Get a prediction | Nera AI estimates your metabolic response — before you eat |
+| 3 | ScanLine | Scan after 90 min | Take a quick EasyTouch reading to see how your body actually responded |
+| 4 | TrendingUp | See your patterns | Learn which foods keep you Calm vs push you Elevated — for YOUR body |
 
-**Keep the intro text above (lines 196-202)** — the rhetorical questions + "Meet EasyTouch Wellness" headline + tagline. These are short and effective.
-
-**Remove the duplicate product image** (line 221-223) since it's already in the hero now.
-
-**Move the "Not just a reading. An explanation." line** to sit as a bold closer below the 3 cards.
+**Add a bold closer line** below: *"Not a generic diet chart. Your chart."*
 
 ### Result
 
-- Section 2 goes from ~5 scrolls on mobile to ~1.5
-- Key information preserved but scannable
-- User reaches Add to Cart much faster
+- Section goes from ~4 paragraphs to a scannable 4-step grid
+- Consistent with the card-based pattern from Section 2
+- Key message preserved in ~40% of the space
 
 ### File to edit
 
-- `src/pages/products/EasyTouchWellnessProduct.tsx` — Section 2 only (lines 192-259)
+- `src/pages/products/EasyTouchWellnessProduct.tsx` — Section 5 only (lines 348-360)
 
