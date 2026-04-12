@@ -154,7 +154,8 @@ export default function EasyTouchWellnessProduct() {
                 <span className="items-center gap-1.5 hidden md:flex">🩸 <span className="font-semibold text-foreground">50% fewer pricks</span> in 30 days</span>
               </div>
 
-              <p className="text-lg md:text-xl text-foreground font-semibold mt-6">
+              {/* "You know your number" — desktop only here, mobile gets it after image */}
+              <p className="hidden md:block text-lg md:text-xl text-foreground font-semibold mt-6">
                 You know your number.<br />But you still don't know why it goes up.
               </p>
 
