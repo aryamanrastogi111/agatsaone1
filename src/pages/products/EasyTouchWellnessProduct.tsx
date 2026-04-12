@@ -174,6 +174,7 @@ export default function EasyTouchWellnessProduct() {
                 <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center md:justify-start" />
                 <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
                 <EmiLine price={wellnessPrice} />
+                <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2 justify-center md:justify-start">
                   <span>📦</span>
                   <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
