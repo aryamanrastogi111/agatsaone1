@@ -96,7 +96,7 @@ export default function RhythmBandProduct() {
               <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">The EasyTouch Rhythm Band tracks your heart, sleep, steps, SpO2, and stress score around the clock — providing Nera AI with the continuous data it needs to build a complete picture of your health and recovery.</p>
               <div className="mt-6">
                 <StrikePrice sku="band_sub" price={bandPrice} />
-                <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
+                
                 <EmiLine price={bandPrice} />
                 <StockUrgencyBar productKey="easytouch-rhythm" className="mt-3" />
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
