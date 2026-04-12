@@ -189,7 +189,6 @@ export default function EasyTouchWellnessProduct() {
             {/* Hero price + Add to Cart — below image on mobile */}
             <div className="text-center md:text-left order-3 md:order-none md:col-span-2 md:max-w-[50%]">
               <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center md:justify-start" />
-              <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
               <div className="hidden md:block">
                 <EmiLine price={wellnessPrice} />
               </div>
