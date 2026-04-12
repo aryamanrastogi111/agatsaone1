@@ -1,71 +1,41 @@
 
-# Add Blog Section to the Website
 
-## Overview
-Create a new Blog section with a dedicated page, a "Blog" link in the header navigation, and populate it with the first article about smartwatch vs clinical-grade heart monitoring.
+## Problem Analysis
 
-## What Will Change
+**Issue 1 — Hero doesn't look good**: The entire first viewport is pure text — five giant words stacked vertically with no product image, no visual anchor. On desktop, the massive typography fills the entire screen with nothing else. On mobile, the social proof strip wraps awkwardly ("50% fewer pricks" breaks to 2 lines).
 
-### 1. Header Navigation
-Add a "Blog" link to the navigation bar (both desktop and mobile) between "Support" and the hidden SDK link.
+**Issue 2 — Text bombardment causing drop-offs**: After the headline, there are 4 consecutive text-only blocks before the user sees anything visual (the product image is buried in Section 2). That's ~3 full scrolls of text on mobile before any imagery. Users bail.
 
-### 2. Blog Listing Page (`/blog`)
-A clean, modern blog index page featuring:
-- Hero banner with title "Agatsa Insights" and subtitle
-- Blog post cards in a grid layout showing thumbnail, title, excerpt, date, and read time
-- Each card links to the full article
-- Consistent with the site's white and cyan design language
+---
 
-### 3. Blog Post Page (`/blog/:slug`)
-A dedicated article reader page with:
-- Full-width hero/header area with the post title and metadata (date, read time)
-- Clean, readable typography for the article body
-- A call-to-action at the bottom linking to the SanketLife product page
-- "Back to Blog" navigation
+## Plan
 
-### 4. First Blog Post Content
-The article "Why Your Smartwatch Isn't Enough: The Truth About Clinical-Grade Heart Monitoring at Home" will be stored as structured data and rendered on the blog post page.
+### 1. Redesign the hero into a split layout (desktop) / stacked layout (mobile)
 
-## Files to Create
-- `src/pages/Blog.tsx` -- Blog listing page
-- `src/pages/BlogPost.tsx` -- Individual blog post page
-- `src/data/blogPosts.ts` -- Blog post data (title, slug, content, date, excerpt)
+- **Left side (desktop) / Top (mobile)**: Keep the punchy "Needle. Blood. Strip. Repeat." headline but reduce font size slightly. Add the social proof strip and the single killer line: "You know your number. But you still don't know why it goes up."
+- **Right side (desktop) / Below headline (mobile)**: Show the EasyTouch Wellness device image prominently with a subtle floating animation. Add a CTA button ("Show Me How") right here.
+- **Remove** the 3 rhetorical questions block and the "There is a better way" block from the hero. These create scroll fatigue. The "why" questions can move into Section 2 as a compact intro.
 
-## Files to Modify
-- `src/components/layout/Header.tsx` -- Add "Blog" nav item
-- `src/components/layout/Footer.tsx` -- Add Blog link under company links
-- `src/App.tsx` -- Add `/blog` and `/blog/:slug` routes
+### 2. Fix mobile social proof wrapping
 
-## Technical Details
+- On screens below `md`, hide "50% fewer pricks in 30 days" and show only "20,000+ users" and "⭐ 4.6 rating"
+- The guarantee badge already covers the "50% fewer pricks" message, so no information is lost
 
-### Blog data structure (`src/data/blogPosts.ts`)
-```text
-{
-  slug: "smartwatch-vs-clinical-ecg",
-  title: "Why Your Smartwatch Isn't Enough...",
-  excerpt: "It feels good when your wrist buzzes...",
-  date: "2026-02-10",
-  readTime: "5 min read",
-  sections: [
-    { type: "paragraph", content: "..." },
-    { type: "heading", content: "..." },
-    { type: "list", items: ["..."] },
-  ]
-}
-```
+### 3. Condense the text-heavy intro
 
-### Route additions in `App.tsx`
-```text
-/blog        --> Blog listing page
-/blog/:slug  --> Individual blog post
-```
+- Merge the rhetorical questions ("Why did it spike…") into Section 2's intro as a short 2-line block, not 4 separate paragraphs
+- Move the guarantee badge to sit alongside the CTA in the hero, not as a separate block below
 
-### Header nav update
-```text
-navItems = [
-  { label: "Products", href: "/products" },
-  { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
-  { label: "Support", href: "/support" },
-]
-```
+### Summary of changes
+
+| What | Before | After |
+|------|--------|-------|
+| Hero layout | Full-width centered text only | Split: text + product image |
+| First fold content | 5-word headline + stats + 2 paragraphs + 3 questions + CTA + badge | Headline + stats + 1 line + product image + CTA with badge |
+| Mobile social proof | 3 stats wrapping | 2 stats, clean single row |
+| Text before first image | ~3 full scrolls | Image visible in first viewport |
+
+### Files to edit
+
+- `src/pages/products/EasyTouchWellnessProduct.tsx` — restructure Section 1 (hero) only
+
