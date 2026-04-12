@@ -154,7 +154,8 @@ export default function EasyTouchWellnessProduct() {
                 <span className="items-center gap-1.5 hidden md:flex">🩸 <span className="font-semibold text-foreground">50% fewer pricks</span> in 30 days</span>
               </div>
 
-              <p className="text-lg md:text-xl text-foreground font-semibold mt-6">
+              {/* "You know your number" — desktop only here, mobile gets it after image */}
+              <p className="hidden md:block text-lg md:text-xl text-foreground font-semibold mt-6">
                 You know your number.<br />But you still don't know why it goes up.
               </p>
 
@@ -186,8 +187,21 @@ export default function EasyTouchWellnessProduct() {
               </div>
             </motion.div>
 
+            {/* Mobile-only: subheadline + intro after image */}
+            <div className="md:hidden text-center order-3 space-y-3">
+              <p className="text-base text-foreground font-semibold">
+                You know your number.<br />But you still don't know why it goes up.
+              </p>
+              <p className="text-lg text-primary font-bold">
+                Meet EasyTouch Wellness
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Clip it to your finger. Wait 15 seconds.<br />No needle. No blood. No strip.
+              </p>
+            </div>
+
             {/* Hero price + Add to Cart — below image on mobile */}
-            <div className="text-center md:text-left order-3 md:order-none md:col-span-2 md:max-w-[50%]">
+            <div className="text-center md:text-left order-4 md:order-none md:col-span-2 md:max-w-[50%]">
               <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center md:justify-start" />
               <div className="hidden md:block">
                 <EmiLine price={wellnessPrice} />
