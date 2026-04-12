@@ -176,6 +176,16 @@ export default function EasyTouchWellnessProduct() {
               <span className="text-sm md:text-base font-bold text-primary-foreground tracking-wide">50% FEWER NEEDLE PRICKS IN 30 DAYS — OR YOUR MONEY BACK</span>
             </div>
           </motion.div>
+
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.75 }} className="mt-8">
+            <div className="flex items-center justify-center gap-4 md:gap-8 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1.5"><span className="text-primary font-bold text-base">20,000+</span> users</span>
+              <span className="w-px h-4 bg-border" />
+              <span className="flex items-center gap-1.5">⭐ <span className="font-bold text-foreground">4.6</span> rating</span>
+              <span className="w-px h-4 bg-border" />
+              <span className="flex items-center gap-1.5">🩸 <span className="font-semibold text-foreground">50% fewer pricks</span> in 30 days</span>
+            </div>
+          </motion.div>
         </div>
       </section>
 
