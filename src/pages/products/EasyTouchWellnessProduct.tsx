@@ -145,16 +145,16 @@ export default function EasyTouchWellnessProduct() {
                 <span className="block text-primary">Repeat.</span>
               </h1>
 
-              {/* Social proof — hide 3rd stat on mobile */}
-              <div className="flex items-center gap-4 md:gap-6 text-sm text-muted-foreground mt-5 justify-center md:justify-start">
+              {/* Social proof — desktop only in hero text block */}
+              <div className="hidden md:flex items-center gap-4 md:gap-6 text-sm text-muted-foreground mt-5 justify-start">
                 <span className="flex items-center gap-1.5"><span className="text-primary font-bold text-base">20,000+</span> users</span>
                 <span className="w-px h-4 bg-border" />
                 <span className="flex items-center gap-1.5">⭐ <span className="font-bold text-foreground">4.6</span> rating</span>
-                <span className="w-px h-4 bg-border hidden md:block" />
-                <span className="items-center gap-1.5 hidden md:flex">🩸 <span className="font-semibold text-foreground">50% fewer pricks</span> in 30 days</span>
+                <span className="w-px h-4 bg-border" />
+                <span className="flex items-center gap-1.5">🩸 <span className="font-semibold text-foreground">50% fewer pricks</span> in 30 days</span>
               </div>
 
-              {/* "You know your number" — desktop only here, mobile gets it after image */}
+              {/* "You know your number" — desktop only here */}
               <p className="hidden md:block text-lg md:text-xl text-foreground font-semibold mt-6">
                 You know your number.<br />But you still don't know why it goes up.
               </p>
@@ -165,30 +165,14 @@ export default function EasyTouchWellnessProduct() {
                   Show Me How <ArrowRight className="h-5 w-5 ml-1" />
                 </Button>
               </div>
-              <div className="mt-4 inline-flex items-center gap-2 bg-primary border border-primary rounded-full px-5 py-2.5 shadow-[0_4px_20px_hsl(var(--primary)/0.4)]">
+              <div className="hidden md:inline-flex mt-4 items-center gap-2 bg-primary border border-primary rounded-full px-5 py-2.5 shadow-[0_4px_20px_hsl(var(--primary)/0.4)]">
                 <span className="text-base">🛡️</span>
                 <span className="text-xs md:text-sm font-bold text-primary-foreground tracking-wide">50% FEWER PRICKS IN 30 DAYS — OR MONEY BACK</span>
               </div>
             </motion.div>
 
-            {/* Product image — appears after headline on mobile, right column on desktop */}
-            <motion.div
-              {...fadeUp}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-center md:justify-end order-2 md:order-none"
-            >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl blur-3xl scale-110" />
-                <img
-                  src={easytouchDeviceImg}
-                  alt="EasyTouch Wellness device clipped to finger"
-                  className="relative z-10 w-full max-w-[200px] md:max-w-sm drop-shadow-2xl"
-                />
-              </div>
-            </motion.div>
-
-            {/* Mobile-only: subheadline + intro after image */}
-            <div className="md:hidden text-center order-3 space-y-3">
+            {/* Mobile-only: subheadline + intro ABOVE image */}
+            <div className="md:hidden text-center order-2 space-y-2">
               <p className="text-base text-foreground font-semibold">
                 You know your number.<br />But you still don't know why it goes up.
               </p>
@@ -200,8 +184,37 @@ export default function EasyTouchWellnessProduct() {
               </p>
             </div>
 
+            {/* Product image */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center md:justify-end order-3 md:order-none"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl blur-3xl scale-110" />
+                <img
+                  src={easytouchDeviceImg}
+                  alt="EasyTouch Wellness device clipped to finger"
+                  className="relative z-10 w-full max-w-[200px] md:max-w-sm drop-shadow-2xl"
+                />
+              </div>
+            </motion.div>
+
+            {/* Mobile-only: stats + guarantee BELOW image */}
+            <div className="md:hidden text-center order-4 space-y-3">
+              <div className="flex items-center gap-4 text-sm text-muted-foreground justify-center">
+                <span className="flex items-center gap-1.5"><span className="text-primary font-bold text-base">20,000+</span> users</span>
+                <span className="w-px h-4 bg-border" />
+                <span className="flex items-center gap-1.5">⭐ <span className="font-bold text-foreground">4.6</span> rating</span>
+              </div>
+              <div className="inline-flex items-center gap-2 bg-primary border border-primary rounded-full px-4 py-2 shadow-[0_4px_20px_hsl(var(--primary)/0.4)]">
+                <span className="text-base">🛡️</span>
+                <span className="text-xs font-bold text-primary-foreground tracking-wide">50% FEWER PRICKS IN 30 DAYS — OR MONEY BACK</span>
+              </div>
+            </div>
+
             {/* Hero price + Add to Cart — below image on mobile */}
-            <div className="text-center md:text-left order-4 md:order-none md:col-span-2 md:max-w-[50%]">
+            <div className="text-center md:text-left order-5 md:order-none md:col-span-2 md:max-w-[50%]">
               <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center md:justify-start" />
               <div className="hidden md:block">
                 <EmiLine price={wellnessPrice} />
