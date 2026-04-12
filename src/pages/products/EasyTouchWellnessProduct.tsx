@@ -133,59 +133,59 @@ export default function EasyTouchWellnessProduct() {
 
   return (
     <SiteLayout>
-      {/* ── SECTION 1 — HERO ── */}
-      <section className="pt-8 pb-10 md:pt-14 md:pb-16 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div {...fadeUp}>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-foreground leading-[1.1] tracking-tight">
-              <span className="block">Needle.</span>
-              <span className="block">Blood.</span>
-              <span className="block">Strip.</span>
-              <span className="block">Number.</span>
-              <span className="block text-primary">Repeat.</span>
-            </h1>
-          </motion.div>
+      {/* ── SECTION 1 — HERO (split layout) ── */}
+      <section className="pt-8 pb-10 md:pt-14 md:pb-16 bg-background overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Left — text */}
+            <motion.div {...fadeUp} className="text-center md:text-left">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-foreground leading-[1.1] tracking-tight">
+                <span className="block">Needle. Blood.</span>
+                <span className="block">Strip. Number.</span>
+                <span className="block text-primary">Repeat.</span>
+              </h1>
 
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} className="mt-6">
-            <div className="flex items-center justify-center gap-4 md:gap-8 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1.5"><span className="text-primary font-bold text-base">20,000+</span> users</span>
-              <span className="w-px h-4 bg-border" />
-              <span className="flex items-center gap-1.5">⭐ <span className="font-bold text-foreground">4.6</span> rating</span>
-              <span className="w-px h-4 bg-border" />
-              <span className="flex items-center gap-1.5">🩸 <span className="font-semibold text-foreground">50% fewer pricks</span> in 30 days</span>
-            </div>
-          </motion.div>
+              {/* Social proof — hide 3rd stat on mobile */}
+              <div className="flex items-center gap-4 md:gap-6 text-sm text-muted-foreground mt-5 justify-center md:justify-start">
+                <span className="flex items-center gap-1.5"><span className="text-primary font-bold text-base">20,000+</span> users</span>
+                <span className="w-px h-4 bg-border" />
+                <span className="flex items-center gap-1.5">⭐ <span className="font-bold text-foreground">4.6</span> rating</span>
+                <span className="w-px h-4 bg-border hidden md:block" />
+                <span className="items-center gap-1.5 hidden md:flex">🩸 <span className="font-semibold text-foreground">50% fewer pricks</span> in 30 days</span>
+              </div>
 
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 max-w-2xl mx-auto">
-            <p className="text-xl md:text-2xl text-muted-foreground font-medium leading-relaxed">
-              You have been doing this 3 times a day, every day, for years.
-            </p>
-            <p className="text-xl md:text-2xl text-foreground font-semibold mt-2">
-              You know your number. But you still don't know why it goes up.
-            </p>
-          </motion.div>
+              <p className="text-lg md:text-xl text-foreground font-semibold mt-6">
+                You know your number. But you still don't know <span className="text-primary">why</span> it goes up.
+              </p>
 
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.3 }} className="mt-10 max-w-xl mx-auto space-y-3 text-lg text-muted-foreground">
-            <p>Why did it spike after that meal you thought was fine?</p>
-            <p>Why is it high every morning before you've even eaten anything?</p>
-            <p>Why does it behave some days and not others?</p>
-            <p className="font-medium text-foreground/70">The strip gives you a number. It never gives you a reason.</p>
-          </motion.div>
+              {/* CTA + guarantee */}
+              <div className="mt-8 flex flex-col sm:flex-row items-center md:items-start gap-4">
+                <Button onClick={scrollToIntro} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                  Show Me How <ArrowRight className="h-5 w-5 ml-1" />
+                </Button>
+              </div>
+              <div className="mt-4 inline-flex items-center gap-2 bg-primary border border-primary rounded-full px-5 py-2.5 shadow-[0_4px_20px_hsl(var(--primary)/0.4)]">
+                <span className="text-base">🛡️</span>
+                <span className="text-xs md:text-sm font-bold text-primary-foreground tracking-wide">50% FEWER PRICKS IN 30 DAYS — OR MONEY BACK</span>
+              </div>
+            </motion.div>
 
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.45 }} className="mt-12">
-            <div className="w-16 h-px bg-border mx-auto mb-8" />
-            <p className="text-3xl md:text-4xl font-bold text-foreground">There is a better way.</p>
-            <Button onClick={scrollToIntro} size="lg" className="mt-8 rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-              Show Me <ArrowRight className="h-5 w-5 ml-1" />
-            </Button>
-          </motion.div>
-
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.6 }} className="mt-10">
-            <div className="inline-flex items-center gap-2 bg-primary border border-primary rounded-full px-6 py-3 shadow-[0_4px_20px_hsl(var(--primary)/0.4)] animate-pulse">
-              <span className="text-lg">🛡️</span>
-              <span className="text-sm md:text-base font-bold text-primary-foreground tracking-wide">50% FEWER NEEDLE PRICKS IN 30 DAYS — OR YOUR MONEY BACK</span>
-            </div>
-          </motion.div>
+            {/* Right — product image */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center md:justify-end"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl blur-3xl scale-110" />
+                <img
+                  src={easytouchDeviceImg}
+                  alt="EasyTouch Wellness device clipped to finger"
+                  className="relative z-10 w-full max-w-xs md:max-w-sm drop-shadow-2xl animate-float"
+                />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -193,6 +193,9 @@ export default function EasyTouchWellnessProduct() {
       <section id="introduce-device" className="py-12 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center">
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6">
+              Why did it spike after that meal you thought was fine? Why is it high every morning? The strip gives you a number — never a reason.
+            </p>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Meet EasyTouch Wellness.</h2>
             <p className="text-xl text-primary font-semibold mt-3">
               Clip it to your finger. Wait 15 seconds. No needle. No blood. No strip.
