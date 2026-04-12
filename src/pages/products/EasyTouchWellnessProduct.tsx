@@ -136,10 +136,10 @@ export default function EasyTouchWellnessProduct() {
       {/* ── SECTION 1 — HERO (split layout) ── */}
       <section className="pt-8 pb-10 md:pt-14 md:pb-16 bg-background overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left — text */}
-            <motion.div {...fadeUp} className="text-center md:text-left">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-foreground leading-[1.1] tracking-tight">
+            <motion.div {...fadeUp} className="text-center md:text-left order-1 md:order-none">
+              <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-foreground leading-[1.1] tracking-tight">
                 <span className="block">Needle. Blood.</span>
                 <span className="block">Strip. Number.</span>
                 <span className="block text-primary">Repeat.</span>
@@ -158,8 +158,8 @@ export default function EasyTouchWellnessProduct() {
                 You know your number. But you still don't know <span className="text-primary">why</span> it goes up.
               </p>
 
-              {/* CTA + guarantee */}
-              <div className="mt-8 flex flex-col sm:flex-row items-center md:items-start gap-4">
+              {/* CTA + guarantee — hide "Show Me How" on mobile */}
+              <div className="mt-8 hidden md:flex flex-col sm:flex-row items-center md:items-start gap-4">
                 <Button onClick={scrollToIntro} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
                   Show Me How <ArrowRight className="h-5 w-5 ml-1" />
                 </Button>
@@ -168,46 +168,48 @@ export default function EasyTouchWellnessProduct() {
                 <span className="text-base">🛡️</span>
                 <span className="text-xs md:text-sm font-bold text-primary-foreground tracking-wide">50% FEWER PRICKS IN 30 DAYS — OR MONEY BACK</span>
               </div>
-
-              {/* Hero price + Add to Cart */}
-              <div className="mt-6 text-center md:text-left">
-                <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center md:justify-start" />
-                <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
-                <EmiLine price={wellnessPrice} />
-                <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2 justify-center md:justify-start">
-                  <span>📦</span>
-                  <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
-                </div>
-                <div className="mt-4">
-                  <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-                    <ShoppingCart className="h-5 w-5 mr-2" />
-                    Add to Cart — {fmt(wellnessPrice)}
-                  </Button>
-                </div>
-                <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
-                  <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
-                  <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
-                  <span className="text-xs text-muted-foreground">(worth ₹1,197)</span>
-                </div>
-              </div>
             </motion.div>
 
-            {/* Right — product image */}
+            {/* Product image — appears after headline on mobile, right column on desktop */}
             <motion.div
               {...fadeUp}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-center md:justify-end"
+              className="flex justify-center md:justify-end order-2 md:order-none"
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl blur-3xl scale-110" />
                 <img
                   src={easytouchDeviceImg}
                   alt="EasyTouch Wellness device clipped to finger"
-                  className="relative z-10 w-full max-w-xs md:max-w-sm drop-shadow-2xl"
+                  className="relative z-10 w-full max-w-[200px] md:max-w-sm drop-shadow-2xl"
                 />
               </div>
             </motion.div>
+
+            {/* Hero price + Add to Cart — below image on mobile */}
+            <div className="text-center md:text-left order-3 md:order-none md:col-span-2 md:max-w-[50%]">
+              <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center md:justify-start" />
+              <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
+              <div className="hidden md:block">
+                <EmiLine price={wellnessPrice} />
+              </div>
+              <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
+              <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground mt-2 justify-center md:justify-start">
+                <span>📦</span>
+                <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
+              </div>
+              <div className="mt-4">
+                <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  Add to Cart — {fmt(wellnessPrice)}
+                </Button>
+              </div>
+              <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
+                <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
+                <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
+                <span className="text-xs text-muted-foreground">(worth ₹1,197)</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
