@@ -247,13 +247,7 @@ export default function EasyTouchWellnessProduct() {
       <section id="introduce-device" className="py-12 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center">
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6">
-              Why did it spike after that meal you thought was fine? Why is it high every morning? The strip gives you a number — never a reason.
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Meet EasyTouch Wellness.</h2>
-            <p className="text-xl text-primary font-semibold mt-3">
-              Clip it to your finger. Wait 15 seconds.<br />No needle. No blood. No strip.
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">How it works</h2>
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
             {[
