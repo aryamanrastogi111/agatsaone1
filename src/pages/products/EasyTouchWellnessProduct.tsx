@@ -245,7 +245,7 @@ export default function EasyTouchWellnessProduct() {
       <section id="introduce-device" className="py-12 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">How it works</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">The technology behind EasyTouch</h2>
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
             {[
