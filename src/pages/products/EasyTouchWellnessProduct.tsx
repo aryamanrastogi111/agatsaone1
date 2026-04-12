@@ -248,7 +248,7 @@ export default function EasyTouchWellnessProduct() {
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.25 }} className="mt-12 text-center">
             <div>
               <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center" />
-              <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
+              
               <EmiLine price={wellnessPrice} />
               <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
               <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2 justify-center">

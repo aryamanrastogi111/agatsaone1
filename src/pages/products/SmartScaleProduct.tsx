@@ -100,7 +100,7 @@ export default function SmartScaleProduct() {
               <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">The Agatsa Smart Scale measures 14 body composition metrics in a single 5-second reading — weight, body fat, muscle mass, bone density, visceral fat, metabolic age, and more. Syncs instantly to Nera AI via Bluetooth.</p>
               <div className="mt-6">
                 <StrikePrice sku="scale_sub" price={scalePrice} />
-                <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
+                
                 <EmiLine price={scalePrice} />
                 <StockUrgencyBar productKey="corebalance" className="mt-3" />
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
