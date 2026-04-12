@@ -181,7 +181,7 @@ export default function EasyTouchWellnessProduct() {
                 <img
                   src={easytouchDeviceImg}
                   alt="EasyTouch Wellness device clipped to finger"
-                  className="relative z-10 w-full max-w-xs md:max-w-sm drop-shadow-2xl animate-float"
+                  className="relative z-10 w-full max-w-xs md:max-w-sm drop-shadow-2xl"
                 />
               </div>
             </motion.div>
