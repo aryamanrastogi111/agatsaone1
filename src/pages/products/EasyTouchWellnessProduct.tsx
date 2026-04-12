@@ -176,10 +176,10 @@ export default function EasyTouchWellnessProduct() {
               <p className="text-base text-foreground font-semibold">
                 You know your number.<br />But you still don't know why it goes up.
               </p>
-              <p className="text-lg text-primary font-bold">
+              <p className="text-xl text-primary font-bold">
                 Meet EasyTouch Wellness
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-base text-muted-foreground">
                 Clip it to your finger. Wait 15 seconds.<br />No needle. No blood. No strip.
               </p>
             </div>
@@ -195,7 +195,7 @@ export default function EasyTouchWellnessProduct() {
                 <img
                   src={easytouchDeviceImg}
                   alt="EasyTouch Wellness device clipped to finger"
-                  className="relative z-10 w-full max-w-[200px] md:max-w-sm drop-shadow-2xl"
+                  className="relative z-10 w-full max-w-[260px] md:max-w-sm drop-shadow-2xl"
                 />
               </div>
             </motion.div>
