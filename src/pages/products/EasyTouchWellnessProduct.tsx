@@ -172,9 +172,12 @@ export default function EasyTouchWellnessProduct() {
             </motion.div>
 
             {/* Mobile-only: subheadline + intro ABOVE image */}
-            <div className="md:hidden text-center order-2 space-y-2">
+            <div className="md:hidden text-center order-2 space-y-3">
               <p className="text-base text-foreground font-semibold">
                 You know your number.<br />But you still don't know why it goes up.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Why did it spike after that meal you thought was fine? Why is it high every morning? The strip gives you a number — never a reason.
               </p>
               <p className="text-xl text-primary font-bold">
                 Meet EasyTouch Wellness
