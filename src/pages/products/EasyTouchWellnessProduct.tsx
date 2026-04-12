@@ -155,7 +155,7 @@ export default function EasyTouchWellnessProduct() {
               </div>
 
               <p className="text-lg md:text-xl text-foreground font-semibold mt-6">
-                You know your number. But you still don't know <span className="text-primary">why</span> it goes up.
+                You know your number.<br />But you still don't know <span className="text-primary">why</span> it goes up.
               </p>
 
               {/* CTA + guarantee — hide "Show Me How" on mobile */}
@@ -222,7 +222,7 @@ export default function EasyTouchWellnessProduct() {
             </p>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Meet EasyTouch Wellness.</h2>
             <p className="text-xl text-primary font-semibold mt-3">
-              Clip it to your finger. Wait 15 seconds. No needle. No blood. No strip.
+              Clip it to your finger. Wait 15 seconds.<br />No needle. No blood. No strip.
             </p>
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
