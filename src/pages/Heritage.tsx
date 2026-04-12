@@ -1,82 +1,7 @@
-import { useEffect, useRef } from "react";
-import { trackEvent } from "@/lib/analytics";
-import { supabase } from "@/integrations/supabase/client";
-
 const APPSTORE_URL = "https://agatsa-one-api-651017108992.asia-south1.run.app/v1/track/app-download?platform=ios&campaign=heritage_apr12";
 const PLAYSTORE_URL = "https://agatsa-one-api-651017108992.asia-south1.run.app/v1/track/app-download?platform=android&campaign=heritage_apr12";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const db = supabase as any;
-
-function getQueryParams() {
-  const url = new URL(window.location.href);
-  return {
-    email: url.searchParams.get("email") || url.searchParams.get("e") || null,
-    utm_source: url.searchParams.get("utm_source") || null,
-    utm_medium: url.searchParams.get("utm_medium") || null,
-    utm_campaign: url.searchParams.get("utm_campaign") || null,
-  };
-}
-
-function trackDownloadClick(store: "app_store" | "play_store", visitId: string | null) {
-  // GA4
-  trackEvent("heritage_download_click", {
-    store,
-    campaign: "heritage_email",
-    content_name: "Agatsa One",
-  });
-
-  // Meta Pixel
-  if (window.fbq) {
-    window.fbq("track", "Lead", {
-      content_name: "Heritage Report — App Download",
-      content_category: "heritage_email",
-      value: 0,
-      currency: "INR",
-    });
-  }
-
-  // Log to DB
-  if (visitId) {
-    db.from("heritage_visits")
-      .update({ clicked_store: store, clicked_at: new Date().toISOString() })
-      .eq("id", visitId)
-      .then(() => {});
-  }
-}
-
 export default function Heritage() {
-  const visitIdRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    document.title = "Your Heritage Report — Agatsa One";
-
-    const params = getQueryParams();
-    const device = window.innerWidth < 768 ? "mobile" : "desktop";
-
-    // Fire pixel events
-    trackEvent("heritage_page_view", { campaign: "heritage_email", email: params.email });
-    if (window.fbq) {
-      window.fbq("track", "ViewContent", {
-        content_name: "Heritage Report Landing",
-        content_category: "heritage_email",
-      });
-    }
-
-    // Log visit to DB
-    (async () => {
-      const { data } = await db.from("heritage_visits").insert({
-        email: params.email,
-        session_id: sessionStorage.getItem("agatsa_vsid") || null,
-        utm_source: params.utm_source,
-        utm_medium: params.utm_medium,
-        utm_campaign: params.utm_campaign,
-        device,
-      }).select("id").single();
-      if (data) visitIdRef.current = data.id;
-    })();
-  }, []);
-
   return (
     <div className="min-h-screen bg-white flex items-start justify-center px-5">
       <div className="w-full max-w-[480px] py-8 pb-16">
@@ -129,7 +54,6 @@ export default function Heritage() {
               href={APPSTORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackDownloadClick("app_store", visitIdRef.current)}
               className="inline-flex items-center justify-center gap-2.5 bg-foreground text-background rounded-xl px-6 py-3.5 text-sm font-semibold hover:opacity-90 transition-opacity w-full sm:w-auto"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 shrink-0">
@@ -142,7 +66,6 @@ export default function Heritage() {
               href={PLAYSTORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackDownloadClick("play_store", visitIdRef.current)}
               className="inline-flex items-center justify-center gap-2.5 bg-foreground/90 text-background rounded-xl px-6 py-3.5 text-sm font-semibold hover:opacity-90 transition-opacity w-full sm:w-auto"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 shrink-0">
