@@ -201,26 +201,22 @@ export default function EasyTouchWellnessProduct() {
               Clip it to your finger. Wait 15 seconds. No needle. No blood. No strip.
             </p>
           </motion.div>
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 space-y-5 text-lg text-muted-foreground max-w-3xl mx-auto">
-            <p>
-              EasyTouch Wellness uses the same light sensor that hospitals use in pulse oximeters — the small device they clipped to your finger during COVID to check your oxygen.
-            </p>
-            <p>
-              That sensor shines a gentle light through your fingertip and reads how your blood is moving. But here's what makes it truly powerful:
-            </p>
-            <p>
-              The first few days, you use EasyTouch Wellness with the Agatsa One app — and do two simple things alongside: snap a photo of your glucometer reading, and snap a photo of what you ate. Think of it like training wheels. Every time you do this, Nera AI learns how <strong className="text-foreground">YOUR body</strong> responds to different foods.
-            </p>
-            <p>
-              After just a few days, it knows your body's patterns so well that your glucometer usage reduces — and gradually becomes optional. One touch, 15 seconds — and you get your <strong className="text-foreground">Metabolic Score: a simple number from 0 to 100</strong> that tells you exactly how your body is responding to what you ate. No strip. No blood. Just answers.
-            </p>
-            <p className="text-foreground font-semibold text-xl">Not just a reading. An explanation.</p>
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
+            {[
+              { emoji: "🔬", title: "Same tech as hospitals", text: "Uses light sensors like the pulse oximeter from COVID — reads blood flow through your fingertip." },
+              { emoji: "📸", title: "Train it in days", text: "Snap your glucometer + meal photos for a few days. Nera AI learns YOUR body's patterns." },
+              { emoji: "✅", title: "Then just scan", text: "One touch, 15 seconds → Metabolic Score 0–100. No strip. No blood. Glucometer becomes optional." },
+            ].map((card) => (
+              <div key={card.title} className="bg-card border border-border rounded-xl p-5 text-center">
+                <span className="text-3xl">{card.emoji}</span>
+                <h3 className="text-foreground font-bold text-lg mt-3">{card.title}</h3>
+                <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{card.text}</p>
+              </div>
+            ))}
           </motion.div>
-
-          {/* Product image */}
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.2 }} className="mt-12 flex justify-center">
-            <img src={easytouchDeviceImg} alt="EasyTouch Wellness device clipped to finger" className="w-full max-w-md drop-shadow-2xl" />
-          </motion.div>
+          <motion.p {...fadeUp} transition={{ duration: 0.6, delay: 0.2 }} className="text-foreground font-semibold text-xl text-center mt-8">
+            Not just a reading. An explanation.
+          </motion.p>
 
           {/* Price + Add to Cart block */}
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.25 }} className="mt-12 text-center">
