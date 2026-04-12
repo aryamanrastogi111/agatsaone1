@@ -266,39 +266,6 @@ export default function EasyTouchWellnessProduct() {
             Not just a reading. An explanation.
           </motion.p>
 
-          {/* Price + Add to Cart block */}
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.25 }} className="mt-12 text-center">
-            <div>
-              <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center" />
-              
-              <EmiLine price={wellnessPrice} />
-              <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2 justify-center">
-                <span>📦</span>
-                <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1 mt-3 justify-center">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              ))}
-              <span className="text-sm text-muted-foreground ml-1">4.6/5 (834 reviews)</span>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
-              <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-                <ShoppingCart className="h-5 w-5 mr-2" />
-                Add to Cart — {fmt(wellnessPrice)}
-              </Button>
-            </div>
-            <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
-              <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
-              <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
-              <span className="text-xs text-muted-foreground">(worth ₹1,197)</span>
-            </div>
-            <WellnessTrustBar />
-          </motion.div>
         </div>
       </section>
 
@@ -397,7 +364,37 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* ── SECTION 5B — WATCH IT IN ACTION ── */}
+      {/* ── MID-PAGE CTA ── */}
+      <section className="py-10 bg-muted/30">
+        <div className="max-w-xl mx-auto px-4 text-center">
+          <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center" />
+          <EmiLine price={wellnessPrice} />
+          <StockUrgencyBar productKey="easytouch-wellness" className="mt-3" />
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2 justify-center">
+            <span>📦</span>
+            <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
+          </div>
+          <div className="flex items-center gap-1 mt-3 justify-center">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            ))}
+            <span className="text-sm text-muted-foreground ml-1">4.6/5 (834 reviews)</span>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+            <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+              <ShoppingCart className="h-5 w-5 mr-2" />
+              Add to Cart — {fmt(wellnessPrice)}
+            </Button>
+          </div>
+          <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
+            <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
+            <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
+            <span className="text-xs text-muted-foreground">(worth ₹1,197)</span>
+          </div>
+          <WellnessTrustBar />
+        </div>
+      </section>
+
       <section className="py-12 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center mb-8">
