@@ -1,41 +1,34 @@
 
 
-## Problem Analysis
+## Problem
 
-**Issue 1 — Hero doesn't look good**: The entire first viewport is pure text — five giant words stacked vertically with no product image, no visual anchor. On desktop, the massive typography fills the entire screen with nothing else. On mobile, the social proof strip wraps awkwardly ("50% fewer pricks" breaks to 2 lines).
+Section 2 ("Introduce the Device") dumps 5 dense paragraphs of text (lines 204-218) — roughly 2 full mobile scrolls of unbroken reading before the product image and Add to Cart. The content is good but the format guarantees nobody reads it.
 
-**Issue 2 — Text bombardment causing drop-offs**: After the headline, there are 4 consecutive text-only blocks before the user sees anything visual (the product image is buried in Section 2). That's ~3 full scrolls of text on mobile before any imagery. Users bail.
+## Plan — Convert Section 2 text wall into scannable visual blocks
 
----
+### What changes
 
-## Plan
+**Replace the 5 paragraphs (lines 204-218) with 3 compact visual cards** arranged in a horizontal row on desktop, vertical stack on mobile. Each card has an icon/emoji, a bold 1-line title, and 1-2 short sentences max:
 
-### 1. Redesign the hero into a split layout (desktop) / stacked layout (mobile)
+| Card | Icon | Title | Content (condensed) |
+|------|------|-------|---------------------|
+| 1 | 🔬 | Same tech as hospitals | Uses light sensors like the pulse oximeter from COVID — reads blood flow through your fingertip |
+| 2 | 📸 | Train it in days | Snap your glucometer + meal photos for a few days. Nera AI learns YOUR body's patterns |
+| 3 | ✅ | Then just scan | One touch, 15 seconds → Metabolic Score 0-100. No strip. No blood. Glucometer becomes optional |
 
-- **Left side (desktop) / Top (mobile)**: Keep the punchy "Needle. Blood. Strip. Repeat." headline but reduce font size slightly. Add the social proof strip and the single killer line: "You know your number. But you still don't know why it goes up."
-- **Right side (desktop) / Below headline (mobile)**: Show the EasyTouch Wellness device image prominently with a subtle floating animation. Add a CTA button ("Show Me How") right here.
-- **Remove** the 3 rhetorical questions block and the "There is a better way" block from the hero. These create scroll fatigue. The "why" questions can move into Section 2 as a compact intro.
+**Keep the intro text above (lines 196-202)** — the rhetorical questions + "Meet EasyTouch Wellness" headline + tagline. These are short and effective.
 
-### 2. Fix mobile social proof wrapping
+**Remove the duplicate product image** (line 221-223) since it's already in the hero now.
 
-- On screens below `md`, hide "50% fewer pricks in 30 days" and show only "20,000+ users" and "⭐ 4.6 rating"
-- The guarantee badge already covers the "50% fewer pricks" message, so no information is lost
+**Move the "Not just a reading. An explanation." line** to sit as a bold closer below the 3 cards.
 
-### 3. Condense the text-heavy intro
+### Result
 
-- Merge the rhetorical questions ("Why did it spike…") into Section 2's intro as a short 2-line block, not 4 separate paragraphs
-- Move the guarantee badge to sit alongside the CTA in the hero, not as a separate block below
+- Section 2 goes from ~5 scrolls on mobile to ~1.5
+- Key information preserved but scannable
+- User reaches Add to Cart much faster
 
-### Summary of changes
+### File to edit
 
-| What | Before | After |
-|------|--------|-------|
-| Hero layout | Full-width centered text only | Split: text + product image |
-| First fold content | 5-word headline + stats + 2 paragraphs + 3 questions + CTA + badge | Headline + stats + 1 line + product image + CTA with badge |
-| Mobile social proof | 3 stats wrapping | 2 stats, clean single row |
-| Text before first image | ~3 full scrolls | Image visible in first viewport |
-
-### Files to edit
-
-- `src/pages/products/EasyTouchWellnessProduct.tsx` — restructure Section 1 (hero) only
+- `src/pages/products/EasyTouchWellnessProduct.tsx` — Section 2 only (lines 192-259)
 
