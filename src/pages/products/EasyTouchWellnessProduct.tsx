@@ -233,8 +233,8 @@ export default function EasyTouchWellnessProduct() {
               </div>
               <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
                 <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
-                <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
-                <span className="text-xs text-muted-foreground">(worth ₹1,197)</span>
+                <span className="text-sm font-semibold text-foreground">Nera AI Premium — 1 year</span>
+                <span className="text-xs text-muted-foreground">No subscription needed</span>
               </div>
             </div>
           </div>
@@ -388,8 +388,8 @@ export default function EasyTouchWellnessProduct() {
           </div>
           <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
             <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
-            <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
-            <span className="text-xs text-muted-foreground">(worth ₹1,197)</span>
+            <span className="text-sm font-semibold text-foreground">Nera AI Premium — 1 year</span>
+            <span className="text-xs text-muted-foreground">No subscription needed</span>
           </div>
           <WellnessTrustBar />
         </div>
