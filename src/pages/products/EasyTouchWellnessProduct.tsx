@@ -155,7 +155,7 @@ export default function EasyTouchWellnessProduct() {
               </div>
 
               <p className="text-lg md:text-xl text-foreground font-semibold mt-6">
-                You know your number.<br />But you still don't know <span className="text-primary">why</span> it goes up.
+                You know your number.<br />But you still don't know why it goes up.
               </p>
 
               {/* CTA + guarantee — hide "Show Me How" on mobile */}
