@@ -146,6 +146,16 @@ export default function EasyTouchWellnessProduct() {
             </h1>
           </motion.div>
 
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} className="mt-6">
+            <div className="flex items-center justify-center gap-4 md:gap-8 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1.5"><span className="text-primary font-bold text-base">20,000+</span> users</span>
+              <span className="w-px h-4 bg-border" />
+              <span className="flex items-center gap-1.5">⭐ <span className="font-bold text-foreground">4.6</span> rating</span>
+              <span className="w-px h-4 bg-border" />
+              <span className="flex items-center gap-1.5">🩸 <span className="font-semibold text-foreground">50% fewer pricks</span> in 30 days</span>
+            </div>
+          </motion.div>
+
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 max-w-2xl mx-auto">
             <p className="text-xl md:text-2xl text-muted-foreground font-medium leading-relaxed">
               You have been doing this 3 times a day, every day, for years.
@@ -174,16 +184,6 @@ export default function EasyTouchWellnessProduct() {
             <div className="inline-flex items-center gap-2 bg-primary border border-primary rounded-full px-6 py-3 shadow-[0_4px_20px_hsl(var(--primary)/0.4)] animate-pulse">
               <span className="text-lg">🛡️</span>
               <span className="text-sm md:text-base font-bold text-primary-foreground tracking-wide">50% FEWER NEEDLE PRICKS IN 30 DAYS — OR YOUR MONEY BACK</span>
-            </div>
-          </motion.div>
-
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.75 }} className="mt-8">
-            <div className="flex items-center justify-center gap-4 md:gap-8 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1.5"><span className="text-primary font-bold text-base">20,000+</span> users</span>
-              <span className="w-px h-4 bg-border" />
-              <span className="flex items-center gap-1.5">⭐ <span className="font-bold text-foreground">4.6</span> rating</span>
-              <span className="w-px h-4 bg-border" />
-              <span className="flex items-center gap-1.5">🩸 <span className="font-semibold text-foreground">50% fewer pricks</span> in 30 days</span>
             </div>
           </motion.div>
         </div>
