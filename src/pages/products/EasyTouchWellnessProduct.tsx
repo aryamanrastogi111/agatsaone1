@@ -179,7 +179,7 @@ export default function EasyTouchWellnessProduct() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Why did it spike after that meal you thought was fine? Why is it high every morning? The strip gives you a number — never a reason.
               </p>
-              <p className="text-xl text-primary font-bold">
+              <p className="text-2xl text-primary font-black tracking-tight">
                 Meet EasyTouch Wellness
               </p>
               <p className="text-base text-muted-foreground">
