@@ -178,8 +178,8 @@ export default function EasyTouchWellnessProduct() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Why did it spike after that meal you thought was fine? Why is it high every morning? The strip gives you a number — never a reason.
               </p>
-              <p className="text-2xl text-primary font-black tracking-tighter uppercase">
-                Meet EasyTouch Wellness
+              <p className="text-2xl text-foreground font-extrabold tracking-tight">
+                Meet <span className="text-accent-foreground">EasyTouch Wellness</span>
               </p>
               <p className="text-base text-muted-foreground">
                 Clip it to your finger. Wait 15 seconds.<br />No needle. No blood. No strip.
