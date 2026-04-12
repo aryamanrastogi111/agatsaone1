@@ -5,7 +5,7 @@ import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, ArrowRight, Package, ShoppingCart, ChevronDown, Star } from "lucide-react";
+import { Check, ArrowRight, Package, ShoppingCart, ChevronDown, Star, Microscope, Camera, ScanLine } from "lucide-react";
 import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -203,12 +203,14 @@ export default function EasyTouchWellnessProduct() {
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
             {[
-              { emoji: "🔬", title: "Same tech as hospitals", text: "Uses light sensors like the pulse oximeter from COVID — reads blood flow through your fingertip." },
-              { emoji: "📸", title: "Train it in days", text: "Snap your glucometer + meal photos for a few days. Nera AI learns YOUR body's patterns." },
-              { emoji: "✅", title: "Then just scan", text: "One touch, 15 seconds → Metabolic Score 0–100. No strip. No blood. Glucometer becomes optional." },
+              { icon: Microscope, title: "Same tech as hospitals", text: "Uses light sensors like the pulse oximeter from COVID — reads blood flow through your fingertip." },
+              { icon: Camera, title: "Train it in days", text: "Snap your glucometer + meal photos for a few days. Nera AI learns YOUR body's patterns." },
+              { icon: ScanLine, title: "Then just scan", text: "One touch, 15 seconds → Metabolic Score 0–100. No strip. No blood. Glucometer becomes optional." },
             ].map((card) => (
               <div key={card.title} className="bg-card border border-border rounded-xl p-5 text-center">
-                <span className="text-3xl">{card.emoji}</span>
+                <div className="flex justify-center">
+                  <card.icon className="h-8 w-8 text-primary" />
+                </div>
                 <h3 className="text-foreground font-bold text-lg mt-3">{card.title}</h3>
                 <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{card.text}</p>
               </div>
