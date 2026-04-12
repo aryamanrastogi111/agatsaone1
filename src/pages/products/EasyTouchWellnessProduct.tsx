@@ -168,6 +168,28 @@ export default function EasyTouchWellnessProduct() {
                 <span className="text-base">🛡️</span>
                 <span className="text-xs md:text-sm font-bold text-primary-foreground tracking-wide">50% FEWER PRICKS IN 30 DAYS — OR MONEY BACK</span>
               </div>
+
+              {/* Hero price + Add to Cart */}
+              <div className="mt-6 text-center md:text-left">
+                <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center md:justify-start" />
+                <span className="text-sm text-muted-foreground ml-1">inclusive of GST</span>
+                <EmiLine price={wellnessPrice} />
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2 justify-center md:justify-start">
+                  <span>📦</span>
+                  <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
+                </div>
+                <div className="mt-4">
+                  <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                    <ShoppingCart className="h-5 w-5 mr-2" />
+                    Add to Cart — {fmt(wellnessPrice)}
+                  </Button>
+                </div>
+                <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
+                  <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
+                  <span className="text-sm font-semibold text-foreground">Nera AI Premium — 3 months</span>
+                  <span className="text-xs text-muted-foreground">(worth ₹1,197)</span>
+                </div>
+              </div>
             </motion.div>
 
             {/* Right — product image */}
