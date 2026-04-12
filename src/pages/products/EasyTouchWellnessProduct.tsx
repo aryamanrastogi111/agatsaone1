@@ -165,10 +165,9 @@ export default function EasyTouchWellnessProduct() {
                   Show Me How <ArrowRight className="h-5 w-5 ml-1" />
                 </Button>
               </div>
-              <div className="hidden md:inline-flex mt-4 items-center gap-2 bg-primary border border-primary rounded-full px-5 py-2.5 shadow-[0_4px_20px_hsl(var(--primary)/0.4)]">
-                <span className="text-base">🛡️</span>
-                <span className="text-xs md:text-sm font-bold text-primary-foreground tracking-wide">50% FEWER PRICKS IN 30 DAYS — OR MONEY BACK</span>
-              </div>
+              <p className="hidden md:block mt-4 text-lg font-black text-foreground tracking-tight">
+                🛡️ 50% FEWER PRICKS IN 30 DAYS — OR MONEY BACK
+              </p>
             </motion.div>
 
             {/* Mobile-only: subheadline + intro ABOVE image */}
@@ -210,10 +209,9 @@ export default function EasyTouchWellnessProduct() {
                 <span className="w-px h-4 bg-border" />
                 <span className="flex items-center gap-1.5">⭐ <span className="font-bold text-foreground">4.6</span> rating</span>
               </div>
-              <div className="inline-flex items-center gap-2 bg-primary border border-primary rounded-full px-4 py-2 shadow-[0_4px_20px_hsl(var(--primary)/0.4)]">
-                <span className="text-base">🛡️</span>
-                <span className="text-xs font-bold text-primary-foreground tracking-wide">50% FEWER PRICKS IN 30 DAYS — OR MONEY BACK</span>
-              </div>
+              <p className="text-lg font-black text-foreground tracking-tight leading-tight">
+                🛡️ 50% FEWER PRICKS IN 30 DAYS — OR MONEY BACK
+              </p>
             </div>
 
             {/* Hero price + Add to Cart — below image on mobile */}
