@@ -458,7 +458,7 @@ export default function SmartScaleProduct() {
         <AwardsTrustSection />
       </Suspense>
       <Suspense fallback={<div className="h-40" />}>
-        <ProductReviewsSection reviews={(await import("@/data/smartScaleReviews")).smartScaleReviews} />
+        <SmartScaleReviews />
       </Suspense>
     </SiteLayout>
   );
