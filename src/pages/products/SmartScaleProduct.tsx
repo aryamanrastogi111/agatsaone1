@@ -1,4 +1,5 @@
 import { lazy, Suspense, useState } from "react";
+import { smartScaleReviews } from "@/data/smartScaleReviews";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { StrikePrice } from "@/components/StrikePrice";
@@ -458,7 +459,7 @@ export default function SmartScaleProduct() {
         <AwardsTrustSection />
       </Suspense>
       <Suspense fallback={<div className="h-40" />}>
-        <SmartScaleReviews />
+        <ProductReviewsSection reviews={smartScaleReviews} />
       </Suspense>
     </SiteLayout>
   );
