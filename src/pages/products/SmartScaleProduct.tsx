@@ -1,17 +1,14 @@
-import { useState } from "react";
-import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
+import { lazy, Suspense, useState } from "react";
 import { smartScaleReviews } from "@/data/smartScaleReviews";
-import { AwardsTrustSection } from "@/components/AwardsTrustSection";
-import { TrustVideosSection } from "@/components/TrustVideosSection";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { StrikePrice } from "@/components/StrikePrice";
 import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star, ArrowRight, Package, Scale, TrendingDown, Users, Heart, ShoppingCart } from "lucide-react";
+import { Star, ArrowRight, Package, Scale, TrendingDown, Users, Heart, ShoppingCart, AlertTriangle, Eye, Stethoscope, CheckCircle2 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
@@ -21,6 +18,10 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
+
+const AwardsTrustSection = lazy(() => import("@/components/AwardsTrustSection").then(m => ({ default: m.AwardsTrustSection })));
+const TrustVideosSection = lazy(() => import("@/components/TrustVideosSection").then(m => ({ default: m.TrustVideosSection })));
+const ProductReviewsSection = lazy(() => import("@/components/products/ProductReviewsSection").then(m => ({ default: m.ProductReviewsSection })));
 
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 
@@ -68,6 +69,33 @@ const relatedDevices = [
   { name: "SanketLife ECG", desc: "Add cardiac monitoring for the complete picture", link: "/devices/sanketlife-ecg" },
 ];
 
+const problemCards = [
+  {
+    icon: AlertTriangle,
+    title: "Weight hides the real problem",
+    body: "You can lose 5 kg on the scale and actually gain visceral fat — the dangerous fat wrapped around your organs. Without body composition data, you're flying blind.",
+  },
+  {
+    icon: Eye,
+    title: "BMI lies",
+    body: "Two people with the same BMI can have completely different health profiles. One is mostly muscle. The other is carrying dangerous levels of internal fat. BMI can't tell the difference.",
+  },
+  {
+    icon: Stethoscope,
+    title: "Your doctor needs more than a number",
+    body: "Body composition — muscle mass, visceral fat, metabolic age — is what actually predicts cardiac and metabolic risk. A weight reading alone tells your doctor almost nothing.",
+  },
+];
+
+const forYouItems = [
+  "You're fitness-focused and want to track body recomposition, not just weight loss",
+  "Your doctor told you to lose weight — but never told you how to measure real progress",
+  "You want one device the whole family can use (up to 10 profiles)",
+  "You're tired of scales that only show a number with no context",
+  "You want to understand visceral fat, metabolic age, and muscle mass trends",
+  "You want Nera AI to track your body composition over weeks, not just one reading",
+];
+
 export default function SmartScaleProduct() {
   const [adding, setAdding] = useState(false);
   const { prices, fmt } = usePricing();
@@ -85,6 +113,7 @@ export default function SmartScaleProduct() {
 
   return (
     <SiteLayout>
+      {/* ─── 1. HERO ─── */}
       <section className="pt-8 pb-8 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="text-sm text-muted-foreground mb-6">
@@ -100,7 +129,6 @@ export default function SmartScaleProduct() {
               <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">The Agatsa Smart Scale measures 14 body composition metrics in a single 5-second reading — weight, body fat, muscle mass, bone density, visceral fat, metabolic age, and more. Syncs instantly to Nera AI via Bluetooth.</p>
               <div className="mt-6">
                 <StrikePrice sku="scale_sub" price={scalePrice} />
-                
                 <EmiLine price={scalePrice} />
                 <StockUrgencyBar productKey="corebalance" className="mt-3" />
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
@@ -128,19 +156,30 @@ export default function SmartScaleProduct() {
         </div>
       </section>
 
-
-      {/* ─── WATCH IT IN ACTION ─── */}
-      <section className="py-16 md:py-20 bg-gray-950">
+      {/* ─── 2. PROBLEM SECTION ─── */}
+      <section className="py-16 md:py-20 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Watch It In Action</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <VideoCard video={{ id: "e9f0DR890zM", title: "India: The Diabetes Capital" }} />
-            <VideoCard video={{ id: "ZkLv3wyVtfg", title: "Real Story: What the Numbers Showed" }} />
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <p className="text-xs uppercase tracking-widest text-destructive font-semibold mb-2">The problem</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Your scale only tells you half the story</h2>
+            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">Weight alone is the worst way to measure health progress. Here's why.</p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {problemCards.map((card, i) => (
+              <motion.div key={card.title} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }} className="bg-card border border-border rounded-2xl p-6">
+                <card.icon className="h-8 w-8 text-destructive mb-4" />
+                <h3 className="text-lg font-bold text-foreground">{card.title}</h3>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{card.body}</p>
+              </motion.div>
+            ))}
           </div>
-          <YouTubeChannelLink />
+          <motion.p {...fadeUp} className="text-center mt-10 text-lg font-semibold text-primary">
+            Not just weight. The full picture.
+          </motion.p>
         </div>
       </section>
 
+      {/* ─── 3. STATS STRIP ─── */}
       <section className="bg-[hsl(260,100%,97%)] py-10">
         <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           {[
@@ -157,6 +196,23 @@ export default function SmartScaleProduct() {
         </div>
       </section>
 
+      {/* ─── 4. HOW IT WORKS (moved up) ─── */}
+      <section className="py-20 bg-[hsl(260,100%,97%)]">
+        <div className="max-w-4xl mx-auto px-4">
+          <motion.h2 {...fadeUp} className="text-3xl font-bold text-foreground text-center">How it works</motion.h2>
+          <div className="mt-12 grid md:grid-cols-3 gap-8">
+            {steps.map((s, i) => (
+              <motion.div key={s.n} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.12 }} className="text-center md:text-left">
+                <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-bold mx-auto md:mx-0">{s.n}</div>
+                <h3 className="text-lg font-bold text-foreground mt-4">{s.title}</h3>
+                <p className="text-sm text-muted-foreground mt-2">{s.copy}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 5. 14 METRICS GRID ─── */}
       <section className="py-20 bg-background">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <motion.div {...fadeUp}>
@@ -174,22 +230,29 @@ export default function SmartScaleProduct() {
         </div>
       </section>
 
-      <section className="py-20 bg-[hsl(260,100%,97%)]">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.h2 {...fadeUp} className="text-3xl font-bold text-foreground text-center">How it works</motion.h2>
-          <div className="mt-12 grid md:grid-cols-3 gap-8">
-            {steps.map((s, i) => (
-              <motion.div key={s.n} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.12 }} className="text-center md:text-left">
-                <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-bold mx-auto md:mx-0">{s.n}</div>
-                <h3 className="text-lg font-bold text-foreground mt-4">{s.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2">{s.copy}</p>
-              </motion.div>
-            ))}
+      {/* ─── 6. MID-PAGE CTA ─── */}
+      <section className="py-12 bg-muted/30">
+        <div className="max-w-xl mx-auto px-4 text-center">
+          <StrikePrice sku="scale_sub" price={scalePrice} className="justify-center" />
+          <StockUrgencyBar productKey="corebalance" className="mt-3" />
+          <Button onClick={handleAddToCart} disabled={adding} className="mt-5 rounded-full px-10 py-5 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+            <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart — {fmt(scalePrice)}
+          </Button>
+          <div className="mt-4 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
+            <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
+            <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 1 year</span>
+            <span className="text-xs text-muted-foreground">No subscription needed</span>
           </div>
+          <TrustBar />
         </div>
       </section>
 
-      {/* Nera AI Intelligence */}
+      {/* ─── 7. AWARDS & TRUST ─── */}
+      <Suspense fallback={<div className="h-40" />}>
+        <AwardsTrustSection />
+      </Suspense>
+
+      {/* ─── 8. NERA AI SECTION ─── */}
       <section className="py-20 bg-gradient-to-br from-[#0D0D1A] to-[#1A0D00]">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
@@ -200,9 +263,7 @@ export default function SmartScaleProduct() {
             </p>
           </div>
 
-          {/* Cardiac Risk Spotlight */}
           <div className="grid lg:grid-cols-2 gap-12 items-center mt-16">
-            {/* Left - Content */}
             <motion.div {...fadeUp}>
               <span className="inline-block bg-[#FF6D00]/20 text-[#FF6D00] border border-[#FF6D00]/30 rounded-full px-4 py-1 text-sm font-medium">
                 The number doctors actually care about
@@ -223,7 +284,6 @@ export default function SmartScaleProduct() {
               </div>
             </motion.div>
 
-            {/* Right - App UI Card */}
             <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
               <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
                 <div className="flex items-center justify-between">
@@ -260,7 +320,6 @@ export default function SmartScaleProduct() {
             </motion.div>
           </div>
 
-          {/* 3 AI Feature Cards */}
           <div className="grid md:grid-cols-3 gap-6 mt-16">
             {[
               { icon: Scale, title: "Fat Loss vs Muscle Loss — Nera AI tells the difference", body: "The scale says you lost 2kg. But was it fat or muscle? Nera AI tracks your body fat %, lean mass, and muscle mass separately — so your programme is actually working, not just showing a lower number." },
@@ -275,7 +334,6 @@ export default function SmartScaleProduct() {
             ))}
           </div>
 
-          {/* Bottom Banner */}
           <div className="bg-[#FF6D00]/10 border border-[#FF6D00]/30 rounded-2xl p-8 mt-16 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <p className="text-white font-semibold text-xl">
@@ -293,6 +351,7 @@ export default function SmartScaleProduct() {
         </div>
       </section>
 
+      {/* ─── 9. WHAT'S INCLUDED ─── */}
       <section className="py-16 bg-background">
         <div className="max-w-3xl mx-auto px-4">
           <motion.h2 {...fadeUp} className="text-2xl font-bold text-foreground text-center mb-8">What's included</motion.h2>
@@ -305,12 +364,45 @@ export default function SmartScaleProduct() {
             ))}
             <div className="flex items-center gap-3 bg-primary/10 rounded-xl border border-primary/20 p-4">
               <Package className="h-5 w-5 text-primary shrink-0" />
-              <span className="text-sm font-semibold text-primary">3-month Nera AI subscription (₹1,797 value)</span>
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold text-primary">1-year Nera AI subscription</span>
+                <span className="text-xs text-muted-foreground">No subscription needed</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* ─── 10. THIS IS FOR YOU IF... ─── */}
+      <section className="py-16 md:py-20 bg-muted/30">
+        <div className="max-w-3xl mx-auto px-4">
+          <motion.div {...fadeUp} className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-foreground">This is for you if…</h2>
+          </motion.div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {forYouItems.map((item, i) => (
+              <motion.div key={i} {...fadeUp} transition={{ duration: 0.4, delay: i * 0.06 }} className="flex items-start gap-3 bg-card border border-border rounded-xl p-4">
+                <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
+                <span className="text-sm text-foreground">{item}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 11. VIDEOS (moved down) ─── */}
+      <section className="py-16 md:py-20 bg-gray-950">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Watch It In Action</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <VideoCard video={{ id: "e9f0DR890zM", title: "India: The Diabetes Capital" }} />
+            <VideoCard video={{ id: "ZkLv3wyVtfg", title: "Real Story: What the Numbers Showed" }} />
+          </div>
+          <YouTubeChannelLink />
+        </div>
+      </section>
+
+      {/* ─── 12. FAQ ─── */}
       <section className="py-20 bg-[hsl(260,100%,97%)]">
         <div className="max-w-3xl mx-auto px-4">
           <motion.h2 {...fadeUp} className="text-2xl font-bold text-foreground text-center mb-8">Frequently asked questions</motion.h2>
@@ -325,6 +417,7 @@ export default function SmartScaleProduct() {
         </div>
       </section>
 
+      {/* ─── 13. RELATED DEVICES ─── */}
       <section className="py-16 bg-background">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-2xl font-bold text-foreground text-center mb-8">Complete your health monitoring setup</h2>
@@ -340,6 +433,7 @@ export default function SmartScaleProduct() {
         </div>
       </section>
 
+      {/* ─── 14. FINAL CTA ─── */}
       <section className="bg-primary py-20">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready to know your body?</h2>
@@ -347,6 +441,7 @@ export default function SmartScaleProduct() {
           <Button onClick={handleAddToCart} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Add Smart Scale to Cart — {fmt(scalePrice)}</Button>
         </div>
       </section>
+
       <StickyAddToCart
         productName="Agatsa Smart Scale"
         price={fmt(scalePrice)}
@@ -356,9 +451,16 @@ export default function SmartScaleProduct() {
         themeColor="primary"
       />
 
-      <TrustVideosSection />
-      <AwardsTrustSection />
-      <ProductReviewsSection reviews={smartScaleReviews} />
+      {/* ─── 15. TRUST VIDEOS + REVIEWS ─── */}
+      <Suspense fallback={<div className="h-40" />}>
+        <TrustVideosSection />
+      </Suspense>
+      <Suspense fallback={<div className="h-40" />}>
+        <AwardsTrustSection />
+      </Suspense>
+      <Suspense fallback={<div className="h-40" />}>
+        <ProductReviewsSection reviews={smartScaleReviews} />
+      </Suspense>
     </SiteLayout>
   );
 }
