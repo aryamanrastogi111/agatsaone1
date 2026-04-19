@@ -7,9 +7,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 import { useDevicePricingFetch, PricingProvider } from "@/hooks/useDevicePricing";
+import { isMyEasyTouchHost } from "@/hooks/useIsMyEasyTouch";
 
 // Only the home page is eagerly loaded for instant first paint
 import Home from "./pages/Home";
+import MyEasyTouchLanding from "./pages/MyEasyTouchLanding";
 
 // All other pages are lazy-loaded
 const DevicesPage = lazy(() => import("./pages/Devices"));
