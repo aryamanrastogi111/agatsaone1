@@ -111,7 +111,7 @@ function AppWithPricing() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Public marketing pages */}
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={isMyEasyTouchHost() ? <MyEasyTouchLanding /> : <Home />} />
               <Route path="/devices" element={<DevicesPage />} />
               <Route path="/devices/sanketlife-ecg" element={<SanketLifeECGProduct />} />
               <Route path="/devices/easytouch-wellness" element={<EasyTouchWellnessProduct />} />
