@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -143,19 +143,19 @@ export function HeroSection() {
                 <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-b from-[#2a2a2e] to-[#1a1a1e] shadow-2xl" />
                 <div className="absolute inset-[3px] rounded-[2.8rem] bg-[#1a1a1e]" />
                 <div className="absolute inset-[6px] rounded-[2.6rem] overflow-hidden bg-white">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[28px] md:h-[32px] bg-[#1a1a1e] rounded-b-2xl z-10" />
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={current}
-                      src={screens[current]}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[28px] md:h-[32px] bg-[#1a1a1e] rounded-b-2xl z-20" />
+                  {/* Preload all screens, crossfade via opacity (GPU-accelerated, no layout thrash) */}
+                  {screens.map((src, i) => (
+                    <img
+                      key={i}
+                      src={src}
                       alt="Agatsa One app screen"
-                      className="w-full h-full object-cover object-top"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.5 }}
+                      loading="eager"
+                      decoding="async"
+                      className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ease-in-out will-change-[opacity]"
+                      style={{ opacity: i === current ? 1 : 0 }}
                     />
-                  </AnimatePresence>
+                  ))}
                 </div>
                 <div className="absolute bottom-[10px] left-1/2 -translate-x-1/2 w-[100px] h-[4px] bg-white/30 rounded-full z-10" />
               </div>
