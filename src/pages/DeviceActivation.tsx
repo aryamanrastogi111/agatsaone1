@@ -109,7 +109,7 @@ export default function DeviceActivationPage() {
             <XCircle className="h-14 w-14 mx-auto text-destructive" />
             <h1 className="text-2xl font-extrabold text-foreground">We couldn't find this device code</h1>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              The code <span className="font-mono font-bold text-foreground">{code}</span> doesn't match any device in our system. Please double-check the code on the sticker inside your device box. If the problem persists, contact <a href="mailto:support@agatsa.ai" className="text-primary font-medium">support@agatsa.ai</a> — we'll get it sorted within 24 hours.
+              The code <span className="font-mono font-bold text-foreground">{code}</span> doesn't match any device in our system. Please double-check the code on the sticker inside your device box. If the problem persists, contact <a href="mailto:info@agatsa.com" className="text-primary font-medium">info@agatsa.com</a> — we'll get it sorted within 24 hours.
             </p>
             <a href="/app" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full font-bold text-sm">
               Download Agatsa One
@@ -129,7 +129,7 @@ export default function DeviceActivationPage() {
             <AlertCircle className="h-14 w-14 mx-auto text-amber-500" />
             <h1 className="text-2xl font-extrabold text-foreground">This device has already been activated</h1>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Device code <span className="font-mono font-bold text-foreground">{code}</span> has already been used. If you believe this is an error, or if you received this device as a gift and need a new activation, please contact our support team at <a href="mailto:support@agatsa.ai" className="text-primary font-medium">support@agatsa.ai</a>.
+              Device code <span className="font-mono font-bold text-foreground">{code}</span> has already been used. If you believe this is an error, or if you received this device as a gift and need a new activation, please contact our support team at <a href="mailto:info@agatsa.com" className="text-primary font-medium">info@agatsa.com</a>.
             </p>
             <a href="/app" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full font-bold text-sm">
               Download Agatsa One
