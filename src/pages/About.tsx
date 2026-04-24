@@ -167,13 +167,13 @@ export default function About() {
             <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>In the news</h2>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {["Press coverage coming soon — contact press@agatsa.ai", "Media enquiry? We respond within 24 hours", "For partnership and investor enquiries: rahul.rastogi@agatsa.com"].map((t, i) => (
+            {["Press coverage coming soon — contact info@agatsa.com", "Media enquiry? We respond within 24 hours", "For partnership and investor enquiries: info@agatsa.com"].map((t, i) => (
               <motion.div key={i} variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="rounded-2xl p-8 border border-dashed border-border bg-muted/30 flex items-center justify-center text-center min-h-[120px]">
                 <p className="text-sm" style={{ color: "#4A4A68" }}>{t}</p>
               </motion.div>
             ))}
           </div>
-          <p className="text-center mt-6 text-sm" style={{ color: "#4A4A68" }}>Media enquiries: press@agatsa.ai | Investor relations: rahul.rastogi@agatsa.com</p>
+          <p className="text-center mt-6 text-sm" style={{ color: "#4A4A68" }}>Media enquiries: info@agatsa.com | Investor relations: info@agatsa.com</p>
         </div>
       </section>
 

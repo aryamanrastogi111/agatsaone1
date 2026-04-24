@@ -35,7 +35,7 @@ import {
   Package,
   Cable,
   Smartphone,
-  MessageCircle,
+  Mail,
   Star,
   CheckCircle2,
   Truck,
@@ -504,7 +504,7 @@ export default function EasyTouchPlusProduct() {
                   { icon: <Cable className="h-5 w-5 text-teal-600" />, text: "Charging cable" },
                   { icon: <Smartphone className="h-5 w-5 text-teal-600" />, text: "Agatsa One app (free download)" },
                   { icon: <Sparkles className="h-5 w-5 text-teal-600" />, text: "Nera AI metabolic analysis — included" },
-                  { icon: <MessageCircle className="h-5 w-5 text-teal-600" />, text: "Setup support via WhatsApp" },
+                  { icon: <Mail className="h-5 w-5 text-teal-600" />, text: "Setup support via email" },
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 p-3 rounded-xl border border-border bg-card">
                     {item.icon}
@@ -636,12 +636,10 @@ export default function EasyTouchPlusProduct() {
             <p className="text-muted-foreground text-sm mt-6">
               Questions?{" "}
               <a
-                href="https://wa.me/918826283840?text=Hi,%20I%20want%20to%20know%20more%20about%20EasyTouch%20Wellness"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="mailto:info@agatsa.com"
                 className="text-teal-600 underline hover:text-teal-700"
               >
-                WhatsApp us at +91 88262 83840
+                Email us at info@agatsa.com
               </a>
             </p>
           </AnimatedSection>
