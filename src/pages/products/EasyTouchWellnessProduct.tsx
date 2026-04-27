@@ -360,13 +360,15 @@ export default function EasyTouchWellnessProduct() {
       {/* ── SECTION 3 — HOW DOES IT WORK ── */}
       <section className="py-12 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">How does it work — in plain language</motion.h2>
+          <motion.div {...fadeUp} className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Simple. Personal. Proven.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Snap. Scan. See your Food Fingerprint.</h2>
+          </motion.div>
           <div className="mt-14 space-y-12">
             {[
-              { n: "1", title: "Clip it on", copy: "Attach EasyTouch Wellness to your fingertip. Same as a pulse oximeter. No setup. No calibration the first time." },
-              { n: "2", title: "15 seconds", copy: "A gentle light passes through your finger. You feel nothing. The sensor reads your blood flow patterns." },
-              { n: "3", title: "Your Metabolic Score appears", copy: "The Agatsa One app shows you a score from 0 to 100 and tells you which zone you are in — in plain language, not medical terms." },
-              { n: "4", title: "Nera AI explains", copy: "Our AI tells you what the score means right now, why it may have changed since your last reading, and what to do next — in simple sentences, like a knowledgeable friend." },
+              { n: "1", title: "Snap Your Meal", copy: "Log what you're eating in the Agatsa One app before you eat. Takes 5 seconds. No calorie counting. Just snap or tap." },
+              { n: "2", title: "Scan After Eating", copy: "60–90 minutes later, press your fingertip to EasyTouch Wellness for 60 seconds. Nera AI reads your metabolic response — heart rate variability, oxygen dynamics, and stress signals — and converts it into your Metabolic Index score." },
+              { n: "3", title: "See Your Food Fingerprint", copy: "After 5 linked scans, your personal Food Fingerprint unlocks. See exactly how Light, Balanced, and Heavy meals affect your body — averaged, trended, and compared to your fasting baseline. No two fingerprints are alike." },
             ].map((step, i) => (
               <motion.div key={step.n} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }} className="flex gap-5 items-start">
                 <div className="w-11 h-11 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-bold shrink-0">{step.n}</div>
