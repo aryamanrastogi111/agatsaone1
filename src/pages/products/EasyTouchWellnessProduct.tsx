@@ -637,19 +637,32 @@ export default function EasyTouchWellnessProduct() {
       <section className="py-12 bg-background">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
           <motion.div {...fadeUp}>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">EasyTouch Wellness</h2>
-            <p className="text-5xl font-extrabold text-foreground mt-6">{fmt(wellnessPrice)}</p>
-            <EmiLine price={wellnessPrice} />
-            <p className="text-muted-foreground mt-2">Free delivery across India · 1-year warranty · 30-day return policy</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Your Food Fingerprint Won't Build Itself.</h2>
+            <p className="text-muted-foreground text-base md:text-lg mt-5 max-w-xl mx-auto leading-relaxed">
+              Every day you eat without data is a day your body is trying to tell you something — and you can't hear it. EasyTouch Wellness gives you ears.
+            </p>
+            <p className="text-muted-foreground text-sm mt-3 max-w-xl mx-auto">
+              Most people who order see their first Meal Impact score within 24 hours of delivery. Your Food Fingerprint starts building from scan #1.
+            </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-              <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+            <div className="mt-8">
+              <StrikePrice sku="wellness_sub" price={wellnessPrice} className="justify-center" />
+              <EmiLine price={wellnessPrice} />
+              <p className="text-muted-foreground mt-2 text-sm">Free delivery across India · 1-year warranty · 30-day return policy</p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+              <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-8 py-5 text-base md:text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
                 <ShoppingCart className="h-5 w-5 mr-2" />
-                Order Now — Free Delivery
+                Start Building My Food Fingerprint — {fmt(wellnessPrice)}
               </Button>
             </div>
 
-            <div className="mt-4">
+            <p className="mt-4 text-xs text-muted-foreground max-w-md mx-auto">
+              1 year of Nera AI included free. Ships in 2–3 days. 30-day device returns on unopened units. Nera AI activation is non-refundable once first scan is completed.
+            </p>
+
+            <div className="mt-6">
               <AppStoreBadges className="justify-center" />
               <p className="text-xs text-muted-foreground mt-2">Download the App First (Free)</p>
             </div>
