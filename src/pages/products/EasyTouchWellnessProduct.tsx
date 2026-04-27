@@ -675,7 +675,7 @@ export default function EasyTouchWellnessProduct() {
       {/* ── SECTION 11 — FAQ ── */}
       <section className="py-12 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center mb-10">Questions people usually ask</motion.h2>
+          <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center mb-10">Questions We Get Asked</motion.h2>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((f, i) => (
               <AccordionItem key={i} value={`faq-${i}`}>
