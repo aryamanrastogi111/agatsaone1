@@ -269,6 +269,64 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
+      {/* NEW: PROBLEM / AGITATION */}
+      <section className="py-12 bg-muted/30">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">
+            You've Been Eating Blindfolded.
+          </motion.h2>
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} className="mt-6 space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
+            <p>
+              You eat <span className="text-foreground font-semibold">"healthy"</span> — salad, rice, fruit — and still feel sluggish, bloated, or drained. You don't know why.
+            </p>
+            <p>
+              That's because metabolic response is <span className="text-foreground font-semibold">personal</span>. The same bowl of rice that barely moves your friend's numbers can spike yours. Without data, you're guessing.
+            </p>
+          </motion.div>
+          <motion.ul {...fadeUp} transition={{ duration: 0.6, delay: 0.2 }} className="mt-6 space-y-3">
+            {[
+              "You don't know which foods drain you vs. energize you",
+              "You can't see the difference between a Light meal and a Heavy one — on your body",
+              "You have no idea what \"fasting baseline\" means for you specifically",
+            ].map((item) => (
+              <li key={item} className="flex gap-3 items-start">
+                <span className="text-primary mt-1">•</span>
+                <span className="text-foreground">{item}</span>
+              </li>
+            ))}
+          </motion.ul>
+          <motion.p {...fadeUp} transition={{ duration: 0.6, delay: 0.3 }} className="mt-8 text-center text-xl md:text-2xl font-bold text-primary">
+            EasyTouch Wellness ends the guesswork.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* NEW: FOOD FINGERPRINT — 6 FEATURE CARDS */}
+      <section className="py-14 bg-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Your Personal Food Fingerprint</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Six features. One unique blueprint of your body.</h2>
+            <p className="text-muted-foreground mt-3">
+              Every scan, meal snap, and trend powers the only thing that truly matters — your body's personal response to food.
+            </p>
+          </motion.div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
+            {fingerprintCards.map((card, i) => (
+              <motion.div key={card.title} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.06 }}
+                className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg transition-shadow"
+              >
+                <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <card.icon className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground">{card.title}</h3>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{card.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── SECTION 2 — INTRODUCE THE DEVICE ── */}
       <section id="introduce-device" className="py-12 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
