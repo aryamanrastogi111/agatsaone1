@@ -549,7 +549,7 @@ export default function EasyTouchWellnessProduct() {
       {/* ── SECTION 8 — WHAT'S IN THE BOX ── */}
       <section className="py-10 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center">Everything you need. Nothing extra.</motion.h2>
+          <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center">Everything You Need to Start Knowing Your Body</motion.h2>
           <div className="grid sm:grid-cols-2 gap-4 mt-10">
             {boxItems.map((item) => (
               <div key={item} className="flex items-center gap-3 bg-card rounded-xl border border-border p-4">
