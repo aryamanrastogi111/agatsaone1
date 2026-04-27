@@ -201,16 +201,16 @@ export default function EasyTouchWellnessProduct() {
             {/* Mobile-only: subheadline + intro ABOVE image */}
             <div className="md:hidden text-center order-2 space-y-3">
               <p className="text-base text-foreground font-semibold">
-                You know your number.<br />But you still don't know why it goes up.
+                Your body responds differently to every meal.<br />Now you can see how.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Why did it spike after that meal you thought was fine? Why is it high every morning? The strip gives you a number — never a reason.
+                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary font-semibold">Food Fingerprint</span> — so you stop guessing and start knowing exactly what food does to your body.
               </p>
               <p className="text-2xl text-foreground font-extrabold tracking-tight">
                 Meet <span className="text-accent-foreground">EasyTouch Wellness</span>
               </p>
               <p className="text-base text-muted-foreground">
-                Clip it to your finger. Wait 15 seconds.<br />No needle. No blood. No strip.
+                60-second scan · No needle · No blood · No strip
               </p>
             </div>
 
