@@ -248,12 +248,18 @@ export default function EasyTouchWellnessProduct() {
                 <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
               </div>
               <div className="mt-4">
-                <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-8 py-5 text-base md:text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  Get My EasyTouch Wellness Kit — {fmt(wellnessPrice)} <ArrowRight className="h-4 w-4 ml-1" />
+                <Button
+                  onClick={handleAddToCart}
+                  disabled={adding}
+                  size="lg"
+                  className="w-full sm:w-auto h-auto min-h-[3.25rem] rounded-full px-5 sm:px-8 py-3.5 sm:py-5 text-sm sm:text-base md:text-lg whitespace-normal text-center leading-tight shadow-[0_8px_32px_hsl(var(--primary)/0.4)]"
+                >
+                  <ShoppingCart className="h-5 w-5 mr-2 shrink-0" />
+                  <span className="inline">Get My EasyTouch Kit — {fmt(wellnessPrice)}</span>
+                  <ArrowRight className="h-4 w-4 ml-1 shrink-0" />
                 </Button>
               </div>
-              <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
+              <div className="mt-3 inline-flex flex-wrap items-center justify-center md:justify-start gap-x-2 gap-y-1 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2 max-w-full">
                 <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
                 <span className="text-sm font-semibold text-foreground">Nera AI Premium — 1 year</span>
                 <span className="text-xs text-muted-foreground">No subscription needed</span>
