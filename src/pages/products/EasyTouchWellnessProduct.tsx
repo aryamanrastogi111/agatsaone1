@@ -59,12 +59,6 @@ const boxItems = [
   "1 year of Nera AI included free — no subscription needed",
 ];
 
-const testimonials = [
-  { quote: "I used to prick my finger 4 times a day. Now I scan once in the morning and once after lunch. Nera tells me what is actually happening. I finally feel like I understand my own body.", name: "Meena R.", city: "Hyderabad" },
-  { quote: "My doctor was more interested in my EasyTouch report than my manual readings. She said the pattern data gave her something she had never seen before from a home device.", name: "Suresh K.", city: "Pune" },
-  { quote: "I realised my sugar spikes every Tuesday evening. Nera helped me figure out it was stress from my weekly office review. Nothing to do with food at all.", name: "Anita M.", city: "Delhi" },
-];
-
 // New: Food Fingerprint feature highlight cards
 const fingerprintCards = [
   { icon: Activity, title: "Meal Impact Score", desc: "Every scan after a meal shows you exactly how many points above or below your fasting baseline you are. +12 pts after biryani. -3 pts after a salad. Now you know." },
