@@ -157,10 +157,10 @@ export default function EasyTouchWellnessProduct() {
           <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left — text */}
             <motion.div {...fadeUp} className="text-center md:text-left order-1 md:order-none">
-              <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-foreground leading-[1.1] tracking-tight">
-                <span className="block">Needle. Blood.</span>
-                <span className="block">Strip. Number.</span>
-                <span className="block text-primary">Repeat.</span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground leading-[1.1] tracking-tight">
+                <span className="block">Your Body Responds Differently</span>
+                <span className="block">to Every Meal.</span>
+                <span className="block text-primary">Now You Can See How.</span>
               </h1>
 
               {/* Social proof — desktop only in hero text block */}
@@ -172,18 +172,28 @@ export default function EasyTouchWellnessProduct() {
                 <span className="flex items-center gap-1.5">🩸 <span className="font-semibold text-foreground">50% fewer pricks</span> in 30 days</span>
               </div>
 
-              {/* "You know your number" — desktop only here */}
+              {/* Subheadline — desktop only here */}
               <p className="hidden md:block text-lg md:text-xl text-foreground font-semibold mt-6">
-                You know your number.<br />But you still don't know why it goes up.
+                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary">Food Fingerprint</span> — so you stop guessing and start knowing exactly what food does to your body.
               </p>
 
-              {/* CTA + guarantee — hide "Show Me How" on mobile */}
+              {/* CTA — hide "Show Me How" on mobile */}
               <div className="mt-8 hidden md:flex flex-col sm:flex-row items-center md:items-start gap-4">
                 <Button onClick={scrollToIntro} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
                   Show Me How <ArrowRight className="h-5 w-5 ml-1" />
                 </Button>
               </div>
-              <p className="hidden md:block mt-4 text-lg font-black text-foreground tracking-tight">
+              {/* Hero trust bar */}
+              <div className="hidden md:flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground mt-4">
+                <span>60-second scan</span>
+                <span className="text-border">|</span>
+                <span>Powered by Nera AI</span>
+                <span className="text-border">|</span>
+                <span>Ships in 2–3 days</span>
+                <span className="text-border">|</span>
+                <span>30-day returns</span>
+              </div>
+              <p className="hidden md:block mt-4 text-base font-black text-foreground tracking-tight">
                 🛡️ 50% FEWER PRICKS IN 30 DAYS — OR MONEY BACK
               </p>
             </motion.div>
