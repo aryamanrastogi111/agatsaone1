@@ -147,7 +147,7 @@ export default function EasyTouchWellnessProduct() {
     document.getElementById("introduce-device")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useSEO({ title: "EasyTouch Wellness — No Needle. No Blood. Know Why Your Sugar Goes Up. | Agatsa One", description: `EasyTouch Wellness measures your Metabolic Score in 15 seconds — no needles, no strips. Nera AI explains why your readings change. ${fmt(wellnessPrice)} with free delivery.` });
+  useSEO({ title: "EasyTouch Wellness — Personal Food Fingerprint & Metabolic Tracking | Agatsa One", description: `Discover how your body responds to every meal with EasyTouch Wellness and Nera AI. Build your Food Fingerprint in 5 scans. Metabolic Index, Meal Impact Score, and personalized AI coaching included. ${fmt(wellnessPrice)} with free delivery.` });
 
   return (
     <SiteLayout>
