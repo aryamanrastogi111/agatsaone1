@@ -51,17 +51,35 @@ const whoIsThisFor = [
 ];
 
 const boxItems = [
-  "EasyTouch Wellness device",
+  "EasyTouch Wellness PPG device (plug-in, no charging needed)",
   "2× AAA batteries (included)",
   "Carry case",
   "Free Agatsa One app (Android + iOS)",
-  "Nera AI — 3-day free access included with device",
+  "Nera AI Food Fingerprint engine (activates after first scan)",
+  "1 year of Nera AI included free — no subscription needed",
 ];
 
 const testimonials = [
   { quote: "I used to prick my finger 4 times a day. Now I scan once in the morning and once after lunch. Nera tells me what is actually happening. I finally feel like I understand my own body.", name: "Meena R.", city: "Hyderabad" },
   { quote: "My doctor was more interested in my EasyTouch report than my manual readings. She said the pattern data gave her something she had never seen before from a home device.", name: "Suresh K.", city: "Pune" },
   { quote: "I realised my sugar spikes every Tuesday evening. Nera helped me figure out it was stress from my weekly office review. Nothing to do with food at all.", name: "Anita M.", city: "Delhi" },
+];
+
+// New: Food Fingerprint feature highlight cards
+const fingerprintCards = [
+  { icon: Activity, title: "Meal Impact Score", desc: "Every scan after a meal shows you exactly how many points above or below your fasting baseline you are. +12 pts after biryani. -3 pts after a salad. Now you know." },
+  { icon: Fingerprint, title: "Food Fingerprint (Unique to You)", desc: "Built from your actual scans. Light, Balanced and Heavy meals — each gets its own average metabolic response. This is your body's unique dietary blueprint. Nobody else has your fingerprint." },
+  { icon: Bell, title: "Smart Scan Nudge", desc: "The app tells you the perfect moment to scan after eating — so you never miss the window when your metabolic response is at its peak. No more forgetting." },
+  { icon: Compass, title: "Nera AI Guide", desc: "Even on Day 1, Nera AI tells you exactly what to do next — snap a meal, scan now, or you're building toward your fingerprint. You're never lost." },
+  { icon: Gauge, title: "Fasting Baseline", desc: "Before meals, scan fasting. This becomes your personal benchmark. Every meal response is measured against it. Your fasting score is your metabolic truth." },
+  { icon: LineChart, title: "Trends Over Time", desc: "Week over week, see if your metabolic health is improving. Stress, sleep, and diet all show up in your scores. Nera AI connects the dots." },
+];
+
+// New: Food Fingerprint discovery quotes
+const fingerprintTestimonials = [
+  { quote: "I always thought fruit was the safest snack. My Food Fingerprint showed that mangoes push my score up almost as much as a full meal. Now I have them in the morning only.", name: "Priya R.", city: "Bangalore" },
+  { quote: "My fasting score used to be 62. After 3 weeks of watching my meal responses, it's consistently above 74. I didn't change everything — just the 2 meals that were hitting me hardest.", name: "Vikram S.", city: "Mumbai" },
+  { quote: "The scan nudge is what got me to actually use it. It reminds me 90 minutes after I log food. That one feature made the habit stick.", name: "Anita M.", city: "Delhi" },
 ];
 
 const objections = [
@@ -100,12 +118,12 @@ const objections = [
 ];
 
 const faqs = [
-  { q: "Does this replace my glucometer completely?", a: "For many people, it significantly reduces how often they need to prick. However, if your doctor has prescribed a specific testing schedule, follow that. EasyTouch works best alongside — and gradually in place of — your daily routine." },
-  { q: "How accurate is it?", a: "The first few readings are directional. As you take more readings and occasionally confirm with a reference test, the system builds a personal model of your body. After 8+ readings, most users find the zone tracking highly consistent with their traditional tests." },
+  { q: "Is this a glucometer? Does it measure blood sugar directly?", a: "No — EasyTouch Wellness measures your body's metabolic response using photoplethysmography (PPG). It gives you a Metabolic Index — a composite of heart, oxygen, and stress signals — not a direct glucose number. It's designed to help you understand food's effect on your body over time, not replace a clinical glucometer." },
+  { q: "How many scans before I see my Food Fingerprint?", a: "You need 5 linked meal scans (snap a meal, then scan within 90 minutes). Most users hit this in the first week. The app guides you to each one." },
+  { q: "What if I already have diabetes?", a: "Many users with diabetes or pre-diabetes use EasyTouch Wellness to track their metabolic responses to different foods as part of their daily routine. It complements — not replaces — clinical monitoring. Always follow your doctor's advice for disease management." },
+  { q: "Does it work without Nera AI?", a: "Basic scans work. The Food Fingerprint, Meal Impact Score, and Nera AI coaching are powered by Nera AI — and 1 year of Nera AI is included free with your kit. No subscription needed." },
+  { q: "What's the return policy?", a: "30-day returns on unopened devices. If your device is defective, we replace it. Note: Nera AI activation is non-refundable once the app is set up and your first scan is completed." },
   { q: "Is this easy to use if I am not good with technology?", a: "Yes. Clip it to your finger. Open the app. That is it. The app is in simple English. Nera AI speaks in plain language. No settings to configure." },
-  { q: "What if my reading seems wrong?", a: "Take another reading after 5 minutes. If it still seems off, do a traditional test and enter the result in the app — this actually helps EasyTouch learn your body better." },
-  { q: "Does it work for older people who are not used to smartphones?", a: "The Agatsa One app is designed to be simple. Large text, clear zones, plain language. Most users above 60 are comfortable with it within the first day." },
-  { q: "What is Nera AI?", a: "Nera is the health intelligence system built into the Agatsa One app. It reads all your data — EasyTouch scores, meal snaps, sleep, activity — and explains what is happening in your body in plain language. Think of it as a knowledgeable friend who is always available and never makes you feel judged." },
 ];
 
 const trustItems = ["Made in India", "1-year warranty", "30-day returns", "Free delivery", "Secure payment"];
