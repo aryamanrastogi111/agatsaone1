@@ -259,7 +259,7 @@ export default function EasyTouchWellnessProduct() {
                   <ArrowRight className="h-4 w-4 ml-1 shrink-0" />
                 </Button>
               </div>
-              <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
+              <div className="mt-3 inline-flex flex-wrap items-center justify-center md:justify-start gap-x-2 gap-y-1 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2 max-w-full">
                 <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
                 <span className="text-sm font-semibold text-foreground">Nera AI Premium — 1 year</span>
                 <span className="text-xs text-muted-foreground">No subscription needed</span>
