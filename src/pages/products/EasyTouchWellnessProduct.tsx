@@ -254,9 +254,9 @@ export default function EasyTouchWellnessProduct() {
                 <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
               </div>
               <div className="mt-4">
-                <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 py-5 text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-8 py-5 text-base md:text-lg shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
                   <ShoppingCart className="h-5 w-5 mr-2" />
-                  Add to Cart — {fmt(wellnessPrice)}
+                  Get My EasyTouch Wellness Kit — {fmt(wellnessPrice)} <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
               </div>
               <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
