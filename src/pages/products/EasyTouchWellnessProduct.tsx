@@ -179,7 +179,7 @@ export default function EasyTouchWellnessProduct() {
               </div>
               {/* Hero trust bar */}
               <div className="hidden md:flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground mt-4">
-                <span>60-second scan</span>
+                <span>15-second scan</span>
                 <span className="text-border">|</span>
                 <span>Powered by Nera AI</span>
                 <span className="text-border">|</span>
@@ -204,7 +204,7 @@ export default function EasyTouchWellnessProduct() {
                 Meet <span className="text-accent-foreground">EasyTouch Wellness</span>
               </p>
               <p className="text-base text-muted-foreground">
-                60-second scan · No needle · No blood · No strip
+                15-second scan · No needle · No blood · No strip
               </p>
             </div>
 
@@ -829,7 +829,7 @@ export default function EasyTouchWellnessProduct() {
           <div className="mt-14 space-y-12">
             {[
               { n: "1", title: "Snap Your Meal", copy: "Log what you're eating in the Agatsa One app before you eat. Takes 5 seconds. No calorie counting. Just snap or tap." },
-              { n: "2", title: "Scan After Eating", copy: "60–90 minutes later, press your fingertip to EasyTouch Wellness for 60 seconds. Nera AI reads your metabolic response — heart rate variability, oxygen dynamics, and stress signals — and converts it into your Metabolic Index score." },
+              { n: "2", title: "Scan After Eating", copy: "60–90 minutes later, press your fingertip to EasyTouch Wellness for 15 seconds. Nera AI reads your metabolic response — heart rate variability, oxygen dynamics, and stress signals — and converts it into your Metabolic Index score." },
               { n: "3", title: "See Your Food Fingerprint", copy: "After 5 linked scans, your personal Food Fingerprint unlocks. See exactly how Light, Balanced, and Heavy meals affect your body — averaged, trended, and compared to your fasting baseline. No two fingerprints are alike." },
             ].map((step, i) => (
               <motion.div key={step.n} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }} className="flex gap-5 items-start">
