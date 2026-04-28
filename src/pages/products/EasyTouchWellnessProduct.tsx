@@ -306,17 +306,17 @@ export default function EasyTouchWellnessProduct() {
               {
                 icon: Gauge,
                 title: "Which foods drain you?",
-                desc: "You don't know which foods drain you vs. energize you.",
+                desc: "You don't know which foods drain you vs. energize you — because your body's reaction is the real signal.",
               },
               {
                 icon: LineChart,
                 title: "Light vs. Heavy?",
-                desc: "You can't see the difference between a Light meal and a Heavy one — on your body.",
+                desc: "You can't see the difference between a Light meal and a Heavy one — on your body. Same meal, different day, different response.",
               },
               {
                 icon: Compass,
                 title: "Your baseline?",
-                desc: "You have no idea what \"fasting baseline\" means for you specifically.",
+                desc: "You have no idea what \"fasting baseline\" means for you specifically — and how far each meal pulls you away from it.",
               },
             ].map((item, i) => (
               <motion.div
