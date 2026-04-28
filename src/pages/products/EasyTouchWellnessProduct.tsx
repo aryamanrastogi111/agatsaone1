@@ -45,7 +45,7 @@ const whoIsThisFor = [
   "You want an early read on your metabolic health — long before regular tests show anything wrong",
   "You have been told you are pre-diabetic and want to understand what your body is really doing day to day",
   "Your sugar readings keep changing and you can't figure out why",
-  "You want to see how food, sleep, and stress are silently shaping your body",
+  "You want to see how food, sleep, and stress are silently shaping your body — not just on the scale, but inside it",
   "A family member has sugar or heart issues and you want to track your own risk early",
   "You are health-conscious and want one simple daily score that tells you how your body is coping",
 ];
