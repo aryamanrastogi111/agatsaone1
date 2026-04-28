@@ -445,9 +445,9 @@ export default function EasyTouchWellnessProduct() {
                 "Anyone over 30 who wants to age well",
                 "Working professionals battling fatigue",
                 "Anyone with a family history of diabetes",
-                "Fitness enthusiasts optimizing nutrition",
+                "Fitness enthusiasts who want to understand body response, not just nutrition",
                 "Parents who want to model healthy habits",
-                "Anyone tired of generic diet advice",
+                "Anyone tired of generic diet advice that ignores how their body actually reacts",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-2.5">
                   <div className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5">
