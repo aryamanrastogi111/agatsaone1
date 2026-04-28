@@ -5,7 +5,7 @@ import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, ArrowRight, Package, ShoppingCart, ChevronDown, Star, Microscope, Camera, ScanLine, Sparkles, TrendingUp, Fingerprint, Activity, Bell, Compass, Gauge, LineChart } from "lucide-react";
+import { Check, ArrowRight, Package, ShoppingCart, ChevronDown, Star, Microscope, Camera, ScanLine, Sparkles, TrendingUp, Fingerprint, Activity, Bell, Compass, Gauge, LineChart, MessageCircle } from "lucide-react";
 import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { SiteLayout } from "@/components/SiteLayout";
