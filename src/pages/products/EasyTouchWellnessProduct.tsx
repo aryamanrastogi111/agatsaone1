@@ -558,7 +558,7 @@ export default function EasyTouchWellnessProduct() {
                   One score. Five deeper signals. <span className="text-primary">Zero confusion.</span>
                 </h3>
                 <p className="mt-3 text-muted-foreground text-base leading-relaxed">
-                  Your Metabolic Health Score combines vascular health, meal recovery, autonomic fitness, day portrait and stress load — into one number you can act on.
+                  Your Metabolic Health Score quietly combines vascular health, post-meal recovery, autonomic fitness, day portrait and stress load — turning your body's internal signals into one number you can act on. Sugar swings are only one part of the story; this looks at the rest.
                 </p>
                 <ul className="mt-5 space-y-3">
                   {[
