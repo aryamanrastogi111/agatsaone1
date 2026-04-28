@@ -5,7 +5,7 @@ import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, ArrowRight, Package, ShoppingCart, ChevronDown, Star, Microscope, Camera, ScanLine, Sparkles, TrendingUp, Fingerprint, Activity, Bell, Compass, Gauge, LineChart } from "lucide-react";
+import { Check, ArrowRight, Package, ShoppingCart, ChevronDown, Star, Microscope, Camera, ScanLine, Sparkles, TrendingUp, Fingerprint, Activity, Bell, Compass, Gauge, LineChart, MessageCircle } from "lucide-react";
 import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -469,33 +469,59 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* ── SECTION 5 — SNAP YOUR MEAL ── */}
-      <section className="py-12 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp}>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center">Know before you eat.</h2>
+      {/* ── SECTION 5 — KNOW BEFORE YOU EAT (phone + notifications) ── */}
+      <section className="py-14 bg-background">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Know before you eat.</h2>
+            <p className="text-muted-foreground mt-3">Not a generic diet chart. Your chart.</p>
           </motion.div>
 
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { icon: Camera, title: "Snap your plate", desc: "Open the app, take a photo of your meal." },
-              { icon: Sparkles, title: "Get a prediction", desc: "Nera AI estimates your metabolic response — before you eat." },
-              { icon: ScanLine, title: "Scan after 90 min", desc: "Take a quick EasyTouch reading to see how your body actually responded." },
-              { icon: TrendingUp, title: "See your patterns", desc: "Learn which foods keep you Calm vs push you Elevated — for YOUR body." },
-            ].map((step, i) => (
-              <motion.div key={step.title} {...fadeUp} transition={{ duration: 0.5, delay: 0.1 * i }} className="bg-card border border-border rounded-xl p-5 text-center">
-                <div className="mx-auto w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center mb-3">
-                  <step.icon className="h-5 w-5 text-primary" />
+          <div className="grid lg:grid-cols-[280px_1fr] gap-10 lg:gap-14 items-center">
+            {/* phone frame */}
+            <motion.div {...fadeUp} className="mx-auto">
+              <div className="relative w-[240px] h-[480px] rounded-[2.5rem] bg-foreground p-3 shadow-2xl">
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-5 bg-foreground rounded-b-2xl z-10" />
+                <div className="w-full h-full rounded-[2rem] bg-gradient-to-br from-primary/20 via-card to-primary/5 flex flex-col items-center justify-center px-5 text-center">
+                  <Fingerprint className="h-14 w-14 text-primary mb-4" />
+                  <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">Agatsa One</p>
+                  <p className="text-foreground font-bold text-lg mt-2 leading-tight">Your Food<br/>Fingerprint</p>
+                  <p className="text-[11px] text-muted-foreground mt-3">Tap to start scanning</p>
+                  <div className="mt-6 w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-[0_0_30px_hsl(var(--primary)/0.6)]">
+                    <ScanLine className="h-7 w-7 text-primary-foreground" />
+                  </div>
                 </div>
-                <h3 className="font-semibold text-foreground mb-1">{step.title}</h3>
-                <p className="text-sm text-muted-foreground">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            </motion.div>
 
-          <motion.p {...fadeUp} transition={{ duration: 0.5, delay: 0.5 }} className="mt-8 text-center text-lg font-semibold text-foreground italic">
-            Not a generic diet chart. Your chart.
-          </motion.p>
+            {/* notification stack */}
+            <div className="space-y-3">
+              {[
+                { icon: Camera, title: "Snap your plate", desc: "Open the app, take a photo of your meal.", time: "now" },
+                { icon: Sparkles, title: "Get a prediction", desc: "Nera AI estimates your metabolic response — before you eat.", time: "2 sec" },
+                { icon: ScanLine, title: "Scan after 90 min", desc: "Take a quick EasyTouch reading to see how your body actually responded.", time: "1h 30m" },
+                { icon: TrendingUp, title: "See your patterns", desc: "Learn which foods keep you Calm vs push you Elevated — for YOUR body.", time: "this week" },
+              ].map((step, i) => (
+                <motion.div
+                  key={step.title}
+                  {...fadeUp}
+                  transition={{ duration: 0.45, delay: 0.1 * i }}
+                  className="flex items-start gap-4 bg-card border border-border rounded-2xl p-4 pr-5 shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <step.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-bold text-foreground">{step.title}</h3>
+                      <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-mono shrink-0">{step.time}</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1">{step.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -545,9 +571,10 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* ── SECTION 6 — NERA AI ── */}
-      <section className="py-12 bg-gradient-to-br from-[#0D0D1A] to-[#1A1040]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      {/* ── SECTION 6 — NERA AI (chat bubbles) ── */}
+      <section className="py-16 bg-gradient-to-br from-[#0D0D1A] to-[#1A1040] relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(124,77,255,0.15),transparent_60%)]" />
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 relative">
           <motion.div {...fadeUp} className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white">Your health — explained in plain language, every single day.</h2>
             <p className="text-[#A0A0C0] text-lg mt-4 max-w-2xl mx-auto">
@@ -558,19 +585,51 @@ export default function EasyTouchWellnessProduct() {
             </p>
           </motion.div>
 
-          <div className="mt-12 space-y-5 max-w-2xl mx-auto">
-            {[
-              "\"Your morning reading is elevated — but this is likely the dawn effect. Your body naturally releases stored energy just before you wake up. This is common and not caused by anything you ate last night.\"",
-              "\"Your score went into Elevated zone 2 hours after lunch. The roti portion may have been larger than your body handles easily. Try a smaller portion or a 10-minute walk after your next meal.\"",
-              "\"Great — your last 5 readings have all been in Calm or Active zone. Your body is responding well this week.\"",
-            ].map((msg, i) => (
-              <motion.div key={i} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white/5 border border-white/10 rounded-2xl p-5"
-              >
-                <p className="text-white/90 text-sm leading-relaxed italic">{msg}</p>
-              </motion.div>
-            ))}
-          </div>
+          {/* phone-chat frame */}
+          <motion.div
+            {...fadeUp}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="mt-12 mx-auto max-w-md bg-black/30 backdrop-blur-sm border border-white/10 rounded-[2rem] p-5 shadow-2xl"
+          >
+            {/* header */}
+            <div className="flex items-center gap-3 pb-4 border-b border-white/10">
+              <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-primary to-[#B388FF] flex items-center justify-center">
+                <Sparkles className="h-5 w-5 text-white" />
+                <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-400 border-2 border-[#0D0D1A]" />
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm">Nera AI</p>
+                <p className="text-[#A0A0C0] text-[11px]">Online · Your metabolic companion</p>
+              </div>
+            </div>
+
+            {/* messages */}
+            <div className="mt-5 space-y-4">
+              {[
+                { msg: "Your morning reading is elevated — but this is likely the dawn effect. Your body naturally releases stored energy just before you wake up. This is common and not caused by anything you ate last night.", time: "7:42 AM" },
+                { msg: "Your score went into Elevated zone 2 hours after lunch. The roti portion may have been larger than your body handles easily. Try a smaller portion or a 10-minute walk after your next meal.", time: "3:18 PM" },
+                { msg: "Great — your last 5 readings have all been in Calm or Active zone. Your body is responding well this week.", time: "Sun 9:02 AM" },
+              ].map((m, i) => (
+                <motion.div
+                  key={i}
+                  {...fadeUp}
+                  transition={{ duration: 0.5, delay: 0.25 + i * 0.1 }}
+                  className="flex flex-col items-start max-w-[90%]"
+                >
+                  <div className="bg-white/10 border border-white/10 rounded-2xl rounded-tl-md px-4 py-3">
+                    <p className="text-white/90 text-[13px] leading-relaxed">{m.msg}</p>
+                  </div>
+                  <span className="text-[10px] text-[#A0A0C0]/70 mt-1 ml-2">{m.time}</span>
+                </motion.div>
+              ))}
+              {/* typing indicator */}
+              <div className="flex items-center gap-1.5 pl-2 pt-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse [animation-delay:150ms]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse [animation-delay:300ms]" />
+              </div>
+            </div>
+          </motion.div>
 
           <motion.p {...fadeUp} className="mt-10 text-[#A0A0C0] text-center max-w-2xl mx-auto">
             Nera also sends you a weekly summary, tracks your patterns over time, and generates a PDF report you can share with your doctor — with all your readings, zones, and trends in one place.
@@ -578,55 +637,104 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* ── SECTION 7 — WHO IS THIS FOR ── */}
-      <section className="py-12 bg-background">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">This is for you if...</motion.h2>
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 space-y-4">
+      {/* ── SECTION 7 — WHO IS THIS FOR (persona chips) ── */}
+      <section className="py-14 bg-background">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center mb-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary mb-3">Is EasyTouch for you?</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">This is for you if...</h2>
+          </motion.div>
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} className="grid sm:grid-cols-2 gap-3">
             {whoIsThisFor.map((item, i) => (
-              <div key={i} className="flex gap-3 items-start">
-                <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <p className="text-muted-foreground">{item}</p>
+              <div
+                key={i}
+                className="group flex items-start gap-3 bg-primary/5 hover:bg-primary/10 border border-primary/15 hover:border-primary/40 rounded-full pl-4 pr-5 py-3 transition-all"
+              >
+                <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 mt-0.5">
+                  <Check className="h-3 w-3" strokeWidth={3} />
+                </span>
+                <p className="text-sm text-foreground leading-snug">{item}</p>
               </div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ── SECTION 8 — WHAT'S IN THE BOX ── */}
-      <section className="py-10 bg-muted/30">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center">Everything You Need to Start Knowing Your Body</motion.h2>
-          <div className="grid sm:grid-cols-2 gap-4 mt-10">
-            {boxItems.map((item) => (
-              <div key={item} className="flex items-center gap-3 bg-card rounded-xl border border-border p-4">
-                <Package className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-sm text-foreground">{item}</span>
+      {/* ── SECTION 8 — WHAT'S IN THE BOX (packing slip) ── */}
+      <section className="py-14 bg-muted/30">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+          <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center mb-8">
+            Everything You Need to Start Knowing Your Body
+          </motion.h2>
+          <motion.div
+            {...fadeUp}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="relative bg-card rounded-none border-y-2 border-dashed border-foreground/20 shadow-lg"
+          >
+            {/* ticket notches */}
+            <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-muted/30" />
+            <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-muted/30" />
+
+            <div className="px-6 md:px-10 py-6 border-b border-dashed border-border flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-mono tracking-[0.2em] text-muted-foreground uppercase">Agatsa Packing Slip</p>
+                <p className="text-sm font-bold text-foreground mt-0.5">EasyTouch Wellness Kit</p>
               </div>
-            ))}
-          </div>
+              <Package className="h-6 w-6 text-primary" />
+            </div>
+
+            <ul className="px-6 md:px-10 py-6 divide-y divide-dashed divide-border">
+              {boxItems.map((item, i) => (
+                <li key={item} className="flex items-start gap-3 py-3">
+                  <span className="font-mono text-xs text-muted-foreground pt-1 w-8 shrink-0">{String(i + 1).padStart(2, "0")}.</span>
+                  <Check className="h-4 w-4 text-primary shrink-0 mt-1" strokeWidth={3} />
+                  <span className="text-sm text-foreground">{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="px-6 md:px-10 py-4 border-t border-dashed border-border flex items-center justify-between text-[11px] font-mono uppercase tracking-widest text-muted-foreground">
+              <span>Sku · WELLNESS-SUB</span>
+              <span>Qty · 1 Kit</span>
+            </div>
+          </motion.div>
           <motion.p {...fadeUp} className="mt-6 text-sm text-muted-foreground text-center">
             The device pairs with your phone in under 2 minutes. No technical setup.
           </motion.p>
         </div>
       </section>
 
-      {/* ── SECTION 9 — TESTIMONIALS ── */}
-      <section className="py-12 bg-background">
+      {/* ── SECTION 9 — TESTIMONIALS (staggered, with quote marks) ── */}
+      <section className="py-14 bg-background">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">What Users Discovered About Themselves</h2>
             <p className="text-muted-foreground mt-3">Real Food Fingerprint moments — straight from people who scanned, learned, and changed.</p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
-            {fingerprintTestimonials.map((t, i) => (
-              <motion.div key={i} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-card rounded-2xl border border-border p-6"
-              >
-                <p className="text-muted-foreground text-sm leading-relaxed italic">"{t.quote}"</p>
-                <p className="mt-4 text-sm font-semibold text-foreground">— {t.name}, {t.city}</p>
-              </motion.div>
-            ))}
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 mt-16">
+            {fingerprintTestimonials.map((t, i) => {
+              const offsets = ["md:mt-0 md:-rotate-[0.8deg]", "md:mt-8 md:rotate-0", "md:mt-2 md:rotate-[0.8deg]"];
+              return (
+                <motion.div
+                  key={i}
+                  {...fadeUp}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className={`relative bg-card rounded-2xl border border-border p-7 pt-10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all ${offsets[i]}`}
+                >
+                  <span
+                    aria-hidden
+                    className="absolute -top-6 left-5 font-serif text-primary text-[7rem] leading-none select-none"
+                  >
+                    &ldquo;
+                  </span>
+                  <p className="relative text-foreground/90 text-[15px] leading-relaxed">{t.quote}</p>
+                  <div className="mt-5 pt-4 border-t border-dashed border-border flex items-center justify-between">
+                    <p className="text-sm font-bold text-foreground">{t.name}</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">{t.city}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -636,20 +744,31 @@ export default function EasyTouchWellnessProduct() {
       {/* ── SECTION 9B — USER REVIEWS ── */}
       <Suspense fallback={<div className="py-12" />}><WellnessReviewsSection /></Suspense>
 
-      {/* ── OBJECTION HANDLING — "We Know What You Are Thinking" ── */}
+      {/* ── OBJECTION HANDLING — editorial Q&A ── */}
       <section className="py-12 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp} className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">We know what you are thinking. Let us be honest.</h2>
-            <p className="text-lg text-muted-foreground mt-3">
-              These are the real questions people ask before buying EasyTouch Wellness. Here are straight answers — no marketing spin.
+          <motion.div {...fadeUp} className="mb-10 border-b border-border pb-6">
+            <p className="text-xs font-bold tracking-[0.3em] uppercase text-primary mb-2">Candid Q&amp;A</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">We know what you are thinking.<br/><span className="italic text-muted-foreground font-serif">Let us be honest.</span></h2>
+            <p className="text-base text-muted-foreground mt-3">
+              The real questions people ask before buying — answered without marketing spin.
             </p>
           </motion.div>
-          <Accordion type="single" collapsible className="w-full space-y-3">
+          <Accordion type="single" collapsible className="w-full">
             {objections.map((obj, i) => (
-              <AccordionItem key={i} value={`obj-${i}`} className="bg-card border border-border rounded-xl px-5">
-                <AccordionTrigger className="text-left text-foreground font-semibold text-base py-5">{obj.q}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground whitespace-pre-line pb-5">{obj.a}</AccordionContent>
+              <AccordionItem key={i} value={`obj-${i}`} className="border-b border-border last:border-b-0 data-[state=open]:bg-card/50 transition-colors">
+                <AccordionTrigger className="text-left font-semibold text-base py-5 hover:no-underline group">
+                  <div className="flex gap-4 items-start w-full pr-2">
+                    <span className="font-serif text-2xl text-primary/70 leading-none shrink-0 w-7">Q.</span>
+                    <span className="text-foreground group-hover:text-primary transition-colors">{obj.q}</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="pb-6 pl-11 border-l-2 border-primary ml-[14px]">
+                  <div className="flex gap-4 items-start">
+                    <span className="font-serif text-2xl text-primary leading-none shrink-0 -ml-[30px]">A.</span>
+                    <div className="text-muted-foreground whitespace-pre-line leading-relaxed">{obj.a}</div>
+                  </div>
+                </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
