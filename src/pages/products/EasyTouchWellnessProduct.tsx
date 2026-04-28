@@ -26,6 +26,7 @@ import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
+import mealIntelligenceApp from "@/assets/easytouch-meal-intelligence-app.jpg";
 
 // Lazy-load heavy below-fold sections
 const WellnessReviewsSection = lazy(() => import("@/components/products/WellnessReviewsSection").then(m => ({ default: m.WellnessReviewsSection })));
