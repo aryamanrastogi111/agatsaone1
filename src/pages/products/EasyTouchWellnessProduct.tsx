@@ -545,9 +545,10 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* ── SECTION 6 — NERA AI ── */}
-      <section className="py-12 bg-gradient-to-br from-[#0D0D1A] to-[#1A1040]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      {/* ── SECTION 6 — NERA AI (chat bubbles) ── */}
+      <section className="py-16 bg-gradient-to-br from-[#0D0D1A] to-[#1A1040] relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(124,77,255,0.15),transparent_60%)]" />
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 relative">
           <motion.div {...fadeUp} className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white">Your health — explained in plain language, every single day.</h2>
             <p className="text-[#A0A0C0] text-lg mt-4 max-w-2xl mx-auto">
@@ -558,19 +559,51 @@ export default function EasyTouchWellnessProduct() {
             </p>
           </motion.div>
 
-          <div className="mt-12 space-y-5 max-w-2xl mx-auto">
-            {[
-              "\"Your morning reading is elevated — but this is likely the dawn effect. Your body naturally releases stored energy just before you wake up. This is common and not caused by anything you ate last night.\"",
-              "\"Your score went into Elevated zone 2 hours after lunch. The roti portion may have been larger than your body handles easily. Try a smaller portion or a 10-minute walk after your next meal.\"",
-              "\"Great — your last 5 readings have all been in Calm or Active zone. Your body is responding well this week.\"",
-            ].map((msg, i) => (
-              <motion.div key={i} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white/5 border border-white/10 rounded-2xl p-5"
-              >
-                <p className="text-white/90 text-sm leading-relaxed italic">{msg}</p>
-              </motion.div>
-            ))}
-          </div>
+          {/* phone-chat frame */}
+          <motion.div
+            {...fadeUp}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="mt-12 mx-auto max-w-md bg-black/30 backdrop-blur-sm border border-white/10 rounded-[2rem] p-5 shadow-2xl"
+          >
+            {/* header */}
+            <div className="flex items-center gap-3 pb-4 border-b border-white/10">
+              <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-primary to-[#B388FF] flex items-center justify-center">
+                <Sparkles className="h-5 w-5 text-white" />
+                <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-green-400 border-2 border-[#0D0D1A]" />
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm">Nera AI</p>
+                <p className="text-[#A0A0C0] text-[11px]">Online · Your metabolic companion</p>
+              </div>
+            </div>
+
+            {/* messages */}
+            <div className="mt-5 space-y-4">
+              {[
+                { msg: "Your morning reading is elevated — but this is likely the dawn effect. Your body naturally releases stored energy just before you wake up. This is common and not caused by anything you ate last night.", time: "7:42 AM" },
+                { msg: "Your score went into Elevated zone 2 hours after lunch. The roti portion may have been larger than your body handles easily. Try a smaller portion or a 10-minute walk after your next meal.", time: "3:18 PM" },
+                { msg: "Great — your last 5 readings have all been in Calm or Active zone. Your body is responding well this week.", time: "Sun 9:02 AM" },
+              ].map((m, i) => (
+                <motion.div
+                  key={i}
+                  {...fadeUp}
+                  transition={{ duration: 0.5, delay: 0.25 + i * 0.1 }}
+                  className="flex flex-col items-start max-w-[90%]"
+                >
+                  <div className="bg-white/10 border border-white/10 rounded-2xl rounded-tl-md px-4 py-3">
+                    <p className="text-white/90 text-[13px] leading-relaxed">{m.msg}</p>
+                  </div>
+                  <span className="text-[10px] text-[#A0A0C0]/70 mt-1 ml-2">{m.time}</span>
+                </motion.div>
+              ))}
+              {/* typing indicator */}
+              <div className="flex items-center gap-1.5 pl-2 pt-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse [animation-delay:150ms]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse [animation-delay:300ms]" />
+              </div>
+            </div>
+          </motion.div>
 
           <motion.p {...fadeUp} className="mt-10 text-[#A0A0C0] text-center max-w-2xl mx-auto">
             Nera also sends you a weekly summary, tracks your patterns over time, and generates a PDF report you can share with your doctor — with all your readings, zones, and trends in one place.
