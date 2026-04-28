@@ -625,12 +625,12 @@ export default function EasyTouchWellnessProduct() {
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">Meal Intelligence</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">Meal Intelligence — and Body Response</p>
             <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">
-              Snap your meal. <span className="text-primary">Nera AI does the maths.</span>
+              Snap your meal. <span className="text-primary">See how your body answers.</span>
             </h2>
             <p className="mt-4 text-muted-foreground text-base md:text-lg">
-              No counting calories. No guessing portions. Just see how today's meals affected <em>your</em> body — flagged Light or Heavy. Because the same meal can be Light for one body and Heavy for another.
+              No counting calories. No guessing portions. Just see how today's meals — and the stress, sleep and movement around them — affected <em>your</em> body, flagged Light or Heavy. Because the same plate can be Light for one person and Heavy for another, depending on what's happening inside.
             </p>
           </motion.div>
 
