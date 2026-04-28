@@ -735,7 +735,7 @@ export default function EasyTouchWellnessProduct() {
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Your Food Fingerprint</p>
                 <h3 className="text-xl md:text-2xl font-extrabold text-foreground mb-2">Discover which meals quietly drain you.</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">After a few days, Nera AI shows your body's average response by meal type — vs your fasting baseline.</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">After a few days, Nera AI shows your body's average response by meal type — vs your fasting baseline. So you can tell which meals settle quickly, and which ones leave your body working overtime.</p>
               </div>
               <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-md">
                 <div className="font-bold text-slate-900 text-sm mb-1">Food Fingerprint</div>
