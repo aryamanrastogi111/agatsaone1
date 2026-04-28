@@ -294,8 +294,8 @@ export default function EasyTouchWellnessProduct() {
                 <Fingerprint className="h-5 w-5 text-primary" />
               </div>
               <p className="text-foreground text-base md:text-lg leading-relaxed">
-                Metabolic response is <span className="font-semibold">personal</span>. The same bowl of rice that barely moves your friend's numbers can spike yours.
-                <span className="block mt-2 text-muted-foreground text-sm md:text-base">Same plate. Same portion. Two completely different bodies inside. Without data, you're guessing.</span>
+                Metabolic response is <span className="font-semibold">personal</span>. The same bowl of rice that barely moves your friend's sugar response can quietly send yours climbing.
+                <span className="block mt-2 text-muted-foreground text-sm md:text-base">Same plate. Same portion. Two completely different bodies inside. Without data, you're guessing — and a once-a-day finger prick only catches a fraction of the story.</span>
               </p>
             </div>
           </motion.div>
