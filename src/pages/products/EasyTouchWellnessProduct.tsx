@@ -269,7 +269,7 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* NEW: PROBLEM / AGITATION — redesigned for scannability */}
+      {/* PROBLEM / AGITATION — redesigned for scannability */}
       <section className="py-14 md:py-20 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           {/* Headline */}
