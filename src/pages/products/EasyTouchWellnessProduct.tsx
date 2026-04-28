@@ -461,7 +461,7 @@ export default function EasyTouchWellnessProduct() {
               <p className="text-base md:text-lg text-foreground">
                 In short — <span className="font-extrabold text-primary">everyone who eats</span>.
               </p>
-              <p className="text-sm text-muted-foreground mt-1">Because what you eat today shapes how you feel tomorrow.</p>
+              <p className="text-sm text-muted-foreground mt-1">Because what you eat matters — but how your body responds to it matters more.</p>
             </div>
           </motion.div>
         </div>
