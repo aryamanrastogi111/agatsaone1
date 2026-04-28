@@ -112,9 +112,9 @@ const objections = [
 ];
 
 const faqs = [
-  { q: "Is this a glucometer? Does it measure blood sugar directly?", a: "No — EasyTouch Wellness measures your body's metabolic response using photoplethysmography (PPG). It gives you a Metabolic Index — a composite of heart, oxygen, and stress signals — not a direct sugar number. It's designed to help you understand how your body responds to food, sleep and stress over time, not replace a clinical glucometer." },
-  { q: "How many scans before I see my Food Fingerprint?", a: "You need 5 linked meal scans (snap a meal, then scan within 90 minutes). Most users hit this in the first week. The app guides you to each one." },
-  { q: "What if I already have diabetes?", a: "Many users with diabetes or pre-diabetes use EasyTouch Wellness to track how their body responds to different foods — and to daily stress and sleep — as part of their daily routine. It complements — not replaces — clinical monitoring. Always follow your doctor's advice for disease management." },
+  { q: "Is this a glucometer? Does it measure blood sugar directly?", a: "No — EasyTouch Wellness is a non-invasive wellness insight device, not a glucometer or diagnostic device. It uses optical sensing (PPG) to read body signals like heart rhythm, blood flow, perfusion and pulse-wave shape, and turns them into a Metabolic Index. It's designed to help you understand how your body responds to food, sleep, stress and daily habits over time — sugar fluctuations are only one part of that story. It does not measure blood sugar and does not replace a clinical glucometer or any medical test." },
+  { q: "How many scans before I see my Food Fingerprint?", a: "You need 5 linked meal scans (snap a meal, then scan within 90 minutes). Most users hit this in the first week. Each scan adds to your body's response pattern — not just to the food, but to how you slept, moved and felt around it." },
+  { q: "What if I already have diabetes?", a: "Many users with diabetes or pre-diabetes use EasyTouch Wellness to understand how their body responds to different foods, stress and sleep as part of their daily wellness routine. It complements — not replaces — clinical monitoring, and it is not a diabetes treatment device. Always follow your doctor's advice for disease management." },
   { q: "Does it work without Nera AI?", a: "Basic scans work. The Food Fingerprint, Meal Impact Score, and Nera AI coaching are powered by Nera AI — and 1 year of Nera AI is included free with your kit. No subscription needed." },
   { q: "What's the return policy?", a: "30-day returns on unopened devices. If your device is defective, we replace it. Note: Nera AI activation is non-refundable once the app is set up and your first scan is completed." },
   { q: "Is this easy to use if I am not good with technology?", a: "Yes. Clip it to your finger. Open the app. That is it. The app is in simple English. Nera AI speaks in plain language. No settings to configure." },
@@ -362,10 +362,10 @@ export default function EasyTouchWellnessProduct() {
               <p className="text-xs font-bold uppercase tracking-widest text-white">Why Everyone Needs This</p>
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-primary-foreground leading-tight">
-              The silent problem hiding in <span className="italic underline decoration-white/40 decoration-4 underline-offset-4">everyday meals</span>
+              The silent signals hiding behind <span className="italic underline decoration-white/40 decoration-4 underline-offset-4">everyday meals</span>
             </h2>
             <p className="mt-5 text-primary-foreground/90 text-lg md:text-xl leading-relaxed">
-              <span className="font-bold text-white">1 in 4 Indian adults</span> already lives with a metabolic issue — and most don't know until it's serious. EasyTouch Wellness catches the early signals, every single day — in your heart rhythm, your blood flow and how you recover after meals.
+              <span className="font-bold text-white">1 in 4 Indian adults</span> already lives with a metabolic issue — and the body whispers about it long before any test does. EasyTouch Wellness reads those whispers every single day — in your heart rhythm, your blood flow, your pulse pattern and how you recover after eating.
             </p>
           </motion.div>
 
@@ -445,9 +445,9 @@ export default function EasyTouchWellnessProduct() {
                 "Anyone over 30 who wants to age well",
                 "Working professionals battling fatigue",
                 "Anyone with a family history of diabetes",
-                "Fitness enthusiasts optimizing nutrition",
+                "Fitness enthusiasts who want to understand body response, not just nutrition",
                 "Parents who want to model healthy habits",
-                "Anyone tired of generic diet advice",
+                "Anyone tired of generic diet advice that ignores how their body actually reacts",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-2.5">
                   <div className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5">
@@ -558,7 +558,7 @@ export default function EasyTouchWellnessProduct() {
                   One score. Five deeper signals. <span className="text-primary">Zero confusion.</span>
                 </h3>
                 <p className="mt-3 text-muted-foreground text-base leading-relaxed">
-                  Your Metabolic Health Score combines vascular health, meal recovery, autonomic fitness, day portrait and stress load — into one number you can act on.
+                  Your Metabolic Health Score quietly combines vascular health, post-meal recovery, autonomic fitness, day portrait and stress load — turning your body's internal signals into one number you can act on. Sugar swings are only one part of the story; this looks at the rest.
                 </p>
                 <ul className="mt-5 space-y-3">
                   {[
@@ -625,12 +625,12 @@ export default function EasyTouchWellnessProduct() {
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">Meal Intelligence</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">Meal Intelligence — and Body Response</p>
             <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">
-              Snap your meal. <span className="text-primary">Nera AI does the maths.</span>
+              Snap your meal. <span className="text-primary">See how your body answers.</span>
             </h2>
             <p className="mt-4 text-muted-foreground text-base md:text-lg">
-              No counting calories. No guessing portions. Just see how today's meals affected <em>your</em> body — flagged Light or Heavy. Because the same meal can be Light for one body and Heavy for another.
+              No counting calories. No guessing portions. Just see how today's meals — and the stress, sleep and movement around them — affected <em>your</em> body, flagged Light or Heavy. Because the same plate can be Light for one person and Heavy for another, depending on what's happening inside.
             </p>
           </motion.div>
 
