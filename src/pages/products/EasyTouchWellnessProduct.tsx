@@ -342,7 +342,7 @@ export default function EasyTouchWellnessProduct() {
           >
             <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-5 py-2.5 shadow-md shadow-primary/20">
               <Sparkles className="h-4 w-4" />
-              <span className="text-sm md:text-base font-bold">EasyTouch Wellness ends the guesswork.</span>
+              <span className="text-sm md:text-base font-bold">EasyTouch Wellness ends the guesswork — no needle required.</span>
             </div>
           </motion.div>
         </div>
