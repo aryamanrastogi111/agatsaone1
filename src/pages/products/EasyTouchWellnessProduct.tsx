@@ -466,10 +466,308 @@ export default function EasyTouchWellnessProduct() {
           </motion.div>
         </div>
       </section>
+
+      {/* APP IN ACTION — Section A: Metabolic Health Score + Daily Snapshot */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-muted/40 to-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-12">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">See It In The App</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">
+              Wake up to a <span className="text-primary">single number</span> that tells you exactly where you stand.
+            </h2>
+            <p className="mt-4 text-muted-foreground text-base md:text-lg">
+              No charts to decode. No reports to interpret. Just one Metabolic Health Score, every morning — backed by 5 deeper signals.
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            <motion.div {...fadeUp} transition={{ duration: 0.6 }} className="relative mx-auto w-full max-w-sm">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-accent/20 blur-3xl rounded-full" />
+              <div className="relative bg-white rounded-[2.5rem] border-8 border-foreground/90 shadow-2xl overflow-hidden">
+                <div className="bg-foreground/90 h-6 flex items-center justify-center">
+                  <div className="w-20 h-1.5 bg-foreground/40 rounded-full" />
+                </div>
+                <div className="p-5 space-y-4">
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-bold text-slate-900">Your Vitals</span>
+                      <span className="text-xs text-slate-400">just now</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="bg-blue-50 border border-blue-100 rounded-xl p-2 text-center">
+                        <div className="text-blue-600 font-bold text-sm">Active</div>
+                        <div className="text-[9px] text-slate-500 mt-0.5">Sugar Zone</div>
+                      </div>
+                      <div className="bg-rose-50 border border-rose-100 rounded-xl p-2 text-center">
+                        <div className="text-rose-600 font-bold text-base">86</div>
+                        <div className="text-[9px] text-slate-500">Heart Rate</div>
+                      </div>
+                      <div className="bg-amber-50 border border-amber-100 rounded-xl p-2 text-center">
+                        <div className="text-amber-600 font-bold text-sm">126/86</div>
+                        <div className="text-[9px] text-slate-500">BP</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-emerald-50/40 border-2 border-emerald-200 rounded-2xl p-4">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <div className="font-bold text-slate-900 text-base">Metabolic Health Score</div>
+                        <div className="text-xs text-slate-500">3 of 5 signals active</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-5xl font-extrabold text-emerald-500 leading-none">64</div>
+                        <div className="text-emerald-600 font-bold text-sm mt-0.5">Fair</div>
+                      </div>
+                    </div>
+                    <div className="flex gap-1 mt-3">
+                      <div className="h-1.5 flex-1 bg-emerald-400 rounded-full" />
+                      <div className="h-1.5 flex-1 bg-emerald-400 rounded-full" />
+                      <div className="h-1.5 flex-1 bg-emerald-400 rounded-full" />
+                      <div className="h-1.5 flex-1 bg-slate-200 rounded-full" />
+                      <div className="h-1.5 flex-1 bg-slate-200 rounded-full" />
+                    </div>
+                    <div className="mt-4 space-y-2.5">
+                      {[
+                        { label: "Day Portrait", val: "75", w: "w-3/4", color: "bg-emerald-400", text: "text-emerald-500", muted: false },
+                        { label: "Autonomic Fitness", val: "—", w: "w-0", color: "bg-slate-300", text: "text-slate-400", muted: true },
+                        { label: "Meal Recovery", val: "36", w: "w-1/3", color: "bg-amber-400", text: "text-amber-500", muted: false },
+                        { label: "Vascular", val: "80", w: "w-4/5", color: "bg-emerald-400", text: "text-emerald-500", muted: false },
+                        { label: "Stress & Load", val: "—", w: "w-0", color: "bg-slate-300", text: "text-slate-400", muted: true },
+                      ].map((row) => (
+                        <div key={row.label} className="flex items-center gap-3 text-xs">
+                          <div className={`flex-1 ${row.muted ? "text-slate-400" : "text-slate-700"} font-medium`}>{row.label}</div>
+                          <div className="w-20 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                            <div className={`h-full ${row.color} ${row.w} rounded-full`} />
+                          </div>
+                          <div className={`w-6 text-right font-bold ${row.text}`}>{row.val}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3">
+                      <div className="text-amber-700 font-bold text-xs mb-1">Biggest opportunity: Meal Recovery</div>
+                      <div className="text-[11px] text-slate-600 leading-relaxed">How fast your body clears post-meal load. Improving this single signal moves your overall score the most.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <div className="space-y-6">
+              <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-foreground leading-tight">
+                  One score. Five deeper signals. <span className="text-primary">Zero confusion.</span>
+                </h3>
+                <p className="mt-3 text-muted-foreground text-base leading-relaxed">
+                  Your Metabolic Health Score combines vascular health, meal recovery, autonomic fitness, day portrait and stress load — into one number you can act on.
+                </p>
+                <ul className="mt-5 space-y-3">
+                  {[
+                    "Updated every morning automatically",
+                    "Highlights your single biggest opportunity",
+                    "Tracks your trajectory week over week",
+                    "Built on 1.5Cr+ Indian metabolic records",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="h-3 w-3 text-primary" strokeWidth={3} />
+                      </div>
+                      <span className="text-sm md:text-base text-foreground font-medium">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.2 }}
+                className="bg-white rounded-2xl border-2 border-emerald-200 p-5 shadow-xl"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-base">⌚</span>
+                  <span className="font-bold text-slate-900 text-sm">Today's Snapshot</span>
+                  <span className="ml-auto text-[10px] text-slate-400 uppercase tracking-wide">Live</span>
+                </div>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-2 text-center">
+                    <div className="text-emerald-600 font-extrabold text-lg leading-tight">Calm</div>
+                    <div className="text-[10px] text-slate-500">Sugar Zone</div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs text-slate-500">Score</span>
+                      <span className="font-extrabold text-emerald-500 text-lg">93/100</span>
+                    </div>
+                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full w-[93%] bg-emerald-400 rounded-full" />
+                    </div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                    <span className="text-slate-500">Resting HR</span>
+                    <span className="ml-auto font-bold text-slate-900">51 bpm</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-blue-400" />
+                    <span className="text-slate-500">Sleep</span>
+                    <span className="ml-auto font-bold text-slate-900">9.7h</span>
+                  </div>
+                </div>
+                <div className="mt-3 text-[11px] text-emerald-600 font-medium leading-relaxed">
+                  All signals look good — your metabolic health indicators are in the healthy range today.
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* APP IN ACTION — Section B: Meal Intelligence */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-12">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">Meal Intelligence</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">
+              Snap your meal. <span className="text-primary">Nera AI does the maths.</span>
+            </h2>
+            <p className="mt-4 text-muted-foreground text-base md:text-lg">
+              No counting calories. No guessing portions. Just see how today's meals affected <em>your</em> body — flagged Light or Heavy.
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <motion.div {...fadeUp} transition={{ duration: 0.6 }} className="order-2 lg:order-1">
+              <div className="space-y-5">
+                {[
+                  { tag: "Auto-detected", title: "Calories, carbs, protein, sugar", desc: "Photo your plate. Nera AI estimates kcal, macros, sugar — and flags overshoots vs WHO targets." },
+                  { tag: "Personal flags", title: "Heavy or Light — for YOUR body", desc: "Same biryani may be 'Heavy' for you and 'Light' for your friend. The flag is personal, not generic." },
+                  { tag: "Sugar-aware", title: "WHO target overshoots, in real time", desc: "If today's sugar is 15g over your daily WHO limit, you'll see it before dinner — not after a year." },
+                ].map((item) => (
+                  <div key={item.title} className="bg-card border border-border rounded-2xl p-5 hover:border-primary/30 hover:shadow-md transition-all">
+                    <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest bg-primary/10 text-primary rounded-full px-2.5 py-1 mb-2">{item.tag}</span>
+                    <h3 className="font-bold text-foreground text-base md:text-lg">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} className="order-1 lg:order-2 relative mx-auto w-full max-w-sm">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-amber-200/30 blur-3xl rounded-full" />
+              <div className="relative bg-white rounded-[2.5rem] border-8 border-foreground/90 shadow-2xl overflow-hidden">
+                <div className="bg-foreground/90 h-6 flex items-center justify-center">
+                  <div className="w-20 h-1.5 bg-foreground/40 rounded-full" />
+                </div>
+                <div className="p-5">
+                  <div className="bg-slate-50 rounded-2xl p-4">
+                    <div className="font-bold text-slate-900 text-base mb-3">Meal Intelligence</div>
+                    <div className="flex gap-1.5 mb-4">
+                      <span className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-[10px] font-bold">Today</span>
+                      <span className="bg-slate-200 text-slate-600 rounded-full px-3 py-1 text-[10px] font-medium">7 Days</span>
+                      <span className="bg-slate-200 text-slate-600 rounded-full px-3 py-1 text-[10px] font-medium">30 Days</span>
+                    </div>
+                    <div className="text-xs text-slate-500 mb-3">4 meals logged · today</div>
+                    <div className="grid grid-cols-4 gap-1.5 mb-3">
+                      <div className="bg-amber-50 border border-amber-200 rounded-lg p-2 text-center">
+                        <div className="text-amber-600 font-extrabold text-sm">1156</div>
+                        <div className="text-[8px] text-slate-500">kcal</div>
+                        <div className="text-[9px] font-bold text-slate-700">Calories</div>
+                      </div>
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-2 text-center">
+                        <div className="text-blue-600 font-extrabold text-sm">142g</div>
+                        <div className="text-[8px] text-slate-500">carbs</div>
+                        <div className="text-[9px] font-bold text-slate-700">Carbs</div>
+                      </div>
+                      <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-2 text-center">
+                        <div className="text-emerald-600 font-extrabold text-sm">25g</div>
+                        <div className="text-[8px] text-slate-500">protein</div>
+                        <div className="text-[9px] font-bold text-slate-700">Protein</div>
+                      </div>
+                      <div className="bg-orange-50 border border-orange-200 rounded-lg p-2 text-center">
+                        <div className="text-orange-600 font-extrabold text-sm">40g</div>
+                        <div className="text-[8px] text-slate-500">sugar</div>
+                        <div className="text-[9px] font-bold text-slate-700">Sugar</div>
+                      </div>
+                    </div>
+                    <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden mb-1">
+                      <div className="h-full w-[80%] bg-orange-400 rounded-full" />
+                    </div>
+                    <div className="flex justify-between text-[10px] mb-4">
+                      <span className="text-orange-600 font-bold">40g sugar · 15g over WHO target</span>
+                      <span className="text-slate-400">limit 50g</span>
+                    </div>
+                    <div className="border-t border-slate-200 pt-3 space-y-3">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-bold text-slate-900 text-sm">biryani, chutney, cola</span>
+                          <span className="bg-rose-100 text-rose-600 rounded-full px-2 py-0.5 text-[9px] font-bold">Heavy</span>
+                          <span className="ml-auto text-[10px] text-slate-400">27 Apr</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {["~700–900 kcal", "Carbs 100g", "Protein 15g", "Sugar 35g ⚠", "Fat 25g"].map((t) => (
+                            <span key={t} className={`text-[9px] rounded-full px-2 py-0.5 ${t.includes("⚠") ? "bg-rose-50 text-rose-600 font-bold" : "bg-slate-100 text-slate-600"}`}>{t}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-bold text-slate-900 text-sm">Coffee</span>
+                          <span className="bg-emerald-100 text-emerald-600 rounded-full px-2 py-0.5 text-[9px] font-bold">Light</span>
+                          <span className="ml-auto text-[10px] text-slate-400">27 Apr</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {["~0–5 kcal", "Carbs 1g", "Protein 0g", "Sugar 0g", "Fat 0g"].map((t) => (
+                            <span key={t} className="text-[9px] bg-slate-100 text-slate-600 rounded-full px-2 py-0.5">{t}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center text-emerald-600 font-bold text-xs mt-4">View all 5 meals ↓</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-12 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-3xl p-6 md:p-8 max-w-3xl mx-auto"
+          >
+            <div className="grid md:grid-cols-2 gap-6 items-center">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Your Food Fingerprint</p>
+                <h3 className="text-xl md:text-2xl font-extrabold text-foreground mb-2">Discover which meals quietly drain you.</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">After a few days, Nera AI shows your body's average response by meal type — vs your fasting baseline.</p>
+              </div>
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-md">
+                <div className="font-bold text-slate-900 text-sm mb-1">Food Fingerprint</div>
+                <div className="text-[11px] text-slate-500 mb-4">Your body's average response by meal type</div>
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs text-slate-700 font-medium">Light meals</span>
+                      <span className="text-amber-600 font-bold text-sm">+34 pts</span>
+                    </div>
+                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div className="h-full w-[40%] bg-amber-400 rounded-full" /></div>
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs text-slate-700 font-medium">Heavy meals</span>
+                      <span className="text-rose-600 font-bold text-sm">+36 pts</span>
+                    </div>
+                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div className="h-full w-[45%] bg-rose-400 rounded-full" /></div>
+                  </div>
+                </div>
+                <div className="text-[10px] text-slate-400 mt-3">vs your fasting baseline</div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <section className="py-14 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Your Personal Food Fingerprint</p>
+
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Six features. One unique blueprint of your body.</h2>
             <p className="text-muted-foreground mt-3">
               Every scan, meal snap, and trend powers the only thing that truly matters — your body's personal response to food.
