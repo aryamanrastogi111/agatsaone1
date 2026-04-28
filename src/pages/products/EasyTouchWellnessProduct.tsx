@@ -375,22 +375,22 @@ export default function EasyTouchWellnessProduct() {
               {
                 icon: HeartPulse,
                 problem: "Sudden energy crashes after meals",
-                solution: "See exactly which foods spike and crash you — so you can swap them out.",
+                solution: "See exactly which foods spike and crash you — so you can swap them out. And see when the same meal hits you harder than usual.",
               },
               {
                 icon: Brain,
                 problem: "Brain fog, mood swings, poor focus",
-                solution: "Track how your meals affect your mental clarity through metabolic patterns.",
+                solution: "Track how your meals affect your mental clarity through metabolic patterns that show up in your pulse, not just on your plate.",
               },
               {
                 icon: Salad,
                 problem: "Eating 'healthy' but not feeling better",
-                solution: "Discover that 'healthy' is personal — your body reacts differently than others.",
+                solution: "Discover that 'healthy' is personal — your body reacts differently than others. The food may be the same; your response isn't.",
               },
               {
                 icon: TrendingUp,
                 problem: "Weight that won't move despite effort",
-                solution: "Identify hidden metabolic load that quietly stalls your fitness goals.",
+                solution: "Identify hidden metabolic load that quietly stalls your fitness goals — the kind that builds long before sugar tests notice.",
               },
               {
                 icon: ShieldCheck,
@@ -400,7 +400,7 @@ export default function EasyTouchWellnessProduct() {
               {
                 icon: Zap,
                 problem: "No clear way to measure 'wellness'",
-                solution: "Get a single Metabolic Score 0–100 that tells you, daily, where you stand.",
+                solution: "Get a single Metabolic Score 0–100 that tells you, daily, where you stand — reflecting how your whole body is coping today, not just what you ate.",
               },
             ].map((row, i) => (
               <motion.div
