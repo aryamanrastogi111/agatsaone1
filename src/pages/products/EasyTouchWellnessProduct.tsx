@@ -198,7 +198,7 @@ export default function EasyTouchWellnessProduct() {
                 What you eat matters — how your body responds matters more.<br />Now you can see both.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary font-semibold">Food Fingerprint</span> — tracking not just what you eat, but how your heart rhythm, blood flow and recovery quietly react to it.
+                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary font-semibold">Food Fingerprint</span> — tracking not just what you eat, but how your heart rhythm, blood flow and recovery quietly react to it. No needle, no prick — just your body's own sugar response patterns, gently observed over time.
               </p>
               <p className="text-2xl text-foreground font-extrabold tracking-tight">
                 Meet <span className="text-accent-foreground">EasyTouch Wellness</span>
