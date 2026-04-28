@@ -152,9 +152,9 @@ export default function EasyTouchWellnessProduct() {
             {/* Left — text */}
             <motion.div {...fadeUp} className="text-center md:text-left order-1 md:order-none">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground leading-[1.1] tracking-tight">
-                <span className="block">Your Body Responds Differently</span>
-                <span className="block">to Every Meal.</span>
-                <span className="block text-primary">Now You Can See How.</span>
+                <span className="block">What You Eat Matters.</span>
+                <span className="block">How Your Body Responds Matters More.</span>
+                <span className="block text-primary">Now You Can See Both.</span>
               </h1>
 
               {/* Social proof — desktop only in hero text block */}
