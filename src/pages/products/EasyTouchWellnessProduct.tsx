@@ -35,19 +35,19 @@ const TrustVideosSection = lazy(() => import("@/components/TrustVideosSection").
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 
 const zones = [
-  { color: "#22c55e", name: "Calm", range: "0–25", meaning: "Your body processed that meal smoothly. Everything is in balance — like a normal fasting morning reading.", familiar: "Steady and stable" },
-  { color: "#3b82f6", name: "Active", range: "26–50", meaning: "A mild response — your body is working as expected after eating. Nothing to worry about.", familiar: "Within a healthy range" },
-  { color: "#f59e0b", name: "Elevated", range: "51–75", meaning: "Your body is working harder than usual to process what you ate. Pay attention to your next meal.", familiar: "Higher than your usual pattern" },
-  { color: "#ef4444", name: "High", range: "76–100", meaning: "Your body is under metabolic stress right now. Time to act — rest, take a walk, or speak to your doctor.", familiar: "Needs immediate attention" },
+  { color: "#22c55e", name: "Calm", range: "0–25", meaning: "Your body is relaxed. Heart rhythm is steady, blood flow is smooth — a healthy resting state.", familiar: "Steady and stable" },
+  { color: "#3b82f6", name: "Active", range: "26–50", meaning: "A mild load — could be after food, light activity, or normal daily stress. Your body is handling it well.", familiar: "Within a healthy range" },
+  { color: "#f59e0b", name: "Elevated", range: "51–75", meaning: "Your body is working harder than usual. Could be a heavy meal, poor sleep, or building stress. Worth noting.", familiar: "Higher than your usual pattern" },
+  { color: "#ef4444", name: "High", range: "76–100", meaning: "Your body is under real strain right now. Time to slow down, breathe, walk it off — or check in with your doctor.", familiar: "Needs attention" },
 ];
 
 const whoIsThisFor = [
-  "You check your sugar regularly and want to reduce how often you prick your finger",
-  "You have been told you are pre-diabetic and want to understand your body before it becomes a bigger problem",
-  "You know your readings but never understand why they change",
-  "You want to know which foods work for your body — not a generic diet plan",
-  "A family member has sugar issues and you want to help them monitor without the daily needle routine",
-  "You are health-conscious and want to track your body's response to food, stress, and sleep",
+  "You want an early read on your metabolic health — long before regular tests show anything wrong",
+  "You have been told you are pre-diabetic and want to understand what your body is really doing day to day",
+  "Your sugar readings keep changing and you can't figure out why",
+  "You want to see how food, sleep, and stress are silently shaping your body",
+  "A family member has sugar or heart issues and you want to track your own risk early",
+  "You are health-conscious and want one simple daily score that tells you how your body is coping",
 ];
 
 const boxItems = [
@@ -55,31 +55,31 @@ const boxItems = [
   "2× AAA batteries (included)",
   "Carry case",
   "Free Agatsa One app (Android + iOS)",
-  "Nera AI Food Fingerprint engine (activates after first scan)",
+  "Nera AI Body Signal engine (activates after first scan)",
   "1 year of Nera AI included free — no subscription needed",
 ];
 
-// New: Food Fingerprint feature highlight cards
+// Body Signal feature highlight cards
 const fingerprintCards = [
-  { icon: Activity, title: "Meal Impact Score", desc: "Every scan after a meal shows you exactly how many points above or below your fasting baseline you are. +12 pts after biryani. -3 pts after a salad. Now you know." },
-  { icon: Fingerprint, title: "Food Fingerprint (Unique to You)", desc: "Built from your actual scans. Light, Balanced and Heavy meals — each gets its own average metabolic response. This is your body's unique dietary blueprint. Nobody else has your fingerprint." },
-  { icon: Bell, title: "Smart Scan Nudge", desc: "The app tells you the perfect moment to scan after eating — so you never miss the window when your metabolic response is at its peak. No more forgetting." },
-  { icon: Compass, title: "Nera AI Guide", desc: "Even on Day 1, Nera AI tells you exactly what to do next — snap a meal, scan now, or you're building toward your fingerprint. You're never lost." },
-  { icon: Gauge, title: "Fasting Baseline", desc: "Before meals, scan fasting. This becomes your personal benchmark. Every meal response is measured against it. Your fasting score is your metabolic truth." },
-  { icon: LineChart, title: "Trends Over Time", desc: "Week over week, see if your metabolic health is improving. Stress, sleep, and diet all show up in your scores. Nera AI connects the dots." },
+  { icon: Activity, title: "Daily Load Score", desc: "Every scan shows how much strain your body is carrying right now — after a meal, after a tough day, or first thing in the morning. One number. Easy to read." },
+  { icon: Fingerprint, title: "Your Body Pattern", desc: "Built from your own scans over time. The device learns how your heart rhythm and blood flow behave — and flags when something shifts. No two patterns are the same." },
+  { icon: Bell, title: "Smart Reminders", desc: "The app nudges you to scan at the right moments — morning, after a meal, before bed — so you build a real picture of your day, not random snapshots." },
+  { icon: Compass, title: "Nera AI Guide", desc: "From Day 1, Nera AI tells you what to do next — when to scan, what your number means, and what's quietly changing. You're never guessing." },
+  { icon: Gauge, title: "Resting Baseline", desc: "Your morning fasting scans become your personal benchmark. Every later reading is compared to it — so you can see when your body is calm and when it's under load." },
+  { icon: LineChart, title: "Trends Over Time", desc: "Week over week, see if your body is getting calmer or more stressed. Sleep, food, and stress all leave a mark on your score. Nera AI connects the dots." },
 ];
 
-// New: Food Fingerprint discovery quotes
+// Body Signal discovery quotes
 const fingerprintTestimonials = [
-  { quote: "I always thought fruit was the safest snack. My Food Fingerprint showed that mangoes push my score up almost as much as a full meal. Now I have them in the morning only.", name: "Priya R.", city: "Bangalore" },
-  { quote: "My fasting score used to be 62. After 3 weeks of watching my meal responses, it's consistently above 74. I didn't change everything — just the 2 meals that were hitting me hardest.", name: "Vikram S.", city: "Mumbai" },
-  { quote: "The scan nudge is what got me to actually use it. It reminds me 90 minutes after I log food. That one feature made the habit stick.", name: "Anita M.", city: "Delhi" },
+  { quote: "I always thought I was 'fine' between checkups. My morning scans showed my body was running hot for weeks. I slowed down, slept more — and the number came back down.", name: "Priya R.", city: "Bangalore" },
+  { quote: "My resting score used to sit at 62. After 3 weeks of small changes — sleep, walks, lighter dinners — it's consistently above 74. I didn't overhaul my life. Just listened to the signals.", name: "Vikram S.", city: "Mumbai" },
+  { quote: "The reminders are what got me to actually use it. It nudges me morning and evening. That one habit made everything else click.", name: "Anita M.", city: "Delhi" },
 ];
 
 const objections = [
   {
     q: "\"A light through my finger can tell me about my sugar? That sounds impossible.\"",
-    a: "It does sound that way. Here is the honest explanation.\n\nDuring COVID, everyone used a pulse oximeter — the small device clipped to your finger that checked your oxygen without drawing blood. It works by shining a light through your fingertip and reading how your blood is absorbing that light.\n\nEasyTouch uses the same proven technology. When your body is under metabolic stress — after a heavy meal, after a spike, during fatigue — your blood flow patterns change in ways that light can detect.\n\nEasyTouch does not measure sugar molecules directly the way a strip test does. What it does is read how your body is responding — and Nera AI, trained on millions of Indian health readings, translates that into a zone that tells you whether your body is handling the situation well or struggling.\n\nNot magic. Science that has been in hospitals for decades — now brought home.",
+    a: "It does sound that way. Here is the honest explanation.\n\nDuring COVID, everyone used a pulse oximeter — the small device clipped to your finger that checked your oxygen without drawing blood. It works by shining a light through your fingertip and reading how your blood is moving and absorbing that light.\n\nEasyTouch uses the same proven technology — but it reads much more. It studies your heart rhythm, the shape of your pulse, and how well your tiny blood vessels are pushing blood through. These are the very signals that quietly change when your body is under metabolic strain — sometimes years before a sugar test ever shows a problem.\n\nEasyTouch does not measure sugar molecules the way a strip test does. It reads how your body is coping. Nera AI, trained on millions of Indian health readings, turns those signals into one easy score that tells you whether your body is calm or under load.\n\nNot magic. Hospital-grade science — now in your hand.",
   },
   {
     q: "\"My glucometer cost ₹800. This costs ₹9,999. Why would I spend this much?\"",
