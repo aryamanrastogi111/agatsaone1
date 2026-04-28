@@ -36,16 +36,16 @@ const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0
 
 const zones = [
   { color: "#22c55e", name: "Calm", range: "0–25", meaning: "Your body is relaxed. Heart rhythm is steady, blood flow is smooth — a healthy resting state.", familiar: "Steady and stable" },
-  { color: "#3b82f6", name: "Active", range: "26–50", meaning: "A mild load — could be after food, light activity, or normal daily stress. Your body is handling it well.", familiar: "Within a healthy range" },
-  { color: "#f59e0b", name: "Elevated", range: "51–75", meaning: "Your body is working harder than usual. Could be a heavy meal, poor sleep, or building stress. Worth noting.", familiar: "Higher than your usual pattern" },
-  { color: "#ef4444", name: "High", range: "76–100", meaning: "Your body is under real strain right now. Time to slow down, breathe, walk it off — or check in with your doctor.", familiar: "Needs attention" },
+  { color: "#3b82f6", name: "Active", range: "26–50", meaning: "A mild load — could be after food, light activity, or normal daily stress. Your body is handling it well, and your heart rhythm and blood flow are responding the way they should.", familiar: "Within a healthy range" },
+  { color: "#f59e0b", name: "Elevated", range: "51–75", meaning: "Your body is working harder than usual. Could be a heavy meal, poor sleep, or building stress. A sign your body is taking longer than usual to settle after what you ate. Worth noting.", familiar: "Higher than your usual pattern" },
+  { color: "#ef4444", name: "High", range: "76–100", meaning: "Your body is under real strain right now — your post-meal recovery and pulse signals are working overtime. Time to slow down, breathe, walk it off — or check in with your doctor.", familiar: "Needs attention" },
 ];
 
 const whoIsThisFor = [
   "You want an early read on your metabolic health — long before regular tests show anything wrong",
   "You have been told you are pre-diabetic and want to understand what your body is really doing day to day",
   "Your sugar readings keep changing and you can't figure out why",
-  "You want to see how food, sleep, and stress are silently shaping your body",
+  "You want to see how food, sleep, and stress are silently shaping your body — not just on the scale, but inside it",
   "A family member has sugar or heart issues and you want to track your own risk early",
   "You are health-conscious and want one simple daily score that tells you how your body is coping",
 ];
@@ -61,25 +61,25 @@ const boxItems = [
 
 // Body Signal feature highlight cards
 const fingerprintCards = [
-  { icon: Activity, title: "Daily Load Score", desc: "Every scan shows how much strain your body is carrying right now — after a meal, after a tough day, or first thing in the morning. One number. Easy to read." },
-  { icon: Fingerprint, title: "Your Body Pattern", desc: "Built from your own scans over time. The device learns how your heart rhythm and blood flow behave — and flags when something shifts. No two patterns are the same." },
-  { icon: Bell, title: "Smart Reminders", desc: "The app nudges you to scan at the right moments — morning, after a meal, before bed — so you build a real picture of your day, not random snapshots." },
+  { icon: Activity, title: "Daily Load Score", desc: "Every scan shows how much strain your body is carrying right now — after a meal, after a tough day, or first thing in the morning. It captures how your body is reacting, not just to food, but to sleep, stress and activity. One number. Easy to read." },
+  { icon: Fingerprint, title: "Your Body Pattern", desc: "Built from your own scans over time. The device learns how your heart rhythm and blood flow behave — and flags when something shifts. Because two people can eat the same meal and react completely differently inside. No two patterns are the same." },
+  { icon: Bell, title: "Smart Reminders", desc: "The app nudges you to scan at the right moments — morning, after a meal, before bed — so you build a real picture of your day, not random snapshots. Same meal, different day — your body's response can change, and the right scan timing reveals it." },
   { icon: Compass, title: "Nera AI Guide", desc: "From Day 1, Nera AI tells you what to do next — when to scan, what your number means, and what's quietly changing. You're never guessing." },
   { icon: Gauge, title: "Resting Baseline", desc: "Your morning fasting scans become your personal benchmark. Every later reading is compared to it — so you can see when your body is calm and when it's under load." },
-  { icon: LineChart, title: "Trends Over Time", desc: "Week over week, see if your body is getting calmer or more stressed. Sleep, food, and stress all leave a mark on your score. Nera AI connects the dots." },
+  { icon: LineChart, title: "Trends Over Time", desc: "Week over week, see if your body is getting calmer or more stressed. Sleep, food, and stress all leave a mark on your score — and your real health signal is the pattern over weeks, not a single meal. Nera AI connects the dots." },
 ];
 
 // Body Signal discovery quotes
 const fingerprintTestimonials = [
   { quote: "I always thought I was 'fine' between checkups. My morning scans showed my body was running hot for weeks. I slowed down, slept more — and the number came back down.", name: "Priya R.", city: "Bangalore" },
-  { quote: "My resting score used to sit at 62. After 3 weeks of small changes — sleep, walks, lighter dinners — it's consistently above 74. I didn't overhaul my life. Just listened to the signals.", name: "Vikram S.", city: "Mumbai" },
+  { quote: "My resting score used to sit at 62. After 3 weeks of small changes — sleep, walks, lighter dinners — it's consistently above 74. I didn't change what I ate as much as I learned how my body was reacting to it. I just listened to the signals.", name: "Vikram S.", city: "Mumbai" },
   { quote: "The reminders are what got me to actually use it. It nudges me morning and evening. That one habit made everything else click.", name: "Anita M.", city: "Delhi" },
 ];
 
 const objections = [
   {
     q: "\"A light through my finger can tell me about my sugar? That sounds impossible.\"",
-    a: "It does sound that way. Here is the honest explanation.\n\nDuring COVID, everyone used a pulse oximeter — the small device clipped to your finger that checked your oxygen without drawing blood. It works by shining a light through your fingertip and reading how your blood is moving and absorbing that light.\n\nEasyTouch uses the same proven technology — but it reads much more. It studies your heart rhythm, the shape of your pulse, and how well your tiny blood vessels are pushing blood through. These are the very signals that quietly change when your body is under metabolic strain — sometimes years before a sugar test ever shows a problem.\n\nEasyTouch does not measure sugar molecules the way a strip test does. It reads how your body is coping. Nera AI, trained on millions of Indian health readings, turns those signals into one easy score that tells you whether your body is calm or under load.\n\nNot magic. Hospital-grade science — now in your hand.",
+    a: "It does sound that way. Here is the honest explanation.\n\nDuring COVID, everyone used a pulse oximeter — the small device clipped to your finger that checked your oxygen without drawing blood. It works by shining a light through your fingertip and reading how your blood is moving and absorbing that light.\n\nEasyTouch uses the same proven technology — but it reads much more. It studies your heart rhythm, the shape of your pulse, and how well your tiny blood vessels are pushing blood through. These are the very signals that quietly change when your body is under metabolic strain — sometimes years before a sugar test ever shows a problem.\n\nEasyTouch does not measure sugar molecules the way a strip test does. It reads how your body is coping — your heart rhythm, your blood flow, and your internal stress response after a meal. Nera AI, trained on millions of Indian health readings, turns those signals into one easy score that tells you whether your body is calm or under load.\n\nNot magic. Hospital-grade science — now in your hand.",
   },
   {
     q: "\"My glucometer cost ₹800. This costs ₹9,999. Why would I spend this much?\"",
@@ -112,9 +112,9 @@ const objections = [
 ];
 
 const faqs = [
-  { q: "Is this a glucometer? Does it measure blood sugar directly?", a: "No — EasyTouch Wellness measures your body's metabolic response using photoplethysmography (PPG). It gives you a Metabolic Index — a composite of heart, oxygen, and stress signals — not a direct glucose number. It's designed to help you understand food's effect on your body over time, not replace a clinical glucometer." },
+  { q: "Is this a glucometer? Does it measure blood sugar directly?", a: "No — EasyTouch Wellness measures your body's metabolic response using photoplethysmography (PPG). It gives you a Metabolic Index — a composite of heart, oxygen, and stress signals — not a direct sugar number. It's designed to help you understand how your body responds to food, sleep and stress over time, not replace a clinical glucometer." },
   { q: "How many scans before I see my Food Fingerprint?", a: "You need 5 linked meal scans (snap a meal, then scan within 90 minutes). Most users hit this in the first week. The app guides you to each one." },
-  { q: "What if I already have diabetes?", a: "Many users with diabetes or pre-diabetes use EasyTouch Wellness to track their metabolic responses to different foods as part of their daily routine. It complements — not replaces — clinical monitoring. Always follow your doctor's advice for disease management." },
+  { q: "What if I already have diabetes?", a: "Many users with diabetes or pre-diabetes use EasyTouch Wellness to track how their body responds to different foods — and to daily stress and sleep — as part of their daily routine. It complements — not replaces — clinical monitoring. Always follow your doctor's advice for disease management." },
   { q: "Does it work without Nera AI?", a: "Basic scans work. The Food Fingerprint, Meal Impact Score, and Nera AI coaching are powered by Nera AI — and 1 year of Nera AI is included free with your kit. No subscription needed." },
   { q: "What's the return policy?", a: "30-day returns on unopened devices. If your device is defective, we replace it. Note: Nera AI activation is non-refundable once the app is set up and your first scan is completed." },
   { q: "Is this easy to use if I am not good with technology?", a: "Yes. Clip it to your finger. Open the app. That is it. The app is in simple English. Nera AI speaks in plain language. No settings to configure." },
@@ -141,7 +141,7 @@ export default function EasyTouchWellnessProduct() {
     document.getElementById("introduce-device")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useSEO({ title: "EasyTouch Wellness — Personal Food Fingerprint & Metabolic Tracking | Agatsa One", description: `Discover how your body responds to every meal with EasyTouch Wellness and Nera AI. Build your Food Fingerprint in 5 scans. Metabolic Index, Meal Impact Score, and personalized AI coaching included. ${fmt(wellnessPrice)} with free delivery.` });
+  useSEO({ title: "EasyTouch Wellness — Personal Food Fingerprint & Metabolic Tracking | Agatsa One", description: `Discover how your body responds to every meal — and to sleep, stress and daily load — with EasyTouch Wellness and Nera AI. Build your Food Fingerprint in 5 scans. Metabolic Index, Meal Impact Score, and personalized AI coaching included. ${fmt(wellnessPrice)} with free delivery.` });
 
   return (
     <SiteLayout>
@@ -168,7 +168,7 @@ export default function EasyTouchWellnessProduct() {
 
               {/* Subheadline — desktop only here */}
               <p className="hidden md:block text-lg md:text-xl text-foreground font-semibold mt-6">
-                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary">Food Fingerprint</span> — so you stop guessing and start knowing exactly what food does to your body.
+                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary">Food Fingerprint</span> — so you stop guessing and start knowing exactly what food does to your body, and how your body quietly responds to it.
               </p>
 
               {/* CTA — hide "Show Me How" on mobile */}
@@ -198,7 +198,7 @@ export default function EasyTouchWellnessProduct() {
                 Your body responds differently to every meal.<br />Now you can see how.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary font-semibold">Food Fingerprint</span> — so you stop guessing and start knowing exactly what food does to your body.
+                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary font-semibold">Food Fingerprint</span> — so you stop guessing and start knowing exactly what food does to your body, and how your body quietly responds to it.
               </p>
               <p className="text-2xl text-foreground font-extrabold tracking-tight">
                 Meet <span className="text-accent-foreground">EasyTouch Wellness</span>
@@ -279,7 +279,7 @@ export default function EasyTouchWellnessProduct() {
               You've Been Eating Blindfolded.
             </h2>
             <p className="mt-4 text-muted-foreground text-base md:text-lg">
-              You eat <span className="text-foreground font-semibold">"healthy"</span> — salad, rice, fruit — and still feel sluggish, bloated, or drained. You don't know why.
+              You eat <span className="text-foreground font-semibold">"healthy"</span> — salad, rice, fruit — and still feel sluggish, bloated, or drained. You don't know why. The food isn't the only story — how your body reacts to it is.
             </p>
           </motion.div>
 
@@ -295,7 +295,7 @@ export default function EasyTouchWellnessProduct() {
               </div>
               <p className="text-foreground text-base md:text-lg leading-relaxed">
                 Metabolic response is <span className="font-semibold">personal</span>. The same bowl of rice that barely moves your friend's numbers can spike yours.
-                <span className="block mt-2 text-muted-foreground text-sm md:text-base">Without data, you're guessing.</span>
+                <span className="block mt-2 text-muted-foreground text-sm md:text-base">Same plate. Same portion. Two completely different bodies inside. Without data, you're guessing.</span>
               </p>
             </div>
           </motion.div>
@@ -306,17 +306,17 @@ export default function EasyTouchWellnessProduct() {
               {
                 icon: Gauge,
                 title: "Which foods drain you?",
-                desc: "You don't know which foods drain you vs. energize you.",
+                desc: "You don't know which foods drain you vs. energize you — because your body's reaction is the real signal.",
               },
               {
                 icon: LineChart,
                 title: "Light vs. Heavy?",
-                desc: "You can't see the difference between a Light meal and a Heavy one — on your body.",
+                desc: "You can't see the difference between a Light meal and a Heavy one — on your body. Same meal, different day, different response.",
               },
               {
                 icon: Compass,
                 title: "Your baseline?",
-                desc: "You have no idea what \"fasting baseline\" means for you specifically.",
+                desc: "You have no idea what \"fasting baseline\" means for you specifically — and how far each meal pulls you away from it.",
               },
             ].map((item, i) => (
               <motion.div
@@ -365,7 +365,7 @@ export default function EasyTouchWellnessProduct() {
               The silent problem hiding in <span className="italic underline decoration-white/40 decoration-4 underline-offset-4">everyday meals</span>
             </h2>
             <p className="mt-5 text-primary-foreground/90 text-lg md:text-xl leading-relaxed">
-              <span className="font-bold text-white">1 in 4 Indian adults</span> already lives with a metabolic issue — and most don't know until it's serious. EasyTouch Wellness catches the early signals, every single day.
+              <span className="font-bold text-white">1 in 4 Indian adults</span> already lives with a metabolic issue — and most don't know until it's serious. EasyTouch Wellness catches the early signals, every single day — in your heart rhythm, your blood flow and how you recover after meals.
             </p>
           </motion.div>
 
@@ -375,22 +375,22 @@ export default function EasyTouchWellnessProduct() {
               {
                 icon: HeartPulse,
                 problem: "Sudden energy crashes after meals",
-                solution: "See exactly which foods spike and crash you — so you can swap them out.",
+                solution: "See exactly which foods spike and crash you — so you can swap them out. And see when the same meal hits you harder than usual.",
               },
               {
                 icon: Brain,
                 problem: "Brain fog, mood swings, poor focus",
-                solution: "Track how your meals affect your mental clarity through metabolic patterns.",
+                solution: "Track how your meals affect your mental clarity through metabolic patterns that show up in your pulse, not just on your plate.",
               },
               {
                 icon: Salad,
                 problem: "Eating 'healthy' but not feeling better",
-                solution: "Discover that 'healthy' is personal — your body reacts differently than others.",
+                solution: "Discover that 'healthy' is personal — your body reacts differently than others. The food may be the same; your response isn't.",
               },
               {
                 icon: TrendingUp,
                 problem: "Weight that won't move despite effort",
-                solution: "Identify hidden metabolic load that quietly stalls your fitness goals.",
+                solution: "Identify hidden metabolic load that quietly stalls your fitness goals — the kind that builds long before sugar tests notice.",
               },
               {
                 icon: ShieldCheck,
@@ -400,7 +400,7 @@ export default function EasyTouchWellnessProduct() {
               {
                 icon: Zap,
                 problem: "No clear way to measure 'wellness'",
-                solution: "Get a single Metabolic Score 0–100 that tells you, daily, where you stand.",
+                solution: "Get a single Metabolic Score 0–100 that tells you, daily, where you stand — reflecting how your whole body is coping today, not just what you ate.",
               },
             ].map((row, i) => (
               <motion.div
@@ -461,7 +461,7 @@ export default function EasyTouchWellnessProduct() {
               <p className="text-base md:text-lg text-foreground">
                 In short — <span className="font-extrabold text-primary">everyone who eats</span>.
               </p>
-              <p className="text-sm text-muted-foreground mt-1">Because what you eat today shapes how you feel tomorrow.</p>
+              <p className="text-sm text-muted-foreground mt-1">Because what you eat matters — but how your body responds to it matters more.</p>
             </div>
           </motion.div>
         </div>
@@ -630,7 +630,7 @@ export default function EasyTouchWellnessProduct() {
               Snap your meal. <span className="text-primary">Nera AI does the maths.</span>
             </h2>
             <p className="mt-4 text-muted-foreground text-base md:text-lg">
-              No counting calories. No guessing portions. Just see how today's meals affected <em>your</em> body — flagged Light or Heavy.
+              No counting calories. No guessing portions. Just see how today's meals affected <em>your</em> body — flagged Light or Heavy. Because the same meal can be Light for one body and Heavy for another.
             </p>
           </motion.div>
 
@@ -638,9 +638,9 @@ export default function EasyTouchWellnessProduct() {
             <motion.div {...fadeUp} transition={{ duration: 0.6 }} className="order-2 lg:order-1">
               <div className="space-y-5">
                 {[
-                  { tag: "Auto-detected", title: "Calories, carbs, protein, sugar", desc: "Photo your plate. Nera AI estimates kcal, macros, sugar — and flags overshoots vs WHO targets." },
+                  { tag: "Auto-detected", title: "Calories, carbs, protein, sugar", desc: "Photo your plate. Nera AI estimates kcal, macros, sugar — and flags overshoots vs WHO targets. So you see both what's on your plate and what it's doing inside." },
                   { tag: "Personal flags", title: "Heavy or Light — for YOUR body", desc: "Same biryani may be 'Heavy' for you and 'Light' for your friend. The flag is personal, not generic." },
-                  { tag: "Sugar-aware", title: "WHO target overshoots, in real time", desc: "If today's sugar is 15g over your daily WHO limit, you'll see it before dinner — not after a year." },
+                  { tag: "Sugar-aware", title: "WHO target overshoots, in real time", desc: "If today's sugar is 15g over your daily WHO limit, you'll see it before dinner — not after a year. And see how your body actually carries that load." },
                 ].map((item) => (
                   <div key={item.title} className="bg-card border border-border rounded-2xl p-5 hover:border-primary/30 hover:shadow-md transition-all">
                     <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest bg-primary/10 text-primary rounded-full px-2.5 py-1 mb-2">{item.tag}</span>
@@ -735,7 +735,7 @@ export default function EasyTouchWellnessProduct() {
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Your Food Fingerprint</p>
                 <h3 className="text-xl md:text-2xl font-extrabold text-foreground mb-2">Discover which meals quietly drain you.</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">After a few days, Nera AI shows your body's average response by meal type — vs your fasting baseline.</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">After a few days, Nera AI shows your body's average response by meal type — vs your fasting baseline. So you can tell which meals settle quickly, and which ones leave your body working overtime.</p>
               </div>
               <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-md">
                 <div className="font-bold text-slate-900 text-sm mb-1">Food Fingerprint</div>
@@ -770,7 +770,7 @@ export default function EasyTouchWellnessProduct() {
 
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Six features. One unique blueprint of your body.</h2>
             <p className="text-muted-foreground mt-3">
-              Every scan, meal snap, and trend powers the only thing that truly matters — your body's personal response to food.
+              Every scan, meal snap, and trend powers the only thing that truly matters — your body's personal response to food, and to the sleep, stress and recovery wrapped around it.
             </p>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
