@@ -274,7 +274,7 @@ export default function EasyTouchWellnessProduct() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           {/* Headline */}
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto">
-            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">The Problem</p>
+            
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Tired of pricking your finger to chase numbers? <span className="block mt-2 text-primary">Or feel fine — but family history says otherwise?</span>
             </h2>
