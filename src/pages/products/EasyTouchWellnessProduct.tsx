@@ -578,33 +578,67 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* ── SECTION 7 — WHO IS THIS FOR ── */}
-      <section className="py-12 bg-background">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">This is for you if...</motion.h2>
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} className="mt-10 space-y-4">
+      {/* ── SECTION 7 — WHO IS THIS FOR (persona chips) ── */}
+      <section className="py-14 bg-background">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center mb-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary mb-3">Is EasyTouch for you?</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">This is for you if...</h2>
+          </motion.div>
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} className="grid sm:grid-cols-2 gap-3">
             {whoIsThisFor.map((item, i) => (
-              <div key={i} className="flex gap-3 items-start">
-                <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <p className="text-muted-foreground">{item}</p>
+              <div
+                key={i}
+                className="group flex items-start gap-3 bg-primary/5 hover:bg-primary/10 border border-primary/15 hover:border-primary/40 rounded-full pl-4 pr-5 py-3 transition-all"
+              >
+                <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 mt-0.5">
+                  <Check className="h-3 w-3" strokeWidth={3} />
+                </span>
+                <p className="text-sm text-foreground leading-snug">{item}</p>
               </div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ── SECTION 8 — WHAT'S IN THE BOX ── */}
-      <section className="py-10 bg-muted/30">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center">Everything You Need to Start Knowing Your Body</motion.h2>
-          <div className="grid sm:grid-cols-2 gap-4 mt-10">
-            {boxItems.map((item) => (
-              <div key={item} className="flex items-center gap-3 bg-card rounded-xl border border-border p-4">
-                <Package className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-sm text-foreground">{item}</span>
+      {/* ── SECTION 8 — WHAT'S IN THE BOX (packing slip) ── */}
+      <section className="py-14 bg-muted/30">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+          <motion.h2 {...fadeUp} className="text-2xl md:text-3xl font-bold text-foreground text-center mb-8">
+            Everything You Need to Start Knowing Your Body
+          </motion.h2>
+          <motion.div
+            {...fadeUp}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="relative bg-card rounded-none border-y-2 border-dashed border-foreground/20 shadow-lg"
+          >
+            {/* ticket notches */}
+            <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-muted/30" />
+            <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-muted/30" />
+
+            <div className="px-6 md:px-10 py-6 border-b border-dashed border-border flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-mono tracking-[0.2em] text-muted-foreground uppercase">Agatsa Packing Slip</p>
+                <p className="text-sm font-bold text-foreground mt-0.5">EasyTouch Wellness Kit</p>
               </div>
-            ))}
-          </div>
+              <Package className="h-6 w-6 text-primary" />
+            </div>
+
+            <ul className="px-6 md:px-10 py-6 divide-y divide-dashed divide-border">
+              {boxItems.map((item, i) => (
+                <li key={item} className="flex items-start gap-3 py-3">
+                  <span className="font-mono text-xs text-muted-foreground pt-1 w-8 shrink-0">{String(i + 1).padStart(2, "0")}.</span>
+                  <Check className="h-4 w-4 text-primary shrink-0 mt-1" strokeWidth={3} />
+                  <span className="text-sm text-foreground">{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="px-6 md:px-10 py-4 border-t border-dashed border-border flex items-center justify-between text-[11px] font-mono uppercase tracking-widest text-muted-foreground">
+              <span>Sku · WELLNESS-SUB</span>
+              <span>Qty · 1 Kit</span>
+            </div>
+          </motion.div>
           <motion.p {...fadeUp} className="mt-6 text-sm text-muted-foreground text-center">
             The device pairs with your phone in under 2 minutes. No technical setup.
           </motion.p>
