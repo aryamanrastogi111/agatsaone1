@@ -635,6 +635,56 @@ export default function EasyTouchWellnessProduct() {
             </div>
           </motion.div>
 
+          {/* Nera-powered meal analysis snippets (cropped from real app) */}
+          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.2 }} className="mt-14">
+            <div className="text-center mb-8">
+              <p className="text-[11px] font-mono uppercase tracking-[0.25em] text-primary/80 mb-2">Nera AI · Meal analysis engine</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-white">She does the meal math, so you don't have to.</h3>
+              <p className="text-[#A0A0C0] text-sm mt-3 max-w-xl mx-auto">
+                Snap a photo. Nera AI identifies the dish, estimates portions, and tells you what it'll do to your body — instantly.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  img: neraSnippetMacros,
+                  tag: "Auto-calculated",
+                  title: "Macros, not maths",
+                  desc: "Nera reads your meal photo and breaks down calories, carbs, protein and sugar — no app to look up grams.",
+                },
+                {
+                  img: neraSnippetSugar,
+                  tag: "WHO-aware",
+                  title: "Honest sugar alerts",
+                  desc: "Crossed the daily WHO sugar limit? Nera flags it in amber and tells you by how much. No silent drift.",
+                },
+                {
+                  img: neraSnippetMeal,
+                  tag: "One-tap log",
+                  title: "Heavy or light, called out",
+                  desc: "Nera tags every meal by metabolic load and highlights the macro that pushed you out of range.",
+                },
+              ].map((s, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 * i }}
+                  className="bg-white/[0.04] border border-white/10 rounded-2xl p-4 hover:border-primary/40 transition-colors"
+                >
+                  <div className="bg-white rounded-xl overflow-hidden mb-4 aspect-[700/180]">
+                    <img src={s.img} alt={s.title} className="w-full h-full object-cover" loading="lazy" />
+                  </div>
+                  <p className="text-[10px] font-mono uppercase tracking-wider text-primary mb-1">{s.tag}</p>
+                  <h4 className="text-white font-semibold text-base mb-1.5">{s.title}</h4>
+                  <p className="text-[#A0A0C0] text-[13px] leading-relaxed">{s.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
           <motion.p {...fadeUp} className="mt-10 text-[#A0A0C0] text-center max-w-2xl mx-auto">
             Nera also sends you a weekly summary, tracks your patterns over time, and generates a PDF report you can share with your doctor — with all your readings, zones, and trends in one place.
           </motion.p>
