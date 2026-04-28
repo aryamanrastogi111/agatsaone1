@@ -27,6 +27,9 @@ import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
 import mealIntelligenceApp from "@/assets/easytouch-meal-intelligence-app.jpg";
+import neraSnippetMacros from "@/assets/nera-snippet-macros.jpg";
+import neraSnippetSugar from "@/assets/nera-snippet-sugar.jpg";
+import neraSnippetMeal from "@/assets/nera-snippet-meal.jpg";
 
 // Lazy-load heavy below-fold sections
 const WellnessReviewsSection = lazy(() => import("@/components/products/WellnessReviewsSection").then(m => ({ default: m.WellnessReviewsSection })));
