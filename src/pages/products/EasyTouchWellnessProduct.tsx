@@ -276,10 +276,10 @@ export default function EasyTouchWellnessProduct() {
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">The Problem</p>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              You've Been Eating Blindfolded — and Pricking Your Finger to Catch Up.
+              Tired of pricking your finger to chase numbers? <span className="block mt-2 text-primary">Or feel fine — but family history says otherwise?</span>
             </h2>
             <p className="mt-4 text-muted-foreground text-base md:text-lg">
-              You eat <span className="text-foreground font-semibold">"healthy"</span> — salad, rice, fruit — and still feel sluggish, bloated, or drained. You don't know why. The food isn't the only story — how your body responds to it is. And the only way most people check that response today is a needle, a strip and a drop of blood, hours after the meal is gone.
+              Whether you're already managing your sugar response or simply trying to stay ahead of it, the truth is the same — you eat <span className="text-foreground font-semibold">"healthy"</span> and still feel sluggish, bloated, or drained. The food isn't the only story — how your body responds to it is. And the only way most people check that response today is a needle, a strip and a drop of blood, hours after the meal is gone.
             </p>
           </motion.div>
 
