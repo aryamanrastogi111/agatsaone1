@@ -36,9 +36,9 @@ const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0
 
 const zones = [
   { color: "#22c55e", name: "Calm", range: "0–25", meaning: "Your body is relaxed. Heart rhythm is steady, blood flow is smooth — a healthy resting state.", familiar: "Steady and stable" },
-  { color: "#3b82f6", name: "Active", range: "26–50", meaning: "A mild load — could be after food, light activity, or normal daily stress. Your body is handling it well.", familiar: "Within a healthy range" },
-  { color: "#f59e0b", name: "Elevated", range: "51–75", meaning: "Your body is working harder than usual. Could be a heavy meal, poor sleep, or building stress. Worth noting.", familiar: "Higher than your usual pattern" },
-  { color: "#ef4444", name: "High", range: "76–100", meaning: "Your body is under real strain right now. Time to slow down, breathe, walk it off — or check in with your doctor.", familiar: "Needs attention" },
+  { color: "#3b82f6", name: "Active", range: "26–50", meaning: "A mild load — could be after food, light activity, or normal daily stress. Your body is handling it well, and your heart rhythm and blood flow are responding the way they should.", familiar: "Within a healthy range" },
+  { color: "#f59e0b", name: "Elevated", range: "51–75", meaning: "Your body is working harder than usual. Could be a heavy meal, poor sleep, or building stress. A sign your body is taking longer than usual to settle after what you ate. Worth noting.", familiar: "Higher than your usual pattern" },
+  { color: "#ef4444", name: "High", range: "76–100", meaning: "Your body is under real strain right now — your post-meal recovery and pulse signals are working overtime. Time to slow down, breathe, walk it off — or check in with your doctor.", familiar: "Needs attention" },
 ];
 
 const whoIsThisFor = [
