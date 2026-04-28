@@ -269,35 +269,82 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* NEW: PROBLEM / AGITATION */}
-      <section className="py-12 bg-muted/30">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-foreground text-center">
-            You've Been Eating Blindfolded.
-          </motion.h2>
-          <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} className="mt-6 space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
-            <p>
+      {/* NEW: PROBLEM / AGITATION — redesigned for scannability */}
+      <section className="py-14 md:py-20 bg-muted/30">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          {/* Headline */}
+          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">The Problem</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              You've Been Eating Blindfolded.
+            </h2>
+            <p className="mt-4 text-muted-foreground text-base md:text-lg">
               You eat <span className="text-foreground font-semibold">"healthy"</span> — salad, rice, fruit — and still feel sluggish, bloated, or drained. You don't know why.
             </p>
-            <p>
-              That's because metabolic response is <span className="text-foreground font-semibold">personal</span>. The same bowl of rice that barely moves your friend's numbers can spike yours. Without data, you're guessing.
-            </p>
           </motion.div>
-          <motion.ul {...fadeUp} transition={{ duration: 0.6, delay: 0.2 }} className="mt-6 space-y-3">
+
+          {/* Key insight callout */}
+          <motion.div
+            {...fadeUp}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-10 max-w-3xl mx-auto bg-card border border-primary/20 rounded-2xl p-6 md:p-7 shadow-sm"
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                <Fingerprint className="h-5 w-5 text-primary" />
+              </div>
+              <p className="text-foreground text-base md:text-lg leading-relaxed">
+                Metabolic response is <span className="font-semibold">personal</span>. The same bowl of rice that barely moves your friend's numbers can spike yours.
+                <span className="block mt-2 text-muted-foreground text-sm md:text-base">Without data, you're guessing.</span>
+              </p>
+            </div>
+          </motion.div>
+
+          {/* 3 blind spots — visual grid */}
+          <div className="mt-10 grid sm:grid-cols-3 gap-4 md:gap-5">
             {[
-              "You don't know which foods drain you vs. energize you",
-              "You can't see the difference between a Light meal and a Heavy one — on your body",
-              "You have no idea what \"fasting baseline\" means for you specifically",
-            ].map((item) => (
-              <li key={item} className="flex gap-3 items-start">
-                <span className="text-primary mt-1">•</span>
-                <span className="text-foreground">{item}</span>
-              </li>
+              {
+                icon: Gauge,
+                title: "Which foods drain you?",
+                desc: "You don't know which foods drain you vs. energize you.",
+              },
+              {
+                icon: LineChart,
+                title: "Light vs. Heavy?",
+                desc: "You can't see the difference between a Light meal and a Heavy one — on your body.",
+              },
+              {
+                icon: Compass,
+                title: "Your baseline?",
+                desc: "You have no idea what \"fasting baseline\" means for you specifically.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: 0.15 + i * 0.08 }}
+                className="bg-card border border-border rounded-2xl p-5 hover:border-primary/30 hover:shadow-md transition-all"
+              >
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
+                  <item.icon className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="text-sm md:text-base font-bold text-foreground mb-1">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+              </motion.div>
             ))}
-          </motion.ul>
-          <motion.p {...fadeUp} transition={{ duration: 0.6, delay: 0.3 }} className="mt-8 text-center text-xl md:text-2xl font-bold text-primary">
-            EasyTouch Wellness ends the guesswork.
-          </motion.p>
+          </div>
+
+          {/* Resolution */}
+          <motion.div
+            {...fadeUp}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mt-10 text-center"
+          >
+            <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-5 py-2.5 shadow-md shadow-primary/20">
+              <Sparkles className="h-4 w-4" />
+              <span className="text-sm md:text-base font-bold">EasyTouch Wellness ends the guesswork.</span>
+            </div>
+          </motion.div>
         </div>
       </section>
 
