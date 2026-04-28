@@ -152,9 +152,9 @@ export default function EasyTouchWellnessProduct() {
             {/* Left — text */}
             <motion.div {...fadeUp} className="text-center md:text-left order-1 md:order-none">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground leading-[1.1] tracking-tight">
-                <span className="block">Your Body Responds Differently</span>
-                <span className="block">to Every Meal.</span>
-                <span className="block text-primary">Now You Can See How.</span>
+                <span className="block">What You Eat Matters.</span>
+                <span className="block">How Your Body Responds Matters More.</span>
+                <span className="block text-primary">Now You Can See Both.</span>
               </h1>
 
               {/* Social proof — desktop only in hero text block */}
@@ -168,7 +168,7 @@ export default function EasyTouchWellnessProduct() {
 
               {/* Subheadline — desktop only here */}
               <p className="hidden md:block text-lg md:text-xl text-foreground font-semibold mt-6">
-                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary">Food Fingerprint</span> — so you stop guessing and start knowing exactly what food does to your body, and how your body quietly responds to it.
+                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary">Food Fingerprint</span> — tracking not just what you eat, but how your heart rhythm, blood flow and recovery quietly react to it.
               </p>
 
               {/* CTA — hide "Show Me How" on mobile */}
@@ -195,10 +195,10 @@ export default function EasyTouchWellnessProduct() {
             {/* Mobile-only: subheadline + intro ABOVE image */}
             <div className="md:hidden text-center order-2 space-y-3">
               <p className="text-base text-foreground font-semibold">
-                Your body responds differently to every meal.<br />Now you can see how.
+                What you eat matters — how your body responds matters more.<br />Now you can see both.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary font-semibold">Food Fingerprint</span> — so you stop guessing and start knowing exactly what food does to your body, and how your body quietly responds to it.
+                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary font-semibold">Food Fingerprint</span> — tracking not just what you eat, but how your heart rhythm, blood flow and recovery quietly react to it.
               </p>
               <p className="text-2xl text-foreground font-extrabold tracking-tight">
                 Meet <span className="text-accent-foreground">EasyTouch Wellness</span>
