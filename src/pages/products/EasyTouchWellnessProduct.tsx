@@ -72,7 +72,7 @@ const fingerprintCards = [
 // Body Signal discovery quotes
 const fingerprintTestimonials = [
   { quote: "I always thought I was 'fine' between checkups. My morning scans showed my body was running hot for weeks. I slowed down, slept more — and the number came back down.", name: "Priya R.", city: "Bangalore" },
-  { quote: "My resting score used to sit at 62. After 3 weeks of small changes — sleep, walks, lighter dinners — it's consistently above 74. I didn't overhaul my life. Just listened to the signals.", name: "Vikram S.", city: "Mumbai" },
+  { quote: "My resting score used to sit at 62. After 3 weeks of small changes — sleep, walks, lighter dinners — it's consistently above 74. I didn't change what I ate as much as I learned how my body was reacting to it. I just listened to the signals.", name: "Vikram S.", city: "Mumbai" },
   { quote: "The reminders are what got me to actually use it. It nudges me morning and evening. That one habit made everything else click.", name: "Anita M.", city: "Delhi" },
 ];
 
