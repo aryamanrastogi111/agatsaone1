@@ -469,33 +469,59 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* ── SECTION 5 — SNAP YOUR MEAL ── */}
-      <section className="py-12 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp}>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center">Know before you eat.</h2>
+      {/* ── SECTION 5 — KNOW BEFORE YOU EAT (phone + notifications) ── */}
+      <section className="py-14 bg-background">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Know before you eat.</h2>
+            <p className="text-muted-foreground mt-3">Not a generic diet chart. Your chart.</p>
           </motion.div>
 
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { icon: Camera, title: "Snap your plate", desc: "Open the app, take a photo of your meal." },
-              { icon: Sparkles, title: "Get a prediction", desc: "Nera AI estimates your metabolic response — before you eat." },
-              { icon: ScanLine, title: "Scan after 90 min", desc: "Take a quick EasyTouch reading to see how your body actually responded." },
-              { icon: TrendingUp, title: "See your patterns", desc: "Learn which foods keep you Calm vs push you Elevated — for YOUR body." },
-            ].map((step, i) => (
-              <motion.div key={step.title} {...fadeUp} transition={{ duration: 0.5, delay: 0.1 * i }} className="bg-card border border-border rounded-xl p-5 text-center">
-                <div className="mx-auto w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center mb-3">
-                  <step.icon className="h-5 w-5 text-primary" />
+          <div className="grid lg:grid-cols-[280px_1fr] gap-10 lg:gap-14 items-center">
+            {/* phone frame */}
+            <motion.div {...fadeUp} className="mx-auto">
+              <div className="relative w-[240px] h-[480px] rounded-[2.5rem] bg-foreground p-3 shadow-2xl">
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-5 bg-foreground rounded-b-2xl z-10" />
+                <div className="w-full h-full rounded-[2rem] bg-gradient-to-br from-primary/20 via-card to-primary/5 flex flex-col items-center justify-center px-5 text-center">
+                  <Fingerprint className="h-14 w-14 text-primary mb-4" />
+                  <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">Agatsa One</p>
+                  <p className="text-foreground font-bold text-lg mt-2 leading-tight">Your Food<br/>Fingerprint</p>
+                  <p className="text-[11px] text-muted-foreground mt-3">Tap to start scanning</p>
+                  <div className="mt-6 w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-[0_0_30px_hsl(var(--primary)/0.6)]">
+                    <ScanLine className="h-7 w-7 text-primary-foreground" />
+                  </div>
                 </div>
-                <h3 className="font-semibold text-foreground mb-1">{step.title}</h3>
-                <p className="text-sm text-muted-foreground">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            </motion.div>
 
-          <motion.p {...fadeUp} transition={{ duration: 0.5, delay: 0.5 }} className="mt-8 text-center text-lg font-semibold text-foreground italic">
-            Not a generic diet chart. Your chart.
-          </motion.p>
+            {/* notification stack */}
+            <div className="space-y-3">
+              {[
+                { icon: Camera, title: "Snap your plate", desc: "Open the app, take a photo of your meal.", time: "now" },
+                { icon: Sparkles, title: "Get a prediction", desc: "Nera AI estimates your metabolic response — before you eat.", time: "2 sec" },
+                { icon: ScanLine, title: "Scan after 90 min", desc: "Take a quick EasyTouch reading to see how your body actually responded.", time: "1h 30m" },
+                { icon: TrendingUp, title: "See your patterns", desc: "Learn which foods keep you Calm vs push you Elevated — for YOUR body.", time: "this week" },
+              ].map((step, i) => (
+                <motion.div
+                  key={step.title}
+                  {...fadeUp}
+                  transition={{ duration: 0.45, delay: 0.1 * i }}
+                  className="flex items-start gap-4 bg-card border border-border rounded-2xl p-4 pr-5 shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <step.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-bold text-foreground">{step.title}</h3>
+                      <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-mono shrink-0">{step.time}</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1">{step.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
