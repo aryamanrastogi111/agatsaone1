@@ -276,10 +276,10 @@ export default function EasyTouchWellnessProduct() {
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">The Problem</p>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              You've Been Eating Blindfolded.
+              You've Been Eating Blindfolded — and Pricking Your Finger to Catch Up.
             </h2>
             <p className="mt-4 text-muted-foreground text-base md:text-lg">
-              You eat <span className="text-foreground font-semibold">"healthy"</span> — salad, rice, fruit — and still feel sluggish, bloated, or drained. You don't know why. The food isn't the only story — how your body reacts to it is.
+              You eat <span className="text-foreground font-semibold">"healthy"</span> — salad, rice, fruit — and still feel sluggish, bloated, or drained. You don't know why. The food isn't the only story — how your body responds to it is. And the only way most people check that response today is a needle, a strip and a drop of blood, hours after the meal is gone.
             </p>
           </motion.div>
 
@@ -294,8 +294,8 @@ export default function EasyTouchWellnessProduct() {
                 <Fingerprint className="h-5 w-5 text-primary" />
               </div>
               <p className="text-foreground text-base md:text-lg leading-relaxed">
-                Metabolic response is <span className="font-semibold">personal</span>. The same bowl of rice that barely moves your friend's numbers can spike yours.
-                <span className="block mt-2 text-muted-foreground text-sm md:text-base">Same plate. Same portion. Two completely different bodies inside. Without data, you're guessing.</span>
+                Metabolic response is <span className="font-semibold">personal</span>. The same bowl of rice that barely moves your friend's sugar response can quietly send yours climbing.
+                <span className="block mt-2 text-muted-foreground text-sm md:text-base">Same plate. Same portion. Two completely different bodies inside. Without data, you're guessing — and a once-a-day finger prick only catches a fraction of the story.</span>
               </p>
             </div>
           </motion.div>
@@ -342,7 +342,7 @@ export default function EasyTouchWellnessProduct() {
           >
             <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-5 py-2.5 shadow-md shadow-primary/20">
               <Sparkles className="h-4 w-4" />
-              <span className="text-sm md:text-base font-bold">EasyTouch Wellness ends the guesswork.</span>
+              <span className="text-sm md:text-base font-bold">EasyTouch Wellness ends the guesswork — no needle required.</span>
             </div>
           </motion.div>
         </div>
