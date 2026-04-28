@@ -349,20 +349,28 @@ export default function EasyTouchWellnessProduct() {
       </section>
 
       {/* WHY EVERY PERSON NEEDS THIS — problem it solves */}
-      <section className="py-14 md:py-20 bg-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-br from-primary via-primary to-primary/80">
+        {/* Decorative glow orbs */}
+        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-40 -right-20 w-[500px] h-[500px] rounded-full bg-accent/20 blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.15),transparent_50%)] pointer-events-none" />
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto">
-            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Why Everyone Needs This</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              The silent problem hiding in <span className="text-primary">everyday meals</span>
+            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/30 rounded-full px-4 py-1.5 mb-5 shadow-lg">
+              <Sparkles className="h-3.5 w-3.5 text-white" />
+              <p className="text-xs font-bold uppercase tracking-widest text-white">Why Everyone Needs This</p>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-primary-foreground leading-tight">
+              The silent problem hiding in <span className="italic underline decoration-white/40 decoration-4 underline-offset-4">everyday meals</span>
             </h2>
-            <p className="mt-4 text-muted-foreground text-base md:text-lg">
-              1 in 4 Indian adults already lives with a metabolic issue — and most don't know until it's serious. EasyTouch Wellness catches the early signals, every single day.
+            <p className="mt-5 text-primary-foreground/90 text-lg md:text-xl leading-relaxed">
+              <span className="font-bold text-white">1 in 4 Indian adults</span> already lives with a metabolic issue — and most don't know until it's serious. EasyTouch Wellness catches the early signals, every single day.
             </p>
           </motion.div>
 
           {/* Problem → Solution rows */}
-          <div className="mt-12 grid md:grid-cols-2 gap-5">
+          <div className="mt-14 grid md:grid-cols-2 gap-5">
             {[
               {
                 icon: HeartPulse,
@@ -399,20 +407,21 @@ export default function EasyTouchWellnessProduct() {
                 key={row.problem}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="bg-card border border-border rounded-2xl p-5 md:p-6 hover:border-primary/30 hover:shadow-md transition-all"
+                className="group bg-white/95 backdrop-blur-sm border border-white/40 rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                    <row.icon className="h-5 w-5 text-primary" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shrink-0 shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform">
+                    <row.icon className="h-6 w-6 text-white" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs font-bold uppercase tracking-wide text-destructive/80 mb-1">The Problem</p>
+                    <p className="text-[10px] font-extrabold uppercase tracking-widest text-destructive mb-1">⚠ The Problem</p>
                     <h3 className="text-base md:text-lg font-bold text-foreground leading-snug">{row.problem}</h3>
-                    <div className="my-3 flex items-center gap-2 text-primary">
-                      <ArrowRight className="h-4 w-4" />
-                      <span className="text-xs font-bold uppercase tracking-wide">What EasyTouch Does</span>
+                    <div className="my-3 h-px bg-gradient-to-r from-primary/40 to-transparent" />
+                    <div className="flex items-center gap-2 text-primary mb-1.5">
+                      <ArrowRight className="h-3.5 w-3.5" />
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest">What EasyTouch Does</span>
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{row.solution}</p>
+                    <p className="text-sm text-foreground/80 leading-relaxed">{row.solution}</p>
                   </div>
                 </div>
               </motion.div>
@@ -423,11 +432,13 @@ export default function EasyTouchWellnessProduct() {
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-12 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-3xl p-6 md:p-8"
+            className="mt-14 bg-white rounded-3xl p-7 md:p-9 shadow-2xl border-4 border-white/50"
           >
-            <div className="flex items-center gap-3 mb-5">
-              <Users className="h-6 w-6 text-primary" />
-              <h3 className="text-xl md:text-2xl font-bold text-foreground">Who needs this?</h3>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
+                <Users className="h-5 w-5 text-primary-foreground" />
+              </div>
+              <h3 className="text-2xl md:text-3xl font-extrabold text-foreground">Who needs this?</h3>
             </div>
             <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
               {[
@@ -438,15 +449,20 @@ export default function EasyTouchWellnessProduct() {
                 "Parents who want to model healthy habits",
                 "Anyone tired of generic diet advice",
               ].map((item) => (
-                <div key={item} className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                  <span className="text-sm md:text-base text-foreground">{item}</span>
+                <div key={item} className="flex items-start gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="h-3 w-3 text-primary" strokeWidth={3} />
+                  </div>
+                  <span className="text-sm md:text-base text-foreground font-medium">{item}</span>
                 </div>
               ))}
             </div>
-            <p className="mt-6 text-center text-sm md:text-base text-muted-foreground">
-              In short — <span className="font-semibold text-foreground">everyone who eats</span>. Because what you eat today shapes how you feel tomorrow.
-            </p>
+            <div className="mt-7 pt-6 border-t border-border text-center">
+              <p className="text-base md:text-lg text-foreground">
+                In short — <span className="font-extrabold text-primary">everyone who eats</span>.
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">Because what you eat today shapes how you feel tomorrow.</p>
+            </div>
           </motion.div>
         </div>
       </section>
