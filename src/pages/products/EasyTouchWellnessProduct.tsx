@@ -348,7 +348,108 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* NEW: FOOD FINGERPRINT — 6 FEATURE CARDS */}
+      {/* WHY EVERY PERSON NEEDS THIS — problem it solves */}
+      <section className="py-14 md:py-20 bg-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Why Everyone Needs This</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              The silent problem hiding in <span className="text-primary">everyday meals</span>
+            </h2>
+            <p className="mt-4 text-muted-foreground text-base md:text-lg">
+              1 in 4 Indian adults already lives with a metabolic issue — and most don't know until it's serious. EasyTouch Wellness catches the early signals, every single day.
+            </p>
+          </motion.div>
+
+          {/* Problem → Solution rows */}
+          <div className="mt-12 grid md:grid-cols-2 gap-5">
+            {[
+              {
+                icon: HeartPulse,
+                problem: "Sudden energy crashes after meals",
+                solution: "See exactly which foods spike and crash you — so you can swap them out.",
+              },
+              {
+                icon: Brain,
+                problem: "Brain fog, mood swings, poor focus",
+                solution: "Track how your meals affect your mental clarity through metabolic patterns.",
+              },
+              {
+                icon: Salad,
+                problem: "Eating 'healthy' but not feeling better",
+                solution: "Discover that 'healthy' is personal — your body reacts differently than others.",
+              },
+              {
+                icon: TrendingUp,
+                problem: "Weight that won't move despite effort",
+                solution: "Identify hidden metabolic load that quietly stalls your fitness goals.",
+              },
+              {
+                icon: ShieldCheck,
+                problem: "Family history of diabetes or heart issues",
+                solution: "Build an early-warning system years before standard tests catch a problem.",
+              },
+              {
+                icon: Zap,
+                problem: "No clear way to measure 'wellness'",
+                solution: "Get a single Metabolic Score 0–100 that tells you, daily, where you stand.",
+              },
+            ].map((row, i) => (
+              <motion.div
+                key={row.problem}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: i * 0.06 }}
+                className="bg-card border border-border rounded-2xl p-5 md:p-6 hover:border-primary/30 hover:shadow-md transition-all"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <row.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs font-bold uppercase tracking-wide text-destructive/80 mb-1">The Problem</p>
+                    <h3 className="text-base md:text-lg font-bold text-foreground leading-snug">{row.problem}</h3>
+                    <div className="my-3 flex items-center gap-2 text-primary">
+                      <ArrowRight className="h-4 w-4" />
+                      <span className="text-xs font-bold uppercase tracking-wide">What EasyTouch Does</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{row.solution}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Who it's for */}
+          <motion.div
+            {...fadeUp}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-12 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-3xl p-6 md:p-8"
+          >
+            <div className="flex items-center gap-3 mb-5">
+              <Users className="h-6 w-6 text-primary" />
+              <h3 className="text-xl md:text-2xl font-bold text-foreground">Who needs this?</h3>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
+              {[
+                "Anyone over 30 who wants to age well",
+                "Working professionals battling fatigue",
+                "Anyone with a family history of diabetes",
+                "Fitness enthusiasts optimizing nutrition",
+                "Parents who want to model healthy habits",
+                "Anyone tired of generic diet advice",
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-2">
+                  <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                  <span className="text-sm md:text-base text-foreground">{item}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-center text-sm md:text-base text-muted-foreground">
+              In short — <span className="font-semibold text-foreground">everyone who eats</span>. Because what you eat today shapes how you feel tomorrow.
+            </p>
+          </motion.div>
+        </div>
+      </section>
       <section className="py-14 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto">
