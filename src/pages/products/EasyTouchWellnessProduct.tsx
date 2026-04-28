@@ -636,20 +636,31 @@ export default function EasyTouchWellnessProduct() {
       {/* ── SECTION 9B — USER REVIEWS ── */}
       <Suspense fallback={<div className="py-12" />}><WellnessReviewsSection /></Suspense>
 
-      {/* ── OBJECTION HANDLING — "We Know What You Are Thinking" ── */}
+      {/* ── OBJECTION HANDLING — editorial Q&A ── */}
       <section className="py-12 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp} className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">We know what you are thinking. Let us be honest.</h2>
-            <p className="text-lg text-muted-foreground mt-3">
-              These are the real questions people ask before buying EasyTouch Wellness. Here are straight answers — no marketing spin.
+          <motion.div {...fadeUp} className="mb-10 border-b border-border pb-6">
+            <p className="text-xs font-bold tracking-[0.3em] uppercase text-primary mb-2">Candid Q&amp;A</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">We know what you are thinking.<br/><span className="italic text-muted-foreground font-serif">Let us be honest.</span></h2>
+            <p className="text-base text-muted-foreground mt-3">
+              The real questions people ask before buying — answered without marketing spin.
             </p>
           </motion.div>
-          <Accordion type="single" collapsible className="w-full space-y-3">
+          <Accordion type="single" collapsible className="w-full">
             {objections.map((obj, i) => (
-              <AccordionItem key={i} value={`obj-${i}`} className="bg-card border border-border rounded-xl px-5">
-                <AccordionTrigger className="text-left text-foreground font-semibold text-base py-5">{obj.q}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground whitespace-pre-line pb-5">{obj.a}</AccordionContent>
+              <AccordionItem key={i} value={`obj-${i}`} className="border-b border-border last:border-b-0 data-[state=open]:bg-card/50 transition-colors">
+                <AccordionTrigger className="text-left font-semibold text-base py-5 hover:no-underline group">
+                  <div className="flex gap-4 items-start w-full pr-2">
+                    <span className="font-serif text-2xl text-primary/70 leading-none shrink-0 w-7">Q.</span>
+                    <span className="text-foreground group-hover:text-primary transition-colors">{obj.q}</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="pb-6 pl-11 border-l-2 border-primary ml-[14px]">
+                  <div className="flex gap-4 items-start">
+                    <span className="font-serif text-2xl text-primary leading-none shrink-0 -ml-[30px]">A.</span>
+                    <div className="text-muted-foreground whitespace-pre-line leading-relaxed">{obj.a}</div>
+                  </div>
+                </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
