@@ -611,22 +611,37 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
-      {/* ── SECTION 9 — TESTIMONIALS ── */}
-      <section className="py-12 bg-background">
+      {/* ── SECTION 9 — TESTIMONIALS (staggered, with quote marks) ── */}
+      <section className="py-14 bg-background">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">What Users Discovered About Themselves</h2>
             <p className="text-muted-foreground mt-3">Real Food Fingerprint moments — straight from people who scanned, learned, and changed.</p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
-            {fingerprintTestimonials.map((t, i) => (
-              <motion.div key={i} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-card rounded-2xl border border-border p-6"
-              >
-                <p className="text-muted-foreground text-sm leading-relaxed italic">"{t.quote}"</p>
-                <p className="mt-4 text-sm font-semibold text-foreground">— {t.name}, {t.city}</p>
-              </motion.div>
-            ))}
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 mt-16">
+            {fingerprintTestimonials.map((t, i) => {
+              const offsets = ["md:mt-0 md:-rotate-[0.8deg]", "md:mt-8 md:rotate-0", "md:mt-2 md:rotate-[0.8deg]"];
+              return (
+                <motion.div
+                  key={i}
+                  {...fadeUp}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className={`relative bg-card rounded-2xl border border-border p-7 pt-10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all ${offsets[i]}`}
+                >
+                  <span
+                    aria-hidden
+                    className="absolute -top-6 left-5 font-serif text-primary text-[7rem] leading-none select-none"
+                  >
+                    &ldquo;
+                  </span>
+                  <p className="relative text-foreground/90 text-[15px] leading-relaxed">{t.quote}</p>
+                  <div className="mt-5 pt-4 border-t border-dashed border-border flex items-center justify-between">
+                    <p className="text-sm font-bold text-foreground">{t.name}</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">{t.city}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
