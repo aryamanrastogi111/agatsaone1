@@ -168,7 +168,7 @@ export default function EasyTouchWellnessProduct() {
 
               {/* Subheadline — desktop only here */}
               <p className="hidden md:block text-lg md:text-xl text-foreground font-semibold mt-6">
-                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary">Food Fingerprint</span> — tracking not just what you eat, but how your heart rhythm, blood flow and recovery quietly react to it.
+                EasyTouch Wellness + Nera AI builds your personal <span className="text-primary">Food Fingerprint</span> — tracking not just what you eat, but how your heart rhythm, blood flow and recovery quietly react to it. <span className="text-muted-foreground font-normal">No needle. No prick. No strip — just your body's own sugar response patterns, gently observed over time.</span>
               </p>
 
               {/* CTA — hide "Show Me How" on mobile */}
