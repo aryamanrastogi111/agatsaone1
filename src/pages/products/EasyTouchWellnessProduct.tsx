@@ -362,10 +362,10 @@ export default function EasyTouchWellnessProduct() {
               <p className="text-xs font-bold uppercase tracking-widest text-white">Why Everyone Needs This</p>
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-primary-foreground leading-tight">
-              The silent problem hiding in <span className="italic underline decoration-white/40 decoration-4 underline-offset-4">everyday meals</span>
+              The silent signals hiding behind <span className="italic underline decoration-white/40 decoration-4 underline-offset-4">everyday meals</span>
             </h2>
             <p className="mt-5 text-primary-foreground/90 text-lg md:text-xl leading-relaxed">
-              <span className="font-bold text-white">1 in 4 Indian adults</span> already lives with a metabolic issue — and most don't know until it's serious. EasyTouch Wellness catches the early signals, every single day — in your heart rhythm, your blood flow and how you recover after meals.
+              <span className="font-bold text-white">1 in 4 Indian adults</span> already lives with a metabolic issue — and the body whispers about it long before any test does. EasyTouch Wellness reads those whispers every single day — in your heart rhythm, your blood flow, your pulse pattern and how you recover after eating.
             </p>
           </motion.div>
 
