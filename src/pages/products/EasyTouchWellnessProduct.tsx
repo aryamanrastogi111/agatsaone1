@@ -61,12 +61,12 @@ const boxItems = [
 
 // Body Signal feature highlight cards
 const fingerprintCards = [
-  { icon: Activity, title: "Daily Load Score", desc: "Every scan shows how much strain your body is carrying right now — after a meal, after a tough day, or first thing in the morning. One number. Easy to read." },
-  { icon: Fingerprint, title: "Your Body Pattern", desc: "Built from your own scans over time. The device learns how your heart rhythm and blood flow behave — and flags when something shifts. No two patterns are the same." },
-  { icon: Bell, title: "Smart Reminders", desc: "The app nudges you to scan at the right moments — morning, after a meal, before bed — so you build a real picture of your day, not random snapshots." },
+  { icon: Activity, title: "Daily Load Score", desc: "Every scan shows how much strain your body is carrying right now — after a meal, after a tough day, or first thing in the morning. It captures how your body is reacting, not just to food, but to sleep, stress and activity. One number. Easy to read." },
+  { icon: Fingerprint, title: "Your Body Pattern", desc: "Built from your own scans over time. The device learns how your heart rhythm and blood flow behave — and flags when something shifts. Because two people can eat the same meal and react completely differently inside. No two patterns are the same." },
+  { icon: Bell, title: "Smart Reminders", desc: "The app nudges you to scan at the right moments — morning, after a meal, before bed — so you build a real picture of your day, not random snapshots. Same meal, different day — your body's response can change, and the right scan timing reveals it." },
   { icon: Compass, title: "Nera AI Guide", desc: "From Day 1, Nera AI tells you what to do next — when to scan, what your number means, and what's quietly changing. You're never guessing." },
   { icon: Gauge, title: "Resting Baseline", desc: "Your morning fasting scans become your personal benchmark. Every later reading is compared to it — so you can see when your body is calm and when it's under load." },
-  { icon: LineChart, title: "Trends Over Time", desc: "Week over week, see if your body is getting calmer or more stressed. Sleep, food, and stress all leave a mark on your score. Nera AI connects the dots." },
+  { icon: LineChart, title: "Trends Over Time", desc: "Week over week, see if your body is getting calmer or more stressed. Sleep, food, and stress all leave a mark on your score — and your real health signal is the pattern over weeks, not a single meal. Nera AI connects the dots." },
 ];
 
 // Body Signal discovery quotes
