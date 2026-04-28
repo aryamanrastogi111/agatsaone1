@@ -770,7 +770,7 @@ export default function EasyTouchWellnessProduct() {
 
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Six features. One unique blueprint of your body.</h2>
             <p className="text-muted-foreground mt-3">
-              Every scan, meal snap, and trend powers the only thing that truly matters — your body's personal response to food.
+              Every scan, meal snap, and trend powers the only thing that truly matters — your body's personal response to food, and to the sleep, stress and recovery wrapped around it.
             </p>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
