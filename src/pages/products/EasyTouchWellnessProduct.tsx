@@ -26,6 +26,7 @@ import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
+import mealIntelligenceApp from "@/assets/easytouch-meal-intelligence-app.jpg";
 
 // Lazy-load heavy below-fold sections
 const WellnessReviewsSection = lazy(() => import("@/components/products/WellnessReviewsSection").then(m => ({ default: m.WellnessReviewsSection })));
@@ -637,7 +638,93 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
+      {/* ── SECTION 6B — MEAL INTELLIGENCE (real app screenshot + annotations) ── */}
+      <section className="py-16 md:py-24 bg-muted/30 overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary mb-3">Inside the Agatsa One app</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Every meal, <span className="text-primary">decoded for you.</span>
+            </h2>
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+              No spreadsheets. No calorie counting. Just a clear, honest snapshot of what you ate — and what it's doing to your body.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-[auto_1fr] gap-10 md:gap-14 items-center">
+            {/* Phone screenshot */}
+            <motion.div
+              {...fadeUp}
+              className="relative mx-auto md:mx-0 w-[260px] md:w-[300px] shrink-0"
+            >
+              <div className="absolute -inset-6 bg-gradient-to-br from-primary/20 via-primary/5 to-transparent rounded-[3rem] blur-2xl" />
+              <div className="relative rounded-[2.2rem] border-[10px] border-foreground/90 bg-foreground/90 shadow-2xl overflow-hidden">
+                <img
+                  src={mealIntelligenceApp}
+                  alt="EasyTouch Wellness Meal Intelligence dashboard showing calories, carbs, protein, sugar, and meal-by-meal breakdown in the Agatsa One app"
+                  className="w-full h-auto block"
+                  loading="lazy"
+                />
+              </div>
+              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-background border border-border rounded-full px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-muted-foreground shadow">
+                Live from Agatsa One
+              </div>
+            </motion.div>
+
+            {/* Annotations */}
+            <div className="space-y-5">
+              {[
+                {
+                  tag: "Today / 7 Days / 30 Days",
+                  title: "Zoom in or zoom out, instantly",
+                  desc: "Switch from a single day to a 30-day view in one tap — see if today was a bad day or a building pattern.",
+                },
+                {
+                  tag: "1156 kcal · 142g carbs · 25g protein · 40g sugar",
+                  title: "The 4 numbers that actually matter",
+                  desc: "Calories, carbs, protein and sugar — pulled together for the day, with fat, fiber and sodium one glance below. No app-jumping.",
+                },
+                {
+                  tag: "40g sugar · 15g over WHO target",
+                  title: "Honest red flags, in plain English",
+                  desc: "When you cross the WHO daily sugar limit, the bar turns amber and tells you by how much. No judgement — just the truth.",
+                },
+                {
+                  tag: "Heavy · Light · Light",
+                  title: "Every meal labelled by metabolic load",
+                  desc: "Biryani gets flagged Heavy. Black coffee shows Light. Each entry is sized by what it actually does to your body — not by calories alone.",
+                },
+                {
+                  tag: "Sugar 35g ⚠",
+                  title: "The one ingredient that spiked you",
+                  desc: "Inside every meal, the macro that pushed you out of range is highlighted — so you know exactly what to swap next time.",
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className="group relative pl-6 border-l-2 border-primary/30 hover:border-primary transition-colors"
+                >
+                  <div className="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-primary ring-4 ring-background" />
+                  <p className="text-[11px] font-mono uppercase tracking-wider text-primary mb-1">{item.tag}</p>
+                  <h3 className="text-base md:text-lg font-bold text-foreground mb-1">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          <motion.p {...fadeUp} className="mt-10 text-center text-sm text-muted-foreground max-w-2xl mx-auto">
+            This is a real screen from the Agatsa One app — not a mockup. Every meal you log builds your <span className="text-foreground font-semibold">Food Fingerprint</span>, and Nera AI gets sharper with every scan.
+          </motion.p>
+        </div>
+      </section>
+
       {/* ── SECTION 7 — WHO IS THIS FOR (persona chips) ── */}
+
       <section className="py-14 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="text-center mb-10">
