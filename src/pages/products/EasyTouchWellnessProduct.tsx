@@ -630,7 +630,7 @@ export default function EasyTouchWellnessProduct() {
               Snap your meal. <span className="text-primary">Nera AI does the maths.</span>
             </h2>
             <p className="mt-4 text-muted-foreground text-base md:text-lg">
-              No counting calories. No guessing portions. Just see how today's meals affected <em>your</em> body — flagged Light or Heavy.
+              No counting calories. No guessing portions. Just see how today's meals affected <em>your</em> body — flagged Light or Heavy. Because the same meal can be Light for one body and Heavy for another.
             </p>
           </motion.div>
 
