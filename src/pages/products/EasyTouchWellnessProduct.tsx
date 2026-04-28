@@ -348,6 +348,85 @@ export default function EasyTouchWellnessProduct() {
         </div>
       </section>
 
+      {/* WHO IS THIS FOR — dual-audience split */}
+      <section className="py-14 md:py-20 bg-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Who Is This For</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              One device. <span className="text-primary">Two journeys.</span>
+            </h2>
+            <p className="mt-4 text-muted-foreground text-base md:text-lg">
+              Whether you already track your sugar response every day, or simply want to stay ahead of it — EasyTouch Wellness meets you where you are.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-5 md:gap-6">
+            {/* Card 1 — Already managing */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="bg-card border border-border rounded-2xl p-6 md:p-7 hover:border-primary/40 hover:shadow-md transition-all"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <HeartPulse className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-primary">For You If</p>
+                  <h3 className="text-lg md:text-xl font-bold text-foreground">You already track your sugar</h3>
+                </div>
+              </div>
+              <ul className="space-y-2.5 text-sm md:text-base text-foreground">
+                {[
+                  "Cut down on daily finger pricks — without losing the picture",
+                  "Understand why a meal moved you, not just by how much",
+                  "Spot patterns your strips can't catch — sleep, stress, recovery",
+                  "Pairs with your existing routine and your doctor's advice",
+                ].map((line) => (
+                  <li key={line} className="flex items-start gap-2.5">
+                    <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
+                    <span className="leading-relaxed">{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-xs text-muted-foreground italic">A companion to your routine — not a replacement for prescribed testing.</p>
+            </motion.div>
+
+            {/* Card 2 — Staying ahead */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.5, delay: 0.18 }}
+              className="bg-card border border-border rounded-2xl p-6 md:p-7 hover:border-primary/40 hover:shadow-md transition-all"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-primary">For You If</p>
+                  <h3 className="text-lg md:text-xl font-bold text-foreground">You feel fine — but want to stay that way</h3>
+                </div>
+              </div>
+              <ul className="space-y-2.5 text-sm md:text-base text-foreground">
+                {[
+                  "Catch metabolic drift years before symptoms appear",
+                  "Build your personal Food Fingerprint, meal by meal",
+                  "Optimize energy, sleep, recovery and daily focus",
+                  "Train your intuition around food — without guesswork",
+                ].map((line) => (
+                  <li key={line} className="flex items-start gap-2.5">
+                    <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
+                    <span className="leading-relaxed">{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-xs text-muted-foreground italic">Wellness insight, not a diagnosis — built for early awareness.</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* WHY EVERY PERSON NEEDS THIS — problem it solves */}
       <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-br from-primary via-primary to-primary/80">
         {/* Decorative glow orbs */}
