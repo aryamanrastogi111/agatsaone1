@@ -279,7 +279,7 @@ export default function EasyTouchWellnessProduct() {
               You've Been Eating Blindfolded.
             </h2>
             <p className="mt-4 text-muted-foreground text-base md:text-lg">
-              You eat <span className="text-foreground font-semibold">"healthy"</span> — salad, rice, fruit — and still feel sluggish, bloated, or drained. You don't know why.
+              You eat <span className="text-foreground font-semibold">"healthy"</span> — salad, rice, fruit — and still feel sluggish, bloated, or drained. You don't know why. The food isn't the only story — how your body reacts to it is.
             </p>
           </motion.div>
 
