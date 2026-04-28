@@ -295,7 +295,7 @@ export default function EasyTouchWellnessProduct() {
               </div>
               <p className="text-foreground text-base md:text-lg leading-relaxed">
                 Metabolic response is <span className="font-semibold">personal</span>. The same bowl of rice that barely moves your friend's numbers can spike yours.
-                <span className="block mt-2 text-muted-foreground text-sm md:text-base">Without data, you're guessing.</span>
+                <span className="block mt-2 text-muted-foreground text-sm md:text-base">Same plate. Same portion. Two completely different bodies inside. Without data, you're guessing.</span>
               </p>
             </div>
           </motion.div>
