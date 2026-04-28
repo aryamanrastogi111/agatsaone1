@@ -638,9 +638,9 @@ export default function EasyTouchWellnessProduct() {
             <motion.div {...fadeUp} transition={{ duration: 0.6 }} className="order-2 lg:order-1">
               <div className="space-y-5">
                 {[
-                  { tag: "Auto-detected", title: "Calories, carbs, protein, sugar", desc: "Photo your plate. Nera AI estimates kcal, macros, sugar — and flags overshoots vs WHO targets." },
+                  { tag: "Auto-detected", title: "Calories, carbs, protein, sugar", desc: "Photo your plate. Nera AI estimates kcal, macros, sugar — and flags overshoots vs WHO targets. So you see both what's on your plate and what it's doing inside." },
                   { tag: "Personal flags", title: "Heavy or Light — for YOUR body", desc: "Same biryani may be 'Heavy' for you and 'Light' for your friend. The flag is personal, not generic." },
-                  { tag: "Sugar-aware", title: "WHO target overshoots, in real time", desc: "If today's sugar is 15g over your daily WHO limit, you'll see it before dinner — not after a year." },
+                  { tag: "Sugar-aware", title: "WHO target overshoots, in real time", desc: "If today's sugar is 15g over your daily WHO limit, you'll see it before dinner — not after a year. And see how your body actually carries that load." },
                 ].map((item) => (
                   <div key={item.title} className="bg-card border border-border rounded-2xl p-5 hover:border-primary/30 hover:shadow-md transition-all">
                     <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest bg-primary/10 text-primary rounded-full px-2.5 py-1 mb-2">{item.tag}</span>
