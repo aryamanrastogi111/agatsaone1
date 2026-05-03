@@ -9,11 +9,11 @@ import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  Star, Check, ArrowRight, ShieldCheck, Package, Heart,
-  Clock, Activity, Smartphone, Share2, Stethoscope, Users,
-  MapPin, Building2, Shield, Zap, FileText, Phone, HeartPulse,
-  Moon, Eye, UserCheck, Timer, CalendarCheck, Headphones,
-  Award, RefreshCw, CheckCircle2, AlertTriangle, Brain, ShoppingCart,
+  Star, Check, ArrowRight, ShieldCheck, Package,
+  Activity, Smartphone, Share2, Stethoscope,
+  FileText, HeartPulse,
+  Moon, UserCheck, CalendarCheck, Headphones,
+  Award, CheckCircle2, AlertTriangle, Brain, ShoppingCart,
 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
