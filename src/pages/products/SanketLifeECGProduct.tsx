@@ -781,34 +781,35 @@ function HowItsTakenSection() {
 
 function Device({ active }: { active: boolean }) {
   return (
-    <div className="relative w-[140px] h-[200px] rounded-[28px] bg-gradient-to-b from-foreground to-foreground/85 shadow-[0_12px_40px_hsl(var(--foreground)/0.35)] border border-foreground/40">
-      {/* brand strip */}
-      <div className="absolute top-3 left-1/2 -translate-x-1/2 text-[8px] tracking-widest font-bold text-background/60">
-        SANKETLIFE
+    <div className="relative w-[120px] h-[200px] rounded-[22px] bg-gradient-to-b from-white to-[hsl(0_0%_94%)] shadow-[0_14px_40px_hsl(var(--foreground)/0.30)] border border-foreground/10 flex flex-col items-center pt-3 pb-3">
+      {/* brand */}
+      <div className="text-[9px] tracking-wide font-bold text-foreground/70 italic">
+        SanketLife
       </div>
-      {/* sensors */}
-      <div className="absolute inset-0 flex items-center justify-center gap-6 mt-4">
+      {/* teal sensor panel */}
+      <div className="mt-2 w-[78px] flex-1 rounded-[14px] bg-gradient-to-b from-[hsl(180_55%_55%)] via-[hsl(170_50%_50%)] to-[hsl(95_55%_55%)] flex flex-col items-center justify-around py-3 shadow-inner">
         {[0, 1].map((i) => (
           <div key={i} className="relative">
-            <div className="w-10 h-10 rounded-full bg-background/10 border border-background/30 flex items-center justify-center">
-              <div className={`w-6 h-6 rounded-full ${active ? "bg-destructive" : "bg-primary/70"}`} />
+            {/* metal sensor pad */}
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[hsl(0_0%_55%)] via-[hsl(0_0%_38%)] to-[hsl(0_0%_25%)] border-2 border-white/70 shadow-md flex items-center justify-center">
+              <div className="w-5 h-5 rounded-full bg-foreground/60" />
             </div>
             {/* pulse ripple when active */}
             {active && (
               <>
-                <span className="absolute inset-0 rounded-full border-2 border-destructive/60 animate-ping" />
+                <span className="absolute inset-0 rounded-full border-2 border-destructive/70 animate-ping" />
                 <span
                   className="absolute inset-0 rounded-full border border-destructive/40 animate-ping"
-                  style={{ animationDelay: "0.4s" }}
+                  style={{ animationDelay: "0.5s" }}
                 />
               </>
             )}
           </div>
         ))}
       </div>
-      {/* led */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-        <div className={`w-1.5 h-1.5 rounded-full ${active ? "bg-success animate-pulse" : "bg-background/30"}`} />
+      {/* status dot at bottom */}
+      <div className="mt-2">
+        <div className={`w-1.5 h-1.5 rounded-full ${active ? "bg-success animate-pulse" : "bg-foreground/20"}`} />
       </div>
     </div>
   );
