@@ -249,6 +249,9 @@ export default function SanketLifeECGProduct() {
         </div>
       </section>
 
+      {/* ─── HOW IT'S TAKEN — animated scene ─── */}
+      <HowItsTakenSection />
+
       {/* ─── WHY EARLY CHECKS MATTER (merged) ─── */}
       <section className="py-14 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4">
