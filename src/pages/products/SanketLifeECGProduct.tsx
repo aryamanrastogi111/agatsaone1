@@ -782,8 +782,11 @@ function HowItsTakenSection() {
 function Device({ active }: { active: boolean }) {
   return (
     <div className="relative w-[220px] h-[110px] rounded-[22px] bg-gradient-to-b from-white to-[hsl(0_0%_94%)] shadow-[0_14px_40px_hsl(var(--foreground)/0.30)] border border-foreground/10 flex items-center pl-3 pr-3">
-      {/* brand on left */}
-      <div className="text-[10px] tracking-wide font-bold text-foreground/70 italic rotate-0 w-[42px] text-center">
+      {/* brand on left — vertical text */}
+      <div
+        className="text-[11px] tracking-[0.2em] font-bold text-foreground/70 italic w-[42px] text-center"
+        style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+      >
         SanketLife
       </div>
       {/* teal sensor panel — horizontal */}
