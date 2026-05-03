@@ -708,7 +708,7 @@ function HowItsTakenSection() {
                   y: { duration: 2.4, repeat: Infinity, ease: "easeInOut" },
                 }}
                 className="absolute z-20"
-                style={{ left: "50%", marginLeft: -70 }}
+                style={{ left: "50%", marginLeft: -110 }}
               >
                 <Device active={stage >= 1} />
               </motion.div>
@@ -722,7 +722,7 @@ function HowItsTakenSection() {
                 }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
                 className="absolute z-30"
-                style={{ left: "50%", marginLeft: -70 + deviceX, top: "50%", marginTop: 4 }}
+                style={{ left: "50%", marginLeft: -70 + deviceX, top: "50%", marginTop: -10 }}
               >
                 <Thumbs />
               </motion.div>
@@ -815,17 +815,17 @@ function Device({ active }: { active: boolean }) {
 
 function Thumbs() {
   return (
-    <div className="flex gap-6 -mt-2">
+    <div className="flex gap-[60px]">
       {[0, 1].map((i) => (
         <div
           key={i}
-          className="w-12 h-20 rounded-t-[24px] rounded-b-[10px] bg-gradient-to-b from-[hsl(28_55%_75%)] to-[hsl(28_45%_60%)] border border-foreground/20 shadow-md relative"
-          style={{ transform: i === 0 ? "rotate(-6deg)" : "rotate(6deg)" }}
+          className="w-14 h-24 rounded-t-[28px] rounded-b-[12px] bg-gradient-to-b from-[hsl(28_55%_75%)] to-[hsl(28_45%_60%)] border border-foreground/20 shadow-md relative"
+          style={{ transform: i === 0 ? "rotate(-8deg)" : "rotate(8deg)" }}
         >
           {/* nail */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-7 h-5 rounded-t-full bg-[hsl(28_30%_88%)]" />
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-5 rounded-t-full bg-[hsl(28_30%_88%)]" />
           {/* knuckle line */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-6 h-px bg-foreground/15" />
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-7 h-px bg-foreground/15" />
         </div>
       ))}
     </div>
