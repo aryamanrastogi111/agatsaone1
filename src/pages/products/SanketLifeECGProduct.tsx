@@ -708,7 +708,7 @@ function HowItsTakenSection() {
                   y: { duration: 2.4, repeat: Infinity, ease: "easeInOut" },
                 }}
                 className="absolute z-20"
-                style={{ left: "50%", marginLeft: -70 }}
+                style={{ left: "50%", marginLeft: -110 }}
               >
                 <Device active={stage >= 1} />
               </motion.div>
@@ -722,7 +722,7 @@ function HowItsTakenSection() {
                 }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
                 className="absolute z-30"
-                style={{ left: "50%", marginLeft: -70 + deviceX, top: "50%", marginTop: 4 }}
+                style={{ left: "50%", marginLeft: -70 + deviceX, top: "50%", marginTop: -10 }}
               >
                 <Thumbs />
               </motion.div>
@@ -781,20 +781,18 @@ function HowItsTakenSection() {
 
 function Device({ active }: { active: boolean }) {
   return (
-    <div className="relative w-[120px] h-[200px] rounded-[22px] bg-gradient-to-b from-white to-[hsl(0_0%_94%)] shadow-[0_14px_40px_hsl(var(--foreground)/0.30)] border border-foreground/10 flex flex-col items-center pt-3 pb-3">
-      {/* brand */}
-      <div className="text-[9px] tracking-wide font-bold text-foreground/70 italic">
+    <div className="relative w-[220px] h-[110px] rounded-[22px] bg-gradient-to-b from-white to-[hsl(0_0%_94%)] shadow-[0_14px_40px_hsl(var(--foreground)/0.30)] border border-foreground/10 flex items-center pl-3 pr-3">
+      {/* brand on left */}
+      <div className="text-[10px] tracking-wide font-bold text-foreground/70 italic rotate-0 w-[42px] text-center">
         SanketLife
       </div>
-      {/* teal sensor panel */}
-      <div className="mt-2 w-[78px] flex-1 rounded-[14px] bg-gradient-to-b from-[hsl(180_55%_55%)] via-[hsl(170_50%_50%)] to-[hsl(95_55%_55%)] flex flex-col items-center justify-around py-3 shadow-inner">
+      {/* teal sensor panel — horizontal */}
+      <div className="ml-2 flex-1 h-[82px] rounded-[14px] bg-gradient-to-r from-[hsl(180_55%_55%)] via-[hsl(170_50%_50%)] to-[hsl(95_55%_55%)] flex items-center justify-around px-3 shadow-inner">
         {[0, 1].map((i) => (
           <div key={i} className="relative">
-            {/* metal sensor pad */}
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[hsl(0_0%_55%)] via-[hsl(0_0%_38%)] to-[hsl(0_0%_25%)] border-2 border-white/70 shadow-md flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[hsl(0_0%_55%)] via-[hsl(0_0%_38%)] to-[hsl(0_0%_25%)] border-2 border-white/70 shadow-md flex items-center justify-center">
               <div className="w-5 h-5 rounded-full bg-foreground/60" />
             </div>
-            {/* pulse ripple when active */}
             {active && (
               <>
                 <span className="absolute inset-0 rounded-full border-2 border-destructive/70 animate-ping" />
@@ -807,8 +805,8 @@ function Device({ active }: { active: boolean }) {
           </div>
         ))}
       </div>
-      {/* status dot at bottom */}
-      <div className="mt-2">
+      {/* status dot */}
+      <div className="absolute bottom-1.5 right-3">
         <div className={`w-1.5 h-1.5 rounded-full ${active ? "bg-success animate-pulse" : "bg-foreground/20"}`} />
       </div>
     </div>
@@ -817,17 +815,17 @@ function Device({ active }: { active: boolean }) {
 
 function Thumbs() {
   return (
-    <div className="flex gap-6 -mt-2">
+    <div className="flex gap-[60px]">
       {[0, 1].map((i) => (
         <div
           key={i}
-          className="w-12 h-20 rounded-t-[24px] rounded-b-[10px] bg-gradient-to-b from-[hsl(28_55%_75%)] to-[hsl(28_45%_60%)] border border-foreground/20 shadow-md relative"
-          style={{ transform: i === 0 ? "rotate(-6deg)" : "rotate(6deg)" }}
+          className="w-14 h-24 rounded-t-[28px] rounded-b-[12px] bg-gradient-to-b from-[hsl(28_55%_75%)] to-[hsl(28_45%_60%)] border border-foreground/20 shadow-md relative"
+          style={{ transform: i === 0 ? "rotate(-8deg)" : "rotate(8deg)" }}
         >
           {/* nail */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-7 h-5 rounded-t-full bg-[hsl(28_30%_88%)]" />
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-5 rounded-t-full bg-[hsl(28_30%_88%)]" />
           {/* knuckle line */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-6 h-px bg-foreground/15" />
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-7 h-px bg-foreground/15" />
         </div>
       ))}
     </div>
