@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Star, Check, ArrowRight, ShieldCheck, Package,
   Activity, Smartphone, Share2, Stethoscope,
