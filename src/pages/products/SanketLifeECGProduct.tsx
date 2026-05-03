@@ -152,20 +152,80 @@ export default function SanketLifeECGProduct() {
       </section>
 
       {/* ─── WATCH IT IN ACTION ─── */}
-      <section className="py-16 md:py-20 bg-gray-950">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Watch It In Action</h2>
-          {/* Hero video */}
-          <div className="mb-6">
-            <VideoCard video={{ id: "1UIKpA7H4O4", title: "SanketLife ECG — Official Demo" }} hero />
+      {/* ─── WHAT SANKETLIFE DETECTS ─── */}
+      <section className="py-12 bg-background">
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto mb-10">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">12-Lead Clinical Picture</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              One device. A <span className="text-primary">full clinical picture</span> of your heart.
+            </h2>
+            <p className="text-base md:text-lg text-muted-foreground mt-4 leading-relaxed">
+              A 12-lead ECG captures your heart from 12 different angles — surfacing the patterns single-lead smartwatches simply cannot see. Here's what your SanketLife waveform helps your doctor flag:
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: AlertTriangle,
+                tone: "destructive",
+                title: "Life-threatening events",
+                items: [
+                  "STEMI (ST-Elevation Heart Attack)",
+                  "NSTEMI / Ischemia (ST depression, T-wave inversion)",
+                  "Ventricular Tachycardia patterns",
+                  "Ventricular Fibrillation patterns",
+                ],
+              },
+              {
+                icon: Activity,
+                tone: "primary",
+                title: "Rhythm disorders (Arrhythmias)",
+                items: [
+                  "Atrial Fibrillation (AFib)",
+                  "Atrial Flutter",
+                  "Supraventricular Tachycardia (SVT)",
+                  "Bradycardia & Tachycardia",
+                  "Premature beats (PVC, PAC)",
+                ],
+              },
+              {
+                icon: HeartPulse,
+                tone: "primary",
+                title: "Conduction & structural clues",
+                items: [
+                  "1st / 2nd / 3rd degree AV blocks",
+                  "Bundle Branch Blocks (LBBB / RBBB)",
+                  "Long QT / Short QT intervals",
+                  "Left Ventricular Hypertrophy (LVH) signs",
+                  "Pericarditis patterns",
+                ],
+              },
+            ].map((cat, i) => (
+              <motion.div
+                key={cat.title}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="bg-card border border-border rounded-2xl p-6"
+              >
+                <cat.icon className={`h-6 w-6 mb-3 ${cat.tone === "destructive" ? "text-destructive/80" : "text-primary"}`} />
+                <h3 className="font-bold text-foreground mb-4">{cat.title}</h3>
+                <ul className="space-y-2.5">
+                  {cat.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
           </div>
-          {/* Supporting videos */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            <VideoCard video={{ id: "Ck8syb2uQdo", title: "Why Watch ECGs Aren't Enough" }} />
-            <VideoCard video={{ id: "ZkLv3wyVtfg", title: "Real Story: What the ECG Revealed" }} />
-            <VideoCard video={{ id: "4nldXDM1w7w", title: "Heart Problems Don't Check Your Age" }} />
-          </div>
-          <YouTubeChannelLink />
+
+          <motion.p {...fadeUp} className="mt-8 text-center text-sm text-muted-foreground max-w-2xl mx-auto">
+            SanketLife provides clinical-grade ECG waveforms for review. Diagnosis and treatment decisions are made by your doctor.
+          </motion.p>
         </div>
       </section>
 
@@ -850,6 +910,24 @@ export default function SanketLifeECGProduct() {
               </p>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ─── WATCH IT IN ACTION (moved near bottom) ─── */}
+      <section className="py-16 md:py-20 bg-gray-950">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Watch It In Action</h2>
+          {/* Hero video */}
+          <div className="mb-6">
+            <VideoCard video={{ id: "1UIKpA7H4O4", title: "SanketLife ECG — Official Demo" }} hero />
+          </div>
+          {/* Supporting videos */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <VideoCard video={{ id: "Ck8syb2uQdo", title: "Why Watch ECGs Aren't Enough" }} />
+            <VideoCard video={{ id: "ZkLv3wyVtfg", title: "Real Story: What the ECG Revealed" }} />
+            <VideoCard video={{ id: "4nldXDM1w7w", title: "Heart Problems Don't Check Your Age" }} />
+          </div>
+          <YouTubeChannelLink />
         </div>
       </section>
 
