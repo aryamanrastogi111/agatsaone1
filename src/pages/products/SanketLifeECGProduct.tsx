@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Star, Check, ArrowRight, ShieldCheck, Package,
   Activity, Smartphone, Share2, Stethoscope,
@@ -248,6 +248,9 @@ export default function SanketLifeECGProduct() {
           </motion.p>
         </div>
       </section>
+
+      {/* ─── HOW IT'S TAKEN — animated scene ─── */}
+      <HowItsTakenSection />
 
       {/* ─── WHY EARLY CHECKS MATTER (merged) ─── */}
       <section className="py-14 bg-muted/30">
@@ -638,5 +641,240 @@ export default function SanketLifeECGProduct() {
       <AwardsTrustSection />
       <ProductReviewsSection reviews={sanketLifeEcgReviews} />
     </SiteLayout>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────
+ * HowItsTakenSection
+ * 3-stage looping animation: device → thumbs on sensors → phone w/ ECG
+ * ────────────────────────────────────────────────────────────── */
+function HowItsTakenSection() {
+  const reduce = useReducedMotion();
+  const [stage, setStage] = useState(0); // 0 device, 1 +thumbs, 2 +phone
+
+  useEffect(() => {
+    if (reduce) { setStage(2); return; }
+    const timings = [2000, 2200, 3200]; // dwell per stage
+    let i = 0;
+    const tick = () => {
+      i = (i + 1) % 3;
+      setStage(i);
+    };
+    const id = setInterval(tick, 2600);
+    return () => clearInterval(id);
+  }, [reduce]);
+
+  // Device shifts left when thumbs/phone appear so the scene composes nicely
+  const deviceX = stage === 0 ? 0 : stage === 1 ? -40 : -110;
+  const deviceScale = stage === 0 ? 1 : 0.92;
+
+  return (
+    <section className="py-16 md:py-20 bg-gradient-to-b from-primary/5 via-background to-background">
+      <div className="max-w-5xl mx-auto px-4">
+        <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-10">
+          <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">How it's taken</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            12-lead ECG at home. <span className="text-primary">Hospital-grade.</span>
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground mt-4 leading-relaxed">
+            Two thumbs. 30 seconds. A complete ECG on your phone — ready to share with any doctor.
+          </p>
+        </motion.div>
+
+        {/* Animated stage */}
+        <motion.div
+          {...fadeUp}
+          className="relative mx-auto rounded-3xl border border-border bg-card/60 backdrop-blur-sm overflow-hidden h-[340px] md:h-[420px] shadow-[0_8px_40px_hsl(var(--primary)/0.10)]"
+        >
+          {/* subtle grid backdrop */}
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-[0.07]"
+            style={{
+              backgroundImage:
+                "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            }}
+          />
+
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative w-[460px] max-w-full h-full flex items-center justify-center">
+              {/* DEVICE */}
+              <motion.div
+                animate={{ x: deviceX, scale: deviceScale, y: stage === 0 ? [0, -6, 0] : 0 }}
+                transition={{
+                  x: { duration: 0.8, ease: "easeInOut" },
+                  scale: { duration: 0.8, ease: "easeInOut" },
+                  y: { duration: 2.4, repeat: Infinity, ease: "easeInOut" },
+                }}
+                className="absolute z-20"
+                style={{ left: "50%", marginLeft: -70 }}
+              >
+                <Device active={stage >= 1} />
+              </motion.div>
+
+              {/* THUMBS */}
+              <motion.div
+                initial={false}
+                animate={{
+                  y: stage >= 1 ? 0 : 140,
+                  opacity: stage >= 1 ? 1 : 0,
+                }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="absolute z-30"
+                style={{ left: "50%", marginLeft: -70 + deviceX, top: "50%", marginTop: 4 }}
+              >
+                <Thumbs />
+              </motion.div>
+
+              {/* PHONE */}
+              <motion.div
+                initial={false}
+                animate={{
+                  x: stage >= 2 ? 0 : 220,
+                  opacity: stage >= 2 ? 1 : 0,
+                }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="absolute z-10"
+                style={{ left: "50%", marginLeft: 20 }}
+              >
+                <PhoneWithEcg play={stage >= 2} />
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Stage label */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  stage === i ? "w-6 bg-primary" : "w-1.5 bg-foreground/20"
+                }`}
+              />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Step chips */}
+        <motion.div {...fadeUp} className="grid sm:grid-cols-3 gap-3 mt-6">
+          {[
+            { n: "1", t: "Hold the device", s: "Pocket-sized, no wires." },
+            { n: "2", t: "Place both thumbs", s: "On the two sensor pads." },
+            { n: "3", t: "ECG on your phone", s: "Share the PDF with any doctor." },
+          ].map((step) => (
+            <div key={step.n} className="bg-card border border-border rounded-2xl p-4 flex items-start gap-3">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary font-bold flex items-center justify-center shrink-0">
+                {step.n}
+              </div>
+              <div>
+                <p className="font-semibold text-foreground text-sm">{step.t}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{step.s}</p>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function Device({ active }: { active: boolean }) {
+  return (
+    <div className="relative w-[140px] h-[200px] rounded-[28px] bg-gradient-to-b from-foreground to-foreground/85 shadow-[0_12px_40px_hsl(var(--foreground)/0.35)] border border-foreground/40">
+      {/* brand strip */}
+      <div className="absolute top-3 left-1/2 -translate-x-1/2 text-[8px] tracking-widest font-bold text-background/60">
+        SANKETLIFE
+      </div>
+      {/* sensors */}
+      <div className="absolute inset-0 flex items-center justify-center gap-6 mt-4">
+        {[0, 1].map((i) => (
+          <div key={i} className="relative">
+            <div className="w-10 h-10 rounded-full bg-background/10 border border-background/30 flex items-center justify-center">
+              <div className={`w-6 h-6 rounded-full ${active ? "bg-destructive" : "bg-primary/70"}`} />
+            </div>
+            {/* pulse ripple when active */}
+            {active && (
+              <>
+                <span className="absolute inset-0 rounded-full border-2 border-destructive/60 animate-ping" />
+                <span
+                  className="absolute inset-0 rounded-full border border-destructive/40 animate-ping"
+                  style={{ animationDelay: "0.4s" }}
+                />
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+      {/* led */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+        <div className={`w-1.5 h-1.5 rounded-full ${active ? "bg-success animate-pulse" : "bg-background/30"}`} />
+      </div>
+    </div>
+  );
+}
+
+function Thumbs() {
+  return (
+    <div className="flex gap-6 -mt-2">
+      {[0, 1].map((i) => (
+        <div
+          key={i}
+          className="w-12 h-20 rounded-t-[24px] rounded-b-[10px] bg-gradient-to-b from-[hsl(28_55%_75%)] to-[hsl(28_45%_60%)] border border-foreground/20 shadow-md relative"
+          style={{ transform: i === 0 ? "rotate(-6deg)" : "rotate(6deg)" }}
+        >
+          {/* nail */}
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-7 h-5 rounded-t-full bg-[hsl(28_30%_88%)]" />
+          {/* knuckle line */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-6 h-px bg-foreground/15" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function PhoneWithEcg({ play }: { play: boolean }) {
+  return (
+    <div className="w-[150px] h-[260px] rounded-[28px] bg-foreground p-2 shadow-[0_12px_40px_hsl(var(--foreground)/0.35)] border border-foreground/40">
+      <div className="w-full h-full rounded-[22px] bg-[hsl(240_33%_8%)] relative overflow-hidden flex flex-col">
+        {/* notch */}
+        <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-12 h-3 rounded-full bg-foreground" />
+        {/* status */}
+        <div className="pt-6 px-3">
+          <p className="text-[8px] tracking-widest text-success font-bold">● LIVE ECG</p>
+          <p className="text-[10px] text-background/80 font-semibold mt-0.5">72 BPM</p>
+        </div>
+        {/* ECG canvas */}
+        <div className="flex-1 mt-1 mx-2 rounded-md bg-[hsl(240_33%_5%)] relative overflow-hidden">
+          {/* grid */}
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage:
+                "linear-gradient(hsl(0 100% 64% / 0.18) 1px, transparent 1px), linear-gradient(90deg, hsl(0 100% 64% / 0.18) 1px, transparent 1px)",
+              backgroundSize: "10px 10px",
+            }}
+          />
+          <svg viewBox="0 0 200 100" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+            <motion.path
+              d="M0,50 L30,50 L36,50 L40,30 L44,70 L48,20 L52,80 L56,50 L80,50 L100,50 L104,40 L108,55 L112,50 L140,50 L146,50 L150,32 L154,68 L158,18 L162,82 L166,50 L200,50"
+              fill="none"
+              stroke="hsl(var(--destructive))"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: play ? [0, 1] : 0 }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: "linear" }}
+              style={{ filter: "drop-shadow(0 0 3px hsl(var(--destructive)/0.7))" }}
+            />
+          </svg>
+        </div>
+        <div className="px-3 py-2 text-[8px] text-background/50 tracking-wider">
+          LEAD I · NORMAL SINUS
+        </div>
+      </div>
+    </div>
   );
 }
