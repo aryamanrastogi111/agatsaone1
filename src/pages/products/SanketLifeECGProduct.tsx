@@ -913,6 +913,24 @@ export default function SanketLifeECGProduct() {
         </div>
       </section>
 
+      {/* ─── WATCH IT IN ACTION (moved near bottom) ─── */}
+      <section className="py-16 md:py-20 bg-gray-950">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Watch It In Action</h2>
+          {/* Hero video */}
+          <div className="mb-6">
+            <VideoCard video={{ id: "1UIKpA7H4O4", title: "SanketLife ECG — Official Demo" }} hero />
+          </div>
+          {/* Supporting videos */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <VideoCard video={{ id: "Ck8syb2uQdo", title: "Why Watch ECGs Aren't Enough" }} />
+            <VideoCard video={{ id: "ZkLv3wyVtfg", title: "Real Story: What the ECG Revealed" }} />
+            <VideoCard video={{ id: "4nldXDM1w7w", title: "Heart Problems Don't Check Your Age" }} />
+          </div>
+          <YouTubeChannelLink />
+        </div>
+      </section>
+
       {/* ─── SECTION 14: FINAL TRUST REINFORCEMENT ─── */}
       <section className="py-10 bg-background">
         <div className="max-w-4xl mx-auto px-4">
