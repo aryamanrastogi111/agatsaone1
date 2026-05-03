@@ -252,6 +252,70 @@ export default function SanketLifeECGProduct() {
       {/* ─── HOW IT'S TAKEN — animated scene ─── */}
       <HowItsTakenSection />
 
+      {/* ─── WHY EVERY HOME NEEDS ONE ─── */}
+      <section className="py-16 md:py-20 bg-background">
+        <div className="max-w-5xl mx-auto px-4">
+          <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto mb-12">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">Not just for heart patients</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              Why every home needs a SanketLife — <span className="text-primary">even if your heart feels fine.</span>
+            </h2>
+            <p className="text-base md:text-lg text-muted-foreground mt-4 leading-relaxed">
+              Most heart problems don't appear out of nowhere. They build up quietly, over months and years.
+              A 60-second check today can surface what an annual check-up misses.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-5 mb-10">
+            {[
+              {
+                icon: HeartPulse,
+                title: "Heart issues develop slowly",
+                desc: "Blood pressure, rhythm changes and early ischemia show up in your ECG long before symptoms do.",
+              },
+              {
+                icon: CalendarCheck,
+                title: "Daily check, not yearly guess",
+                desc: "A yearly ECG is one snapshot. Frequent at-home readings build a real timeline of your heart.",
+              },
+              {
+                icon: Brain,
+                title: "Nera AI nudges your lifestyle",
+                desc: "Spot patterns tied to stress, sleep, caffeine or activity — and get small, doable nudges to improve.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="bg-card border border-border rounded-2xl p-6"
+              >
+                <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
+                  <item.icon className="h-5 w-5" />
+                </div>
+                <h3 className="font-bold text-foreground mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            {...fadeUp}
+            className="bg-gradient-to-r from-primary/10 via-primary/5 to-background border border-primary/20 rounded-2xl p-6 md:p-7 flex flex-col md:flex-row items-start md:items-center gap-4"
+          >
+            <div className="w-12 h-12 rounded-xl bg-primary/15 text-primary flex items-center justify-center shrink-0">
+              <Brain className="h-6 w-6" />
+            </div>
+            <div className="flex-1">
+              <p className="font-bold text-foreground">Your heart's quiet years are the most important.</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Track now, while everything looks fine — so the day something shifts, you and your doctor see it first.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ─── WHY EARLY CHECKS MATTER (merged) ─── */}
       <section className="py-14 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4">
