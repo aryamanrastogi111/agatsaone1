@@ -679,6 +679,13 @@ function HowItsTakenSection() {
           <p className="text-base md:text-lg text-muted-foreground mt-4 leading-relaxed">
             Two thumbs. 30 seconds. A complete ECG on your phone — ready to share with any doctor.
           </p>
+          <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-foreground bg-success/10 border border-success/30 rounded-full px-3 py-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-success" />
+            No leads. Just by touch.<span className="text-destructive">*</span>
+          </p>
+          <p className="text-[11px] text-muted-foreground mt-2">
+            *Lead version is also available.
+          </p>
         </motion.div>
 
         {/* Animated stage */}
