@@ -722,7 +722,7 @@ function HowItsTakenSection() {
                 }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
                 className="absolute z-30"
-                style={{ left: "50%", marginLeft: -70 + deviceX, top: "50%", marginTop: -10 }}
+                style={{ left: "50%", marginLeft: -110 + deviceX, top: "50%", marginTop: -55 }}
               >
                 <Thumbs />
               </motion.div>
