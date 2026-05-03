@@ -814,20 +814,23 @@ function Device({ active }: { active: boolean }) {
 }
 
 function Thumbs() {
+  // Mirror device layout (220px wide): 42px brand + 8px gap, then panel with
+  // 2 sensors arranged justify-around — thumbs sit on top of those sensor centers.
   return (
-    <div className="flex gap-[60px]">
-      {[0, 1].map((i) => (
-        <div
-          key={i}
-          className="w-14 h-24 rounded-t-[28px] rounded-b-[12px] bg-gradient-to-b from-[hsl(28_55%_75%)] to-[hsl(28_45%_60%)] border border-foreground/20 shadow-md relative"
-          style={{ transform: i === 0 ? "rotate(-8deg)" : "rotate(8deg)" }}
-        >
-          {/* nail */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-5 rounded-t-full bg-[hsl(28_30%_88%)]" />
-          {/* knuckle line */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-7 h-px bg-foreground/15" />
-        </div>
-      ))}
+    <div className="w-[220px] flex items-start">
+      <div className="w-[42px] shrink-0" />
+      <div className="ml-2 flex-1 flex items-start justify-around px-3">
+        {[0, 1].map((i) => (
+          <div
+            key={i}
+            className="w-12 h-24 rounded-t-[26px] rounded-b-[10px] bg-gradient-to-b from-[hsl(28_55%_75%)] to-[hsl(28_45%_60%)] border border-foreground/20 shadow-md relative"
+            style={{ transform: i === 0 ? "rotate(-6deg)" : "rotate(6deg)" }}
+          >
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 w-7 h-5 rounded-t-full bg-[hsl(28_30%_88%)]" />
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-6 h-px bg-foreground/15" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
