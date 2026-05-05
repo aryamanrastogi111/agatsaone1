@@ -157,6 +157,17 @@ export default function EasyTouchWellnessProduct() {
                 </button>
               </div>
 
+              {/* Stock urgency + ship date */}
+              <div className="mt-5">
+                <StockUrgencyBar productKey="easytouch-wellness" />
+                <div className="flex items-center gap-2 text-sm mt-2" style={{ color: BODY }}>
+                  <span>📦</span>
+                  <span>
+                    <span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}
+                  </span>
+                </div>
+              </div>
+
               {/* Social proof row */}
               <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
                 <div className="flex items-center gap-2">
