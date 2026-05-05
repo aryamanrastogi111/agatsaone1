@@ -1047,7 +1047,7 @@ export default function EasyTouchWellnessProduct() {
       <RecentPurchasePopup />
       <StickyAddToCart
         productName="EasyTouch Wellness"
-        price={`₹${PRICE.toLocaleString("en-IN")}`}
+        price={PRICE_FMT}
         unitPrice={PRICE}
         onBuyNow={(qty) => buyNow(qty)}
         onAddToCart={(qty) => addToCart(qty)}
