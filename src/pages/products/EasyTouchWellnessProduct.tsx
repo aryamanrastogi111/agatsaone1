@@ -842,6 +842,9 @@ export default function EasyTouchWellnessProduct() {
         {/* SECTION 8b — FULL CUSTOMER REVIEWS (stars, filters, verified) */}
         <WellnessReviewsSection />
 
+        {/* SECTION 8c — AWARDS & RECOGNITION */}
+        <AwardsTrustSection />
+
         {/* SECTION 9 — PRICING + IN THE BOX */}
         <section className="bg-white py-16">
           <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-start">
