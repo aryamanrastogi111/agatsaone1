@@ -382,15 +382,6 @@ export default function EasyTouchWellnessProduct() {
           </div>
         </section>
 
-        {/* INLINE CTA — after How It Works */}
-        <InlineBuyCTA
-          headline="Ready to stop the daily pricks?"
-          sub="EasyTouch Wellness · 15-second check-in · No strips, no needles."
-          price={PRICE}
-          onBuy={() => buyNow()}
-          onCart={() => addToCart()}
-        />
-
         {/* SECTION 5 — DEVICE + APP ECOSYSTEM */}
         <section className="bg-white py-20">
           <div className="max-w-6xl mx-auto px-6">
