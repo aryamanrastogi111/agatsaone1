@@ -60,24 +60,34 @@ export default function EasyTouchWellnessProduct() {
   });
   useMetaPixelViewContent("wellness_sub", "EasyTouch Wellness", PRICE);
 
-  const buyNow = () => {
+  const buyNow = (qty: number = 1) => {
     useCartStore.getState().addItem({
       productId: "wellness_sub",
       productName: "EasyTouch Wellness",
       variantTitle: "Default Title",
       price: PRICE,
-      quantity: 1,
+      quantity: qty,
     });
     try {
       (window as any).fbq?.("track", "AddToCart", {
         content_ids: ["wellness_sub"],
         content_name: "EasyTouch Wellness",
         content_type: "product",
-        value: PRICE,
+        value: PRICE * qty,
         currency: "INR",
       });
     } catch {}
     navigate("/checkout");
+  };
+
+  const addToCart = (qty: number = 1) => {
+    useCartStore.getState().addItem({
+      productId: "wellness_sub",
+      productName: "EasyTouch Wellness",
+      variantTitle: "Default Title",
+      price: PRICE,
+      quantity: qty,
+    });
   };
 
   return (
