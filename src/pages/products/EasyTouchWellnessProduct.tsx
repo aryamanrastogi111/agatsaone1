@@ -879,7 +879,7 @@ export default function EasyTouchWellnessProduct() {
                   "EasyTouch Wellness device (1 unit)",
                   "USB-C charging cable",
                   "Quick start guide (English + Hindi)",
-                  "3 months Nera AI Premium free (₹1,797 value)",
+                  "1 year Nera AI Premium FREE (₹7,188 value)",
                   "Snap meal feature included in app",
                   "Predicted HbA1c included in app",
                 ].map((b) => (
@@ -917,7 +917,7 @@ export default function EasyTouchWellnessProduct() {
 
               <ul className="mt-5 space-y-2">
                 {[
-                  "3 months Nera AI Premium (₹1,797 value)",
+                  "1 year Nera AI Premium FREE (₹7,188 value)",
                   "Snap meal feature + HbA1c prediction",
                   "1-year manufacturer warranty",
                   "Free shipping pan-India",
