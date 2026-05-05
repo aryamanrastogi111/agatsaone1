@@ -711,6 +711,15 @@ export default function EasyTouchWellnessProduct() {
           </div>
         </section>
 
+        {/* INLINE CTA — after Companion Framing */}
+        <InlineBuyCTA
+          headline="Pair it with your glucometer today"
+          sub="One-time purchase · No subscription · 7-day return"
+          price={PRICE}
+          onBuy={() => buyNow()}
+          onCart={() => addToCart()}
+        />
+
         {/* SECTION 7 — SCIENCE */}
         <section className="py-20" style={{ backgroundColor: LIGHT_BG }}>
           <div className="max-w-4xl mx-auto px-6">
