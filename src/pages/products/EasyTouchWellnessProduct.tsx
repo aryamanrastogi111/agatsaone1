@@ -533,19 +533,44 @@ export default function EasyTouchWellnessProduct() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="bg-white rounded-3xl border border-border p-5 flex flex-col"
-                  style={{ boxShadow: "0 10px 30px -15px rgba(124,77,255,0.25)" }}
+                  className="flex flex-col items-center"
                 >
+                  {/* iPhone frame */}
                   <div
-                    className="rounded-2xl overflow-hidden mb-5 flex items-center justify-center"
-                    style={{ backgroundColor: LIGHT_BG, aspectRatio: "9 / 14" }}
+                    className="relative mx-auto mb-6"
+                    style={{
+                      width: "100%",
+                      maxWidth: 240,
+                      aspectRatio: "9 / 19.5",
+                      background: "#1A1A2E",
+                      borderRadius: 38,
+                      padding: 10,
+                      boxShadow:
+                        "0 25px 50px -12px rgba(26,26,46,0.45), inset 0 0 0 2px rgba(255,255,255,0.08)",
+                    }}
                   >
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover object-top"
-                    />
+                    <div
+                      className="relative w-full h-full overflow-hidden"
+                      style={{ borderRadius: 28, background: "#fff" }}
+                    >
+                      {/* Dynamic island */}
+                      <div
+                        className="absolute left-1/2 -translate-x-1/2 z-10"
+                        style={{
+                          top: 8,
+                          width: 78,
+                          height: 22,
+                          background: "#1A1A2E",
+                          borderRadius: 999,
+                        }}
+                      />
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
                   </div>
                   <h3
                     className="text-lg font-bold mb-2"
