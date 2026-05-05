@@ -14,6 +14,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { WellnessReviewsSection } from "@/components/products/WellnessReviewsSection";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -835,6 +836,9 @@ export default function EasyTouchWellnessProduct() {
             </div>
           </div>
         </section>
+
+        {/* SECTION 8b — FULL CUSTOMER REVIEWS (stars, filters, verified) */}
+        <WellnessReviewsSection />
 
         {/* SECTION 9 — PRICING + IN THE BOX */}
         <section className="bg-white py-16">
