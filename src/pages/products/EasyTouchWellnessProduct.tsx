@@ -150,7 +150,7 @@ export default function EasyTouchWellnessProduct() {
 
               <div className="mt-8 flex gap-3 flex-wrap">
                 <button
-                  onClick={buyNow}
+                  onClick={() => buyNow()}
                   className="rounded-full px-8 py-4 font-bold text-lg text-white hover:opacity-90 transition"
                   style={{ backgroundColor: PRIMARY }}
                 >
@@ -935,7 +935,7 @@ export default function EasyTouchWellnessProduct() {
               </ul>
 
               <button
-                onClick={buyNow}
+                onClick={() => buyNow()}
                 className="mt-6 w-full rounded-full py-4 font-bold text-white hover:opacity-90 transition"
                 style={{ backgroundColor: PRIMARY }}
               >
