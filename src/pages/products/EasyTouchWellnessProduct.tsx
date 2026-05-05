@@ -42,7 +42,7 @@ const ACCENT = "#1A73E8";
 const HEADING = "#1A1A2E";
 const BODY = "#4A4A68";
 const LIGHT_BG = "#F8F4FF";
-const PRICE = 3499;
+
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
