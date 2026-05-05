@@ -1037,6 +1037,7 @@ export default function EasyTouchWellnessProduct() {
           </div>
         </section>
       </div>
+      <RecentPurchasePopup />
     </SiteLayout>
   );
 }
