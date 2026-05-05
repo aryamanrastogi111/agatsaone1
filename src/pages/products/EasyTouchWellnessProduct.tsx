@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { WellnessReviewsSection } from "@/components/products/WellnessReviewsSection";
+import { RecentPurchasePopup } from "@/components/products/RecentPurchasePopup";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -1036,6 +1037,7 @@ export default function EasyTouchWellnessProduct() {
           </div>
         </section>
       </div>
+      <RecentPurchasePopup />
     </SiteLayout>
   );
 }

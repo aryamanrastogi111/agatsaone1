@@ -74,3 +74,38 @@ export const wellnessReviews: WellnessReview[] = [
   { name: "Kamla Devi", city: "Jamshedpur", rating: 3, title: "Husband expected instant accuracy", body: "He wanted exact readings from day one. Doesn't work like that — you need to do the calibration with glucometer snaps for a week or so. Once we understood that and completed it properly, it became consistent. Company should explain this more clearly before purchase.", date: d(35), hasAvatar: false },
   { name: "Ravi Shankar", city: "Agra", rating: 3, title: "Courier experience was terrible", body: "Delivery guy called at 9pm asking if I want it now. Said come tomorrow morning. He marked it 'customer not available'. Had to call Agatsa who rescheduled. Product itself is good and I use it daily. Giving 3 stars only because of the delivery mess.", date: d(43), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=57" },
 ];
+
+// ── Additional reviews: today (2026-05-05) back to ~1 month ago ──
+const d2 = (daysAgo: number) => {
+  const dt = new Date("2026-05-05");
+  dt.setDate(dt.getDate() - daysAgo);
+  return dt.toISOString().slice(0, 10);
+};
+
+const recentReviews: WellnessReview[] = [
+  { name: "Aditya Khanna", city: "Noida", rating: 5, title: "Best decision this year", body: "Three weeks in and I've cut my strip usage by 80%. The metabolic zones are spot on once you complete calibration. Worth every rupee.", date: d2(0), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=12" },
+  { name: "Shweta Bhargava", city: "Faridabad", rating: 5, title: "Husband stopped skipping checks", body: "He hated the lancet — would skip days. With EasyTouch he checks morning and night without me reminding. Game changer for our family.", date: d2(1), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=49" },
+  { name: "Rahul Bose", city: "Kolkata", rating: 5, title: "Smooth onboarding", body: "Agatsa One app guided me step by step. Paired in under 2 minutes. First reading came through perfectly.", date: d2(1), hasAvatar: false },
+  { name: "Anjali Verma", city: "Lucknow", rating: 5, title: "My fingers thank me daily", body: "12 years of pricks left my fingertips numb. After 4 weeks of EasyTouch only, sensation is coming back. Didn't expect that bonus.", date: d2(2), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=24" },
+  { name: "Manoj Pillai", city: "Ernakulam", rating: 4, title: "Solid daily companion", body: "Took about a week to fully trust the readings. Now I rely on it more than the glucometer. App could be a touch faster but no real complaints.", date: d2(3), hasAvatar: false },
+  { name: "Sneha Iyer", city: "Bengaluru", rating: 5, title: "Finally understand my meals", body: "Snap thali, check score 90 min later. Discovered my dosa+sambar combo is way better than rice+rasam for me. Personal data > generic advice.", date: d2(4), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=31" },
+  { name: "Vikrant Rana", city: "Dehradun", rating: 5, title: "Mom (74) uses it solo", body: "She refused CGM patches. EasyTouch she's comfortable with — clip, tap, done. That alone is worth the price.", date: d2(5), hasAvatar: false },
+  { name: "Pooja Mehta", city: "Ahmedabad", rating: 5, title: "Weekly Nera reports keep me honest", body: "Sunday morning I get a summary — calm vs elevated time, top trigger meals. It's like a fitness tracker but for sugar. Very motivating.", date: d2(6), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=39" },
+  { name: "Sandeep Reddy", city: "Hyderabad", rating: 5, title: "Calibration is the key", body: "Don't skip the glucometer-snap days. Once I did 10 days of calibration the zones became rock solid. Highly recommend following the instructions.", date: d2(7), hasAvatar: false },
+  { name: "Neelam Joshi", city: "Pune", rating: 4, title: "Wish there were more colors", body: "Functionally perfect. Just wish they made it in a couple of color options. Tiny gripe — product is excellent.", date: d2(8), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=15" },
+  { name: "Tushar Gandhi", city: "Surat", rating: 5, title: "Office desk essential now", body: "Keep it next to my laptop. Quick check after lunch tells me if I should walk or sit. Has changed my afternoon routine.", date: d2(9), hasAvatar: false },
+  { name: "Maya Krishnan", city: "Chennai", rating: 5, title: "Doctor approved my data", body: "My diabetologist reviewed 3 weeks of EasyTouch data alongside lab work. She said the trend visibility is more useful than monthly tests.", date: d2(10), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=42" },
+  { name: "Prateek Soni", city: "Jaipur", rating: 5, title: "No more excuses to skip", body: "Used to skip morning fasting test because of the prick. Now I do it before brushing teeth. 15 seconds, no thought.", date: d2(11), hasAvatar: false },
+  { name: "Ritika Saxena", city: "Bhopal", rating: 4, title: "Great for prediabetics like me", body: "Doctor flagged me prediabetic last year. EasyTouch lets me catch elevated zones early without daily pricks. Perfect monitoring tool for this stage.", date: d2(12), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=10" },
+  { name: "Faisal Ahmed", city: "Hyderabad", rating: 5, title: "Travels well", body: "Took it to Dubai for 2 weeks. No customs issues, no strips to declare. Worked seamlessly the whole trip.", date: d2(13), hasAvatar: false },
+  { name: "Lavanya Rao", city: "Mysuru", rating: 5, title: "Daughter convinced me, now I'm a fan", body: "I'm 68 and was skeptical. Daughter set it up for me on Sunday. By Wednesday I was doing it alone. Modern but very simple.", date: d2(15), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=21" },
+  { name: "Karan Malhotra", city: "Chandigarh", rating: 5, title: "Strip cost analysis convinced me", body: "Did the math: ₹1,400/month strips × 12 = ₹16,800/year. EasyTouch one-time. No-brainer purchase. Now 3 weeks in, very happy.", date: d2(17), hasAvatar: false },
+  { name: "Ananya Ghosh", city: "Kolkata", rating: 5, title: "Nera caught my sleep issue", body: "Was getting elevated morning scores even fasting. Nera suggested checking sleep — turns out my sleep tracker showed disturbed nights. Fixed sleep, scores normalized.", date: d2(19), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=14" },
+  { name: "Mahesh Patil", city: "Nagpur", rating: 4, title: "Battery life is great", body: "One set of AAAs lasted me almost a month with 3x daily use. Better than I expected from the spec sheet.", date: d2(21), hasAvatar: false },
+  { name: "Smita Kulkarni", city: "Pune", rating: 5, title: "Family of 3 sharing one device", body: "Profiles in the app keep our data separate. Husband, mother-in-law, me — everyone tracks independently. Excellent for joint families.", date: d2(23), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=22" },
+  { name: "Rohan Shetty", city: "Mangaluru", rating: 5, title: "Quick delivery to coastal Karnataka", body: "Got it in 3 days. Box was sealed, batteries included, instructions clear. Smooth experience start to finish.", date: d2(25), hasAvatar: false },
+  { name: "Deepika Suri", city: "Gurugram", rating: 5, title: "Cleaner than CGM, cheaper too", body: "Used CGM for 2 months — sticky, expensive, kept falling off. EasyTouch is a fraction of the cost and gives me what I need for daily wellness tracking.", date: d2(27), hasAvatar: true, avatarUrl: "https://i.pravatar.cc/80?img=30" },
+  { name: "Yogesh Bansal", city: "Indore", rating: 5, title: "Hindi support is well done", body: "Switched the app to Hindi for my father. Translations are natural, not robotic. Nice touch for Indian users.", date: d2(29), hasAvatar: false },
+];
+
+wellnessReviews.unshift(...recentReviews);
