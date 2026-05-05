@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/accordion";
 
 import { useCartStore } from "@/stores/cartStore";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
@@ -41,7 +42,7 @@ const ACCENT = "#1A73E8";
 const HEADING = "#1A1A2E";
 const BODY = "#4A4A68";
 const LIGHT_BG = "#F8F4FF";
-const PRICE = 3499;
+
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -52,22 +53,18 @@ const fadeUp = {
 
 export default function EasyTouchWellnessProduct() {
   const navigate = useNavigate();
+  const { prices, fmt } = usePricing();
+  const PRICE = prices.wellness_sub;
+  const PRICE_FMT = fmt(PRICE);
   useSEO({
     title:
       "EasyTouch Wellness — Prick Less. Know More. | Light-Based Daily Diabetes Check-in | Agatsa One",
     description:
-      "Daily diabetes check-in without finger pricks. Light through blood — reads body signals in 15 seconds. Snap meals, track trends, predict HbA1c. Medanta validated. ₹3,499.",
+      "Daily diabetes check-in without finger pricks. Light through blood — reads body signals in 15 seconds. Snap meals, track trends, predict HbA1c.",
   });
   useMetaPixelViewContent("wellness_sub", "EasyTouch Wellness", PRICE);
 
   const buyNow = (qty: number = 1) => {
-    useCartStore.getState().addItem({
-      productId: "wellness_sub",
-      productName: "EasyTouch Wellness",
-      variantTitle: "Default Title",
-      price: PRICE,
-      quantity: qty,
-    });
     try {
       (window as any).fbq?.("track", "AddToCart", {
         content_ids: ["wellness_sub"],
@@ -77,7 +74,7 @@ export default function EasyTouchWellnessProduct() {
         currency: "INR",
       });
     } catch {}
-    navigate("/checkout");
+    navigate(`/checkout?sku=${Array(qty).fill("wellness_sub").join(",")}`);
   };
 
   const addToCart = (qty: number = 1) => {
@@ -154,7 +151,7 @@ export default function EasyTouchWellnessProduct() {
                   className="rounded-full px-8 py-4 font-bold text-lg text-white hover:opacity-90 transition"
                   style={{ backgroundColor: PRIMARY }}
                 >
-                  Buy EasyTouch Wellness — ₹3,499
+                  {`Buy EasyTouch Wellness — ${PRICE_FMT}`}
                 </button>
               </div>
 
@@ -194,7 +191,7 @@ export default function EasyTouchWellnessProduct() {
                 className="absolute top-4 right-4 bg-white rounded-2xl shadow-md px-4 py-2 font-bold"
                 style={{ color: HEADING }}
               >
-                ₹3,499
+                {PRICE_FMT}
               </div>
               <div
                 className="text-sm mt-3 flex items-center gap-2"
@@ -912,10 +909,10 @@ export default function EasyTouchWellnessProduct() {
                 className="font-black mt-2"
                 style={{ color: PRIMARY, fontSize: 56, lineHeight: 1 }}
               >
-                ₹3,499
+                {PRICE_FMT}
               </div>
               <p className="text-sm mt-2" style={{ color: BODY }}>
-                or ₹292/month on 12-month EMI
+                or ₹{Math.round(PRICE / 12).toLocaleString("en-IN")}/month on 12-month EMI
               </p>
 
               <ul className="mt-5 space-y-2">
@@ -941,7 +938,7 @@ export default function EasyTouchWellnessProduct() {
                 className="mt-6 w-full rounded-full py-4 font-bold text-white hover:opacity-90 transition"
                 style={{ backgroundColor: PRIMARY }}
               >
-                Buy Now — ₹3,499
+                {`Buy Now — ${PRICE_FMT}`}
               </button>
             </div>
           </div>
@@ -1050,7 +1047,7 @@ export default function EasyTouchWellnessProduct() {
       <RecentPurchasePopup />
       <StickyAddToCart
         productName="EasyTouch Wellness"
-        price={`₹${PRICE.toLocaleString("en-IN")}`}
+        price={PRICE_FMT}
         unitPrice={PRICE}
         onBuyNow={(qty) => buyNow(qty)}
         onAddToCart={(qty) => addToCart(qty)}
