@@ -638,7 +638,7 @@ export default function EasyTouchWellnessProduct() {
 
             <div className="bg-white/10 rounded-3xl p-8 mt-10 grid md:grid-cols-2 gap-8 text-left">
               <div>
-                <h3 className="font-bold text-lg mb-4">
+                <h3 className="font-bold text-lg mb-4" style={{ color: "#fff" }}>
                   Your glucometer (keep using it):
                 </h3>
                 <ul className="space-y-3">
