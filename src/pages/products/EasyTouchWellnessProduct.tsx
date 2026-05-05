@@ -49,13 +49,7 @@ export default function EasyTouchWellnessProduct() {
     description:
       "Daily diabetes check-in without finger pricks. Light through blood — reads body signals in 15 seconds. Snap meals, track trends, predict HbA1c. Medanta validated. ₹3,499.",
   });
-  useMetaPixelViewContent({
-    content_ids: ["wellness_sub"],
-    content_name: "EasyTouch Wellness",
-    content_type: "product",
-    value: PRICE,
-    currency: "INR",
-  });
+  useMetaPixelViewContent("wellness_sub", "EasyTouch Wellness", PRICE);
 
   const buyNow = () => {
     useCartStore.getState().addItem({
