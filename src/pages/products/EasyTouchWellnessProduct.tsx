@@ -513,18 +513,21 @@ export default function EasyTouchWellnessProduct() {
                   title: "Variability score",
                   body:
                     "See how steady — or jumpy — your metabolic load is across the last 7, 14 or 30 readings. Backed by JAMA research on sugar swings.",
+                  inFrame: false,
                 },
                 {
                   img: appMetabolicLoadImg,
                   title: "Metabolic Load timeline",
                   body:
                     "Every reading tagged Fasting, 1h or 2h after meal. The bar chart shows your trend at a glance — no spreadsheets, no guessing.",
+                  inFrame: true,
                 },
                 {
                   img: appSugarPatternImg,
                   title: "Sugar Pattern History",
                   body:
                     "Snap your glucometer right after a reading and the app builds your personal sugar pattern — Higher, Lower, Stable — over time.",
+                  inFrame: true,
                 },
               ].map((item, i) => (
                 <motion.div
@@ -535,43 +538,67 @@ export default function EasyTouchWellnessProduct() {
                   transition={{ duration: 0.6, delay: i * 0.1 }}
                   className="flex flex-col items-center"
                 >
-                  {/* iPhone frame */}
-                  <div
-                    className="relative mx-auto mb-6"
-                    style={{
-                      width: "100%",
-                      maxWidth: 240,
-                      aspectRatio: "9 / 19.5",
-                      background: "#1A1A2E",
-                      borderRadius: 38,
-                      padding: 10,
-                      boxShadow:
-                        "0 25px 50px -12px rgba(26,26,46,0.45), inset 0 0 0 2px rgba(255,255,255,0.08)",
-                    }}
-                  >
+                  {item.inFrame ? (
+                    /* iPhone frame for full app screenshots */
                     <div
-                      className="relative w-full h-full overflow-hidden"
-                      style={{ borderRadius: 28, background: "#fff" }}
+                      className="relative mx-auto mb-6"
+                      style={{
+                        width: "100%",
+                        maxWidth: 240,
+                        aspectRatio: "9 / 19.5",
+                        background: "#1A1A2E",
+                        borderRadius: 38,
+                        padding: 10,
+                        boxShadow:
+                          "0 25px 50px -12px rgba(26,26,46,0.45), inset 0 0 0 2px rgba(255,255,255,0.08)",
+                      }}
                     >
-                      {/* Dynamic island */}
                       <div
-                        className="absolute left-1/2 -translate-x-1/2 z-10"
-                        style={{
-                          top: 8,
-                          width: 78,
-                          height: 22,
-                          background: "#1A1A2E",
-                          borderRadius: 999,
-                        }}
-                      />
+                        className="relative w-full h-full overflow-hidden"
+                        style={{ borderRadius: 28, background: "#fff" }}
+                      >
+                        <div
+                          className="absolute left-1/2 -translate-x-1/2 z-10"
+                          style={{
+                            top: 8,
+                            width: 78,
+                            height: 22,
+                            background: "#1A1A2E",
+                            borderRadius: 999,
+                          }}
+                        />
+                        <img
+                          src={item.img}
+                          alt={item.title}
+                          loading="lazy"
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    /* Standalone card for the variability widget */
+                    <div
+                      className="relative mx-auto mb-6 w-full flex items-center justify-center"
+                      style={{
+                        maxWidth: 280,
+                        aspectRatio: "9 / 19.5",
+                        background: LIGHT_BG,
+                        borderRadius: 28,
+                        padding: 16,
+                      }}
+                    >
                       <img
                         src={item.img}
                         alt={item.title}
                         loading="lazy"
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-auto object-contain rounded-xl"
+                        style={{
+                          maxHeight: "100%",
+                          boxShadow: "0 12px 30px -12px rgba(124,77,255,0.25)",
+                        }}
                       />
                     </div>
-                  </div>
+                  )}
                   <h3
                     className="text-lg font-bold mb-2 text-center"
                     style={{ color: HEADING }}
