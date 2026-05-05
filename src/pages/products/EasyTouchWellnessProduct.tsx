@@ -25,7 +25,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { AppStoreBadges } from "@/components/AppStoreBadges";
+
 import { useCartStore } from "@/stores/cartStore";
 import { useSEO } from "@/hooks/useSEO";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
@@ -156,13 +156,6 @@ export default function EasyTouchWellnessProduct() {
                 >
                   Buy EasyTouch Wellness — ₹3,499
                 </button>
-                <Link
-                  to="/app?device=easytouch"
-                  className="rounded-full px-6 py-4 font-semibold border-2 hover:bg-white/60 transition inline-flex items-center"
-                  style={{ borderColor: PRIMARY, color: PRIMARY }}
-                >
-                  Download App Free
-                </Link>
               </div>
 
               <div
@@ -903,15 +896,6 @@ export default function EasyTouchWellnessProduct() {
                 ))}
               </ul>
 
-              <div className="mt-8">
-                <p
-                  className="text-sm font-semibold mb-3"
-                  style={{ color: HEADING }}
-                >
-                  Get the Agatsa One app
-                </p>
-                <AppStoreBadges />
-              </div>
             </div>
 
             <div
@@ -959,13 +943,6 @@ export default function EasyTouchWellnessProduct() {
               >
                 Buy Now — ₹3,499
               </button>
-              <Link
-                to="/app?device=easytouch"
-                className="mt-3 w-full inline-block text-center rounded-full py-3 text-sm font-semibold border hover:bg-white/60 transition"
-                style={{ borderColor: PRIMARY, color: PRIMARY }}
-              >
-                Download App Free First
-              </Link>
             </div>
           </div>
         </section>
