@@ -573,12 +573,12 @@ export default function EasyTouchWellnessProduct() {
                     </div>
                   </div>
                   <h3
-                    className="text-lg font-bold mb-2"
+                    className="text-lg font-bold mb-2 text-center"
                     style={{ color: HEADING }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: BODY }}>
+                  <p className="text-sm leading-relaxed text-center max-w-[280px]" style={{ color: BODY }}>
                     {item.body}
                   </p>
                 </motion.div>
