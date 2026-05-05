@@ -81,6 +81,13 @@ export default function SanketLifeECGProduct() {
 
             {/* Hero Content */}
             <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }}>
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                <span className="text-[11px] font-bold uppercase tracking-widest text-primary">
+                  1.6 Crore+ ECGs recorded · World's largest ECG corpus
+                </span>
+              </div>
+
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground leading-tight">
                 That strange heartbeat{" "}
                 <span className="text-primary">shouldn't be ignored.</span>
