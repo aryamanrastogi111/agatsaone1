@@ -53,22 +53,18 @@ const fadeUp = {
 
 export default function EasyTouchWellnessProduct() {
   const navigate = useNavigate();
+  const { prices, fmt } = usePricing();
+  const PRICE = prices.wellness_sub;
+  const PRICE_FMT = fmt(PRICE);
   useSEO({
     title:
       "EasyTouch Wellness — Prick Less. Know More. | Light-Based Daily Diabetes Check-in | Agatsa One",
     description:
-      "Daily diabetes check-in without finger pricks. Light through blood — reads body signals in 15 seconds. Snap meals, track trends, predict HbA1c. Medanta validated. ₹3,499.",
+      "Daily diabetes check-in without finger pricks. Light through blood — reads body signals in 15 seconds. Snap meals, track trends, predict HbA1c.",
   });
   useMetaPixelViewContent("wellness_sub", "EasyTouch Wellness", PRICE);
 
   const buyNow = (qty: number = 1) => {
-    useCartStore.getState().addItem({
-      productId: "wellness_sub",
-      productName: "EasyTouch Wellness",
-      variantTitle: "Default Title",
-      price: PRICE,
-      quantity: qty,
-    });
     try {
       (window as any).fbq?.("track", "AddToCart", {
         content_ids: ["wellness_sub"],
@@ -78,7 +74,7 @@ export default function EasyTouchWellnessProduct() {
         currency: "INR",
       });
     } catch {}
-    navigate("/checkout");
+    navigate(`/checkout?sku=${Array(qty).fill("wellness_sub").join(",")}`);
   };
 
   const addToCart = (qty: number = 1) => {
