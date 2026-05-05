@@ -29,6 +29,8 @@ import {
 import { useCartStore } from "@/stores/cartStore";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
+import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
+import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
 import appVariabilityImg from "@/assets/wellness-app-variability.png";
