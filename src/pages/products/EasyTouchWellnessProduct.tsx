@@ -147,7 +147,8 @@ export default function EasyTouchWellnessProduct() {
                 EasyTouch for everything in between.
               </p>
 
-              <div className="mt-8 flex gap-3 flex-wrap">
+              <div className="mt-8 flex flex-col gap-2 items-start">
+                <OfferEndingTag />
                 <button
                   onClick={() => buyNow()}
                   className="rounded-full px-8 py-4 font-bold text-lg text-white hover:opacity-90 transition"
