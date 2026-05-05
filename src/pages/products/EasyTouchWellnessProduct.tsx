@@ -576,26 +576,22 @@ export default function EasyTouchWellnessProduct() {
                       </div>
                     </div>
                   ) : (
-                    /* Standalone card for the variability widget */
+                    /* Standalone card for the variability widget — natural ratio, large */
                     <div
                       className="relative mx-auto mb-6 w-full flex items-center justify-center"
                       style={{
-                        maxWidth: 280,
-                        aspectRatio: "9 / 19.5",
+                        maxWidth: 360,
                         background: LIGHT_BG,
-                        borderRadius: 28,
-                        padding: 16,
+                        borderRadius: 24,
+                        padding: 18,
+                        boxShadow: "0 18px 40px -18px rgba(124,77,255,0.3)",
                       }}
                     >
                       <img
                         src={item.img}
                         alt={item.title}
                         loading="lazy"
-                        className="w-full h-auto object-contain rounded-xl"
-                        style={{
-                          maxHeight: "100%",
-                          boxShadow: "0 12px 30px -12px rgba(124,77,255,0.25)",
-                        }}
+                        className="w-full h-auto object-contain rounded-xl block"
                       />
                     </div>
                   )}
