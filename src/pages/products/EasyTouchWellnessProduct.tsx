@@ -508,28 +508,56 @@ export default function EasyTouchWellnessProduct() {
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            {/* Featured: Variability widget standalone (no phone frame) */}
+            <motion.div
+              {...fadeUp}
+              className="max-w-md mx-auto mb-16 flex flex-col items-center"
+            >
+              <div
+                className="w-full mb-5 rounded-3xl overflow-hidden"
+                style={{
+                  background: "#fff",
+                  boxShadow: "0 25px 60px -20px rgba(255,90,95,0.35), 0 8px 20px -8px rgba(0,0,0,0.08)",
+                }}
+              >
+                <img
+                  src={appVariabilityImg}
+                  alt="High Variability — Metabolic variability widget from the Agatsa One app"
+                  loading="lazy"
+                  className="w-full h-auto block"
+                />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-center" style={{ color: HEADING }}>
+                Variability score — backed by JAMA 2006
+              </h3>
+              <p className="text-sm leading-relaxed text-center" style={{ color: BODY }}>
+                See how steady — or jumpy — your metabolic load is. Swings hurt your body
+                3× more than a steady high.
+              </p>
+            </motion.div>
+
+            {/* Four full-app screens inside iPhone frames */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {[
                 {
-                  img: appVariabilityImg,
-                  title: "Variability score",
-                  body:
-                    "See how steady — or jumpy — your metabolic load is across the last 7, 14 or 30 readings. Backed by JAMA research on sugar swings.",
-                  inFrame: false,
+                  img: appJourneyImg,
+                  title: "Your Metabolic Journey",
+                  body: "14-scan trend with your latest active reading — fills the gap between blood tests.",
                 },
                 {
-                  img: appMetabolicLoadImg,
-                  title: "Metabolic Load timeline",
-                  body:
-                    "Every reading tagged Fasting, 1h or 2h after meal. The bar chart shows your trend at a glance — no spreadsheets, no guessing.",
-                  inFrame: true,
+                  img: appHealthScoreImg,
+                  title: "Metabolic Health Score",
+                  body: "A single 0–100 score from Day Portrait, Meal Recovery and Vascular signals.",
+                },
+                {
+                  img: appMealIntelligenceImg,
+                  title: "Meal Intelligence",
+                  body: "Snap any meal — Nera AI predicts the sugar spike before you eat.",
                 },
                 {
                   img: appSugarPatternImg,
                   title: "Sugar Pattern History",
-                  body:
-                    "Snap your glucometer right after a reading and the app builds your personal sugar pattern — Higher, Lower, Stable — over time.",
-                  inFrame: true,
+                  body: "Your readings anchored to real glucometer values, with zone and trend.",
                 },
               ].map((item, i) => (
                 <motion.div
@@ -537,73 +565,51 @@ export default function EasyTouchWellnessProduct() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  transition={{ duration: 0.6, delay: i * 0.08 }}
                   className="flex flex-col items-center"
                 >
-                  {item.inFrame ? (
-                    /* iPhone frame for full app screenshots */
+                  <div
+                    className="relative mx-auto mb-5"
+                    style={{
+                      width: "100%",
+                      maxWidth: 220,
+                      aspectRatio: "9 / 19.5",
+                      background: "#1A1A2E",
+                      borderRadius: 34,
+                      padding: 8,
+                      boxShadow:
+                        "0 25px 50px -12px rgba(26,26,46,0.45), inset 0 0 0 2px rgba(255,255,255,0.08)",
+                    }}
+                  >
                     <div
-                      className="relative mx-auto mb-6"
-                      style={{
-                        width: "100%",
-                        maxWidth: 240,
-                        aspectRatio: "9 / 19.5",
-                        background: "#1A1A2E",
-                        borderRadius: 38,
-                        padding: 10,
-                        boxShadow:
-                          "0 25px 50px -12px rgba(26,26,46,0.45), inset 0 0 0 2px rgba(255,255,255,0.08)",
-                      }}
+                      className="relative w-full h-full overflow-hidden"
+                      style={{ borderRadius: 26, background: "#fff" }}
                     >
                       <div
-                        className="relative w-full h-full overflow-hidden"
-                        style={{ borderRadius: 28, background: "#fff" }}
-                      >
-                        <div
-                          className="absolute left-1/2 -translate-x-1/2 z-10"
-                          style={{
-                            top: 8,
-                            width: 78,
-                            height: 22,
-                            background: "#1A1A2E",
-                            borderRadius: 999,
-                          }}
-                        />
-                        <img
-                          src={item.img}
-                          alt={item.title}
-                          loading="lazy"
-                          className="w-full h-full object-cover object-top"
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    /* Standalone card for the variability widget — natural ratio, large */
-                    <div
-                      className="relative mx-auto mb-6 w-full flex items-center justify-center"
-                      style={{
-                        maxWidth: 360,
-                        background: LIGHT_BG,
-                        borderRadius: 24,
-                        padding: 18,
-                        boxShadow: "0 18px 40px -18px rgba(124,77,255,0.3)",
-                      }}
-                    >
+                        className="absolute left-1/2 -translate-x-1/2 z-10"
+                        style={{
+                          top: 7,
+                          width: 70,
+                          height: 20,
+                          background: "#1A1A2E",
+                          borderRadius: 999,
+                        }}
+                      />
                       <img
                         src={item.img}
                         alt={item.title}
                         loading="lazy"
-                        className="w-full h-auto object-contain rounded-xl block"
+                        className="w-full h-full object-cover object-top"
                       />
                     </div>
-                  )}
+                  </div>
                   <h3
-                    className="text-lg font-bold mb-2 text-center"
+                    className="text-base font-bold mb-1.5 text-center"
                     style={{ color: HEADING }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-center max-w-[280px]" style={{ color: BODY }}>
+                  <p className="text-xs leading-relaxed text-center" style={{ color: BODY }}>
                     {item.body}
                   </p>
                 </motion.div>
