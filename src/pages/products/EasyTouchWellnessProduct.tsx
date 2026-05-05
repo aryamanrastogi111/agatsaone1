@@ -16,6 +16,7 @@ import {
 import { SiteLayout } from "@/components/SiteLayout";
 import { WellnessReviewsSection } from "@/components/products/WellnessReviewsSection";
 import { RecentPurchasePopup } from "@/components/products/RecentPurchasePopup";
+import { AwardsTrustSection } from "@/components/AwardsTrustSection";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
