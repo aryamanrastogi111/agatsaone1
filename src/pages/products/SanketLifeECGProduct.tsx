@@ -159,6 +159,56 @@ export default function SanketLifeECGProduct() {
         </div>
       </section>
 
+      {/* ─── ONE TOUCH DEMO VIDEO ─── */}
+      <section className="py-14 md:py-20 bg-gradient-to-b from-background to-muted/30">
+        <div className="max-w-5xl mx-auto px-4">
+          <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto mb-8">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
+              One Touch · Lifelong Intelligence
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+              A single touch today.{" "}
+              <span className="text-primary">A heart story only Agatsa can tell</span> tomorrow.
+            </h2>
+            <p className="text-base md:text-lg text-muted-foreground mt-4 leading-relaxed">
+              Every touch is a 12-lead clinical snapshot. Use it again, and again — and{" "}
+              <strong className="text-foreground">Agatsa ONE's Nera AI</strong> stitches each reading into a longitudinal cardiac record:
+              rhythm drift, ST shifts, axis changes, HRV trends — patterns no watch, no patch, no other device on Earth can build for your heart.
+            </p>
+          </motion.div>
+
+          <motion.div {...fadeUp} className="relative rounded-3xl overflow-hidden shadow-2xl border border-primary/20 bg-black mx-auto max-w-2xl">
+            <video
+              src="/videos/sanketlife-touch-demo.mp4"
+              className="w-full h-auto"
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+            />
+          </motion.div>
+
+          <motion.div {...fadeUp} className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 max-w-3xl mx-auto">
+            {[
+              { icon: HeartPulse, title: "Touch → ECG", desc: "60-second 12-lead clinical reading, no gel, no wires." },
+              { icon: Brain, title: "Nera AI learns you", desc: "Each reading trains your personal cardiac baseline." },
+              { icon: Activity, title: "Longitudinal truth", desc: "Trends only repeat 12-lead capture can reveal." },
+            ].map((b, i) => (
+              <div key={i} className="flex items-start gap-3 p-4 rounded-2xl bg-card border border-border/60">
+                <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <b.icon className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm text-foreground">{b.title}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{b.desc}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* ─── WHAT SANKETLIFE DETECTS ─── */}
       <section className="py-14 bg-background">
         <div className="max-w-6xl mx-auto px-4">
