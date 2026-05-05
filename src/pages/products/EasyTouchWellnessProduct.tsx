@@ -682,7 +682,7 @@ export default function EasyTouchWellnessProduct() {
               </div>
             </div>
 
-            <p className="font-semibold text-lg mt-10">
+            <p className="font-semibold text-lg mt-10" style={{ color: "#fff" }}>
               Together: fewer pricks. More data. Better control.
             </p>
           </div>
