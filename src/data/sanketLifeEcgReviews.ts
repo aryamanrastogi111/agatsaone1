@@ -1,8 +1,10 @@
 import type { ProductReview } from "@/components/products/ProductReviewsSection";
 
 const d = (daysAgo: number) => {
-  const dt = new Date("2026-04-11");
-  dt.setDate(dt.getDate() - daysAgo);
+  const dt = new Date("2026-05-05");
+  // Clamp within the last 30 days so reviews always feel current
+  const clamped = Math.min(Math.max(daysAgo, 0), 30);
+  dt.setDate(dt.getDate() - clamped);
   return dt.toISOString().slice(0, 10);
 };
 
