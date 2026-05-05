@@ -619,8 +619,8 @@ export default function EasyTouchWellnessProduct() {
         </section>
 
         {/* SECTION 6 — COMPANION FRAMING */}
-        <section className="py-20 text-white" style={{ backgroundColor: HEADING }}>
-          <div className="max-w-3xl mx-auto px-6 text-center">
+        <section className="py-20" style={{ backgroundColor: HEADING, color: "#fff" }}>
+          <div className="max-w-3xl mx-auto px-6 text-center" style={{ color: "#fff" }}>
             <p
               className="text-xs font-bold uppercase tracking-widest mb-4"
               style={{ color: "#B8A4FF" }}
@@ -629,7 +629,7 @@ export default function EasyTouchWellnessProduct() {
             </p>
             <h2
               className="font-bold"
-              style={{ fontSize: "clamp(26px, 3.5vw, 36px)", lineHeight: 1.2 }}
+              style={{ fontSize: "clamp(26px, 3.5vw, 36px)", lineHeight: 1.2, color: "#fff" }}
             >
               EasyTouch is not a glucometer.
               <br />
@@ -638,7 +638,7 @@ export default function EasyTouchWellnessProduct() {
 
             <div className="bg-white/10 rounded-3xl p-8 mt-10 grid md:grid-cols-2 gap-8 text-left">
               <div>
-                <h3 className="font-bold text-lg mb-4">
+                <h3 className="font-bold text-lg mb-4" style={{ color: "#fff" }}>
                   Your glucometer (keep using it):
                 </h3>
                 <ul className="space-y-3">
@@ -648,9 +648,9 @@ export default function EasyTouchWellnessProduct() {
                     "Post-meal clinical confirmation",
                     "Required for medication management",
                   ].map((t) => (
-                    <li key={t} className="flex gap-2">
-                      <Check className="w-5 h-5 shrink-0 mt-0.5" />
-                      <span className="text-sm">{t}</span>
+                    <li key={t} className="flex gap-2" style={{ color: "#fff" }}>
+                      <Check className="w-5 h-5 shrink-0 mt-0.5" style={{ color: "#fff" }} />
+                      <span className="text-sm" style={{ color: "#fff" }}>{t}</span>
                     </li>
                   ))}
                 </ul>
@@ -670,19 +670,19 @@ export default function EasyTouchWellnessProduct() {
                     "30-day trend + predicted HbA1c",
                     "Nera AI alerts when something shifts",
                   ].map((t) => (
-                    <li key={t} className="flex gap-2">
+                    <li key={t} className="flex gap-2" style={{ color: "#fff" }}>
                       <Check
                         className="w-5 h-5 shrink-0 mt-0.5"
                         style={{ color: "#B8A4FF" }}
                       />
-                      <span className="text-sm">{t}</span>
+                      <span className="text-sm" style={{ color: "#fff" }}>{t}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
 
-            <p className="font-semibold text-lg mt-10">
+            <p className="font-semibold text-lg mt-10" style={{ color: "#fff" }}>
               Together: fewer pricks. More data. Better control.
             </p>
           </div>
