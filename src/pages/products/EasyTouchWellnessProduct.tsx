@@ -912,7 +912,7 @@ export default function EasyTouchWellnessProduct() {
                 {PRICE_FMT}
               </div>
               <p className="text-sm mt-2" style={{ color: BODY }}>
-                or ₹292/month on 12-month EMI
+                or ₹{Math.round(PRICE / 12).toLocaleString("en-IN")}/month on 12-month EMI
               </p>
 
               <ul className="mt-5 space-y-2">
