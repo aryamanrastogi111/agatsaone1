@@ -25,6 +25,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import sanketlifeHero from "@/assets/sanketlife-device-app.webp";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
+import { RecentPurchasePopup } from "@/components/products/RecentPurchasePopup";
 import { sanketLifeEcgReviews } from "@/data/sanketLifeEcgReviews";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
 import { TrustVideosSection } from "@/components/TrustVideosSection";
