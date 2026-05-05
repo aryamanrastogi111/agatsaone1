@@ -17,6 +17,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { WellnessReviewsSection } from "@/components/products/WellnessReviewsSection";
 import { RecentPurchasePopup } from "@/components/products/RecentPurchasePopup";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -59,24 +60,34 @@ export default function EasyTouchWellnessProduct() {
   });
   useMetaPixelViewContent("wellness_sub", "EasyTouch Wellness", PRICE);
 
-  const buyNow = () => {
+  const buyNow = (qty: number = 1) => {
     useCartStore.getState().addItem({
       productId: "wellness_sub",
       productName: "EasyTouch Wellness",
       variantTitle: "Default Title",
       price: PRICE,
-      quantity: 1,
+      quantity: qty,
     });
     try {
       (window as any).fbq?.("track", "AddToCart", {
         content_ids: ["wellness_sub"],
         content_name: "EasyTouch Wellness",
         content_type: "product",
-        value: PRICE,
+        value: PRICE * qty,
         currency: "INR",
       });
     } catch {}
     navigate("/checkout");
+  };
+
+  const addToCart = (qty: number = 1) => {
+    useCartStore.getState().addItem({
+      productId: "wellness_sub",
+      productName: "EasyTouch Wellness",
+      variantTitle: "Default Title",
+      price: PRICE,
+      quantity: qty,
+    });
   };
 
   return (
@@ -139,7 +150,7 @@ export default function EasyTouchWellnessProduct() {
 
               <div className="mt-8 flex gap-3 flex-wrap">
                 <button
-                  onClick={buyNow}
+                  onClick={() => buyNow()}
                   className="rounded-full px-8 py-4 font-bold text-lg text-white hover:opacity-90 transition"
                   style={{ backgroundColor: PRIMARY }}
                 >
@@ -370,6 +381,15 @@ export default function EasyTouchWellnessProduct() {
             </div>
           </div>
         </section>
+
+        {/* INLINE CTA — after How It Works */}
+        <InlineBuyCTA
+          headline="Ready to stop the daily pricks?"
+          sub="EasyTouch Wellness · 15-second check-in · No strips, no needles."
+          price={PRICE}
+          onBuy={() => buyNow()}
+          onCart={() => addToCart()}
+        />
 
         {/* SECTION 5 — DEVICE + APP ECOSYSTEM */}
         <section className="bg-white py-20">
@@ -691,6 +711,15 @@ export default function EasyTouchWellnessProduct() {
           </div>
         </section>
 
+        {/* INLINE CTA — after Companion Framing */}
+        <InlineBuyCTA
+          headline="Pair it with your glucometer today"
+          sub="One-time purchase · No subscription · 7-day return"
+          price={PRICE}
+          onBuy={() => buyNow()}
+          onCart={() => addToCart()}
+        />
+
         {/* SECTION 7 — SCIENCE */}
         <section className="py-20" style={{ backgroundColor: LIGHT_BG }}>
           <div className="max-w-4xl mx-auto px-6">
@@ -924,7 +953,7 @@ export default function EasyTouchWellnessProduct() {
               </ul>
 
               <button
-                onClick={buyNow}
+                onClick={() => buyNow()}
                 className="mt-6 w-full rounded-full py-4 font-bold text-white hover:opacity-90 transition"
                 style={{ backgroundColor: PRIMARY }}
               >
@@ -1042,6 +1071,62 @@ export default function EasyTouchWellnessProduct() {
         </section>
       </div>
       <RecentPurchasePopup />
+      <StickyAddToCart
+        productName="EasyTouch Wellness"
+        price={`₹${PRICE.toLocaleString("en-IN")}`}
+        unitPrice={PRICE}
+        onBuyNow={(qty) => buyNow(qty)}
+        onAddToCart={(qty) => addToCart(qty)}
+        themeColor="primary"
+      />
     </SiteLayout>
+  );
+}
+
+function InlineBuyCTA({
+  headline,
+  sub,
+  price,
+  onBuy,
+  onCart,
+}: {
+  headline: string;
+  sub: string;
+  price: number;
+  onBuy: () => void;
+  onCart: () => void;
+}) {
+  return (
+    <section className="py-12" style={{ background: `linear-gradient(135deg, ${PRIMARY} 0%, ${ACCENT} 100%)` }}>
+      <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        <div style={{ color: "#fff" }}>
+          <h3 style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 700, color: "#fff", marginBottom: 6 }}>
+            {headline}
+          </h3>
+          <p style={{ color: "rgba(255,255,255,0.88)", fontSize: 14 }}>{sub}</p>
+        </div>
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <div style={{ color: "#fff", textAlign: "right", marginRight: 4 }}>
+            <div style={{ fontSize: 11, opacity: 0.85, lineHeight: 1 }}>Today</div>
+            <div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1.2 }}>
+              ₹{price.toLocaleString("en-IN")}
+            </div>
+          </div>
+          <Button
+            variant="outline"
+            onClick={onCart}
+            style={{ background: "transparent", borderColor: "#fff", color: "#fff" }}
+          >
+            Add to Cart
+          </Button>
+          <Button
+            onClick={onBuy}
+            style={{ background: "#fff", color: PRIMARY, fontWeight: 700 }}
+          >
+            Buy Now <ArrowRight className="w-4 h-4 ml-1" />
+          </Button>
+        </div>
+      </div>
+    </section>
   );
 }
