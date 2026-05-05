@@ -619,8 +619,8 @@ export default function EasyTouchWellnessProduct() {
         </section>
 
         {/* SECTION 6 — COMPANION FRAMING */}
-        <section className="py-20 text-white" style={{ backgroundColor: HEADING }}>
-          <div className="max-w-3xl mx-auto px-6 text-center">
+        <section className="py-20" style={{ backgroundColor: HEADING, color: "#fff" }}>
+          <div className="max-w-3xl mx-auto px-6 text-center" style={{ color: "#fff" }}>
             <p
               className="text-xs font-bold uppercase tracking-widest mb-4"
               style={{ color: "#B8A4FF" }}
