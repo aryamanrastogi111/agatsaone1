@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/accordion";
 
 import { useCartStore } from "@/stores/cartStore";
+import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
