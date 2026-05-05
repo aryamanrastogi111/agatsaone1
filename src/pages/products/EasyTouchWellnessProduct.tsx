@@ -155,6 +155,52 @@ export default function EasyTouchWellnessProduct() {
                 </button>
               </div>
 
+              {/* Social proof row */}
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="flex -space-x-2">
+                    {["#FFB199", "#B3D4FF", "#C4F0C5", "#FFE0A3"].map((c, i) => (
+                      <div
+                        key={i}
+                        className="w-7 h-7 rounded-full border-2 border-white"
+                        style={{ backgroundColor: c }}
+                      />
+                    ))}
+                  </div>
+                  <div className="text-sm" style={{ color: BODY }}>
+                    <span className="font-bold" style={{ color: HEADING }}>15,000+</span> users bought
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star key={s} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-sm font-semibold" style={{ color: HEADING }}>4.6/5</span>
+                  <span className="text-sm" style={{ color: BODY }}>· 834 reviews</span>
+                </div>
+              </div>
+
+              {/* Trust badges row */}
+              <div
+                className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-medium"
+                style={{ color: BODY }}
+              >
+                <span className="inline-flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5" style={{ color: PRIMARY }} /> Free shipping
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5" style={{ color: PRIMARY }} /> 7-day returns
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5" style={{ color: PRIMARY }} /> 1-year warranty
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5" style={{ color: PRIMARY }} /> Secure payment
+                </span>
+              </div>
+
               <div
                 className="flex gap-x-6 gap-y-2 mt-5 text-sm font-medium flex-wrap"
                 style={{ color: BODY }}
