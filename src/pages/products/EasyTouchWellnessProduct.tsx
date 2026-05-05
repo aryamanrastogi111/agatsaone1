@@ -648,9 +648,9 @@ export default function EasyTouchWellnessProduct() {
                     "Post-meal clinical confirmation",
                     "Required for medication management",
                   ].map((t) => (
-                    <li key={t} className="flex gap-2">
-                      <Check className="w-5 h-5 shrink-0 mt-0.5" />
-                      <span className="text-sm">{t}</span>
+                    <li key={t} className="flex gap-2" style={{ color: "#fff" }}>
+                      <Check className="w-5 h-5 shrink-0 mt-0.5" style={{ color: "#fff" }} />
+                      <span className="text-sm" style={{ color: "#fff" }}>{t}</span>
                     </li>
                   ))}
                 </ul>
