@@ -26,6 +26,9 @@ import { useCartStore } from "@/stores/cartStore";
 import { useSEO } from "@/hooks/useSEO";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
+import appVariabilityImg from "@/assets/wellness-app-variability.png";
+import appMetabolicLoadImg from "@/assets/wellness-app-metabolic-load.jpg";
+import appSugarPatternImg from "@/assets/wellness-app-sugar-pattern.jpg";
 
 const PRIMARY = "#7C4DFF";
 const ACCENT = "#1A73E8";
@@ -476,6 +479,84 @@ export default function EasyTouchWellnessProduct() {
                     {c.body}
                   </p>
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 5.5 — INSIDE THE APP (real screenshots) */}
+        <section className="py-20" style={{ backgroundColor: LIGHT_BG }}>
+          <div className="max-w-6xl mx-auto px-6">
+            <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-14">
+              <p
+                className="text-xs font-bold uppercase tracking-widest mb-4"
+                style={{ color: PRIMARY }}
+              >
+                Inside the app
+              </p>
+              <h2
+                className="text-3xl md:text-4xl font-bold mb-4"
+                style={{ color: HEADING }}
+              >
+                What you'll actually see, day after day
+              </h2>
+              <p className="text-base md:text-lg" style={{ color: BODY }}>
+                Real screens from the Agatsa One app — not mockups. Three views that turn
+                scattered readings into a story your body is telling you.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  img: appVariabilityImg,
+                  title: "Variability score",
+                  body:
+                    "See how steady — or jumpy — your metabolic load is across the last 7, 14 or 30 readings. Backed by JAMA research on sugar swings.",
+                },
+                {
+                  img: appMetabolicLoadImg,
+                  title: "Metabolic Load timeline",
+                  body:
+                    "Every reading tagged Fasting, 1h or 2h after meal. The bar chart shows your trend at a glance — no spreadsheets, no guessing.",
+                },
+                {
+                  img: appSugarPatternImg,
+                  title: "Sugar Pattern History",
+                  body:
+                    "Snap your glucometer right after a reading and the app builds your personal sugar pattern — Higher, Lower, Stable — over time.",
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  className="bg-white rounded-3xl border border-border p-5 flex flex-col"
+                  style={{ boxShadow: "0 10px 30px -15px rgba(124,77,255,0.25)" }}
+                >
+                  <div
+                    className="rounded-2xl overflow-hidden mb-5 flex items-center justify-center"
+                    style={{ backgroundColor: LIGHT_BG, aspectRatio: "9 / 14" }}
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  <h3
+                    className="text-lg font-bold mb-2"
+                    style={{ color: HEADING }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: BODY }}>
+                    {item.body}
+                  </p>
+                </motion.div>
               ))}
             </div>
           </div>
