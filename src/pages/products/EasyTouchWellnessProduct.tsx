@@ -481,6 +481,53 @@ export default function EasyTouchWellnessProduct() {
           </div>
         </section>
 
+        {/* SECTION 5.5 — INSIDE THE APP (real screenshots) */}
+        <section className="py-20" style={{ backgroundColor: LIGHT_BG }}>
+          <div className="max-w-6xl mx-auto px-6">
+            <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-14">
+              <p
+                className="text-xs font-bold uppercase tracking-widest mb-4"
+                style={{ color: PRIMARY }}
+              >
+                Inside the app
+              </p>
+              <h2
+                className="text-3xl md:text-4xl font-bold mb-4"
+                style={{ color: HEADING }}
+              >
+                What you'll actually see, day after day
+              </h2>
+              <p className="text-base md:text-lg" style={{ color: BODY }}>
+                Real screens from the Agatsa One app — not mockups. Three views that turn
+                scattered readings into a story your body is telling you.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  img: (await import("@/assets/wellness-app-variability.png")).default,
+                  title: "Variability score",
+                  body:
+                    "See how steady — or jumpy — your metabolic load is across the last 7, 14 or 30 readings. Backed by JAMA research on glucose swings.",
+                },
+                {
+                  img: (await import("@/assets/wellness-app-metabolic-load.jpg")).default,
+                  title: "Metabolic Load timeline",
+                  body:
+                    "Every reading tagged Fasting, 1h, 2h after meal. The bar chart shows your trend at a glance — no spreadsheets, no guessing.",
+                },
+                {
+                  img: (await import("@/assets/wellness-app-sugar-pattern.jpg")).default,
+                  title: "Sugar Pattern History",
+                  body:
+                    "Snap your glucometer right after a reading and the app builds your personal sugar pattern — Higher, Lower, Stable — over time.",
+                },
+              ].map(() => null) /* placeholder, replaced below */}
+            </div>
+          </div>
+        </section>
+
         {/* SECTION 6 — COMPANION FRAMING */}
         <section className="py-20 text-white" style={{ backgroundColor: HEADING }}>
           <div className="max-w-3xl mx-auto px-6 text-center">
