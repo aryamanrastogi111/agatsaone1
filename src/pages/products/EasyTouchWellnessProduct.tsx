@@ -151,7 +151,7 @@ export default function EasyTouchWellnessProduct() {
                   className="rounded-full px-8 py-4 font-bold text-lg text-white hover:opacity-90 transition"
                   style={{ backgroundColor: PRIMARY }}
                 >
-                  Buy EasyTouch Wellness — ₹3,499
+                  {`Buy EasyTouch Wellness — ${PRICE_FMT}`}
                 </button>
               </div>
 
@@ -191,7 +191,7 @@ export default function EasyTouchWellnessProduct() {
                 className="absolute top-4 right-4 bg-white rounded-2xl shadow-md px-4 py-2 font-bold"
                 style={{ color: HEADING }}
               >
-                ₹3,499
+                {PRICE_FMT}
               </div>
               <div
                 className="text-sm mt-3 flex items-center gap-2"
@@ -909,7 +909,7 @@ export default function EasyTouchWellnessProduct() {
                 className="font-black mt-2"
                 style={{ color: PRIMARY, fontSize: 56, lineHeight: 1 }}
               >
-                ₹3,499
+                {PRICE_FMT}
               </div>
               <p className="text-sm mt-2" style={{ color: BODY }}>
                 or ₹292/month on 12-month EMI
@@ -938,7 +938,7 @@ export default function EasyTouchWellnessProduct() {
                 className="mt-6 w-full rounded-full py-4 font-bold text-white hover:opacity-90 transition"
                 style={{ backgroundColor: PRIMARY }}
               >
-                Buy Now — ₹3,499
+                {`Buy Now — ${PRICE_FMT}`}
               </button>
             </div>
           </div>
