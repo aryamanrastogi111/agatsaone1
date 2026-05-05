@@ -112,7 +112,7 @@ export function RecentPurchasePopup({ productName = "EasyTouch Wellness" }: { pr
                 className="text-[12px] leading-snug mt-0.5"
                 style={{ color: "#4A4A68" }}
               >
-                purchased EasyTouch Wellness
+                purchased {productName}
               </p>
               <p
                 className="text-[11px] mt-1"
