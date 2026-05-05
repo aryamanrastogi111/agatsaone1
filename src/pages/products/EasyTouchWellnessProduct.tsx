@@ -27,8 +27,10 @@ import { useSEO } from "@/hooks/useSEO";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
 import appVariabilityImg from "@/assets/wellness-app-variability.png";
-import appMetabolicLoadImg from "@/assets/wellness-app-metabolic-load.jpg";
-import appSugarPatternImg from "@/assets/wellness-app-sugar-pattern.jpg";
+import appJourneyImg from "@/assets/wellness-app-journey.png";
+import appHealthScoreImg from "@/assets/wellness-app-health-score.png";
+import appMealIntelligenceImg from "@/assets/wellness-app-meal-intelligence.png";
+import appSugarPatternImg from "@/assets/wellness-app-sugar-pattern.png";
 
 const PRIMARY = "#7C4DFF";
 const ACCENT = "#1A73E8";
