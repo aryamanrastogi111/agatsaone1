@@ -993,9 +993,10 @@ export default function EasyTouchWellnessProduct() {
                 ))}
               </ul>
 
+              <div className="mt-6"><OfferEndingTag /></div>
               <button
                 onClick={() => buyNow()}
-                className="mt-6 w-full rounded-full py-4 font-bold text-white hover:opacity-90 transition"
+                className="mt-3 w-full rounded-full py-4 font-bold text-white hover:opacity-90 transition"
                 style={{ backgroundColor: PRIMARY }}
               >
                 {`Buy Now — ${PRICE_FMT}`}
