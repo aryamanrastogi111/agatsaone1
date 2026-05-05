@@ -896,15 +896,6 @@ export default function EasyTouchWellnessProduct() {
                 ))}
               </ul>
 
-              <div className="mt-8">
-                <p
-                  className="text-sm font-semibold mb-3"
-                  style={{ color: HEADING }}
-                >
-                  Get the Agatsa One app
-                </p>
-                <AppStoreBadges />
-              </div>
             </div>
 
             <div
