@@ -629,7 +629,7 @@ export default function EasyTouchWellnessProduct() {
             </p>
             <h2
               className="font-bold"
-              style={{ fontSize: "clamp(26px, 3.5vw, 36px)", lineHeight: 1.2 }}
+              style={{ fontSize: "clamp(26px, 3.5vw, 36px)", lineHeight: 1.2, color: "#fff" }}
             >
               EasyTouch is not a glucometer.
               <br />
