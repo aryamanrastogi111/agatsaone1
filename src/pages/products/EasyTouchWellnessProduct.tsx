@@ -1140,10 +1140,13 @@ function InlineBuyCTA({
           </h3>
           <p style={{ color: "rgba(255,255,255,0.88)", fontSize: 14 }}>{sub}</p>
         </div>
-        <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="flex items-center gap-3 flex-shrink-0 flex-wrap justify-center">
           <div style={{ color: "#fff", textAlign: "right", marginRight: 4 }}>
-            <div style={{ fontSize: 11, opacity: 0.85, lineHeight: 1 }}>Today</div>
-            <div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1.2 }}>
+            <div style={{ fontSize: 11, opacity: 0.85, lineHeight: 1 }}>
+              <span style={{ textDecoration: "line-through", marginRight: 6 }}>₹5,999</span>
+              <span style={{ background: "#fff", color: PRIMARY, padding: "1px 6px", borderRadius: 999, fontWeight: 700 }}>Offer Ending Soon</span>
+            </div>
+            <div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1.2, marginTop: 4 }}>
               ₹{price.toLocaleString("en-IN")}
             </div>
           </div>
@@ -1163,5 +1166,19 @@ function InlineBuyCTA({
         </div>
       </div>
     </section>
+  );
+}
+
+function OfferEndingTag() {
+  return (
+    <div className="inline-flex items-center gap-2 text-sm">
+      <span className="line-through text-gray-500">₹5,999</span>
+      <span
+        className="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide text-white animate-pulse"
+        style={{ background: "linear-gradient(90deg,#FF6B6B,#FF3D3D)" }}
+      >
+        Offer Ending Soon
+      </span>
+    </div>
   );
 }
