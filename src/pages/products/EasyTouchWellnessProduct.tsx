@@ -923,7 +923,7 @@ export default function EasyTouchWellnessProduct() {
               <ul className="mt-6 space-y-3">
                 {[
                   "EasyTouch Wellness device (1 unit)",
-                  "USB-C charging cable",
+                  "2x AAA batteries",
                   "Quick start guide (English + Hindi)",
                   "1 year Nera AI Premium FREE (₹7,188 value)",
                   "Snap meal feature included in app",
