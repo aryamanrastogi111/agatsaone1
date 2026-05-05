@@ -117,7 +117,7 @@ export default function EasyTouchWellnessProduct() {
                 className="inline-block rounded-full px-4 py-1.5 text-sm font-semibold text-white mb-5"
                 style={{ backgroundColor: ACCENT }}
               >
-                Medanta Validated · 98.56%
+                15,000+ users bought · Trusted across India
               </span>
 
               <h1
