@@ -705,6 +705,7 @@ export default function SanketLifeECGProduct() {
       <TrustVideosSection />
       <AwardsTrustSection />
       <ProductReviewsSection reviews={sanketLifeEcgReviews} />
+      <RecentPurchasePopup productName="SanketLife ECG" />
     </SiteLayout>
   );
 }
