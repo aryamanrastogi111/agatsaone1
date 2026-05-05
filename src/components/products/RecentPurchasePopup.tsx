@@ -43,7 +43,7 @@ const randomPurchase = (): PurchaseItem => ({
   timeAgo: pick(TIMES),
 });
 
-export function RecentPurchasePopup() {
+export function RecentPurchasePopup({ productName = "EasyTouch Wellness" }: { productName?: string } = {}) {
   const [current, setCurrent] = useState<PurchaseItem | null>(null);
   const [dismissed, setDismissed] = useState(false);
 
