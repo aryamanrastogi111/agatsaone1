@@ -29,6 +29,8 @@ import {
 import { useCartStore } from "@/stores/cartStore";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useSEO } from "@/hooks/useSEO";
+import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
+import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
 import appVariabilityImg from "@/assets/wellness-app-variability.png";
@@ -153,6 +155,17 @@ export default function EasyTouchWellnessProduct() {
                 >
                   {`Buy EasyTouch Wellness — ${PRICE_FMT}`}
                 </button>
+              </div>
+
+              {/* Stock urgency + ship date */}
+              <div className="mt-5">
+                <StockUrgencyBar productKey="easytouch-wellness" />
+                <div className="flex items-center gap-2 text-sm mt-2" style={{ color: BODY }}>
+                  <span>📦</span>
+                  <span>
+                    <span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}
+                  </span>
+                </div>
               </div>
 
               {/* Social proof row */}
