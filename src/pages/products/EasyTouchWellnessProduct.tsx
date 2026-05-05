@@ -670,12 +670,12 @@ export default function EasyTouchWellnessProduct() {
                     "30-day trend + predicted HbA1c",
                     "Nera AI alerts when something shifts",
                   ].map((t) => (
-                    <li key={t} className="flex gap-2">
+                    <li key={t} className="flex gap-2" style={{ color: "#fff" }}>
                       <Check
                         className="w-5 h-5 shrink-0 mt-0.5"
                         style={{ color: "#B8A4FF" }}
                       />
-                      <span className="text-sm">{t}</span>
+                      <span className="text-sm" style={{ color: "#fff" }}>{t}</span>
                     </li>
                   ))}
                 </ul>
