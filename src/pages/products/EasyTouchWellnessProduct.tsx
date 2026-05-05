@@ -26,6 +26,9 @@ import { useCartStore } from "@/stores/cartStore";
 import { useSEO } from "@/hooks/useSEO";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import easytouchDeviceImg from "@/assets/easytouch-wellness-device.png";
+import appVariabilityImg from "@/assets/wellness-app-variability.png";
+import appMetabolicLoadImg from "@/assets/wellness-app-metabolic-load.jpg";
+import appSugarPatternImg from "@/assets/wellness-app-sugar-pattern.jpg";
 
 const PRIMARY = "#7C4DFF";
 const ACCENT = "#1A73E8";
@@ -506,24 +509,55 @@ export default function EasyTouchWellnessProduct() {
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  img: (await import("@/assets/wellness-app-variability.png")).default,
+                  img: appVariabilityImg,
                   title: "Variability score",
                   body:
-                    "See how steady — or jumpy — your metabolic load is across the last 7, 14 or 30 readings. Backed by JAMA research on glucose swings.",
+                    "See how steady — or jumpy — your metabolic load is across the last 7, 14 or 30 readings. Backed by JAMA research on sugar swings.",
                 },
                 {
-                  img: (await import("@/assets/wellness-app-metabolic-load.jpg")).default,
+                  img: appMetabolicLoadImg,
                   title: "Metabolic Load timeline",
                   body:
-                    "Every reading tagged Fasting, 1h, 2h after meal. The bar chart shows your trend at a glance — no spreadsheets, no guessing.",
+                    "Every reading tagged Fasting, 1h or 2h after meal. The bar chart shows your trend at a glance — no spreadsheets, no guessing.",
                 },
                 {
-                  img: (await import("@/assets/wellness-app-sugar-pattern.jpg")).default,
+                  img: appSugarPatternImg,
                   title: "Sugar Pattern History",
                   body:
                     "Snap your glucometer right after a reading and the app builds your personal sugar pattern — Higher, Lower, Stable — over time.",
                 },
-              ].map(() => null) /* placeholder, replaced below */}
+              ].map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  className="bg-white rounded-3xl border border-border p-5 flex flex-col"
+                  style={{ boxShadow: "0 10px 30px -15px rgba(124,77,255,0.25)" }}
+                >
+                  <div
+                    className="rounded-2xl overflow-hidden mb-5 flex items-center justify-center"
+                    style={{ backgroundColor: LIGHT_BG, aspectRatio: "9 / 14" }}
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  <h3
+                    className="text-lg font-bold mb-2"
+                    style={{ color: HEADING }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: BODY }}>
+                    {item.body}
+                  </p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
