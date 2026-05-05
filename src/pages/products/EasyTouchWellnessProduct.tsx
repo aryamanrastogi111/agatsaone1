@@ -16,6 +16,7 @@ import {
 import { SiteLayout } from "@/components/SiteLayout";
 import { WellnessReviewsSection } from "@/components/products/WellnessReviewsSection";
 import { RecentPurchasePopup } from "@/components/products/RecentPurchasePopup";
+import { AwardsTrustSection } from "@/components/AwardsTrustSection";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -840,6 +841,9 @@ export default function EasyTouchWellnessProduct() {
 
         {/* SECTION 8b — FULL CUSTOMER REVIEWS (stars, filters, verified) */}
         <WellnessReviewsSection />
+
+        {/* SECTION 8c — AWARDS & RECOGNITION */}
+        <AwardsTrustSection />
 
         {/* SECTION 9 — PRICING + IN THE BOX */}
         <section className="bg-white py-16">
