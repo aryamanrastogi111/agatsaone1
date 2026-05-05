@@ -382,15 +382,6 @@ export default function EasyTouchWellnessProduct() {
           </div>
         </section>
 
-        {/* INLINE CTA — after How It Works */}
-        <InlineBuyCTA
-          headline="Ready to stop the daily pricks?"
-          sub="EasyTouch Wellness · 15-second check-in · No strips, no needles."
-          price={PRICE}
-          onBuy={() => buyNow()}
-          onCart={() => addToCart()}
-        />
-
         {/* SECTION 5 — DEVICE + APP ECOSYSTEM */}
         <section className="bg-white py-20">
           <div className="max-w-6xl mx-auto px-6">
@@ -710,15 +701,6 @@ export default function EasyTouchWellnessProduct() {
             </p>
           </div>
         </section>
-
-        {/* INLINE CTA — after Companion Framing */}
-        <InlineBuyCTA
-          headline="Pair it with your glucometer today"
-          sub="One-time purchase · No subscription · 7-day return"
-          price={PRICE}
-          onBuy={() => buyNow()}
-          onCart={() => addToCart()}
-        />
 
         {/* SECTION 7 — SCIENCE */}
         <section className="py-20" style={{ backgroundColor: LIGHT_BG }}>
@@ -1080,53 +1062,5 @@ export default function EasyTouchWellnessProduct() {
         themeColor="primary"
       />
     </SiteLayout>
-  );
-}
-
-function InlineBuyCTA({
-  headline,
-  sub,
-  price,
-  onBuy,
-  onCart,
-}: {
-  headline: string;
-  sub: string;
-  price: number;
-  onBuy: () => void;
-  onCart: () => void;
-}) {
-  return (
-    <section className="py-12" style={{ background: `linear-gradient(135deg, ${PRIMARY} 0%, ${ACCENT} 100%)` }}>
-      <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-        <div style={{ color: "#fff" }}>
-          <h3 style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 700, color: "#fff", marginBottom: 6 }}>
-            {headline}
-          </h3>
-          <p style={{ color: "rgba(255,255,255,0.88)", fontSize: 14 }}>{sub}</p>
-        </div>
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <div style={{ color: "#fff", textAlign: "right", marginRight: 4 }}>
-            <div style={{ fontSize: 11, opacity: 0.85, lineHeight: 1 }}>Today</div>
-            <div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1.2 }}>
-              ₹{price.toLocaleString("en-IN")}
-            </div>
-          </div>
-          <Button
-            variant="outline"
-            onClick={onCart}
-            style={{ background: "transparent", borderColor: "#fff", color: "#fff" }}
-          >
-            Add to Cart
-          </Button>
-          <Button
-            onClick={onBuy}
-            style={{ background: "#fff", color: PRIMARY, fontWeight: 700 }}
-          >
-            Buy Now <ArrowRight className="w-4 h-4 ml-1" />
-          </Button>
-        </div>
-      </div>
-    </section>
   );
 }
