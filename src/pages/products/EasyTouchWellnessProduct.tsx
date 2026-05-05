@@ -943,13 +943,6 @@ export default function EasyTouchWellnessProduct() {
               >
                 Buy Now — ₹3,499
               </button>
-              <Link
-                to="/app?device=easytouch"
-                className="mt-3 w-full inline-block text-center rounded-full py-3 text-sm font-semibold border hover:bg-white/60 transition"
-                style={{ borderColor: PRIMARY, color: PRIMARY }}
-              >
-                Download App Free First
-              </Link>
             </div>
           </div>
         </section>
