@@ -1053,6 +1053,14 @@ export default function EasyTouchWellnessProduct() {
         </section>
       </div>
       <RecentPurchasePopup />
+      <StickyAddToCart
+        productName="EasyTouch Wellness"
+        price={`₹${PRICE.toLocaleString("en-IN")}`}
+        unitPrice={PRICE}
+        onBuyNow={(qty) => buyNow(qty)}
+        onAddToCart={(qty) => addToCart(qty)}
+        themeColor="primary"
+      />
     </SiteLayout>
   );
 }
