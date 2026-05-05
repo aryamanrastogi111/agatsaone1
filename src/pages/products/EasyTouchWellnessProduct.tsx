@@ -486,7 +486,7 @@ export default function EasyTouchWellnessProduct() {
           <div className="max-w-3xl mx-auto px-6 text-center">
             <p
               className="text-xs font-bold uppercase tracking-widest mb-4"
-              style={{ color: PRIMARY }}
+              style={{ color: "#B8A4FF" }}
             >
               Important
             </p>
@@ -521,7 +521,7 @@ export default function EasyTouchWellnessProduct() {
               <div>
                 <h3
                   className="font-bold text-lg mb-4"
-                  style={{ color: PRIMARY }}
+                  style={{ color: "#B8A4FF" }}
                 >
                   EasyTouch adds on top:
                 </h3>
@@ -536,7 +536,7 @@ export default function EasyTouchWellnessProduct() {
                     <li key={t} className="flex gap-2">
                       <Check
                         className="w-5 h-5 shrink-0 mt-0.5"
-                        style={{ color: PRIMARY }}
+                        style={{ color: "#B8A4FF" }}
                       />
                       <span className="text-sm">{t}</span>
                     </li>
