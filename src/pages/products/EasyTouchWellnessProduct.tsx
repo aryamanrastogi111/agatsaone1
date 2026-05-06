@@ -1001,6 +1001,7 @@ export default function EasyTouchWellnessProduct() {
               >
                 {`Buy Now — ${PRICE_FMT}`}
               </button>
+              <TodayOnlyCouponCTA />
             </div>
           </div>
         </section>
