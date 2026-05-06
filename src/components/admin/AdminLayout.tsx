@@ -82,6 +82,20 @@ export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [adminChecked, setAdminChecked] = useState(false);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [soundOn, setSoundOn] = useState<boolean>(() => {
+    if (typeof window === "undefined") return true;
+    return localStorage.getItem("admin-order-sound") !== "off";
+  });
+
+  useNewOrderSound(adminChecked && soundOn);
+
+  const toggleSound = () => {
+    setSoundOn((prev) => {
+      const next = !prev;
+      localStorage.setItem("admin-order-sound", next ? "on" : "off");
+      return next;
+    });
+  };
 
   useEffect(() => {
     (async () => {
