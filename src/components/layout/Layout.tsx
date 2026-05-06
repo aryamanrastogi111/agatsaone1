@@ -1,6 +1,6 @@
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { RepublicDayAnnouncementBar, FloatingCouponPill, TodayOnlyOfferBar } from "@/components/sale";
+import { RepublicDayAnnouncementBar, FloatingCouponPill, TodayOnlyOfferBar, TodayOnlyOfferPopup } from "@/components/sale";
 import { StickyCartBar } from "@/components/shop/StickyCartBar";
 
 interface LayoutProps {
@@ -17,6 +17,7 @@ export function Layout({ children }: LayoutProps) {
       <Footer />
       <StickyCartBar />
       <FloatingCouponPill />
+      <TodayOnlyOfferPopup />
     </div>
   );
 }

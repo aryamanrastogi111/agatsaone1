@@ -5,3 +5,4 @@ export { RepublicDayAnnouncementBar } from "./RepublicDayAnnouncementBar";
 export { RepublicDaySaleBadge } from "./RepublicDaySaleBadge";
 export { TodayOnlyOfferBar, MAY10_CODE, MAY10_END_DATE, isMay10Active } from "./TodayOnlyOfferBar";
 export { TodayOnlyCouponCTA } from "./TodayOnlyCouponCTA";
+export { TodayOnlyOfferPopup } from "./TodayOnlyOfferPopup";
