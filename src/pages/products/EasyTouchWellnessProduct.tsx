@@ -18,6 +18,7 @@ import { WellnessReviewsSection } from "@/components/products/WellnessReviewsSec
 import { RecentPurchasePopup } from "@/components/products/RecentPurchasePopup";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { TodayOnlyCouponCTA } from "@/components/sale";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
