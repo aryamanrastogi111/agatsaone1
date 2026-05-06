@@ -9,6 +9,8 @@ import {
   Puzzle, Shield, ChevronDown, ChevronUp, Mail, Zap, Radio, FileText, Heart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useNewOrderSound } from "@/hooks/useNewOrderSound";
+import { Volume2, VolumeX } from "lucide-react";
 
 type NavItem = { label: string; icon: any; href: string };
 type NavGroup = { label: string; items: NavItem[] };
