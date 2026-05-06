@@ -520,6 +520,22 @@ export default function CheckoutPage() {
     }
   };
 
+  // ─── Auto-apply MAY10 coupon (today-only promo) ───────────
+  const autoAppliedRef = useRef(false);
+  useEffect(() => {
+    if (autoAppliedRef.current) return;
+    if (!isMay10Active()) return;
+    if (couponApplied) return;
+    if (uniqueSkus.length === 0) return;
+    autoAppliedRef.current = true;
+    setCouponInput(MAY10_CODE);
+    // Defer to next tick so couponInput state is set before applyCoupon reads it
+    setTimeout(() => {
+      applyCoupon();
+    }, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uniqueSkus.length]);
+
 
   // ─── Main form ─────────────────────────────────────────────
   return (
