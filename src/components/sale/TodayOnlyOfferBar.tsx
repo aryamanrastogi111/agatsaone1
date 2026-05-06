@@ -6,7 +6,8 @@ import { toast } from "sonner";
 // Offer ends at midnight IST tonight
 export const MAY10_CODE = "MAY10";
 export const MAY10_END_DATE = new Date("2026-05-06T23:59:59+05:30");
-export const isMay10Active = () => new Date() < MAY10_END_DATE;
+// Offer closed — force inactive everywhere
+export const isMay10Active = () => false;
 
 const STORAGE_KEY = "may10bold-bar-dismissed";
 
