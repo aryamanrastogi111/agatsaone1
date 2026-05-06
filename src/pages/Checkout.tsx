@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { MAY10_CODE, isMay10Active } from "@/components/sale";
 import { useSearchParams, Link } from "react-router-dom";
 import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock, Plus, Minus, Tag, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -528,13 +529,30 @@ export default function CheckoutPage() {
     if (couponApplied) return;
     if (uniqueSkus.length === 0) return;
     autoAppliedRef.current = true;
-    setCouponInput(MAY10_CODE);
-    // Defer to next tick so couponInput state is set before applyCoupon reads it
-    setTimeout(() => {
-      applyCoupon();
-    }, 0);
+    (async () => {
+      try {
+        const res = await fetch(`${API_BASE}/v1/orders/website/validate-coupon`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ couponCode: MAY10_CODE }),
+        });
+        const data = await res.json();
+        if (res.ok && data.valid) {
+          setCouponInput(MAY10_CODE);
+          setCouponApplied(MAY10_CODE);
+          setCouponValid(true);
+          setCouponType(data.type);
+          setCouponValue(data.value);
+          setCouponMessage(data.message || "10% OFF auto-applied 🎉");
+          await fetchQuote(cartItems, MAY10_CODE);
+        }
+      } catch {
+        // silent — user can still apply manually
+      }
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uniqueSkus.length]);
+
 
 
   // ─── Main form ─────────────────────────────────────────────
