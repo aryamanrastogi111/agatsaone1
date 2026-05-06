@@ -1,0 +1,1 @@
+INSERT INTO public.coupons (code, type, value, minimum_order_amount, is_active, expires_at) VALUES ('MAY10BOLD', 'percentage', 10, 0, true, '2026-05-06T18:29:59Z') ON CONFLICT (code) DO UPDATE SET value = 10, type = 'percentage', is_active = true, expires_at = '2026-05-06T18:29:59Z';
