@@ -216,16 +216,32 @@ export default function AdminLayout() {
             {currentItem?.label ?? "Admin Panel"}
           </h1>
           <div className="flex items-center gap-3">
-            <button
-              onClick={toggleSound}
-              title={soundOn ? "Order sound: ON (click to mute)" : "Order sound: OFF (click to enable)"}
-              className={cn(
-                "p-2 rounded-lg hover:bg-gray-100 transition-colors",
-                soundOn ? "text-blue-600" : "text-gray-400"
+            {/* Order sound slider toggle */}
+            <div className="flex items-center gap-2 pr-1">
+              {soundOn ? (
+                <Volume2 size={14} className="text-blue-600" />
+              ) : (
+                <VolumeX size={14} className="text-gray-400" />
               )}
-            >
-              {soundOn ? <Volume2 size={16} /> : <VolumeX size={16} />}
-            </button>
+              <button
+                role="switch"
+                aria-checked={soundOn}
+                onClick={toggleSound}
+                title={soundOn ? "Order sound: ON" : "Order sound: OFF"}
+                className={cn(
+                  "relative inline-flex h-5 w-9 items-center rounded-full transition-colors",
+                  soundOn ? "bg-blue-600" : "bg-gray-300"
+                )}
+              >
+                <span
+                  className={cn(
+                    "inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform",
+                    soundOn ? "translate-x-4" : "translate-x-0.5"
+                  )}
+                />
+              </button>
+              <span className="text-xs text-gray-500 hidden sm:inline">Sound</span>
+            </div>
             <button className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors">
               <Bell size={16} />
             </button>
