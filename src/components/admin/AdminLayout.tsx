@@ -9,6 +9,8 @@ import {
   Puzzle, Shield, ChevronDown, ChevronUp, Mail, Zap, Radio, FileText, Heart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useNewOrderSound } from "@/hooks/useNewOrderSound";
+import { Volume2, VolumeX } from "lucide-react";
 
 type NavItem = { label: string; icon: any; href: string };
 type NavGroup = { label: string; items: NavItem[] };
@@ -80,6 +82,20 @@ export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [adminChecked, setAdminChecked] = useState(false);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [soundOn, setSoundOn] = useState<boolean>(() => {
+    if (typeof window === "undefined") return true;
+    return localStorage.getItem("admin-order-sound") !== "off";
+  });
+
+  useNewOrderSound(adminChecked && soundOn);
+
+  const toggleSound = () => {
+    setSoundOn((prev) => {
+      const next = !prev;
+      localStorage.setItem("admin-order-sound", next ? "on" : "off");
+      return next;
+    });
+  };
 
   useEffect(() => {
     (async () => {
@@ -200,6 +216,16 @@ export default function AdminLayout() {
             {currentItem?.label ?? "Admin Panel"}
           </h1>
           <div className="flex items-center gap-3">
+            <button
+              onClick={toggleSound}
+              title={soundOn ? "Order sound: ON (click to mute)" : "Order sound: OFF (click to enable)"}
+              className={cn(
+                "p-2 rounded-lg hover:bg-gray-100 transition-colors",
+                soundOn ? "text-blue-600" : "text-gray-400"
+              )}
+            >
+              {soundOn ? <Volume2 size={16} /> : <VolumeX size={16} />}
+            </button>
             <button className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors">
               <Bell size={16} />
             </button>
