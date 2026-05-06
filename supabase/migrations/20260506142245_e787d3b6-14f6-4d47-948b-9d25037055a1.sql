@@ -1,0 +1,1 @@
+UPDATE public.coupons SET is_active = false WHERE code IN ('MAY10','MAY10BOLD');
