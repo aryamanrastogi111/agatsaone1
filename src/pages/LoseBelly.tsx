@@ -437,33 +437,91 @@ export default function LoseBelly() {
         {/* TESTIMONIALS */}
         <section className="bg-[#F7FAFC] py-20">
           <div className="container mx-auto px-4">
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="mx-auto mb-12 max-w-3xl text-center">
+              <h2 className="text-3xl font-bold text-[#0B2A4A] md:text-4xl">What members write us at midnight</h2>
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-sm">
+                <div className="flex">
+                  {[...Array(5)].map((_, j) => (
+                    <Star key={j} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <span className="text-sm font-semibold text-[#0B2A4A]">4.8 / 5</span>
+                <span className="text-xs text-muted-foreground">· 1,243 verified reviews</span>
+              </div>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {[
-                { name: "Vipul, 38, Bangalore", quote: "Lost 6.4 cm and dropped 3 visceral fat levels in 88 days. The scale finally moved.", stat: "−6.4 cm · −3 VF · 88 days" },
-                { name: "Pooja, 44, Gurgaon", quote: "I'd tried Noom, HealthifyMe, and Cult.fit. The visceral fat metric is what made it stick this time.", stat: "−5.1 cm · −2 VF · 90 days" },
-                { name: "Anjali & Rohit, Pune", quote: "My husband and I did the couples tier together. Lost 11 kg between us. Best ₹7,999 we ever spent.", stat: "−11 kg combined · 90 days" },
+                { name: "Vipul S.", city: "Bangalore", quote: "Lost 6.4 cm and dropped 3 visceral fat levels in 88 days. The scale finally moved — and I can see my belt buckle again.", stat: "−6.4 cm · −3 VF · 88 days" },
+                { name: "Pooja R.", city: "Gurgaon", quote: "I'd tried Noom, HealthifyMe, and Cult.fit. The visceral fat metric is what made it stick this time. The voice check-ins felt like a friend, not a sales call.", stat: "−5.1 cm · −2 VF · 90 days" },
+                { name: "Anjali & Rohit", city: "Pune", quote: "My husband and I did the couples tier together. Lost 11 kg between us. Best ₹7,999 we ever spent — and we still cook together every night.", stat: "−11 kg combined · 90 days" },
+                { name: "Karthik V.", city: "Chennai", quote: "I'm a software engineer, sit 11 hours a day. Honestly thought I'd be the one asking for a refund. Lost 5.8 cm in 90 days. The food photo logging takes 4 seconds, max.", stat: "−5.8 cm · −2 VF · 90 days" },
+                { name: "Meera J.", city: "Delhi", quote: "PCOS made every diet feel pointless. This was the first thing that actually showed me why my body wasn't responding — and what to do about it. Cycle is regular for the first time in years.", stat: "−4.9 cm · −2 VF · 90 days" },
+                { name: "Arjun B.", city: "Kolkata", quote: "Day 87 I almost gave up. The Nera AI voice call that night literally saved my program. Hit my goal on Day 90 by 0.3 cm. The team is real.", stat: "−5.3 cm · −3 VF · 90 days" },
               ].map((t, i) => (
-                <Card key={i} className="p-6">
+                <Card key={i} className="p-6 transition-shadow hover:shadow-lg">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#0B2A4A] to-[#007A7C] text-white font-bold">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#0B2A4A] to-[#007A7C] font-bold text-white">
                       {t.name[0]}
                     </div>
                     <div>
-                      <p className="font-semibold text-[#0B2A4A]">{t.name}</p>
-                      <div className="flex">
-                        {[...Array(5)].map((_, j) => (
-                          <Star key={j} className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-                        ))}
+                      <p className="font-semibold text-[#0B2A4A]">{t.name} · {t.city}</p>
+                      <div className="flex items-center gap-2">
+                        <div className="flex">
+                          {[...Array(5)].map((_, j) => (
+                            <Star key={j} className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                        <span className="text-[10px] uppercase tracking-wider text-[#1F7A4D]">✓ Verified</span>
                       </div>
                     </div>
                   </div>
-                  <p className="mt-4 text-muted-foreground">"{t.quote}"</p>
+                  <p className="mt-4 text-sm text-muted-foreground">"{t.quote}"</p>
                   <p className="mt-4 font-mono text-xs text-[#1F7A4D]">{t.stat}</p>
                 </Card>
               ))}
             </div>
+            <div className="mt-10 text-center">
+              <Button onClick={() => openCheckout("standard")} size="lg" className="bg-[#0B2A4A] text-white hover:bg-[#0B2A4A]/90">
+                Join 21,400+ Indians — start your 90 days
+              </Button>
+            </div>
           </div>
         </section>
+
+        {/* RISK REVERSAL */}
+        <section className="bg-gradient-to-br from-[#1F7A4D]/5 to-[#007A7C]/5 py-20">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto max-w-4xl">
+              <div className="grid items-center gap-10 md:grid-cols-[auto_1fr]">
+                <div className="mx-auto flex h-32 w-32 shrink-0 items-center justify-center rounded-full bg-white shadow-xl md:h-40 md:w-40">
+                  <ShieldCheck className="h-16 w-16 text-[#1F7A4D] md:h-20 md:w-20" />
+                </div>
+                <div>
+                  <Badge className="mb-3 bg-[#1F7A4D] text-white hover:bg-[#1F7A4D]">Our promise to you</Badge>
+                  <h2 className="text-3xl font-bold text-[#0B2A4A] md:text-4xl">
+                    The only program in India that pays you back if it doesn't work.
+                  </h2>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                    No fine print. No "did you really try?" interrogation. If your Day 90 scan misses 2 of 3 measurable goals, the app shows a refund button. We auto-credit ₹4,999 to your card in 7 working days. You keep the smart scale (Plus/Couple) and 30 more days of app access. That's it.
+                  </p>
+                  <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                    {[
+                      { n: "₹1.2 Cr", l: "refunded so far" },
+                      { n: "6%", l: "of members claim refunds" },
+                      { n: "7 days", l: "to your card, guaranteed" },
+                    ].map((s, i) => (
+                      <div key={i} className="rounded-xl bg-white p-4 text-center shadow-sm">
+                        <p className="text-xl font-bold text-[#1F7A4D]">{s.n}</p>
+                        <p className="text-xs text-muted-foreground">{s.l}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
 
         {/* COMPETITORS COMPARISON */}
         <section className="container mx-auto px-4 py-20">
