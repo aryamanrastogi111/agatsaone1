@@ -3,8 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Check, X, ChevronRight, Scale, Camera, Target, Star,
-  ShieldCheck, Loader2, Sparkles,
+  ShieldCheck, Loader2, Sparkles, Quote, TrendingDown, Users,
+  Award, Clock, Flame, Stethoscope, Package, Zap,
 } from "lucide-react";
+import transformation1 from "@/assets/lose-belly/transformation-1.jpg";
+import transformation2 from "@/assets/lose-belly/transformation-2.jpg";
+import transformation3 from "@/assets/lose-belly/transformation-3.jpg";
+import transformation4 from "@/assets/lose-belly/transformation-4.jpg";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
