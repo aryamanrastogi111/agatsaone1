@@ -7,6 +7,7 @@ import {
   Award, Clock, Flame, Stethoscope, Package, Zap,
 } from "lucide-react";
 import transformation1 from "@/assets/lose-belly/transformation-1.jpg";
+import heroTransformation from "@/assets/lose-belly/hero-transformation.jpg";
 import transformation2 from "@/assets/lose-belly/transformation-2.jpg";
 import transformation3 from "@/assets/lose-belly/transformation-3.jpg";
 import transformation4 from "@/assets/lose-belly/transformation-4.jpg";
@@ -149,30 +150,61 @@ export default function LoseBelly() {
               </p>
             </div>
             <div className="relative mx-auto w-full max-w-md">
-              <div className="aspect-[3/4] rounded-3xl bg-gradient-to-br from-[#0B2A4A] to-[#007A7C] p-6 shadow-2xl">
-                <div className="flex h-full flex-col justify-between rounded-2xl bg-white/10 p-6 text-white backdrop-blur">
+              <div className="relative overflow-hidden rounded-3xl shadow-2xl ring-1 ring-black/5">
+                <img
+                  src={heroTransformation}
+                  alt="Indian man before and after 90-day belly fat transformation, lost 5.8 kg"
+                  width={1024}
+                  height={1024}
+                  className="h-auto w-full"
+                />
+                {/* Floating stat card */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="absolute left-4 top-4 rounded-2xl bg-white/95 px-4 py-3 shadow-lg backdrop-blur"
+                >
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-[#0B2A4A]/60">
+                    Visceral fat
+                  </p>
+                  <p className="text-2xl font-bold text-[#1F7A4D]">
+                    12 → 9 <span className="text-xs font-medium text-[#1F7A4D]/70">↓ 3 levels</span>
+                  </p>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="absolute right-4 top-4 rounded-full bg-[#0B2A4A] px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
+                >
+                  90 DAYS
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl bg-white/95 px-4 py-3 shadow-lg backdrop-blur"
+                >
                   <div>
-                    <p className="text-xs uppercase tracking-widest opacity-70">Day 47 / 90</p>
-                    <p className="mt-2 text-sm opacity-80">Visceral fat</p>
-                    <motion.p
-                      initial={{ scale: 0.9 }}
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="text-6xl font-bold"
-                    >
-                      9 <span className="text-2xl opacity-60">↓ 3 levels</span>
-                    </motion.p>
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-[#0B2A4A]/60">Waist</p>
+                    <p className="text-lg font-bold text-[#0B2A4A]">−5.2 cm</p>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm opacity-80">
-                      <span>Waist</span><span>−4.2 cm</span>
-                    </div>
-                    <div className="flex justify-between text-sm opacity-80">
-                      <span>Weight</span><span>−5.8 kg</span>
-                    </div>
-                    <Progress value={52} className="h-2 bg-white/20" />
+                  <div className="h-8 w-px bg-[#0B2A4A]/10" />
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-[#0B2A4A]/60">Weight</p>
+                    <p className="text-lg font-bold text-[#0B2A4A]">−5.8 kg</p>
                   </div>
-                </div>
+                  <div className="h-8 w-px bg-[#0B2A4A]/10" />
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-[#0B2A4A]/60">Days</p>
+                    <p className="text-lg font-bold text-[#0B2A4A]">90</p>
+                  </div>
+                </motion.div>
+              </div>
+              {/* Verified badge */}
+              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-[#1F7A4D] px-4 py-1.5 text-xs font-semibold text-white shadow-lg">
+                ✓ Verified result · Rohit, 38, Pune
               </div>
             </div>
           </div>
