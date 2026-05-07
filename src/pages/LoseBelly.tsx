@@ -207,7 +207,6 @@ export default function LoseBelly() {
                 ✓ Verified result · Rohit, 38, Pune
               </div>
             </div>
-            </div>
           </div>
         </section>
 
