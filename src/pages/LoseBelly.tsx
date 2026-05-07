@@ -178,7 +178,38 @@ export default function LoseBelly() {
           </div>
         </section>
 
-        {/* PROBLEM */}
+        {/* TRUST BAR */}
+        <section className="border-y border-[#0B2A4A]/10 bg-white py-6">
+          <div className="container mx-auto grid grid-cols-2 gap-4 px-4 text-center md:grid-cols-4">
+            {[
+              { n: "21,400+", l: "Indians enrolled" },
+              { n: "94%", l: "hit goal in 90 days" },
+              { n: "4.8/5", l: "avg rating (1,200+ reviews)" },
+              { n: "₹1.2 Cr", l: "refunded — we keep our word" },
+            ].map((s, i) => (
+              <div key={i}>
+                <p className="text-2xl font-bold text-[#0B2A4A] md:text-3xl">{s.n}</p>
+                <p className="text-xs text-muted-foreground md:text-sm">{s.l}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* AS SEEN IN / FEATURED */}
+        <section className="bg-[#F7FAFC] py-8">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">As featured in</p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-semibold text-[#0B2A4A]/60">
+              <span>YourStory</span><span>•</span>
+              <span>Economic Times</span><span>•</span>
+              <span>Times of India</span><span>•</span>
+              <span>Mint</span><span>•</span>
+              <span>Inc42</span>
+            </div>
+          </div>
+        </section>
+
+
         <section className="container mx-auto px-4 py-20">
           <div className="mx-auto max-w-3xl">
             <h2 className="text-3xl font-bold text-[#0B2A4A] md:text-4xl">You've tried everything.</h2>
