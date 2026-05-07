@@ -7,6 +7,7 @@ import agatsaLogo from "@/assets/agatsa-logo.webp";
 const navLinks = [
   { label: "Devices", href: "/devices" },
   { label: "Programmes", href: "/programmes" },
+  { label: "Lose Belly 90", href: "/lose-belly" },
   {
     label: "For Providers",
     children: [
