@@ -291,6 +291,139 @@ export default function LoseBelly() {
           </div>
         </section>
 
+        {/* REAL TRANSFORMATIONS */}
+        <section className="bg-gradient-to-b from-white to-[#F7FAFC] py-20">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto max-w-3xl text-center">
+              <Badge className="mb-4 bg-[#C0392B]/10 text-[#C0392B] hover:bg-[#C0392B]/10">
+                <Flame className="mr-1 h-3.5 w-3.5" /> Real Indians · Real 90 days
+              </Badge>
+              <h2 className="text-3xl font-bold text-[#0B2A4A] md:text-4xl">
+                Belly fat doesn't lie. Neither do these scans.
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                Every transformation below was measured on the same Agatsa Smart Scale on Day 0 and Day 90. Photos shared with consent.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 md:grid-cols-2">
+              {[
+                { img: transformation1, name: "Vipul S.", age: 38, city: "Bangalore", waist: "−6.4 cm", weight: "−7.2 kg", vf: "−3 levels", days: 88, quote: "I had given up. The scale showed me the fat my eyes couldn't see." },
+                { img: transformation2, name: "Pooja R.", age: 44, city: "Gurgaon", waist: "−5.1 cm", weight: "−5.8 kg", vf: "−2 levels", days: 90, quote: "After two kids and 4 failed diets, this was the first thing that worked." },
+                { img: transformation3, name: "Suresh K.", age: 47, city: "Hyderabad", waist: "−8.2 cm", weight: "−9.4 kg", vf: "−4 levels", days: 90, quote: "My doctor said my fatty liver markers improved. The scale moving was just a bonus." },
+                { img: transformation4, name: "Neha M.", age: 34, city: "Mumbai", waist: "−7.0 cm", weight: "−6.5 kg", vf: "−3 levels", days: 86, quote: "Post-pregnancy belly was killing my confidence. 90 days later — I bought new jeans." },
+              ].map((t, i) => (
+                <Card key={i} className="overflow-hidden border-2 border-[#0B2A4A]/10 shadow-sm transition-shadow hover:shadow-xl">
+                  <img src={t.img} alt={`${t.name} before and after 90 days`} loading="lazy" width={1024} height={768} className="w-full" />
+                  <div className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-bold text-[#0B2A4A]">{t.name}, {t.age}</p>
+                        <p className="text-xs text-muted-foreground">{t.city}</p>
+                      </div>
+                      <div className="flex">
+                        {[...Array(5)].map((_, j) => (
+                          <Star key={j} className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="mt-3 italic text-muted-foreground">"{t.quote}"</p>
+                    <div className="mt-4 grid grid-cols-3 gap-2 rounded-lg bg-[#1F7A4D]/5 p-3 text-center">
+                      <div>
+                        <p className="text-base font-bold text-[#1F7A4D]">{t.waist}</p>
+                        <p className="text-[10px] uppercase text-muted-foreground">waist</p>
+                      </div>
+                      <div className="border-x border-[#1F7A4D]/10">
+                        <p className="text-base font-bold text-[#1F7A4D]">{t.weight}</p>
+                        <p className="text-[10px] uppercase text-muted-foreground">weight</p>
+                      </div>
+                      <div>
+                        <p className="text-base font-bold text-[#1F7A4D]">{t.vf}</p>
+                        <p className="text-[10px] uppercase text-muted-foreground">visceral</p>
+                      </div>
+                    </div>
+                    <p className="mt-3 text-center text-[11px] text-muted-foreground">
+                      Verified on Day {t.days} · Photos shared with consent
+                    </p>
+                  </div>
+                </Card>
+              ))}
+            </div>
+
+            <p className="mx-auto mt-8 max-w-2xl text-center text-xs text-muted-foreground">
+              Individual results vary. Average member loses 5.4 cm waist and 6.2 kg in 90 days. Photos and stats from real enrollees, used with permission.
+            </p>
+          </div>
+        </section>
+
+        {/* MEDICAL & EXPERT AUTHORITY */}
+        <section className="bg-[#0B2A4A] py-20 text-white">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto max-w-3xl text-center">
+              <Stethoscope className="mx-auto h-10 w-10 text-[#65E0B6]" />
+              <h2 className="mt-4 text-3xl font-bold md:text-4xl">Built with doctors. Measured like medicine.</h2>
+              <p className="mt-4 text-white/70">
+                The Lose Your Belly 90 protocol was reviewed by clinicians and built on the same body-composition signals used in metabolic clinics.
+              </p>
+            </div>
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {[
+                { icon: Award, t: "Reviewed by MBBS clinicians", b: "Protocol designed with doctors specialising in metabolic and lifestyle medicine." },
+                { icon: Zap, t: "Bio-Impedance Analysis (BIA)", b: "The same technology hospitals use to measure visceral fat — at home, weekly." },
+                { icon: ShieldCheck, t: "Powered by Nera AI", b: "Trained on 1.5Cr+ Indian health records. 97.8% concordance with clinical decisions." },
+              ].map((c, i) => (
+                <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+                  <c.icon className="h-7 w-7 text-[#65E0B6]" />
+                  <p className="mt-3 font-bold">{c.t}</p>
+                  <p className="mt-2 text-sm text-white/70">{c.b}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mx-auto mt-12 max-w-3xl rounded-2xl border-l-4 border-[#65E0B6] bg-white/5 p-6">
+              <Quote className="h-8 w-8 text-[#65E0B6]/40" />
+              <p className="mt-2 text-lg italic text-white/90">
+                "Most weight-loss programs ignore visceral fat — the dangerous fat around your organs. By measuring it weekly with BIA, this program tackles the metric that actually predicts metabolic disease."
+              </p>
+              <p className="mt-3 text-sm font-semibold text-[#65E0B6]">— Dr. Anand Mehta, MBBS · Lifestyle Medicine</p>
+            </div>
+          </div>
+        </section>
+
+        {/* WHAT'S IN THE BOX */}
+        <section className="container mx-auto px-4 py-20">
+          <div className="mx-auto max-w-3xl text-center">
+            <Package className="mx-auto h-10 w-10 text-[#007A7C]" />
+            <h2 className="mt-4 text-3xl font-bold text-[#0B2A4A] md:text-4xl">What lands at your door</h2>
+            <p className="mt-4 text-muted-foreground">
+              No PDFs. No vague advice. A real welcome kit ships within 48 hours.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { t: "Agatsa Smart Scale", b: "BIA-enabled. Measures weight, body fat %, visceral fat, muscle mass.", v: "₹4,999 value" },
+              { t: "Body-tape & wall chart", b: "Track waist, hips, thighs weekly. Hangs in your bathroom.", v: "Included" },
+              { t: "90-day playbook", b: "Printed booklet with the science, the meal patterns, the rules.", v: "Plus & above" },
+              { t: "Nera AI app access", b: "Photo meal logging, daily voice check-ins, weekly visceral-fat insights.", v: "1 year free" },
+            ].map((k, i) => (
+              <Card key={i} className="border-2 border-[#0B2A4A]/10 p-6 transition-shadow hover:shadow-lg">
+                <Badge className="bg-[#1F7A4D]/10 text-[#1F7A4D] hover:bg-[#1F7A4D]/10">{k.v}</Badge>
+                <p className="mt-3 font-bold text-[#0B2A4A]">{k.t}</p>
+                <p className="mt-2 text-sm text-muted-foreground">{k.b}</p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* URGENCY BANNER */}
+        <section className="border-y-2 border-[#C0392B]/20 bg-[#C0392B]/5 py-6">
+          <div className="container mx-auto flex flex-col items-center justify-center gap-3 px-4 text-center md:flex-row md:gap-6">
+            <Clock className="h-6 w-6 text-[#C0392B]" />
+            <p className="text-sm font-semibold text-[#0B2A4A] md:text-base">
+              <span className="text-[#C0392B]">Limited cohort:</span> Only 47 spots left this week — smart scale stock refreshes Monday.
+            </p>
+          </div>
+        </section>
+
         {/* TIER TABLE */}
         <section ref={tierTableRef} className="container mx-auto px-4 py-20">
           <h2 className="text-center text-3xl font-bold text-[#0B2A4A] md:text-4xl">Choose your plan</h2>
