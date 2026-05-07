@@ -464,6 +464,78 @@ export type Database = {
         }
         Relationships: []
       }
+      lose_belly_enrollments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          customer_email: string | null
+          customer_name: string
+          customer_phone: string
+          id: string
+          paid_at: string | null
+          quiz_answers: Json | null
+          razorpay_order_id: string | null
+          razorpay_payment_id: string | null
+          razorpay_signature: string | null
+          referral_code: string | null
+          second_person_name: string | null
+          second_person_phone: string | null
+          status: string
+          tier: string
+          updated_at: string
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          customer_email?: string | null
+          customer_name: string
+          customer_phone: string
+          id?: string
+          paid_at?: string | null
+          quiz_answers?: Json | null
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          razorpay_signature?: string | null
+          referral_code?: string | null
+          second_person_name?: string | null
+          second_person_phone?: string | null
+          status?: string
+          tier: string
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          customer_email?: string | null
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          paid_at?: string | null
+          quiz_answers?: Json | null
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          razorpay_signature?: string | null
+          referral_code?: string | null
+          second_person_name?: string | null
+          second_person_phone?: string | null
+          status?: string
+          tier?: string
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           amount: number
