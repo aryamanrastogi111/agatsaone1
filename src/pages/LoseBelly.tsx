@@ -217,7 +217,7 @@ export default function LoseBelly() {
               { n: "21,400+", l: "Indians enrolled" },
               { n: "94%", l: "hit goal in 90 days" },
               { n: "4.8/5", l: "avg rating (1,200+ reviews)" },
-              { n: "₹1.2 Cr", l: "refunded — we keep our word" },
+              { n: "−4.6 cm", l: "avg waist loss in 90 days" },
             ].map((s, i) => (
               <div key={i}>
                 <p className="text-2xl font-bold text-[#0B2A4A] md:text-3xl">{s.n}</p>
@@ -538,9 +538,9 @@ export default function LoseBelly() {
                   </p>
                   <div className="mt-6 grid gap-3 sm:grid-cols-3">
                     {[
-                      { n: "₹1.2 Cr", l: "refunded so far" },
-                      { n: "6%", l: "of members claim refunds" },
+                      { n: "100%", l: "refund if goals missed" },
                       { n: "7 days", l: "to your card, guaranteed" },
+                      { n: "0", l: "questions asked" },
                     ].map((s, i) => (
                       <div key={i} className="rounded-xl bg-white p-4 text-center shadow-sm">
                         <p className="text-xl font-bold text-[#1F7A4D]">{s.n}</p>
