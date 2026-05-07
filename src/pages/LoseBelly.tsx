@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Check, X, ChevronRight, Scale, Camera, Target, Star,
-  ShieldCheck, Loader2, Sparkles, Quote, TrendingDown, Users,
+  ShieldCheck, Loader2, Sparkles, Quote,
   Award, Clock, Flame, Stethoscope, Package, Zap,
 } from "lucide-react";
 import transformation1 from "@/assets/lose-belly/transformation-1.jpg";
