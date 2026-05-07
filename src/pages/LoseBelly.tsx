@@ -7,6 +7,7 @@ import {
   Award, Clock, Flame, Stethoscope, Package, Zap,
 } from "lucide-react";
 import transformation1 from "@/assets/lose-belly/transformation-1.jpg";
+import heroTransformation from "@/assets/lose-belly/hero-transformation.jpg";
 import transformation2 from "@/assets/lose-belly/transformation-2.jpg";
 import transformation3 from "@/assets/lose-belly/transformation-3.jpg";
 import transformation4 from "@/assets/lose-belly/transformation-4.jpg";
