@@ -145,6 +145,7 @@ function AppWithPricing() {
               <Route path="/r/:code" element={<ReferralPage />} />
               <Route path="/heritage" element={<Heritage />} />
               <Route path="/lose-belly" element={<LoseBelly />} />
+              <Route path="/lose-belly/features" element={<LoseBellyFeatures />} />
               <Route path="/lose-belly-90" element={<Navigate to="/lose-belly" replace />} />
               <Route path="/loseyourbelly" element={<Navigate to="/lose-belly" replace />} />
               <Route path="/lose-belly/welcome" element={<LoseBellyWelcome />} />
