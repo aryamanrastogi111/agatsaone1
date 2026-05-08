@@ -24,16 +24,18 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useSEO } from "@/hooks/useSEO";
 import { trackEvent } from "@/lib/analytics";
-import { loadRazorpayScript } from "@/lib/razorpay";
-import { supabase } from "@/integrations/supabase/client";
+import {
+  loadRazorpayScript,
+  createRazorpayOrder,
+  verifyRazorpayPayment,
+} from "@/lib/razorpay";
 import { cn } from "@/lib/utils";
 
-type Tier = "standard" | "plus" | "couple";
+type Tier = "standard" | "plus";
 
-const TIERS: Record<Tier, { name: string; price: number; label: string }> = {
-  standard: { name: "Standard", price: 4999, label: "Start your 90 days" },
-  plus: { name: "Plus", price: 9999, label: "Choose Plus" },
-  couple: { name: "Couple", price: 7999, label: "Choose Couple" },
+const TIERS: Record<Tier, { name: string; price: number; label: string; sku: string }> = {
+  standard: { name: "Standard", price: 4999, label: "Start your 90 days", sku: "LB90-STANDARD" },
+  plus: { name: "Plus", price: 9999, label: "Choose Plus", sku: "LB90-PLUS" },
 };
 
 const QUIZ = [
