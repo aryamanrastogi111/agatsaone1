@@ -764,12 +764,7 @@ export default function LoseBelly() {
           </div>
         </section>
 
-        {/* CHECKOUT MODAL */}
-        <CheckoutModal
-          open={checkoutOpen}
-          onOpenChange={setCheckoutOpen}
-          tier={selectedTier}
-        />
+        {/* Checkout uses standard /checkout flow */}
 
         {/* QUIZ MODAL */}
         <QuizModal
