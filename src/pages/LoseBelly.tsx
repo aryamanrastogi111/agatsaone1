@@ -689,14 +689,6 @@ function TierCard({ tier, onChoose }: { tier: Tier; onChoose: () => void }) {
       "Priority WhatsApp cohort",
       "Money-back guarantee",
     ],
-    couple: [
-      "Daily AI coaching for two",
-      "60 daily lessons",
-      "Smart Scale — yours to keep",
-      "Welcome kit: 2× tape, 1 scale shared",
-      "Couple-only WhatsApp group",
-      "Money-back guarantee (per person)",
-    ],
   };
 
   return (
