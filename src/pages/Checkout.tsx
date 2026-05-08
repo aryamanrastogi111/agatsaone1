@@ -18,6 +18,8 @@ const DEVICE_NAMES: Record<string, string> = {
   wellness_sub:    "EasyTouch Wellness",
   multivital:      "Agatsa MultiVital",
   bundle_ecg_band: "ECG + Rhythm Band Bundle",
+  lb90_standard:   "Lose Your Belly 90 — Standard",
+  lb90_plus:       "Lose Your Belly 90 — Plus",
 };
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";

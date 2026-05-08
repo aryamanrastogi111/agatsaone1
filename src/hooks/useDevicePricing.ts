@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback, createContext, useContext } from "rea
 const API_URL = "https://agatsa-one-api-651017108992.asia-south1.run.app/v1/devices/catalog";
 const REFRESH_MS = 5 * 60 * 1000; // 5 minutes
 
-export type DeviceSku = "ecg_bundle" | "wellness_sub" | "band_sub" | "scale_sub" | "bundle_ecg_band" | "multivital";
+export type DeviceSku = "ecg_bundle" | "wellness_sub" | "band_sub" | "scale_sub" | "bundle_ecg_band" | "multivital" | "lb90_standard" | "lb90_plus";
 
 // Fallback prices in INR (matches last known backend prices)
 const FALLBACK_PRICES: Record<DeviceSku, number> = {
@@ -13,6 +13,8 @@ const FALLBACK_PRICES: Record<DeviceSku, number> = {
   scale_sub: 1899,
   bundle_ecg_band: 5999,
   multivital: 5999,
+  lb90_standard: 4999,
+  lb90_plus: 9999,
 };
 
 // MRP (Maximum Retail Price) — rounded figures for strikethrough display
@@ -23,6 +25,8 @@ export const MRP_PRICES: Record<DeviceSku, number> = {
   scale_sub: 2999,
   bundle_ecg_band: 7999,
   multivital: 7999,
+  lb90_standard: 7999,
+  lb90_plus: 14999,
 };
 
 export interface DevicePricingState {
