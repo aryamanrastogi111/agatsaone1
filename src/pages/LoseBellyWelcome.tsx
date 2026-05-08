@@ -6,8 +6,8 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { useSEO } from "@/hooks/useSEO";
 
-const PLAY_STORE = "https://play.google.com/store/apps/details?id=com.agatsa.one";
-const APP_STORE = "https://apps.apple.com/app/agatsa-one/id0000000000";
+const PLAY_STORE = "https://play.google.com/store/apps/details?id=com.agatsakone";
+const APP_STORE = "https://apps.apple.com/in/app/agatsa-one/id6760245564";
 
 export default function LoseBellyWelcome() {
   useSEO({

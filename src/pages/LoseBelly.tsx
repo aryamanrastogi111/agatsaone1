@@ -24,16 +24,18 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useSEO } from "@/hooks/useSEO";
 import { trackEvent } from "@/lib/analytics";
-import { loadRazorpayScript } from "@/lib/razorpay";
-import { supabase } from "@/integrations/supabase/client";
+import {
+  loadRazorpayScript,
+  createRazorpayOrder,
+  verifyRazorpayPayment,
+} from "@/lib/razorpay";
 import { cn } from "@/lib/utils";
 
-type Tier = "standard" | "plus" | "couple";
+type Tier = "standard" | "plus";
 
-const TIERS: Record<Tier, { name: string; price: number; label: string }> = {
-  standard: { name: "Standard", price: 4999, label: "Start your 90 days" },
-  plus: { name: "Plus", price: 9999, label: "Choose Plus" },
-  couple: { name: "Couple", price: 7999, label: "Choose Couple" },
+const TIERS: Record<Tier, { name: string; price: number; label: string; sku: string }> = {
+  standard: { name: "Standard", price: 4999, label: "Start your 90 days", sku: "LB90-STANDARD" },
+  plus: { name: "Plus", price: 9999, label: "Choose Plus", sku: "LB90-PLUS" },
 };
 
 const QUIZ = [
@@ -459,8 +461,8 @@ export default function LoseBelly() {
         {/* TIER TABLE */}
         <section ref={tierTableRef} className="container mx-auto px-4 py-20">
           <h2 className="text-center text-3xl font-bold text-[#0B2A4A] md:text-4xl">Choose your plan</h2>
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {(["standard", "plus", "couple"] as Tier[]).map((tier) => (
+          <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
+            {(["standard", "plus"] as Tier[]).map((tier) => (
               <TierCard key={tier} tier={tier} onChoose={() => openCheckout(tier)} />
             ))}
           </div>
@@ -485,7 +487,7 @@ export default function LoseBelly() {
               {[
                 { name: "Vipul S.", city: "Bangalore", quote: "Lost 6.4 cm and dropped 3 visceral fat levels in 88 days. The scale finally moved — and I can see my belt buckle again.", stat: "−6.4 cm · −3 VF · 88 days" },
                 { name: "Pooja R.", city: "Gurgaon", quote: "I'd tried Noom, HealthifyMe, and Cult.fit. The visceral fat metric is what made it stick this time. The voice check-ins felt like a friend, not a sales call.", stat: "−5.1 cm · −2 VF · 90 days" },
-                { name: "Anjali & Rohit", city: "Pune", quote: "My husband and I did the couples tier together. Lost 11 kg between us. Best ₹7,999 we ever spent — and we still cook together every night.", stat: "−11 kg combined · 90 days" },
+                { name: "Sandeep T.", city: "Pune", quote: "Lost 6.2 kg and 4.8 cm waist in 89 days. The visceral fat dropping each week is what kept me going — finally a metric that made sense.", stat: "−6.2 kg · −2 VF · 89 days" },
                 { name: "Karthik V.", city: "Chennai", quote: "I'm a software engineer, sit 11 hours a day. Honestly thought I'd be the one asking for a refund. Lost 5.8 cm in 90 days. The food photo logging takes 4 seconds, max.", stat: "−5.8 cm · −2 VF · 90 days" },
                 { name: "Meera J.", city: "Delhi", quote: "PCOS made every diet feel pointless. This was the first thing that actually showed me why my body wasn't responding — and what to do about it. Cycle is regular for the first time in years.", stat: "−4.9 cm · −2 VF · 90 days" },
                 { name: "Arjun B.", city: "Kolkata", quote: "Day 87 I almost gave up. The Nera AI voice call that night literally saved my program. Hit my goal on Day 90 by 0.3 cm. The team is real.", stat: "−5.3 cm · −3 VF · 90 days" },
@@ -606,7 +608,7 @@ export default function LoseBelly() {
                 ["What if I don't have an Agatsa Smart Scale?", "It's rented free with your program. Delivered to your address before Day 0. Returnable on completion."],
                 ["What if I miss days during the program?", "The program adjusts. As long as your Day 90 scan hits 2 of 3 goals, you graduate."],
                 ["Is this safe for diabetes / pregnancy / heart conditions?", "Please consult your doctor first. Lose Your Belly 90 is a wellness and lifestyle program, not medical treatment."],
-                ["For the couples tier, do we both need a scale?", "No — one scale serves both, weighed at separate times."],
+                ["Will the Smart Scale really arrive in time?", "Yes — we ship within 48 hours of your enrollment. Smart Scale arrives in 5–7 days. Your daily lessons start the morning after."],
                 ["How does the refund actually work?", "If your Day 90 scan misses 2 of 3 goals, the app shows a 'Claim refund' button. Auto-credited to your card in 7 working days. App access continues for 30 more days as goodwill."],
                 ["What happens after Day 90 if I succeed?", "You get a maintenance plan, a shareable transformation card, and a 30% discount to continue for another 90 days."],
                 ["Can I pay with UPI / Netbanking / EMI?", "Yes — Razorpay supports all UPI apps (PhonePe, GPay, Paytm), all Indian cards, netbanking, and 9-month EMI on cards above ₹5,000."],
@@ -687,14 +689,6 @@ function TierCard({ tier, onChoose }: { tier: Tier; onChoose: () => void }) {
       "Priority WhatsApp cohort",
       "Money-back guarantee",
     ],
-    couple: [
-      "Daily AI coaching for two",
-      "60 daily lessons",
-      "Smart Scale — yours to keep",
-      "Welcome kit: 2× tape, 1 scale shared",
-      "Couple-only WhatsApp group",
-      "Money-back guarantee (per person)",
-    ],
   };
 
   return (
@@ -710,7 +704,6 @@ function TierCard({ tier, onChoose }: { tier: Tier; onChoose: () => void }) {
       <h3 className="text-2xl font-bold text-[#0B2A4A]">{t.name}</h3>
       <p className="mt-3 text-4xl font-bold text-[#0B2A4A]">
         ₹{t.price.toLocaleString("en-IN")}
-        {tier === "couple" && <span className="text-base font-normal text-muted-foreground"> (two people)</span>}
       </p>
       <p className="mt-1 text-sm text-muted-foreground">One-time · No subscription</p>
       <ul className="mt-6 flex-1 space-y-3">
@@ -745,10 +738,10 @@ function CheckoutModal({
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [secondName, setSecondName] = useState("");
-  const [secondPhone, setSecondPhone] = useState("");
-  const [referral, setReferral] = useState("");
-  const [showReferral, setShowReferral] = useState(false);
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [stateName, setStateName] = useState("");
+  const [pincode, setPincode] = useState("");
 
   useEffect(() => {
     if (open) setStep("form");
@@ -758,55 +751,71 @@ function CheckoutModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !/^\d{10}$/.test(phone)) {
-      toast({ title: "Please enter a valid name and 10-digit phone.", variant: "destructive" });
+    if (!name.trim() || !/^\d{10}$/.test(phone) || !email.trim()) {
+      toast({ title: "Please enter your name, email and a valid 10-digit phone.", variant: "destructive" });
       return;
     }
-    if (tier === "couple" && (!secondName.trim() || !/^\d{10}$/.test(secondPhone))) {
-      toast({ title: "Please enter the second person's details.", variant: "destructive" });
+    if (!address.trim() || !city.trim() || !stateName.trim() || !/^\d{6}$/.test(pincode)) {
+      toast({ title: "Please enter a complete shipping address with a 6-digit PIN.", variant: "destructive" });
       return;
     }
 
     setStep("loading");
     try {
-      const quizAnswers = JSON.parse(localStorage.getItem("lose_belly_quiz_answers") || "null");
-      const { data, error } = await supabase.functions.invoke("lose-belly-checkout", {
-        body: {
-          name, phone: `+91${phone}`, email: email || undefined, tier,
-          secondPersonName: tier === "couple" ? secondName : undefined,
-          secondPersonPhone: tier === "couple" ? `+91${secondPhone}` : undefined,
-          referralCode: referral || undefined,
-          quizAnswers,
-          utm: getUTM(),
-        },
-      });
-      if (error || data?.error) throw new Error(error?.message || data?.error);
+      const fullPhone = `+91${phone}`;
+      const item = {
+        productId: t.sku,
+        productName: `Lose Your Belly 90 — ${t.name}`,
+        variantTitle: t.name,
+        price: t.price,
+        quantity: 1,
+      };
+
+      const orderData = await createRazorpayOrder(
+        [item],
+        name,
+        email,
+        fullPhone,
+        address,
+        city,
+        stateName,
+        pincode,
+        t.price,
+      );
 
       const ok = await loadRazorpayScript();
       if (!ok) throw new Error("Razorpay failed to load");
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const rzp = new (window as any).Razorpay({
-        key: data.razorpayKeyId,
-        amount: data.amountPaisa,
-        currency: "INR",
+        key: orderData.keyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
         name: "Agatsa One",
         description: `Lose Your Belly 90 — ${t.name}`,
-        order_id: data.razorpayOrderId,
-        prefill: { name, email, contact: `+91${phone}` },
+        order_id: orderData.orderId,
+        prefill: { name, email, contact: fullPhone },
         theme: { color: "#0B2A4A" },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         handler: async (response: any) => {
           try {
-            await supabase.functions.invoke("lose-belly-confirm", {
-              body: {
-                razorpayPaymentId: response.razorpay_payment_id,
-                razorpayOrderId: response.razorpay_order_id,
-                razorpaySignature: response.razorpay_signature,
+            await verifyRazorpayPayment(
+              response.razorpay_order_id,
+              response.razorpay_payment_id,
+              response.razorpay_signature,
+              {
+                customerEmail: email,
+                customerName: name,
+                items: [item],
+                total: t.price,
+                shippingAddress: address,
+                shippingCity: city,
+                shippingState: stateName,
+                shippingPincode: pincode,
               },
-            });
-            trackEvent("payment_success", { tier, amount: t.price });
-            navigate(`/lose-belly/welcome?orderId=${response.razorpay_order_id}&phone=${encodeURIComponent(`+91${phone}`)}`);
+            );
+            trackEvent("payment_success", { tier, amount: t.price, sku: t.sku });
+            navigate(`/lose-belly/welcome?orderId=${response.razorpay_order_id}&phone=${encodeURIComponent(fullPhone)}`);
           } catch (err) {
             console.error(err);
             toast({ title: "Payment recorded but verification failed. We'll contact you.", variant: "destructive" });
@@ -817,6 +826,8 @@ function CheckoutModal({
             trackEvent("payment_dismissed", { tier });
             setStep("form");
           },
+          backdropclose: false,
+          escape: false,
         },
       });
       rzp.on("payment.failed", () => {
@@ -837,18 +848,21 @@ function CheckoutModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-h-[90vh] max-w-md overflow-y-auto">
         {step === "loading" ? (
           <div className="flex flex-col items-center py-12">
             <Loader2 className="h-10 w-10 animate-spin text-[#0B2A4A]" />
-            <p className="mt-4 text-[#0B2A4A]">Creating your enrollment…</p>
+            <p className="mt-4 text-[#0B2A4A]">Opening secure payment…</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <h3 className="text-xl font-bold text-[#0B2A4A]">
-                You're choosing {t.name} — ₹{t.price.toLocaleString("en-IN")}
+                You're choosing {t.name}
               </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                ₹{t.price.toLocaleString("en-IN")} · one-time · no subscription
+              </p>
             </div>
             <div className="space-y-3">
               <Input placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
@@ -864,37 +878,38 @@ function CheckoutModal({
                   required
                 />
               </div>
-              <Input type="email" placeholder="Email (optional)" value={email} onChange={(e) => setEmail(e.target.value)} />
-              {tier === "couple" && (
-                <>
-                  <Input placeholder="Second person's name" value={secondName} onChange={(e) => setSecondName(e.target.value)} required />
-                  <div className="flex">
-                    <span className="inline-flex items-center rounded-l-md border border-r-0 border-input bg-muted px-3 text-sm">+91</span>
-                    <Input
-                      type="tel"
-                      inputMode="numeric"
-                      placeholder="Second person's 10-digit phone"
-                      value={secondPhone}
-                      onChange={(e) => setSecondPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                      className="rounded-l-none"
-                      required
-                    />
+              <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+
+              <div className="pt-2">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#0B2A4A]/60">
+                  Shipping address (Smart Scale + welcome kit)
+                </p>
+                <div className="space-y-3">
+                  <Input
+                    placeholder="House / flat, street, locality"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                  />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Input placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} required />
+                    <Input placeholder="State" value={stateName} onChange={(e) => setStateName(e.target.value)} required />
                   </div>
-                </>
-              )}
-              {showReferral ? (
-                <Input placeholder="Referral code" value={referral} onChange={(e) => setReferral(e.target.value)} />
-              ) : (
-                <button type="button" className="text-xs text-[#007A7C] underline" onClick={() => setShowReferral(true)}>
-                  Have a referral code?
-                </button>
-              )}
+                  <Input
+                    inputMode="numeric"
+                    placeholder="6-digit PIN code"
+                    value={pincode}
+                    onChange={(e) => setPincode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                    required
+                  />
+                </div>
+              </div>
             </div>
             <p className="text-xs text-muted-foreground">
-              We'll send your access link via SMS to this number. The Agatsa One app auto-recognizes you when you log in with this phone.
+              We'll text your access link to this number. Log in to the Agatsa One app with the same phone — it auto-recognises you.
             </p>
             <Button type="submit" className="h-12 w-full bg-[#0B2A4A] text-white hover:bg-[#0B2A4A]/90">
-              Continue to payment →
+              Pay ₹{t.price.toLocaleString("en-IN")} securely →
             </Button>
             <p className="text-center text-xs text-muted-foreground">
               By continuing you agree to our Terms and Refund Policy.
