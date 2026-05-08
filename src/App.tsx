@@ -43,6 +43,7 @@ const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const CheckoutPage = lazy(() => import("./pages/Checkout"));
 const Heritage = lazy(() => import("./pages/Heritage"));
 const LoseBelly = lazy(() => import("./pages/LoseBelly"));
+const LoseBellyFeatures = lazy(() => import("./pages/LoseBellyFeatures"));
 const LoseBellyWelcome = lazy(() => import("./pages/LoseBellyWelcome"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -144,6 +145,7 @@ function AppWithPricing() {
               <Route path="/r/:code" element={<ReferralPage />} />
               <Route path="/heritage" element={<Heritage />} />
               <Route path="/lose-belly" element={<LoseBelly />} />
+              <Route path="/lose-belly/features" element={<LoseBellyFeatures />} />
               <Route path="/lose-belly-90" element={<Navigate to="/lose-belly" replace />} />
               <Route path="/loseyourbelly" element={<Navigate to="/lose-belly" replace />} />
               <Route path="/lose-belly/welcome" element={<LoseBellyWelcome />} />
