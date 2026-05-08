@@ -96,10 +96,18 @@ export default function LoseBelly() {
   }, []);
 
   const openCheckout = (tier: Tier) => {
-    setSelectedTier(tier);
-    setCheckoutOpen(true);
+    const t = TIERS[tier];
     trackEvent("tier_select", { tier });
     trackEvent("checkout_open", { tier });
+    useCartStore.getState().clearCart();
+    useCartStore.getState().addItem({
+      productId: t.sku,
+      productName: `Lose Your Belly 90 — ${t.name}`,
+      variantTitle: t.name,
+      price: t.price,
+      quantity: 1,
+    });
+    navigate(`/checkout?sku=${t.sku}`);
   };
 
   const scrollToTiers = () => {
