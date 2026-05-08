@@ -1100,3 +1100,185 @@ function QuizModal({
     </Dialog>
   );
 }
+
+// ============================================================
+// App Feature Showcase — interactive phone + tabs
+// ============================================================
+const SHOWCASE_FEATURES = [
+  {
+    id: "home",
+    title: "Your daily mission control",
+    desc: "Day counter, today's lesson, and personal targets — all in one tap. No menus, no chaos.",
+    img: lb90Home,
+    pills: ["Day-by-day plan", "Today's lesson", "Smart targets"],
+  },
+  {
+    id: "pantry",
+    title: "Pantry Coach — snap your kitchen",
+    desc: "Photograph each shelf. We instantly tell you what to keep, swap, or reduce — based on your belly-loss goal.",
+    img: lb90Pantry,
+    pills: ["Snap & sort", "Belly-loss tuned", "10 seconds / shelf"],
+  },
+  {
+    id: "swaps",
+    title: "Indian-brand swap suggestions",
+    desc: "Maida → Aashirvaad atta. Maggi → sooji upma. Every swap uses brands you actually buy.",
+    img: lb90PantryList,
+    pills: ["Real Indian brands", "One-tap accept", "Tracked progress"],
+  },
+  {
+    id: "plate",
+    title: "Today's Plate — every macro tracked",
+    desc: "Calories, protein, carbs, sugar, fibre, sodium. See exactly where you stand against your daily floor and cap.",
+    img: lb90Plate,
+    pills: ["Live macros", "Floor & cap alerts", "Snap a meal"],
+  },
+  {
+    id: "tomorrow",
+    title: "Tomorrow's meals, planned tonight",
+    desc: "Personalised breakfast, lunch, dinner, and snacks — built from your pantry, tuned to your goal.",
+    img: lb90Meals,
+    pills: ["Veg / Non-veg", "From your pantry", "One-tap replace"],
+  },
+];
+
+function AppShowcaseSection() {
+  const [active, setActive] = useState(0);
+  const f = SHOWCASE_FEATURES[active];
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#0B2A4A] to-[#0B2A4A]/95 py-16 md:py-24">
+      <div className="container mx-auto px-4">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white/80">
+            Inside the app
+          </span>
+          <h2 className="mt-4 text-3xl font-bold text-white md:text-4xl">
+            Everything you need. Nothing you don't.
+          </h2>
+          <p className="mt-3 text-base text-white/70 md:text-lg">
+            Tap any feature to see it in the app.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-8">
+          {/* LEFT — feature tabs */}
+          <div className="order-2 space-y-3 md:order-1">
+            {SHOWCASE_FEATURES.map((feat, i) => {
+              const isActive = i === active;
+              return (
+                <button
+                  key={feat.id}
+                  onClick={() => setActive(i)}
+                  className={cn(
+                    "group block w-full rounded-2xl border-2 p-4 text-left transition-all md:p-5",
+                    isActive
+                      ? "border-[#F59E0B] bg-white/10 shadow-lg shadow-[#F59E0B]/10"
+                      : "border-white/10 bg-white/[0.03] hover:border-white/20 hover:bg-white/[0.06]"
+                  )}
+                >
+                  <div className="flex items-start gap-3">
+                    <div
+                      className={cn(
+                        "mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors",
+                        isActive
+                          ? "bg-[#F59E0B] text-[#0B2A4A]"
+                          : "bg-white/10 text-white/60 group-hover:bg-white/20"
+                      )}
+                    >
+                      {i + 1}
+                    </div>
+                    <div className="flex-1">
+                      <h3
+                        className={cn(
+                          "text-base font-bold transition-colors md:text-lg",
+                          isActive ? "text-white" : "text-white/80"
+                        )}
+                      >
+                        {feat.title}
+                      </h3>
+                      <AnimatePresence initial={false}>
+                        {isActive && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="overflow-hidden"
+                          >
+                            <p className="mt-2 text-sm leading-relaxed text-white/70">
+                              {feat.desc}
+                            </p>
+                            <div className="mt-3 flex flex-wrap gap-1.5">
+                              {feat.pills.map((p) => (
+                                <span
+                                  key={p}
+                                  className="rounded-full bg-[#F59E0B]/20 px-2.5 py-0.5 text-[11px] font-semibold text-[#F59E0B]"
+                                >
+                                  {p}
+                                </span>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* CENTER — iPhone mockup */}
+          <div className="order-1 flex justify-center md:order-2">
+            <div className="relative">
+              {/* Glow */}
+              <div className="absolute inset-0 -z-10 rounded-[3rem] bg-[#F59E0B]/20 blur-3xl" />
+              {/* Phone frame */}
+              <div className="relative h-[560px] w-[280px] rounded-[2.75rem] border-[10px] border-[#1a1a1a] bg-[#1a1a1a] shadow-2xl md:h-[620px] md:w-[310px]">
+                {/* Notch */}
+                <div className="absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-[#1a1a1a]" />
+                {/* Screen */}
+                <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-white">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={f.id}
+                      src={f.img}
+                      alt={f.title}
+                      initial={{ opacity: 0, scale: 1.02 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
+                      transition={{ duration: 0.35 }}
+                      className="h-full w-full object-cover object-top"
+                      loading="lazy"
+                    />
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT — stats / reassurance */}
+          <div className="order-3 space-y-4 md:order-3">
+            {[
+              { k: "10s", v: "to scan a shelf" },
+              { k: "2,400+", v: "Indian foods recognised" },
+              { k: "1-tap", v: "swap accept" },
+              { k: "Daily", v: "macro guardrails" },
+            ].map((s) => (
+              <div
+                key={s.k}
+                className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 md:p-5"
+              >
+                <div className="text-2xl font-extrabold text-[#F59E0B] md:text-3xl">
+                  {s.k}
+                </div>
+                <div className="text-sm text-white/70">{s.v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
