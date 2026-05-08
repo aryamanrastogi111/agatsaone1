@@ -34,8 +34,8 @@ import { cn } from "@/lib/utils";
 type Tier = "standard" | "plus";
 
 const TIERS: Record<Tier, { name: string; price: number; label: string; sku: string }> = {
-  standard: { name: "Standard", price: 4999, label: "Start your 90 days", sku: "LB90-STANDARD" },
-  plus: { name: "Plus", price: 9999, label: "Choose Plus", sku: "LB90-PLUS" },
+  standard: { name: "Standard", price: 4999, label: "Start your 90 days", sku: "lb90_standard" },
+  plus: { name: "Plus", price: 9999, label: "Choose Plus", sku: "lb90_plus" },
 };
 
 const QUIZ = [
