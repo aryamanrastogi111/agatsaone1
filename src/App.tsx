@@ -43,6 +43,7 @@ const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const CheckoutPage = lazy(() => import("./pages/Checkout"));
 const Heritage = lazy(() => import("./pages/Heritage"));
 const LoseBelly = lazy(() => import("./pages/LoseBelly"));
+const LoseBellyFeatures = lazy(() => import("./pages/LoseBellyFeatures"));
 const LoseBellyWelcome = lazy(() => import("./pages/LoseBellyWelcome"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
