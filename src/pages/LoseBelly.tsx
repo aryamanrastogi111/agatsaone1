@@ -217,6 +217,9 @@ export default function LoseBelly() {
           </div>
         </section>
 
+        {/* APP FEATURE SHOWCASE — phone + tabs */}
+        <AppShowcaseSection />
+
         {/* TRUST BAR */}
         <section className="border-y border-[#0B2A4A]/10 bg-white py-6">
           <div className="container mx-auto grid grid-cols-2 gap-4 px-4 text-center md:grid-cols-4">
