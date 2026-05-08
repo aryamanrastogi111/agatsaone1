@@ -461,8 +461,8 @@ export default function LoseBelly() {
         {/* TIER TABLE */}
         <section ref={tierTableRef} className="container mx-auto px-4 py-20">
           <h2 className="text-center text-3xl font-bold text-[#0B2A4A] md:text-4xl">Choose your plan</h2>
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {(["standard", "plus", "couple"] as Tier[]).map((tier) => (
+          <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
+            {(["standard", "plus"] as Tier[]).map((tier) => (
               <TierCard key={tier} tier={tier} onChoose={() => openCheckout(tier)} />
             ))}
           </div>
