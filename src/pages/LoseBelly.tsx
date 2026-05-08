@@ -608,7 +608,7 @@ export default function LoseBelly() {
                 ["What if I don't have an Agatsa Smart Scale?", "It's rented free with your program. Delivered to your address before Day 0. Returnable on completion."],
                 ["What if I miss days during the program?", "The program adjusts. As long as your Day 90 scan hits 2 of 3 goals, you graduate."],
                 ["Is this safe for diabetes / pregnancy / heart conditions?", "Please consult your doctor first. Lose Your Belly 90 is a wellness and lifestyle program, not medical treatment."],
-                ["For the couples tier, do we both need a scale?", "No — one scale serves both, weighed at separate times."],
+                ["Will the Smart Scale really arrive in time?", "Yes — we ship within 48 hours of your enrollment. Smart Scale arrives in 5–7 days. Your daily lessons start the morning after."],
                 ["How does the refund actually work?", "If your Day 90 scan misses 2 of 3 goals, the app shows a 'Claim refund' button. Auto-credited to your card in 7 working days. App access continues for 30 more days as goodwill."],
                 ["What happens after Day 90 if I succeed?", "You get a maintenance plan, a shareable transformation card, and a 30% discount to continue for another 90 days."],
                 ["Can I pay with UPI / Netbanking / EMI?", "Yes — Razorpay supports all UPI apps (PhonePe, GPay, Paytm), all Indian cards, netbanking, and 9-month EMI on cards above ₹5,000."],
