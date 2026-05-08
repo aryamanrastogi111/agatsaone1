@@ -738,10 +738,10 @@ function CheckoutModal({
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [secondName, setSecondName] = useState("");
-  const [secondPhone, setSecondPhone] = useState("");
-  const [referral, setReferral] = useState("");
-  const [showReferral, setShowReferral] = useState(false);
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [stateName, setStateName] = useState("");
+  const [pincode, setPincode] = useState("");
 
   useEffect(() => {
     if (open) setStep("form");
@@ -751,55 +751,71 @@ function CheckoutModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !/^\d{10}$/.test(phone)) {
-      toast({ title: "Please enter a valid name and 10-digit phone.", variant: "destructive" });
+    if (!name.trim() || !/^\d{10}$/.test(phone) || !email.trim()) {
+      toast({ title: "Please enter your name, email and a valid 10-digit phone.", variant: "destructive" });
       return;
     }
-    if (tier === "couple" && (!secondName.trim() || !/^\d{10}$/.test(secondPhone))) {
-      toast({ title: "Please enter the second person's details.", variant: "destructive" });
+    if (!address.trim() || !city.trim() || !stateName.trim() || !/^\d{6}$/.test(pincode)) {
+      toast({ title: "Please enter a complete shipping address with a 6-digit PIN.", variant: "destructive" });
       return;
     }
 
     setStep("loading");
     try {
-      const quizAnswers = JSON.parse(localStorage.getItem("lose_belly_quiz_answers") || "null");
-      const { data, error } = await supabase.functions.invoke("lose-belly-checkout", {
-        body: {
-          name, phone: `+91${phone}`, email: email || undefined, tier,
-          secondPersonName: tier === "couple" ? secondName : undefined,
-          secondPersonPhone: tier === "couple" ? `+91${secondPhone}` : undefined,
-          referralCode: referral || undefined,
-          quizAnswers,
-          utm: getUTM(),
-        },
-      });
-      if (error || data?.error) throw new Error(error?.message || data?.error);
+      const fullPhone = `+91${phone}`;
+      const item = {
+        productId: t.sku,
+        productName: `Lose Your Belly 90 — ${t.name}`,
+        variantTitle: t.name,
+        price: t.price,
+        quantity: 1,
+      };
+
+      const orderData = await createRazorpayOrder(
+        [item],
+        name,
+        email,
+        fullPhone,
+        address,
+        city,
+        stateName,
+        pincode,
+        t.price,
+      );
 
       const ok = await loadRazorpayScript();
       if (!ok) throw new Error("Razorpay failed to load");
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const rzp = new (window as any).Razorpay({
-        key: data.razorpayKeyId,
-        amount: data.amountPaisa,
-        currency: "INR",
+        key: orderData.keyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
         name: "Agatsa One",
         description: `Lose Your Belly 90 — ${t.name}`,
-        order_id: data.razorpayOrderId,
-        prefill: { name, email, contact: `+91${phone}` },
+        order_id: orderData.orderId,
+        prefill: { name, email, contact: fullPhone },
         theme: { color: "#0B2A4A" },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         handler: async (response: any) => {
           try {
-            await supabase.functions.invoke("lose-belly-confirm", {
-              body: {
-                razorpayPaymentId: response.razorpay_payment_id,
-                razorpayOrderId: response.razorpay_order_id,
-                razorpaySignature: response.razorpay_signature,
+            await verifyRazorpayPayment(
+              response.razorpay_order_id,
+              response.razorpay_payment_id,
+              response.razorpay_signature,
+              {
+                customerEmail: email,
+                customerName: name,
+                items: [item],
+                total: t.price,
+                shippingAddress: address,
+                shippingCity: city,
+                shippingState: stateName,
+                shippingPincode: pincode,
               },
-            });
-            trackEvent("payment_success", { tier, amount: t.price });
-            navigate(`/lose-belly/welcome?orderId=${response.razorpay_order_id}&phone=${encodeURIComponent(`+91${phone}`)}`);
+            );
+            trackEvent("payment_success", { tier, amount: t.price, sku: t.sku });
+            navigate(`/lose-belly/welcome?orderId=${response.razorpay_order_id}&phone=${encodeURIComponent(fullPhone)}`);
           } catch (err) {
             console.error(err);
             toast({ title: "Payment recorded but verification failed. We'll contact you.", variant: "destructive" });
@@ -810,6 +826,8 @@ function CheckoutModal({
             trackEvent("payment_dismissed", { tier });
             setStep("form");
           },
+          backdropclose: false,
+          escape: false,
         },
       });
       rzp.on("payment.failed", () => {
@@ -830,18 +848,21 @@ function CheckoutModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-h-[90vh] max-w-md overflow-y-auto">
         {step === "loading" ? (
           <div className="flex flex-col items-center py-12">
             <Loader2 className="h-10 w-10 animate-spin text-[#0B2A4A]" />
-            <p className="mt-4 text-[#0B2A4A]">Creating your enrollment…</p>
+            <p className="mt-4 text-[#0B2A4A]">Opening secure payment…</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <h3 className="text-xl font-bold text-[#0B2A4A]">
-                You're choosing {t.name} — ₹{t.price.toLocaleString("en-IN")}
+                You're choosing {t.name}
               </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                ₹{t.price.toLocaleString("en-IN")} · one-time · no subscription
+              </p>
             </div>
             <div className="space-y-3">
               <Input placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
@@ -857,37 +878,38 @@ function CheckoutModal({
                   required
                 />
               </div>
-              <Input type="email" placeholder="Email (optional)" value={email} onChange={(e) => setEmail(e.target.value)} />
-              {tier === "couple" && (
-                <>
-                  <Input placeholder="Second person's name" value={secondName} onChange={(e) => setSecondName(e.target.value)} required />
-                  <div className="flex">
-                    <span className="inline-flex items-center rounded-l-md border border-r-0 border-input bg-muted px-3 text-sm">+91</span>
-                    <Input
-                      type="tel"
-                      inputMode="numeric"
-                      placeholder="Second person's 10-digit phone"
-                      value={secondPhone}
-                      onChange={(e) => setSecondPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                      className="rounded-l-none"
-                      required
-                    />
+              <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+
+              <div className="pt-2">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#0B2A4A]/60">
+                  Shipping address (Smart Scale + welcome kit)
+                </p>
+                <div className="space-y-3">
+                  <Input
+                    placeholder="House / flat, street, locality"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                  />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Input placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} required />
+                    <Input placeholder="State" value={stateName} onChange={(e) => setStateName(e.target.value)} required />
                   </div>
-                </>
-              )}
-              {showReferral ? (
-                <Input placeholder="Referral code" value={referral} onChange={(e) => setReferral(e.target.value)} />
-              ) : (
-                <button type="button" className="text-xs text-[#007A7C] underline" onClick={() => setShowReferral(true)}>
-                  Have a referral code?
-                </button>
-              )}
+                  <Input
+                    inputMode="numeric"
+                    placeholder="6-digit PIN code"
+                    value={pincode}
+                    onChange={(e) => setPincode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                    required
+                  />
+                </div>
+              </div>
             </div>
             <p className="text-xs text-muted-foreground">
-              We'll send your access link via SMS to this number. The Agatsa One app auto-recognizes you when you log in with this phone.
+              We'll text your access link to this number. Log in to the Agatsa One app with the same phone — it auto-recognises you.
             </p>
             <Button type="submit" className="h-12 w-full bg-[#0B2A4A] text-white hover:bg-[#0B2A4A]/90">
-              Continue to payment →
+              Pay ₹{t.price.toLocaleString("en-IN")} securely →
             </Button>
             <p className="text-center text-xs text-muted-foreground">
               By continuing you agree to our Terms and Refund Policy.
