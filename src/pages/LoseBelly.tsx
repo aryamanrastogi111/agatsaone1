@@ -704,7 +704,6 @@ function TierCard({ tier, onChoose }: { tier: Tier; onChoose: () => void }) {
       <h3 className="text-2xl font-bold text-[#0B2A4A]">{t.name}</h3>
       <p className="mt-3 text-4xl font-bold text-[#0B2A4A]">
         ₹{t.price.toLocaleString("en-IN")}
-        {tier === "couple" && <span className="text-base font-normal text-muted-foreground"> (two people)</span>}
       </p>
       <p className="mt-1 text-sm text-muted-foreground">One-time · No subscription</p>
       <ul className="mt-6 flex-1 space-y-3">
