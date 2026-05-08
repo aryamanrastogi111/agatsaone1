@@ -395,7 +395,7 @@ export default function LoseBelly() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center">
               <Stethoscope className="mx-auto h-10 w-10 text-[#65E0B6]" />
-              <h2 className="mt-4 text-3xl font-bold md:text-4xl">Built with doctors. Measured like medicine.</h2>
+              <h2 className="mt-4 text-3xl font-bold text-white md:text-4xl">Built with doctors. Measured like medicine.</h2>
               <p className="mt-4 text-white/70">
                 The Lose Your Belly 90 protocol was reviewed by clinicians and built on the same body-composition signals used in metabolic clinics.
               </p>
