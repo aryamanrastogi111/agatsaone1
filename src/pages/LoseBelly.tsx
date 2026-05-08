@@ -68,12 +68,11 @@ export default function LoseBelly() {
       "India's first body-measured weight loss program. Money-back guarantee tied to 3 measurable outcomes. Smart scale included. Powered by Nera AI.",
   });
 
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [selectedTier, setSelectedTier] = useState<Tier>("standard");
   const [quizOpen, setQuizOpen] = useState(false);
   const [showStickyCta, setShowStickyCta] = useState(false);
   const tierTableRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   // Live counter
   const [enrolledCount, setEnrolledCount] = useState(21400);
