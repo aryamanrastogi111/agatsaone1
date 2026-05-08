@@ -35,6 +35,7 @@ import {
   verifyRazorpayPayment,
 } from "@/lib/razorpay";
 import { cn } from "@/lib/utils";
+import { useCartStore } from "@/stores/cartStore";
 
 type Tier = "standard" | "plus";
 
