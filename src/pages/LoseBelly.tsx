@@ -35,6 +35,7 @@ import {
   verifyRazorpayPayment,
 } from "@/lib/razorpay";
 import { cn } from "@/lib/utils";
+import { useCartStore } from "@/stores/cartStore";
 
 type Tier = "standard" | "plus";
 
@@ -68,12 +69,11 @@ export default function LoseBelly() {
       "India's first body-measured weight loss program. Money-back guarantee tied to 3 measurable outcomes. Smart scale included. Powered by Nera AI.",
   });
 
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [selectedTier, setSelectedTier] = useState<Tier>("standard");
   const [quizOpen, setQuizOpen] = useState(false);
   const [showStickyCta, setShowStickyCta] = useState(false);
   const tierTableRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   // Live counter
   const [enrolledCount, setEnrolledCount] = useState(21400);
@@ -96,10 +96,18 @@ export default function LoseBelly() {
   }, []);
 
   const openCheckout = (tier: Tier) => {
-    setSelectedTier(tier);
-    setCheckoutOpen(true);
+    const t = TIERS[tier];
     trackEvent("tier_select", { tier });
     trackEvent("checkout_open", { tier });
+    useCartStore.getState().clearCart();
+    useCartStore.getState().addItem({
+      productId: t.sku,
+      productName: `Lose Your Belly 90 — ${t.name}`,
+      variantTitle: t.name,
+      price: t.price,
+      quantity: 1,
+    });
+    navigate(`/checkout?sku=${t.sku}`);
   };
 
   const scrollToTiers = () => {
@@ -757,12 +765,7 @@ export default function LoseBelly() {
           </div>
         </section>
 
-        {/* CHECKOUT MODAL */}
-        <CheckoutModal
-          open={checkoutOpen}
-          onOpenChange={setCheckoutOpen}
-          tier={selectedTier}
-        />
+        {/* Checkout uses standard /checkout flow */}
 
         {/* QUIZ MODAL */}
         <QuizModal
