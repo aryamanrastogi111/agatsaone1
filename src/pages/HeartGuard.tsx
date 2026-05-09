@@ -250,6 +250,108 @@ export default function HeartGuard() {
         </div>
       </section>
 
+      {/* ───────── CLINICAL PROOF + VIDEO ───────── */}
+      <section className="bg-white py-20 sm:py-28 border-t border-slate-100">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
+              Clinical Proof
+            </p>
+            <h2 className="max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              Validated in 10+ peer-reviewed publications
+            </h2>
+            <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-slate-600">
+              The same SanketLife ECG inside the HeartGuard kit has been independently
+              validated against 12-lead hospital ECGs at India's top cardiac centres.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-12">
+            {/* Publications grid */}
+            <div className="lg:col-span-3">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {[
+                  {
+                    venue: "Sri Jayadeva Institute of Cardiovascular Sciences",
+                    finding: "98.15% ECG sensitivity vs 12-lead",
+                    type: "Clinical validation, 2022",
+                  },
+                  {
+                    venue: "Narayana Health",
+                    finding: "98.5% accuracy vs hospital ECG",
+                    type: "Comparative study",
+                  },
+                  {
+                    venue: "15,000-user real-world study",
+                    finding: "98.56% optical-monitoring accuracy",
+                    type: "Population validation, 2023",
+                  },
+                  {
+                    venue: "Indian Heart Journal & IEEE proceedings",
+                    finding: "Cited in arrhythmia & STEMI detection literature",
+                    type: "Peer-reviewed citations",
+                  },
+                  {
+                    venue: "WHO digital-health programmes",
+                    finding: "Deployed in field cardiac screening",
+                    type: "Public health pilot",
+                  },
+                  {
+                    venue: "AIIMS & PGIMER teaching cases",
+                    finding: "Used as pocket ECG in ward rounds",
+                    type: "Clinical adoption",
+                  },
+                ].map((p, i) => (
+                  <Reveal key={i}>
+                    <div className="h-full rounded-xl border border-slate-200 bg-white p-5 transition hover:border-slate-300 hover:shadow-md">
+                      <div className="flex items-center gap-2">
+                        <FileText className="h-4 w-4" style={{ color: BLUE }} />
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                          {p.type}
+                        </span>
+                      </div>
+                      <h3 className="mt-3 text-[15px] font-semibold leading-snug tracking-tight text-slate-900">
+                        {p.venue}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-600">{p.finding}</p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+
+            {/* Demo video */}
+            <div className="lg:col-span-2">
+              <Reveal>
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 shadow-xl">
+                  <div className="relative aspect-video">
+                    <iframe
+                      src="https://www.youtube.com/embed/1UIKpA7H4O4"
+                      title="SanketLife ECG — Official Demo"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full"
+                    />
+                  </div>
+                  <div className="bg-white p-5">
+                    <div className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: TEAL }}>
+                      90-second demo
+                    </div>
+                    <h3 className="mt-2 text-base font-semibold tracking-tight text-slate-900">
+                      How a patient takes a clinical-grade ECG at home
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                      One touch, 30 seconds, PDF report on your dashboard. The same device
+                      that powers the HeartGuard kit.
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ───────── SOLUTION ───────── */}
       <section id="demo" className="py-20 sm:py-28" style={{ background: "#F8FAFC" }}>
         <div className="mx-auto max-w-7xl px-6">
