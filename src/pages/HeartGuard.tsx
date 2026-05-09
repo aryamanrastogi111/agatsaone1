@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   CalendarX,
   HeartPulse,
@@ -129,6 +129,40 @@ export default function HeartGuard() {
   const paybackDaysRaw = (24999 / monthly) * 30;
   const paybackDays = Math.max(5, Math.round(paybackDaysRaw / 5) * 5);
 
+  // Hero carousel
+  const HERO_SLIDES = [
+    {
+      key: "portal",
+      label: "Doctor Portal",
+      sub: "Daily ECG triage · Nera AI",
+      gradient: "linear-gradient(135deg, #2563EB 0%, #0D9488 100%)",
+      kind: "phone" as const,
+    },
+    {
+      key: "ecg",
+      label: "SanketLife 12-Lead ECG",
+      sub: "Touch-based · CDSCO approved",
+      gradient: "linear-gradient(135deg, #7C3AED 0%, #DB2777 100%)",
+      kind: "image" as const,
+      src: sanketlifeDevice,
+      alt: "SanketLife 12-Lead touch ECG device",
+    },
+    {
+      key: "band",
+      label: "EasyTouch Rhythm Band",
+      sub: "HRV · Sleep · Activity · SpO₂",
+      gradient: "linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)",
+      kind: "image" as const,
+      src: rhythmBand,
+      alt: "EasyTouch Rhythm vitals band",
+    },
+  ];
+  const [heroSlide, setHeroSlide] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setHeroSlide((i) => (i + 1) % HERO_SLIDES.length), 4000);
+    return () => clearInterval(id);
+  }, [HERO_SLIDES.length]);
+
   const scrollToOrder = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     e.preventDefault();
     document.getElementById("order")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -229,48 +263,96 @@ export default function HeartGuard() {
             </div>
           </div>
 
-          {/* Phone mockup with floating device cards */}
+          {/* Hero carousel: phone mockup ↔ ECG device ↔ Rhythm band */}
           <div className="lg:col-span-5">
-            <div className="relative">
-              <DoctorPhoneMockup />
+            <div
+              className="relative mx-auto w-full max-w-md overflow-hidden rounded-3xl border border-white/15 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
+              style={{ aspectRatio: "4 / 5" }}
+            >
+              {/* Animated gradient background per slide */}
+              <AnimatePresence mode="sync">
+                <motion.div
+                  key={`bg-${HERO_SLIDES[heroSlide].key}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="absolute inset-0"
+                  style={{ background: HERO_SLIDES[heroSlide].gradient }}
+                />
+              </AnimatePresence>
 
-              {/* Floating: ln ECG device — visible on all breakpoints */}
-              <motion.div
-                initial={{ opacity: 0, x: -20, y: 20 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.7, ease: "easeOut" }}
-                className="absolute -left-2 top-8 w-28 rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-2.5 shadow-2xl backdrop-blur-md sm:-left-4 sm:top-12 sm:w-40 sm:p-3 lg:-left-10"
-              >
-                <div className="overflow-hidden rounded-xl bg-white/95">
-                  <img
-                    src={sanketlifeDevice}
-                    alt="SanketLife 12-Lead ECG device"
-                    loading="eager"
-                    className="h-16 w-full object-contain p-1.5 sm:h-24 sm:p-2"
-                  />
-                </div>
-                <p className="mt-1.5 text-[9px] font-bold uppercase tracking-wider text-white sm:mt-2 sm:text-[10px]">SanketLife ECG</p>
-                <p className="text-[9px] text-white/60 sm:text-[10px]">5 devices included</p>
-              </motion.div>
+              {/* Soft sheen overlay */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.18), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(0,0,0,0.25), transparent 60%)",
+                }}
+              />
 
-              {/* Floating: Rhythm band — visible on all breakpoints */}
-              <motion.div
-                initial={{ opacity: 0, x: 20, y: 20 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.7, ease: "easeOut" }}
-                className="absolute -right-2 bottom-12 w-28 rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-2.5 shadow-2xl backdrop-blur-md sm:-right-4 sm:bottom-16 sm:w-40 sm:p-3 lg:-right-10"
-              >
-                <div className="overflow-hidden rounded-xl bg-white/95">
-                  <img
-                    src={rhythmBand}
-                    alt="EasyTouch Rhythm vitals band"
-                    loading="eager"
-                    className="h-16 w-full object-contain p-1.5 sm:h-24 sm:p-2"
+              {/* Slide content */}
+              <div className="relative flex h-full w-full items-center justify-center p-6 sm:p-10">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={HERO_SLIDES[heroSlide].key}
+                    initial={{ opacity: 0, x: 60 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -60 }}
+                    transition={{ duration: 0.55, ease: "easeOut" }}
+                    className="flex h-full w-full items-center justify-center"
+                  >
+                    {HERO_SLIDES[heroSlide].kind === "phone" ? (
+                      <div className="scale-90 sm:scale-100">
+                        <DoctorPhoneMockup />
+                      </div>
+                    ) : (
+                      <img
+                        src={HERO_SLIDES[heroSlide].src}
+                        alt={HERO_SLIDES[heroSlide].alt}
+                        loading="eager"
+                        className="max-h-[78%] w-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.45)]"
+                      />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Slide label */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`lbl-${HERO_SLIDES[heroSlide].key}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4 }}
+                  className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-3 bg-gradient-to-t from-black/60 to-transparent px-5 pb-5 pt-12"
+                >
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70">
+                      In the kit
+                    </p>
+                    <p className="mt-1 text-base font-semibold text-white sm:text-lg">
+                      {HERO_SLIDES[heroSlide].label}
+                    </p>
+                    <p className="text-xs text-white/80">{HERO_SLIDES[heroSlide].sub}</p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Dots */}
+              <div className="absolute bottom-3 right-4 z-20 flex gap-1.5">
+                {HERO_SLIDES.map((s, i) => (
+                  <button
+                    key={s.key}
+                    onClick={() => setHeroSlide(i)}
+                    aria-label={`Show ${s.label}`}
+                    className={`h-1.5 rounded-full transition-all ${
+                      i === heroSlide ? "w-6 bg-white" : "w-1.5 bg-white/50 hover:bg-white/70"
+                    }`}
                   />
-                </div>
-                <p className="mt-1.5 text-[9px] font-bold uppercase tracking-wider text-white sm:mt-2 sm:text-[10px]">Rhythm Band</p>
-                <p className="text-[9px] text-white/60 sm:text-[10px]">HRV · sleep · activity</p>
-              </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
