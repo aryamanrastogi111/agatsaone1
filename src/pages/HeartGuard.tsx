@@ -205,15 +205,12 @@ export default function HeartGuard() {
 
   const navigate = useNavigate();
 
-  // HeartGuard Kit = 5× SanketLife ECG + 5× Rhythm Band → reuses existing /checkout flow
-  // (orders, Razorpay, admin dashboard all already integrated for these SKUs)
-  const HEARTGUARD_KIT_SKUS =
-    "ecg_bundle,ecg_bundle,ecg_bundle,ecg_bundle,ecg_bundle,band_sub,band_sub,band_sub,band_sub,band_sub";
+  // HeartGuard Doctor Starter Kit — single SKU @ ₹24,999 in backend catalog
+  const HEARTGUARD_KIT_SKUS = "heartguard_starter";
 
   const goToCheckout = (e?: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     if (e) e.preventDefault();
-    // HEARTGUARD coupon brings the 5×ECG + 5×Band cart (₹44,990) down to ₹24,999
-    navigate(`/checkout?sku=${HEARTGUARD_KIT_SKUS}&coupon=HEARTGUARD&utm_source=heartguard`);
+    navigate(`/checkout?sku=${HEARTGUARD_KIT_SKUS}&utm_source=heartguard`);
   };
 
   return (
