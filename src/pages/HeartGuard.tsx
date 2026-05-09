@@ -267,7 +267,7 @@ export default function HeartGuard() {
           <div className="lg:col-span-5">
             <div
               className="relative mx-auto w-full max-w-md overflow-hidden rounded-3xl border border-white/15 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
-              style={{ aspectRatio: "4 / 5" }}
+              style={{ aspectRatio: "3 / 4", minHeight: "480px" }}
             >
               {/* Animated gradient background per slide */}
               <AnimatePresence mode="sync">
@@ -292,7 +292,7 @@ export default function HeartGuard() {
               />
 
               {/* Slide content */}
-              <div className="relative flex h-full w-full items-center justify-center p-6 sm:p-10">
+              <div className="absolute inset-0 flex items-center justify-center">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={HERO_SLIDES[heroSlide].key}
@@ -300,18 +300,20 @@ export default function HeartGuard() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -60 }}
                     transition={{ duration: 0.55, ease: "easeOut" }}
-                    className="flex h-full w-full items-center justify-center"
+                    className="absolute inset-0 flex items-center justify-center"
                   >
                     {HERO_SLIDES[heroSlide].kind === "phone" ? (
-                      <div className="scale-90 sm:scale-100">
-                        <DoctorPhoneMockup />
+                      <div className="flex h-full w-full items-center justify-center px-6 pb-24 pt-6">
+                        <div className="origin-center scale-[0.78] sm:scale-90">
+                          <DoctorPhoneMockup />
+                        </div>
                       </div>
                     ) : (
                       <img
                         src={HERO_SLIDES[heroSlide].src}
                         alt={HERO_SLIDES[heroSlide].alt}
                         loading="eager"
-                        className="max-h-[78%] w-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.45)]"
+                        className="absolute inset-0 h-full w-full object-contain p-4 pb-24 drop-shadow-[0_20px_30px_rgba(0,0,0,0.45)]"
                       />
                     )}
                   </motion.div>
