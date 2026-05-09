@@ -236,7 +236,7 @@ export default function HeartGuard() {
           </div>
           <a
             href="#order"
-            onClick={scrollToOrder}
+            onClick={goToCheckout}
             className="hidden rounded-md px-4 py-2 text-sm font-medium text-white/80 transition hover:text-white sm:inline-block"
           >
             Order Kit →
@@ -272,7 +272,7 @@ export default function HeartGuard() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#order"
-                onClick={scrollToOrder}
+                onClick={goToCheckout}
                 className="inline-flex items-center justify-center rounded-md px-6 py-4 text-base font-semibold text-white shadow-lg transition hover:brightness-110"
                 style={{ background: BLUE }}
               >
@@ -530,7 +530,7 @@ export default function HeartGuard() {
               <div className="mt-8 text-center">
                 <a
                   href="#order"
-                  onClick={scrollToOrder}
+                  onClick={goToCheckout}
                   className="inline-flex items-center gap-2 rounded-md px-6 py-3.5 text-base font-semibold text-white shadow-md transition hover:brightness-110"
                   style={{ background: BLUE }}
                 >
@@ -1130,7 +1130,7 @@ export default function HeartGuard() {
               </ul>
 
               <button
-                onClick={scrollToOrder}
+                onClick={goToCheckout}
                 className="mt-8 flex w-full items-center justify-center gap-2 rounded-md px-6 py-4 text-base font-semibold text-white shadow-md transition hover:brightness-110"
                 style={{ background: BLUE }}
               >
@@ -1227,7 +1227,7 @@ export default function HeartGuard() {
               that's a 3,000% return on platform cost.
             </p>
             <button
-              onClick={scrollToOrder}
+              onClick={goToCheckout}
               className="mt-10 inline-flex items-center justify-center gap-2 rounded-md px-8 py-4 text-base font-semibold text-white shadow-lg transition hover:brightness-110"
               style={{ background: BLUE }}
             >
