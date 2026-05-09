@@ -386,6 +386,68 @@ export default function HeartGuard() {
         </div>
       </section>
 
+      {/* ───────── DOCTOR ENDORSEMENTS + AWARDS ───────── */}
+      <section className="bg-slate-950 py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
+              Trusted by Experts
+            </p>
+            <h2 className="max-w-3xl text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Cardiologists, hospitals & national media on Agatsa
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-slate-400">
+              Watch leading doctors and institutions vouch for the same ECG device that ships
+              inside every HeartGuard kit.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {DOCTOR_VIDEOS.map((v) => (
+              <Reveal key={v.id}>
+                <VideoCard video={v} />
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-6 flex justify-center">
+            <YouTubeChannelLink />
+          </div>
+
+          {/* Awards strip */}
+          <div className="mt-16 border-t border-white/10 pt-12">
+            <Reveal>
+              <p className="mb-2 text-center text-xs font-semibold uppercase tracking-widest text-slate-400">
+                Recognised by
+              </p>
+              <h3 className="text-center text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                National & international awards
+              </h3>
+            </Reveal>
+            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
+              {HG_AWARDS.map((a, i) => (
+                <Reveal key={i}>
+                  <div className="relative flex h-full flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur transition hover:border-white/20 hover:bg-white/[0.07]">
+                    {a.recent && (
+                      <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow">
+                        Latest
+                      </span>
+                    )}
+                    <img
+                      src={a.image}
+                      alt={a.name}
+                      loading="lazy"
+                      className="h-20 w-auto object-contain opacity-90"
+                    />
+                    <p className="mt-4 text-sm font-medium text-white/85">{a.name}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ───────── SOLUTION ───────── */}
       <section id="demo" className="py-20 sm:py-28" style={{ background: "#F8FAFC" }}>
         <div className="mx-auto max-w-7xl px-6">
