@@ -473,7 +473,7 @@ export default function HeartGuard() {
               </p>
 
               <p className="mt-2 text-center text-xs text-slate-400">
-                * You set your own programme fee. This is illustrative at ₹3,000/month.
+                * You set your own programme fee. This is an illustration at ₹3,000/month charged as patient fees.
               </p>
 
               <div className="mt-8 text-center">
