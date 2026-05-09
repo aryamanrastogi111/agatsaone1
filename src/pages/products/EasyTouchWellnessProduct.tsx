@@ -631,7 +631,7 @@ export default function EasyTouchWellnessProduct() {
                 {
                   img: appSugarPatternImg,
                   title: "Sugar Pattern History",
-                  body: "Your readings anchored to real glucometer values, with zone and trend.",
+                  body: "Your own logged Glucometer values with zone and trend.",
                 },
               ].map((item, i) => (
                 <motion.div
