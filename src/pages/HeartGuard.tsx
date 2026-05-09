@@ -17,6 +17,11 @@ import {
   Heart,
   Droplet,
   Stethoscope,
+  Search,
+  AlertTriangle,
+  CircleDot,
+  Send,
+  Sparkles,
   Check,
   Lock,
   Package,
@@ -571,6 +576,178 @@ export default function HeartGuard() {
             <p className="mt-5 max-w-3xl text-base text-slate-600 sm:text-lg">
               Nera AI correlates your patient's ECG with their HRV, sleep, glucose patterns and
               tells you what a number means — not just what it is.
+            </p>
+          </Reveal>
+
+          {/* ───── Doctor Portal Mockup ───── */}
+          <Reveal>
+            <div className="mt-12 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-2xl">
+              <div className="flex items-center gap-2 border-b border-slate-200 bg-white px-4 py-2.5">
+                <div className="flex gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
+                </div>
+                <div className="ml-3 flex flex-1 items-center gap-2 rounded-md bg-slate-100 px-3 py-1 text-[11px] text-slate-500">
+                  <Lock className="h-3 w-3" /> portal.agatsa.one / dashboard
+                </div>
+              </div>
+
+              <div className="grid grid-cols-12">
+                <aside className="col-span-12 border-b border-slate-200 bg-white p-4 sm:col-span-3 sm:border-b-0 sm:border-r">
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: TEAL }}>
+                      <HeartPulse className="h-4 w-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold tracking-tight">Agatsa One</p>
+                      <p className="text-[10px] text-slate-500">Doctor Portal</p>
+                    </div>
+                  </div>
+                  <nav className="mt-5 space-y-1 text-[12px]">
+                    {[
+                      { Icon: LayoutDashboard, label: "Dashboard", active: true },
+                      { Icon: Stethoscope, label: "My Patients", count: "47" },
+                      { Icon: Activity, label: "ECG Reports", count: "20" },
+                      { Icon: Bell, label: "Alerts", count: "3", urgent: true },
+                      { Icon: FileText, label: "Weekly Reports" },
+                      { Icon: Send, label: "Messages" },
+                    ].map((it, i) => (
+                      <div
+                        key={i}
+                        className={`flex items-center justify-between rounded-md px-2.5 py-1.5 ${it.active ? "bg-purple-50 text-purple-700 font-semibold" : "text-slate-600"}`}
+                      >
+                        <span className="flex items-center gap-2">
+                          <it.Icon className="h-3.5 w-3.5" />
+                          {it.label}
+                        </span>
+                        {it.count && (
+                          <span className={`rounded-full px-1.5 text-[10px] font-bold ${it.urgent ? "bg-red-100 text-red-600" : "bg-slate-100 text-slate-600"}`}>
+                            {it.count}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </nav>
+                </aside>
+
+                <main className="col-span-12 bg-slate-50 p-5 sm:col-span-9 sm:p-6">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <p className="text-[11px] font-medium text-slate-500">Tuesday, 12 Nov · 7:42 AM</p>
+                      <h4 className="mt-0.5 text-lg font-bold tracking-tight">Good morning, Dr. Mehta</h4>
+                    </div>
+                    <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-[11px] text-slate-500">
+                      <Search className="h-3.5 w-3.5" /> Search patient…
+                    </div>
+                  </div>
+
+                  <div className="mt-4 rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 to-white p-4">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="h-4 w-4 text-purple-600" />
+                      <p className="text-[11px] font-bold uppercase tracking-wider text-purple-700">Nera AI · Morning Briefing</p>
+                    </div>
+                    <p className="mt-2 text-[13px] leading-relaxed text-slate-700">
+                      I reviewed <strong>20 ECGs</strong> overnight. <strong className="text-emerald-600">17 stable</strong>,
+                      <strong className="text-amber-600"> 2 borderline</strong>, <strong className="text-red-600">1 needs urgent review</strong>.
+                      Estimated time to triage: <strong>6 minutes</strong>.
+                    </p>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    {[
+                      { label: "ECGs read", value: "20", sub: "today", color: "text-slate-900" },
+                      { label: "Urgent", value: "1", sub: "review now", color: "text-red-600" },
+                      { label: "Borderline", value: "2", sub: "today", color: "text-amber-600" },
+                      { label: "Stable", value: "17", sub: "auto-cleared", color: "text-emerald-600" },
+                    ].map((k, i) => (
+                      <div key={i} className="rounded-xl border border-slate-200 bg-white p-3">
+                        <p className="text-[10px] font-medium uppercase tracking-wider text-slate-500">{k.label}</p>
+                        <p className={`mt-1 text-2xl font-bold tracking-tight ${k.color}`}>{k.value}</p>
+                        <p className="text-[10px] text-slate-500">{k.sub}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white">
+                    <div className="flex items-center justify-between border-b border-slate-200 px-4 py-2.5">
+                      <p className="text-[12px] font-semibold tracking-tight">Today's Triage Queue</p>
+                      <p className="text-[10px] text-slate-500">Sorted by Nera priority</p>
+                    </div>
+                    <div className="divide-y divide-slate-100 text-[12px]">
+                      {[
+                        { name: "Rajesh Kumar", age: "58 · M", note: "ECG: AFib detected · HRV ↓ 3 days · BP 152/96", tag: "URGENT", color: "red", dot: "bg-red-500" },
+                        { name: "Sunita Verma", age: "62 · F", note: "ECG: ST-T changes · Sleep score 48 · Sugar spike post-dinner", tag: "REVIEW", color: "amber", dot: "bg-amber-500" },
+                        { name: "Anil Joshi", age: "54 · M", note: "ECG: borderline QT · HRV trending up · Fasting sugar stable", tag: "REVIEW", color: "amber", dot: "bg-amber-500" },
+                        { name: "Meena Gupta", age: "67 · F", note: "ECG: normal sinus rhythm · All vitals stable · 7-day adherence 100%", tag: "STABLE", color: "emerald", dot: "bg-emerald-500" },
+                        { name: "Vikas Sharma", age: "49 · M", note: "ECG: normal · HRV improving · Weight ↓ 1.2 kg this week", tag: "STABLE", color: "emerald", dot: "bg-emerald-500" },
+                      ].map((p, i) => (
+                        <div key={i} className="flex items-center gap-3 px-4 py-2.5">
+                          <span className={`h-2 w-2 flex-shrink-0 rounded-full ${p.dot}`} />
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate font-semibold text-slate-900">{p.name} <span className="font-normal text-slate-400">· {p.age}</span></p>
+                            <p className="truncate text-[11px] text-slate-500">{p.note}</p>
+                          </div>
+                          <span
+                            className={`hidden rounded-full px-2 py-0.5 text-[9px] font-bold tracking-wider sm:inline-block ${
+                              p.color === "red" ? "bg-red-100 text-red-700" : p.color === "amber" ? "bg-amber-100 text-amber-700" : "bg-emerald-100 text-emerald-700"
+                            }`}
+                          >
+                            {p.tag}
+                          </span>
+                          <ArrowRight className="h-3.5 w-3.5 flex-shrink-0 text-slate-300" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
+                    <div className="rounded-xl border border-slate-200 bg-white p-4">
+                      <div className="flex items-center justify-between">
+                        <p className="text-[11px] font-semibold tracking-tight">Rajesh Kumar — Lead I</p>
+                        <span className="rounded-full bg-red-100 px-2 py-0.5 text-[9px] font-bold text-red-700">AFib · 142 BPM</span>
+                      </div>
+                      <svg viewBox="0 0 300 70" className="mt-2 h-16 w-full">
+                        <defs>
+                          <pattern id="hg-ecg-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#fee2e2" strokeWidth="0.5" />
+                          </pattern>
+                        </defs>
+                        <rect width="300" height="70" fill="url(#hg-ecg-grid)" />
+                        <path
+                          d="M0,35 L20,35 L25,30 L30,35 L40,35 L45,10 L50,55 L55,35 L75,35 L78,33 L82,37 L95,35 L100,12 L105,52 L110,35 L130,35 L135,32 L155,35 L160,15 L165,50 L170,35 L195,35 L200,30 L220,35 L225,12 L230,52 L235,35 L260,35 L265,33 L285,35 L290,18 L295,48 L300,35"
+                          fill="none"
+                          stroke="#dc2626"
+                          strokeWidth="1.4"
+                        />
+                      </svg>
+                      <p className="mt-1 text-[10px] text-slate-500">Captured 06:48 AM · ln ECG · Nera flagged irregular R-R intervals</p>
+                    </div>
+
+                    <div className="rounded-xl border border-slate-200 bg-white p-4">
+                      <div className="flex items-center gap-2">
+                        <FileText className="h-3.5 w-3.5 text-purple-600" />
+                        <p className="text-[11px] font-semibold tracking-tight">Auto-drafted weekly report · Sunita Verma</p>
+                      </div>
+                      <div className="mt-2 space-y-1.5 text-[11px] leading-relaxed text-slate-600">
+                        <p>• Avg resting HR: <strong className="text-slate-900">78 bpm</strong> (↑4 vs last week)</p>
+                        <p>• HRV (RMSSD): <strong className="text-slate-900">28 ms</strong> — borderline</p>
+                        <p>• Post-dinner sugar spikes: <strong className="text-amber-600">3 of 7 days</strong></p>
+                        <p>• Sleep quality: <strong className="text-slate-900">Fair</strong> · Avg 5h 42m</p>
+                      </div>
+                      <div className="mt-3 flex items-center gap-2">
+                        <button className="flex items-center gap-1.5 rounded-lg bg-purple-600 px-2.5 py-1 text-[10px] font-semibold text-white">
+                          <Send className="h-3 w-3" /> Send via WhatsApp
+                        </button>
+                        <button className="rounded-lg border border-slate-200 px-2.5 py-1 text-[10px] font-semibold text-slate-600">Edit</button>
+                      </div>
+                    </div>
+                  </div>
+                </main>
+              </div>
+            </div>
+            <p className="mt-3 text-center text-[11px] text-slate-500">
+              Illustrative mockup of the Doctor Portal · Patient names anonymised
             </p>
           </Reveal>
 
