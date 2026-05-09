@@ -696,6 +696,25 @@ export default function HeartGuard() {
                 </Reveal>
               ))}
             </div>
+
+            {/* More recognitions — text badges */}
+            <Reveal>
+              <p className="mt-12 mb-5 text-center text-xs font-semibold uppercase tracking-widest text-slate-400">
+                And {HG_AWARDS_MORE.length}+ more honours & grants
+              </p>
+            </Reveal>
+            <div className="flex flex-wrap justify-center gap-2">
+              {HG_AWARDS_MORE.map((a, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/75 backdrop-blur transition hover:border-white/25 hover:bg-white/10 hover:text-white"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                  {a.name}
+                  {a.year && <span className="text-white/45">· {a.year}</span>}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
