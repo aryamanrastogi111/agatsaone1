@@ -282,14 +282,16 @@ export default function HeartGuard() {
                 />
               </AnimatePresence>
 
-              {/* Soft sheen overlay */}
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    "radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.18), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(0,0,0,0.25), transparent 60%)",
-                }}
-              />
+              {/* Soft sheen overlay (skip on light slides) */}
+              {HERO_SLIDES[heroSlide].key !== "ecg" && (
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      "radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.18), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(0,0,0,0.25), transparent 60%)",
+                  }}
+                />
+              )}
 
               {/* Slide content */}
               <div className="absolute inset-0 flex items-center justify-center">
