@@ -172,6 +172,25 @@ export default function HeartGuard() {
             <p className="mt-5 text-xs text-slate-400">
               First 50 doctors get 1-year platform access free · Ships in 48 hours
             </p>
+
+            {/* Trust badges */}
+            <div className="mt-8 grid grid-cols-2 gap-4 border-t border-white/10 pt-6 sm:grid-cols-4">
+              {[
+                { stat: "1.6 Cr+", label: "ECG tests analysed" },
+                { stat: "10+", label: "Peer-reviewed publications" },
+                { stat: "WHO", label: "Deployed in WHO programmes" },
+                { stat: "ISO 13485", label: "Medical-grade certified" },
+              ].map((b) => (
+                <div key={b.label}>
+                  <div className="text-lg font-bold sm:text-xl" style={{ color: TEAL }}>
+                    {b.stat}
+                  </div>
+                  <div className="mt-1 text-[11px] leading-tight text-slate-400 sm:text-xs">
+                    {b.label}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Phone mockup */}
