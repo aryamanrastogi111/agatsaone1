@@ -315,7 +315,7 @@ export default function HeartGuard() {
                         src={HERO_SLIDES[heroSlide].src}
                         alt={HERO_SLIDES[heroSlide].alt}
                         loading="eager"
-                        className="absolute inset-0 h-full w-full object-contain p-4 pb-24 drop-shadow-[0_20px_30px_rgba(0,0,0,0.45)]"
+                        className={`absolute inset-0 h-full w-full object-contain p-4 pb-24 ${HERO_SLIDES[heroSlide].key === "ecg" ? "drop-shadow-[0_12px_20px_rgba(15,23,42,0.18)]" : "drop-shadow-[0_20px_30px_rgba(0,0,0,0.45)]"}`}
                       />
                     )}
                   </motion.div>
