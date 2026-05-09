@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   CalendarX,
@@ -202,9 +203,16 @@ export default function HeartGuard() {
     return () => clearInterval(id);
   }, [HERO_SLIDES.length]);
 
-  const scrollToOrder = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
-    e.preventDefault();
-    document.getElementById("order")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const navigate = useNavigate();
+
+  // HeartGuard Kit = 5× SanketLife ECG + 5× Rhythm Band → reuses existing /checkout flow
+  // (orders, Razorpay, admin dashboard all already integrated for these SKUs)
+  const HEARTGUARD_KIT_SKUS =
+    "ecg_bundle,ecg_bundle,ecg_bundle,ecg_bundle,ecg_bundle,band_sub,band_sub,band_sub,band_sub,band_sub";
+
+  const goToCheckout = (e?: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+    if (e) e.preventDefault();
+    navigate(`/checkout?sku=${HEARTGUARD_KIT_SKUS}&utm_source=heartguard`);
   };
 
   return (
@@ -228,7 +236,7 @@ export default function HeartGuard() {
           </div>
           <a
             href="#order"
-            onClick={scrollToOrder}
+            onClick={goToCheckout}
             className="hidden rounded-md px-4 py-2 text-sm font-medium text-white/80 transition hover:text-white sm:inline-block"
           >
             Order Kit →
@@ -264,7 +272,7 @@ export default function HeartGuard() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#order"
-                onClick={scrollToOrder}
+                onClick={goToCheckout}
                 className="inline-flex items-center justify-center rounded-md px-6 py-4 text-base font-semibold text-white shadow-lg transition hover:brightness-110"
                 style={{ background: BLUE }}
               >
@@ -522,7 +530,7 @@ export default function HeartGuard() {
               <div className="mt-8 text-center">
                 <a
                   href="#order"
-                  onClick={scrollToOrder}
+                  onClick={goToCheckout}
                   className="inline-flex items-center gap-2 rounded-md px-6 py-3.5 text-base font-semibold text-white shadow-md transition hover:brightness-110"
                   style={{ background: BLUE }}
                 >
@@ -1122,7 +1130,7 @@ export default function HeartGuard() {
               </ul>
 
               <button
-                onClick={scrollToOrder}
+                onClick={goToCheckout}
                 className="mt-8 flex w-full items-center justify-center gap-2 rounded-md px-6 py-4 text-base font-semibold text-white shadow-md transition hover:brightness-110"
                 style={{ background: BLUE }}
               >
@@ -1219,7 +1227,7 @@ export default function HeartGuard() {
               that's a 3,000% return on platform cost.
             </p>
             <button
-              onClick={scrollToOrder}
+              onClick={goToCheckout}
               className="mt-10 inline-flex items-center justify-center gap-2 rounded-md px-8 py-4 text-base font-semibold text-white shadow-lg transition hover:brightness-110"
               style={{ background: BLUE }}
             >
