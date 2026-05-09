@@ -352,33 +352,6 @@ export default function HeartGuard() {
                   </div>
                 </div>
               </Reveal>
-
-              {/* Second demo: ECG report inside Agatsa One app */}
-              <Reveal>
-                <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 shadow-xl">
-                  <div className="relative aspect-video">
-                    <iframe
-                      src="https://www.youtube.com/embed/qAZYI6VCq0Q"
-                      title="Agatsa One App — ECG Report Walkthrough"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute inset-0 h-full w-full"
-                    />
-                  </div>
-                  <div className="bg-white p-5">
-                    <div className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: TEAL }}>
-                      App walkthrough
-                    </div>
-                    <h3 className="mt-2 text-base font-semibold tracking-tight text-slate-900">
-                      How the ECG report appears inside the Agatsa One app
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                      Step-by-step: capture the ECG, view the AI-interpreted report, and
-                      share the PDF with the patient's cardiologist — all from one screen.
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
             </div>
           </div>
         </div>
