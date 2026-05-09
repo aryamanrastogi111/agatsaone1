@@ -12,6 +12,7 @@ const navLinks = [
     label: "For Providers",
     children: [
       { label: "For Doctors", href: "/for-doctors" },
+      { label: "HeartGuard Kit", href: "/heartguard" },
       { label: "For Hospitals", href: "/for-hospitals" },
       { label: "For Corporates", href: "/for-corporates" },
     ],
