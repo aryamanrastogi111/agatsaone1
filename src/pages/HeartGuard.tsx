@@ -38,6 +38,25 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useSEO } from "@/hooks/useSEO";
+import { VideoCard, YouTubeChannelLink, type VideoItem } from "@/components/VideoCard";
+import awardMbillionth from "@/assets/award-mbillionth.png";
+import awardAegisGrahambell from "@/assets/award-aegis-grahambell.webp";
+import awardAnjaniMashelkar from "@/assets/award-anjani-mashelkar.webp";
+
+const DOCTOR_VIDEOS: VideoItem[] = [
+  { id: "u26lsahqY8k", title: "Dr. Sanjeev Gera Recommends SanketLife ECG" },
+  { id: "RfXpcoGsJlA", title: "Dr. Vanita Arora: SanketLife — Hero For Your Heart" },
+  { id: "LW1dBopGYl4", title: "NEWS9 Live: Agatsa's Life-Saving SanketLife 2.0" },
+  { id: "0bLpUCQw-Xc", title: "AIIMS Event — Simplifying Heart Care with SanketLife" },
+  { id: "Ird2TuUR0j4", title: "Neha Rastogi at Medical Expo India 2024" },
+  { id: "wocf2tnTLmE", title: "Patients & Doctors Embrace SanketLife Pro Plus" },
+];
+
+const HG_AWARDS = [
+  { name: "Anjani Mashelkar Prize 2025", image: awardAnjaniMashelkar, recent: true },
+  { name: "Aegis Graham Bell Award 2022", image: awardAegisGrahambell },
+  { name: "mBillionth Award 2017", image: awardMbillionth },
+];
 
 // ───────── Animated counter ─────────
 function AnimatedNumber({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) {
