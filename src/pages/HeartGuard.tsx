@@ -42,6 +42,8 @@ import { VideoCard, YouTubeChannelLink, type VideoItem } from "@/components/Vide
 import awardMbillionth from "@/assets/award-mbillionth.png";
 import awardAegisGrahambell from "@/assets/award-aegis-grahambell.webp";
 import awardAnjaniMashelkar from "@/assets/award-anjani-mashelkar.webp";
+import sanketlifeDevice from "@/assets/sanketlife-2.0-device.webp";
+import rhythmBand from "@/assets/easytouch-rhythm-band.webp";
 
 const DOCTOR_VIDEOS: VideoItem[] = [
   { id: "u26lsahqY8k", title: "Dr. Sanjeev Gera Recommends SanketLife ECG" },
@@ -227,9 +229,49 @@ export default function HeartGuard() {
             </div>
           </div>
 
-          {/* Phone mockup */}
+          {/* Phone mockup with floating device cards */}
           <div className="lg:col-span-5">
-            <DoctorPhoneMockup />
+            <div className="relative">
+              <DoctorPhoneMockup />
+
+              {/* Floating: ln ECG device */}
+              <motion.div
+                initial={{ opacity: 0, x: -30, y: 20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.7, ease: "easeOut" }}
+                className="absolute -left-4 top-12 hidden w-40 rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-3 shadow-2xl backdrop-blur-md sm:block lg:-left-10"
+              >
+                <div className="overflow-hidden rounded-xl bg-white/95">
+                  <img
+                    src={sanketlifeDevice}
+                    alt="ln 12-Lead ECG device"
+                    loading="eager"
+                    className="h-24 w-full object-contain p-2"
+                  />
+                </div>
+                <p className="mt-2 text-[10px] font-bold uppercase tracking-wider text-white">ln · 12-Lead ECG</p>
+                <p className="text-[10px] text-white/60">5 devices included</p>
+              </motion.div>
+
+              {/* Floating: Rhythm band */}
+              <motion.div
+                initial={{ opacity: 0, x: 30, y: 20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.7, ease: "easeOut" }}
+                className="absolute -right-4 bottom-16 hidden w-40 rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-3 shadow-2xl backdrop-blur-md sm:block lg:-right-10"
+              >
+                <div className="overflow-hidden rounded-xl bg-white/95">
+                  <img
+                    src={rhythmBand}
+                    alt="EasyTouch Rhythm vitals band"
+                    loading="eager"
+                    className="h-24 w-full object-contain p-2"
+                  />
+                </div>
+                <p className="mt-2 text-[10px] font-bold uppercase tracking-wider text-white">Rhythm Band</p>
+                <p className="text-[10px] text-white/60">HRV · sleep · activity</p>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
