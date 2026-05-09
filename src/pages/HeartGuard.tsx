@@ -39,7 +39,7 @@ import {
 } from "@/components/ui/accordion";
 import { useSEO } from "@/hooks/useSEO";
 import { VideoCard, YouTubeChannelLink, type VideoItem } from "@/components/VideoCard";
-import awardMbillionth from "@/assets/award-mbillionth.png";
+import awardMbillionth from "@/assets/award-mbillionth-new.png";
 import awardAegisGrahambell from "@/assets/award-aegis-grahambell.webp";
 import awardAnjaniMashelkar from "@/assets/award-anjani-mashelkar.webp";
 import sanketlifeDevice from "@/assets/sanketlife-2.0-device.webp";
@@ -638,19 +638,21 @@ export default function HeartGuard() {
             <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
               {HG_AWARDS.map((a, i) => (
                 <Reveal key={i}>
-                  <div className="relative flex h-full flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur transition hover:border-white/20 hover:bg-white/[0.07]">
+                  <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 text-center backdrop-blur transition hover:border-white/20 hover:bg-white/[0.07]">
                     {a.recent && (
-                      <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow">
+                      <span className="absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow">
                         Latest
                       </span>
                     )}
-                    <img
-                      src={a.image}
-                      alt={a.name}
-                      loading="lazy"
-                      className="h-20 w-auto object-contain opacity-90"
-                    />
-                    <p className="mt-4 text-sm font-medium text-white/85">{a.name}</p>
+                    <div className="aspect-[4/3] w-full overflow-hidden bg-white/5">
+                      <img
+                        src={a.image}
+                        alt={a.name}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <p className="px-4 py-4 text-sm font-medium text-white/85">{a.name}</p>
                   </div>
                 </Reveal>
               ))}
