@@ -12,8 +12,9 @@ import agatsaLogo from "@/assets/agatsa-logo.webp";
 
 // ─── Device display names ───────────────────────────────────────
 const DEVICE_NAMES: Record<string, string> = {
-  ecg_bundle:      "SanketLife ECG",
-  band_sub:        "EasyTouch Rhythm Band",
+  ecg_bundle:         "SanketLife ECG",
+  band_sub:           "EasyTouch Rhythm Band",
+  heartguard_starter: "HeartGuard Doctor Starter Kit",
   scale_sub:       "Agatsa Smart Scale",
   wellness_sub:    "EasyTouch Wellness",
   multivital:      "Agatsa MultiVital",
