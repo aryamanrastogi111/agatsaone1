@@ -212,7 +212,8 @@ export default function HeartGuard() {
 
   const goToCheckout = (e?: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     if (e) e.preventDefault();
-    navigate(`/checkout?sku=${HEARTGUARD_KIT_SKUS}&utm_source=heartguard`);
+    // HEARTGUARD coupon brings the 5×ECG + 5×Band cart (₹44,990) down to ₹24,999
+    navigate(`/checkout?sku=${HEARTGUARD_KIT_SKUS}&coupon=HEARTGUARD&utm_source=heartguard`);
   };
 
   return (
