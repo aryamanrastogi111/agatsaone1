@@ -146,6 +146,14 @@ export default function HeartGuard() {
             <p className="mb-5 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
               For Cardiologists & Diabetologists
             </p>
+            <div className="mb-5 inline-flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[11px] font-medium text-white/85 backdrop-blur">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: TEAL }} />
+                World's only touch-based 12-Lead ECG
+              </span>
+              <span className="hidden h-3 w-px bg-white/20 sm:inline-block" />
+              <span className="text-white/65">CDSCO Reg. No. MD-XXXXXX</span>
+            </div>
             <h1 className="text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
               You're losing ₹3 lakh a month
               <br />
@@ -329,21 +337,21 @@ export default function HeartGuard() {
             <div className="lg:col-span-2">
               <Reveal>
                 <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 shadow-xl">
-                  <div className="relative aspect-video">
-                    <iframe
-                      src="https://www.youtube.com/embed/1UIKpA7H4O4"
-                      title="SanketLife ECG — Official Demo"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute inset-0 h-full w-full"
+                  <div className="relative aspect-video bg-black">
+                    <video
+                      src="/videos/heartguard-demo.mp4"
+                      controls
+                      playsInline
+                      preload="metadata"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                   </div>
                   <div className="bg-white p-5">
                     <div className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: TEAL }}>
-                      90-second demo
+                      Live demo
                     </div>
                     <h3 className="mt-2 text-base font-semibold tracking-tight text-slate-900">
-                      How a patient takes a clinical-grade ECG at home
+                      One touch, 30 seconds, clinical-grade ECG
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-slate-600">
                       One touch, 30 seconds, PDF report on your dashboard. The same device
