@@ -523,30 +523,34 @@ export default function CheckoutPage() {
     }
   };
 
-  // ─── Auto-apply MAY10 coupon (today-only promo) ───────────
+  // ─── Auto-apply coupon from URL (?coupon=CODE) or MAY10 promo ─
   const autoAppliedRef = useRef(false);
   useEffect(() => {
     if (autoAppliedRef.current) return;
-    if (!isMay10Active()) return;
     if (couponApplied) return;
     if (uniqueSkus.length === 0) return;
+
+    const urlCoupon = (searchParams.get("coupon") || "").trim().toUpperCase();
+    const codeToTry = urlCoupon || (isMay10Active() ? MAY10_CODE : "");
+    if (!codeToTry) return;
+
     autoAppliedRef.current = true;
     (async () => {
       try {
         const res = await fetch(`${API_BASE}/v1/orders/website/validate-coupon`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ couponCode: MAY10_CODE }),
+          body: JSON.stringify({ couponCode: codeToTry }),
         });
         const data = await res.json();
         if (res.ok && data.valid) {
-          setCouponInput(MAY10_CODE);
-          setCouponApplied(MAY10_CODE);
+          setCouponInput(codeToTry);
+          setCouponApplied(codeToTry);
           setCouponValid(true);
           setCouponType(data.type);
           setCouponValue(data.value);
-          setCouponMessage(data.message || "10% OFF auto-applied 🎉");
-          await fetchQuote(cartItems, MAY10_CODE);
+          setCouponMessage(data.message || "Coupon auto-applied 🎉");
+          await fetchQuote(cartItems, codeToTry);
         }
       } catch {
         // silent — user can still apply manually
