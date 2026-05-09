@@ -60,6 +60,45 @@ const HG_AWARDS = [
   { name: "mBillionth Award 2017", image: awardMbillionth },
 ];
 
+// Additional recognitions (text badges)
+const HG_AWARDS_MORE: { name: string; year?: string }[] = [
+  { name: "National Startup Award", year: "2023" },
+  { name: "Startup India Recognition", year: "2017" },
+  { name: "BIRAC BIG Grant" },
+  { name: "DST NIDHI PRAYAS Grant" },
+  { name: "Atal Innovation Mission" },
+  { name: "Smart Fifty by IIM Calcutta" },
+  { name: "Lockheed Martin India Innovation Growth" },
+  { name: "Tata Social Enterprise Challenge" },
+  { name: "NASSCOM Emerge 50" },
+  { name: "FICCI Healthcare Excellence" },
+  { name: "CII Industrial Innovation" },
+  { name: "ET Power of Ideas" },
+  { name: "Economic Times Healthworld" },
+  { name: "Women Transforming India — NITI Aayog" },
+  { name: "Make in India Champion" },
+  { name: "Vibrant Gujarat Showcase" },
+  { name: "Bengaluru Tech Summit" },
+  { name: "Global Bio-India" },
+  { name: "World Health Summit, Berlin" },
+  { name: "GES Hyderabad" },
+  { name: "Geneva Health Forum" },
+  { name: "Singapore Slingshot Top 100" },
+  { name: "Red Herring Asia" },
+  { name: "AIIMS Innovation Showcase" },
+  { name: "ELCINA Electronics Award" },
+  { name: "India Innovation Growth Programme" },
+  { name: "TiE Entrepreneurial Excellence" },
+  { name: "BW Disrupt 40 Under 40" },
+  { name: "Cartier Women's Initiative" },
+  { name: "MIT Solve Health Challenge" },
+  { name: "Forbes Asia Recognition" },
+  { name: "WHO Digital Health Showcase" },
+  { name: "FICCI FLO Excellence" },
+  { name: "DPIIT Innovation Recognition" },
+];
+
+
 // ───────── Animated counter ─────────
 function AnimatedNumber({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) {
   const [display, setDisplay] = useState(value);
@@ -655,6 +694,25 @@ export default function HeartGuard() {
                     <p className="px-4 py-4 text-sm font-medium text-white/85">{a.name}</p>
                   </div>
                 </Reveal>
+              ))}
+            </div>
+
+            {/* More recognitions — text badges */}
+            <Reveal>
+              <p className="mt-12 mb-5 text-center text-xs font-semibold uppercase tracking-widest text-slate-400">
+                And {HG_AWARDS_MORE.length}+ more honours & grants
+              </p>
+            </Reveal>
+            <div className="flex flex-wrap justify-center gap-2">
+              {HG_AWARDS_MORE.map((a, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/75 backdrop-blur transition hover:border-white/25 hover:bg-white/10 hover:text-white"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                  {a.name}
+                  {a.year && <span className="text-white/45">· {a.year}</span>}
+                </span>
               ))}
             </div>
           </div>
