@@ -234,42 +234,42 @@ export default function HeartGuard() {
             <div className="relative">
               <DoctorPhoneMockup />
 
-              {/* Floating: ln ECG device */}
+              {/* Floating: ln ECG device — visible on all breakpoints */}
               <motion.div
-                initial={{ opacity: 0, x: -30, y: 20 }}
+                initial={{ opacity: 0, x: -20, y: 20 }}
                 animate={{ opacity: 1, x: 0, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.7, ease: "easeOut" }}
-                className="absolute -left-4 top-12 hidden w-40 rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-3 shadow-2xl backdrop-blur-md sm:block lg:-left-10"
+                className="absolute -left-2 top-8 w-28 rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-2.5 shadow-2xl backdrop-blur-md sm:-left-4 sm:top-12 sm:w-40 sm:p-3 lg:-left-10"
               >
                 <div className="overflow-hidden rounded-xl bg-white/95">
                   <img
                     src={sanketlifeDevice}
-                    alt="ln 12-Lead ECG device"
+                    alt="SanketLife 12-Lead ECG device"
                     loading="eager"
-                    className="h-24 w-full object-contain p-2"
+                    className="h-16 w-full object-contain p-1.5 sm:h-24 sm:p-2"
                   />
                 </div>
-                <p className="mt-2 text-[10px] font-bold uppercase tracking-wider text-white">ln · 12-Lead ECG</p>
-                <p className="text-[10px] text-white/60">5 devices included</p>
+                <p className="mt-1.5 text-[9px] font-bold uppercase tracking-wider text-white sm:mt-2 sm:text-[10px]">SanketLife ECG</p>
+                <p className="text-[9px] text-white/60 sm:text-[10px]">5 devices included</p>
               </motion.div>
 
-              {/* Floating: Rhythm band */}
+              {/* Floating: Rhythm band — visible on all breakpoints */}
               <motion.div
-                initial={{ opacity: 0, x: 30, y: 20 }}
+                initial={{ opacity: 0, x: 20, y: 20 }}
                 animate={{ opacity: 1, x: 0, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.7, ease: "easeOut" }}
-                className="absolute -right-4 bottom-16 hidden w-40 rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-3 shadow-2xl backdrop-blur-md sm:block lg:-right-10"
+                className="absolute -right-2 bottom-12 w-28 rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-2.5 shadow-2xl backdrop-blur-md sm:-right-4 sm:bottom-16 sm:w-40 sm:p-3 lg:-right-10"
               >
                 <div className="overflow-hidden rounded-xl bg-white/95">
                   <img
                     src={rhythmBand}
                     alt="EasyTouch Rhythm vitals band"
                     loading="eager"
-                    className="h-24 w-full object-contain p-2"
+                    className="h-16 w-full object-contain p-1.5 sm:h-24 sm:p-2"
                   />
                 </div>
-                <p className="mt-2 text-[10px] font-bold uppercase tracking-wider text-white">Rhythm Band</p>
-                <p className="text-[10px] text-white/60">HRV · sleep · activity</p>
+                <p className="mt-1.5 text-[9px] font-bold uppercase tracking-wider text-white sm:mt-2 sm:text-[10px]">Rhythm Band</p>
+                <p className="text-[9px] text-white/60 sm:text-[10px]">HRV · sleep · activity</p>
               </motion.div>
             </div>
           </div>
