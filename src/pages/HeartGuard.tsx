@@ -38,6 +38,25 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useSEO } from "@/hooks/useSEO";
+import { VideoCard, YouTubeChannelLink, type VideoItem } from "@/components/VideoCard";
+import awardMbillionth from "@/assets/award-mbillionth.png";
+import awardAegisGrahambell from "@/assets/award-aegis-grahambell.webp";
+import awardAnjaniMashelkar from "@/assets/award-anjani-mashelkar.webp";
+
+const DOCTOR_VIDEOS: VideoItem[] = [
+  { id: "u26lsahqY8k", title: "Dr. Sanjeev Gera Recommends SanketLife ECG" },
+  { id: "RfXpcoGsJlA", title: "Dr. Vanita Arora: SanketLife — Hero For Your Heart" },
+  { id: "LW1dBopGYl4", title: "NEWS9 Live: Agatsa's Life-Saving SanketLife 2.0" },
+  { id: "0bLpUCQw-Xc", title: "AIIMS Event — Simplifying Heart Care with SanketLife" },
+  { id: "Ird2TuUR0j4", title: "Neha Rastogi at Medical Expo India 2024" },
+  { id: "wocf2tnTLmE", title: "Patients & Doctors Embrace SanketLife Pro Plus" },
+];
+
+const HG_AWARDS = [
+  { name: "Anjani Mashelkar Prize 2025", image: awardAnjaniMashelkar, recent: true },
+  { name: "Aegis Graham Bell Award 2022", image: awardAegisGrahambell },
+  { name: "mBillionth Award 2017", image: awardMbillionth },
+];
 
 // ───────── Animated counter ─────────
 function AnimatedNumber({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) {
@@ -362,6 +381,68 @@ export default function HeartGuard() {
                   </div>
                 </div>
               </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ───────── DOCTOR ENDORSEMENTS + AWARDS ───────── */}
+      <section className="bg-slate-950 py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
+              Trusted by Experts
+            </p>
+            <h2 className="max-w-3xl text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Cardiologists, hospitals & national media on Agatsa
+            </h2>
+            <p className="mt-4 max-w-2xl text-base text-slate-400">
+              Watch leading doctors and institutions vouch for the same ECG device that ships
+              inside every HeartGuard kit.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {DOCTOR_VIDEOS.map((v) => (
+              <Reveal key={v.id}>
+                <VideoCard video={v} />
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-6 flex justify-center">
+            <YouTubeChannelLink />
+          </div>
+
+          {/* Awards strip */}
+          <div className="mt-16 border-t border-white/10 pt-12">
+            <Reveal>
+              <p className="mb-2 text-center text-xs font-semibold uppercase tracking-widest text-slate-400">
+                Recognised by
+              </p>
+              <h3 className="text-center text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                National & international awards
+              </h3>
+            </Reveal>
+            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
+              {HG_AWARDS.map((a, i) => (
+                <Reveal key={i}>
+                  <div className="relative flex h-full flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur transition hover:border-white/20 hover:bg-white/[0.07]">
+                    {a.recent && (
+                      <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow">
+                        Latest
+                      </span>
+                    )}
+                    <img
+                      src={a.image}
+                      alt={a.name}
+                      loading="lazy"
+                      className="h-20 w-auto object-contain opacity-90"
+                    />
+                    <p className="mt-4 text-sm font-medium text-white/85">{a.name}</p>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </div>
