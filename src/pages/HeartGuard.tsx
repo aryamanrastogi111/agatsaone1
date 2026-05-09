@@ -129,6 +129,40 @@ export default function HeartGuard() {
   const paybackDaysRaw = (24999 / monthly) * 30;
   const paybackDays = Math.max(5, Math.round(paybackDaysRaw / 5) * 5);
 
+  // Hero carousel
+  const HERO_SLIDES = [
+    {
+      key: "portal",
+      label: "Doctor Portal",
+      sub: "Daily ECG triage · Nera AI",
+      gradient: "linear-gradient(135deg, #2563EB 0%, #0D9488 100%)",
+      kind: "phone" as const,
+    },
+    {
+      key: "ecg",
+      label: "SanketLife 12-Lead ECG",
+      sub: "Touch-based · CDSCO approved",
+      gradient: "linear-gradient(135deg, #7C3AED 0%, #DB2777 100%)",
+      kind: "image" as const,
+      src: sanketlifeDevice,
+      alt: "SanketLife 12-Lead touch ECG device",
+    },
+    {
+      key: "band",
+      label: "EasyTouch Rhythm Band",
+      sub: "HRV · Sleep · Activity · SpO₂",
+      gradient: "linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)",
+      kind: "image" as const,
+      src: rhythmBand,
+      alt: "EasyTouch Rhythm vitals band",
+    },
+  ];
+  const [heroSlide, setHeroSlide] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setHeroSlide((i) => (i + 1) % HERO_SLIDES.length), 4000);
+    return () => clearInterval(id);
+  }, [HERO_SLIDES.length]);
+
   const scrollToOrder = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     e.preventDefault();
     document.getElementById("order")?.scrollIntoView({ behavior: "smooth", block: "start" });
