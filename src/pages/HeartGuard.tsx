@@ -326,6 +326,89 @@ export default function HeartGuard() {
         </div>
       </section>
 
+      {/* ───────── INCOME CALCULATOR ───────── */}
+      <section className="bg-white py-20 sm:py-28 border-t border-slate-100">
+        <div className="mx-auto max-w-5xl px-6">
+          <Reveal>
+            <div className="text-center">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
+                Your Earning Potential
+              </p>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+                How much can you earn with HeartGuard?
+              </h2>
+              <p className="mx-auto mt-5 max-w-2xl text-base text-slate-600 sm:text-lg">
+                You set your own monthly monitoring fee.
+                <br />
+                Most doctors charge ₹2,000–₹4,000/month per patient.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal className="mt-12">
+            <div className="rounded-3xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-8 shadow-sm sm:p-12">
+              <div className="mb-8">
+                <div className="mb-4 flex items-baseline justify-between">
+                  <label className="text-sm font-medium text-slate-700">Number of enrolled patients</label>
+                  <span className="text-2xl font-bold tabular-nums" style={{ color: BLUE }}>
+                    {patients}
+                  </span>
+                </div>
+                <Slider
+                  value={[patients]}
+                  onValueChange={(v) => setPatients(v[0])}
+                  min={5}
+                  max={50}
+                  step={1}
+                />
+                <div className="mt-2 flex justify-between text-xs text-slate-400">
+                  <span>5</span>
+                  <span>50</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div className="rounded-2xl bg-white p-6 ring-1 ring-slate-200">
+                  <div className="text-4xl font-bold tabular-nums sm:text-5xl" style={{ color: BLUE }}>
+                    <AnimatedNumber value={monthly} prefix="₹" />
+                    <span className="text-base font-medium text-slate-400"> /month</span>
+                  </div>
+                  <p className="mt-3 text-sm font-medium text-slate-600">
+                    Your monthly monitoring income
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white p-6 ring-1 ring-slate-200">
+                  <div className="text-4xl font-bold tabular-nums sm:text-5xl" style={{ color: TEAL }}>
+                    <AnimatedNumber value={yearly} prefix="₹" />
+                    <span className="text-base font-medium text-slate-400"> /year</span>
+                  </div>
+                  <p className="mt-3 text-sm font-medium text-slate-600">Annual additional income</p>
+                </div>
+              </div>
+
+              <p className="mt-8 text-center text-sm italic text-slate-500">
+                Kit cost ₹24,999 recovered in <span className="font-semibold not-italic text-slate-700">{paybackDays} days</span>
+              </p>
+
+              <p className="mt-2 text-center text-xs text-slate-400">
+                * You set your own programme fee. This is illustrative at ₹3,000/month.
+              </p>
+
+              <div className="mt-8 text-center">
+                <a
+                  href="#order"
+                  onClick={scrollToOrder}
+                  className="inline-flex items-center gap-2 rounded-md px-6 py-3.5 text-base font-semibold text-white shadow-md transition hover:brightness-110"
+                  style={{ background: BLUE }}
+                >
+                  Get the HeartGuard Kit <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ───────── CLINICAL PROOF + VIDEO ───────── */}
       <section className="bg-white py-20 sm:py-28 border-t border-slate-100">
         <div className="mx-auto max-w-7xl px-6">
