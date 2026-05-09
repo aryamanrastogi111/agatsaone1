@@ -45,6 +45,7 @@ const Heritage = lazy(() => import("./pages/Heritage"));
 const LoseBelly = lazy(() => import("./pages/LoseBelly"));
 const LoseBellyFeatures = lazy(() => import("./pages/LoseBellyFeatures"));
 const LoseBellyWelcome = lazy(() => import("./pages/LoseBellyWelcome"));
+const HeartGuard = lazy(() => import("./pages/HeartGuard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // SDK Portal
