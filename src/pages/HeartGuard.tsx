@@ -142,14 +142,14 @@ export default function HeartGuard() {
               For Cardiologists & Diabetologists
             </p>
             <h1 className="text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Your patients leave your clinic.
+              You're losing ₹3 lakh a month
               <br />
-              <span className="text-white/70">Their heart doesn't stop.</span>
+              <span className="text-white/70">to follow-ups that never happen.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
-              HeartGuard lets you monitor your cardiac and diabetic patients every single day — not
-              just when they visit. Nera AI watches the data. You get alerted only when something
-              actually needs your attention.
+              Apollo and Medanta already monitor their patients at home. Your clinic doesn't.
+              HeartGuard gives solo and small-group doctors the same remote-monitoring stack —
+              ECG kit, vitals band, doctor dashboard, and Nera AI triage — for a one-time ₹24,999.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
