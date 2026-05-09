@@ -42,6 +42,8 @@ import { VideoCard, YouTubeChannelLink, type VideoItem } from "@/components/Vide
 import awardMbillionth from "@/assets/award-mbillionth.png";
 import awardAegisGrahambell from "@/assets/award-aegis-grahambell.webp";
 import awardAnjaniMashelkar from "@/assets/award-anjani-mashelkar.webp";
+import sanketlifeDevice from "@/assets/sanketlife-2.0-device.webp";
+import rhythmBand from "@/assets/easytouch-rhythm-band.webp";
 
 const DOCTOR_VIDEOS: VideoItem[] = [
   { id: "u26lsahqY8k", title: "Dr. Sanjeev Gera Recommends SanketLife ECG" },
