@@ -152,7 +152,7 @@ export default function HeartGuard() {
                 World's only touch-based 12-Lead ECG
               </span>
               <span className="hidden h-3 w-px bg-white/20 sm:inline-block" />
-              <span className="text-white/65">CDSCO Reg. No. MD-XXXXXX</span>
+              <span className="text-white/65">CDSCO approved · Class B Medical Device</span>
             </div>
             <h1 className="text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
               You're losing ₹3 lakh a month
