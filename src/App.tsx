@@ -154,6 +154,7 @@ function AppWithPricing() {
               <Route path="/download" element={<Navigate to="/app" replace />} />
               <Route path="/ecg" element={<Navigate to="/devices/sanketlife-ecg" replace />} />
               <Route path="/band" element={<Navigate to="/devices/rhythm-band" replace />} />
+              <Route path="/pages/easytouch-plus-your-health-in-a-single-touch" element={<Navigate to="/devices/easytouch-wellness" replace />} />
 
               {/* SDK Portal */}
               <Route path="/sdk" element={<SDKLanding />} />
