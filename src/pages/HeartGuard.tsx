@@ -142,7 +142,7 @@ export default function HeartGuard() {
       key: "ecg",
       label: "SanketLife 12-Lead ECG",
       sub: "Touch-based · CDSCO approved",
-      gradient: "linear-gradient(135deg, #7C3AED 0%, #DB2777 100%)",
+      gradient: "linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)",
       kind: "image" as const,
       src: sanketlifeDevice,
       alt: "SanketLife 12-Lead touch ECG device",
