@@ -165,15 +165,15 @@ export default function WakeUpLike25() {
   return (
     <div className="min-h-screen text-white" style={{ background: NAVY }}>
       {/* ───── HERO ───── */}
-      <section ref={heroRef} className="relative pt-24 sm:pt-28 pb-10 px-5 min-h-[100svh] flex flex-col">
+      <section ref={heroRef} className="relative pt-20 sm:pt-24 pb-10 px-5">
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at top, rgba(255,140,40,0.10), transparent 60%)" }} />
-        <div className="relative max-w-2xl mx-auto w-full flex-1 flex flex-col justify-center text-center">
-          <p className="text-amber-300/90 text-xs sm:text-sm font-medium mb-5">
+        <div className="relative max-w-2xl mx-auto w-full text-center">
+          <p className="text-amber-300/90 text-xs sm:text-sm font-medium mb-4">
             ⚡ <CountUp to={2847} /> people started this month · ₹2,000 off this week only
           </p>
 
-          <h1 className="font-black tracking-tight text-[2.5rem] leading-[1.05] sm:text-6xl mb-4">
-            You wake up tired.
+          <h1 className="font-black tracking-tight text-[2.5rem] leading-[1.05] sm:text-6xl mb-4 text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.6)]">
+            <span className="text-white">You wake up tired.</span>
             <br />
             <span style={{ background: "linear-gradient(135deg,#FFD27A,#FF7A1A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Every. Single. Day.
@@ -215,9 +215,9 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── EMPATHY ───── */}
-      <section className="px-5 py-20 sm:py-28">
+      <section className="px-5 py-12 sm:py-16">
         <div className="max-w-2xl mx-auto text-center">
-          <p className="italic text-2xl sm:text-3xl font-light leading-tight text-white mb-10">
+          <p className="italic text-2xl sm:text-3xl font-light leading-tight text-white mb-6">
             "I sleep 8 hours and still wake up exhausted.
             <br />
             I used to jump out of bed."
@@ -234,18 +234,18 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── REVEAL ───── */}
-      <section className="px-5 py-20 sm:py-28" style={{ background: "rgba(255,255,255,0.015)" }}>
+      <section className="px-5 py-12 sm:py-16" style={{ background: "rgba(255,255,255,0.015)" }}>
         <div className="max-w-3xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-4">
             Here's what's actually happening
           </p>
-          <h2 className="text-3xl sm:text-5xl font-black text-center leading-tight mb-12">
+          <h2 className="text-3xl sm:text-5xl font-black text-center leading-tight mb-8">
             Your HRV has been declining for years.
             <br />
             <span className="text-slate-400 font-bold">You just didn't know it.</span>
           </h2>
 
-          <div className="grid sm:grid-cols-2 gap-4 mb-10">
+          <div className="grid sm:grid-cols-2 gap-4 mb-6">
             <div className="rounded-2xl p-6" style={{ background: CARD, border: "1px solid rgba(255,255,255,0.06)" }}>
               <Brain className="h-7 w-7 text-amber-400 mb-3" />
               <p className="text-white text-base sm:text-lg leading-relaxed">
@@ -276,12 +276,12 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── SOCIAL PROOF ───── */}
-      <section className="px-5 py-20 sm:py-28">
+      <section className="px-5 py-12 sm:py-16">
         <div className="max-w-6xl mx-auto">
-          <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-10">
+          <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-6">
             Real people. Real watches. Real numbers.
           </p>
-          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 mb-12">
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 mb-8">
             <Testimonial
               initial="R"
               accent="linear-gradient(135deg,#3b82f6,#1e40af)"
@@ -317,10 +317,10 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── NERA AI ───── */}
-      <section className="px-5 py-20 sm:py-28" style={{ background: "rgba(255,255,255,0.015)" }}>
+      <section className="px-5 py-12 sm:py-16" style={{ background: "rgba(255,255,255,0.015)" }}>
         <div className="max-w-3xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-4">Meet Nera AI</p>
-          <h2 className="text-3xl sm:text-5xl font-black text-center leading-tight mb-12">
+          <h2 className="text-3xl sm:text-5xl font-black text-center leading-tight mb-8">
             The first AI that reads your watch
             <br />
             <span className="text-amber-300">and tells you WHY you're tired</span>
@@ -350,7 +350,7 @@ export default function WakeUpLike25() {
             ))}
           </div>
 
-          <p className="text-center text-2xl sm:text-3xl font-black mt-12 leading-tight">
+          <p className="text-center text-2xl sm:text-3xl font-black mt-8 leading-tight">
             Apple Health shows you numbers.
             <br />
             <span style={{ background: "linear-gradient(135deg,#FFD27A,#FF7A1A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
@@ -361,12 +361,12 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── HOW IT WORKS ───── */}
-      <section className="px-5 py-20 sm:py-28">
+      <section className="px-5 py-12 sm:py-16">
         <div className="max-w-5xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-4">
             30 Days. 5 Changes. Watch-Confirmed.
           </p>
-          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 mt-10">
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 mt-6">
             {[
               { icon: <Watch className="h-8 w-8" />, n: "1", title: "Sync", body: "Connect your existing watch.\nApple Watch, Galaxy, anything.\nDay 0 HRV recorded." },
               { icon: <Brain className="h-8 w-8" />, n: "2", title: "Nera Diagnoses", body: "Nera reads 14 days of your data.\nFinds your top 3 energy killers.\nRanks which changes will move your HRV most." },
@@ -382,7 +382,7 @@ export default function WakeUpLike25() {
               </div>
             ))}
           </div>
-          <p className="text-center text-lg sm:text-xl mt-10 font-medium">
+          <p className="text-center text-lg sm:text-xl mt-6 font-medium">
             Most users see their first measurable HRV improvement{" "}
             <span className="text-amber-300 font-bold">within 72 hours.</span>
           </p>
@@ -390,7 +390,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── 5 PROTOCOLS ───── */}
-      <section className="px-5 py-20 sm:py-28" style={{ background: "rgba(255,255,255,0.015)" }}>
+      <section className="px-5 py-12 sm:py-16" style={{ background: "rgba(255,255,255,0.015)" }}>
         <div className="max-w-3xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-6">
             The 5 things that change everything
@@ -423,9 +423,9 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── WHAT YOU GET ───── */}
-      <section className="px-5 py-20 sm:py-28">
+      <section className="px-5 py-12 sm:py-16">
         <div className="max-w-5xl mx-auto">
-          <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-10">
+          <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-6">
             Everything in ₹4,999
           </p>
           <div className="grid md:grid-cols-2 gap-5">
@@ -468,7 +468,7 @@ export default function WakeUpLike25() {
               </div>
             ))}
           </div>
-          <p className="text-center text-2xl sm:text-3xl font-black mt-10 leading-tight">
+          <p className="text-center text-2xl sm:text-3xl font-black mt-6 leading-tight">
             No new device.
             <br />
             No subscription.
@@ -481,7 +481,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── PRICE + CTA ───── */}
-      <section className="px-5 py-20 sm:py-24" style={{ background: "linear-gradient(180deg,rgba(255,140,40,0.05),transparent)" }}>
+      <section className="px-5 py-12 sm:py-16" style={{ background: "linear-gradient(180deg,rgba(255,140,40,0.05),transparent)" }}>
         <div className="max-w-xl mx-auto text-center">
           <div className="mb-6"><Countdown /></div>
 
@@ -534,9 +534,9 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── FAQ ───── */}
-      <section className="px-5 py-20 sm:py-24">
+      <section className="px-5 py-12 sm:py-16">
         <div className="max-w-2xl mx-auto">
-          <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-10">Quick Answers</p>
+          <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-6">Quick Answers</p>
           <div className="space-y-4">
             {[
               {
@@ -566,10 +566,10 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── FINAL CTA ───── */}
-      <section className="px-5 py-24 sm:py-32 text-center">
+      <section className="px-5 py-14 sm:py-20 text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl sm:text-6xl font-black text-white leading-tight mb-3">Stop waking up tired.</h2>
-          <p className="text-2xl sm:text-3xl font-bold mb-10" style={{ background: "linear-gradient(135deg,#FFD27A,#FF7A1A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          <p className="text-2xl sm:text-3xl font-bold mb-6" style={{ background: "linear-gradient(135deg,#FFD27A,#FF7A1A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             Your 30 days start today.
           </p>
           <SunriseButton size="xl" onClick={buyNow}>
