@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { SiteLayout } from "@/components/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone } from "lucide-react";
@@ -259,6 +260,7 @@ export default function HeartGuard() {
   };
 
   return (
+    <SiteLayout>
     <div className="font-sans antialiased text-[#0f172a] bg-white scroll-smooth">
       {/* ───────── HERO ───────── */}
       <section className="relative overflow-hidden" style={{ background: NAVY }}>
@@ -270,22 +272,6 @@ export default function HeartGuard() {
               "radial-gradient(800px 400px at 80% 20%, rgba(37,99,235,0.25), transparent 60%), radial-gradient(600px 400px at 10% 90%, rgba(13,148,136,0.18), transparent 60%)",
           }}
         />
-        <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <div className="flex items-center gap-2 text-white">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md" style={{ background: BLUE }}>
-              <HeartPulse className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-base font-semibold tracking-tight">Agatsa One</span>
-          </div>
-          <a
-            href="#order"
-            onClick={goToCheckout}
-            className="hidden rounded-md px-4 py-2 text-sm font-medium text-white/80 transition hover:text-white sm:inline-block"
-          >
-            Order Kit →
-          </a>
-        </header>
-
         <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-20 pt-10 lg:grid-cols-12 lg:pb-32 lg:pt-16">
           <div className="lg:col-span-7">
             <p className="mb-5 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
@@ -1759,31 +1745,6 @@ export default function HeartGuard() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-200 bg-white py-10">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:justify-between sm:text-left">
-            <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-md" style={{ background: BLUE }}>
-                <HeartPulse className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-sm font-semibold tracking-tight">Agatsa One</span>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-600">
-              <a href="/about" className="hover:text-slate-900">About</a>
-              <a href="/privacy-policy" className="hover:text-slate-900">Privacy Policy</a>
-              <a href="/terms-of-service" className="hover:text-slate-900">Terms</a>
-              <a href="/contact" className="hover:text-slate-900">Contact</a>
-            </div>
-          </div>
-          <p className="mt-6 text-center text-xs text-slate-500">
-            Powered by Nera AI — Agatsa One, 2026
-          </p>
-          <p className="mt-2 text-center text-xs text-slate-400">
-            HeartGuard devices are for monitoring purposes. Clinical decisions remain the physician's responsibility.
-          </p>
-        </div>
-      </footer>
-
       <StickyAddToCart
         productName="HeartGuard Doctor Starter Kit"
         price="₹24,999"
@@ -1792,6 +1753,7 @@ export default function HeartGuard() {
         themeColor="primary"
       />
     </div>
+    </SiteLayout>
   );
 }
 
