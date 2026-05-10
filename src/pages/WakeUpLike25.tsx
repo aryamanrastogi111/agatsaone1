@@ -172,8 +172,8 @@ export default function WakeUpLike25() {
             ⚡ <CountUp to={2847} /> people started this month · ₹2,000 off this week only
           </p>
 
-          <h1 className="font-black tracking-tight text-[2.5rem] leading-[1.05] sm:text-6xl mb-4">
-            You wake up tired.
+          <h1 className="font-black tracking-tight text-[2.5rem] leading-[1.05] sm:text-6xl mb-4 text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.6)]">
+            <span className="text-white">You wake up tired.</span>
             <br />
             <span style={{ background: "linear-gradient(135deg,#FFD27A,#FF7A1A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Every. Single. Day.
