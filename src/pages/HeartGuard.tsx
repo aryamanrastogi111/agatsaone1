@@ -609,6 +609,146 @@ export default function HeartGuard() {
         </div>
       </section>
 
+      {/* ───────── TECHNICAL SPECIFICATIONS ───────── */}
+      <section className="bg-slate-50 py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: BLUE }}>
+              Technical Specifications
+            </p>
+            <h2 className="max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              Built for clinical accuracy. Designed for everyday use.
+            </h2>
+            <p className="mt-4 max-w-3xl text-base text-slate-600 sm:text-lg">
+              Every device in the HeartGuard kit meets medical-grade standards your patients can rely on.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {/* SanketLife ECG */}
+            <Reveal>
+              <div className="h-full rounded-2xl bg-white p-7 shadow-sm ring-1 ring-slate-200/60">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: "rgba(37,99,235,0.1)" }}>
+                    <Activity className="h-5 w-5" style={{ color: BLUE }} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold tracking-tight">SanketLife ECG Device</h3>
+                    <p className="text-xs text-slate-500">World's smallest pocket ECG · CDSCO approved</p>
+                  </div>
+                </div>
+                <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {[
+                    { Icon: HeartPulse, label: "ECG Channels", value: "Single-lead (Lead I) — clinical-grade" },
+                    { Icon: Ruler, label: "Dimensions", value: "55 × 55 × 14 mm · 28 g" },
+                    { Icon: Zap, label: "Sampling Rate", value: "300 samples/sec, 12-bit resolution" },
+                    { Icon: Bluetooth, label: "Connectivity", value: "Bluetooth 4.0 LE" },
+                    { Icon: Smartphone, label: "Compatibility", value: "Android 6.0+ / iOS 11+" },
+                    { Icon: BatteryCharging, label: "Battery", value: "200+ readings per charge · USB-C" },
+                    { Icon: FileText, label: "Output", value: "Instant PDF report, doctor-shareable" },
+                    { Icon: Check, label: "Certifications", value: "CE, ISO 13485, CDSCO Class B" },
+                  ].map((s, i) => (
+                    <div key={i} className="flex items-start gap-3 rounded-lg bg-slate-50 p-3">
+                      <s.Icon className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
+                      <div>
+                        <dt className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">{s.label}</dt>
+                        <dd className="mt-0.5 text-sm font-medium text-slate-800">{s.value}</dd>
+                      </div>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </Reveal>
+
+            {/* EasyTouch Rhythm Band */}
+            <Reveal>
+              <div className="h-full rounded-2xl bg-white p-7 shadow-sm ring-1 ring-slate-200/60">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: "rgba(13,148,136,0.12)" }}>
+                    <Watch className="h-5 w-5" style={{ color: TEAL }} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold tracking-tight">EasyTouch Rhythm Band</h3>
+                    <p className="text-xs text-slate-500">Continuous wellness monitoring wearable</p>
+                  </div>
+                </div>
+                <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {[
+                    { Icon: Heart, label: "Vitals Tracked", value: "Heart rate, HRV, SpO₂, skin temp" },
+                    { Icon: Activity, label: "Activity", value: "Steps, calories, 5 sport rhythms" },
+                    { Icon: Watch, label: "Display", value: "1.47\" colour AMOLED touchscreen" },
+                    { Icon: BatteryCharging, label: "Battery", value: "7-day usage · magnetic charging" },
+                    { Icon: Droplet, label: "Water Resistance", value: "IP68 — splash & sweat proof" },
+                    { Icon: Bluetooth, label: "Connectivity", value: "Bluetooth 5.2 LE" },
+                    { Icon: Smartphone, label: "App", value: "Agatsa One · Android & iOS" },
+                    { Icon: Bell, label: "Smart Alerts", value: "Sleep score, stress, sedentary nudges" },
+                  ].map((s, i) => (
+                    <div key={i} className="flex items-start gap-3 rounded-lg bg-slate-50 p-3">
+                      <s.Icon className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
+                      <div>
+                        <dt className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">{s.label}</dt>
+                        <dd className="mt-0.5 text-sm font-medium text-slate-800">{s.value}</dd>
+                      </div>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ───────── POWER OF NERA AI ───────── */}
+      <section className="relative overflow-hidden py-20 sm:py-28" style={{ background: "linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #312E81 100%)" }}>
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 20% 30%, rgba(168,85,247,0.4) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(59,130,246,0.4) 0%, transparent 50%)" }} />
+        <div className="relative mx-auto max-w-7xl px-6">
+          <Reveal>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-purple-300">
+              The Power of Nera AI
+            </p>
+            <h2 className="max-w-4xl text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Trained on the world's largest ECG dataset — <span style={{ color: "#A78BFA" }}>16 million+ recordings</span>
+            </h2>
+            <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-300 sm:text-lg">
+              Over a decade, Agatsa has collected 16M+ real-world ECG recordings from Indian patients across
+              every age group, body type and clinical scenario. That's the foundation Nera AI is trained on —
+              giving your patients diagnostic-grade intelligence no global model can match for the Indian heart.
+            </p>
+          </Reveal>
+
+          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { Icon: Database, stat: "16 M+", label: "ECG recordings", body: "The largest proprietary ECG dataset in the world — collected from real Indian patients, not lab simulations." },
+              { Icon: Brain, stat: "97.8%", label: "Concordance with cardiologists", body: "Independently validated against expert ECG readings. Nera AI matches what your cardiologist would say." },
+              { Icon: Cpu, stat: "12+ years", label: "Of clinical learning", body: "Continuously trained since 2013 across millions of patient journeys, arrhythmias and recovery patterns." },
+              { Icon: Zap, stat: "< 8 sec", label: "Per ECG analysis", body: "Real-time triage. The moment a patient records, Nera flags abnormal rhythms before you see it." },
+            ].map((item, i) => (
+              <Reveal key={i}>
+                <div className="h-full rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition hover:border-purple-400/40 hover:bg-white/[0.08]">
+                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: "rgba(168,85,247,0.18)" }}>
+                    <item.Icon className="h-5 w-5 text-purple-300" />
+                  </div>
+                  <div className="text-3xl font-extrabold text-white">{item.stat}</div>
+                  <div className="mt-1 text-xs font-semibold uppercase tracking-wider text-purple-300">{item.label}</div>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-300">{item.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal>
+            <div className="mt-10 flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm">
+              <Sparkles className="h-5 w-5 text-purple-300" />
+              <p className="text-sm text-slate-200 sm:text-base">
+                <span className="font-semibold text-white">Built for the Indian heart.</span>{" "}
+                Indian ECG patterns differ from Western datasets. Nera AI is the only model trained
+                primarily on Indian patient data — making it uniquely accurate for your clinic.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ───────── NERA AI ───────── */}
       <section className="bg-white py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-6">
