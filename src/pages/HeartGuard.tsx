@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { Mail, Phone } from "lucide-react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   CalendarX,
@@ -214,6 +217,38 @@ export default function HeartGuard() {
   }, [HERO_SLIDES.length]);
 
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  // ── Contact form state ──
+  const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", clinic: "", city: "", message: "" });
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [contactSent, setContactSent] = useState(false);
+
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setContactForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  };
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!contactForm.name.trim() || !contactForm.email.trim() || !contactForm.phone.trim()) {
+      toast({ title: "Please fill name, email and phone", variant: "destructive" });
+      return;
+    }
+    setContactSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke("send-heartguard-contact", { body: contactForm });
+      if (error) throw error;
+      setContactSent(true);
+      toast({ title: "Thanks — we'll be in touch", description: "Our team will call you within 24 hours." });
+      setContactForm({ name: "", email: "", phone: "", clinic: "", city: "", message: "" });
+    } catch (err) {
+      console.error(err);
+      toast({ title: "Could not send", description: "Please try again or email info@agatsa.com directly.", variant: "destructive" });
+    } finally {
+      setContactSubmitting(false);
+    }
+  };
+
 
   // HeartGuard Doctor Starter Kit — single SKU @ ₹24,999 in backend catalog
   const HEARTGUARD_KIT_SKUS = "heartguard_starter";
@@ -1581,6 +1616,149 @@ export default function HeartGuard() {
       </section>
 
       {/* ───────── FOOTER ───────── */}
+      {/* ───────── CONTACT US ───────── */}
+      <section className="py-20 sm:py-28" style={{ background: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)" }}>
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-5">
+            {/* Left — pitch */}
+            <div className="lg:col-span-2">
+              <Reveal>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
+                  Get in touch
+                </p>
+                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  Talk to the HeartGuard team
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-slate-300">
+                  Have questions about the kit, deployment, or how HeartGuard fits your clinic?
+                  Drop your details and our team will get back to you within 24 hours.
+                </p>
+                <div className="mt-8 space-y-4 text-sm text-slate-300">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: "rgba(13,148,136,0.18)" }}>
+                      <Mail className="h-4 w-4" style={{ color: TEAL }} />
+                    </div>
+                    <a href="mailto:info@agatsa.com" className="hover:text-white">info@agatsa.com</a>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: "rgba(13,148,136,0.18)" }}>
+                      <Phone className="h-4 w-4" style={{ color: TEAL }} />
+                    </div>
+                    <span>Mon – Sat · 10 AM – 7 PM IST</span>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Right — form */}
+            <div className="lg:col-span-3">
+              <Reveal>
+                <form
+                  onSubmit={handleContactSubmit}
+                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm sm:p-8"
+                >
+                  {contactSent ? (
+                    <div className="py-10 text-center">
+                      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full" style={{ background: "rgba(13,148,136,0.2)" }}>
+                        <Check className="h-6 w-6" style={{ color: TEAL }} />
+                      </div>
+                      <h3 className="text-xl font-bold text-white">Thanks — we got it.</h3>
+                      <p className="mt-2 text-sm text-slate-300">
+                        Our team will reach out within 24 hours at the email and phone you provided.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setContactSent(false)}
+                        className="mt-6 text-sm font-semibold underline"
+                        style={{ color: TEAL }}
+                      >
+                        Send another message
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-300">Your name *</label>
+                          <input
+                            name="name" type="text" required maxLength={120}
+                            value={contactForm.name} onChange={handleContactChange}
+                            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-teal-400/60"
+                            placeholder="Dr. Asha Verma"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-300">Email *</label>
+                          <input
+                            name="email" type="email" required maxLength={200}
+                            value={contactForm.email} onChange={handleContactChange}
+                            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-teal-400/60"
+                            placeholder="you@clinic.com"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-300">Phone *</label>
+                          <input
+                            name="phone" type="tel" required maxLength={30}
+                            value={contactForm.phone} onChange={handleContactChange}
+                            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-teal-400/60"
+                            placeholder="+91 98xxxxxxxx"
+                          />
+                        </div>
+                        <div>
+                          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-300">City</label>
+                          <input
+                            name="city" type="text" maxLength={120}
+                            value={contactForm.city} onChange={handleContactChange}
+                            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-teal-400/60"
+                            placeholder="Bengaluru"
+                          />
+                        </div>
+                        <div className="sm:col-span-2">
+                          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-300">Clinic / Hospital</label>
+                          <input
+                            name="clinic" type="text" maxLength={200}
+                            value={contactForm.clinic} onChange={handleContactChange}
+                            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-teal-400/60"
+                            placeholder="Apollo Clinic, Indiranagar"
+                          />
+                        </div>
+                        <div className="sm:col-span-2">
+                          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-300">Message</label>
+                          <textarea
+                            name="message" rows={4} maxLength={2000}
+                            value={contactForm.message} onChange={handleContactChange}
+                            className="w-full resize-none rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-teal-400/60"
+                            placeholder="Tell us about your patient load and what you'd like to know..."
+                          />
+                        </div>
+                      </div>
+
+                      <Button
+                        type="submit"
+                        disabled={contactSubmitting}
+                        size="lg"
+                        className="mt-6 w-full text-base font-semibold"
+                        style={{ background: TEAL }}
+                      >
+                        {contactSubmitting ? "Sending..." : (
+                          <>
+                            Send enquiry <Send className="ml-2 h-4 w-4" />
+                          </>
+                        )}
+                      </Button>
+                      <p className="mt-3 text-center text-xs text-slate-400">
+                        Sent securely to info@agatsa.com · We respond within 24 hours.
+                      </p>
+                    </>
+                  )}
+                </form>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-slate-200 bg-white py-10">
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:justify-between sm:text-left">
