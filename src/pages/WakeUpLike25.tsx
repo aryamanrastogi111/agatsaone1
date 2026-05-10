@@ -535,6 +535,13 @@ export default function WakeUpLike25() {
         </div>
       </section>
 
+      {/* ───── LOOX-STYLE REVIEWS ───── */}
+      <section className="px-5 py-12 sm:py-16 bg-white text-foreground">
+        <div className="max-w-6xl mx-auto">
+          <ProductReviewsSection reviews={wakeUpLike25Reviews} heading="What members are saying" />
+        </div>
+      </section>
+
       {/* ───── FAQ ───── */}
       <section className="px-5 py-12 sm:py-16">
         <div className="max-w-2xl mx-auto">
