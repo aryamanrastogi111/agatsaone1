@@ -673,17 +673,6 @@ export default function WakeUpLike25() {
         </motion.div>
       )}
 
-      {/* ───── WHATSAPP FAB ───── */}
-      <a
-        href={WHATSAPP}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat on WhatsApp"
-        className="fixed bottom-24 right-4 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(34,197,94,0.4)] hover:scale-105 transition"
-        style={{ background: "#25D366" }}
-      >
-        <MessageCircle className="h-7 w-7 text-white" />
-      </a>
     </div>
     </SiteLayout>
   );
