@@ -1609,7 +1609,7 @@ export default function HeartGuard() {
               Claim Your HeartGuard Kit <ArrowRight className="h-4 w-4" />
             </button>
             <p className="mt-6 text-sm text-slate-400">
-              Questions? Email hello@agatsaone.com or WhatsApp us
+              Questions? Email info@agatsa.com
             </p>
           </Reveal>
         </div>
