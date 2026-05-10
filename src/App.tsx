@@ -152,6 +152,7 @@ function AppWithPricing() {
               <Route path="/loseyourbelly" element={<Navigate to="/lose-belly" replace />} />
               <Route path="/lose-belly/welcome" element={<LoseBellyWelcome />} />
               <Route path="/heartguard" element={<HeartGuard />} />
+              <Route path="/wake-up-like-25" element={<WakeUpLike25 />} />
 
               {/* Redirects */}
               <Route path="/download" element={<Navigate to="/app" replace />} />
