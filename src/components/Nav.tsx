@@ -68,15 +68,15 @@ export function Nav() {
                 <div
                   key={link.label}
                   className="relative"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => setDropdownOpen(false)}
+                  onMouseEnter={() => setDropdownOpen(link.label)}
+                  onMouseLeave={() => setDropdownOpen(null)}
                 >
                   <button className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                     {link.label}
                     <ChevronDown className="h-3.5 w-3.5" />
                   </button>
                   <AnimatePresence>
-                    {dropdownOpen && (
+                    {dropdownOpen === link.label && (
                       <motion.div
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
