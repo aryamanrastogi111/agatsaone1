@@ -919,8 +919,8 @@ export default function HeartGuard() {
               </div>
             </div>
 
-            {/* Demo video */}
-            <div className="lg:col-span-2">
+            {/* Demo videos */}
+            <div className="lg:col-span-2 grid gap-6 md:grid-cols-2">
               <Reveal>
                 <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 shadow-xl">
                   <div className="relative aspect-video bg-black">
@@ -942,6 +942,24 @@ export default function HeartGuard() {
                     <p className="mt-2 text-sm leading-relaxed text-slate-600">
                       One touch, 30 seconds, PDF report on your dashboard. The same device
                       that powers the HeartGuard kit.
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal>
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 shadow-xl">
+                  <VideoCard video={{ id: "1UIKpA7H4O4", title: "SanketLife ECG — Official Demo" }} hero />
+                  <div className="bg-white p-5">
+                    <div className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: TEAL }}>
+                      How to use
+                    </div>
+                    <h3 className="mt-2 text-base font-semibold tracking-tight text-slate-900">
+                      SanketLife ECG — Official Demo
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                      Step-by-step walkthrough of taking an ECG with the SanketLife device
+                      included in your HeartGuard kit.
                     </p>
                   </div>
                 </div>
