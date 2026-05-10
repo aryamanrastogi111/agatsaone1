@@ -347,6 +347,10 @@ export default function WakeUpLike25() {
                 title: "Nera ranks what works FOR YOU.",
                 quote: "For your body: dinner timing has 3× more impact than breathing. Other people get different results.",
               },
+              {
+                title: "Nera fixes your food.",
+                quote: "Your 4pm chai-biscuit is killing your evening energy. Swap to roasted chana + 5 almonds — your watch will show +18% HRV by tomorrow morning.",
+              },
             ].map((s, i) => (
               <div key={i} className="rounded-2xl p-6" style={{ background: CARD, border: "1px solid rgba(255,255,255,0.06)" }}>
                 <p className="font-bold text-lg sm:text-xl mb-3 text-white">{s.title}</p>
