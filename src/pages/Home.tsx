@@ -22,10 +22,10 @@ export default function HomePage() {
     <SiteLayout>
       <HeroSection />
       <ProblemSection />
+      <TimelineInsightSection />
       <NeraAISection />
       <DeviceShowcaseSection />
       <VideoShowcaseSection />
-      <TimelineInsightSection />
       <ClinicalProofSection />
       <ProvidersSection />
       <TestimonialsSection />
