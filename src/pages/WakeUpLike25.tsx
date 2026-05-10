@@ -241,7 +241,7 @@ export default function WakeUpLike25() {
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-4">
             Here's what's actually happening
           </p>
-          <h2 className="text-3xl sm:text-5xl font-black text-center leading-tight mb-8">
+          <h2 className="text-3xl sm:text-5xl font-black text-center leading-tight mb-8 text-white">
             Your HRV has been declining for years.
             <br />
             <span className="text-slate-400 font-bold">You just didn't know it.</span>
@@ -322,7 +322,7 @@ export default function WakeUpLike25() {
       <section className="px-5 py-12 sm:py-16" style={{ background: "rgba(255,255,255,0.015)" }}>
         <div className="max-w-3xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-4">Meet Nera AI</p>
-          <h2 className="text-3xl sm:text-5xl font-black text-center leading-tight mb-8">
+          <h2 className="text-3xl sm:text-5xl font-black text-center leading-tight mb-8 text-white">
             The first AI that reads your watch
             <br />
             <span className="text-amber-300">and tells you WHY you're tired</span>
