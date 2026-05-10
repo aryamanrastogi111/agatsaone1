@@ -215,7 +215,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── EMPATHY ───── */}
-      <section className="px-5 py-20 sm:py-28">
+      <section className="px-5 py-12 sm:py-16">
         <div className="max-w-2xl mx-auto text-center">
           <p className="italic text-2xl sm:text-3xl font-light leading-tight text-white mb-10">
             "I sleep 8 hours and still wake up exhausted.
@@ -234,7 +234,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── REVEAL ───── */}
-      <section className="px-5 py-20 sm:py-28" style={{ background: "rgba(255,255,255,0.015)" }}>
+      <section className="px-5 py-12 sm:py-16" style={{ background: "rgba(255,255,255,0.015)" }}>
         <div className="max-w-3xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-4">
             Here's what's actually happening
@@ -276,7 +276,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── SOCIAL PROOF ───── */}
-      <section className="px-5 py-20 sm:py-28">
+      <section className="px-5 py-12 sm:py-16">
         <div className="max-w-6xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-10">
             Real people. Real watches. Real numbers.
@@ -317,7 +317,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── NERA AI ───── */}
-      <section className="px-5 py-20 sm:py-28" style={{ background: "rgba(255,255,255,0.015)" }}>
+      <section className="px-5 py-12 sm:py-16" style={{ background: "rgba(255,255,255,0.015)" }}>
         <div className="max-w-3xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-4">Meet Nera AI</p>
           <h2 className="text-3xl sm:text-5xl font-black text-center leading-tight mb-12">
@@ -361,7 +361,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── HOW IT WORKS ───── */}
-      <section className="px-5 py-20 sm:py-28">
+      <section className="px-5 py-12 sm:py-16">
         <div className="max-w-5xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-4">
             30 Days. 5 Changes. Watch-Confirmed.
@@ -390,7 +390,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── 5 PROTOCOLS ───── */}
-      <section className="px-5 py-20 sm:py-28" style={{ background: "rgba(255,255,255,0.015)" }}>
+      <section className="px-5 py-12 sm:py-16" style={{ background: "rgba(255,255,255,0.015)" }}>
         <div className="max-w-3xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-6">
             The 5 things that change everything
@@ -423,7 +423,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── WHAT YOU GET ───── */}
-      <section className="px-5 py-20 sm:py-28">
+      <section className="px-5 py-12 sm:py-16">
         <div className="max-w-5xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-10">
             Everything in ₹4,999
@@ -481,7 +481,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── PRICE + CTA ───── */}
-      <section className="px-5 py-20 sm:py-24" style={{ background: "linear-gradient(180deg,rgba(255,140,40,0.05),transparent)" }}>
+      <section className="px-5 py-12 sm:py-16" style={{ background: "linear-gradient(180deg,rgba(255,140,40,0.05),transparent)" }}>
         <div className="max-w-xl mx-auto text-center">
           <div className="mb-6"><Countdown /></div>
 
@@ -534,7 +534,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── FAQ ───── */}
-      <section className="px-5 py-20 sm:py-24">
+      <section className="px-5 py-12 sm:py-16">
         <div className="max-w-2xl mx-auto">
           <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-10">Quick Answers</p>
           <div className="space-y-4">
@@ -566,7 +566,7 @@ export default function WakeUpLike25() {
       </section>
 
       {/* ───── FINAL CTA ───── */}
-      <section className="px-5 py-24 sm:py-32 text-center">
+      <section className="px-5 py-14 sm:py-20 text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl sm:text-6xl font-black text-white leading-tight mb-3">Stop waking up tired.</h2>
           <p className="text-2xl sm:text-3xl font-bold mb-10" style={{ background: "linear-gradient(135deg,#FFD27A,#FF7A1A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
