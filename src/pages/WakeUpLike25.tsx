@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useSEO } from "@/hooks/useSEO";
+import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
+import { wakeUpLike25Reviews } from "@/data/wakeUpLike25Reviews";
 
 const NAVY = "#080f1e";
 const CARD = "#0d1626";
@@ -530,6 +532,13 @@ export default function WakeUpLike25() {
           >
             Have questions? WhatsApp us →
           </a>
+        </div>
+      </section>
+
+      {/* ───── LOOX-STYLE REVIEWS ───── */}
+      <section className="px-5 py-12 sm:py-16 bg-white text-foreground">
+        <div className="max-w-6xl mx-auto">
+          <ProductReviewsSection reviews={wakeUpLike25Reviews} heading="What members are saying" />
         </div>
       </section>
 
