@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, Send } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   CalendarX,
