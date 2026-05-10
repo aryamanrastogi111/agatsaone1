@@ -208,7 +208,7 @@ export default function WakeUpLike25() {
           </SunriseButton>
 
           <p className="text-slate-400 text-xs sm:text-sm mt-4">
-            Works with Apple Watch · Galaxy Watch · Any smartwatch you own
+            Works with Apple Watch · Samsung Galaxy Watch · EasyTouch Rhythm band
           </p>
           <p className="text-slate-500 text-[11px] sm:text-xs mt-1.5">
             30-day money-back if your HRV doesn't improve
