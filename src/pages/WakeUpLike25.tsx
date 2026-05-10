@@ -371,6 +371,56 @@ export default function WakeUpLike25() {
         </div>
       </section>
 
+      {/* ───── FOOD ───── */}
+      <section className="px-5 py-12 sm:py-16">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-amber-400 text-xs font-bold uppercase tracking-[0.2em] text-center mb-4">
+            Food is 60% of your energy
+          </p>
+          <h2 className="text-3xl sm:text-5xl font-black text-center leading-tight mb-4 text-white">
+            Nera fixes <span className="text-amber-300">what's on your plate</span> too.
+          </h2>
+          <p className="text-center text-slate-300 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+            Sleep and breathing are only half the story. The other half is sitting in your kitchen.
+            Nera reads your meals, finds the foods quietly draining you, and rebuilds your day —
+            with Indian food you already eat.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-5">
+            {[
+              {
+                icon: <Apple className="h-7 w-7" />,
+                title: "Pantry Scan",
+                body: "Snap your kitchen shelf. Nera flags the 3 items quietly killing your sleep — and 5 swaps from the same shop.",
+              },
+              {
+                icon: <Utensils className="h-7 w-7" />,
+                title: "Daily Meal Plan",
+                body: "Personalised breakfast, lunch, dinner — built from your pantry, your taste, your routine. Veg, non-veg, Jain — all supported.",
+              },
+              {
+                icon: <Flame className="h-7 w-7" />,
+                title: "Food → HRV Proof",
+                body: "Every meal scored against your watch the next morning. Nera shows exactly which foods raise your energy and which crash it.",
+              },
+            ].map((c) => (
+              <div key={c.title} className="rounded-2xl p-6" style={{ background: CARD, border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div className="text-amber-400 mb-3">{c.icon}</div>
+                <p className="font-black text-lg text-white mb-2">{c.title}</p>
+                <p className="text-slate-400 text-sm leading-relaxed">{c.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-2xl p-5 sm:p-6 text-center" style={{ background: "rgba(255,140,40,0.08)", border: "1px solid rgba(255,180,80,0.18)" }}>
+            <p className="text-amber-200 text-sm sm:text-base leading-relaxed">
+              <span className="font-bold">3,000+ Indian foods.</span> Roti, dal, poha, biryani, filter coffee, masala chai — all scored.
+              No bland salads. No imported "superfoods." Just the food you already love, sequenced right.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ───── HOW IT WORKS ───── */}
       <section className="px-5 py-12 sm:py-16">
         <div className="max-w-5xl mx-auto">
