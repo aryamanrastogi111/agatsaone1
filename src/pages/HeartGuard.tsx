@@ -30,6 +30,15 @@ import {
   RefreshCw,
   ArrowRight,
   Play,
+  Cpu,
+  Database,
+  Brain,
+  Zap,
+  Smartphone,
+  BatteryCharging,
+  Bluetooth,
+  Ruler,
+  Wifi,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
