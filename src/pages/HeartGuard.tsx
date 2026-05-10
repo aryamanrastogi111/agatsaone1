@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   CalendarX,
@@ -1328,6 +1329,14 @@ export default function HeartGuard() {
           </p>
         </div>
       </footer>
+
+      <StickyAddToCart
+        productName="HeartGuard Doctor Starter Kit"
+        price="₹24,999"
+        unitPrice={24999}
+        onBuyNow={() => goToCheckout()}
+        themeColor="primary"
+      />
     </div>
   );
 }
