@@ -15,6 +15,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { useSEO } from "@/hooks/useSEO";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
 import { wakeUpLike25Reviews } from "@/data/wakeUpLike25Reviews";
+import { SiteLayout } from "@/components/SiteLayout";
 
 const NAVY = "#080f1e";
 const CARD = "#0d1626";
@@ -165,9 +166,10 @@ export default function WakeUpLike25() {
   };
 
   return (
-    <div className="min-h-screen text-white" style={{ background: NAVY }}>
+    <SiteLayout>
+    <div className="text-white" style={{ background: NAVY }}>
       {/* ───── HERO ───── */}
-      <section ref={heroRef} className="relative pt-20 sm:pt-24 pb-10 px-5">
+      <section ref={heroRef} className="relative pt-6 sm:pt-10 pb-10 px-5">
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at top, rgba(255,140,40,0.10), transparent 60%)" }} />
         <div className="relative max-w-2xl mx-auto w-full text-center">
           <p className="text-amber-300/90 text-xs sm:text-sm font-medium mb-4">
@@ -626,5 +628,6 @@ export default function WakeUpLike25() {
         <MessageCircle className="h-7 w-7 text-white" />
       </a>
     </div>
+    </SiteLayout>
   );
 }
