@@ -30,7 +30,7 @@ const navLinks = [
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const location = useLocation();
 
   useEffect(() => {
