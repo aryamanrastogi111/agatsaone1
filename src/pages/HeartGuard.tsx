@@ -1794,6 +1794,7 @@ export default function HeartGuard() {
         themeColor="primary"
       />
     </div>
+    </SiteLayout>
   );
 }
 
