@@ -10,6 +10,9 @@ import {
   TrendingUp,
   Clock,
   MessageCircle,
+  Utensils,
+  Apple,
+  Flame,
 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useSEO } from "@/hooks/useSEO";
