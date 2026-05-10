@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useSEO } from "@/hooks/useSEO";
+import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
+import { wakeUpLike25Reviews } from "@/data/wakeUpLike25Reviews";
 
 const NAVY = "#080f1e";
 const CARD = "#0d1626";
