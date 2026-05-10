@@ -21,6 +21,7 @@ const DEVICE_NAMES: Record<string, string> = {
   bundle_ecg_band: "ECG + Rhythm Band Bundle",
   lb90_standard:   "Lose Your Belly 90 — Standard",
   lb90_plus:       "Lose Your Belly 90 — Plus",
+  er30_standard:   "Wake Up Like 25 Again — 30-Day Programme",
 };
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
