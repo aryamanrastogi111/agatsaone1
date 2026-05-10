@@ -272,22 +272,6 @@ export default function HeartGuard() {
               "radial-gradient(800px 400px at 80% 20%, rgba(37,99,235,0.25), transparent 60%), radial-gradient(600px 400px at 10% 90%, rgba(13,148,136,0.18), transparent 60%)",
           }}
         />
-        <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <div className="flex items-center gap-2 text-white">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md" style={{ background: BLUE }}>
-              <HeartPulse className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-base font-semibold tracking-tight">Agatsa One</span>
-          </div>
-          <a
-            href="#order"
-            onClick={goToCheckout}
-            className="hidden rounded-md px-4 py-2 text-sm font-medium text-white/80 transition hover:text-white sm:inline-block"
-          >
-            Order Kit →
-          </a>
-        </header>
-
         <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-20 pt-10 lg:grid-cols-12 lg:pb-32 lg:pt-16">
           <div className="lg:col-span-7">
             <p className="mb-5 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
