@@ -208,7 +208,7 @@ export default function WakeUpLike25() {
           </SunriseButton>
 
           <p className="text-slate-400 text-xs sm:text-sm mt-4">
-            Works with Apple Watch · Galaxy Watch · Any smartwatch you own
+            Works with Apple Watch · Samsung Galaxy Watch · EasyTouch Rhythm band
           </p>
           <p className="text-slate-500 text-[11px] sm:text-xs mt-1.5">
             30-day money-back if your HRV doesn't improve
@@ -550,7 +550,7 @@ export default function WakeUpLike25() {
             {[
               {
                 q: "Do I need to buy a new device?",
-                a: "No. Works with Apple Watch, Galaxy Watch, or the JStyle band you already have. Most customers don't buy anything extra.",
+                a: "No. Works with Apple Watch, Samsung Galaxy Watch, or the EasyTouch Rhythm band you already have. Most customers don't buy anything extra.",
               },
               {
                 q: "I've tried other sleep programmes. Why will this work?",
