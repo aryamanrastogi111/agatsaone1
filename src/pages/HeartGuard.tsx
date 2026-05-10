@@ -543,17 +543,11 @@ export default function HeartGuard() {
                     📞
                   </div>
                   <div className="flex-1">
-                    <div
-                      className="mb-2 inline-block rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
-                      style={{ background: "rgba(255,255,255,0.2)", color: "#ffffff" }}
-                    >
-                      Zero Effort Onboarding
-                    </div>
                     <h3
-                      className="mb-2 text-xl font-bold leading-snug sm:text-2xl"
+                      className="mb-3 text-2xl font-extrabold leading-tight sm:text-3xl"
                       style={{ color: "#ffffff" }}
                     >
-                      We onboard your patients for you.
+                      Zero Patient Onboarding
                     </h3>
                     <p
                       className="text-sm leading-relaxed sm:text-base"
