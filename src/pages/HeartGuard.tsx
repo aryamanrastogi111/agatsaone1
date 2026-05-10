@@ -518,30 +518,51 @@ export default function HeartGuard() {
       </section>
 
       {/* ───────── ZERO-EFFORT ONBOARDING RIBBON ───────── */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-6">
+      <section className="py-10 sm:py-14">
+        <div className="mx-auto max-w-4xl px-6">
           <Reveal>
             <div
-              className="relative overflow-hidden rounded-2xl px-6 py-6 shadow-2xl sm:px-10 sm:py-7"
+              className="relative overflow-hidden rounded-3xl p-[2px] shadow-2xl"
               style={{
                 background:
-                  "linear-gradient(90deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%)",
+                  "linear-gradient(135deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%)",
               }}
             >
-              <div className="flex items-start gap-4 sm:items-center">
-                <div
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-2xl"
-                  style={{ background: "rgba(255,255,255,0.22)" }}
-                >
-                  📞
+              <div
+                className="rounded-[22px] p-8 sm:p-10"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,60,172,0.95) 0%, rgba(120,75,160,0.95) 50%, rgba(43,134,197,0.95) 100%)",
+                }}
+              >
+                <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-6">
+                  <div
+                    className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-3xl shadow-lg"
+                    style={{ background: "rgba(255,255,255,0.22)", backdropFilter: "blur(8px)" }}
+                  >
+                    📞
+                  </div>
+                  <div className="flex-1">
+                    <div
+                      className="mb-2 inline-block rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-widest"
+                      style={{ background: "rgba(255,255,255,0.2)", color: "#ffffff" }}
+                    >
+                      Zero Effort Onboarding
+                    </div>
+                    <h3
+                      className="mb-2 text-xl font-bold leading-snug sm:text-2xl"
+                      style={{ color: "#ffffff" }}
+                    >
+                      We onboard your patients for you.
+                    </h3>
+                    <p
+                      className="text-sm leading-relaxed sm:text-base"
+                      style={{ color: "rgba(255,255,255,0.92)" }}
+                    >
+                      The moment you enroll a patient, our team calls them directly to explain how to download the Agatsa One app and record their readings — so you spend zero effort getting them started.
+                    </p>
+                  </div>
                 </div>
-                <p
-                  className="text-sm font-medium leading-relaxed sm:text-base"
-                  style={{ color: "#ffffff" }}
-                >
-                  <span className="font-bold">Zero effort patient onboarding.</span>{" "}
-                  The moment you enroll a patient, our team calls them directly to explain how to download the Agatsa One app and record their readings — so you spend zero effort getting them started.
-                </p>
               </div>
             </div>
           </Reveal>
