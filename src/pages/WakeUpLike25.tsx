@@ -162,7 +162,7 @@ export default function WakeUpLike25() {
       price: PRICE,
       quantity: 1,
     });
-    navigate("/checkout");
+    navigate(`/checkout?sku=${SKU}`);
   };
 
   return (
