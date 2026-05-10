@@ -674,12 +674,12 @@ export default function HeartGuard() {
                 </div>
                 <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {[
-                    { Icon: Heart, label: "Vitals Tracked", value: "Heart rate, HRV, SpO₂, skin temp" },
-                    { Icon: Activity, label: "Activity", value: "Steps, calories, 5 sport rhythms" },
-                    { Icon: Watch, label: "Display", value: "1.47\" colour AMOLED touchscreen" },
-                    { Icon: BatteryCharging, label: "Battery", value: "7-day usage · magnetic charging" },
-                    { Icon: Droplet, label: "Water Resistance", value: "IP68 — splash & sweat proof" },
-                    { Icon: Bluetooth, label: "Connectivity", value: "Bluetooth 5.2 LE" },
+                    { Icon: Heart, label: "Vitals Tracked", value: "Heart rate, HRV, SpO₂, stress score" },
+                    { Icon: Activity, label: "Sleep & Activity", value: "Sleep stages, steps, calories, 5 sport rhythms" },
+                    { Icon: Watch, label: "Wear Style", value: "Lightweight silicone strap · 24/7 comfort" },
+                    { Icon: BatteryCharging, label: "Battery", value: "7-day usage · magnetic charging cable" },
+                    { Icon: Droplet, label: "Water Resistance", value: "IP67 — handwash & light rain safe" },
+                    { Icon: Bluetooth, label: "Sync", value: "Bluetooth — auto-uploads to Nera AI" },
                     { Icon: Smartphone, label: "App", value: "Agatsa One · Android & iOS" },
                     { Icon: Bell, label: "Smart Alerts", value: "Sleep score, stress, sedentary nudges" },
                   ].map((s, i) => (
