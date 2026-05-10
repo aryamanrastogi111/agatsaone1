@@ -280,7 +280,7 @@ export default function HeartGuard() {
                 href="#demo"
                 className="inline-flex items-center justify-center gap-2 rounded-md border border-white/30 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/10"
               >
-                <Play className="h-4 w-4" /> Watch 2-min Demo
+                <Play className="h-4 w-4" /> How it Happens?
               </a>
             </div>
 
