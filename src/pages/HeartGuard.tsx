@@ -457,6 +457,66 @@ export default function HeartGuard() {
         </div>
       </section>
 
+      {/* ───────── SOLUTION ───────── */}
+      <section id="demo" className="py-20 sm:py-28" style={{ background: "#F8FAFC" }}>
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
+              The Solution
+            </p>
+            <h2 className="max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              Daily home ECG. Real-time on your screen.
+            </h2>
+            <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              HeartGuard gives your patients a device they use every morning — 30 seconds, in their
+              palm. Every result goes directly to your portal. Nera AI reads it, flags anomalies,
+              and tells you which patients need your attention today.
+            </p>
+          </Reveal>
+
+          <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
+            {[
+              {
+                Icon: ShoppingBag,
+                title: "You buy the kit",
+                body: "One-time purchase. 5 ECG devices. Ships to your clinic in 48 hours.",
+              },
+              {
+                Icon: QrCode,
+                title: "Patient scans the card",
+                body:
+                  "Give your patient a clinic card. They download Agatsa One, enter your code, and are linked to your dashboard instantly.",
+              },
+              {
+                Icon: MonitorPlay,
+                title: "You monitor. Nera AI does the work.",
+                body:
+                  "Daily ECGs, HRV, sleep, glucose patterns — all in one portal. Nera AI sends you a morning briefing: 'Patient 3 needs review today.'",
+              },
+            ].map((s, i, arr) => (
+              <Reveal key={i}>
+                <div className="relative h-full rounded-2xl bg-white p-7 shadow-sm ring-1 ring-slate-200/60">
+                  <div className="mb-5 flex items-center gap-3">
+                    <div
+                      className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white"
+                      style={{ background: BLUE }}
+                    >
+                      {i + 1}
+                    </div>
+                    <s.Icon className="h-5 w-5 text-slate-400" />
+                  </div>
+                  <h3 className="text-lg font-semibold tracking-tight">{s.title}</h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-slate-600">{s.body}</p>
+                  {i < arr.length - 1 && (
+                    <ArrowRight className="absolute -right-5 top-1/2 hidden h-6 w-6 -translate-y-1/2 text-slate-300 md:block" />
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ───────── INCOME CALCULATOR ───────── */}
       <section className="bg-white py-20 sm:py-28 border-t border-slate-100">
         <div className="mx-auto max-w-5xl px-6">
@@ -721,66 +781,6 @@ export default function HeartGuard() {
                 </span>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ───────── SOLUTION ───────── */}
-      <section id="demo" className="py-20 sm:py-28" style={{ background: "#F8FAFC" }}>
-        <div className="mx-auto max-w-7xl px-6">
-          <Reveal>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
-              The Solution
-            </p>
-            <h2 className="max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-              Daily home ECG. Real-time on your screen.
-            </h2>
-            <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              HeartGuard gives your patients a device they use every morning — 30 seconds, in their
-              palm. Every result goes directly to your portal. Nera AI reads it, flags anomalies,
-              and tells you which patients need your attention today.
-            </p>
-          </Reveal>
-
-          <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
-            {[
-              {
-                Icon: ShoppingBag,
-                title: "You buy the kit",
-                body: "One-time purchase. 5 ECG devices. Ships to your clinic in 48 hours.",
-              },
-              {
-                Icon: QrCode,
-                title: "Patient scans the card",
-                body:
-                  "Give your patient a clinic card. They download Agatsa One, enter your code, and are linked to your dashboard instantly.",
-              },
-              {
-                Icon: MonitorPlay,
-                title: "You monitor. Nera AI does the work.",
-                body:
-                  "Daily ECGs, HRV, sleep, glucose patterns — all in one portal. Nera AI sends you a morning briefing: 'Patient 3 needs review today.'",
-              },
-            ].map((s, i, arr) => (
-              <Reveal key={i}>
-                <div className="relative h-full rounded-2xl bg-white p-7 shadow-sm ring-1 ring-slate-200/60">
-                  <div className="mb-5 flex items-center gap-3">
-                    <div
-                      className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white"
-                      style={{ background: BLUE }}
-                    >
-                      {i + 1}
-                    </div>
-                    <s.Icon className="h-5 w-5 text-slate-400" />
-                  </div>
-                  <h3 className="text-lg font-semibold tracking-tight">{s.title}</h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-slate-600">{s.body}</p>
-                  {i < arr.length - 1 && (
-                    <ArrowRight className="absolute -right-5 top-1/2 hidden h-6 w-6 -translate-y-1/2 text-slate-300 md:block" />
-                  )}
-                </div>
-              </Reveal>
-            ))}
           </div>
         </div>
       </section>
