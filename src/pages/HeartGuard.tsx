@@ -462,7 +462,7 @@ export default function HeartGuard() {
                 Icon: HeartPulse,
                 title: "Clinic ECG is a snapshot",
                 body:
-                  "Your Tricog or in-clinic ECG tells you what happened when the patient was sitting in front of you. What happened at 2am on Wednesday — you have no idea.",
+                  "Your in-clinic ECG tells you what happened when the patient was sitting in front of you. What happened at 2am on Wednesday — you have no idea.",
               },
               {
                 Icon: Unlink,
@@ -1499,7 +1499,7 @@ export default function HeartGuard() {
               </button>
 
               <p className="mt-4 text-center text-sm text-slate-500">
-                Have questions? WhatsApp us: +91 95605 92872
+                Have questions? Email us: <a href="mailto:info@agatsa.com" className="underline">info@agatsa.com</a>
               </p>
 
               <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-500">
