@@ -1248,6 +1248,133 @@ export default function HeartGuard() {
         </div>
       </section>
 
+      {/* ───────── COMPARISON: SANKETLIFE vs OTHER ECG DEVICES ───────── */}
+      <section className="bg-white py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <Reveal>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: BLUE }}>
+              ECG Comparison
+            </p>
+            <h2 className="max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              SanketLife vs other ECG options
+            </h2>
+            <p className="mt-4 max-w-3xl text-base text-slate-600 sm:text-lg">
+              The only pocket device that gives your patient a true 12-lead reading at home — and gives you the same data your hospital ECG would.
+            </p>
+          </Reveal>
+
+          <Reveal>
+            <div className="mt-10 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-slate-200 bg-slate-50">
+                    <th className="min-w-[180px] py-4 px-5 text-left font-semibold text-slate-600">Feature</th>
+                    <th className="min-w-[150px] py-4 px-5 text-center font-bold" style={{ color: BLUE }}>SanketLife</th>
+                    <th className="min-w-[140px] py-4 px-5 text-center font-medium text-slate-500">Hospital ECG</th>
+                    <th className="min-w-[140px] py-4 px-5 text-center font-medium text-slate-500">Holter Monitor</th>
+                    <th className="min-w-[140px] py-4 px-5 text-center font-medium text-slate-500">Smartwatch ECG</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["ECG Leads", "12-lead", "12-lead", "3-lead", "Single-lead"],
+                    ["Time to result", "15 seconds", "Hours to days", "24–48 hours", "30 seconds"],
+                    ["Where", "Patient's palm", "Hospital only", "Worn for 1–2 days", "Wrist only"],
+                    ["Cost per ECG", "Unlimited", "₹300 – ₹1,500", "₹3,000 – ₹6,000", "Unlimited"],
+                    ["Validated accuracy", "98.5% vs hospital", "Reference", "Reference", "Limited"],
+                    ["Doctor-shareable PDF", "Instant", "Manual", "Lab report", "Limited export"],
+                    ["AI triage (Nera AI)", "Included", "—", "—", "—"],
+                    ["Setup for elderly patient", "30 seconds", "Appointment + travel", "Clinic fitting", "Needs paired phone"],
+                  ].map(([feature, sanket, hosp, holter, watch], i) => (
+                    <tr key={i} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/60">
+                      <td className="py-3.5 px-5 font-medium text-slate-800">{feature}</td>
+                      <td className="py-3.5 px-5 text-center font-semibold" style={{ color: BLUE, background: "rgba(37,99,235,0.04)" }}>{sanket}</td>
+                      <td className="py-3.5 px-5 text-center text-slate-500">{hosp}</td>
+                      <td className="py-3.5 px-5 text-center text-slate-500">{holter}</td>
+                      <td className="py-3.5 px-5 text-center text-slate-500">{watch}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-xs text-slate-500">Comparison based on publicly available specifications. SanketLife accuracy validated at Narayana Health and Sri Jayadeva Institute.</p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ───────── COMPARISON: RHYTHM BAND vs OTHER WEARABLES ───────── */}
+      <section className="py-20 sm:py-24" style={{ background: "#F8FAFC" }}>
+        <div className="mx-auto max-w-6xl px-6">
+          <Reveal>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest" style={{ color: TEAL }}>
+              Wearable Comparison
+            </p>
+            <h2 className="max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              EasyTouch Rhythm vs other wearables
+            </h2>
+            <p className="mt-4 max-w-3xl text-base text-slate-600 sm:text-lg">
+              Most bands track numbers. The Rhythm Band feeds Nera AI the continuous signal it needs to spot what matters between ECGs.
+            </p>
+          </Reveal>
+
+          <Reveal>
+            <div className="mt-10 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-slate-200 bg-slate-50">
+                    <th className="min-w-[200px] py-4 px-5 text-left font-semibold text-slate-600">Feature</th>
+                    <th className="min-w-[150px] py-4 px-5 text-center font-bold" style={{ color: TEAL }}>EasyTouch Rhythm</th>
+                    <th className="min-w-[130px] py-4 px-5 text-center font-medium text-slate-500">Apple Watch</th>
+                    <th className="min-w-[130px] py-4 px-5 text-center font-medium text-slate-500">Fitbit</th>
+                    <th className="min-w-[130px] py-4 px-5 text-center font-medium text-slate-500">Oura Ring</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { feature: "Five Rhythm Analysis", rhythm: true, apple: false, fitbit: false, oura: false, unique: true },
+                    { feature: "Unified Rhythm Score", rhythm: true, apple: false, fitbit: false, oura: false, unique: true },
+                    { feature: "Heart Rate Monitoring", rhythm: true, apple: true, fitbit: true, oura: true },
+                    { feature: "Sleep Tracking", rhythm: true, apple: true, fitbit: true, oura: true },
+                    { feature: "Blood Oxygen (SpO₂)", rhythm: true, apple: true, fitbit: true, oura: true },
+                    { feature: "Stress Detection", rhythm: true, apple: true, fitbit: true, oura: true },
+                    { feature: "Circadian Rhythm Tracking", rhythm: true, apple: false, fitbit: false, oura: true, unique: true },
+                    { feature: "Metabolic Insights", rhythm: true, apple: false, fitbit: false, oura: false, unique: true },
+                    { feature: "Feeds doctor portal (Nera AI)", rhythm: true, apple: false, fitbit: false, oura: false, unique: true },
+                    { feature: "7-Day Battery", rhythm: true, apple: false, fitbit: true, oura: true },
+                    { feature: "No Subscription Required", rhythm: true, apple: true, fitbit: false, oura: false, unique: true },
+                    { feature: "Made in India", rhythm: true, apple: false, fitbit: false, oura: false },
+                  ].map((row, i) => (
+                    <tr key={i} className={`border-b border-slate-100 last:border-0 ${row.unique ? "bg-teal-50/40" : "hover:bg-slate-50/60"}`}>
+                      <td className="py-3.5 px-5 font-medium text-slate-800">
+                        {row.feature}
+                        {row.unique && (
+                          <span className="ml-2 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider" style={{ background: "rgba(13,148,136,0.15)", color: TEAL }}>
+                            Unique
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-3.5 px-5 text-center" style={{ background: "rgba(13,148,136,0.05)" }}>
+                        {row.rhythm ? <Check className="mx-auto h-5 w-5" style={{ color: TEAL }} /> : <span className="text-slate-400">—</span>}
+                      </td>
+                      <td className="py-3.5 px-5 text-center">
+                        {row.apple ? <Check className="mx-auto h-5 w-5 text-slate-400" /> : <span className="text-slate-400">—</span>}
+                      </td>
+                      <td className="py-3.5 px-5 text-center">
+                        {row.fitbit ? <Check className="mx-auto h-5 w-5 text-slate-400" /> : <span className="text-slate-400">—</span>}
+                      </td>
+                      <td className="py-3.5 px-5 text-center">
+                        {row.oura ? <Check className="mx-auto h-5 w-5 text-slate-400" /> : <span className="text-slate-400">—</span>}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-xs text-slate-500">* Comparison based on publicly available product specifications.</p>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ───────── WHAT'S IN THE KIT (moved above) ───────── */}
       {/* ───────── WHO IS THIS FOR ───────── */}
       <section className="py-20 sm:py-28" style={{ background: "#F8FAFC" }}>
