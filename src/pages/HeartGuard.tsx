@@ -1627,7 +1627,7 @@ export default function HeartGuard() {
                   Get in touch
                 </p>
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Talk to the HeartGuard team
+                  Talk to the Agatsa team
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-slate-300">
                   Have questions about the kit, deployment, or how HeartGuard fits your clinic?
