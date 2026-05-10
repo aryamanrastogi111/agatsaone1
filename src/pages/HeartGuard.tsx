@@ -518,7 +518,7 @@ export default function HeartGuard() {
       </section>
 
       {/* ───────── ZERO-EFFORT ONBOARDING RIBBON ───────── */}
-      <section className="py-10 sm:py-14">
+      <section className="pb-10 sm:pb-14">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <div
