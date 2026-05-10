@@ -1328,6 +1328,14 @@ export default function HeartGuard() {
           </p>
         </div>
       </footer>
+
+      <StickyAddToCart
+        productName="HeartGuard Doctor Starter Kit"
+        price="₹24,999"
+        unitPrice={24999}
+        onBuyNow={() => goToCheckout()}
+        themeColor="primary"
+      />
     </div>
   );
 }
