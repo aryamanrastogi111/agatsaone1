@@ -1761,31 +1761,6 @@ export default function HeartGuard() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-200 bg-white py-10">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:justify-between sm:text-left">
-            <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-md" style={{ background: BLUE }}>
-                <HeartPulse className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-sm font-semibold tracking-tight">Agatsa One</span>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-600">
-              <a href="/about" className="hover:text-slate-900">About</a>
-              <a href="/privacy-policy" className="hover:text-slate-900">Privacy Policy</a>
-              <a href="/terms-of-service" className="hover:text-slate-900">Terms</a>
-              <a href="/contact" className="hover:text-slate-900">Contact</a>
-            </div>
-          </div>
-          <p className="mt-6 text-center text-xs text-slate-500">
-            Powered by Nera AI — Agatsa One, 2026
-          </p>
-          <p className="mt-2 text-center text-xs text-slate-400">
-            HeartGuard devices are for monitoring purposes. Clinical decisions remain the physician's responsibility.
-          </p>
-        </div>
-      </footer>
-
       <StickyAddToCart
         productName="HeartGuard Doctor Starter Kit"
         price="₹24,999"
