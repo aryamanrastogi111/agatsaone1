@@ -41,7 +41,7 @@ export function Nav() {
 
   useEffect(() => {
     setMobileOpen(false);
-    setDropdownOpen(false);
+    setDropdownOpen(null);
   }, [location.pathname]);
 
   return (
