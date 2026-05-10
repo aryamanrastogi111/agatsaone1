@@ -553,7 +553,7 @@ export default function HeartGuard() {
                       className="text-sm leading-relaxed sm:text-base"
                       style={{ color: "rgba(255,255,255,0.92)" }}
                     >
-                      The moment you enroll a patient, our team calls them directly to explain how to download the Agatsa One app and record their readings — so you spend zero effort getting them started.
+                      The moment you enroll a patient, the system notifies the Agatsa team and they call the enrolled patient directly to explain how to download the Agatsa One app and record their readings — so you spend zero effort getting them started.
                     </p>
                   </div>
                 </div>
