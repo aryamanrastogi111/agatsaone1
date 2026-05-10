@@ -518,20 +518,30 @@ export default function HeartGuard() {
       </section>
 
       {/* ───────── ZERO-EFFORT ONBOARDING RIBBON ───────── */}
-      <section className="py-6">
+      <section className="py-8">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-fuchsia-600 via-purple-600 to-indigo-600 p-[1px] shadow-xl">
-              <div className="rounded-2xl bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500 px-6 py-5 sm:px-10 sm:py-6">
-                <div className="flex items-start gap-4 sm:items-center">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
-                    <span className="text-2xl">📞</span>
-                  </div>
-                  <p className="text-sm font-medium leading-relaxed text-white sm:text-base">
-                    <span className="font-bold">Zero effort patient onboarding.</span>{" "}
-                    The moment you enroll a patient, our team calls them directly to explain how to download the Agatsa One app and record their readings — so you spend zero effort getting them started.
-                  </p>
+            <div
+              className="relative overflow-hidden rounded-2xl px-6 py-6 shadow-2xl sm:px-10 sm:py-7"
+              style={{
+                background:
+                  "linear-gradient(90deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%)",
+              }}
+            >
+              <div className="flex items-start gap-4 sm:items-center">
+                <div
+                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-2xl"
+                  style={{ background: "rgba(255,255,255,0.22)" }}
+                >
+                  📞
                 </div>
+                <p
+                  className="text-sm font-medium leading-relaxed sm:text-base"
+                  style={{ color: "#ffffff" }}
+                >
+                  <span className="font-bold">Zero effort patient onboarding.</span>{" "}
+                  The moment you enroll a patient, our team calls them directly to explain how to download the Agatsa One app and record their readings — so you spend zero effort getting them started.
+                </p>
               </div>
             </div>
           </Reveal>
