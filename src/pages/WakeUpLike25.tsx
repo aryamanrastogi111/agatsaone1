@@ -550,7 +550,7 @@ export default function WakeUpLike25() {
             {[
               {
                 q: "Do I need to buy a new device?",
-                a: "No. Works with Apple Watch, Galaxy Watch, or the JStyle band you already have. Most customers don't buy anything extra.",
+                a: "No. Works with Apple Watch, Samsung Galaxy Watch, or the EasyTouch Rhythm band you already have. Most customers don't buy anything extra.",
               },
               {
                 q: "I've tried other sleep programmes. Why will this work?",
