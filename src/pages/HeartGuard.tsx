@@ -489,7 +489,7 @@ export default function HeartGuard() {
               {
                 Icon: ShoppingBag,
                 title: "You buy the kit",
-                body: "One-time purchase. 5 ECG devices. Ships to your clinic in 72 hours.",
+                body: "One-time purchase. 5 SanketLife ECG devices + 5 EasyTouch Rhythm wearable bands. Ships to your clinic in 72 hours.",
               },
               {
                 Icon: QrCode,
