@@ -260,6 +260,7 @@ export default function HeartGuard() {
   };
 
   return (
+    <SiteLayout>
     <div className="font-sans antialiased text-[#0f172a] bg-white scroll-smooth">
       {/* ───────── HERO ───────── */}
       <section className="relative overflow-hidden" style={{ background: NAVY }}>
