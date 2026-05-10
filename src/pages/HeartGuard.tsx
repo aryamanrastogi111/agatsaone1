@@ -634,19 +634,19 @@ export default function HeartGuard() {
                   </div>
                   <div>
                     <h3 className="text-lg font-bold tracking-tight">SanketLife ECG Device</h3>
-                    <p className="text-xs text-slate-500">World's smallest pocket ECG · CDSCO approved</p>
+                    <p className="text-xs text-slate-500">World's smallest 12-lead pocket ECG</p>
                   </div>
                 </div>
                 <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {[
-                    { Icon: HeartPulse, label: "ECG Channels", value: "Single-lead (Lead I) — clinical-grade" },
-                    { Icon: Ruler, label: "Dimensions", value: "55 × 55 × 14 mm · 28 g" },
-                    { Icon: Zap, label: "Sampling Rate", value: "300 samples/sec, 12-bit resolution" },
-                    { Icon: Bluetooth, label: "Connectivity", value: "Bluetooth 4.0 LE" },
-                    { Icon: Smartphone, label: "Compatibility", value: "Android 6.0+ / iOS 11+" },
-                    { Icon: BatteryCharging, label: "Battery", value: "200+ readings per charge · USB-C" },
+                    { Icon: HeartPulse, label: "ECG Type", value: "12-lead clinical ECG via thumb sensors" },
+                    { Icon: Zap, label: "Capture Time", value: "15-second reading · no gel, no wires" },
+                    { Icon: Check, label: "Accuracy", value: "98.5% concordance with hospital ECG" },
+                    { Icon: Bluetooth, label: "Connectivity", value: "Bluetooth Low Energy" },
+                    { Icon: Smartphone, label: "Compatibility", value: "Android & iOS · Agatsa One app" },
+                    { Icon: BatteryCharging, label: "Battery", value: "CR2032 coin cell · pre-installed" },
                     { Icon: FileText, label: "Output", value: "Instant PDF report, doctor-shareable" },
-                    { Icon: Check, label: "Certifications", value: "CE, ISO 13485, CDSCO Class B" },
+                    { Icon: Package, label: "In the Box", value: "Device, battery, pouch, quick-start guide" },
                   ].map((s, i) => (
                     <div key={i} className="flex items-start gap-3 rounded-lg bg-slate-50 p-3">
                       <s.Icon className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
