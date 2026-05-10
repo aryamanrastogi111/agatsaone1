@@ -46,6 +46,7 @@ const LoseBelly = lazy(() => import("./pages/LoseBelly"));
 const LoseBellyFeatures = lazy(() => import("./pages/LoseBellyFeatures"));
 const LoseBellyWelcome = lazy(() => import("./pages/LoseBellyWelcome"));
 const HeartGuard = lazy(() => import("./pages/HeartGuard"));
+const WakeUpLike25 = lazy(() => import("./pages/WakeUpLike25"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // SDK Portal
@@ -151,6 +152,7 @@ function AppWithPricing() {
               <Route path="/loseyourbelly" element={<Navigate to="/lose-belly" replace />} />
               <Route path="/lose-belly/welcome" element={<LoseBellyWelcome />} />
               <Route path="/heartguard" element={<HeartGuard />} />
+              <Route path="/wake-up-like-25" element={<WakeUpLike25 />} />
 
               {/* Redirects */}
               <Route path="/download" element={<Navigate to="/app" replace />} />
