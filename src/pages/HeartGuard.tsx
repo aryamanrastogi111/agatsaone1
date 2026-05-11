@@ -293,7 +293,7 @@ export default function HeartGuard() {
               <span className="text-white/70">to follow-ups that never happen.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
-              Apollo and Medanta already monitor their patients at home. Your clinic doesn't.
+              Most big hospitals already monitor their patients at home. Your clinic doesn't.
               HeartGuard gives solo and small-group doctors the same remote-monitoring stack —
               ECG kit, vitals band, doctor dashboard, and Nera AI triage — for a one-time ₹24,999.
             </p>
