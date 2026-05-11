@@ -4,7 +4,7 @@ import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
-import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown, Users, Clock, MousePointerClick, Globe, MapPin } from "lucide-react";
+import { TrendingUp, ShoppingCart, IndianRupee, Package, RefreshCw, Calendar, ArrowRight, ArrowDown, Users, Clock, MousePointerClick, Globe, MapPin, CalendarClock } from "lucide-react";
 import { format, subDays } from "date-fns";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,6 +54,17 @@ export default function Analytics() {
     totalRevenue: 0, totalOrders: 0, paidOrders: 0,
     monthRevenue: 0, monthOrders: 0, avgOrderValue: 0,
     todayRevenue: 0, todayOrders: 0, totalVisitors: 0,
+  });
+  // Order-time heatmap: last 15 days, day-of-week × 2-hour bucket
+  const [heatmapGrid, setHeatmapGrid] = useState<number[][]>(() =>
+    Array.from({ length: 7 }, () => Array(12).fill(0))
+  );
+  const [heatmapMeta, setHeatmapMeta] = useState({
+    total: 0,
+    peakDay: "",
+    peakBucket: "",
+    peakCount: 0,
+    byDay: [] as { day: string; count: number }[],
   });
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
@@ -313,6 +324,47 @@ export default function Analytics() {
       setCityData([]);
     }
 
+    // Order time heatmap (independent: always last 15 days, paid orders, IST)
+    const heatmapStartIst = new Date(istNow.getTime() - 14 * 86400000);
+    const heatmapStartStr = heatmapStartIst.toISOString().split("T")[0];
+    const heatmapStartIso = new Date(`${heatmapStartStr}T00:00:00+05:30`).toISOString();
+    const heatmapRes = await db
+      .from("orders")
+      .select("created_at, status")
+      .gte("created_at", heatmapStartIso)
+      .in("status", PAID_STATUSES);
+    const grid: number[][] = Array.from({ length: 7 }, () => Array(12).fill(0));
+    const dayCounts = Array(7).fill(0);
+    let total = 0;
+    let peakCount = 0;
+    let peakDayIdx = 0;
+    let peakBucketIdx = 0;
+    (heatmapRes.data ?? []).forEach((o: any) => {
+      const ist = new Date(new Date(o.created_at).getTime() + istOffsetMs);
+      // getUTCDay on shifted time = IST day-of-week (0=Sun)
+      const dow = ist.getUTCDay();
+      const hour = ist.getUTCHours();
+      const bucket = Math.floor(hour / 2);
+      grid[dow][bucket] += 1;
+      dayCounts[dow] += 1;
+      total += 1;
+      if (grid[dow][bucket] > peakCount) {
+        peakCount = grid[dow][bucket];
+        peakDayIdx = dow;
+        peakBucketIdx = bucket;
+      }
+    });
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const bucketLabel = (b: number) => `${(b * 2).toString().padStart(2, "0")}:00–${(b * 2 + 2).toString().padStart(2, "0")}:00`;
+    setHeatmapGrid(grid);
+    setHeatmapMeta({
+      total,
+      peakDay: total ? dayNames[peakDayIdx] : "",
+      peakBucket: total ? bucketLabel(peakBucketIdx) : "",
+      peakCount,
+      byDay: dayNames.map((day, i) => ({ day, count: dayCounts[i] })),
+    });
+
     setLoading(false);
   }, [timeRange]);
 
@@ -522,6 +574,105 @@ export default function Analytics() {
           </div>
         ) : (
           <p className="text-gray-400 text-sm text-center py-8">Not enough data to show funnel</p>
+        )}
+      </div>
+
+      {/* Order Time Heatmap — Day × Hour (last 15 days, paid orders) */}
+      <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+        <div className="flex items-start justify-between flex-wrap gap-3 mb-1">
+          <h3 className="font-semibold text-gray-900 flex items-center gap-2">
+            <CalendarClock size={18} /> Order Time Heatmap
+          </h3>
+          <span className="text-xs text-gray-400">Paid orders · last 15 days · IST</span>
+        </div>
+        <p className="text-xs text-gray-400 mb-4">
+          When are buyers actually checking out? Darker = more orders. Use this to schedule ads, support and offers.
+        </p>
+
+        {heatmapMeta.total === 0 ? (
+          <p className="text-gray-400 text-sm text-center py-8">No paid orders in the last 15 days yet.</p>
+        ) : (
+          <>
+            {/* Insight strip */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+              <div className="rounded-lg border p-3">
+                <div className="text-xs text-gray-500 mb-0.5">Peak day</div>
+                <div className="text-lg font-bold text-gray-900">{heatmapMeta.peakDay}</div>
+                <div className="text-xs text-gray-400">{heatmapMeta.peakBucket} · {heatmapMeta.peakCount} order{heatmapMeta.peakCount === 1 ? "" : "s"}</div>
+              </div>
+              <div className="rounded-lg border p-3">
+                <div className="text-xs text-gray-500 mb-0.5">Best weekday (volume)</div>
+                <div className="text-lg font-bold text-gray-900">
+                  {[...heatmapMeta.byDay].sort((a, b) => b.count - a.count)[0]?.day || "—"}
+                </div>
+                <div className="text-xs text-gray-400">
+                  {[...heatmapMeta.byDay].sort((a, b) => b.count - a.count)[0]?.count || 0} orders
+                </div>
+              </div>
+              <div className="rounded-lg border p-3">
+                <div className="text-xs text-gray-500 mb-0.5">Total paid orders</div>
+                <div className="text-lg font-bold text-gray-900">{heatmapMeta.total}</div>
+                <div className="text-xs text-gray-400">tracked in last 15 days</div>
+              </div>
+            </div>
+
+            {/* Heatmap grid */}
+            <div className="overflow-x-auto">
+              <table className="text-xs border-separate" style={{ borderSpacing: 2 }}>
+                <thead>
+                  <tr>
+                    <th className="text-left text-gray-400 font-medium pr-2 pb-1 sticky left-0 bg-white">Day \ Hour</th>
+                    {Array.from({ length: 12 }, (_, b) => (
+                      <th key={b} className="text-gray-400 font-medium px-1 pb-1 text-center" style={{ minWidth: 38 }}>
+                        {(b * 2).toString().padStart(2, "0")}
+                      </th>
+                    ))}
+                    <th className="text-gray-400 font-medium pl-2 pb-1 text-right">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d, di) => {
+                    const max = Math.max(1, heatmapMeta.peakCount);
+                    const dayTotal = heatmapGrid[di].reduce((a, b) => a + b, 0);
+                    return (
+                      <tr key={d}>
+                        <td className="text-gray-700 font-medium pr-2 sticky left-0 bg-white">{d}</td>
+                        {heatmapGrid[di].map((c, bi) => {
+                          const intensity = c === 0 ? 0 : 0.15 + (c / max) * 0.85;
+                          return (
+                            <td
+                              key={bi}
+                              className="text-center rounded-md"
+                              style={{
+                                background: c === 0 ? "#f3f4f6" : `rgba(59, 130, 246, ${intensity})`,
+                                color: intensity > 0.55 ? "#fff" : "#374151",
+                                height: 30,
+                                minWidth: 38,
+                              }}
+                              title={`${d} ${(bi * 2).toString().padStart(2, "0")}:00–${(bi * 2 + 2).toString().padStart(2, "0")}:00 · ${c} order${c === 1 ? "" : "s"}`}
+                            >
+                              {c || ""}
+                            </td>
+                          );
+                        })}
+                        <td className="pl-2 text-right font-semibold text-gray-700">{dayTotal}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Legend */}
+            <div className="flex items-center gap-2 mt-4 text-xs text-gray-500">
+              <span>Less</span>
+              {[0.15, 0.35, 0.55, 0.75, 1].map((i) => (
+                <span key={i} className="inline-block rounded" style={{ width: 18, height: 12, background: `rgba(59, 130, 246, ${i})` }} />
+              ))}
+              <span>More</span>
+              <span className="ml-3 text-gray-400">Hours shown in IST · 2-hour buckets</span>
+            </div>
+          </>
         )}
       </div>
 
