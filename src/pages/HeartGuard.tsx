@@ -288,15 +288,39 @@ export default function HeartGuard() {
               </span>
             </div>
             <h1 className="text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
-              You're losing ₹3 lakh a month
+              Keep your patients.
               <br />
-              <span className="text-white/70">to follow-ups that never happen.</span>
+              <span className="text-white/70">Earn while you care.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
-              Most big hospitals already monitor their patients at home. Your clinic doesn't.
-              HeartGuard gives solo and small-group doctors the same remote-monitoring stack —
-              ECG kit, vitals band, doctor dashboard, and Nera AI triage — for a one-time ₹24,999.
+              HeartGuard turns one-time visits into a year-round relationship — and a predictable monthly income stream for your clinic.
             </p>
+
+            {/* Two-point offer */}
+            <div className="mt-7 grid gap-3 sm:grid-cols-2 max-w-xl">
+              <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: "rgba(13,148,136,0.18)" }}>
+                    <Heart className="h-5 w-5" style={{ color: TEAL }} />
+                  </div>
+                  <p className="text-sm font-semibold text-white">Patient stickiness</p>
+                </div>
+                <p className="mt-2 text-[13px] leading-snug text-slate-300">
+                  Daily ECG + vitals keep patients engaged with <span className="text-white">your</span> clinic — not the next one on Google.
+                </p>
+              </div>
+              <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: "rgba(37,99,235,0.20)" }}>
+                    <TrendingUp className="h-5 w-5" style={{ color: "#60A5FA" }} />
+                  </div>
+                  <p className="text-sm font-semibold text-white">Earn ₹3,000+/patient/month</p>
+                </div>
+                <p className="mt-2 text-[13px] leading-snug text-slate-300">
+                  Bill remote monitoring as a recurring service. 15 patients = <span className="font-semibold text-white">₹5.4L/year</span> extra.
+                </p>
+              </div>
+            </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
