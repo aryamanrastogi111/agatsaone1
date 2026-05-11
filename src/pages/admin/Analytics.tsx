@@ -55,6 +55,17 @@ export default function Analytics() {
     monthRevenue: 0, monthOrders: 0, avgOrderValue: 0,
     todayRevenue: 0, todayOrders: 0, totalVisitors: 0,
   });
+  // Order-time heatmap: last 15 days, day-of-week × 2-hour bucket
+  const [heatmapGrid, setHeatmapGrid] = useState<number[][]>(() =>
+    Array.from({ length: 7 }, () => Array(12).fill(0))
+  );
+  const [heatmapMeta, setHeatmapMeta] = useState({
+    total: 0,
+    peakDay: "",
+    peakBucket: "",
+    peakCount: 0,
+    byDay: [] as { day: string; count: number }[],
+  });
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
 
