@@ -324,6 +324,47 @@ export default function Analytics() {
       setCityData([]);
     }
 
+    // Order time heatmap (independent: always last 15 days, paid orders, IST)
+    const heatmapStartIst = new Date(istNow.getTime() - 14 * 86400000);
+    const heatmapStartStr = heatmapStartIst.toISOString().split("T")[0];
+    const heatmapStartIso = new Date(`${heatmapStartStr}T00:00:00+05:30`).toISOString();
+    const heatmapRes = await db
+      .from("orders")
+      .select("created_at, status")
+      .gte("created_at", heatmapStartIso)
+      .in("status", PAID_STATUSES);
+    const grid: number[][] = Array.from({ length: 7 }, () => Array(12).fill(0));
+    const dayCounts = Array(7).fill(0);
+    let total = 0;
+    let peakCount = 0;
+    let peakDayIdx = 0;
+    let peakBucketIdx = 0;
+    (heatmapRes.data ?? []).forEach((o: any) => {
+      const ist = new Date(new Date(o.created_at).getTime() + istOffsetMs);
+      // getUTCDay on shifted time = IST day-of-week (0=Sun)
+      const dow = ist.getUTCDay();
+      const hour = ist.getUTCHours();
+      const bucket = Math.floor(hour / 2);
+      grid[dow][bucket] += 1;
+      dayCounts[dow] += 1;
+      total += 1;
+      if (grid[dow][bucket] > peakCount) {
+        peakCount = grid[dow][bucket];
+        peakDayIdx = dow;
+        peakBucketIdx = bucket;
+      }
+    });
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const bucketLabel = (b: number) => `${(b * 2).toString().padStart(2, "0")}:00–${(b * 2 + 2).toString().padStart(2, "0")}:00`;
+    setHeatmapGrid(grid);
+    setHeatmapMeta({
+      total,
+      peakDay: total ? dayNames[peakDayIdx] : "",
+      peakBucket: total ? bucketLabel(peakBucketIdx) : "",
+      peakCount,
+      byDay: dayNames.map((day, i) => ({ day, count: dayCounts[i] })),
+    });
+
     setLoading(false);
   }, [timeRange]);
 
