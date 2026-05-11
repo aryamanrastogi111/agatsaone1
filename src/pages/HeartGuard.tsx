@@ -470,7 +470,7 @@ export default function HeartGuard() {
               The Problem
             </p>
             <h2 className="max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-              You are completely blind between visits
+              What happens to your patient between two visits?
             </h2>
           </Reveal>
 
