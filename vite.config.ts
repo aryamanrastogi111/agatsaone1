@@ -100,6 +100,11 @@ function createLoseBellyHtml(indexHtml: string) {
     `<div id="root">${loseBellyCrawlerContent}</div>`,
   );
 
+  html = html.replace(
+    "</head>",
+    "    <script>document.documentElement.classList.add('js');</script>\n    <style>.js #lose-belly-crawler-content{display:none;}</style>\n</head>",
+  );
+
   html = replaceOrInsertHeadTag(html, /<title>[\s\S]*?<\/title>/, "<title>Lose 5 cm in 90 days — Agatsa One</title>");
   html = replaceOrInsertHeadTag(
     html,
