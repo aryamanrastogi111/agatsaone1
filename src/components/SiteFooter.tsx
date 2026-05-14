@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { AppStoreBadges } from "./AppStoreBadges";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
+import { isMyEasyTouchHost } from "@/hooks/useIsMyEasyTouch";
 
 const productLinks = [
   { label: "Devices", href: "/devices" },
   { label: "Care Programmes", href: "/programmes" },
-  { label: "Pricing", href: "/pricing" },
+  ...(isMyEasyTouchHost() ? [] : [{ label: "Pricing", href: "/pricing" }]),
   { label: "Download App", href: "/app" },
   { label: "Referral Programme", href: "/app" },
 ];
