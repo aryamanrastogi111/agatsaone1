@@ -1,63 +1,41 @@
 ## Goal
-Add a new visual section to `src/pages/products/SanketLifeECGProduct.tsx` immediately below the "What SanketLife Detects" section, titled around "12-Lead ECG at home — hospital grade", featuring a 3-stage CSS/Framer Motion animation that storytells how the device is used.
 
-## Section placement
-Insert directly after line 250 (close of detection section), before the "Why early checks matter" section.
+Make `https://agatsaone.com/lose-belly` return fully-rendered HTML in the initial server response — so ChatGPT, Meta/Facebook, LinkedIn, Slack, and other JS-less crawlers can read the headline, benefits, FAQ, testimonials, and CTAs as real text.
 
-## Animation concept (3 sequential stages, looping)
+The rest of the site (home, products, admin, checkout) stays as a normal SPA — no behavior change.
 
-```text
-Stage 1 (0–2s):   Device alone, centered, gentle float.
-                  Two small sensor circles glow/pulse on its face.
+## Approach: Prerender only `/lose-belly` at build time
 
-Stage 2 (2–4s):   Camera "pans out": device scales down + shifts left.
-                  Two thumb shapes slide in from below and rest on
-                  the two sensor circles. A subtle pulse ripple
-                  emanates from each thumb contact point.
+After Vite builds the SPA, a headless Chrome instance loads `/lose-belly`, waits for React to render, captures the final DOM, and writes it to `dist/lose-belly/index.html`. When a crawler requests `/lose-belly`, the host serves that static HTML file directly (it takes precedence over the SPA fallback). When a real user lands on it, React hydrates on top and the page becomes interactive as normal.
 
-Stage 3 (4–7s):   A phone slides in from the right next to the
-                  device. Inside the phone screen, an animated ECG
-                  waveline draws across (SVG stroke-dashoffset),
-                  with a moving heartbeat dot.
+No source-code rewrite of `LoseBelly.tsx` needed. No Next.js. No SSR runtime.
 
-Loop back to Stage 1.
-```
+## Changes
 
-All built in pure React + Tailwind + Framer Motion. No new assets, no Lottie. The device, thumbs, and phone are simple stylized SVG/div shapes (consistent with the existing minimal mockup style used across the site, e.g. the home hero CSS iPhone). The ECG line is an SVG path animated with `pathLength` via Framer Motion — a clean, hospital-monitor-style trace.
+1. **Add dependencies** (dev):
+   - `@prerenderer/rollup-plugin`
+   - `@prerenderer/renderer-puppeteer`
+   - `puppeteer` (downloads bundled Chromium at install)
 
-## Section layout
+2. **Update `vite.config.ts`** — add the prerender plugin, configured to prerender only the `/lose-belly` route, with a 2s wait for animations/images to settle.
 
-```text
-┌──────────────────────────────────────────────────────────┐
-│   eyebrow:  HOW IT'S TAKEN                               │
-│   H2:       12-lead ECG at home. Hospital-grade.         │
-│   sub:      Two thumbs. 30 seconds. A full ECG on        │
-│             your phone — ready to share with any doctor. │
-│                                                          │
-│   ┌──────────────────────────────────────────────────┐   │
-│   │                                                  │   │
-│   │            [ ANIMATED SCENE STAGE ]              │   │
-│   │       device → +thumbs → +phone with ECG         │   │
-│   │                                                  │   │
-│   └──────────────────────────────────────────────────┘   │
-│                                                          │
-│   3 small step chips below the scene:                    │
-│   1. Hold device     2. Place both thumbs    3. ECG on phone │
-└──────────────────────────────────────────────────────────┘
-```
+3. **Verify the build output** — confirm `dist/lose-belly/index.html` contains the headline ("Lose your belly…"), CTA, benefits, FAQ as plain HTML by grepping the built file.
 
-Background: soft gradient (`from-primary/5 via-background to-background`) to make the scene feel like a clean clinical canvas. Stage container has rounded-3xl card with subtle border.
+4. **No changes to `LoseBelly.tsx`** — the page already renders real HTML; we're just snapshotting it at build time.
 
-## Animation technical details
+## Risks & mitigations
 
-- Scene wrapped in a single Framer Motion timeline using `useEffect` + `useAnimation` controls (or a simple looping `animate` prop with `times` array driven by a state cycle).
-- Total loop: ~7s, repeats infinitely, pauses on `prefers-reduced-motion` (use `useReducedMotion` from framer-motion → render a static final composition with all 3 elements visible).
-- Mobile: scene scales down (`scale-90`) and re-centers; thumbs shrink; phone overlaps less. Container height: `h-[360px] md:h-[440px]`.
-- Colors: device uses `bg-foreground/90` body with `bg-destructive` and `bg-primary` sensor dots that pulse. Phone uses `bg-card` frame with dark screen. ECG line in `stroke-destructive` with a glowing dot.
-- All semantic tokens — no raw hex.
-- Step chips below use `Check` icons in primary, same styling pattern as existing scannable content sections.
+- **Puppeteer install size (~170 MB)** — only a devDependency, doesn't ship to users. Build time will increase by ~10–30s.
+- **Puppeteer may fail in Lovable's build sandbox** — if Chromium can't launch, the build will fail. If that happens, fall back to writing a hand-authored static `public/lose-belly.html` with the same SEO content (no JS render needed, but loses single-source-of-truth).
+- **Hydration mismatches** — if any code in the LoseBelly tree behaves differently between SSR-snapshot time and client hydration (e.g. `Date.now()`, randomness), React will warn in console and re-render. We'll keep the page deterministic.
+- **Other routes unaffected** — only `/lose-belly` is in the prerender list.
 
-## Files to edit
-- `src/pages/products/SanketLifeECGProduct.tsx` — add ~120 lines for the new section + a small `<HowItsTakenAnimation />` sub-component defined in the same file (kept local since it's page-specific).
+## Out of scope
 
-No new dependencies. No new assets.
+- Prerendering other product pages (can extend later once `/lose-belly` is verified working).
+- Full SSR (Next.js / Remix migration).
+- Per-route og:image generation.
+
+## Verification
+
+After build: `grep -c "Lose your belly" dist/lose-belly/index.html` should return a non-zero count, and `curl -s https://agatsaone.com/lose-belly | grep -i "lose your belly"` should return matches once deployed.
