@@ -1401,18 +1401,18 @@ function AppShowcaseSection() {
                 <div className="absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-[#1a1a1a]" />
                 {/* Screen */}
                 <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-white">
-                  <div className="absolute left-1/2 top-2 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-[#1a1a1a]" />
                   <AnimatePresence mode="wait">
-                    <motion.div
+                    <motion.img
                       key={f.id}
+                      src={f.img}
+                      alt={f.title}
                       initial={{ opacity: 0, scale: 1.02 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ duration: 0.35 }}
-                      className="h-full w-full"
-                    >
-                      <PhoneScreenContent id={f.id} />
-                    </motion.div>
+                      className="h-full w-full object-cover object-top"
+                      loading="lazy"
+                    />
                   </AnimatePresence>
                 </div>
               </div>
