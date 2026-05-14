@@ -121,7 +121,7 @@ function AppWithPricing() {
               <Route path="/devices/rhythm-band" element={<RhythmBandProduct />} />
               <Route path="/devices/smart-scale" element={<SmartScaleProduct />} />
               <Route path="/programmes" element={<ProgrammesPage />} />
-              <Route path="/pricing" element={<PricingPage />} />
+              <Route path="/pricing" element={isMyEasyTouchHost() ? <Navigate to="/" replace /> : <PricingPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/for-doctors" element={<ForDoctors />} />
               <Route path="/for-hospitals" element={<ForHospitals />} />
