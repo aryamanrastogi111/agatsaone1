@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 import { useDevicePricingFetch, PricingProvider } from "@/hooks/useDevicePricing";
+import { isMyEasyTouchHost } from "@/hooks/useIsMyEasyTouch";
 
 // Only the home page is eagerly loaded for instant first paint
 import Home from "./pages/Home";
@@ -121,7 +122,7 @@ function AppWithPricing() {
               <Route path="/devices/rhythm-band" element={<RhythmBandProduct />} />
               <Route path="/devices/smart-scale" element={<SmartScaleProduct />} />
               <Route path="/programmes" element={<ProgrammesPage />} />
-              <Route path="/pricing" element={<PricingPage />} />
+              <Route path="/pricing" element={isMyEasyTouchHost() ? <Navigate to="/" replace /> : <PricingPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/for-doctors" element={<ForDoctors />} />
               <Route path="/for-hospitals" element={<ForHospitals />} />
