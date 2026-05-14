@@ -67,6 +67,30 @@ export default function LoseBelly() {
     title: "Lose 5 cm in 90 days — or your money back | Agatsa One",
     description:
       "India's first body-measured weight loss program. Money-back guarantee tied to 3 measurable outcomes. Smart scale included. Powered by Nera AI.",
+    canonical: "https://agatsaone.com/lose-belly",
+    ogImage: heroTransformation,
+    ogType: "product",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: "Lose Your Belly 90",
+      description:
+        "90-day body-measured weight loss program with Agatsa Smart Scale, Nera AI app and 3-outcome money-back guarantee.",
+      image: heroTransformation,
+      brand: { "@type": "Brand", name: "Agatsa One" },
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "INR",
+        price: "4999",
+        availability: "https://schema.org/InStock",
+        url: "https://agatsaone.com/lose-belly",
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        reviewCount: "1243",
+      },
+    },
   });
 
   const [quizOpen, setQuizOpen] = useState(false);
@@ -117,28 +141,26 @@ export default function LoseBelly() {
   return (
     <SiteLayout>
       <div className="bg-background text-foreground">
-        {/* Sticky bottom CTA */}
-        <AnimatePresence>
-          {showStickyCta && (
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-              className="fixed bottom-4 left-4 right-4 z-40 md:left-auto md:right-6 md:bottom-6 md:w-auto"
-            >
-              <Button
-                size="lg"
-                onClick={() => openCheckout("standard")}
-                className="w-full bg-[#0B2A4A] text-white shadow-2xl hover:bg-[#0B2A4A]/90 md:w-auto"
-              >
-                Start your 90 days — ₹4,999
-              </Button>
-            </motion.div>
+        {/* Sticky bottom CTA — always rendered, CSS-toggled for crawlability + perf */}
+        <div
+          className={cn(
+            "fixed bottom-4 left-4 right-4 z-40 transition-all duration-300 md:left-auto md:right-6 md:bottom-6 md:w-auto",
+            showStickyCta ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-24 opacity-0"
           )}
-        </AnimatePresence>
+          aria-hidden={!showStickyCta}
+        >
+          <Button
+            size="lg"
+            onClick={() => openCheckout("standard")}
+            className="w-full bg-[#0B2A4A] text-white shadow-2xl hover:bg-[#0B2A4A]/90 md:w-auto"
+            aria-label="Start your 90 days for ₹4,999"
+          >
+            Start your 90 days — ₹4,999
+          </Button>
+        </div>
 
         {/* HERO */}
-        <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-br from-[#F7FAFC] to-[#EDF2F7] py-16 md:py-24">
+        <header ref={heroRef} className="relative overflow-hidden bg-gradient-to-br from-[#F7FAFC] to-[#EDF2F7] py-16 md:py-24">
           <div className="container mx-auto grid gap-10 px-4 md:grid-cols-2 md:items-center">
             <div>
               <Badge className="mb-4 bg-[#1F7A4D]/10 text-[#1F7A4D] hover:bg-[#1F7A4D]/10">
@@ -156,6 +178,7 @@ export default function LoseBelly() {
                   size="lg"
                   onClick={() => openCheckout("standard")}
                   className="h-14 bg-[#0B2A4A] px-8 text-base text-white hover:bg-[#0B2A4A]/90"
+                  aria-label="Start your 90 days for ₹4,999"
                 >
                   Start your 90 days — ₹4,999
                 </Button>
@@ -171,36 +194,24 @@ export default function LoseBelly() {
                   alt="Indian man before and after 90-day belly fat transformation, lost 5.8 kg"
                   width={1024}
                   height={1024}
+                  fetchPriority="high"
+                  loading="eager"
+                  decoding="async"
                   className="h-auto w-full"
                 />
-                {/* Floating stat card */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="absolute left-4 top-4 rounded-2xl bg-white/95 px-4 py-3 shadow-lg backdrop-blur"
-                >
+                {/* Static stat overlays — no JS required */}
+                <div className="absolute left-4 top-4 rounded-2xl bg-white/95 px-4 py-3 shadow-lg backdrop-blur">
                   <p className="text-[10px] font-semibold uppercase tracking-widest text-[#0B2A4A]/60">
                     Visceral fat
                   </p>
                   <p className="text-2xl font-bold text-[#1F7A4D]">
                     12 → 9 <span className="text-xs font-medium text-[#1F7A4D]/70">↓ 3 levels</span>
                   </p>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="absolute right-4 top-4 rounded-full bg-[#0B2A4A] px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
-                >
+                </div>
+                <div className="absolute right-4 top-4 rounded-full bg-[#0B2A4A] px-3 py-1.5 text-xs font-semibold text-white shadow-lg">
                   90 DAYS
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl bg-white/95 px-4 py-3 shadow-lg backdrop-blur"
-                >
+                </div>
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl bg-white/95 px-4 py-3 shadow-lg backdrop-blur">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-widest text-[#0B2A4A]/60">Waist</p>
                     <p className="text-lg font-bold text-[#0B2A4A]">−5.2 cm</p>
@@ -215,7 +226,7 @@ export default function LoseBelly() {
                     <p className="text-[10px] font-semibold uppercase tracking-widest text-[#0B2A4A]/60">Days</p>
                     <p className="text-lg font-bold text-[#0B2A4A]">90</p>
                   </div>
-                </motion.div>
+                </div>
               </div>
               {/* Verified badge */}
               <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-[#1F7A4D] px-4 py-1.5 text-xs font-semibold text-white shadow-lg">
@@ -223,7 +234,7 @@ export default function LoseBelly() {
               </div>
             </div>
           </div>
-        </section>
+        </header>
 
         {/* APP FEATURE SHOWCASE — phone + tabs */}
         <AppShowcaseSection />
