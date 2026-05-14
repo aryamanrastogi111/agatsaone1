@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => ({
         rendererOptions: {
           renderAfterTime: 2500,
           maxConcurrentRoutes: 1,
-          headless: "new",
+          headless: true,
           args: ["--no-sandbox", "--disable-setuid-sandbox"],
         },
         postProcess(renderedRoute: { html: string }) {
