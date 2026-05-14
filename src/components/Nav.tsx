@@ -24,7 +24,7 @@ const navLinks = [
       { label: "For Corporates", href: "/for-corporates" },
     ],
   },
-  { label: "Pricing", href: "/pricing" },
+  ...(isMyEasyTouchHost() ? [] : [{ label: "Pricing", href: "/pricing" }]),
   { label: "About", href: "/about" },
 ];
 
