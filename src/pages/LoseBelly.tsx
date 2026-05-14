@@ -67,6 +67,30 @@ export default function LoseBelly() {
     title: "Lose 5 cm in 90 days — or your money back | Agatsa One",
     description:
       "India's first body-measured weight loss program. Money-back guarantee tied to 3 measurable outcomes. Smart scale included. Powered by Nera AI.",
+    canonical: "https://agatsaone.com/lose-belly",
+    ogImage: heroTransformation,
+    ogType: "product",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: "Lose Your Belly 90",
+      description:
+        "90-day body-measured weight loss program with Agatsa Smart Scale, Nera AI app and 3-outcome money-back guarantee.",
+      image: heroTransformation,
+      brand: { "@type": "Brand", name: "Agatsa One" },
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "INR",
+        price: "4999",
+        availability: "https://schema.org/InStock",
+        url: "https://agatsaone.com/lose-belly",
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        reviewCount: "1243",
+      },
+    },
   });
 
   const [quizOpen, setQuizOpen] = useState(false);
