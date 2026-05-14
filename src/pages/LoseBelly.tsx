@@ -11,6 +11,11 @@ import heroTransformation from "@/assets/lose-belly/hero-transformation.jpg";
 import transformation2 from "@/assets/lose-belly/transformation-2.jpg";
 import transformation3 from "@/assets/lose-belly/transformation-3.jpg";
 import transformation4 from "@/assets/lose-belly/transformation-4.jpg";
+import lb90Home from "@/assets/lb90/home.jpg";
+import lb90Pantry from "@/assets/lb90/pantry.jpg";
+import lb90PantryList from "@/assets/lb90/pantry-list.jpg";
+import lb90Plate from "@/assets/lb90/plate.jpg";
+import lb90Meals from "@/assets/lb90/meals.jpg";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -1118,185 +1123,38 @@ const SHOWCASE_FEATURES = [
     id: "home",
     title: "Your daily mission control",
     desc: "Day counter, today's lesson, and personal targets — all in one tap. No menus, no chaos.",
+    img: lb90Home,
     pills: ["Day-by-day plan", "Today's lesson", "Smart targets"],
   },
   {
     id: "pantry",
     title: "Pantry Coach — snap your kitchen",
     desc: "Photograph each shelf. We instantly tell you what to keep, swap, or reduce — based on your belly-loss goal.",
+    img: lb90Pantry,
     pills: ["Snap & sort", "Belly-loss tuned", "10 seconds / shelf"],
   },
   {
     id: "swaps",
     title: "Indian-brand swap suggestions",
     desc: "Maida → Aashirvaad atta. Maggi → sooji upma. Every swap uses brands you actually buy.",
+    img: lb90PantryList,
     pills: ["Real Indian brands", "One-tap accept", "Tracked progress"],
   },
   {
     id: "plate",
     title: "Today's Plate — every macro tracked",
     desc: "Calories, protein, carbs, sugar, fibre, sodium. See exactly where you stand against your daily floor and cap.",
+    img: lb90Plate,
     pills: ["Live macros", "Floor & cap alerts", "Snap a meal"],
   },
   {
     id: "tomorrow",
     title: "Tomorrow's meals, planned tonight",
     desc: "Personalised breakfast, lunch, dinner, and snacks — built from your pantry, tuned to your goal.",
+    img: lb90Meals,
     pills: ["Veg / Non-veg", "From your pantry", "One-tap replace"],
   },
 ];
-
-function PhoneScreenContent({ id }: { id: string }) {
-  if (id === "home") {
-    return (
-      <div className="flex h-full flex-col bg-gradient-to-b from-[#F7FAFC] to-white p-4 text-[#0B2A4A]">
-        <div className="mt-6 flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-[#0B2A4A]/50">Day</p>
-            <p className="text-3xl font-extrabold leading-none">24<span className="text-base font-semibold text-[#0B2A4A]/40">/90</span></p>
-          </div>
-          <div className="rounded-full bg-[#1F7A4D]/10 px-2.5 py-1 text-[10px] font-bold text-[#1F7A4D]">ON TRACK</div>
-        </div>
-        <div className="mt-4 rounded-xl bg-[#0B2A4A] p-3 text-white">
-          <p className="text-[9px] font-bold uppercase tracking-widest text-white/60">Today's lesson</p>
-          <p className="mt-1 text-sm font-semibold leading-snug">Why visceral fat melts faster than subcutaneous fat</p>
-        </div>
-        <div className="mt-3 grid grid-cols-2 gap-2">
-          <div className="rounded-lg bg-white p-2.5 ring-1 ring-[#0B2A4A]/10">
-            <p className="text-[9px] font-bold uppercase text-[#0B2A4A]/50">Waist</p>
-            <p className="text-base font-bold text-[#1F7A4D]">−2.8 cm</p>
-          </div>
-          <div className="rounded-lg bg-white p-2.5 ring-1 ring-[#0B2A4A]/10">
-            <p className="text-[9px] font-bold uppercase text-[#0B2A4A]/50">Visceral</p>
-            <p className="text-base font-bold text-[#1F7A4D]">−1 lvl</p>
-          </div>
-          <div className="rounded-lg bg-white p-2.5 ring-1 ring-[#0B2A4A]/10">
-            <p className="text-[9px] font-bold uppercase text-[#0B2A4A]/50">Weight</p>
-            <p className="text-base font-bold text-[#1F7A4D]">−2.4 kg</p>
-          </div>
-          <div className="rounded-lg bg-white p-2.5 ring-1 ring-[#0B2A4A]/10">
-            <p className="text-[9px] font-bold uppercase text-[#0B2A4A]/50">Streak</p>
-            <p className="text-base font-bold text-[#0B2A4A]">23 days</p>
-          </div>
-        </div>
-        <div className="mt-3 rounded-xl bg-[#F59E0B]/10 p-3 ring-1 ring-[#F59E0B]/30">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-[#B45309]">Next action</p>
-          <p className="mt-0.5 text-xs font-semibold text-[#0B2A4A]">Log lunch · 1:30 PM</p>
-        </div>
-      </div>
-    );
-  }
-  if (id === "pantry") {
-    return (
-      <div className="flex h-full flex-col bg-[#F7FAFC] p-4 text-[#0B2A4A]">
-        <p className="mt-6 text-[10px] font-bold uppercase tracking-widest text-[#0B2A4A]/50">Pantry Coach</p>
-        <h4 className="mt-1 text-base font-bold leading-snug">Snap each shelf</h4>
-        <div className="mt-3 aspect-square rounded-xl bg-gradient-to-br from-[#0B2A4A] to-[#007A7C] p-3 text-white">
-          <div className="flex h-full flex-col justify-end">
-            <div className="rounded-lg bg-white/15 p-2 backdrop-blur">
-              <p className="text-[9px] font-bold uppercase tracking-widest text-white/70">Detected · 12 items</p>
-              <p className="mt-0.5 text-xs font-semibold">Maida · Sugar · Maggi · Atta · Dal…</p>
-            </div>
-          </div>
-        </div>
-        <div className="mt-3 space-y-1.5 text-[11px]">
-          <div className="flex items-center justify-between rounded-md bg-[#1F7A4D]/10 px-2.5 py-1.5">
-            <span className="font-semibold">✓ Keep</span><span className="font-bold text-[#1F7A4D]">5 items</span>
-          </div>
-          <div className="flex items-center justify-between rounded-md bg-[#F59E0B]/15 px-2.5 py-1.5">
-            <span className="font-semibold">↻ Swap</span><span className="font-bold text-[#B45309]">4 items</span>
-          </div>
-          <div className="flex items-center justify-between rounded-md bg-[#C0392B]/10 px-2.5 py-1.5">
-            <span className="font-semibold">− Reduce</span><span className="font-bold text-[#C0392B]">3 items</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  if (id === "swaps") {
-    return (
-      <div className="flex h-full flex-col bg-white p-4 text-[#0B2A4A]">
-        <p className="mt-6 text-[10px] font-bold uppercase tracking-widest text-[#0B2A4A]/50">Smart swaps</p>
-        <h4 className="mt-1 text-base font-bold">Indian brands you already buy</h4>
-        <div className="mt-3 space-y-2 text-[11px]">
-          {[
-            { from: "Maida", to: "Aashirvaad atta" },
-            { from: "Maggi", to: "Sooji upma" },
-            { from: "Sugar in chai", to: "Dates / jaggery" },
-            { from: "Britannia biscuits", to: "Roasted chana" },
-            { from: "Refined oil", to: "Cold-pressed mustard" },
-          ].map((s) => (
-            <div key={s.from} className="rounded-lg bg-[#F7FAFC] p-2.5 ring-1 ring-[#0B2A4A]/10">
-              <div className="flex items-center justify-between">
-                <span className="text-[#C0392B] line-through">{s.from}</span>
-                <span className="font-bold text-[#1F7A4D]">→ {s.to}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <button className="mt-3 rounded-lg bg-[#0B2A4A] py-2 text-[11px] font-bold text-white">Accept all 5 swaps</button>
-      </div>
-    );
-  }
-  if (id === "plate") {
-    return (
-      <div className="flex h-full flex-col bg-[#F7FAFC] p-4 text-[#0B2A4A]">
-        <p className="mt-6 text-[10px] font-bold uppercase tracking-widest text-[#0B2A4A]/50">Today's Plate</p>
-        <div className="mt-1 flex items-end justify-between">
-          <h4 className="text-base font-bold">1,420 / 1,650 kcal</h4>
-          <span className="rounded-full bg-[#1F7A4D]/10 px-2 py-0.5 text-[9px] font-bold text-[#1F7A4D]">−230 deficit</span>
-        </div>
-        <div className="mt-3 space-y-2">
-          {[
-            { l: "Protein", v: "92g", t: "120g", pct: 76, c: "#1F7A4D" },
-            { l: "Carbs", v: "108g", t: "150g cap", pct: 72, c: "#0B2A4A" },
-            { l: "Sugar", v: "18g", t: "25g cap", pct: 72, c: "#F59E0B" },
-            { l: "Fibre", v: "22g", t: "30g floor", pct: 73, c: "#1F7A4D" },
-            { l: "Sodium", v: "1.4g", t: "2g cap", pct: 70, c: "#0B2A4A" },
-          ].map((m) => (
-            <div key={m.l}>
-              <div className="flex items-baseline justify-between text-[10px]">
-                <span className="font-semibold">{m.l}</span>
-                <span className="text-[#0B2A4A]/60">{m.v} <span className="text-[#0B2A4A]/40">/ {m.t}</span></span>
-              </div>
-              <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-[#0B2A4A]/10">
-                <div className="h-full rounded-full" style={{ width: `${m.pct}%`, background: m.c }} />
-              </div>
-            </div>
-          ))}
-        </div>
-        <button className="mt-3 rounded-lg bg-[#F59E0B] py-2 text-[11px] font-bold text-[#0B2A4A]">📷 Snap a meal</button>
-      </div>
-    );
-  }
-  // tomorrow
-  return (
-    <div className="flex h-full flex-col bg-white p-4 text-[#0B2A4A]">
-      <p className="mt-6 text-[10px] font-bold uppercase tracking-widest text-[#0B2A4A]/50">Tomorrow · Tue</p>
-      <h4 className="mt-1 text-base font-bold">Planned · 1,650 kcal</h4>
-      <div className="mt-3 space-y-2 text-[11px]">
-        {[
-          { m: "Breakfast", k: "320 kcal", n: "Moong dal chilla + curd" },
-          { m: "Lunch", k: "520 kcal", n: "Jowar roti, rajma, sabzi, salad" },
-          { m: "Snack", k: "180 kcal", n: "Roasted chana + black coffee" },
-          { m: "Dinner", k: "480 kcal", n: "Grilled paneer, sautéed greens" },
-          { m: "Late", k: "150 kcal", n: "Warm haldi milk" },
-        ].map((meal) => (
-          <div key={meal.m} className="rounded-lg bg-[#F7FAFC] p-2.5 ring-1 ring-[#0B2A4A]/10">
-            <div className="flex items-center justify-between">
-              <span className="text-[9px] font-bold uppercase tracking-wider text-[#0B2A4A]/60">{meal.m}</span>
-              <span className="text-[9px] font-bold text-[#1F7A4D]">{meal.k}</span>
-            </div>
-            <p className="mt-0.5 font-semibold text-[#0B2A4A]">{meal.n}</p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-3 flex items-center justify-between rounded-lg bg-[#0B2A4A] px-3 py-2 text-[10px] font-bold text-white">
-        <span>From your pantry</span><span className="text-[#65E0B6]">✓ All available</span>
-      </div>
-    </div>
-  );
-}
 
 function AppShowcaseSection() {
   const [active, setActive] = useState(0);
@@ -1396,18 +1254,18 @@ function AppShowcaseSection() {
                 <div className="absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-[#1a1a1a]" />
                 {/* Screen */}
                 <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-white">
-                  <div className="absolute left-1/2 top-2 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-[#1a1a1a]" />
                   <AnimatePresence mode="wait">
-                    <motion.div
+                    <motion.img
                       key={f.id}
+                      src={f.img}
+                      alt={f.title}
                       initial={{ opacity: 0, scale: 1.02 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ duration: 0.35 }}
-                      className="h-full w-full"
-                    >
-                      <PhoneScreenContent id={f.id} />
-                    </motion.div>
+                      className="h-full w-full object-cover object-top"
+                      loading="lazy"
+                    />
                   </AnimatePresence>
                 </div>
               </div>
