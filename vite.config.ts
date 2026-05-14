@@ -23,13 +23,11 @@ export default defineConfig(({ mode }) => ({
           headless: "new",
           args: ["--no-sandbox", "--disable-setuid-sandbox"],
         },
-        postProcess(renderedRoute: { html: string; route: string }) {
-          // Strip any inline scripts that may capture runtime state we don't want frozen
+        postProcess(renderedRoute: { html: string }) {
           renderedRoute.html = renderedRoute.html.replace(
             /<script (?:type="application\/json"|data-prerender-state)[^>]*>[\s\S]*?<\/script>/g,
             "",
           );
-          return renderedRoute;
         },
       }),
   ].filter(Boolean),
