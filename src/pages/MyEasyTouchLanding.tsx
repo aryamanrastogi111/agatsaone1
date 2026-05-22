@@ -50,7 +50,7 @@ const faqs = [
   { q: "How accurate is the sleep tracking?", a: "The Rhythm Band uses your HRV and movement data to detect sleep stages. Accuracy is comparable to other medical-grade wristband devices. Nera AI analyses your sleep architecture and gives you weekly sleep quality reports." },
   { q: "Can I wear it in water?", a: "Yes. The Rhythm Band is water-resistant up to IP67 standards — safe for handwashing and light rain. Do not submerge for extended swimming." },
   { q: "How does the stress score work?", a: "The stress score is derived from your HRV patterns throughout the day. Lower HRV = higher stress response. Nera AI correlates your stress score with your sleep quality and vital readings to show you patterns over time." },
-  { q: "What's the warranty and return policy?", a: "Every Rhythm Band ships with a 1-year manufacturer warranty. We offer a 7-day no-questions-asked return policy from the date of delivery." },
+  { q: "What's the warranty and return policy?", a: "Every Rhythm Band ships with a 1-year manufacturer warranty. Returns are accepted within 7 days of delivery for verified manufacturing defects only — product must be in original packaging and will undergo a technical inspection. See our Return Policy page for full details." },
 ];
 
 /**
