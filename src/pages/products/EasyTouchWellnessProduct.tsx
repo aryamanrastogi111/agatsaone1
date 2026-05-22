@@ -1036,7 +1036,7 @@ export default function EasyTouchWellnessProduct() {
                 },
                 {
                   q: "What is the return policy?",
-                  a: "7-day return from the delivery date. If you're not satisfied for any reason, contact support and we'll arrange a free pickup and full refund. No questions asked.",
+                  a: "Returns are accepted within 7 days of delivery for verified manufacturing defects only. The product must be returned in original packaging with all accessories and will undergo a technical inspection by our quality team. See our Return Policy page for full details.",
                 },
               ].map((f, i) => (
                 <AccordionItem key={f.q} value={`item-${i}`}>

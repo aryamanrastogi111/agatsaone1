@@ -1534,7 +1534,7 @@ export default function HeartGuard() {
                   <Package className="h-3.5 w-3.5" /> Ships in 48 hours
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <RefreshCw className="h-3.5 w-3.5" /> 30-day return policy
+                  <RefreshCw className="h-3.5 w-3.5" /> 7-day return (mfg. defects)
                 </span>
               </div>
             </div>

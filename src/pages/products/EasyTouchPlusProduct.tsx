@@ -187,7 +187,7 @@ export default function EasyTouchPlusProduct() {
                 { icon: <BarChart3 className="h-4 w-4" />, text: "12,000+ readings analyzed" },
                 { icon: <Brain className="h-4 w-4" />, text: "Nera AI learns your body" },
                 { icon: <Truck className="h-4 w-4" />, text: "Ships in 3–5 days" },
-                { icon: <RotateCcw className="h-4 w-4" />, text: "30-day returns" },
+                { icon: <RotateCcw className="h-4 w-4" />, text: "7-day returns (mfg. defects)" },
               ].map((t, i) => (
                 <span key={i} className="flex items-center gap-1.5">
                   {t.icon} {t.text}
@@ -591,7 +591,7 @@ export default function EasyTouchPlusProduct() {
                 },
                 {
                   q: "What's your return policy?",
-                  a: "30-day no-questions-asked return.",
+                  a: "7-day return from delivery for verified manufacturing defects only. Product must be returned in original packaging and will undergo technical inspection. See our Return Policy page for full details.",
                 },
               ].map((faq, i) => (
                 <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-xl px-4">
@@ -613,7 +613,7 @@ export default function EasyTouchPlusProduct() {
               <span className="text-teal-600">Start reading it.</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-8">
-              EasyTouch Wellness — {wp}. Free shipping. 30-day returns.
+              EasyTouch Wellness — {wp}. Free shipping. 7-day returns (mfg. defects).
             </p>
             <Button size="lg" className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-10 text-base shadow-lg shadow-teal-200" onClick={handleBuyNow}>
                 Buy EasyTouch Wellness — {wp} <ArrowRight className="ml-2 h-4 w-4" />
