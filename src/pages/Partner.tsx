@@ -73,8 +73,8 @@ export default function Partner() {
         <motion.div {...fade} className="max-w-2xl mx-auto px-4">
           <h2 className="text-2xl font-bold">Have a different partnership idea?</h2>
           <p className="mt-2 opacity-90">We're open to distribution partners, resellers, academic collaborators, and NGO partnerships.</p>
-          <a href="mailto:partnerships@agatsa.com">
-            <Button className="mt-6 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-8">Email partnerships@agatsa.com</Button>
+          <a href="mailto:info@agatsa.com">
+            <Button className="mt-6 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-8">Email info@agatsa.com</Button>
           </a>
         </motion.div>
       </section>

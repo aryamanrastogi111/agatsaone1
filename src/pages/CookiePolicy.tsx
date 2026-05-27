@@ -86,7 +86,7 @@ export default function CookiePolicy() {
           {/* Contact */}
           <motion.div {...fade} className="bg-card border border-border rounded-xl p-6">
             <h3 className="font-bold text-foreground mb-2">Questions about our cookie policy?</h3>
-            <p className="text-sm text-muted-foreground">Contact us at <a href="mailto:privacy@agatsa.com" className="text-primary font-medium">privacy@agatsa.com</a> or visit our <a href="/privacy-policy" className="text-primary font-medium underline">Privacy Policy</a> for more information about how we handle your data.</p>
+            <p className="text-sm text-muted-foreground">Contact us at <a href="mailto:info@agatsa.com" className="text-primary font-medium">info@agatsa.com</a> or visit our <a href="/privacy-policy" className="text-primary font-medium underline">Privacy Policy</a> for more information about how we handle your data.</p>
           </motion.div>
         </div>
       </section>

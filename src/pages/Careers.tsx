@@ -56,7 +56,7 @@ export default function Careers() {
       <section className="py-16 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-2xl font-bold text-foreground text-center mb-2">Open Positions</h2>
-          <p className="text-muted-foreground text-center mb-10">Don't see a role that fits? Send your resume to <a href="mailto:careers@agatsa.com" className="text-primary font-medium">careers@agatsa.com</a></p>
+          <p className="text-muted-foreground text-center mb-10">Don't see a role that fits? Send your resume to <a href="mailto:info@agatsa.com" className="text-primary font-medium">info@agatsa.com</a></p>
           <div className="space-y-4">
             {openings.map((job, i) => (
               <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.05 }} className="bg-card border border-border rounded-xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -64,7 +64,7 @@ export default function Careers() {
                   <h3 className="font-bold text-foreground">{job.role}</h3>
                   <p className="text-sm text-muted-foreground">{job.dept} · {job.location} · {job.type}</p>
                 </div>
-                <a href={`mailto:careers@agatsa.com?subject=Application: ${job.role}`}>
+                <a href={`mailto:info@agatsa.com?subject=Application: ${job.role}`}>
                   <Button variant="outline" className="rounded-full border-primary text-primary hover:bg-primary/5 text-sm">Apply</Button>
                 </a>
               </motion.div>
@@ -79,8 +79,8 @@ export default function Careers() {
           <Mail className="h-10 w-10 mx-auto mb-4 opacity-80" />
           <h2 className="text-2xl font-bold">Don't see your role?</h2>
           <p className="mt-2 opacity-90">We're always looking for exceptional people. Send your resume and a note about what excites you about Agatsa.</p>
-          <a href="mailto:careers@agatsa.com">
-            <Button className="mt-6 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-8">Email careers@agatsa.com</Button>
+          <a href="mailto:info@agatsa.com">
+            <Button className="mt-6 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-8">Email info@agatsa.com</Button>
           </a>
         </motion.div>
       </section>

@@ -18,7 +18,7 @@ export default function Settings() {
   const [section, setSection] = useState("company");
   const [company, setCompany] = useState({
     name: "Agatsa Technologies Pvt. Ltd.",
-    email: "support@agatsa.com",
+    email: "info@agatsa.com",
     phone: "+91 98765 43210",
     address: "Bengaluru, Karnataka, India",
     gst: "29XXXXX1234Z1ZX",

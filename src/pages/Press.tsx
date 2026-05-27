@@ -26,7 +26,7 @@ const mediaKit = [
 ];
 
 export default function Press() {
-  useSEO({ title: "Press & Media — Agatsa One | AI Health Monitoring", description: "Press releases, media coverage, and brand assets for Agatsa. For media enquiries, contact press@agatsa.com." });
+  useSEO({ title: "Press & Media — Agatsa One | AI Health Monitoring", description: "Press releases, media coverage, and brand assets for Agatsa. For media enquiries, contact info@agatsa.com." });
 
   return (
     <SiteLayout>
@@ -35,7 +35,7 @@ export default function Press() {
         <motion.div {...fade} className="max-w-3xl mx-auto px-4">
           <span className="inline-block text-xs font-semibold uppercase tracking-widest text-primary mb-4">Press & Media</span>
           <h1 className="text-4xl md:text-5xl font-extrabold text-foreground">Agatsa in the News</h1>
-          <p className="text-lg text-muted-foreground mt-4">Press releases, media coverage, awards, and brand resources. For press enquiries, contact <a href="mailto:press@agatsa.com" className="text-primary font-medium">press@agatsa.com</a></p>
+          <p className="text-lg text-muted-foreground mt-4">Press releases, media coverage, awards, and brand resources. For press enquiries, contact <a href="mailto:info@agatsa.com" className="text-primary font-medium">info@agatsa.com</a></p>
         </motion.div>
       </section>
 
@@ -93,7 +93,7 @@ export default function Press() {
                 </li>
               ))}
             </ul>
-            <a href="mailto:press@agatsa.com?subject=Media Kit Request">
+            <a href="mailto:info@agatsa.com?subject=Media Kit Request">
               <Button className="rounded-full bg-primary text-primary-foreground px-8">
                 <Mail className="h-4 w-4 mr-2" /> Request Media Kit
               </Button>
@@ -107,9 +107,9 @@ export default function Press() {
         <motion.div {...fade} className="max-w-2xl mx-auto px-4">
           <h2 className="text-2xl font-bold">Media Enquiries</h2>
           <p className="mt-2 opacity-90">For interviews, quotes, or story collaboration, reach our communications team.</p>
-          <a href="mailto:press@agatsa.com">
+          <a href="mailto:info@agatsa.com">
             <Button className="mt-6 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-8">
-              <ExternalLink className="h-4 w-4 mr-2" /> press@agatsa.com
+              <ExternalLink className="h-4 w-4 mr-2" /> info@agatsa.com
             </Button>
           </a>
         </motion.div>
