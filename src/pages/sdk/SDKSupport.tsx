@@ -38,12 +38,12 @@
                  </CardDescription>
                </CardHeader>
                <CardContent>
-                 <p className="text-lg font-medium">sdk-support@agatsa.com</p>
+                 <p className="text-lg font-medium">info@agatsa.com</p>
                  <p className="text-sm text-muted-foreground mt-1">
                    Response within 24-48 hours
                  </p>
                  <Button className="mt-4" variant="outline" asChild>
-                   <a href="mailto:sdk-support@agatsa.com">
+                   <a href="mailto:info@agatsa.com">
                      <Mail className="h-4 w-4 mr-2" />
                      Send Email
                    </a>
