@@ -14,15 +14,15 @@ const demoIncludes = [
 ];
 
 export default function Demo() {
-  useSEO({ title: "Book a Demo — Agatsa One for Providers", description: "Schedule a personalised demo of Agatsa One. See the provider portal, devices, and Nera AI in action. Free, 30-minute session." });
+  useSEO({ title: "Email Agatsa One for Providers", description: "For provider, hospital, clinic, and corporate enquiries, email Agatsa at info@agatsa.com." });
 
   return (
     <SiteLayout>
       <section className="pt-8 pb-8 text-center" style={{ background: "linear-gradient(180deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--background)) 100%)" }}>
         <motion.div {...fade} className="max-w-3xl mx-auto px-4">
-          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-primary mb-4">Book a Demo</span>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground">See Agatsa One in action</h1>
-          <p className="text-lg text-muted-foreground mt-4">Schedule a free 30-minute demo with our team. We'll show you the provider portal, devices, and AI capabilities tailored to your use case.</p>
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-primary mb-4">For Providers</span>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground">Email us at info@agatsa.com</h1>
+          <p className="text-lg text-muted-foreground mt-4">For provider, hospital, clinic, and corporate enquiries, contact the Agatsa team directly by email.</p>
         </motion.div>
       </section>
 
