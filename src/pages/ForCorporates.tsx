@@ -265,15 +265,15 @@ export default function ForCorporatesPage() {
           >
             <h3 className="text-[22px] font-bold text-[#1A1A2E]">Get a custom quote</h3>
             <p className="mt-2 text-[15px] text-[#4A4A68]">
-              Email us your company size, industry, and what you're trying to achieve at info@agatsa.com.
+              Fill our 2-minute partnership form with your company size, industry and goals. Our team responds within 2 business days.
             </p>
             <a
-              href="mailto:info@agatsa.com?subject=Corporate Wellness Quote Request&body=Company name: %0ANumber of employees: %0AContact name: %0APhone: %0AWhat you're looking for: "
+              href="/partner-with-us?type=corporate"
               className="block mt-6 w-full rounded-full py-4 font-bold text-base text-white bg-[#7C4DFF] hover:bg-purple-700 transition text-center"
             >
-              Email us at info@agatsa.com
+              Start your corporate enquiry
             </a>
-            <p className="text-xs text-gray-400 mt-3">Direct email only — no automatic email sending system.</p>
+            <p className="text-xs text-gray-400 mt-3">Guided questionnaire · email confirmation · tracked enquiry ID.</p>
           </motion.div>
         </div>
       </section>
