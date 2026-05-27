@@ -183,8 +183,8 @@ export default function ForHospitalsPage() {
       <section className="bg-[#1A1A2E] py-20">
         <motion.div className="max-w-3xl mx-auto px-4 text-center" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-bold text-white">Ready to build the remote monitoring programme your patients deserve?</h2>
-          <p className="mt-4 text-white/75 text-lg">Email us at info@agatsa.com and our hospital partnerships team will respond.</p>
-          <a href="mailto:info@agatsa.com?subject=Hospital Enquiry" className="inline-block mt-8 bg-primary text-primary-foreground rounded-full px-10 py-5 font-semibold text-lg hover:opacity-90 transition">Email us at info@agatsa.com</a>
+          <p className="mt-4 text-white/75 text-lg">Fill the hospital enquiry form and our partnerships team will respond within 2 business days.</p>
+          <a href="/partner-with-us?type=hospital" className="inline-block mt-8 bg-primary text-primary-foreground rounded-full px-10 py-5 font-semibold text-lg hover:opacity-90 transition">Start your hospital enquiry</a>
         </motion.div>
       </section>
     </SiteLayout>
