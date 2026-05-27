@@ -9,3 +9,4 @@ export { ClinicalProofSection } from "./ClinicalProofSection";
 export { ProvidersSection } from "./ProvidersSection";
 export { TestimonialsSection } from "./TestimonialsSection";
 export { FinalCTASection } from "./FinalCTASection";
+export { HeartGuardTeaserSection } from "./HeartGuardTeaserSection";
