@@ -86,7 +86,7 @@ export default function About() {
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
             <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>THE TEAM</span>
             <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>The people behind Agatsa One</h2>
-            <p className="mt-2 text-base" style={{ color: "#4A4A68" }}>Three co-founders. Three disciplines. One mission.</p>
+            <p className="mt-2 text-base" style={{ color: "#4A4A68" }}>Two co-founders. One mission.</p>
           </motion.div>
           <div className="grid md:grid-cols-2 gap-10 max-w-3xl mx-auto">
             {team.map((p, i) => (
