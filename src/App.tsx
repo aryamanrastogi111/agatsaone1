@@ -81,6 +81,7 @@ const AdminReturns = lazy(() => import("./pages/admin/Returns"));
 const AdminLeads = lazy(() => import("./pages/admin/Leads"));
 const AdminHeritage = lazy(() => import("./pages/admin/Heritage"));
 const AdminTickets = lazy(() => import("./pages/admin/Tickets"));
+const AdminPartnerships = lazy(() => import("./pages/admin/Partnerships"));
 const AdminAnalytics = lazy(() => import("./pages/admin/Analytics"));
 const AdminTeam = lazy(() => import("./pages/admin/Team"));
 const AdminSettings = lazy(() => import("./pages/admin/Settings"));
@@ -194,6 +195,7 @@ function AppWithPricing() {
                 <Route path="leads" element={<AdminLeads />} />
                 <Route path="heritage" element={<AdminHeritage />} />
                 <Route path="tickets" element={<AdminTickets />} />
+                <Route path="partnerships" element={<AdminPartnerships />} />
                 <Route path="analytics" element={<AdminAnalytics />} />
                 <Route path="team" element={<AdminTeam />} />
                 <Route path="settings" element={<AdminSettings />} />
