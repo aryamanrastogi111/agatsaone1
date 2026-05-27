@@ -8,13 +8,14 @@ import agatsaProducts from "@/assets/agatsa-products-family.webp";
 const fade = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
 const team = [
-  { photo: "https://placehold.co/280x280/7C4DFF/FFFFFF?text=RR", name: "Rahul Rastogi", title: "Co-founder & CEO", bio: "Engineer, entrepreneur, and the person most likely to be found reviewing ECG waveforms at midnight. Rahul has spent a decade building medical hardware in India — from early SanketLife prototypes in a Delhi garage to a multi-device health ecosystem used by tens of thousands. He leads product, technology, and strategy at Agatsa.", edu: "IIT Delhi (B.Tech), Wharton (Executive Education)" },
-  { photo: "https://placehold.co/280x280/1A73E8/FFFFFF?text=NR", name: "Neha Rastogi", title: "Co-founder & COO", bio: "Neha oversees operations, partnerships, and the business systems that keep Agatsa running. She has built the distribution networks that put SanketLife devices into hospitals, clinics, and homes across 22 Indian states. Her background spans supply chain, healthcare operations, and scaling hardware businesses in emerging markets." },
+  { photo: "https://placehold.co/280x280/7C4DFF/FFFFFF?text=RR", name: "Rahul Rastogi", title: "Co-founder & CEO", bio: "Electronics and telecommunications engineer turned medical-device entrepreneur. After his father Arun Kumar survived a sudden heart attack in 2013, Rahul set out to make hospital-grade ECG technology small enough to fit in a pocket and affordable enough for every Indian family. He leads product, engineering, and strategy at Agatsa." },
+  { photo: "https://placehold.co/280x280/1A73E8/FFFFFF?text=NR", name: "Neha Rastogi", title: "Co-founder & COO", bio: "Electronics and telecommunications engineer who co-founded Agatsa with her husband Rahul in 2014 after the family's brush with cardiac disease. Neha oversees operations, partnerships, and distribution — building the networks that now put Agatsa devices into hospitals, clinics, defence units, and homes across India." },
   { photo: "https://placehold.co/280x280/FF6D00/FFFFFF?text=AP", name: "Dr. Anbu Pandian, MD", title: "Chief Medical Officer", loc: "Based in Dallas, Texas, USA", bio: "Board-certified cardiologist with clinical practice in Dallas and a deep commitment to preventive cardiology in South Asian populations. Dr. Pandian leads clinical validation, medical AI oversight, and the design of Agatsa One's Care Programmes. He is a co-inventor on Agatsa's core AI patent applications and represents Agatsa Inc.'s US medical presence.", edu: "MBBS, MD (Cardiology), FACC" },
 ];
 
 const milestones = [
-  { year: "2015", text: "Agatsa founded. SanketLife ECG prototype developed at IIT Delhi." },
+  { year: "2014", text: "Agatsa founded by Rahul and Neha Rastogi in Noida after Rahul's father survives a heart attack. Work begins on a pocket-sized ECG." },
+  { year: "2015", text: "First SanketLife prototype built — a keychain-sized 12-lead ECG monitor." },
   { year: "2017", text: "First clinical validation at Sri Jayadeva Institute. 98.15% ECG sensitivity confirmed." },
   { year: "2018", text: "CDSCO Class B Medical Device license received. Commercial launch." },
   { year: "2020", text: "10,000 users milestone. EasyTouch Wellness Monitor launched." },
@@ -65,10 +66,13 @@ export default function About() {
             <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>OUR STORY</span>
             <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>Why we built this</h2>
             <p className="mt-6 text-base leading-relaxed" style={{ color: "#4A4A68" }}>
-              Agatsa was founded in 2014 by engineers and doctors who watched too many people die from conditions that were perfectly detectable — if only they had access to the right tools. The SanketLife ECG began as a clinical research project at IIT Delhi, designed to bring hospital-grade cardiac monitoring to remote villages. It was validated in ICUs. It was used in emergency rooms. Then we asked: why should this technology only be available in hospitals?
+              In 2013, Rahul Rastogi's father Arun Kumar suffered a sudden heart attack. He survived — just in time — but the experience exposed a painful gap. Rahul and his wife Neha, both electronics and telecommunications engineers, searched the market for a simple, affordable device that could spot heart trouble early at home. Nothing existed. So they decided to build it themselves.
             </p>
             <p className="mt-4 text-base leading-relaxed" style={{ color: "#4A4A68" }}>
-              Today, SanketLife is used by more than 2.1 Lac+ individuals — from cardiac ICU patients to village health workers to busy executives who want to know their hearts are okay. The next chapter — Agatsa One — brings everything together: devices, AI, data, and community. One app. One AI. One health story.
+              In 2014 they founded Agatsa out of Noida and began shrinking the bulky hospital ECG into something that could fit on a keychain. The result was SanketLife — a pocket-sized 12-lead ECG monitor that lets anyone capture a hospital-grade reading in 60 seconds and share it with a doctor. Early customers included ONGC field engineers in remote locations and defence forces operating far from hospitals. The Marico Innovation Foundation backed the journey.
+            </p>
+            <p className="mt-4 text-base leading-relaxed" style={{ color: "#4A4A68" }}>
+              Today, more than 2.1 Lac+ individuals — from ICU patients to village health workers to busy executives — use Agatsa devices. The next chapter, Agatsa One, brings everything together: devices, AI, data, and community. One app. One AI. One health story.
             </p>
           </motion.div>
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
