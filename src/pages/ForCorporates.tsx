@@ -2,7 +2,6 @@ import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Monitor, BarChart3, Smartphone, ClipboardList, FileText, ShieldCheck } from "lucide-react";
-import { BrochureLeadCapture } from "@/components/BrochureLeadCapture";
 
 const fade = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
@@ -116,13 +115,7 @@ export default function ForCorporatesPage() {
               High-performing professionals are 2.4x more likely to have undetected hypertension. 1 in 3 corporate heart attacks happens to someone under 45. Stress, sedentary work, and delayed medical care are a lethal combination. Agatsa One Corporate changes that.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a href="mailto:info@agatsa.com?subject=Corporate Demo Request" className="rounded-full px-8 py-4 text-base font-semibold text-white bg-[#7C4DFF] hover:opacity-90 transition">Request a Corporate Demo</a>
-              <BrochureLeadCapture
-                brochureType="corporates"
-                brochurePath="/agatsa-one-corporate-brochure.pdf"
-                buttonText="Download Corporate Brochure"
-                buttonClassName="rounded-full px-8 py-4 text-base font-semibold border-2 border-[#7C4DFF] text-[#7C4DFF] hover:bg-purple-50 transition"
-              />
+              <a href="mailto:info@agatsa.com?subject=Corporate Enquiry" className="rounded-full px-8 py-4 text-base font-semibold text-white bg-[#7C4DFF] hover:opacity-90 transition">Email us at info@agatsa.com</a>
             </div>
           </motion.div>
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -272,15 +265,15 @@ export default function ForCorporatesPage() {
           >
             <h3 className="text-[22px] font-bold text-[#1A1A2E]">Get a custom quote</h3>
             <p className="mt-2 text-[15px] text-[#4A4A68]">
-              Tell us your company size, industry, and what you're trying to achieve. We'll respond within 24 hours with a proposal tailored to your workforce.
+              Email us your company size, industry, and what you're trying to achieve at info@agatsa.com.
             </p>
             <a
               href="mailto:info@agatsa.com?subject=Corporate Wellness Quote Request&body=Company name: %0ANumber of employees: %0AContact name: %0APhone: %0AWhat you're looking for: "
               className="block mt-6 w-full rounded-full py-4 font-bold text-base text-white bg-[#7C4DFF] hover:bg-purple-700 transition text-center"
             >
-              Email Us for a Corporate Quote
+              Email us at info@agatsa.com
             </a>
-            <p className="text-xs text-gray-400 mt-3">We respond within 24 hours. No spam, no sales calls unless you ask for one.</p>
+            <p className="text-xs text-gray-400 mt-3">Direct email only — no automatic email sending system.</p>
           </motion.div>
         </div>
       </section>

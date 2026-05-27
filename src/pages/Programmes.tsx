@@ -120,7 +120,7 @@ const programmes: (Programme & { slug: string })[] = [
     ],
     device: "Flexible — device bundles available for employer purchase",
     alert: { type: "info", text: "ℹ️ Note: Employees identified as high-risk by Nera AI are prompted to consult a doctor — HR sees only aggregate risk tiers, never individual health data." },
-    cta1: { label: "Request a Demo", link: "/for-corporates" },
+    cta1: { label: "Email Us", link: "/for-corporates" },
     cta2: { label: "Download Programme Guide" },
   },
 ];
