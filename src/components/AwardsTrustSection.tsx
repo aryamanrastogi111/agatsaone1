@@ -54,7 +54,7 @@ const allAwards: { name: string; org: string; year?: string; icon: typeof Award 
   { name: "ET Now Rise with India Award", org: "ET Now", icon: Trophy },
   { name: "India SME 100 Award", org: "India SME Forum", icon: Star },
   { name: "Startup of the Year", org: "Multiple Bodies", icon: Sparkles },
-  { name: "IAN Fund Portfolio Company", org: "Indian Angel Network", icon: Gem },
+  { name: "Anjani Mashelkar Prize", org: "For EasyTouch Plus (2025)", icon: Gem },
   { name: "Best Health-Tech Startup", org: "Various Platforms", icon: Medal },
   { name: "Entrepreneur India Award", org: "Entrepreneur Magazine", icon: Award },
   
