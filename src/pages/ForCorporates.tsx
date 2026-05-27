@@ -119,7 +119,7 @@ export default function ForCorporatesPage() {
             </div>
           </motion.div>
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <img src="https://placehold.co/560x420/7C4DFF/FFFFFF?text=Corporate+Dashboard" alt="Corporate Dashboard" className="rounded-3xl w-full" />
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80" alt="Team of corporate employees collaborating in an office" loading="lazy" className="rounded-3xl w-full h-[420px] object-cover shadow-xl" />
           </motion.div>
         </div>
       </section>
