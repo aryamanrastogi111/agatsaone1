@@ -15,14 +15,10 @@ const team = [
 const milestones = [
   { year: "2014", text: "Agatsa founded by Rahul and Neha Rastogi in Noida after Rahul's father survives a heart attack. Work begins on a pocket-sized ECG." },
   { year: "2015", text: "First SanketLife prototype built — a keychain-sized 12-lead ECG monitor." },
+  { year: "2016", text: "SanketLife begins shipping to early customers including ONGC field engineers and defence units operating far from hospitals." },
   { year: "2017", text: "First clinical validation at Sri Jayadeva Institute. 98.15% ECG sensitivity confirmed." },
-  { year: "2018", text: "CDSCO Class B Medical Device license received. Commercial launch." },
-  { year: "2020", text: "10,000 users milestone. EasyTouch Wellness Monitor launched." },
-  { year: "2022", text: "Clinical validation across 15,000 users for optical monitoring (98.56%)." },
-  { year: "2023", text: "Agatsa One app launched — unifying all devices in one platform." },
-  { year: "2024", text: "2.1 Lac+ users. Nera AI engine launched." },
-  { year: "2025", text: "Nera voice assistant launched. Care Programmes launched. B2B SaaS platform launched." },
-  { year: "2026", text: "2.1 Lac+ users. Worldwide app availability. Camp screening. AI multimodal pipeline live." },
+  { year: "2025", text: "EasyTouch+ launched — India's first smart prickless sugar-monitoring device. Rahul and Neha awarded the Anjani Mashelkar Prize." },
+  { year: "2026", text: "2.1 Lac+ users. Agatsa One unifies devices, Nera AI and care programmes in a single platform." },
 ];
 
 const regs = [
@@ -68,7 +64,7 @@ export default function About() {
               In 2013, Rahul Rastogi's father Arun Kumar suffered a sudden heart attack. He survived — just in time — but the experience exposed a painful gap. Rahul and his wife Neha, both electronics and telecommunications engineers, searched the market for a simple, affordable device that could spot heart trouble early at home. Nothing existed. So they decided to build it themselves.
             </p>
             <p className="mt-4 text-base leading-relaxed" style={{ color: "#4A4A68" }}>
-              In 2014 they founded Agatsa out of Noida and began shrinking the bulky hospital ECG into something that could fit on a keychain. The result was SanketLife — a pocket-sized 12-lead ECG monitor that lets anyone capture a hospital-grade reading in 60 seconds and share it with a doctor. Early customers included ONGC field engineers in remote locations and defence forces operating far from hospitals. The Marico Innovation Foundation backed the journey.
+              In 2014 they founded Agatsa out of Noida and began shrinking the bulky hospital ECG into something that could fit on a keychain. The result was SanketLife — a pocket-sized 12-lead ECG monitor that lets anyone capture a hospital-grade reading in 60 seconds and share it with a doctor. Early customers included ONGC field engineers in remote locations and defence forces operating far from hospitals.
             </p>
             <p className="mt-4 text-base leading-relaxed" style={{ color: "#4A4A68" }}>
               Today, more than 2.1 Lac+ individuals — from ICU patients to village health workers to busy executives — use Agatsa devices. The next chapter, Agatsa One, brings everything together: devices, AI, data, and community. One app. One AI. One health story.
@@ -124,7 +120,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4">
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
             <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>OUR JOURNEY</span>
-            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>From a Delhi garage to 2.1 Lac+ users.</h2>
+            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>From Noida, 2014 — to 2.1 Lac+ users.</h2>
           </motion.div>
           <div className="relative max-w-3xl mx-auto">
             <div className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5" style={{ background: "#7C4DFF", opacity: 0.2 }} />
