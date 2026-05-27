@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { SiteLayout } from "@/components/SiteLayout";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone } from "lucide-react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
@@ -218,37 +216,6 @@ export default function HeartGuard() {
   }, [HERO_SLIDES.length]);
 
   const navigate = useNavigate();
-  const { toast } = useToast();
-
-  // ── Contact form state ──
-  const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", clinic: "", city: "", message: "" });
-  const [contactSubmitting, setContactSubmitting] = useState(false);
-  const [contactSent, setContactSent] = useState(false);
-
-  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setContactForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-  };
-
-  const handleContactSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!contactForm.name.trim() || !contactForm.email.trim() || !contactForm.phone.trim()) {
-      toast({ title: "Please fill name, email and phone", variant: "destructive" });
-      return;
-    }
-    setContactSubmitting(true);
-    try {
-      const { error } = await supabase.functions.invoke("send-heartguard-contact", { body: contactForm });
-      if (error) throw error;
-      setContactSent(true);
-      toast({ title: "Thanks — we'll be in touch", description: "Our team will call you within 24 hours." });
-      setContactForm({ name: "", email: "", phone: "", clinic: "", city: "", message: "" });
-    } catch (err) {
-      console.error(err);
-      toast({ title: "Could not send", description: "Please try again or email info@agatsa.com directly.", variant: "destructive" });
-    } finally {
-      setContactSubmitting(false);
-    }
-  };
 
 
   // HeartGuard Doctor Starter Kit — single SKU @ ₹24,999 in backend catalog
