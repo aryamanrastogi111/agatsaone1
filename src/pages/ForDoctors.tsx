@@ -6,7 +6,6 @@ import providerPortalImg from "@/assets/provider-portal-dashboard.webp";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BrochureLeadCapture } from "@/components/BrochureLeadCapture";
 
 const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
 
@@ -157,16 +156,9 @@ export default function ForDoctorsPage() {
               Trained on real patient data from Agatsa's devices — not simulated or limited datasets.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-8">
-              <a href="mailto:info@agatsa.com?subject=Provider Demo Request">
-                <Button className="rounded-full px-8 py-4 text-base w-full">Book a Demo</Button>
+              <a href="mailto:info@agatsa.com?subject=Provider Enquiry">
+                <Button className="rounded-full px-8 py-4 text-base w-full">Email us at info@agatsa.com</Button>
               </a>
-              <BrochureLeadCapture
-                brochureType="doctors"
-                brochurePath="/agatsa-one-doctors-brochure.pdf"
-                buttonText="Download Provider Guide"
-              >
-                <Button variant="outline" className="rounded-full px-8 py-4 text-base border-2 border-primary text-primary w-full">Download Provider Guide</Button>
-              </BrochureLeadCapture>
             </div>
           </motion.div>
           <motion.img {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }} src={providerPortalImg} alt="Agatsa One Provider Portal Dashboard" className="w-full rounded-3xl shadow-2xl" />
@@ -449,11 +441,8 @@ export default function ForDoctorsPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready to monitor your patients beyond the waiting room?</h2>
           <p className="text-primary-foreground/80 mt-3 text-lg">Join doctors and clinics across India using Agatsa One to deliver better care.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-            <a href="mailto:info@agatsa.com?subject=Provider Demo Request">
-              <Button className="rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Book a Demo</Button>
-            </a>
-            <a href="mailto:info@agatsa.com?subject=Register as Provider">
-              <Button variant="outline" className="rounded-full px-10 py-5 text-lg border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 font-semibold">Register as a Provider</Button>
+            <a href="mailto:info@agatsa.com?subject=Provider Enquiry">
+              <Button className="rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Email us at info@agatsa.com</Button>
             </a>
           </div>
         </div>
