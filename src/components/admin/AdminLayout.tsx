@@ -7,6 +7,7 @@ import {
   LogOut, Menu, X, ChevronRight, Bell, Settings, BarChart2,
   Boxes, RefreshCw, RotateCcw, UserCheck, LifeBuoy, Activity,
   Puzzle, Shield, ChevronDown, ChevronUp, Mail, Zap, Radio, FileText, Heart,
+  Handshake,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNewOrderSound } from "@/hooks/useNewOrderSound";
@@ -44,10 +45,11 @@ const NAV_GROUPS: NavGroup[] = [
   {
     label: "Engagement",
     items: [
-      { label: "Leads",    icon: UserCheck, href: "/admin/leads" },
-      { label: "Heritage", icon: Heart,     href: "/admin/heritage" },
-      { label: "Tickets",  icon: LifeBuoy,  href: "/admin/tickets" },
-      { label: "Reviews",  icon: Star,      href: "/admin/reviews" },
+      { label: "Leads",         icon: UserCheck,  href: "/admin/leads" },
+      { label: "Heritage",      icon: Heart,      href: "/admin/heritage" },
+      { label: "Tickets",       icon: LifeBuoy,   href: "/admin/tickets" },
+      { label: "Partnerships",  icon: Handshake,  href: "/admin/partnerships" },
+      { label: "Reviews",       icon: Star,       href: "/admin/reviews" },
     ],
   },
   {
