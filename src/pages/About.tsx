@@ -10,7 +10,6 @@ const fade = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, trans
 const team = [
   { photo: "https://placehold.co/280x280/7C4DFF/FFFFFF?text=RR", name: "Rahul Rastogi", title: "Co-founder & CEO", bio: "Electronics and telecommunications engineer turned medical-device entrepreneur. After his father Arun Kumar survived a sudden heart attack in 2013, Rahul set out to make hospital-grade ECG technology small enough to fit in a pocket and affordable enough for every Indian family. He leads product, engineering, and strategy at Agatsa." },
   { photo: "https://placehold.co/280x280/1A73E8/FFFFFF?text=NR", name: "Neha Rastogi", title: "Co-founder & COO", bio: "Electronics and telecommunications engineer who co-founded Agatsa with her husband Rahul in 2014 after the family's brush with cardiac disease. Neha oversees operations, partnerships, and distribution — building the networks that now put Agatsa devices into hospitals, clinics, defence units, and homes across India." },
-  { photo: "https://placehold.co/280x280/FF6D00/FFFFFF?text=AP", name: "Dr. Anbu Pandian, MD", title: "Chief Medical Officer", loc: "Based in Dallas, Texas, USA", bio: "Board-certified cardiologist with clinical practice in Dallas and a deep commitment to preventive cardiology in South Asian populations. Dr. Pandian leads clinical validation, medical AI oversight, and the design of Agatsa One's Care Programmes. He is a co-inventor on Agatsa's core AI patent applications and represents Agatsa Inc.'s US medical presence.", edu: "MBBS, MD (Cardiology), FACC" },
 ];
 
 const milestones = [
@@ -87,17 +86,15 @@ export default function About() {
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
             <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>THE TEAM</span>
             <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>The people behind Agatsa One</h2>
-            <p className="mt-2 text-base" style={{ color: "#4A4A68" }}>Three co-founders. Three disciplines. One mission.</p>
+            <p className="mt-2 text-base" style={{ color: "#4A4A68" }}>Two co-founders. One mission.</p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-2 gap-10 max-w-3xl mx-auto">
             {team.map((p, i) => (
               <motion.div key={i} variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center">
                 <img src={p.photo} alt={p.name} className="w-48 h-48 rounded-full mx-auto object-cover" />
                 <h3 className="mt-6 text-2xl font-bold" style={{ color: "#1A1A2E" }}>{p.name}</h3>
                 <p className="text-base font-medium" style={{ color: "#7C4DFF" }}>{p.title}</p>
-                {"loc" in p && <p className="text-sm mt-1" style={{ color: "#4A4A68" }}>{(p as any).loc}</p>}
                 <p className="mt-3 text-sm leading-relaxed text-left" style={{ color: "#4A4A68" }}>{p.bio}</p>
-                {"edu" in p && p.edu && <p className="mt-2 text-xs italic" style={{ color: "rgba(74,74,104,0.7)" }}>{p.edu}</p>}
               </motion.div>
             ))}
           </div>
