@@ -115,6 +115,22 @@ export default function AdminLayout() {
     })();
   }, [navigate]);
 
+  // Poll new partnership enquiries for sidebar badge
+  useEffect(() => {
+    if (!adminChecked) return;
+    let cancelled = false;
+    const fetchBadges = async () => {
+      const { count } = await supabase
+        .from("partnership_enquiries")
+        .select("id", { count: "exact", head: true })
+        .eq("status", "new");
+      if (!cancelled) setBadges((b) => ({ ...b, partnerships: count || 0 }));
+    };
+    fetchBadges();
+    const interval = setInterval(fetchBadges, 60000);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, [adminChecked, location.pathname]);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate("/admin/login");
