@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { useNewOrderSound } from "@/hooks/useNewOrderSound";
 import { Volume2, VolumeX } from "lucide-react";
 
-type NavItem = { label: string; icon: any; href: string };
+type NavItem = { label: string; icon: any; href: string; badgeKey?: string };
 type NavGroup = { label: string; items: NavItem[] };
 
 const NAV_GROUPS: NavGroup[] = [
