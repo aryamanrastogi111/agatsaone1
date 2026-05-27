@@ -84,6 +84,7 @@ export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [adminChecked, setAdminChecked] = useState(false);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [badges, setBadges] = useState<Record<string, number>>({});
   const [soundOn, setSoundOn] = useState<boolean>(() => {
     if (typeof window === "undefined") return true;
     return localStorage.getItem("admin-order-sound") !== "off";
