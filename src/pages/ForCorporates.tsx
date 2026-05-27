@@ -38,7 +38,7 @@ const corpPlans = [
     ],
     cta: "Get Started Free",
     ctaStyle: "border-2 border-[#7C4DFF] text-[#7C4DFF] hover:bg-purple-50 bg-transparent",
-    href: "mailto:info@agatsa.com?subject=Corporate Starter",
+    href: "/partner-with-us?type=corporate",
   },
   {
     name: "Growth",
@@ -58,7 +58,7 @@ const corpPlans = [
     ],
     cta: "Contact Us",
     ctaStyle: "bg-[#7C4DFF] text-white shadow-lg shadow-purple-200 hover:bg-purple-700",
-    href: "mailto:info@agatsa.com?subject=Corporate Growth",
+    href: "/partner-with-us?type=corporate",
   },
   {
     name: "Pro",
@@ -76,7 +76,7 @@ const corpPlans = [
     ],
     cta: "Contact Us",
     ctaStyle: "border-2 border-gray-200 text-gray-700 hover:border-purple-400 hover:text-purple-700 bg-transparent",
-    href: "mailto:info@agatsa.com?subject=Corporate Pro",
+    href: "/partner-with-us?type=corporate",
   },
   {
     name: "Enterprise",
@@ -94,7 +94,7 @@ const corpPlans = [
     ],
     cta: "Talk to Sales",
     ctaStyle: "bg-[#1A1A2E] text-white hover:bg-gray-800",
-    href: "mailto:info@agatsa.com?subject=Corporate Enterprise",
+    href: "/partner-with-us?type=corporate",
   },
 ];
 
@@ -115,7 +115,7 @@ export default function ForCorporatesPage() {
               High-performing professionals are 2.4x more likely to have undetected hypertension. 1 in 3 corporate heart attacks happens to someone under 45. Stress, sedentary work, and delayed medical care are a lethal combination. Agatsa One Corporate changes that.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a href="mailto:info@agatsa.com?subject=Corporate Enquiry" className="rounded-full px-8 py-4 text-base font-semibold text-white bg-[#7C4DFF] hover:opacity-90 transition">Email us at info@agatsa.com</a>
+              <a href="/partner-with-us?type=corporate" className="rounded-full px-8 py-4 text-base font-semibold text-white bg-[#7C4DFF] hover:opacity-90 transition">Start your corporate enquiry</a>
             </div>
           </motion.div>
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -265,15 +265,15 @@ export default function ForCorporatesPage() {
           >
             <h3 className="text-[22px] font-bold text-[#1A1A2E]">Get a custom quote</h3>
             <p className="mt-2 text-[15px] text-[#4A4A68]">
-              Email us your company size, industry, and what you're trying to achieve at info@agatsa.com.
+              Fill our 2-minute partnership form with your company size, industry and goals. Our team responds within 2 business days.
             </p>
             <a
-              href="mailto:info@agatsa.com?subject=Corporate Wellness Quote Request&body=Company name: %0ANumber of employees: %0AContact name: %0APhone: %0AWhat you're looking for: "
+              href="/partner-with-us?type=corporate"
               className="block mt-6 w-full rounded-full py-4 font-bold text-base text-white bg-[#7C4DFF] hover:bg-purple-700 transition text-center"
             >
-              Email us at info@agatsa.com
+              Start your corporate enquiry
             </a>
-            <p className="text-xs text-gray-400 mt-3">Direct email only — no automatic email sending system.</p>
+            <p className="text-xs text-gray-400 mt-3">Guided questionnaire · email confirmation · tracked enquiry ID.</p>
           </motion.div>
         </div>
       </section>

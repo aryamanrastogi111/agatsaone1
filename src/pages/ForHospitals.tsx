@@ -48,7 +48,7 @@ export default function ForHospitalsPage() {
           <h1 className="text-4xl md:text-[56px] leading-tight font-extrabold text-white">Remote patient monitoring at hospital scale.</h1>
           <p className="mt-4 text-lg md:text-xl text-white/80 max-w-[640px] mx-auto">Reduce cardiac readmissions. Monitor post-discharge patients automatically. Catch deterioration at home before it becomes an ICU readmission. Built for the scale, compliance, and integration requirements of large healthcare institutions.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <a href="mailto:info@agatsa.com?subject=Hospital Enquiry" className="bg-primary text-primary-foreground rounded-full px-8 py-4 font-semibold hover:opacity-90 transition">Email us at info@agatsa.com</a>
+            <a href="/partner-with-us?type=hospital" className="bg-primary text-primary-foreground rounded-full px-8 py-4 font-semibold hover:opacity-90 transition">Start your hospital enquiry</a>
           </div>
         </motion.div>
       </section>
@@ -153,11 +153,11 @@ export default function ForHospitalsPage() {
 
           {/* Pricing note */}
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-center mt-8 max-w-3xl mx-auto text-[#4A4A68]">
-            All prices exclude GST. Annual billing available at 10% discount. White-label deployment requires a minimum 3-month commitment and custom scoping. Email us at info@agatsa.com for enterprise quotes.
+            All prices exclude GST. Annual billing available at 10% discount. White-label deployment requires a minimum 3-month commitment and custom scoping. Submit a hospital enquiry below for enterprise quotes.
           </div>
 
           <div className="text-center mt-10">
-            <a href="mailto:info@agatsa.com?subject=Hospital Enquiry" className="inline-block bg-primary text-primary-foreground rounded-full px-10 py-4 font-semibold hover:opacity-90 transition text-lg">Email us at info@agatsa.com</a>
+            <a href="/partner-with-us?type=hospital" className="inline-block bg-primary text-primary-foreground rounded-full px-10 py-4 font-semibold hover:opacity-90 transition text-lg">Start your hospital enquiry</a>
           </div>
         </div>
       </section>
@@ -183,8 +183,8 @@ export default function ForHospitalsPage() {
       <section className="bg-[#1A1A2E] py-20">
         <motion.div className="max-w-3xl mx-auto px-4 text-center" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-bold text-white">Ready to build the remote monitoring programme your patients deserve?</h2>
-          <p className="mt-4 text-white/75 text-lg">Email us at info@agatsa.com and our hospital partnerships team will respond.</p>
-          <a href="mailto:info@agatsa.com?subject=Hospital Enquiry" className="inline-block mt-8 bg-primary text-primary-foreground rounded-full px-10 py-5 font-semibold text-lg hover:opacity-90 transition">Email us at info@agatsa.com</a>
+          <p className="mt-4 text-white/75 text-lg">Fill the hospital enquiry form and our partnerships team will respond within 2 business days.</p>
+          <a href="/partner-with-us?type=hospital" className="inline-block mt-8 bg-primary text-primary-foreground rounded-full px-10 py-5 font-semibold text-lg hover:opacity-90 transition">Start your hospital enquiry</a>
         </motion.div>
       </section>
     </SiteLayout>
