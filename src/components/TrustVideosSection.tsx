@@ -18,11 +18,11 @@ export function TrustVideosSection() {
           <p className="text-xs uppercase tracking-widest text-[#7C4DFF] mb-2 font-semibold">
             Trusted by Experts
           </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-white">
-            Endorsed by Doctors & Institutions
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+            Cardiologists, hospitals & national media on Agatsa
           </h2>
-          <p className="mt-2 text-sm text-white/50 max-w-lg mx-auto">
-            Watch cardiologists, leading hospitals, and national media vouch for Agatsa devices.
+          <p className="mt-3 text-sm text-white/60 max-w-2xl mx-auto">
+            Watch leading doctors and institutions vouch for the same devices that power Agatsa One.
           </p>
         </div>
 
