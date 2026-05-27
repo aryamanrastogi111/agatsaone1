@@ -10,6 +10,7 @@ import {
   ProvidersSection,
   TestimonialsSection,
   FinalCTASection,
+  HeartGuardTeaserSection,
 } from "@/components/home-new";
 import { VideoShowcaseSection } from "@/components/home/VideoShowcaseSection";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
