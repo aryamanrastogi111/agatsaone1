@@ -88,15 +88,13 @@ export default function About() {
             <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>The people behind Agatsa One</h2>
             <p className="mt-2 text-base" style={{ color: "#4A4A68" }}>Three co-founders. Three disciplines. One mission.</p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-2 gap-10 max-w-3xl mx-auto">
             {team.map((p, i) => (
               <motion.div key={i} variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center">
                 <img src={p.photo} alt={p.name} className="w-48 h-48 rounded-full mx-auto object-cover" />
                 <h3 className="mt-6 text-2xl font-bold" style={{ color: "#1A1A2E" }}>{p.name}</h3>
                 <p className="text-base font-medium" style={{ color: "#7C4DFF" }}>{p.title}</p>
-                {"loc" in p && <p className="text-sm mt-1" style={{ color: "#4A4A68" }}>{(p as any).loc}</p>}
                 <p className="mt-3 text-sm leading-relaxed text-left" style={{ color: "#4A4A68" }}>{p.bio}</p>
-                {"edu" in p && p.edu && <p className="mt-2 text-xs italic" style={{ color: "rgba(74,74,104,0.7)" }}>{p.edu}</p>}
               </motion.div>
             ))}
           </div>
