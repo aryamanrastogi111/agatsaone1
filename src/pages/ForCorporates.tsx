@@ -115,7 +115,7 @@ export default function ForCorporatesPage() {
               High-performing professionals are 2.4x more likely to have undetected hypertension. 1 in 3 corporate heart attacks happens to someone under 45. Stress, sedentary work, and delayed medical care are a lethal combination. Agatsa One Corporate changes that.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a href="mailto:info@agatsa.com?subject=Corporate Enquiry" className="rounded-full px-8 py-4 text-base font-semibold text-white bg-[#7C4DFF] hover:opacity-90 transition">Email us at info@agatsa.com</a>
+              <a href="/partner-with-us?type=corporate" className="rounded-full px-8 py-4 text-base font-semibold text-white bg-[#7C4DFF] hover:opacity-90 transition">Start your corporate enquiry</a>
             </div>
           </motion.div>
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>
