@@ -195,6 +195,7 @@ function AppWithPricing() {
                 <Route path="leads" element={<AdminLeads />} />
                 <Route path="heritage" element={<AdminHeritage />} />
                 <Route path="tickets" element={<AdminTickets />} />
+                <Route path="partnerships" element={<AdminPartnerships />} />
                 <Route path="analytics" element={<AdminAnalytics />} />
                 <Route path="team" element={<AdminTeam />} />
                 <Route path="settings" element={<AdminSettings />} />
