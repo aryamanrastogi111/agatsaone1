@@ -7,6 +7,7 @@ import {
   LogOut, Menu, X, ChevronRight, Bell, Settings, BarChart2,
   Boxes, RefreshCw, RotateCcw, UserCheck, LifeBuoy, Activity,
   Puzzle, Shield, ChevronDown, ChevronUp, Mail, Zap, Radio, FileText, Heart,
+  Handshake,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNewOrderSound } from "@/hooks/useNewOrderSound";
