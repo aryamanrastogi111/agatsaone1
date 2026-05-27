@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { useNewOrderSound } from "@/hooks/useNewOrderSound";
 import { Volume2, VolumeX } from "lucide-react";
 
-type NavItem = { label: string; icon: any; href: string };
+type NavItem = { label: string; icon: any; href: string; badgeKey?: string };
 type NavGroup = { label: string; items: NavItem[] };
 
 const NAV_GROUPS: NavGroup[] = [
@@ -48,7 +48,7 @@ const NAV_GROUPS: NavGroup[] = [
       { label: "Leads",         icon: UserCheck,  href: "/admin/leads" },
       { label: "Heritage",      icon: Heart,      href: "/admin/heritage" },
       { label: "Tickets",       icon: LifeBuoy,   href: "/admin/tickets" },
-      { label: "Partnerships",  icon: Handshake,  href: "/admin/partnerships" },
+      { label: "Partnerships",  icon: Handshake,  href: "/admin/partnerships", badgeKey: "partnerships" },
       { label: "Reviews",       icon: Star,       href: "/admin/reviews" },
     ],
   },
@@ -84,6 +84,7 @@ export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [adminChecked, setAdminChecked] = useState(false);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [badges, setBadges] = useState<Record<string, number>>({});
   const [soundOn, setSoundOn] = useState<boolean>(() => {
     if (typeof window === "undefined") return true;
     return localStorage.getItem("admin-order-sound") !== "off";
@@ -113,6 +114,22 @@ export default function AdminLayout() {
       setAdminChecked(true);
     })();
   }, [navigate]);
+
+  // Poll new partnership enquiries for sidebar badge
+  useEffect(() => {
+    if (!adminChecked) return;
+    let cancelled = false;
+    const fetchBadges = async () => {
+      const { count } = await supabase
+        .from("partnership_enquiries")
+        .select("id", { count: "exact", head: true })
+        .eq("status", "new");
+      if (!cancelled) setBadges((b) => ({ ...b, partnerships: count || 0 }));
+    };
+    fetchBadges();
+    const interval = setInterval(fetchBadges, 60000);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, [adminChecked, location.pathname]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -172,21 +189,32 @@ export default function AdminLayout() {
                   <div className="space-y-0.5 px-2">
                     {group.items.map(item => {
                       const active = isActive(item.href, location.pathname);
+                      const badgeCount = item.badgeKey ? badges[item.badgeKey] || 0 : 0;
                       return (
                         <Link
                           key={item.href}
                           to={item.href}
-                          title={!sidebarOpen ? item.label : undefined}
+                          title={!sidebarOpen ? `${item.label}${badgeCount ? ` (${badgeCount})` : ""}` : undefined}
                           className={cn(
-                            "flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm font-medium transition-colors",
+                            "relative flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm font-medium transition-colors",
                             active
                               ? "bg-blue-50 text-blue-700 border border-blue-100"
                               : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                           )}
                         >
-                          <item.icon size={16} className="shrink-0" />
+                          <span className="relative shrink-0">
+                            <item.icon size={16} />
+                            {!sidebarOpen && badgeCount > 0 && (
+                              <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+                            )}
+                          </span>
                           {sidebarOpen && <span className="truncate">{item.label}</span>}
-                          {sidebarOpen && active && <ChevronRight size={12} className="ml-auto shrink-0 text-blue-500" />}
+                          {sidebarOpen && badgeCount > 0 && (
+                            <span className="ml-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[11px] font-semibold rounded-full bg-red-500 text-white">
+                              {badgeCount > 99 ? "99+" : badgeCount}
+                            </span>
+                          )}
+                          {sidebarOpen && active && badgeCount === 0 && <ChevronRight size={12} className="ml-auto shrink-0 text-blue-500" />}
                         </Link>
                       );
                     })}
