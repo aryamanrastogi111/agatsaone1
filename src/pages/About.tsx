@@ -22,7 +22,7 @@ const milestones = [
 ];
 
 const regs = [
-  { title: "CDSCO License", sub: "MFG/MD/2023/000231", body: "Class B Medical Device under Medical Devices Rules, 2017" },
+  { title: "CDSCO License", sub: "Class B Medical Device", body: "Class B Medical Device under Medical Devices Rules, 2017" },
   { title: "ISO 13485", sub: "Quality Management", body: "ISO 13485-compliant manufacturing quality management system" },
   { title: "Clinical Validation", sub: "Three independent studies", body: "Sri Jayadeva Institute (ECG, 2022) — 98.15% sensitivity. Narayana Health (ECG) — 98.5% accuracy. 15,000-user validation study (optical monitoring, 2023) — 98.56% accuracy." },
   { title: "Data Privacy", sub: "DPDP Act compliant", body: "India's Digital Personal Data Protection Act (2023). Data stored on Indian servers. No data sold to third parties." },
@@ -156,25 +156,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Press */}
-      <section className="py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-12">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#7C4DFF" }}>PRESS</span>
-            <h2 className="mt-3 text-3xl md:text-4xl font-extrabold" style={{ color: "#1A1A2E" }}>In the news</h2>
-          </motion.div>
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {["Press coverage coming soon — contact info@agatsa.com", "Media enquiry? We respond within 24 hours", "For partnership and investor enquiries: info@agatsa.com"].map((t, i) => (
-              <motion.div key={i} variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }} className="rounded-2xl p-8 border border-dashed border-border bg-muted/30 flex items-center justify-center text-center min-h-[120px]">
-                <p className="text-sm" style={{ color: "#4A4A68" }}>{t}</p>
-              </motion.div>
-            ))}
-          </div>
-          <p className="text-center mt-6 text-sm" style={{ color: "#4A4A68" }}>Media enquiries: info@agatsa.com | Investor relations: info@agatsa.com</p>
-        </div>
-      </section>
-
-      {/* Bottom CTA */}
       <section className="py-20" style={{ background: "#7C4DFF" }}>
         <div className="max-w-3xl mx-auto px-4 text-center">
           <motion.div variants={fade} initial="hidden" whileInView="visible" viewport={{ once: true }}>

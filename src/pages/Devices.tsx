@@ -39,7 +39,7 @@ const devices: DeviceData[] = [
   {
     id: "sanketlife",
     image: sanketlifeImg,
-    badge: "CDSCO Class B Certified · MFG/MD/2023/000231",
+    badge: "CDSCO Class B Certified",
     name: "SanketLife 12-Lead ECG Monitor",
     tagline: "Hospital-grade ECG in your shirt pocket",
     keyStat: "98.5% accuracy validated at Narayana Health & Sri Jayadeva Institute",

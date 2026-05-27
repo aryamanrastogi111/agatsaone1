@@ -152,7 +152,7 @@ export default function SanketLifeECGProduct() {
               </div>
 
               <p className="text-xs text-muted-foreground mt-3">
-                CDSCO Class B Medical Device · Lic. MFG/MD/2023/000231
+                CDSCO Class B Medical Device
               </p>
             </motion.div>
           </div>
