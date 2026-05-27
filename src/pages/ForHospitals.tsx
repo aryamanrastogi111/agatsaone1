@@ -48,7 +48,7 @@ export default function ForHospitalsPage() {
           <h1 className="text-4xl md:text-[56px] leading-tight font-extrabold text-white">Remote patient monitoring at hospital scale.</h1>
           <p className="mt-4 text-lg md:text-xl text-white/80 max-w-[640px] mx-auto">Reduce cardiac readmissions. Monitor post-discharge patients automatically. Catch deterioration at home before it becomes an ICU readmission. Built for the scale, compliance, and integration requirements of large healthcare institutions.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <a href="mailto:info@agatsa.com?subject=Hospital Enquiry" className="bg-primary text-primary-foreground rounded-full px-8 py-4 font-semibold hover:opacity-90 transition">Email us at info@agatsa.com</a>
+            <a href="/partner-with-us?type=hospital" className="bg-primary text-primary-foreground rounded-full px-8 py-4 font-semibold hover:opacity-90 transition">Start your hospital enquiry</a>
           </div>
         </motion.div>
       </section>
