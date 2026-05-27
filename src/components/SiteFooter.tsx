@@ -16,7 +16,7 @@ const providerLinks = [
   { label: "For Hospitals", href: "/for-hospitals" },
   { label: "For Corporates", href: "/for-corporates" },
   { label: "Partner with Us", href: "/partner" },
-  { label: "Book a Demo", href: "/demo" },
+  { label: "Email Us", href: "/demo" },
 ];
 
 const companyLinks = [
