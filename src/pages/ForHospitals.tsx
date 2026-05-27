@@ -153,11 +153,11 @@ export default function ForHospitalsPage() {
 
           {/* Pricing note */}
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-center mt-8 max-w-3xl mx-auto text-[#4A4A68]">
-            All prices exclude GST. Annual billing available at 10% discount. White-label deployment requires a minimum 3-month commitment and custom scoping. Email us at info@agatsa.com for enterprise quotes.
+            All prices exclude GST. Annual billing available at 10% discount. White-label deployment requires a minimum 3-month commitment and custom scoping. Submit a hospital enquiry below for enterprise quotes.
           </div>
 
           <div className="text-center mt-10">
-            <a href="mailto:info@agatsa.com?subject=Hospital Enquiry" className="inline-block bg-primary text-primary-foreground rounded-full px-10 py-4 font-semibold hover:opacity-90 transition text-lg">Email us at info@agatsa.com</a>
+            <a href="/partner-with-us?type=hospital" className="inline-block bg-primary text-primary-foreground rounded-full px-10 py-4 font-semibold hover:opacity-90 transition text-lg">Start your hospital enquiry</a>
           </div>
         </div>
       </section>
