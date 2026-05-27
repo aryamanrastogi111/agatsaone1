@@ -947,58 +947,85 @@ export type Database = {
       support_tickets: {
         Row: {
           assigned_to: string | null
+          attachments: Json | null
+          category: string | null
           created_at: string
           customer_email: string | null
           customer_id: string | null
           customer_name: string | null
+          customer_phone: string | null
           id: string
           internal_notes: string | null
           issue_summary: string | null
+          last_customer_message_at: string | null
+          last_staff_message_at: string | null
           order_id: string | null
           order_number: string | null
           priority: string
           product_id: string | null
+          questionnaire_answers: Json | null
           resolution_notes: string | null
+          sla_due_at: string | null
           status: string
+          sub_issue: string | null
           subject: string
+          ticket_number: string | null
           type: string | null
           updated_at: string
         }
         Insert: {
           assigned_to?: string | null
+          attachments?: Json | null
+          category?: string | null
           created_at?: string
           customer_email?: string | null
           customer_id?: string | null
           customer_name?: string | null
+          customer_phone?: string | null
           id?: string
           internal_notes?: string | null
           issue_summary?: string | null
+          last_customer_message_at?: string | null
+          last_staff_message_at?: string | null
           order_id?: string | null
           order_number?: string | null
           priority?: string
           product_id?: string | null
+          questionnaire_answers?: Json | null
           resolution_notes?: string | null
+          sla_due_at?: string | null
           status?: string
+          sub_issue?: string | null
           subject: string
+          ticket_number?: string | null
           type?: string | null
           updated_at?: string
         }
         Update: {
           assigned_to?: string | null
+          attachments?: Json | null
+          category?: string | null
           created_at?: string
           customer_email?: string | null
           customer_id?: string | null
           customer_name?: string | null
+          customer_phone?: string | null
           id?: string
           internal_notes?: string | null
           issue_summary?: string | null
+          last_customer_message_at?: string | null
+          last_staff_message_at?: string | null
           order_id?: string | null
           order_number?: string | null
           priority?: string
           product_id?: string | null
+          questionnaire_answers?: Json | null
           resolution_notes?: string | null
+          sla_due_at?: string | null
           status?: string
+          sub_issue?: string | null
           subject?: string
+          ticket_number?: string | null
           type?: string | null
           updated_at?: string
         }
@@ -1066,6 +1093,53 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      ticket_messages: {
+        Row: {
+          attachments: Json | null
+          body: string
+          created_at: string
+          email_message_id: string | null
+          id: string
+          is_internal_note: boolean
+          sender_email: string | null
+          sender_name: string | null
+          sender_type: string
+          ticket_id: string
+        }
+        Insert: {
+          attachments?: Json | null
+          body: string
+          created_at?: string
+          email_message_id?: string | null
+          id?: string
+          is_internal_note?: boolean
+          sender_email?: string | null
+          sender_name?: string | null
+          sender_type: string
+          ticket_id: string
+        }
+        Update: {
+          attachments?: Json | null
+          body?: string
+          created_at?: string
+          email_message_id?: string | null
+          id?: string
+          is_internal_note?: boolean
+          sender_email?: string | null
+          sender_name?: string | null
+          sender_type?: string
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ticket_messages_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       tracking_pixels: {
         Row: {
