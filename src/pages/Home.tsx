@@ -10,6 +10,7 @@ import {
   ProvidersSection,
   TestimonialsSection,
   FinalCTASection,
+  HeartGuardTeaserSection,
 } from "@/components/home-new";
 import { VideoShowcaseSection } from "@/components/home/VideoShowcaseSection";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
@@ -27,6 +28,7 @@ export default function HomePage() {
       <DeviceShowcaseSection />
       <VideoShowcaseSection />
       <ClinicalProofSection />
+      <HeartGuardTeaserSection />
       <ProvidersSection />
       <TestimonialsSection />
       <TrustVideosSection />
