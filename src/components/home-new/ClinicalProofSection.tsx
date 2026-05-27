@@ -26,8 +26,8 @@ const studies = [
 ];
 
 const badges = [
-  { icon: Shield, label: "CDSCO License MFG/MD/2023/000231" },
-  { icon: Award, label: "Class B Medical Device — Government of India" },
+  { icon: Shield, label: "CDSCO Class B Medical Device" },
+  { icon: Award, label: "Government of India Certified" },
   { icon: FileCheck, label: "ISO 13485 Compliant Manufacturing" },
 ];
 
