@@ -2,11 +2,6 @@ import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Monitor, Users, BarChart3, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
-import { toast } from "sonner";
 
 const fade = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
@@ -20,13 +15,6 @@ const demoIncludes = [
 
 export default function Demo() {
   useSEO({ title: "Book a Demo — Agatsa One for Providers", description: "Schedule a personalised demo of Agatsa One. See the provider portal, devices, and Nera AI in action. Free, 30-minute session." });
-
-  const [form, setForm] = useState({ name: "", email: "", phone: "", org: "", role: "", message: "" });
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Demo request submitted! We'll contact you within 24 hours to schedule.");
-    setForm({ name: "", email: "", phone: "", org: "", role: "", message: "" });
-  };
 
   return (
     <SiteLayout>
@@ -55,23 +43,18 @@ export default function Demo() {
         </div>
       </section>
 
-      {/* Form */}
+      {/* Contact */}
       <section className="py-16 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4 grid lg:grid-cols-[1fr_380px] gap-12">
-          <motion.form {...fade} onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-8 space-y-5">
-            <h2 className="text-2xl font-bold text-foreground">Request a Demo</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <Input placeholder="Your name" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required />
-              <Input type="email" placeholder="Work email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} required />
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <Input placeholder="Phone (+91)" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} required />
-              <Input placeholder="Organisation name" value={form.org} onChange={e => setForm(f => ({ ...f, org: e.target.value }))} required />
-            </div>
-            <Input placeholder="Your role (e.g., Cardiologist, Hospital Admin, HR Head)" value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} />
-            <Textarea placeholder="Tell us about your use case (optional)" rows={3} value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} />
-            <Button type="submit" className="rounded-full px-8 bg-primary text-primary-foreground w-full sm:w-auto">Schedule Demo</Button>
-          </motion.form>
+          <motion.div {...fade} className="bg-card border border-border rounded-2xl p-8 space-y-5">
+            <h2 className="text-2xl font-bold text-foreground">Email us at info@agatsa.com</h2>
+            <p className="text-muted-foreground">
+              For provider demos, hospital deployments, clinic onboarding, and corporate enquiries, please email us directly at info@agatsa.com.
+            </p>
+            <a href="mailto:info@agatsa.com?subject=Provider Demo Enquiry" className="inline-block rounded-full px-8 py-3 bg-primary text-primary-foreground font-semibold hover:opacity-90 transition">
+              Email us at info@agatsa.com
+            </a>
+          </motion.div>
 
           <motion.div {...fade} transition={{ duration: 0.5, delay: 0.2 }} className="space-y-4">
             <h3 className="font-bold text-foreground">What's included in the demo:</h3>
