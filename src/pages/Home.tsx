@@ -28,6 +28,7 @@ export default function HomePage() {
       <DeviceShowcaseSection />
       <VideoShowcaseSection />
       <ClinicalProofSection />
+      <HeartGuardTeaserSection />
       <ProvidersSection />
       <TestimonialsSection />
       <TrustVideosSection />
