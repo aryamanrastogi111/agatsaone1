@@ -45,10 +45,11 @@ const NAV_GROUPS: NavGroup[] = [
   {
     label: "Engagement",
     items: [
-      { label: "Leads",    icon: UserCheck, href: "/admin/leads" },
-      { label: "Heritage", icon: Heart,     href: "/admin/heritage" },
-      { label: "Tickets",  icon: LifeBuoy,  href: "/admin/tickets" },
-      { label: "Reviews",  icon: Star,      href: "/admin/reviews" },
+      { label: "Leads",         icon: UserCheck,  href: "/admin/leads" },
+      { label: "Heritage",      icon: Heart,      href: "/admin/heritage" },
+      { label: "Tickets",       icon: LifeBuoy,   href: "/admin/tickets" },
+      { label: "Partnerships",  icon: Handshake,  href: "/admin/partnerships" },
+      { label: "Reviews",       icon: Star,       href: "/admin/reviews" },
     ],
   },
   {
