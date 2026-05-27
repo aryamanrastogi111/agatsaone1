@@ -578,6 +578,158 @@ export type Database = {
         }
         Relationships: []
       }
+      partnership_enquiries: {
+        Row: {
+          assigned_to: string | null
+          attachments: Json
+          city: string | null
+          consent: boolean
+          contact_designation: string | null
+          contact_email: string
+          contact_name: string
+          contact_phone: string | null
+          country: string | null
+          created_at: string
+          enquiry_number: string | null
+          goal_summary: string | null
+          heard_from: string | null
+          id: string
+          internal_notes: string | null
+          last_customer_message_at: string | null
+          last_staff_message_at: string | null
+          next_step_date: string | null
+          organisation_name: string
+          partner_type: string
+          preferred_contact_method: string | null
+          preferred_contact_window: string | null
+          priority: string
+          qualification_reason: string | null
+          questionnaire_answers: Json
+          score: number
+          sla_due_at: string | null
+          state: string | null
+          status: string
+          tags: string[] | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          assigned_to?: string | null
+          attachments?: Json
+          city?: string | null
+          consent?: boolean
+          contact_designation?: string | null
+          contact_email: string
+          contact_name: string
+          contact_phone?: string | null
+          country?: string | null
+          created_at?: string
+          enquiry_number?: string | null
+          goal_summary?: string | null
+          heard_from?: string | null
+          id?: string
+          internal_notes?: string | null
+          last_customer_message_at?: string | null
+          last_staff_message_at?: string | null
+          next_step_date?: string | null
+          organisation_name: string
+          partner_type: string
+          preferred_contact_method?: string | null
+          preferred_contact_window?: string | null
+          priority?: string
+          qualification_reason?: string | null
+          questionnaire_answers?: Json
+          score?: number
+          sla_due_at?: string | null
+          state?: string | null
+          status?: string
+          tags?: string[] | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          assigned_to?: string | null
+          attachments?: Json
+          city?: string | null
+          consent?: boolean
+          contact_designation?: string | null
+          contact_email?: string
+          contact_name?: string
+          contact_phone?: string | null
+          country?: string | null
+          created_at?: string
+          enquiry_number?: string | null
+          goal_summary?: string | null
+          heard_from?: string | null
+          id?: string
+          internal_notes?: string | null
+          last_customer_message_at?: string | null
+          last_staff_message_at?: string | null
+          next_step_date?: string | null
+          organisation_name?: string
+          partner_type?: string
+          preferred_contact_method?: string | null
+          preferred_contact_window?: string | null
+          priority?: string
+          qualification_reason?: string | null
+          questionnaire_answers?: Json
+          score?: number
+          sla_due_at?: string | null
+          state?: string | null
+          status?: string
+          tags?: string[] | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      partnership_messages: {
+        Row: {
+          attachments: Json | null
+          body: string
+          created_at: string
+          email_message_id: string | null
+          enquiry_id: string
+          id: string
+          is_internal_note: boolean
+          sender_email: string | null
+          sender_name: string | null
+          sender_type: string
+        }
+        Insert: {
+          attachments?: Json | null
+          body: string
+          created_at?: string
+          email_message_id?: string | null
+          enquiry_id: string
+          id?: string
+          is_internal_note?: boolean
+          sender_email?: string | null
+          sender_name?: string | null
+          sender_type: string
+        }
+        Update: {
+          attachments?: Json | null
+          body?: string
+          created_at?: string
+          email_message_id?: string | null
+          enquiry_id?: string
+          id?: string
+          is_internal_note?: boolean
+          sender_email?: string | null
+          sender_name?: string | null
+          sender_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partnership_messages_enquiry_id_fkey"
+            columns: ["enquiry_id"]
+            isOneToOne: false
+            referencedRelation: "partnership_enquiries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_images: {
         Row: {
           created_at: string
