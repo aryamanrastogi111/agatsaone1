@@ -141,6 +141,7 @@ function AppWithPricing() {
               <Route path="/careers" element={<Careers />} />
               <Route path="/press" element={<Press />} />
               <Route path="/partner" element={<Partner />} />
+              <Route path="/partner-with-us" element={<PartnerWithUs />} />
               <Route path="/demo" element={<Demo />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="/checkout" element={<CheckoutPage />} />
