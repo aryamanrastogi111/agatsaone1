@@ -193,16 +193,6 @@ export default function RhythmBandProduct() {
                   />
                 </div>
               </div>
-              {/* App screen — Overloaded systems breakdown */}
-              <div className="rounded-[28px] p-2 bg-gradient-to-b from-[hsl(220,20%,88%)] to-[hsl(220,20%,82%)] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)]">
-                <div className="rounded-[22px] overflow-hidden bg-black w-[190px] md:w-[230px]">
-                  <img
-                    src={rhythmAppOverloaded.url}
-                    alt="Nera AI body systems breakdown on mobile"
-                    className="w-full object-cover"
-                  />
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>
