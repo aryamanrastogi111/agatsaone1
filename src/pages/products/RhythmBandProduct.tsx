@@ -275,7 +275,7 @@ export default function RhythmBandProduct() {
           <motion.div {...fadeUp} className="max-w-2xl">
             <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">Built for real life</p>
             <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
-              Not built for athletes.<br />Built for you.
+              Made for everyday life.<br />Made for you.
             </h2>
           </motion.div>
 
