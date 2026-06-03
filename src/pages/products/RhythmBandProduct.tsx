@@ -18,7 +18,6 @@ import rhythmPortrait2 from "@/assets/rhythm-portrait-2.jpg";
 import rhythmPortrait3 from "@/assets/rhythm-portrait-3.jpg";
 import rhythmPortrait4 from "@/assets/rhythm-portrait-4.jpg";
 import rhythmAppScore from "@/assets/rhythm-app-score.jpeg.asset.json";
-import rhythmHeroLifestyle from "@/assets/rhythm-hero-meditation.jpg.asset.json";
 import rhythmLifestyleBasketball from "@/assets/rhythm-lifestyle-basketball.jpg.asset.json";
 import rhythmLifestyleRunning from "@/assets/rhythm-lifestyle-running.jpg.asset.json";
 import rhythmLifestyleCoffee from "@/assets/rhythm-lifestyle-coffee.jpg.asset.json";
