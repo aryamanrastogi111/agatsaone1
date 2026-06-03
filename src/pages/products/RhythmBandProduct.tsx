@@ -121,7 +121,7 @@ export default function RhythmBandProduct() {
           <motion.p
             {...fadeUp}
             transition={{ duration: 0.7, delay: 0.03 }}
-            className="mb-4 text-sm font-semibold tracking-[0.12em] uppercase text-primary"
+            className="mb-5 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-sm font-semibold tracking-[0.1em] uppercase text-primary"
           >
             EasyTouch Rhythm Band
           </motion.p>
