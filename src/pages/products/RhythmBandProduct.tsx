@@ -443,6 +443,9 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
+      {/* What Nera actually tells you — animated dialogue cards */}
+      <SignalDialogueSection />
+
       {/* Lives — story-driven personas (Google Health style) */}
       <section className="py-16 md:py-24 bg-[hsl(220,30%,98%)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
