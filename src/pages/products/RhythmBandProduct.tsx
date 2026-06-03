@@ -18,6 +18,7 @@ import rhythmPortrait2 from "@/assets/rhythm-portrait-2.jpg";
 import rhythmPortrait3 from "@/assets/rhythm-portrait-3.jpg";
 import rhythmPortrait4 from "@/assets/rhythm-portrait-4.jpg";
 import rhythmAppScore from "@/assets/rhythm-app-score.jpeg.asset.json";
+import rhythmMeditationPool from "@/assets/rhythm-meditation-pool.jpg.asset.json";
 import rhythmLifestyleBasketball from "@/assets/rhythm-lifestyle-basketball.jpg.asset.json";
 import rhythmLifestyleRunning from "@/assets/rhythm-lifestyle-running.jpg.asset.json";
 import rhythmLifestyleCoffee from "@/assets/rhythm-lifestyle-coffee.jpg.asset.json";
@@ -394,6 +395,37 @@ export default function RhythmBandProduct() {
               </div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* Editorial lifestyle card — meditation poolside */}
+      <section className="pb-10 md:pb-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div
+            {...fadeUp}
+            className="relative overflow-hidden rounded-[32px] md:rounded-[40px] shadow-2xl"
+          >
+            <img
+              src={rhythmMeditationPool.url}
+              alt="Woman meditating poolside wearing the Rhythm Band"
+              className="w-full h-[320px] md:h-[520px] object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
+            <div className="absolute inset-0 flex items-end md:items-center">
+              <div className="px-6 md:px-14 py-8 md:py-0 max-w-xl">
+                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                  <Sparkles className="h-3.5 w-3.5" /> Calm, measured.
+                </span>
+                <h3 className="mt-4 text-3xl md:text-5xl font-semibold text-white tracking-[-0.02em] leading-[1.1]">
+                  Breathe in. Your body is listening.
+                </h3>
+                <p className="mt-5 text-base md:text-lg text-white/85 leading-relaxed">
+                  Every quiet moment is a signal. Rhythm Band reads your HRV, breath and recovery — so Nera AI can tell you when to push, and when to pause.
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
