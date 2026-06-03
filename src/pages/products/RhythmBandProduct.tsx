@@ -5,7 +5,7 @@ import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck } from "lucide-react";
+import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck, Globe, TrendingUp, Link2 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { StrikePrice } from "@/components/StrikePrice";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
@@ -253,6 +253,37 @@ export default function RhythmBandProduct() {
               { icon: Activity, title: "Movement", desc: "Daily steps and active minutes against your personal target." },
               { icon: ShieldCheck, title: "Autonomic Calm", desc: "HRV and stress balance — how regulated is your nervous system?" },
               { icon: Sparkles, title: "Longevity Score", desc: "Your daily Rhythm Score and Biological Age — one number that summarises all five systems." },
+            ].map((f, i) => (
+              <motion.div
+                key={f.title}
+                {...fadeUp}
+                transition={{ duration: 0.6, delay: i * 0.05 }}
+                className="rounded-2xl bg-card border border-border/60 p-7 hover:border-primary/40 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.08)] transition-all"
+              >
+                <f.icon className="h-6 w-6 text-primary" strokeWidth={1.75} />
+                <h3 className="mt-5 text-lg font-semibold text-foreground tracking-tight">{f.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Built for India — three deeper value cards */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="max-w-5xl mx-auto px-6">
+          <motion.div {...fadeUp} className="max-w-2xl">
+            <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">Built for real life</p>
+            <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
+              Not built for athletes.<br />Built for you.
+            </h2>
+          </motion.div>
+
+          <div className="mt-14 grid md:grid-cols-3 gap-4 md:gap-6">
+            {[
+              { icon: Globe, title: "Indian lifestyle context", desc: "Designed for real people with late dinners, poor sleep, work stress, low movement, metabolic risk and irregular routines." },
+              { icon: TrendingUp, title: "Actionable improvement points", desc: "The app does not just show a low score. It shows how many points you can unlock by improving sleep, steps, stress or metabolic rhythm." },
+              { icon: Link2, title: "Expandable health ecosystem", desc: "Can be linked with Agatsa's ECG, BP, sugar trend and AgatsaOne health intelligence ecosystem as your needs grow." },
             ].map((f, i) => (
               <motion.div
                 key={f.title}
