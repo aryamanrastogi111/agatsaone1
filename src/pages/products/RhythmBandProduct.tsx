@@ -446,6 +446,62 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
+      {/* Clinical-grade ecosystem */}
+      <section className="py-20 md:py-28 bg-[hsl(220,30%,98%)]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="max-w-2xl mb-14 md:mb-20">
+            <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">Complete health picture</p>
+            <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
+              Fitness is a start.<br />
+              <span className="text-muted-foreground">Clinical depth is the next step.</span>
+            </h2>
+            <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
+              The Rhythm Band watches you continuously. Add medical-grade devices, and Nera AI turns scattered readings into connected health guidance — not just fitness stats.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
+            {[
+              {
+                icon: HeartPulse,
+                title: "SanketLife ECG",
+                desc: "Hospital-grade ECG at home. Detect arrhythmia, missed beats and cardiac stress patterns that a band alone cannot see. Nera AI links these snapshots with your 24/7 rhythm data for early warning signals.",
+                link: "/devices/sanketlife-ecg",
+                linkLabel: "Explore SanketLife →",
+              },
+              {
+                icon: Activity,
+                title: "EasyTouch Wellness",
+                desc: "Blood pressure and sugar trend monitoring with clinical accuracy. Nera AI correlates these metabolic markers with your continuous stress, sleep and HRV signals — so you see causes, not just numbers.",
+                link: "/devices/easytouch-wellness",
+                linkLabel: "Explore EasyTouch →",
+              },
+              {
+                icon: Stethoscope,
+                title: "Nera AI Correlation",
+                desc: "Rhythm Band gives you continuous trends. SanketLife and EasyTouch Wellness give you clinical snapshots. Nera AI connects both — turning separate readings into one coherent health story with actionable guidance.",
+                link: "#how-it-thinks",
+                linkLabel: "See how it thinks →",
+              },
+            ].map((card, i) => (
+              <motion.div
+                key={card.title}
+                {...fadeUp}
+                transition={{ duration: 0.6, delay: i * 0.08 }}
+                className="rounded-2xl bg-card border border-border/60 p-7 md:p-8 hover:border-primary/40 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.08)] transition-all flex flex-col"
+              >
+                <card.icon className="h-6 w-6 text-primary" strokeWidth={1.75} />
+                <h3 className="mt-5 text-lg font-semibold text-foreground tracking-tight">{card.title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed flex-1">{card.desc}</p>
+                <Link to={card.link} className="mt-6 text-sm font-medium text-primary hover:underline">
+                  {card.linkLabel}
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* The loop — visual editorial moment */}
       <section className="py-24 md:py-32 bg-background">
         <div className="max-w-4xl mx-auto px-6 text-center">
