@@ -304,6 +304,70 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
+      {/* Bento — faces + moments (Google Health Premium style) */}
+      <section className="py-20 md:py-28 bg-[hsl(220,30%,98%)]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="max-w-2xl mb-12 md:mb-16">
+            <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">For every body</p>
+            <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
+              One band. Many lives.<br />
+              <span className="text-muted-foreground">All ages, all rhythms.</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[160px] md:auto-rows-[200px] gap-3 md:gap-4">
+            <motion.div {...fadeUp} className="col-span-1 row-span-2 rounded-3xl overflow-hidden bg-muted">
+              <img src={rhythmPortrait1} alt="Working professional in his 40s" loading="lazy" className="w-full h-full object-cover" />
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.05 }} className="col-span-2 row-span-2 rounded-3xl bg-gradient-to-br from-[hsl(220,90%,55%)] to-[hsl(260,80%,55%)] p-6 md:p-8 flex flex-col justify-between text-white relative overflow-hidden">
+              <div className="absolute -top-20 -right-20 h-56 w-56 rounded-full bg-white/15 blur-3xl" />
+              <span className="relative text-xs font-semibold uppercase tracking-[0.18em] text-white/80">Today's Rhythm</span>
+              <div className="relative">
+                <div className="text-6xl md:text-7xl font-semibold tracking-tight">72</div>
+                <div className="mt-2 text-sm md:text-base text-white/85">Balanced · Biological age 38y</div>
+              </div>
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.1 }} className="col-span-1 row-span-1 rounded-3xl overflow-hidden bg-muted">
+              <img src={rhythmPortrait2} alt="Young professional in her 30s" loading="lazy" className="w-full h-full object-cover" />
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.15 }} className="col-span-1 row-span-1 rounded-3xl bg-card border border-border/60 p-5 flex flex-col justify-between">
+              <Moon className="h-5 w-5 text-primary" strokeWidth={1.75} />
+              <div>
+                <div className="text-2xl font-semibold text-foreground">7h 12m</div>
+                <div className="text-xs text-muted-foreground mt-1">Sleep debt clearing</div>
+              </div>
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.2 }} className="col-span-1 row-span-2 rounded-3xl overflow-hidden bg-muted">
+              <img src={rhythmPortrait3} alt="Senior in his 60s" loading="lazy" className="w-full h-full object-cover" />
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.25 }} className="col-span-1 row-span-1 rounded-3xl bg-card border border-border/60 p-5 flex flex-col justify-between">
+              <HeartPulse className="h-5 w-5 text-primary" strokeWidth={1.75} />
+              <div>
+                <div className="text-2xl font-semibold text-foreground">HRV 48ms</div>
+                <div className="text-xs text-muted-foreground mt-1">Above your baseline</div>
+              </div>
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.3 }} className="col-span-1 row-span-1 rounded-3xl overflow-hidden bg-muted">
+              <img src={rhythmPortrait4} alt="Woman in her late 40s" loading="lazy" className="w-full h-full object-cover" />
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.35 }} className="col-span-2 row-span-1 rounded-3xl bg-gradient-to-br from-[hsl(150,60%,94%)] to-[hsl(180,60%,94%)] p-5 md:p-6 flex flex-col justify-between">
+              <ShieldCheck className="h-5 w-5 text-[hsl(160,70%,35%)]" strokeWidth={1.75} />
+              <div>
+                <div className="text-lg md:text-xl font-semibold text-foreground">Autonomic calm restored</div>
+                <div className="text-xs text-muted-foreground mt-1">Stress trend down 18% this week</div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* The loop — visual editorial moment */}
       <section className="py-24 md:py-32 bg-background">
         <div className="max-w-4xl mx-auto px-6 text-center">
