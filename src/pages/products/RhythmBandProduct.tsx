@@ -5,7 +5,7 @@ import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck, BatteryCharging } from "lucide-react";
+import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { StrikePrice } from "@/components/StrikePrice";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
@@ -252,7 +252,7 @@ export default function RhythmBandProduct() {
               { icon: Moon, title: "Sleep & Recovery", desc: "Sleep duration and quality — is your debt building or clearing?" },
               { icon: Activity, title: "Movement", desc: "Daily steps and active minutes against your personal target." },
               { icon: ShieldCheck, title: "Autonomic Calm", desc: "HRV and stress balance — how regulated is your nervous system?" },
-              { icon: BatteryCharging, title: "7-day battery", desc: "Wear it all week. Charge it while you shower. Never miss a night." },
+              { icon: Sparkles, title: "Longevity Score", desc: "Your daily Rhythm Score and Biological Age — one number that summarises all five systems." },
             ].map((f, i) => (
               <motion.div
                 key={f.title}
