@@ -5,7 +5,7 @@ import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck, BatteryCharging } from "lucide-react";
+import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { StrikePrice } from "@/components/StrikePrice";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
