@@ -115,7 +115,7 @@ export default function RhythmBandProduct() {
         <div className="absolute inset-0 pointer-events-none opacity-60"
           style={{ background: "radial-gradient(60% 50% at 50% 30%, hsl(220 95% 92% / 0.7), transparent 70%)" }}
         />
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 pt-20 md:pt-28 pb-16 md:pb-24 text-center">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 pt-12 md:pt-18 pb-10 md:pb-16 text-center">
           <motion.div {...fadeUp} className="inline-flex items-center gap-2 mb-8">
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[hsl(220,90%,55%)] to-[hsl(280,80%,60%)] shadow-lg shadow-primary/20">
               <Sparkles className="h-4 w-4 text-white" />
@@ -200,7 +200,7 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* Why it's different — single statement card */}
-      <section className="py-20 md:py-28 bg-background">
+      <section className="py-12 md:py-18 bg-background">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <motion.p {...fadeUp} className="text-sm font-medium text-primary uppercase tracking-[0.15em]">
             The difference
@@ -221,9 +221,9 @@ export default function RhythmBandProduct() {
 
 
       {/* Bento tiles — Google Health Premium style */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-10 md:py-16 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp} className="max-w-2xl mb-10 md:mb-14">
+          <motion.div {...fadeUp} className="max-w-2xl mb-6 md:mb-10">
             <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">What it gives you</p>
             <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
               Five systems.<br />
@@ -348,7 +348,7 @@ export default function RhythmBandProduct() {
 
 
       {/* Lifestyle Q&A — Google Health Premium style alternating blocks */}
-      <section className="py-20 md:py-28 bg-[hsl(220,30%,98%)]">
+      <section className="py-12 md:py-18 bg-[hsl(220,30%,98%)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-16 md:space-y-24">
           {[
             {
@@ -399,11 +399,11 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* Nera AI Readiness — large feature card */}
-      <section id="how-it-thinks" className="pb-20 md:pb-28">
+      <section id="how-it-thinks" className="pb-12 md:pb-18">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div
             {...fadeUp}
-            className="relative overflow-hidden rounded-[32px] md:rounded-[40px] bg-gradient-to-br from-[hsl(220,40%,12%)] via-[hsl(240,50%,14%)] to-[hsl(160,40%,12%)] px-6 md:px-16 py-16 md:py-24"
+            className="relative overflow-hidden rounded-[32px] md:rounded-[40px] bg-gradient-to-br from-[hsl(220,40%,12%)] via-[hsl(240,50%,14%)] to-[hsl(160,40%,12%)] px-6 md:px-16 py-10 md:py-16"
           >
             <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[hsl(150,90%,50%)]/15 blur-3xl" />
             <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-[hsl(220,90%,55%)]/20 blur-3xl" />
@@ -447,9 +447,9 @@ export default function RhythmBandProduct() {
       <SignalDialogueSection />
 
       {/* Lives — story-driven personas (Google Health style) */}
-      <section className="py-16 md:py-24 bg-[hsl(220,30%,98%)]">
+      <section className="py-10 md:py-16 bg-[hsl(220,30%,98%)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp} className="max-w-2xl mb-10 md:mb-14">
+          <motion.div {...fadeUp} className="max-w-2xl mb-6 md:mb-10">
             <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">For every body</p>
             <h2 className="mt-3 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
               One band. Many lives.<br />
@@ -525,9 +525,9 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* Clinical-grade ecosystem */}
-      <section className="py-20 md:py-28 bg-[hsl(220,30%,98%)]">
+      <section className="py-12 md:py-18 bg-[hsl(220,30%,98%)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp} className="max-w-2xl mb-14 md:mb-20">
+          <motion.div {...fadeUp} className="max-w-2xl mb-8 md:mb-12">
             <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">Complete health picture</p>
             <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
               Fitness is a start.<br />
@@ -581,7 +581,7 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* The loop — visual editorial moment */}
-      <section className="py-24 md:py-32 bg-background">
+      <section className="py-14 md:py-20 bg-background">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.h2 {...fadeUp} className="text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
             The loop most bands miss.
@@ -608,9 +608,9 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* Nera score device shot */}
-      <section className="pb-24 md:pb-32 bg-background">
+      <section className="pb-14 md:pb-20 bg-background">
         <div className="max-w-5xl mx-auto px-6">
-          <motion.div {...fadeUp} className="rounded-[32px] bg-gradient-to-br from-[hsl(260,100%,97%)] to-[hsl(220,100%,97%)] px-6 md:px-16 py-16 md:py-20 grid md:grid-cols-2 gap-12 items-center">
+          <motion.div {...fadeUp} className="rounded-[32px] bg-gradient-to-br from-[hsl(260,100%,97%)] to-[hsl(220,100%,97%)] px-6 md:px-16 py-10 md:py-14 grid md:grid-cols-2 gap-12 items-center">
             <div>
               <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">A score per system</p>
               <h3 className="mt-4 text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
@@ -635,7 +635,7 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* FAQ — Google-style two column */}
-      <section className="py-20 md:py-28 bg-background border-t border-border/60">
+      <section className="py-12 md:py-18 bg-background border-t border-border/60">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-12 gap-10 md:gap-16">
             <motion.div {...fadeUp} className="md:col-span-4">
@@ -668,7 +668,7 @@ export default function RhythmBandProduct() {
 
 
       {/* Final CTA — minimal */}
-      <section className="py-24 md:py-32 bg-background">
+      <section className="py-14 md:py-20 bg-background">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
             Health that thinks for itself.
@@ -777,9 +777,9 @@ function SignalDialogueSection() {
   const accent = `hsl(${s.accent})`;
 
   return (
-    <section className="py-20 md:py-28 bg-[hsl(225,40%,6%)] text-white">
+    <section className="py-12 md:py-18 bg-[hsl(225,40%,6%)] text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <motion.div {...fadeUp} className="max-w-2xl mb-10 md:mb-14">
+        <motion.div {...fadeUp} className="max-w-2xl mb-6 md:mb-10">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
             What Nera actually tells you
           </p>
