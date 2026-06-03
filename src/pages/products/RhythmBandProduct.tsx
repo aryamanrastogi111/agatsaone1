@@ -315,52 +315,146 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* The Problem No One Talks About */}
-      <section className="py-12 md:py-16 bg-background">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+      <section className="py-16 md:py-24 bg-background overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div
-            {...fadeUp}
-            className="rounded-[28px] bg-gradient-to-br from-[hsl(220,40%,12%)] to-[hsl(260,50%,18%)] text-white p-8 md:p-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7 }}
+            className="relative rounded-[32px] bg-gradient-to-br from-[hsl(220,45%,10%)] via-[hsl(245,50%,14%)] to-[hsl(280,55%,18%)] text-white p-8 md:p-14 overflow-hidden shadow-[0_40px_120px_-40px_hsl(260_60%_30%/0.6)]"
           >
-            <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
-              The Problem No One Talks About
-            </h3>
-            <p className="mt-4 text-white/80 text-base md:text-lg leading-relaxed">
-              People don't suddenly become unhealthy.
-            </p>
-            <p className="mt-6 text-white/60 text-sm uppercase tracking-wider font-medium">
-              The process usually looks like:
-            </p>
-            <div className="mt-5 space-y-3 text-base md:text-lg">
-              {[
-                "Poor sleep",
-                "Higher stress",
-                "Lower recovery",
-                "Reduced movement",
-                "Metabolic strain",
-              ].map((step, i) => (
-                <div key={i} className="flex flex-col items-start">
-                  <span className="text-white/90">{step}</span>
-                  {i < 4 && (
-                    <span className="text-white/30 text-lg leading-none mt-1">↓</span>
-                  )}
-                </div>
-              ))}
-              <div className="pt-2">
-                <span className="text-white/50 text-sm">Years later:</span>
-                <p className="mt-1 text-white/80">weight gain, fatigue, burnout, declining health</p>
+            {/* Ambient glow orbs */}
+            <motion.div
+              aria-hidden
+              className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[hsl(280,80%,55%)]/20 blur-3xl"
+              animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              aria-hidden
+              className="absolute -bottom-32 -left-20 w-80 h-80 rounded-full bg-[hsl(200,80%,55%)]/15 blur-3xl"
+              animate={{ scale: [1.1, 1, 1.1], opacity: [0.3, 0.6, 0.3] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            />
+
+            <div className="relative">
+              <motion.span
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-white/60 mb-4"
+              >
+                <span className="w-8 h-px bg-white/40" />
+                The silent cascade
+              </motion.span>
+              <motion.h3
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.05 }}
+                className="text-3xl md:text-5xl font-semibold tracking-[-0.02em] leading-[1.1]"
+              >
+                The Problem <span className="bg-gradient-to-r from-[hsl(280,90%,75%)] to-[hsl(200,90%,75%)] bg-clip-text text-transparent">No One Talks About</span>
+              </motion.h3>
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+                className="mt-5 text-white/75 text-lg md:text-xl leading-relaxed max-w-2xl"
+              >
+                People don't suddenly become unhealthy. It happens like dominoes — one quiet tip at a time.
+              </motion.p>
+
+              {/* Cascade */}
+              <div className="mt-12 space-y-2.5">
+                {[
+                  { icon: Moon, label: "Poor sleep", tint: "from-indigo-400/30 to-indigo-500/10", iconColor: "text-indigo-300" },
+                  { icon: Zap, label: "Higher stress", tint: "from-amber-400/30 to-amber-500/10", iconColor: "text-amber-300" },
+                  { icon: BatteryLow, label: "Lower recovery", tint: "from-sky-400/30 to-sky-500/10", iconColor: "text-sky-300" },
+                  { icon: Activity, label: "Reduced movement", tint: "from-emerald-400/30 to-emerald-500/10", iconColor: "text-emerald-300" },
+                  { icon: Flame, label: "Metabolic strain", tint: "from-rose-400/30 to-rose-500/10", iconColor: "text-rose-300" },
+                ].map((step, i) => {
+                  const Icon = step.icon;
+                  return (
+                    <div key={i}>
+                      <motion.div
+                        initial={{ opacity: 0, x: -24 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-40px" }}
+                        transition={{ duration: 0.5, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                        className={`group relative flex items-center gap-4 p-4 md:p-5 rounded-2xl bg-gradient-to-r ${step.tint} border border-white/10 backdrop-blur-sm hover:border-white/20 transition-colors`}
+                      >
+                        <div className={`w-11 h-11 md:w-12 md:h-12 rounded-xl bg-white/10 flex items-center justify-center ${step.iconColor} shrink-0`}>
+                          <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.75} />
+                        </div>
+                        <span className="text-base md:text-xl font-medium text-white tracking-tight">{step.label}</span>
+                        <span className="ml-auto text-xs font-mono text-white/40 hidden sm:block">0{i + 1}</span>
+                      </motion.div>
+                      {i < 4 && (
+                        <motion.div
+                          initial={{ opacity: 0, scaleY: 0 }}
+                          whileInView={{ opacity: 1, scaleY: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.3, delay: i * 0.12 + 0.25 }}
+                          className="flex justify-center origin-top"
+                        >
+                          <ChevronDown className="w-5 h-5 text-white/30 my-1 animate-pulse" />
+                        </motion.div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-            </div>
-            <div className="mt-8 border-t border-white/10 pt-6 space-y-2">
-              <p className="text-white/70 text-base leading-relaxed">
-                The warning signs often appear long before symptoms do.
-              </p>
-              <p className="text-white font-medium text-base">
-                But nobody connects them together.
-              </p>
+
+              {/* Years later — explosion */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.8 }}
+                className="mt-10 relative rounded-2xl p-6 md:p-7 bg-gradient-to-br from-rose-500/20 via-orange-500/15 to-amber-500/10 border border-rose-300/20"
+              >
+                <div className="flex items-start gap-4">
+                  <motion.div
+                    animate={{ rotate: [0, -8, 8, -4, 4, 0] }}
+                    transition={{ duration: 1.2, repeat: Infinity, repeatDelay: 3 }}
+                    className="w-12 h-12 rounded-xl bg-rose-500/20 flex items-center justify-center text-rose-200 shrink-0"
+                  >
+                    <AlertTriangle className="w-6 h-6" strokeWidth={1.75} />
+                  </motion.div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-rose-200/80 font-semibold">Years later</p>
+                    <p className="mt-2 text-lg md:text-2xl font-medium text-white leading-snug">
+                      Weight gain. Fatigue. Burnout. Declining health.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Closing lines */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 1 }}
+                className="mt-10 border-t border-white/10 pt-8 space-y-3"
+              >
+                <p className="text-white/70 text-base md:text-lg leading-relaxed">
+                  The warning signs appear <em className="not-italic text-white/90 font-medium">long</em> before symptoms do.
+                </p>
+                <p className="text-2xl md:text-3xl font-semibold text-white tracking-tight leading-tight">
+                  But nobody connects them <span className="bg-gradient-to-r from-[hsl(280,90%,75%)] to-[hsl(200,90%,75%)] bg-clip-text text-transparent">together.</span>
+                </p>
+              </motion.div>
             </div>
           </motion.div>
         </div>
       </section>
+
+
 
 
       {/* Lifestyle Q&A — Google Health Premium style alternating blocks */}
