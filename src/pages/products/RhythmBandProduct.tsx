@@ -1,21 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star, ArrowRight, Package, Moon, Activity, Bell, ShoppingCart } from "lucide-react";
+import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck, BatteryCharging } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
-import { EmiLine, TrustBar } from "@/components/EmiLine";
 import { StrikePrice } from "@/components/StrikePrice";
-import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
-import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
-import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
 import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
-import { TrustVideosSection } from "@/components/TrustVideosSection";
 import rhythmHero from "@/assets/easytouch-rhythm-new.webp";
 import neraScreen from "@/assets/app-screen-nera.webp";
 import { Button } from "@/components/ui/button";
@@ -23,346 +18,358 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 
-const fadeUp = { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } };
-
-const measures = [
-  { title: "Continuous Heart Rate", desc: "24/7 heart rate monitoring with resting HR trend and abnormal HR alerts" },
-  { title: "Blood Oxygen (SpO2)", desc: "Continuous SpO2 with nocturnal dip detection during sleep" },
-  { title: "HRV", desc: "Heart rate variability — the key metric for recovery, stress, and cardiac health" },
-  { title: "Sleep Stages", desc: "Deep sleep, REM, light sleep, and awake time — every night tracked" },
-  { title: "Steps & Distance", desc: "Daily step count, distance, and activity goal tracking" },
-  { title: "Calories Burned", desc: "Active calories and total daily energy expenditure" },
-  { title: "Stress Score", desc: "HRV-derived stress index — see how stress builds through your day" },
-  { title: "Skin Temperature", desc: "Continuous skin temperature trend — useful for illness detection" },
-];
-
-const steps = [
-  { n: "1", title: "Wear it. Forget it.", copy: "Strap on the EasyTouch Rhythm Band and wear it 24/7. Waterproof for the shower. Comfortable enough to sleep in. It pairs with Agatsa One via Bluetooth in 30 seconds." },
-  { n: "2", title: "It monitors everything, automatically", copy: "No manual readings needed. The band tracks your heart rate, SpO2, sleep stages, and stress score continuously — uploading data to Nera AI every time your phone is in Bluetooth range." },
-  { n: "3", title: "Nera AI builds your wellness picture", copy: "Every morning, Nera AI analyses your overnight data — your sleep quality, HRV recovery score, and resting heart rate trend — and gives you a plain-English readiness score for the day." },
-];
-
-const boxItems = [
-  "EasyTouch Rhythm Band",
-  "Magnetic charging cable",
-  "Quick start guide (English + Hindi)",
-  "1-year manufacturer warranty card",
-];
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+};
 
 const faqs = [
-  { q: "Does the Rhythm Band work without the other Agatsa devices?", a: "Yes. The Rhythm Band works standalone — you get all sleep, HRV, steps, SpO2, and stress features with just the band and the Agatsa One app. It becomes even more powerful when combined with the ECG or EasyTouch for cross-device health correlation." },
-  { q: "How accurate is the sleep tracking?", a: "The Rhythm Band uses your HRV and movement data to detect sleep stages. Accuracy is comparable to other medical-grade wristband devices. Nera AI analyses your sleep architecture and gives you weekly sleep quality reports." },
-  { q: "Can I wear it in water?", a: "Yes. The Rhythm Band is water-resistant up to IP67 standards — safe for handwashing and light rain. Do not submerge for extended swimming." },
-  { q: "How does the stress score work?", a: "The stress score is derived from your HRV patterns throughout the day. Lower HRV = higher stress response. Nera AI correlates your stress score with your sleep quality and vital readings to show you patterns — for example, how a poor night's sleep elevates your stress score the following day." },
-  { q: "Does it show BP like the EasyTouch does?", a: "The Rhythm Band provides a spot-check blood pressure estimate using PPG technology. For clinical BP monitoring, we recommend the EasyTouch Wellness, which provides a more validated BP measurement. The two devices complement each other well." },
-];
-
-const relatedDevices = [
-  { name: "SanketLife ECG", desc: "Add clinical ECG for complete cardiac monitoring", link: "/devices/sanketlife-ecg" },
-  { name: "EasyTouch Wellness", desc: "Add metabolic health and BP monitoring", link: "/devices/easytouch-wellness" },
-  { name: "Agatsa Smart Scale", desc: "Add body composition for complete health tracking", link: "/devices/smart-scale" },
+  { q: "How is this different from a Whoop or a fitness band?", a: "Most bands give you a screen full of numbers. Rhythm Band feeds those numbers into Nera AI, which understands your patterns and answers one question every morning: how recovered is your body today? No charts to decode. No coach to subscribe to." },
+  { q: "Does it work without the other Agatsa devices?", a: "Yes. The Rhythm Band works fully standalone with the Agatsa One app and Nera AI. It becomes more powerful when paired with the SanketLife ECG or EasyTouch Wellness — Nera AI then correlates rhythm data with clinical readings." },
+  { q: "How accurate is the sleep and HRV tracking?", a: "Comparable to leading medical-grade wristbands. Nera AI cross-checks band data against your own baseline rather than a generic norm — which is what actually matters for recovery." },
+  { q: "Can I wear it in water?", a: "IP67 water-resistant. Safe for handwashing, sweat, and light rain. Avoid prolonged submersion or swimming." },
+  { q: "What's the battery like?", a: "Up to 7 days of continuous 24/7 monitoring on a single charge. Magnetic charging cable included." },
 ];
 
 export default function RhythmBandProduct() {
-  const [adding, setAdding] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { prices, fmt } = usePricing();
   const bandPrice = prices.band_sub;
   useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 3999);
-  const handleAddToCart = (qtyOrEvent?: number | React.MouseEvent) => {
-    const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 120);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const handleAddToCart = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
-      try { (window as any).fbq("track", "AddToCart", { content_ids: ["band_sub"], content_name: "EasyTouch Rhythm Band", content_type: "product", value: bandPrice * qty, currency: "INR" }); } catch {}
+      try {
+        (window as any).fbq("track", "AddToCart", {
+          content_ids: ["band_sub"],
+          content_name: "EasyTouch Rhythm Band",
+          content_type: "product",
+          value: bandPrice,
+          currency: "INR",
+        });
+      } catch {}
     }
-    useCartStore.getState().addItem({ productId: "band_sub", productName: "EasyTouch Rhythm Band", variantTitle: "Default Title", price: bandPrice, quantity: qty });
-    toast.success(qty > 1 ? `${qty} EasyTouch Rhythm Bands added to cart` : "EasyTouch Rhythm Band added to cart");
+    useCartStore.getState().addItem({
+      productId: "band_sub",
+      productName: "EasyTouch Rhythm Band",
+      variantTitle: "Default Title",
+      price: bandPrice,
+      quantity: 1,
+    });
+    toast.success("EasyTouch Rhythm Band added to cart");
   };
-  useSEO({ title: "EasyTouch Rhythm Band — 24/7 Sleep, HRV, SpO2 Monitoring | Agatsa One", description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Works with Nera AI. ₹3,999. Compatible with all 5 Care Programmes." });
+
+  useSEO({
+    title: "EasyTouch Rhythm Band — Health Monitoring, Built with Nera AI | Agatsa One",
+    description: "Not just another wellness band. Continuous heart, sleep, HRV and SpO2 — interpreted by Nera AI into one Readiness Score every morning. ₹3,999.",
+  });
 
   return (
     <SiteLayout>
-      {/* Hero */}
-      <section className="pt-8 pb-8 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="text-sm text-muted-foreground mb-6">
-            <Link to="/devices" className="hover:text-primary">Devices</Link>
-            <span className="mx-2">/</span>
-            <span className="text-foreground font-medium">EasyTouch Rhythm Band</span>
-          </nav>
-          <div className="grid lg:grid-cols-[55%_45%] gap-12 items-center">
-            <motion.img {...fadeUp} src={rhythmHero} alt="EasyTouch Rhythm Wellness Band" className="w-full rounded-3xl shadow-2xl" />
-            <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
-              <h1 className="text-3xl md:text-5xl font-extrabold text-foreground leading-tight">EasyTouch Rhythm Wellness Band</h1>
-              <p className="text-xl md:text-2xl font-bold text-green-600 dark:text-green-400 mt-3">24/7 health monitoring that never sleeps.</p>
-              <p className="text-lg text-muted-foreground mt-4 max-w-[480px]">The EasyTouch Rhythm Band tracks your heart, sleep, steps, SpO2, and stress score around the clock — providing Nera AI with the continuous data it needs to build a complete picture of your health and recovery.</p>
-              <div className="mt-6">
-                <StrikePrice sku="band_sub" price={bandPrice} />
-                
-                <EmiLine price={bandPrice} />
-                <StockUrgencyBar productKey="easytouch-rhythm" className="mt-3" />
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
-                  <span>📦</span>
-                  <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
-                </div>
-                <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
-                  <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
-                  <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 1 year</span>
-                  <span className="text-xs text-muted-foreground">No subscription needed</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-1 mt-3">
-                {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
-                <span className="text-sm text-muted-foreground ml-1">4.5/5 (612 reviews)</span>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button onClick={handleAddToCart} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart — {fmt(bandPrice)}
-                </Button>
-              </div>
-              <TrustBar />
-            </motion.div>
+      {/* Sub-product bar (Google-style sticky) */}
+      <div
+        className={`sticky top-[60px] md:top-[68px] z-30 bg-background/85 backdrop-blur-md border-b transition-colors ${
+          scrolled ? "border-border" : "border-transparent"
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+          <Link to="/devices" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+            EasyTouch Rhythm Band
+          </Link>
+          <div className="flex items-center gap-3 sm:gap-5">
+            <span className="hidden sm:block text-sm text-muted-foreground">
+              From <span className="font-semibold text-foreground">{fmt(bandPrice)}</span>
+            </span>
+            <Button
+              onClick={handleAddToCart}
+              size="sm"
+              className="rounded-full px-5 h-9 text-sm font-medium"
+            >
+              Buy
+            </Button>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* ─── WATCH IT IN ACTION ─── */}
-      <section className="py-16 md:py-20 bg-gray-950">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Watch It In Action</h2>
-          {/* Hero video */}
-          <div className="mb-6">
-            <VideoCard video={{ id: "j8QwXnQwozg", title: "How to Set Up & Pair EasyTouch Rhythm" }} hero />
-          </div>
-          {/* Supporting videos */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <VideoCard video={{ id: "m57UYezHL0U", title: "Why Rhythm, Not Just Numbers" }} />
-            <VideoCard video={{ id: "Y1uqW-9hbQQ", title: "The Band That Understands Your Body" }} />
-            <VideoCard video={{ id: "lvJMaIAO4mo", title: "Stop Tracking Numbers" }} />
-            <VideoCard video={{ id: "FSstgD0nujQ", title: "Stop Tracking, Start Understanding" }} />
-            <VideoCard video={{ id: "hyl6mvSf-Ew", title: "It Doesn't Just Track — It Explains" }} />
-            <VideoCard video={{ id: "4U9wV6nHflI", title: "India's First Rhythm Band" }} />
-            <VideoCard video={{ id: "-DumCEShm0w", title: "Your Daily Rhythm Tells a Story" }} />
-            <VideoCard video={{ id: "ZMOBfNFOwXY", title: "India's First Daily Rhythm Band" }} />
-          </div>
-          <YouTubeChannelLink />
-        </div>
-      </section>
-
-      {/* Stats Bar */}
-      <section className="bg-[hsl(260,100%,97%)] py-10">
-        <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          {[
-            { big: "24/7", label: "Continuous monitoring", sub: "Never miss a beat" },
-            { big: "7-Day Battery", label: "Wear it all week", sub: "Charge once, monitor always" },
-            { big: "9 Metrics", label: "Tracked continuously", sub: "HR, SpO2, sleep, HRV + more" },
-          ].map((s) => (
-            <motion.div key={s.big} {...fadeUp}>
-              <p className="text-4xl md:text-5xl font-extrabold text-primary">{s.big}</p>
-              <p className="text-base font-medium text-muted-foreground mt-1">{s.label}</p>
-              <p className="text-xs text-muted-foreground/60 mt-0.5">{s.sub}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* What It Measures */}
-      <section className="py-20 bg-background">
-        <div className="max-w-5xl mx-auto px-4 text-center">
-          <motion.div {...fadeUp}>
-            <h2 className="text-3xl font-bold text-foreground">9 metrics. Tracked continuously.</h2>
-            <p className="text-lg text-muted-foreground mt-3 max-w-xl mx-auto">The Rhythm Band captures a continuous stream of health data — giving Nera AI the context it needs to understand your body's patterns.</p>
+      {/* Hero — Google Health Premium style */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[hsl(220,90%,96%)] via-[hsl(260,80%,97%)] to-background">
+        <div className="absolute inset-0 pointer-events-none opacity-60"
+          style={{ background: "radial-gradient(60% 50% at 50% 30%, hsl(220 95% 92% / 0.7), transparent 70%)" }}
+        />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 pt-20 md:pt-28 pb-16 md:pb-24 text-center">
+          <motion.div {...fadeUp} className="inline-flex items-center gap-2 mb-8">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[hsl(220,90%,55%)] to-[hsl(280,80%,60%)] shadow-lg shadow-primary/20">
+              <Sparkles className="h-4 w-4 text-white" />
+            </span>
           </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-            {measures.map((m, i) => (
-              <motion.div key={m.title} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.06 }} className="bg-card border border-border rounded-2xl p-6 text-left">
-                <h3 className="text-base font-bold text-foreground">{m.title}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{m.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+
+          <motion.h1
+            {...fadeUp}
+            transition={{ duration: 0.8, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            className="text-[40px] leading-[1.05] sm:text-6xl md:text-7xl font-semibold tracking-[-0.03em] text-foreground"
+          >
+            Your personal<br />health monitor,<br />
+            <span className="bg-gradient-to-r from-[hsl(220,90%,50%)] via-[hsl(260,85%,55%)] to-[hsl(280,80%,55%)] bg-clip-text text-transparent">
+              built with Nera AI.
+            </span>
+          </motion.h1>
+
+          <motion.p
+            {...fadeUp}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="mt-8 max-w-xl mx-auto text-base md:text-lg text-muted-foreground leading-relaxed"
+          >
+            The EasyTouch Rhythm Band watches your heart, sleep, and recovery 24/7 — and lets Nera AI do the thinking. Not another wall of numbers. One clear answer, every morning.
+          </motion.p>
+
+          <motion.div {...fadeUp} transition={{ duration: 0.8, delay: 0.25 }} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Button onClick={handleAddToCart} className="rounded-full px-8 h-12 text-base font-medium">
+              Buy — {fmt(bandPrice)}
+            </Button>
+            <Link
+              to="#how-it-thinks"
+              className="text-sm font-medium text-primary hover:underline px-4 py-2"
+            >
+              See how it thinks →
+            </Link>
+          </motion.div>
+
+          <motion.div {...fadeUp} transition={{ duration: 0.8, delay: 0.35 }} className="mt-4 text-xs text-muted-foreground">
+            <StrikePrice sku="band_sub" price={bandPrice} size="sm" showLabel={false} />
+            <span className="block mt-2">Free 1-year Nera AI included · Free shipping · 7-day returns</span>
+          </motion.div>
+
+          {/* Floating product image */}
+          <motion.div
+            initial={{ opacity: 0, y: 40, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-16 md:mt-20"
+          >
+            <img
+              src={rhythmHero}
+              alt="EasyTouch Rhythm Band"
+              className="w-full max-w-xl mx-auto drop-shadow-[0_30px_60px_hsl(220_80%_40%/0.25)]"
+            />
+          </motion.div>
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-20 bg-[hsl(260,100%,97%)]">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.h2 {...fadeUp} className="text-3xl font-bold text-foreground text-center">How it works</motion.h2>
-          <div className="mt-12 grid md:grid-cols-3 gap-8">
-            {steps.map((s, i) => (
-              <motion.div key={s.n} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.12 }} className="text-center md:text-left">
-                <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-bold mx-auto md:mx-0">{s.n}</div>
-                <h3 className="text-lg font-bold text-foreground mt-4">{s.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2">{s.copy}</p>
-              </motion.div>
-            ))}
-          </div>
+      {/* Why it's different — single statement card */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <motion.p {...fadeUp} className="text-sm font-medium text-primary uppercase tracking-[0.15em]">
+            The difference
+          </motion.p>
+          <motion.h2
+            {...fadeUp}
+            transition={{ duration: 0.8, delay: 0.05 }}
+            className="mt-5 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]"
+          >
+            Other bands count.<br />
+            <span className="text-muted-foreground">Rhythm Band</span> understands.
+          </motion.h2>
+          <motion.p {...fadeUp} transition={{ duration: 0.8, delay: 0.15 }} className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            A Whoop-style band gives you 14 charts and a coach subscription. Rhythm Band gives you one Readiness Score — generated by Nera AI from your own baseline, your stress patterns, and what your body did overnight.
+          </motion.p>
         </div>
       </section>
 
-      {/* Nera AI Intelligence */}
-      <section className="py-20 bg-gradient-to-br from-[#0D0D1A] to-[#001A0D]">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#00C853]">POWERED BY NERA AI</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">Continuous data is only useful if someone's watching it.</h2>
-            <p className="text-[#A0A0C0] text-lg mt-4 max-w-2xl mx-auto">
-              The Rhythm Band runs 24/7. Nera AI runs with it — watching patterns across your sleep, recovery, stress, and activity so you don't have to.
-            </p>
-          </div>
+      {/* Nera AI Readiness — large feature card */}
+      <section id="how-it-thinks" className="pb-20 md:pb-28">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div
+            {...fadeUp}
+            className="relative overflow-hidden rounded-[32px] md:rounded-[40px] bg-gradient-to-br from-[hsl(220,40%,12%)] via-[hsl(240,50%,14%)] to-[hsl(160,40%,12%)] px-6 md:px-16 py-16 md:py-24"
+          >
+            <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[hsl(150,90%,50%)]/15 blur-3xl" />
+            <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-[hsl(220,90%,55%)]/20 blur-3xl" />
 
-          {/* Morning Readiness Spotlight */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center mt-16">
-            {/* Left - App UI Card */}
-            <motion.div {...fadeUp}>
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-white font-medium">☀️ Good morning, Rahul</span>
-                  <span className="text-[#A0A0C0] text-sm">6:42 AM</span>
-                </div>
-                <div className="border-t border-white/10 my-4" />
-                <div className="text-center py-4">
-                  <p className="text-5xl font-bold text-[#00C853]">74</p>
-                  <p className="text-[#A0A0C0] text-sm mt-1">Readiness Score</p>
-                </div>
-                <div className="border-t border-white/10 my-4" />
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#A0A0C0] text-sm">Deep sleep</span>
-                    <span className="text-[#00C853] font-medium text-sm">1h 52m</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#A0A0C0] text-sm">HRV recovery</span>
-                    <span className="text-[#00C853] font-medium text-sm">+12% vs avg</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#A0A0C0] text-sm">Resting heart rate</span>
-                    <span className="text-white font-medium text-sm">61 bpm</span>
-                  </div>
-                </div>
-                <div className="border-t border-white/10 my-4" />
-                <p className="text-[#A0A0C0] text-xs italic">
-                  Nera AI: Good recovery night. Your stress score yesterday was high — but your body handled it well. A focused morning is within reach today.
+            <div className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <div>
+                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[hsl(150,80%,65%)]">
+                  <Sparkles className="h-3.5 w-3.5" /> Powered by Nera AI
+                </span>
+                <h3 className="mt-5 text-3xl md:text-5xl font-semibold text-white tracking-[-0.02em] leading-[1.1]">
+                  Wake up knowing how recovered you really are.
+                </h3>
+                <p className="mt-6 text-base md:text-lg text-white/70 leading-relaxed max-w-lg">
+                  Every morning before you pick up your phone, Nera AI has already read your night — sleep stages, HRV trend, resting heart rate, SpO₂ dips — and turned it into one Readiness Score, on your own baseline.
                 </p>
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {["Sleep architecture", "HRV recovery", "Stress-sleep loop", "Personal baseline"].map((t) => (
+                    <span key={t} className="rounded-full bg-white/10 border border-white/15 px-3.5 py-1.5 text-sm text-white/85 backdrop-blur">
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </motion.div>
 
-            {/* Right - Content */}
-            <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.15 }}>
-              <span className="inline-block bg-[#00C853]/20 text-[#00C853] border border-[#00C853]/30 rounded-full px-4 py-1 text-sm font-medium">
-                Every morning, automatically
-              </span>
-              <h3 className="text-2xl md:text-3xl font-bold text-white mt-4">
-                Wake up knowing how recovered you actually are.
-              </h3>
-              <p className="text-[#A0A0C0] text-base leading-relaxed mt-4">
-                Every morning, Nera AI analyses your overnight data — sleep stages, HRV trend, resting heart rate, SpO2 dips — and generates a Readiness Score before you even pick up your phone.
-              </p>
-              <p className="text-[#A0A0C0] text-base leading-relaxed mt-3">
-                Not a generic sleep score. A score built on your own baseline, your recent stress pattern, and how your body has been trending over the past week. On a hard day, it tells you to ease up. On a recovery day, it tells you you're ready.
-              </p>
-              <div className="flex flex-wrap gap-2 mt-6">
-                {["🌙 Sleep stage analysis", "💓 HRV recovery score", "📊 7-day baseline comparison"].map((pill) => (
-                  <span key={pill} className="bg-white/5 border border-white/10 rounded-full px-3 py-1 text-sm text-white">{pill}</span>
-                ))}
+              <div className="flex justify-center">
+                <div className="w-full max-w-[320px] rounded-3xl bg-white/[0.06] border border-white/10 backdrop-blur-xl p-6 shadow-2xl">
+                  <div className="flex items-center justify-between text-white/80 text-sm">
+                    <span>Good morning</span>
+                    <span>6:42 AM</span>
+                  </div>
+                  <div className="mt-8 text-center">
+                    <p className="text-[88px] leading-none font-semibold text-[hsl(150,80%,65%)] tracking-tight">74</p>
+                    <p className="mt-2 text-sm text-white/60">Readiness Score</p>
+                  </div>
+                  <div className="mt-8 space-y-3 text-sm">
+                    {[
+                      ["Deep sleep", "1h 52m"],
+                      ["HRV recovery", "+12% vs avg"],
+                      ["Resting HR", "61 bpm"],
+                    ].map(([k, v]) => (
+                      <div key={k} className="flex justify-between text-white/80">
+                        <span className="text-white/55">{k}</span>
+                        <span>{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-6 pt-4 border-t border-white/10 text-xs italic text-white/55 leading-relaxed">
+                    Nera AI: Good recovery night. Yesterday's stress was high, but your body handled it well. A focused morning is within reach.
+                  </p>
+                </div>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-          {/* 3 AI Feature Cards */}
-          <div className="grid md:grid-cols-3 gap-6 mt-16">
+      {/* Health monitoring — minimal grid */}
+      <section className="py-20 md:py-28 bg-[hsl(220,30%,98%)]">
+        <div className="max-w-5xl mx-auto px-6">
+          <motion.div {...fadeUp} className="max-w-2xl">
+            <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">Health monitoring</p>
+            <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
+              Continuous signals.<br />Clinical context.
+            </h2>
+          </motion.div>
+
+          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
-              { icon: Moon, title: "Nocturnal Pattern Detection", body: "While you sleep, Nera AI watches for SpO2 dips, irregular heart rate patterns, and unusually shallow sleep stages. Patterns that repeat across nights — not random noise — surface as a flag to discuss with your doctor." },
-              { icon: Activity, title: "Stress-Sleep Loop", body: "High stress score yesterday → poor sleep → elevated resting HR today. Nera AI maps this cycle and shows it to you in plain language. Not individual metrics — the loop that's affecting your health." },
-              { icon: Bell, title: "Passive Alerts, Not Noise", body: "Nera AI only alerts you when something changes from your personal pattern — not because a number crossed a generic threshold. You get fewer alerts. Every one matters." },
-            ].map((card) => (
-              <motion.div key={card.title} {...fadeUp} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#00C853]/50 transition-all">
-                <card.icon className="text-[#00C853]" size={28} />
-                <h4 className="text-white font-semibold text-lg mt-3">{card.title}</h4>
-                <p className="text-[#A0A0C0] text-sm mt-2 leading-relaxed">{card.body}</p>
+              { icon: HeartPulse, title: "Heart rhythm, 24/7", desc: "Continuous heart rate, HRV and resting HR — the foundation of recovery." },
+              { icon: Moon, title: "Sleep, decoded", desc: "Deep, REM and light stages mapped each night, with nocturnal SpO₂ tracking." },
+              { icon: Activity, title: "Stress that's measured", desc: "HRV-derived stress score follows your day — no self-reporting required." },
+              { icon: ShieldCheck, title: "Personal baseline", desc: "Nera AI alerts on changes from your pattern, not generic thresholds." },
+              { icon: BatteryCharging, title: "7-day battery", desc: "Wear it all week. Charge it while you shower. Never miss a night." },
+              { icon: Sparkles, title: "One app, one story", desc: "Pairs with SanketLife ECG and EasyTouch in the Agatsa One timeline." },
+            ].map((f, i) => (
+              <motion.div
+                key={f.title}
+                {...fadeUp}
+                transition={{ duration: 0.6, delay: i * 0.05 }}
+                className="rounded-2xl bg-card border border-border/60 p-7 hover:border-primary/40 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.08)] transition-all"
+              >
+                <f.icon className="h-6 w-6 text-primary" strokeWidth={1.75} />
+                <h3 className="mt-5 text-lg font-semibold text-foreground tracking-tight">{f.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
-          </div>
-
-          {/* Bottom Banner */}
-          <div className="bg-[#00C853]/10 border border-[#00C853]/30 rounded-2xl p-8 mt-16 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <p className="text-white font-semibold text-xl">
-                The Rhythm Band feeds the{" "}
-                <span className="text-[#00C853] font-bold">Nera Health Score — 24 hours a day.</span>
-              </p>
-              <p className="text-[#A0A0C0] text-sm mt-2">
-                Every step, every sleep cycle, every HRV data point updates your Nera Health Score in real time. It's the only health score that actually reflects how you lived today — not just how you measured once.
-              </p>
-            </div>
-            <div className="shrink-0">
-              <div className="relative w-[140px] h-[280px] rounded-[28px] border-[3px] border-white/20 bg-black overflow-hidden shadow-2xl">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60px] h-[18px] bg-black rounded-b-xl z-10" />
-                <img src={neraScreen} alt="Nera Health Score on iPhone" className="w-full h-full object-cover" />
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* In The Box */}
-      <section className="py-16 bg-background">
-        <div className="max-w-3xl mx-auto px-4">
-          <motion.h2 {...fadeUp} className="text-2xl font-bold text-foreground text-center mb-8">What's included</motion.h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {boxItems.map((item) => (
-              <div key={item} className="flex items-center gap-3 bg-card rounded-xl border border-border p-4">
-                <Package className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-sm text-foreground">{item}</span>
-              </div>
+      {/* The loop — visual editorial moment */}
+      <section className="py-24 md:py-32 bg-background">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.h2 {...fadeUp} className="text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
+            The loop most bands miss.
+          </motion.h2>
+          <motion.p {...fadeUp} transition={{ duration: 0.8, delay: 0.1 }} className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            High stress today → shallow sleep tonight → elevated resting heart rate tomorrow. Nera AI sees the cycle, not just the data points.
+          </motion.p>
+
+          <motion.div {...fadeUp} transition={{ duration: 0.8, delay: 0.15 }} className="mt-14 flex flex-wrap justify-center gap-3 text-sm">
+            {["Stress ↑", "Sleep ↓", "Resting HR ↑", "Recovery ↓"].map((s, i) => (
+              <span
+                key={s}
+                className={`rounded-full px-5 py-2.5 border ${
+                  i % 2 === 0
+                    ? "bg-primary/5 text-primary border-primary/20"
+                    : "bg-muted text-foreground border-border"
+                }`}
+              >
+                {s}
+              </span>
             ))}
-            <div className="flex items-center gap-3 bg-primary/10 rounded-xl border border-primary/20 p-4">
-              <Package className="h-5 w-5 text-primary shrink-0" />
-              <span className="text-sm font-semibold text-primary">3-month Nera AI subscription (₹1,797 value)</span>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Nera score device shot */}
+      <section className="pb-24 md:pb-32 bg-background">
+        <div className="max-w-5xl mx-auto px-6">
+          <motion.div {...fadeUp} className="rounded-[32px] bg-gradient-to-br from-[hsl(260,100%,97%)] to-[hsl(220,100%,97%)] px-6 md:px-16 py-16 md:py-20 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">Nera Health Score</p>
+              <h3 className="mt-4 text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
+                A single score that reflects how you actually lived today.
+              </h3>
+              <p className="mt-5 text-base text-muted-foreground leading-relaxed">
+                Every step, sleep cycle, and HRV reading updates your Nera Health Score in real time. Not a snapshot. A living picture of your health.
+              </p>
             </div>
-          </div>
+            <div className="flex justify-center">
+              <div className="relative w-[200px] h-[400px] rounded-[36px] border-[6px] border-foreground/90 bg-foreground overflow-hidden shadow-2xl">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[70px] h-[20px] bg-foreground rounded-b-xl z-10" />
+                <img src={neraScreen} alt="Nera Health Score" className="w-full h-full object-cover" />
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-20 bg-[hsl(260,100%,97%)]">
-        <div className="max-w-3xl mx-auto px-4">
-          <motion.h2 {...fadeUp} className="text-2xl font-bold text-foreground text-center mb-8">Frequently asked questions</motion.h2>
-          <Accordion type="single" collapsible className="w-full">
+      <section className="py-20 bg-[hsl(220,30%,98%)]">
+        <div className="max-w-3xl mx-auto px-6">
+          <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground text-center">
+            Questions
+          </motion.h2>
+          <Accordion type="single" collapsible className="w-full mt-10">
             {faqs.map((f, i) => (
-              <AccordionItem key={i} value={`faq-${i}`}>
-                <AccordionTrigger className="text-left text-foreground">{f.q}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
+              <AccordionItem key={i} value={`faq-${i}`} className="border-border/60">
+                <AccordionTrigger className="text-left text-foreground font-medium text-base hover:no-underline">{f.q}</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed">{f.a}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
         </div>
       </section>
 
-      {/* Related Devices */}
-      <section className="py-16 bg-background">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-foreground text-center mb-8">Complete your health monitoring setup</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {relatedDevices.map((d) => (
-              <Link key={d.name} to={d.link} className="bg-card rounded-2xl border border-border p-6 hover:shadow-lg hover:border-primary/20 transition-all group">
-                <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">{d.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{d.desc}</p>
-                <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary mt-3">Learn more <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" /></span>
-              </Link>
-            ))}
+      {/* Final CTA — minimal */}
+      <section className="py-24 md:py-32 bg-background">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
+            Health that thinks for itself.
+          </h2>
+          <p className="mt-5 text-lg text-muted-foreground">
+            Strap it on. Forget it's there. Wake up smarter.
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <Button onClick={handleAddToCart} className="rounded-full px-10 h-12 text-base font-medium">
+              Buy — {fmt(bandPrice)}
+            </Button>
+            <Link to="/devices" className="text-sm font-medium text-primary hover:underline px-4 py-2">
+              Compare all devices →
+            </Link>
           </div>
+          <p className="mt-6 text-xs text-muted-foreground">
+            Free 1-year Nera AI · Free shipping · 7-day returns
+          </p>
         </div>
       </section>
 
-      {/* Bottom CTA */}
-      <section className="bg-primary py-20">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Ready for 24/7 health monitoring?</h2>
-          <p className="text-primary-foreground/80 mt-3 text-lg">Pair in 30 seconds. Wear it all week. Let Nera AI do the rest.</p>
-          <Button onClick={handleAddToCart} disabled={adding} className="mt-8 rounded-full px-10 py-5 text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">Add Rhythm Band to Cart — {fmt(bandPrice)}</Button>
-        </div>
-      </section>
-
-      <TrustVideosSection />
       <AwardsTrustSection />
       <ProductReviewsSection reviews={easytouchRhythmReviews} />
 
