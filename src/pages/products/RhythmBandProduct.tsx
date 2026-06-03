@@ -347,9 +347,56 @@ export default function RhythmBandProduct() {
       </section>
 
 
-      {/* Animated chat dialogue — real buyer questions, Nera-AI style */}
-      <BuyerDialogueSection />
-
+      {/* Lifestyle Q&A — Google Health Premium style alternating blocks */}
+      <section className="py-12 md:py-16 bg-[hsl(220,30%,98%)]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-16 md:space-y-24">
+          {[
+            {
+              img: rhythmLifestyleBasketball.url,
+              alt: "Man holding a basketball with EasyTouch Rhythm Band on his wrist",
+              q: "Will it keep up with how hard I push?",
+              h: "Built to move with you, not get in your way.",
+              a: "Lightweight nylon loop band, IP67 sweat and splash resistant, no glass screen to crack. Wear it through pickup games, gym sets and weekend sport — it just keeps reading.",
+            },
+            {
+              img: rhythmLifestyleRunning.url,
+              alt: "Man running up stairs wearing EasyTouch Rhythm Band",
+              q: "Does it understand a real workout?",
+              h: "Continuous HR, SpO₂ and movement — interpreted, not just logged.",
+              a: "Nera AI sees the stress your workout creates and the recovery it costs. Tomorrow's Rhythm Score tells you whether to push again or back off — no guesswork.",
+              reverse: true,
+            },
+            {
+              img: rhythmLifestyleCoffee.url,
+              alt: "Woman sitting calmly with a cup of coffee wearing EasyTouch Rhythm Band",
+              q: "What about stress and recovery?",
+              h: "Your nervous system, on screen — gently.",
+              a: "HRV, resting heart rate and sleep depth feed an Autonomic Calm score. You see when your body is regulated, when it's overloaded, and what to do about it — without staring at charts.",
+            },
+          ].map((b, i) => (
+            <motion.div
+              key={i}
+              {...fadeUp}
+              className={`grid md:grid-cols-2 gap-8 md:gap-14 items-center ${b.reverse ? "md:[&>*:first-child]:order-2" : ""}`}
+            >
+              <div className="rounded-[28px] md:rounded-[36px] overflow-hidden aspect-[4/3] shadow-[0_30px_80px_-30px_hsl(220_40%_30%/0.3)]">
+                <img src={b.img} alt={b.alt} loading="lazy" className="w-full h-full object-cover" />
+              </div>
+              <div className="md:px-2">
+                <p className="text-sm font-semibold text-primary uppercase tracking-[0.18em]">
+                  Q. {b.q}
+                </p>
+                <h3 className="mt-5 text-2xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground leading-[1.15]">
+                  {b.h}
+                </h3>
+                <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
+                  {b.a}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
       {/* Nera AI Readiness — large feature card */}
       <section id="how-it-thinks" className="pb-12 md:pb-16">
@@ -888,179 +935,4 @@ function SignalDialogueSection() {
     </section>
   );
 }
-
-// ============================================================
-// Animated buyer-question dialogue — chat-bubble storytelling
-// ============================================================
-type Turn = { q: string; a: string; tag: string };
-
-const BUYER_TURNS: Turn[] = [
-  {
-    tag: "Why this band?",
-    q: "I already check my phone for steps. Why do I need another band?",
-    a: "Steps are one of 9 signals. Rhythm Band continuously reads HR, SpO₂, sleep depth, HRV and movement — Nera AI turns them into ONE Rhythm Score. Your phone counts. This explains.",
-  },
-  {
-    tag: "Stress",
-    q: "Can it really tell when I'm stressed — or is that just marketing?",
-    a: "Yes. HRV drops measurably before you 'feel' stress. The band catches it in your morning reading and warns you on overloaded days, so you can slow down before your body forces you to.",
-  },
-  {
-    tag: "Sleep",
-    q: "I sleep 6 hours and feel fine. Is that really a problem?",
-    a: "Feeling fine ≠ being fine. Each hour under 7h raises morning cortisol ~15–20% — which silently elevates fasting sugar and suppresses recovery. The band shows the cumulative cost, as a number.",
-  },
-  {
-    tag: "Workouts",
-    q: "Will it survive my gym sessions and sweat?",
-    a: "Lightweight nylon loop, IP67 sweat & splash resistant, no fragile glass. Wear it through pickup games, gym sets, monsoon runs — it just keeps reading.",
-  },
-  {
-    tag: "Recovery",
-    q: "How do I know if I should push hard today or rest?",
-    a: "Open the app. Balanced → train. Loaded → light day. Overloaded → recover. One verdict. No guessing. No 14-tab dashboards.",
-  },
-  {
-    tag: "Family",
-    q: "Can my parents use it? They're not tech people.",
-    a: "Yes. Pair once, charge weekly, that's it. No daily setup, no buttons to learn. Nera AI does the reading — they just glance at the score.",
-  },
-];
-
-function BuyerDialogueSection() {
-  const [active, setActive] = useState(0);
-  const [phase, setPhase] = useState<"q" | "typing" | "a">("q");
-
-  useEffect(() => {
-    let t: number;
-    if (phase === "q") t = window.setTimeout(() => setPhase("typing"), 1300);
-    else if (phase === "typing") t = window.setTimeout(() => setPhase("a"), 1400);
-    else t = window.setTimeout(() => {
-      setActive((i) => (i + 1) % BUYER_TURNS.length);
-      setPhase("q");
-    }, 3800);
-    return () => window.clearTimeout(t);
-  }, [phase, active]);
-
-  const turn = BUYER_TURNS[active];
-
-  return (
-    <section className="py-12 md:py-16 bg-[hsl(220,30%,98%)]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <motion.div {...fadeUp} className="max-w-2xl mb-8 md:mb-12">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            Real questions, real answers
-          </p>
-          <h2 className="mt-3 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
-            What people actually ask <span className="text-muted-foreground">before buying.</span>
-          </h2>
-          <p className="mt-3 text-base md:text-lg text-muted-foreground leading-relaxed">
-            Tap a topic — Nera answers in plain English.
-          </p>
-        </motion.div>
-
-        <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
-          {BUYER_TURNS.map((t, i) => {
-            const isActive = i === active;
-            return (
-              <button
-                key={t.tag}
-                onClick={() => { setActive(i); setPhase("q"); }}
-                className={`text-sm rounded-full px-4 py-2 border transition-all ${
-                  isActive
-                    ? "bg-foreground text-background border-foreground"
-                    : "bg-white border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
-                }`}
-              >
-                {t.tag}
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="rounded-[28px] md:rounded-[32px] border border-border/70 bg-white shadow-[0_30px_80px_-40px_hsl(220_40%_30%/0.25)] overflow-hidden">
-          <div className="flex items-center gap-3 px-5 md:px-7 py-4 border-b border-border/60 bg-[hsl(220,30%,99%)]">
-            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-[hsl(260,90%,65%)] flex items-center justify-center text-white">
-              <Sparkles className="h-4 w-4" />
-            </div>
-            <div>
-              <div className="text-sm font-semibold text-foreground">Nera AI</div>
-              <div className="text-xs text-muted-foreground flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Online · Powered by your Rhythm Band
-              </div>
-            </div>
-          </div>
-
-          <div className="px-4 md:px-7 py-6 md:py-8 min-h-[320px] md:min-h-[340px] flex flex-col gap-4">
-            <motion.div
-              key={`q-${active}`}
-              initial={{ opacity: 0, y: 12, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="flex justify-end"
-            >
-              <div className="max-w-[85%] md:max-w-[75%] rounded-2xl rounded-tr-md bg-foreground text-background px-4 py-3 text-[15px] md:text-base leading-relaxed shadow-sm">
-                {turn.q}
-              </div>
-            </motion.div>
-
-            {phase === "typing" && (
-              <motion.div
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex justify-start"
-              >
-                <div className="rounded-2xl rounded-tl-md bg-muted px-4 py-3 flex items-center gap-1.5">
-                  {[0, 1, 2].map((d) => (
-                    <motion.span
-                      key={d}
-                      className="block h-2 w-2 rounded-full bg-muted-foreground/60"
-                      animate={{ y: [0, -4, 0], opacity: [0.4, 1, 0.4] }}
-                      transition={{ duration: 0.9, repeat: Infinity, delay: d * 0.15 }}
-                    />
-                  ))}
-                </div>
-              </motion.div>
-            )}
-
-            {phase === "a" && (
-              <motion.div
-                key={`a-${active}`}
-                initial={{ opacity: 0, y: 12, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="flex justify-start items-end gap-2"
-              >
-                <div className="h-7 w-7 rounded-full bg-gradient-to-br from-primary to-[hsl(260,90%,65%)] flex items-center justify-center text-white shrink-0">
-                  <Sparkles className="h-3.5 w-3.5" />
-                </div>
-                <div className="max-w-[85%] md:max-w-[78%] rounded-2xl rounded-tl-md bg-gradient-to-br from-[hsl(265,100%,97%)] to-[hsl(220,100%,97%)] border border-primary/15 px-4 py-3 text-[15px] md:text-base text-foreground leading-relaxed">
-                  {turn.a}
-                </div>
-              </motion.div>
-            )}
-          </div>
-
-          <div className="px-5 md:px-7 pb-4">
-            <div className="h-1 rounded-full bg-muted overflow-hidden">
-              <motion.div
-                key={`pg-${active}`}
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 6.5, ease: "linear" }}
-                className="h-full bg-primary"
-              />
-            </div>
-          </div>
-        </div>
-
-        <p className="mt-5 text-xs text-muted-foreground text-center">
-          {active + 1} of {BUYER_TURNS.length} · Auto-playing
-        </p>
-      </div>
-    </section>
-  );
-}
-
 
