@@ -264,73 +264,132 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
-      {/* Health monitoring — minimal grid */}
-      <section className="py-20 md:py-28 bg-[hsl(220,30%,98%)]">
-        <div className="max-w-5xl mx-auto px-6">
-          <motion.div {...fadeUp} className="max-w-2xl">
-            <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">Five body systems</p>
+      {/* Bento tiles — Google Health Premium style */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div {...fadeUp} className="max-w-2xl mb-10 md:mb-14">
+            <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">What it gives you</p>
             <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
-              Not 14 charts.<br />Five systems that decide how you age.
+              Five systems.<br />
+              <span className="text-muted-foreground">One clear rhythm.</span>
             </h2>
-            <p className="mt-5 text-base text-muted-foreground leading-relaxed">
-              Each system gets its own score every day — and a one-line reason why. Tap any card to unlock points and see what to do next.
-            </p>
           </motion.div>
 
-          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {[
-              { icon: Sparkles, title: "Metabolic", desc: "Stress and temperature signals — is your metabolic load in range?" },
-              { icon: HeartPulse, title: "Heart & Circulation", desc: "HR, SpO₂ and BP signals — your cardiovascular foundation." },
-              { icon: Moon, title: "Sleep & Recovery", desc: "Sleep duration and quality — is your debt building or clearing?" },
-              { icon: Activity, title: "Movement", desc: "Daily steps and active minutes against your personal target." },
-              { icon: ShieldCheck, title: "Autonomic Calm", desc: "HRV and stress balance — how regulated is your nervous system?" },
-              { icon: Sparkles, title: "Longevity Score", desc: "Your daily Rhythm Score and Biological Age — one number that summarises all five systems." },
-            ].map((f, i) => (
-              <motion.div
-                key={f.title}
-                {...fadeUp}
-                transition={{ duration: 0.6, delay: i * 0.05 }}
-                className="rounded-2xl bg-card border border-border/60 p-7 hover:border-primary/40 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.08)] transition-all"
-              >
-                <f.icon className="h-6 w-6 text-primary" strokeWidth={1.75} />
-                <h3 className="mt-5 text-lg font-semibold text-foreground tracking-tight">{f.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-6 auto-rows-[minmax(220px,auto)] gap-3 md:gap-4">
+            {/* Large hero tile — Metabolic */}
+            <motion.div
+              {...fadeUp}
+              className="md:col-span-4 md:row-span-2 rounded-[28px] md:rounded-[32px] bg-gradient-to-br from-[hsl(220,95%,94%)] to-[hsl(260,90%,95%)] p-7 md:p-10 flex flex-col justify-between overflow-hidden relative"
+            >
+              <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-white/50 blur-3xl pointer-events-none" />
+              <div className="relative">
+                <Sparkles className="h-6 w-6 text-primary" strokeWidth={1.75} />
+                <h3 className="mt-4 text-2xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
+                  Metabolic load,<br />read every day.
+                </h3>
+                <p className="mt-4 text-sm md:text-base text-muted-foreground max-w-md leading-relaxed">
+                  Stress and temperature signals tell Nera AI whether your body is balanced, loaded or overloaded — before symptoms show.
+                </p>
+              </div>
+              <div className="relative mt-6 flex items-end justify-end">
+                <div className="rounded-2xl bg-white/85 backdrop-blur border border-white px-5 py-4 shadow-sm">
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Metabolic</div>
+                  <div className="text-3xl font-semibold text-foreground mt-1">72<span className="text-base text-muted-foreground">/100</span></div>
+                  <div className="text-[11px] mt-1 inline-flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Balanced</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Heart */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.7, delay: 0.05 }}
+              className="md:col-span-2 rounded-[28px] bg-[hsl(0,80%,96%)] p-6 md:p-7 flex flex-col justify-between"
+            >
+              <div>
+                <HeartPulse className="h-6 w-6 text-[hsl(0,75%,55%)]" strokeWidth={1.75} />
+                <h3 className="mt-4 text-lg md:text-xl font-semibold text-foreground tracking-tight">Heart & circulation</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">HR, SpO₂ and BP signals — your cardiovascular foundation, 24/7.</p>
+              </div>
+            </motion.div>
+
+            {/* Sleep — dark tile */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="md:col-span-2 rounded-[28px] bg-[hsl(240,50%,12%)] text-white p-6 md:p-7 flex flex-col justify-between overflow-hidden relative"
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,hsl(260,80%,40%,0.6),transparent_60%)]" />
+              <div className="relative">
+                <Moon className="h-6 w-6 text-[hsl(260,80%,80%)]" strokeWidth={1.75} />
+                <h3 className="mt-4 text-lg md:text-xl font-semibold tracking-tight">Sleep & recovery</h3>
+                <p className="mt-2 text-sm text-white/70 leading-relaxed">Is your sleep debt building, or quietly clearing tonight?</p>
+              </div>
+              <div className="relative mt-4 text-2xl font-semibold">7h 12m</div>
+            </motion.div>
+
+            {/* Movement */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              className="md:col-span-3 rounded-[28px] bg-[hsl(150,55%,93%)] p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-5"
+            >
+              <Activity className="h-6 w-6 text-[hsl(150,70%,30%)] shrink-0" strokeWidth={1.75} />
+              <div className="flex-1">
+                <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight">Movement, on your terms</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">Steps and active minutes against <em>your</em> baseline — not someone else's.</p>
+              </div>
+            </motion.div>
+
+            {/* Autonomic Calm */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="md:col-span-3 rounded-[28px] bg-[hsl(45,90%,93%)] p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-5"
+            >
+              <ShieldCheck className="h-6 w-6 text-[hsl(35,80%,40%)] shrink-0" strokeWidth={1.75} />
+              <div className="flex-1">
+                <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight">Autonomic calm</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">HRV and stress balance — how regulated your nervous system really is.</p>
+              </div>
+            </motion.div>
+
+            {/* India lifestyle */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.7, delay: 0.25 }}
+              className="md:col-span-2 rounded-[28px] bg-card border border-border/60 p-6 md:p-7"
+            >
+              <Globe className="h-6 w-6 text-primary" strokeWidth={1.75} />
+              <h3 className="mt-4 text-lg md:text-xl font-semibold text-foreground tracking-tight">Made for Indian life</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">Late dinners, poor sleep, work stress, irregular routines. Tuned to <em>your</em> reality.</p>
+            </motion.div>
+
+            {/* Improvement points */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="md:col-span-2 rounded-[28px] bg-card border border-border/60 p-6 md:p-7"
+            >
+              <TrendingUp className="h-6 w-6 text-primary" strokeWidth={1.75} />
+              <h3 className="mt-4 text-lg md:text-xl font-semibold text-foreground tracking-tight">Points to unlock</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">Not just a score — Nera shows exactly how many points sleep, steps or stress will unlock next.</p>
+            </motion.div>
+
+            {/* Ecosystem dark tile */}
+            <motion.div
+              {...fadeUp}
+              transition={{ duration: 0.7, delay: 0.35 }}
+              className="md:col-span-2 rounded-[28px] bg-gradient-to-br from-[hsl(220,40%,12%)] to-[hsl(260,50%,18%)] text-white p-6 md:p-7"
+            >
+              <Link2 className="h-6 w-6 text-[hsl(150,80%,65%)]" strokeWidth={1.75} />
+              <h3 className="mt-4 text-lg md:text-xl font-semibold tracking-tight">Grows with you</h3>
+              <p className="mt-2 text-sm text-white/70 leading-relaxed">Pairs with SanketLife ECG and EasyTouch Wellness for clinical-grade depth.</p>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Built for India — three deeper value cards */}
-      <section className="py-20 md:py-28 bg-background">
-        <div className="max-w-5xl mx-auto px-6">
-          <motion.div {...fadeUp} className="max-w-2xl">
-            <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">Built for real life</p>
-            <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
-              Made for everyday life.<br />Made for you.
-            </h2>
-          </motion.div>
-
-          <div className="mt-14 grid md:grid-cols-3 gap-4 md:gap-6">
-            {[
-              { icon: Globe, title: "Indian lifestyle context", desc: "Designed for real people with late dinners, poor sleep, work stress, low movement, metabolic risk and irregular routines." },
-              { icon: TrendingUp, title: "Actionable improvement points", desc: "The app does not just show a low score. It shows how many points you can unlock by improving sleep, steps, stress or metabolic rhythm." },
-              { icon: Link2, title: "Expandable health ecosystem", desc: "Can be linked with Agatsa's ECG, BP, sugar trend and AgatsaOne health intelligence ecosystem as your needs grow." },
-            ].map((f, i) => (
-              <motion.div
-                key={f.title}
-                {...fadeUp}
-                transition={{ duration: 0.6, delay: i * 0.05 }}
-                className="rounded-2xl bg-card border border-border/60 p-7 hover:border-primary/40 hover:shadow-[0_8px_32px_hsl(var(--primary)/0.08)] transition-all"
-              >
-                <f.icon className="h-6 w-6 text-primary" strokeWidth={1.75} />
-                <h3 className="mt-5 text-lg font-semibold text-foreground tracking-tight">{f.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Lifestyle Q&A — Google Health Premium style alternating blocks */}
       <section className="py-20 md:py-28 bg-[hsl(220,30%,98%)]">
