@@ -18,6 +18,7 @@ import rhythmPortrait2 from "@/assets/rhythm-portrait-2.jpg";
 import rhythmPortrait3 from "@/assets/rhythm-portrait-3.jpg";
 import rhythmPortrait4 from "@/assets/rhythm-portrait-4.jpg";
 import rhythmAppScore from "@/assets/rhythm-app-score.jpeg.asset.json";
+import rhythmHeroLifestyle from "@/assets/rhythm-hero-meditation.jpg.asset.json";
 import rhythmAppSystems from "@/assets/rhythm-app-systems.jpeg.asset.json";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -162,13 +163,28 @@ export default function RhythmBandProduct() {
             <span className="block mt-2">Free 1-year Nera AI included · Free shipping · 7-day returns</span>
           </motion.div>
 
+          {/* Lifestyle hero image */}
+          <motion.div
+            initial={{ opacity: 0, y: 40, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-14 md:mt-20"
+          >
+            <img
+              src={rhythmHeroLifestyle.url}
+              alt="Woman wearing EasyTouch Rhythm Band during meditation"
+              className="w-full max-w-4xl mx-auto rounded-[24px] md:rounded-[32px] object-cover aspect-[16/10] shadow-[0_30px_80px_-20px_hsl(220_50%_30%/0.35)]"
+            />
+          </motion.div>
+
           {/* Floating product image */}
           <motion.div
             initial={{ opacity: 0, y: 40, scale: 0.96 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-16 md:mt-20"
+            transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-12 md:mt-16"
           >
             <img
               src={rhythmHero}
