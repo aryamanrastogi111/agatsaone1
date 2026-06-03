@@ -18,7 +18,7 @@ import rhythmPortrait2 from "@/assets/rhythm-portrait-2.jpg";
 import rhythmPortrait3 from "@/assets/rhythm-portrait-3.jpg";
 import rhythmPortrait4 from "@/assets/rhythm-portrait-4.jpg";
 import rhythmAppScore from "@/assets/rhythm-app-score.jpeg.asset.json";
-import rhythmAppOverloaded from "@/assets/rhythm-app-overloaded.jpeg.asset.json";
+
 import rhythmMeditationPool from "@/assets/rhythm-meditation-pool.jpg.asset.json";
 import rhythmLifestyleBasketball from "@/assets/rhythm-lifestyle-basketball.jpg.asset.json";
 import rhythmLifestyleRunning from "@/assets/rhythm-lifestyle-running.jpg.asset.json";
@@ -189,16 +189,6 @@ export default function RhythmBandProduct() {
                   <img
                     src={rhythmAppScore.url}
                     alt="Nera AI Rhythm Score on mobile"
-                    className="w-full object-cover"
-                  />
-                </div>
-              </div>
-              {/* App screen — Overloaded systems breakdown */}
-              <div className="rounded-[28px] p-2 bg-gradient-to-b from-[hsl(220,20%,88%)] to-[hsl(220,20%,82%)] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)]">
-                <div className="rounded-[22px] overflow-hidden bg-black w-[190px] md:w-[230px]">
-                  <img
-                    src={rhythmAppOverloaded.url}
-                    alt="Nera AI body systems breakdown on mobile"
                     className="w-full object-cover"
                   />
                 </div>
