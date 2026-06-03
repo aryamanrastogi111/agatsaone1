@@ -631,22 +631,38 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-20 bg-[hsl(220,30%,98%)]">
-        <div className="max-w-3xl mx-auto px-6">
-          <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground text-center">
-            Questions
-          </motion.h2>
-          <Accordion type="single" collapsible className="w-full mt-10">
-            {faqs.map((f, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="border-border/60">
-                <AccordionTrigger className="text-left text-foreground font-medium text-base hover:no-underline">{f.q}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed">{f.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+      {/* FAQ — Google-style two column */}
+      <section className="py-20 md:py-28 bg-background border-t border-border/60">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-16">
+            <motion.div {...fadeUp} className="md:col-span-4">
+              <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">Help</p>
+              <h2 className="mt-3 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.05]">
+                Common<br />questions.
+              </h2>
+              <p className="mt-5 text-base text-muted-foreground leading-relaxed">
+                Everything you might want to know about the Rhythm Band and Nera AI.
+              </p>
+            </motion.div>
+
+            <motion.div {...fadeUp} className="md:col-span-8">
+              <Accordion type="single" collapsible className="w-full border-t border-border/70">
+                {faqs.map((f, i) => (
+                  <AccordionItem key={i} value={`faq-${i}`} className="border-b border-border/70">
+                    <AccordionTrigger className="text-left text-foreground font-medium text-lg md:text-xl hover:no-underline py-6">
+                      {f.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground leading-relaxed text-base pb-6 pr-6">
+                      {f.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </motion.div>
+          </div>
         </div>
       </section>
+
 
       {/* Final CTA — minimal */}
       <section className="py-24 md:py-32 bg-background">
