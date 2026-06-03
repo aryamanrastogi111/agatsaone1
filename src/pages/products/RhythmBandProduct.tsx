@@ -347,56 +347,9 @@ export default function RhythmBandProduct() {
       </section>
 
 
-      {/* Lifestyle Q&A — Google Health Premium style alternating blocks */}
-      <section className="py-12 md:py-16 bg-[hsl(220,30%,98%)]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-16 md:space-y-24">
-          {[
-            {
-              img: rhythmLifestyleBasketball.url,
-              alt: "Man holding a basketball with EasyTouch Rhythm Band on his wrist",
-              q: "Will it keep up with how hard I push?",
-              h: "Built to move with you, not get in your way.",
-              a: "Lightweight nylon loop band, IP67 sweat and splash resistant, no glass screen to crack. Wear it through pickup games, gym sets and weekend sport — it just keeps reading.",
-            },
-            {
-              img: rhythmLifestyleRunning.url,
-              alt: "Man running up stairs wearing EasyTouch Rhythm Band",
-              q: "Does it understand a real workout?",
-              h: "Continuous HR, SpO₂ and movement — interpreted, not just logged.",
-              a: "Nera AI sees the stress your workout creates and the recovery it costs. Tomorrow's Rhythm Score tells you whether to push again or back off — no guesswork.",
-              reverse: true,
-            },
-            {
-              img: rhythmLifestyleCoffee.url,
-              alt: "Woman sitting calmly with a cup of coffee wearing EasyTouch Rhythm Band",
-              q: "What about stress and recovery?",
-              h: "Your nervous system, on screen — gently.",
-              a: "HRV, resting heart rate and sleep depth feed an Autonomic Calm score. You see when your body is regulated, when it's overloaded, and what to do about it — without staring at charts.",
-            },
-          ].map((b, i) => (
-            <motion.div
-              key={i}
-              {...fadeUp}
-              className={`grid md:grid-cols-2 gap-8 md:gap-14 items-center ${b.reverse ? "md:[&>*:first-child]:order-2" : ""}`}
-            >
-              <div className="rounded-[28px] md:rounded-[36px] overflow-hidden aspect-[4/3] shadow-[0_30px_80px_-30px_hsl(220_40%_30%/0.3)]">
-                <img src={b.img} alt={b.alt} loading="lazy" className="w-full h-full object-cover" />
-              </div>
-              <div className="md:px-2">
-                <p className="text-sm font-semibold text-primary uppercase tracking-[0.18em]">
-                  Q. {b.q}
-                </p>
-                <h3 className="mt-5 text-2xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground leading-[1.15]">
-                  {b.h}
-                </h3>
-                <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
-                  {b.a}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      {/* Animated chat dialogue — real buyer questions, Nera-AI style */}
+      <BuyerDialogueSection />
+
 
       {/* Nera AI Readiness — large feature card */}
       <section id="how-it-thinks" className="pb-12 md:pb-16">
