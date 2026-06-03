@@ -13,6 +13,8 @@ import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
 import rhythmHero from "@/assets/easytouch-rhythm-new.webp";
 import neraScreen from "@/assets/app-screen-nera.webp";
+import rhythmAppScore from "@/assets/rhythm-app-score.jpeg.asset.json";
+import rhythmAppSystems from "@/assets/rhythm-app-systems.jpeg.asset.json";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useCartStore } from "@/stores/cartStore";
@@ -26,9 +28,10 @@ const fadeUp = {
 };
 
 const faqs = [
-  { q: "How is this different from other fitness bands?", a: "Most bands give you a screen full of numbers. Rhythm Band feeds those numbers into Nera AI, which understands your patterns and answers one question every morning: how recovered is your body today? No charts to decode. No coach to subscribe to." },
+  { q: "How is this different from other fitness bands?", a: "Most bands give you a screen full of numbers. Rhythm Band feeds those numbers into Nera AI, which turns them into one Rhythm Score and a Biological Age estimate every day — across 5 body systems. No charts to decode. No coach to subscribe to." },
+  { q: "What are the 5 body systems?", a: "Metabolic, Heart & Circulation, Sleep & Recovery, Movement, and Autonomic Calm. Each system gets its own score, and together they form your daily Longevity Rhythm — Loaded, Balanced or Overloaded." },
+  { q: "What is Biological Age?", a: "Nera AI compares your continuous signals (HRV, resting HR, SpO₂, sleep, stress, movement) against age-matched baselines and gives you an estimated biological age — a clearer answer than 'steps today'." },
   { q: "Does it work without the other Agatsa devices?", a: "Yes. The Rhythm Band works fully standalone with the Agatsa One app and Nera AI. It becomes more powerful when paired with the SanketLife ECG or EasyTouch Wellness — Nera AI then correlates rhythm data with clinical readings." },
-  { q: "How accurate is the sleep and HRV tracking?", a: "Comparable to leading medical-grade wristbands. Nera AI cross-checks band data against your own baseline rather than a generic norm — which is what actually matters for recovery." },
   { q: "Can I wear it in water?", a: "IP67 water-resistant. Safe for handwashing, sweat, and light rain. Avoid prolonged submersion or swimming." },
   { q: "What's the battery like?", a: "Up to 7 days of continuous 24/7 monitoring on a single charge. Magnetic charging cable included." },
 ];
