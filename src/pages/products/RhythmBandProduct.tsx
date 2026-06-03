@@ -5,7 +5,7 @@ import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck, Globe, TrendingUp, Link2, Stethoscope } from "lucide-react";
+import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck, Stethoscope } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { StrikePrice } from "@/components/StrikePrice";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
@@ -310,39 +310,55 @@ export default function RhythmBandProduct() {
               </div>
             </motion.div>
 
-            {/* India lifestyle */}
-            <motion.div
-              {...fadeUp}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="md:col-span-2 rounded-[28px] bg-card border border-border/60 p-6 md:p-7"
-            >
-              <Globe className="h-6 w-6 text-primary" strokeWidth={1.75} />
-              <h3 className="mt-4 text-lg md:text-xl font-semibold text-foreground tracking-tight">Made for Indian life</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">Late dinners, poor sleep, work stress, irregular routines. Tuned to <em>your</em> reality.</p>
-            </motion.div>
-
-            {/* Improvement points */}
-            <motion.div
-              {...fadeUp}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="md:col-span-2 rounded-[28px] bg-card border border-border/60 p-6 md:p-7"
-            >
-              <TrendingUp className="h-6 w-6 text-primary" strokeWidth={1.75} />
-              <h3 className="mt-4 text-lg md:text-xl font-semibold text-foreground tracking-tight">Points to unlock</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">Not just a score — Nera shows exactly how many points sleep, steps or stress will unlock next.</p>
-            </motion.div>
-
-            {/* Ecosystem dark tile */}
-            <motion.div
-              {...fadeUp}
-              transition={{ duration: 0.7, delay: 0.35 }}
-              className="md:col-span-2 rounded-[28px] bg-gradient-to-br from-[hsl(220,40%,12%)] to-[hsl(260,50%,18%)] text-white p-6 md:p-7"
-            >
-              <Link2 className="h-6 w-6 text-[hsl(150,80%,65%)]" strokeWidth={1.75} />
-              <h3 className="mt-4 text-lg md:text-xl font-semibold tracking-tight">Grows with you</h3>
-              <p className="mt-2 text-sm text-white/70 leading-relaxed">Pairs with SanketLife ECG and EasyTouch Wellness for clinical-grade depth.</p>
-            </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* The Problem No One Talks About */}
+      <section className="py-12 md:py-16 bg-background">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <motion.div
+            {...fadeUp}
+            className="rounded-[28px] bg-gradient-to-br from-[hsl(220,40%,12%)] to-[hsl(260,50%,18%)] text-white p-8 md:p-12"
+          >
+            <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
+              The Problem No One Talks About
+            </h3>
+            <p className="mt-4 text-white/80 text-base md:text-lg leading-relaxed">
+              People don't suddenly become unhealthy.
+            </p>
+            <p className="mt-6 text-white/60 text-sm uppercase tracking-wider font-medium">
+              The process usually looks like:
+            </p>
+            <div className="mt-5 space-y-3 text-base md:text-lg">
+              {[
+                "Poor sleep",
+                "Higher stress",
+                "Lower recovery",
+                "Reduced movement",
+                "Metabolic strain",
+              ].map((step, i) => (
+                <div key={i} className="flex flex-col items-start">
+                  <span className="text-white/90">{step}</span>
+                  {i < 4 && (
+                    <span className="text-white/30 text-lg leading-none mt-1">↓</span>
+                  )}
+                </div>
+              ))}
+              <div className="pt-2">
+                <span className="text-white/50 text-sm">Years later:</span>
+                <p className="mt-1 text-white/80">weight gain, fatigue, burnout, declining health</p>
+              </div>
+            </div>
+            <div className="mt-8 border-t border-white/10 pt-6 space-y-2">
+              <p className="text-white/70 text-base leading-relaxed">
+                The warning signs often appear long before symptoms do.
+              </p>
+              <p className="text-white font-medium text-base">
+                But nobody connects them together.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
