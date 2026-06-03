@@ -118,9 +118,17 @@ export default function RhythmBandProduct() {
             </span>
           </motion.div>
 
+          <motion.p
+            {...fadeUp}
+            transition={{ duration: 0.7, delay: 0.03 }}
+            className="mb-4 text-sm font-semibold tracking-[0.12em] uppercase text-primary"
+          >
+            EasyTouch Rhythm Band
+          </motion.p>
+
           <motion.h1
             {...fadeUp}
-            transition={{ duration: 0.8, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="text-[40px] leading-[1.05] sm:text-6xl md:text-7xl font-semibold tracking-[-0.03em] text-foreground"
           >
             Your personal<br />health monitor,<br />
