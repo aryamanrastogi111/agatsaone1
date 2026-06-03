@@ -314,6 +314,54 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
+      {/* The Problem No One Talks About */}
+      <section className="py-12 md:py-16 bg-background">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <motion.div
+            {...fadeUp}
+            className="rounded-[28px] bg-gradient-to-br from-[hsl(220,40%,12%)] to-[hsl(260,50%,18%)] text-white p-8 md:p-12"
+          >
+            <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
+              The Problem No One Talks About
+            </h3>
+            <p className="mt-4 text-white/80 text-base md:text-lg leading-relaxed">
+              People don't suddenly become unhealthy.
+            </p>
+            <p className="mt-6 text-white/60 text-sm uppercase tracking-wider font-medium">
+              The process usually looks like:
+            </p>
+            <div className="mt-5 space-y-3 text-base md:text-lg">
+              {[
+                "Poor sleep",
+                "Higher stress",
+                "Lower recovery",
+                "Reduced movement",
+                "Metabolic strain",
+              ].map((step, i) => (
+                <div key={i} className="flex flex-col items-start">
+                  <span className="text-white/90">{step}</span>
+                  {i < 4 && (
+                    <span className="text-white/30 text-lg leading-none mt-1">↓</span>
+                  )}
+                </div>
+              ))}
+              <div className="pt-2">
+                <span className="text-white/50 text-sm">Years later:</span>
+                <p className="mt-1 text-white/80">weight gain, fatigue, burnout, declining health</p>
+              </div>
+            </div>
+            <div className="mt-8 border-t border-white/10 pt-6 space-y-2">
+              <p className="text-white/70 text-base leading-relaxed">
+                The warning signs often appear long before symptoms do.
+              </p>
+              <p className="text-white font-medium text-base">
+                But nobody connects them together.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
 
       {/* Lifestyle Q&A — Google Health Premium style alternating blocks */}
       <section className="py-12 md:py-16 bg-[hsl(220,30%,98%)]">
