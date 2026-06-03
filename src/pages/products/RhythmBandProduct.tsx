@@ -18,6 +18,7 @@ import rhythmPortrait2 from "@/assets/rhythm-portrait-2.jpg";
 import rhythmPortrait3 from "@/assets/rhythm-portrait-3.jpg";
 import rhythmPortrait4 from "@/assets/rhythm-portrait-4.jpg";
 import rhythmAppScore from "@/assets/rhythm-app-score.jpeg.asset.json";
+import rhythmAppOverloaded from "@/assets/rhythm-app-overloaded.jpeg.asset.json";
 import rhythmMeditationPool from "@/assets/rhythm-meditation-pool.jpg.asset.json";
 import rhythmLifestyleBasketball from "@/assets/rhythm-lifestyle-basketball.jpg.asset.json";
 import rhythmLifestyleRunning from "@/assets/rhythm-lifestyle-running.jpg.asset.json";
@@ -175,23 +176,31 @@ export default function RhythmBandProduct() {
             transition={{ duration: 1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="mt-14 md:mt-20"
           >
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 max-w-5xl mx-auto">
               {/* Band image */}
               <img
                 src={rhythmHero}
                 alt="EasyTouch Rhythm Band"
-                className="w-full max-w-[280px] md:max-w-[320px] drop-shadow-[0_20px_50px_hsl(220_80%_40%/0.25)]"
+                className="w-full max-w-[260px] md:max-w-[300px] drop-shadow-[0_20px_50px_hsl(220_80%_40%/0.25)]"
               />
-              {/* App screen mockup */}
-              <div className="relative">
-                <div className="rounded-[28px] p-2 bg-gradient-to-b from-[hsl(220,20%,88%)] to-[hsl(220,20%,82%)] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)]">
-                  <div className="rounded-[22px] overflow-hidden bg-black w-[200px] md:w-[240px]">
-                    <img
-                      src={rhythmAppScore.url}
-                      alt="Nera AI Rhythm Score on mobile"
-                      className="w-full object-cover"
-                    />
-                  </div>
+              {/* App screen — Rhythm Score */}
+              <div className="rounded-[28px] p-2 bg-gradient-to-b from-[hsl(220,20%,88%)] to-[hsl(220,20%,82%)] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)]">
+                <div className="rounded-[22px] overflow-hidden bg-black w-[190px] md:w-[230px]">
+                  <img
+                    src={rhythmAppScore.url}
+                    alt="Nera AI Rhythm Score on mobile"
+                    className="w-full object-cover"
+                  />
+                </div>
+              </div>
+              {/* App screen — Overloaded systems breakdown */}
+              <div className="rounded-[28px] p-2 bg-gradient-to-b from-[hsl(220,20%,88%)] to-[hsl(220,20%,82%)] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)]">
+                <div className="rounded-[22px] overflow-hidden bg-black w-[190px] md:w-[230px]">
+                  <img
+                    src={rhythmAppOverloaded.url}
+                    alt="Nera AI body systems breakdown on mobile"
+                    className="w-full object-cover"
+                  />
                 </div>
               </div>
             </div>
