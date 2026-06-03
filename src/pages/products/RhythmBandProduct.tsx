@@ -310,38 +310,6 @@ export default function RhythmBandProduct() {
               </div>
             </motion.div>
 
-            {/* India lifestyle */}
-            <motion.div
-              {...fadeUp}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="md:col-span-2 rounded-[28px] bg-card border border-border/60 p-6 md:p-7"
-            >
-              <Globe className="h-6 w-6 text-primary" strokeWidth={1.75} />
-              <h3 className="mt-4 text-lg md:text-xl font-semibold text-foreground tracking-tight">Made for Indian life</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">Late dinners, poor sleep, work stress, irregular routines. Tuned to <em>your</em> reality.</p>
-            </motion.div>
-
-            {/* Improvement points */}
-            <motion.div
-              {...fadeUp}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="md:col-span-2 rounded-[28px] bg-card border border-border/60 p-6 md:p-7"
-            >
-              <TrendingUp className="h-6 w-6 text-primary" strokeWidth={1.75} />
-              <h3 className="mt-4 text-lg md:text-xl font-semibold text-foreground tracking-tight">Points to unlock</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">Not just a score — Nera shows exactly how many points sleep, steps or stress will unlock next.</p>
-            </motion.div>
-
-            {/* Ecosystem dark tile */}
-            <motion.div
-              {...fadeUp}
-              transition={{ duration: 0.7, delay: 0.35 }}
-              className="md:col-span-2 rounded-[28px] bg-gradient-to-br from-[hsl(220,40%,12%)] to-[hsl(260,50%,18%)] text-white p-6 md:p-7"
-            >
-              <Link2 className="h-6 w-6 text-[hsl(150,80%,65%)]" strokeWidth={1.75} />
-              <h3 className="mt-4 text-lg md:text-xl font-semibold tracking-tight">Grows with you</h3>
-              <p className="mt-2 text-sm text-white/70 leading-relaxed">Pairs with SanketLife ECG and EasyTouch Wellness for clinical-grade depth.</p>
-            </motion.div>
           </div>
         </div>
       </section>
