@@ -219,50 +219,6 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
-      {/* Nera AI Readiness — large feature card */}
-      <section id="how-it-thinks" className="pb-20 md:pb-28">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.div
-            {...fadeUp}
-            className="relative overflow-hidden rounded-[32px] md:rounded-[40px] bg-gradient-to-br from-[hsl(220,40%,12%)] via-[hsl(240,50%,14%)] to-[hsl(160,40%,12%)] px-6 md:px-16 py-16 md:py-24"
-          >
-            <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[hsl(150,90%,50%)]/15 blur-3xl" />
-            <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-[hsl(220,90%,55%)]/20 blur-3xl" />
-
-            <div className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              <div>
-                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[hsl(150,80%,65%)]">
-                  <Sparkles className="h-3.5 w-3.5" /> Powered by Nera AI
-                </span>
-                <h3 className="mt-5 text-3xl md:text-5xl font-semibold text-white tracking-[-0.02em] leading-[1.1]">
-                  Today's Longevity Rhythm — in one screen.
-                </h3>
-                <p className="mt-6 text-base md:text-lg text-white/70 leading-relaxed max-w-lg">
-                  Nera AI reads HR, SpO₂, temperature, HRV-stress and sleep continuously, then gives you a single <strong className="text-white">Rhythm Score</strong>, an estimated <strong className="text-white">Biological Age</strong>, and a verdict for the day — Loaded, Balanced, or Overloaded.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {["Rhythm Score", "Biological Age", "Loaded · Balanced · Overloaded", "Personal baseline"].map((t) => (
-                    <span key={t} className="rounded-full bg-white/10 border border-white/15 px-3.5 py-1.5 text-sm text-white/85 backdrop-blur">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex justify-center">
-                <div className="relative w-full max-w-[280px] rounded-[36px] border-[6px] border-white/15 bg-black overflow-hidden shadow-2xl">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80px] h-[22px] bg-black rounded-b-xl z-10" />
-                  <img
-                    src={rhythmAppScore.url}
-                    alt="Today's Longevity Rhythm in the Agatsa One app — Rhythm Score 41, Biological Age 45y, Overloaded"
-                    className="w-full h-auto block"
-                  />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Bento tiles — Google Health Premium style */}
       <section className="py-16 md:py-24 bg-background">
@@ -439,6 +395,51 @@ export default function RhythmBandProduct() {
               </div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* Nera AI Readiness — large feature card */}
+      <section id="how-it-thinks" className="pb-20 md:pb-28">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.div
+            {...fadeUp}
+            className="relative overflow-hidden rounded-[32px] md:rounded-[40px] bg-gradient-to-br from-[hsl(220,40%,12%)] via-[hsl(240,50%,14%)] to-[hsl(160,40%,12%)] px-6 md:px-16 py-16 md:py-24"
+          >
+            <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[hsl(150,90%,50%)]/15 blur-3xl" />
+            <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-[hsl(220,90%,55%)]/20 blur-3xl" />
+
+            <div className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <div>
+                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[hsl(150,80%,65%)]">
+                  <Sparkles className="h-3.5 w-3.5" /> Powered by Nera AI
+                </span>
+                <h3 className="mt-5 text-3xl md:text-5xl font-semibold text-white tracking-[-0.02em] leading-[1.1]">
+                  Today's Longevity Rhythm — in one screen.
+                </h3>
+                <p className="mt-6 text-base md:text-lg text-white/70 leading-relaxed max-w-lg">
+                  Nera AI reads HR, SpO₂, temperature, HRV-stress and sleep continuously, then gives you a single <strong className="text-white">Rhythm Score</strong>, an estimated <strong className="text-white">Biological Age</strong>, and a verdict for the day — Loaded, Balanced, or Overloaded.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {["Rhythm Score", "Biological Age", "Loaded · Balanced · Overloaded", "Personal baseline"].map((t) => (
+                    <span key={t} className="rounded-full bg-white/10 border border-white/15 px-3.5 py-1.5 text-sm text-white/85 backdrop-blur">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex justify-center">
+                <div className="relative w-full max-w-[280px] rounded-[36px] border-[6px] border-white/15 bg-black overflow-hidden shadow-2xl">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80px] h-[22px] bg-black rounded-b-xl z-10" />
+                  <img
+                    src={rhythmAppScore.url}
+                    alt="Today's Longevity Rhythm in the Agatsa One app — Rhythm Score 41, Biological Age 45y, Overloaded"
+                    className="w-full h-auto block"
+                  />
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
