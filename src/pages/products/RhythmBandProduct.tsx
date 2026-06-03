@@ -135,9 +135,9 @@ export default function RhythmBandProduct() {
             transition={{ duration: 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="text-[34px] leading-[1.08] sm:text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-foreground"
           >
-            Most People Track Activity.<br />
+            Your personal<br />health monitor,<br />
             <span className="bg-gradient-to-r from-[hsl(220,90%,50%)] via-[hsl(260,85%,55%)] to-[hsl(280,80%,55%)] bg-clip-text text-transparent">
-              We Track How Your Lifestyle Is Affecting Your Body.
+              built with Nera AI.
             </span>
           </motion.h1>
 
@@ -146,26 +146,9 @@ export default function RhythmBandProduct() {
             transition={{ duration: 0.8, delay: 0.15 }}
             className="mt-8 max-w-2xl mx-auto text-base md:text-lg text-muted-foreground leading-relaxed"
           >
-            The EasyTouch Rhythm Band translates sleep, stress, movement, recovery and metabolic signals into a single Longevity Rhythm Score.
+            The EasyTouch Rhythm Band watches your heart, sleep, and recovery 24/7 — and lets Nera AI do the thinking. Not another wall of numbers. One clear answer, every morning.
           </motion.p>
 
-          <motion.div
-            {...fadeUp}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-6 max-w-xl mx-auto"
-          >
-            <p className="text-base md:text-lg text-foreground font-medium mb-3">
-              Know when your body is:
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm md:text-base text-muted-foreground">
-              <span className="inline-flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full bg-emerald-500" /> Balanced</span>
-              <span className="inline-flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full bg-amber-500" /> Loaded</span>
-              <span className="inline-flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full bg-red-500" /> Overloaded</span>
-            </div>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Before today's habits become tomorrow's problems.
-            </p>
-          </motion.div>
 
           <motion.div {...fadeUp} transition={{ duration: 0.8, delay: 0.25 }} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button onClick={handleAddToCart} className="rounded-full px-8 h-12 text-base font-medium">
