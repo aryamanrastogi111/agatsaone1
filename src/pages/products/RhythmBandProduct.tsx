@@ -443,6 +443,9 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
+      {/* What Nera actually tells you — animated dialogue cards */}
+      <SignalDialogueSection />
+
       {/* Lives — story-driven personas (Google Health style) */}
       <section className="py-16 md:py-24 bg-[hsl(220,30%,98%)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -701,3 +704,235 @@ export default function RhythmBandProduct() {
     </SiteLayout>
   );
 }
+
+// ============================================================
+// Animated dialogue section — Nera-AI style signal storytelling
+// Auto-rotates through 3 real insights, like the in-app screens.
+// ============================================================
+type Signal = {
+  key: string;
+  emoji: string;
+  label: string;
+  meta: string;
+  score: number;
+  pill: string;
+  headline: string;
+  body: string;
+  todo: string;
+  accent: string; // hsl tuple "h s% l%"
+  trend: string;  // svg polyline points 0..300 x, 0..60 y
+};
+
+const SIGNALS: Signal[] = [
+  {
+    key: "sleep",
+    emoji: "🛌",
+    label: "Sleep",
+    meta: "1.4h avg · Rhythm Band",
+    score: 35,
+    pill: "1.4h avg · Below target",
+    headline: "1.4h is 5.6h below your optimal range",
+    body: "Each hour below 7h raises morning cortisol ~15–20%, which elevates fasting sugar and suppresses HRV over 3–5 nights. The cumulative effect on your Rhythm Score is significant.",
+    todo: "Move bedtime 30 minutes earlier tonight. A consistent 10pm bedtime works better than weekend catch-up sleep.",
+    accent: "265 85% 65%",
+    trend: "0,40 50,30 100,42 150,22 200,20 250,18 300,32",
+  },
+  {
+    key: "activity",
+    emoji: "🏃",
+    label: "Activity",
+    meta: "2.4k steps/day · 30d tracked",
+    score: 40,
+    pill: "2.4k · Below target",
+    headline: "2.4k steps — below the 7k insulin-sensitivity threshold",
+    body: "Research consistently shows that crossing 7,000 steps/day is the threshold where insulin sensitivity, resting HR, and metabolic zone begin to improve measurably. You're 4,626 steps short.",
+    todo: "Add one 20-minute walk after lunch — it adds ~2,000 steps and directly lowers post-meal sugar response.",
+    accent: "210 95% 60%",
+    trend: "0,38 50,45 100,30 150,48 200,35 250,42 300,40",
+  },
+  {
+    key: "hrv",
+    emoji: "❤️",
+    label: "HRV & Heart Rate",
+    meta: "HRV 54 ms · HR 70 bpm",
+    score: 72,
+    pill: "54ms · Good",
+    headline: "HRV 54ms — good autonomic health",
+    body: "An HRV of 54ms indicates your autonomic nervous system is managing stress well. Higher HRV is linked to better metabolic regulation, faster recovery, and lower long-term cardiac risk.",
+    todo: "Maintain consistent sleep timing — HRV is most sensitive to sleep irregularity, not just duration.",
+    accent: "5 90% 60%",
+    trend: "0,45 50,42 100,38 150,32 200,28 250,20 300,12",
+  },
+];
+
+function SignalDialogueSection() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setActive((i) => (i + 1) % SIGNALS.length), 5200);
+    return () => clearInterval(t);
+  }, []);
+
+  const s = SIGNALS[active];
+  const accent = `hsl(${s.accent})`;
+
+  return (
+    <section className="py-20 md:py-28 bg-[hsl(225,40%,6%)] text-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <motion.div {...fadeUp} className="max-w-2xl mb-10 md:mb-14">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
+            What Nera actually tells you
+          </p>
+          <h2 className="mt-3 text-3xl md:text-5xl font-semibold tracking-[-0.02em] leading-[1.1]">
+            Not a chart. <span className="text-white/55">A conversation about your day.</span>
+          </h2>
+          <p className="mt-4 text-base md:text-lg text-white/65 leading-relaxed">
+            Every signal becomes a plain-English insight — what it means, why it matters, and exactly what to do next.
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-[1fr_1.4fr] gap-8 lg:gap-12 items-start">
+          {/* Signal list */}
+          <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
+            {SIGNALS.map((sig, i) => {
+              const isActive = i === active;
+              return (
+                <button
+                  key={sig.key}
+                  onClick={() => setActive(i)}
+                  className={`relative shrink-0 lg:w-full text-left rounded-2xl border px-4 py-4 transition-all ${
+                    isActive
+                      ? "border-white/25 bg-white/[0.06]"
+                      : "border-white/10 bg-white/[0.02] hover:bg-white/[0.04]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="text-2xl">{sig.emoji}</span>
+                      <div className="min-w-0">
+                        <div className="text-sm font-semibold truncate">{sig.label}</div>
+                        <div className="text-xs text-white/45 truncate">{sig.meta}</div>
+                      </div>
+                    </div>
+                    <div
+                      className="text-sm font-semibold tabular-nums whitespace-nowrap"
+                      style={{ color: `hsl(${sig.accent})` }}
+                    >
+                      {sig.score}/100
+                    </div>
+                  </div>
+                  <div className="mt-3 h-1.5 rounded-full bg-white/10 overflow-hidden">
+                    <motion.div
+                      key={isActive ? `a-${i}` : `b-${i}`}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${sig.score}%` }}
+                      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                      className="h-full rounded-full"
+                      style={{ background: `hsl(${sig.accent})` }}
+                    />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Animated dialogue card */}
+          <div className="relative">
+            <motion.div
+              key={s.key}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[hsl(225,45%,8%)] p-6 md:p-9"
+            >
+              <div
+                className="absolute -top-32 -right-32 h-72 w-72 rounded-full blur-3xl opacity-25"
+                style={{ background: accent }}
+              />
+
+              <span
+                className="relative inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
+                style={{ background: `hsl(${s.accent} / 0.15)`, color: accent, border: `1px solid hsl(${s.accent} / 0.35)` }}
+              >
+                {s.pill}
+              </span>
+
+              <h3 className="relative mt-5 text-2xl md:text-4xl font-semibold tracking-[-0.01em] leading-[1.15]">
+                {s.headline}
+              </h3>
+
+              <p className="relative mt-5 text-base md:text-lg text-white/65 leading-relaxed">
+                {s.body}
+              </p>
+
+              <div
+                className="relative mt-7 rounded-r-xl border-l-[3px] pl-4 py-1"
+                style={{ borderColor: accent }}
+              >
+                <div
+                  className="text-xs font-bold uppercase tracking-[0.18em]"
+                  style={{ color: accent }}
+                >
+                  What to do
+                </div>
+                <p className="mt-2 text-base md:text-lg text-white/80 leading-relaxed">
+                  {s.todo}
+                </p>
+              </div>
+
+              <div className="relative mt-8">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40 mb-2">
+                  7-day trend
+                </div>
+                <svg viewBox="0 0 300 60" className="w-full h-16 overflow-visible">
+                  <motion.polyline
+                    key={`tr-${s.key}`}
+                    fill="none"
+                    stroke={accent}
+                    strokeWidth={2.5}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    points={s.trend}
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={{ pathLength: 1, opacity: 1 }}
+                    transition={{ duration: 1.4, ease: "easeOut" }}
+                  />
+                  <circle
+                    cx={300}
+                    cy={Number(s.trend.split(" ").pop()!.split(",")[1])}
+                    r={4}
+                    fill={accent}
+                  />
+                </svg>
+              </div>
+            </motion.div>
+
+            {/* Progress dots */}
+            <div className="mt-5 flex items-center gap-2 justify-center lg:justify-start">
+              {SIGNALS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActive(i)}
+                  aria-label={`Show insight ${i + 1}`}
+                  className="h-1.5 rounded-full bg-white/15 overflow-hidden transition-all"
+                  style={{ width: i === active ? 36 : 16 }}
+                >
+                  {i === active && (
+                    <motion.div
+                      key={`p-${active}`}
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 5.2, ease: "linear" }}
+                      className="h-full bg-white/70"
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
