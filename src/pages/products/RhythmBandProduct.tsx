@@ -115,7 +115,7 @@ export default function RhythmBandProduct() {
         <div className="absolute inset-0 pointer-events-none opacity-60"
           style={{ background: "radial-gradient(60% 50% at 50% 30%, hsl(220 95% 92% / 0.7), transparent 70%)" }}
         />
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 pt-12 md:pt-18 pb-10 md:pb-16 text-center">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 pt-12 md:pt-16 pb-10 md:pb-16 text-center">
           <motion.div {...fadeUp} className="inline-flex items-center gap-2 mb-8">
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[hsl(220,90%,55%)] to-[hsl(280,80%,60%)] shadow-lg shadow-primary/20">
               <Sparkles className="h-4 w-4 text-white" />
@@ -200,7 +200,7 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* Why it's different — single statement card */}
-      <section className="py-12 md:py-18 bg-background">
+      <section className="py-12 md:py-16 bg-background">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <motion.p {...fadeUp} className="text-sm font-medium text-primary uppercase tracking-[0.15em]">
             The difference
@@ -348,7 +348,7 @@ export default function RhythmBandProduct() {
 
 
       {/* Lifestyle Q&A — Google Health Premium style alternating blocks */}
-      <section className="py-12 md:py-18 bg-[hsl(220,30%,98%)]">
+      <section className="py-12 md:py-16 bg-[hsl(220,30%,98%)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-16 md:space-y-24">
           {[
             {
@@ -399,7 +399,7 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* Nera AI Readiness — large feature card */}
-      <section id="how-it-thinks" className="pb-12 md:pb-18">
+      <section id="how-it-thinks" className="pb-12 md:pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div
             {...fadeUp}
@@ -525,7 +525,7 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* Clinical-grade ecosystem */}
-      <section className="py-12 md:py-18 bg-[hsl(220,30%,98%)]">
+      <section className="py-12 md:py-16 bg-[hsl(220,30%,98%)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <motion.div {...fadeUp} className="max-w-2xl mb-8 md:mb-12">
             <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">Complete health picture</p>
@@ -635,7 +635,7 @@ export default function RhythmBandProduct() {
       </section>
 
       {/* FAQ — Google-style two column */}
-      <section className="py-12 md:py-18 bg-background border-t border-border/60">
+      <section className="py-12 md:py-16 bg-background border-t border-border/60">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-12 gap-10 md:gap-16">
             <motion.div {...fadeUp} className="md:col-span-4">
@@ -777,7 +777,7 @@ function SignalDialogueSection() {
   const accent = `hsl(${s.accent})`;
 
   return (
-    <section className="py-12 md:py-18 bg-[hsl(225,40%,6%)] text-white">
+    <section className="py-12 md:py-16 bg-[hsl(225,40%,6%)] text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <motion.div {...fadeUp} className="max-w-2xl mb-6 md:mb-10">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
