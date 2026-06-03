@@ -382,66 +382,80 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
-      {/* Bento — faces + moments (Google Health Premium style) */}
-      <section className="py-20 md:py-28 bg-[hsl(220,30%,98%)]">
+      {/* Lives — story-driven personas (Google Health style) */}
+      <section className="py-16 md:py-24 bg-[hsl(220,30%,98%)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp} className="max-w-2xl mb-12 md:mb-16">
+          <motion.div {...fadeUp} className="max-w-2xl mb-10 md:mb-14">
             <p className="text-sm font-medium text-primary uppercase tracking-[0.15em]">For every body</p>
-            <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
+            <h2 className="mt-3 text-3xl md:text-5xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
               One band. Many lives.<br />
               <span className="text-muted-foreground">All ages, all rhythms.</span>
             </h2>
+            <p className="mt-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+              Same wrist. Same band. Completely different stories — written by Nera AI from your own signals.
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[160px] md:auto-rows-[200px] gap-3 md:gap-4">
-            <motion.div {...fadeUp} className="col-span-1 row-span-2 rounded-3xl overflow-hidden bg-muted">
-              <img src={rhythmPortrait1} alt="Working professional in his 40s" loading="lazy" className="w-full h-full object-cover" />
-            </motion.div>
-
-            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.05 }} className="col-span-2 row-span-2 rounded-3xl bg-gradient-to-br from-[hsl(220,90%,55%)] to-[hsl(260,80%,55%)] p-6 md:p-8 flex flex-col justify-between text-white relative overflow-hidden">
-              <div className="absolute -top-20 -right-20 h-56 w-56 rounded-full bg-white/15 blur-3xl" />
-              <span className="relative text-xs font-semibold uppercase tracking-[0.18em] text-white/80">Today's Rhythm</span>
+          {/* Featured story — Arjun */}
+          <motion.div {...fadeUp} className="rounded-3xl overflow-hidden bg-card border border-border/60 grid md:grid-cols-5 mb-4 md:mb-5">
+            <div className="md:col-span-2 aspect-[4/3] md:aspect-auto md:min-h-[360px] bg-muted">
+              <img src={rhythmPortrait1} alt="Arjun, 42, product manager" loading="lazy" className="w-full h-full object-cover" />
+            </div>
+            <div className="md:col-span-3 p-6 md:p-10 flex flex-col justify-between gap-6 bg-gradient-to-br from-[hsl(220,90%,55%)] to-[hsl(260,80%,55%)] text-white relative overflow-hidden">
+              <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-white/15 blur-3xl pointer-events-none" />
               <div className="relative">
-                <div className="text-6xl md:text-7xl font-semibold tracking-tight">72</div>
-                <div className="mt-2 text-sm md:text-base text-white/85">Balanced · Biological age 38y</div>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80">Arjun · 42 · Bengaluru</span>
+                <p className="mt-3 text-xl md:text-2xl font-medium leading-snug">
+                  "Two late nights and Nera flagged my stress load before I felt it. I slept early — Rhythm bounced back to 78 by Friday."
+                </p>
               </div>
-            </motion.div>
-
-            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.1 }} className="col-span-1 row-span-1 rounded-3xl overflow-hidden bg-muted">
-              <img src={rhythmPortrait2} alt="Young professional in her 30s" loading="lazy" className="w-full h-full object-cover" />
-            </motion.div>
-
-            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.15 }} className="col-span-1 row-span-1 rounded-3xl bg-card border border-border/60 p-5 flex flex-col justify-between">
-              <Moon className="h-5 w-5 text-primary" strokeWidth={1.75} />
-              <div>
-                <div className="text-2xl font-semibold text-foreground">7h 12m</div>
-                <div className="text-xs text-muted-foreground mt-1">Sleep debt clearing</div>
+              <div className="relative grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
+                <div>
+                  <div className="text-3xl md:text-4xl font-semibold tracking-tight">72</div>
+                  <div className="text-[11px] uppercase tracking-wider text-white/70 mt-1">Rhythm score</div>
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-semibold tracking-tight">38<span className="text-lg">y</span></div>
+                  <div className="text-[11px] uppercase tracking-wider text-white/70 mt-1">Bio age</div>
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-semibold tracking-tight">7h12</div>
+                  <div className="text-[11px] uppercase tracking-wider text-white/70 mt-1">Sleep</div>
+                </div>
               </div>
-            </motion.div>
+            </div>
+          </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.2 }} className="col-span-1 row-span-2 rounded-3xl overflow-hidden bg-muted">
-              <img src={rhythmPortrait3} alt="Senior in his 60s" loading="lazy" className="w-full h-full object-cover" />
-            </motion.div>
-
-            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.25 }} className="col-span-1 row-span-1 rounded-3xl bg-card border border-border/60 p-5 flex flex-col justify-between">
-              <HeartPulse className="h-5 w-5 text-primary" strokeWidth={1.75} />
-              <div>
-                <div className="text-2xl font-semibold text-foreground">HRV 48ms</div>
-                <div className="text-xs text-muted-foreground mt-1">Above your baseline</div>
-              </div>
-            </motion.div>
-
-            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.3 }} className="col-span-1 row-span-1 rounded-3xl overflow-hidden bg-muted">
-              <img src={rhythmPortrait4} alt="Woman in her late 40s" loading="lazy" className="w-full h-full object-cover" />
-            </motion.div>
-
-            <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.35 }} className="col-span-2 row-span-1 rounded-3xl bg-gradient-to-br from-[hsl(150,60%,94%)] to-[hsl(180,60%,94%)] p-5 md:p-6 flex flex-col justify-between">
-              <ShieldCheck className="h-5 w-5 text-[hsl(160,70%,35%)]" strokeWidth={1.75} />
-              <div>
-                <div className="text-lg md:text-xl font-semibold text-foreground">Autonomic calm restored</div>
-                <div className="text-xs text-muted-foreground mt-1">Stress trend down 18% this week</div>
-              </div>
-            </motion.div>
+          {/* Three persona cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+            {[
+              { img: rhythmPortrait2, name: "Priya · 29 · Mumbai", role: "New mother", quote: "Sleep debt cleared in 11 days. Nera nudged me back to baseline gently.", icon: Moon, stat: "HRV 48ms", sub: "Above baseline" },
+              { img: rhythmPortrait3, name: "Ramesh · 64 · Pune", role: "Recently retired", quote: "Resting heart rate dropped 6 bpm in a month — just from daily walks Nera planned.", icon: HeartPulse, stat: "62 bpm", sub: "Resting · steady" },
+              { img: rhythmPortrait4, name: "Meena · 47 · Delhi", role: "Perimenopause", quote: "My autonomic calm was off. Rhythm caught the pattern weeks before my checkup.", icon: ShieldCheck, stat: "−18%", sub: "Stress this week" },
+            ].map((p, i) => (
+              <motion.div
+                key={p.name}
+                {...fadeUp}
+                transition={{ duration: 0.7, delay: 0.05 + i * 0.05, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+                className="rounded-3xl overflow-hidden bg-card border border-border/60 flex flex-col"
+              >
+                <div className="aspect-[4/3] bg-muted overflow-hidden">
+                  <img src={p.img} alt={p.name} loading="lazy" className="w-full h-full object-cover" />
+                </div>
+                <div className="p-5 md:p-6 flex-1 flex flex-col">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-primary">{p.name}</span>
+                  <span className="text-xs text-muted-foreground mt-1">{p.role}</span>
+                  <p className="mt-3 text-[15px] md:text-base text-foreground leading-relaxed flex-1">"{p.quote}"</p>
+                  <div className="mt-5 pt-4 border-t border-border/60 flex items-center gap-3">
+                    <p.icon className="h-5 w-5 text-primary" strokeWidth={1.75} />
+                    <div>
+                      <div className="text-base font-semibold text-foreground leading-none">{p.stat}</div>
+                      <div className="text-[11px] text-muted-foreground mt-1">{p.sub}</div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
