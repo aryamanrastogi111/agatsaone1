@@ -278,7 +278,7 @@ export default function RhythmBandProduct() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,hsl(260,80%,40%,0.6),transparent_60%)]" />
               <div className="relative">
                 <Moon className="h-6 w-6 text-[hsl(260,80%,80%)]" strokeWidth={1.75} />
-                <h3 className="mt-4 text-lg md:text-xl font-semibold tracking-tight">Sleep & recovery</h3>
+                <h3 className="mt-4 text-lg md:text-xl font-semibold tracking-tight text-white">Sleep & recovery</h3>
                 <p className="mt-2 text-sm text-white/70 leading-relaxed">Is your sleep debt building, or quietly clearing tonight?</p>
               </div>
               <div className="relative mt-4 text-2xl font-semibold">7h 12m</div>
