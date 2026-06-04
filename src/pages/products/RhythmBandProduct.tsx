@@ -473,7 +473,7 @@ export default function RhythmBandProduct() {
               alt: "Man running up stairs wearing EasyTouch Rhythm Band",
               q: "Does it understand a real workout?",
               h: "Continuous HR, SpO₂ and movement — interpreted, not just logged.",
-              a: "Nera AI sees the stress your workout creates and the recovery it costs. Tomorrow's Rhythm Score tells you whether to push again or back off — no guesswork.",
+              a: "NERA AI helps connect the dots between your daily activity, stress, sleep and recovery patterns. Your daily Rhythm Score helps you understand how well your body is coping, recovering and recharging, so you can make smarter decisions about work, rest, movement and overall wellbeing — without relying on guesswork.",
               reverse: true,
             },
             {
