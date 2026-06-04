@@ -998,7 +998,7 @@ function SignalDialogueSection() {
                 {s.pill}
               </span>
 
-              <h3 className="relative mt-5 text-2xl md:text-4xl font-semibold tracking-[-0.01em] leading-[1.15]">
+              <h3 className="relative mt-5 text-2xl md:text-4xl font-semibold tracking-[-0.01em] leading-[1.15] text-white">
                 {s.headline}
               </h3>
 
