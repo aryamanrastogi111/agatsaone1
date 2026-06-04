@@ -466,7 +466,7 @@ export default function RhythmBandProduct() {
               alt: "Man holding a basketball with EasyTouch Rhythm Band on his wrist",
               q: "Will it keep up with how hard I push?",
               h: "Built to move with you, not get in your way.",
-              a: "Lightweight nylon loop band, IP67 sweat and splash resistant, no glass screen to crack. Wear it through pickup games, gym sets and weekend sport — it just keeps reading.",
+              a: "Built for real life, not just workouts. The lightweight nylon loop band offers breathable all-day comfort, while its IP67 sweat and splash resistance helps it keep up with your daily routine. With no glass screen to crack, it is designed for professionals, homemakers, seniors, travelers, fitness enthusiasts, and anyone looking to stay connected to their health. From morning walks and office meetings to household chores, workouts, and restful sleep, EasyTouch Rhythm Band works quietly in the background, helping you understand your body's patterns every day.",
             },
             {
               img: rhythmLifestyleRunning.url,
