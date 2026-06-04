@@ -924,8 +924,8 @@ function SignalDialogueSection() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">
             What Nera actually tells you
           </p>
-          <h2 className="mt-3 text-3xl md:text-5xl font-semibold tracking-[-0.02em] leading-[1.1]">
-            Not a chart. <span className="text-white/55">A conversation about your day.</span>
+          <h2 className="mt-3 text-3xl md:text-5xl font-semibold tracking-[-0.02em] leading-[1.1] text-white">
+            Not a chart. <span className="text-white/70">A conversation about your day.</span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-white/65 leading-relaxed">
             Every signal becomes a plain-English insight — what it means, why it matters, and exactly what to do next.
