@@ -354,7 +354,7 @@ export default function RhythmBandProduct() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.05 }}
-                className="text-3xl md:text-5xl font-semibold tracking-[-0.02em] leading-[1.1]"
+                className="text-3xl md:text-5xl font-semibold tracking-[-0.02em] leading-[1.1] text-white"
               >
                 The Problem <span className="bg-gradient-to-r from-[hsl(280,90%,75%)] to-[hsl(200,90%,75%)] bg-clip-text text-transparent">No One Talks About</span>
               </motion.h3>
@@ -998,7 +998,7 @@ function SignalDialogueSection() {
                 {s.pill}
               </span>
 
-              <h3 className="relative mt-5 text-2xl md:text-4xl font-semibold tracking-[-0.01em] leading-[1.15]">
+              <h3 className="relative mt-5 text-2xl md:text-4xl font-semibold tracking-[-0.01em] leading-[1.15] text-white">
                 {s.headline}
               </h3>
 
