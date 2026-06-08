@@ -811,7 +811,7 @@ export default function CheckoutPage() {
             {/* Email */}
             <div>
               <label className="text-sm font-medium text-foreground block mb-1.5">
-                Email <span className="text-muted-foreground font-normal">— for invoice (optional)</span>
+                Email <span className="text-muted-foreground font-normal">— for order confirmation & invoice</span>
               </label>
               <input
                 type="email"
@@ -820,6 +820,9 @@ export default function CheckoutPage() {
                 placeholder="you@example.com"
                 className="w-full px-4 py-3 border border-border rounded-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
               />
+              {email.trim().length > 0 && !emailValid && (
+                <p className="text-xs text-destructive mt-1">Please enter a valid email so we can send your confirmation.</p>
+              )}
             </div>
 
             {/* Shipping summary */}
