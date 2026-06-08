@@ -78,6 +78,7 @@ export default function CheckoutPage() {
   const [step, setStep] = useState<CheckoutStep>(1);
   const [pageState, setPageState] = useState<PageState>("form");
   const [errorMsg, setErrorMsg] = useState("");
+  const [successReference, setSuccessReference] = useState("");
 
   // Quantities
   const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
