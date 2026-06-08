@@ -275,6 +275,44 @@ export default function CheckoutPage() {
     }
   }, [pageState]);
 
+  // ─── Auto-apply coupon from URL (?coupon=CODE) or MAY10 promo ─
+  const autoAppliedRef = useRef(false);
+  useEffect(() => {
+    if (autoAppliedRef.current) return;
+    if (couponApplied) return;
+    if (uniqueSkus.length === 0) return;
+
+    const urlCoupon = (searchParams.get("coupon") || "").trim().toUpperCase();
+    const codeToTry = urlCoupon || (isMay10Active() ? MAY10_CODE : "");
+    if (!codeToTry) return;
+
+    autoAppliedRef.current = true;
+    (async () => {
+      try {
+        const res = await fetch(`${API_BASE}/v1/orders/website/validate-coupon`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ couponCode: codeToTry }),
+        });
+        const data = await res.json();
+        if (res.ok && data.valid) {
+          setCouponInput(codeToTry);
+          setCouponApplied(codeToTry);
+          setCouponValid(true);
+          setCouponType(data.type);
+          setCouponValue(data.value);
+          setCouponMessage(data.message || "Coupon auto-applied 🎉");
+          await fetchQuote(cartItems, codeToTry);
+        }
+      } catch {
+        // silent — user can still apply manually
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uniqueSkus.length]);
+
+
+
   // ─── Success state ─────────────────────────────────────────
   if (pageState === "success") {
     return (
