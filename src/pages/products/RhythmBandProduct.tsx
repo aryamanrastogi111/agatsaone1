@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck, Stethoscope, Zap, BatteryLow, Flame, AlertTriangle, ChevronDown } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { StrikePrice } from "@/components/StrikePrice";
 import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
 import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
