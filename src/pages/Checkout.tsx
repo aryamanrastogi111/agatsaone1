@@ -254,7 +254,8 @@ export default function CheckoutPage() {
   }, []);
 
   const step1Valid = pincode.length === 6 && addressLine1.trim().length >= 4 && city.trim().length > 0 && state.trim().length > 0;
-  const step2Valid = fullName.trim().length >= 2 && /^\d{10}$/.test(phone);
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const step2Valid = fullName.trim().length >= 2 && /^\d{10}$/.test(phone) && emailValid;
 
   // ─── Meta Pixel Purchase event on success ───────────────────
   useEffect(() => {
