@@ -200,6 +200,63 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
+      {/* First-fold CTA strip — band lifestyle imagery */}
+      <section className="relative py-10 md:py-14 bg-gradient-to-b from-background via-[hsl(220,40%,97%)] to-background overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="relative rounded-[28px] md:rounded-[36px] overflow-hidden bg-gradient-to-br from-[hsl(220,90%,55%)] via-[hsl(250,85%,55%)] to-[hsl(280,80%,55%)] p-6 md:p-10">
+            <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-white/15 blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+
+            <div className="relative grid lg:grid-cols-[1.1fr_1fr] gap-8 items-center">
+              {/* Copy + CTA */}
+              <div className="text-white">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur text-xs font-semibold uppercase tracking-[0.15em]">
+                  <Sparkles className="h-3.5 w-3.5" /> Built for every day
+                </span>
+                <h2 className="mt-5 text-3xl md:text-5xl font-semibold tracking-[-0.02em] leading-[1.05]">
+                  Wear it once.<br />
+                  <span className="text-white/80">Let Nera AI do the rest.</span>
+                </h2>
+                <p className="mt-5 text-white/85 text-base md:text-lg leading-relaxed max-w-md">
+                  Lightweight. Comfortable. Always on. Get your daily Rhythm Score with a 1-year Nera AI plan included.
+                </p>
+                <div className="mt-7 flex flex-wrap items-center gap-3">
+                  <Button
+                    onClick={handleAddToCart}
+                    className="rounded-full px-7 h-12 text-base font-medium bg-white text-[hsl(250,85%,45%)] hover:bg-white/90"
+                  >
+                    Buy — {fmt(bandPrice)}
+                  </Button>
+                  <Link
+                    to="#how-it-thinks"
+                    className="text-sm font-medium text-white/90 hover:text-white underline-offset-4 hover:underline px-3 py-2"
+                  >
+                    How it works →
+                  </Link>
+                </div>
+                <p className="mt-4 text-xs text-white/70">
+                  Free 1-year Nera AI · Free shipping · 7-day returns
+                </p>
+              </div>
+
+              {/* Band image collage */}
+              <div className="relative grid grid-cols-2 gap-3 md:gap-4">
+                <div className="space-y-3 md:space-y-4 pt-6">
+                  <img src={rhythmPortrait1} alt="Rhythm Band lifestyle" className="w-full aspect-[3/4] object-cover rounded-2xl md:rounded-3xl shadow-xl" loading="lazy" />
+                  <img src={rhythmPortrait3} alt="Rhythm Band on wrist" className="w-full aspect-square object-cover rounded-2xl md:rounded-3xl shadow-xl" loading="lazy" />
+                </div>
+                <div className="space-y-3 md:space-y-4">
+                  <img src={rhythmPortrait2} alt="Rhythm Band daily wear" className="w-full aspect-square object-cover rounded-2xl md:rounded-3xl shadow-xl" loading="lazy" />
+                  <img src={rhythmPortrait4} alt="Rhythm Band active lifestyle" className="w-full aspect-[3/4] object-cover rounded-2xl md:rounded-3xl shadow-xl" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
       {/* Why it's different — single statement card */}
       <section className="py-12 md:py-16 bg-background">
         <div className="max-w-3xl mx-auto px-6 text-center">
