@@ -453,15 +453,18 @@ serve(async (req) => {
         }]
       : [];
 
-    const customerResult = await sendViaResend({
-      to: customerEmail,
-      from: customerFrom,
-      subject: `Order Confirmed – ${orderId} | Agatsa`,
-      html: customerEmailHtml,
-      text: stripHtml(customerEmailHtml),
-      resendApiKey: RESEND_API_KEY,
-      attachments: customerAttachments,
-    });
+    const isPlaceholderEmail = /@noemail\.agatsa\.com$/i.test(customerEmail);
+    const customerResult = isPlaceholderEmail
+      ? { success: false, error: "Skipped: placeholder email (no real address on order)", id: null as string | null }
+      : await sendViaResend({
+          to: customerEmail,
+          from: customerFrom,
+          subject: `Order Confirmed – ${orderId} | Agatsa`,
+          html: customerEmailHtml,
+          text: stripHtml(customerEmailHtml),
+          resendApiKey: RESEND_API_KEY,
+          attachments: customerAttachments,
+        });
 
     console.log("Customer email result:", JSON.stringify(customerResult));
 
