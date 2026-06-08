@@ -353,50 +353,71 @@ export default function CheckoutPage() {
   }
 
   // ─── Payment flow ──────────────────────────────────────────
+  const fetchWithTimeout = async (url: string, opts: RequestInit, ms = 30000) => {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), ms);
+    try {
+      return await fetch(url, { ...opts, signal: ctrl.signal });
+    } finally {
+      clearTimeout(t);
+    }
+  };
+
   const handlePay = async () => {
     setPaying(true);
     setPageState("processing");
     setErrorMsg("");
 
-    try {
-      const cleanPhone = phone.replace(/\D/g, "").slice(-10);
-      const recipientEmail = email.trim() || `${cleanPhone}@noemail.agatsa.com`;
+    const cleanPhone = phone.replace(/\D/g, "").slice(-10);
+    const recipientEmail = email.trim();
+    let lastPaymentId = "";
 
-      // 1. Get server-confirmed total via /quote (with coupon if applied)
-      const quoteRes = await fetch(`${API_BASE}/v1/orders/website/quote`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: cartItems, couponCode: couponApplied || undefined }),
-      });
-      const quoteData = await quoteRes.json().catch(() => ({}));
-      if (quoteRes.ok) {
-        setSubtotalPaise(quoteData.subtotalPaise);
-        setDiscountPaise(quoteData.discountPaise || 0);
-        setServerTotalPaise(quoteData.totalPaise);
-        setQuoteLoaded(true);
+    try {
+      // 1. Quote (best-effort)
+      try {
+        const quoteRes = await fetchWithTimeout(`${API_BASE}/v1/orders/website/quote`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: cartItems, couponCode: couponApplied || undefined }),
+        });
+        const quoteData = await quoteRes.json().catch(() => ({}));
+        if (quoteRes.ok) {
+          setSubtotalPaise(quoteData.subtotalPaise);
+          setDiscountPaise(quoteData.discountPaise || 0);
+          setServerTotalPaise(quoteData.totalPaise);
+          setQuoteLoaded(true);
+        }
+      } catch (e) {
+        console.error("[checkout] quote failed:", e);
       }
 
-      // 2. Create order via backend API with items array + coupon
-      const createRes = await fetch(`${API_BASE}/v1/orders/website/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items: cartItems,
-          couponCode: couponApplied || undefined,
-          recipientName: fullName.trim(),
-          recipientPhone: "+91" + cleanPhone,
-          recipientEmail,
-          addressLine1: addressLine1.trim(),
-          addressLine2: addressLine2.trim() || undefined,
-          city: city.trim(),
-          state: state.trim(),
-          pincode: pincode.trim(),
-        }),
-      });
-
-      const createData = await createRes.json().catch(() => ({}));
+      // 2. Create order
+      let createRes: Response;
+      let createData: any = {};
+      try {
+        createRes = await fetchWithTimeout(`${API_BASE}/v1/orders/website/create`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: cartItems,
+            couponCode: couponApplied || undefined,
+            recipientName: fullName.trim(),
+            recipientPhone: "+91" + cleanPhone,
+            recipientEmail,
+            addressLine1: addressLine1.trim(),
+            addressLine2: addressLine2.trim() || undefined,
+            city: city.trim(),
+            state: state.trim(),
+            pincode: pincode.trim(),
+          }),
+        });
+        createData = await createRes.json().catch(() => ({}));
+      } catch (e: any) {
+        console.error("[checkout] create failed:", e);
+        throw new Error("We couldn't reach the payment server. Please check your connection and try again.");
+      }
       if (!createRes.ok) {
-        console.error("Order creation failed:", createRes.status, createData);
+        console.error("[checkout] create non-ok:", createRes.status, createData);
         throw new Error(createData.error || createData.message || `Order creation failed (${createRes.status})`);
       }
 
@@ -405,126 +426,164 @@ export default function CheckoutPage() {
       const confirmedTotalPaise = createData.totalAmountPaise || displayTotalPaise;
       if (!razorpayOrderId) throw new Error("Missing Razorpay order ID in response");
 
-      // 2. Open Razorpay
+      // 3. Open Razorpay
       const razorpayLoaded = await loadRazorpay();
-      if (!razorpayLoaded) throw new Error("Failed to load payment gateway");
+      if (!razorpayLoaded) throw new Error("Failed to load payment gateway. Please refresh and try again.");
 
       setPageState("form"); // hide processing overlay while Razorpay modal is open
 
       await new Promise<void>((resolve, reject) => {
-        const rzp = new (window as any).Razorpay({
-          key: createData.keyId || "rzp_live_SVjGEVthft6CGI",
-          amount: confirmedTotalPaise,
-          currency: createData.currency || "INR",
-          name: "Agatsa One",
-          description: items.map((d) => d.qty > 1 ? `${d.name} ×${d.qty}` : d.name).join(", "),
-          order_id: razorpayOrderId,
-          prefill: {
-            name: fullName.trim(),
-            email: recipientEmail,
-            contact: "+91" + cleanPhone,
-          },
-          theme: { color: "#7C4DFF" },
-          handler: async (response: any) => {
-            // 3. Verify payment
-            setPageState("processing");
-            try {
-              const verifyRes = await fetch(`${API_BASE}/v1/orders/website/verify`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  websiteOrderId,
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature,
-                }),
-              });
-              const verifyData = await verifyRes.json().catch(() => ({}));
-              if (!verifyRes.ok) throw new Error(verifyData.error || "Payment verification failed");
-
-              // Sync order to Supabase for admin dashboard
-              try {
-                await db.from("orders").insert({
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature,
-                  amount: confirmedTotalPaise / 100,
-                  currency: "INR",
-                  status: "paid",
-                  paid_at: new Date().toISOString(),
-                  customer_name: fullName.trim(),
-                  customer_email: recipientEmail,
-                  customer_phone: "+91" + cleanPhone,
-                  items: items.map((d) => ({ sku: d.sku, name: d.name, price: d.unitPricePaise / 100, qty: d.qty })),
-                  shipping_address: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
-                  shipping_city: city.trim(),
-                  shipping_state: state.trim(),
-                  shipping_pincode: pincode.trim(),
-                  coupon_code: couponApplied || null,
-                  discount_amount: discountPaise / 100,
-                });
-              } catch (syncErr) {
-                console.error("Order sync to DB failed:", syncErr);
-              }
-
-              // Send order confirmation emails (customer + team)
-              try {
-                await supabase.functions.invoke("send-order-confirmation", {
-                  body: {
-                    customerEmail: recipientEmail,
-                    customerName: fullName.trim(),
-                    customerPhone: "+91" + cleanPhone,
-                    orderId: response.razorpay_order_id,
-                    paymentId: response.razorpay_payment_id,
-                    items: items.map((d) => ({
-                      productName: d.name,
-                      quantity: d.qty,
-                      price: d.unitPricePaise / 100,
-                    })),
-                    total: confirmedTotalPaise / 100,
-                    discountAmount: discountPaise / 100,
-                    couponCode: couponApplied || null,
-                    shippingAddress: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
-                    shippingCity: city.trim(),
-                    shippingState: state.trim(),
-                    shippingPincode: pincode.trim(),
-                  },
-                });
-              } catch (emailErr) {
-                console.error("Order confirmation email failed:", emailErr);
-              }
-
-              setPageState("success");
-              useCartStore.getState().clearCart();
-              // Clear URL params so reopening doesn't reload old checkout
-              setSearchParams({}, { replace: true });
-              resolve();
-            } catch (err: any) {
-              setErrorMsg(err.message || "Payment verification failed");
-              setPageState("error");
-              reject(err);
-            }
-          },
-          modal: {
-            ondismiss: () => {
-              setPaying(false);
-              setPageState("form");
-              reject(new Error("cancelled"));
+        let rzp: any;
+        try {
+          rzp = new (window as any).Razorpay({
+            key: createData.keyId || "rzp_live_SVjGEVthft6CGI",
+            amount: confirmedTotalPaise,
+            currency: createData.currency || "INR",
+            name: "Agatsa One",
+            description: items.map((d) => d.qty > 1 ? `${d.name} ×${d.qty}` : d.name).join(", "),
+            order_id: razorpayOrderId,
+            prefill: {
+              name: fullName.trim(),
+              email: recipientEmail,
+              contact: "+91" + cleanPhone,
             },
-            backdropclose: false,
-            escape: false,
-          },
-        });
-        rzp.open();
+            theme: { color: "#7C4DFF" },
+            handler: async (response: any) => {
+              setPageState("processing");
+              lastPaymentId = response.razorpay_payment_id || "";
+              try {
+                // Verify payment with external API (with timeout + non-JSON tolerance)
+                let verifyRes: Response;
+                try {
+                  verifyRes = await fetchWithTimeout(`${API_BASE}/v1/orders/website/verify`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      websiteOrderId,
+                      razorpay_order_id: response.razorpay_order_id,
+                      razorpay_payment_id: response.razorpay_payment_id,
+                      razorpay_signature: response.razorpay_signature,
+                    }),
+                  }, 30000);
+                } catch (e: any) {
+                  console.error("[checkout] verify network/timeout:", e);
+                  throw new Error(
+                    `Your payment was received but we couldn't confirm it in time. We'll email your confirmation shortly. Reference: ${response.razorpay_payment_id}`
+                  );
+                }
+                const verifyText = await verifyRes.text();
+                let verifyData: any = {};
+                try { verifyData = verifyText ? JSON.parse(verifyText) : {}; } catch { /* non-JSON */ }
+                if (!verifyRes.ok) {
+                  console.error("[checkout] verify non-ok:", verifyRes.status, verifyText);
+                  throw new Error(verifyData.error || `Payment verification failed (${verifyRes.status}). Reference: ${response.razorpay_payment_id}`);
+                }
+
+                // Transition success FIRST so user always sees confirmation
+                setPageState("success");
+
+                // Sync order to Supabase (best-effort)
+                try {
+                  await db.from("orders").insert({
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_signature: response.razorpay_signature,
+                    amount: confirmedTotalPaise / 100,
+                    currency: "INR",
+                    status: "paid",
+                    paid_at: new Date().toISOString(),
+                    customer_name: fullName.trim(),
+                    customer_email: recipientEmail,
+                    customer_phone: "+91" + cleanPhone,
+                    items: items.map((d) => ({ sku: d.sku, name: d.name, price: d.unitPricePaise / 100, qty: d.qty })),
+                    shipping_address: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
+                    shipping_city: city.trim(),
+                    shipping_state: state.trim(),
+                    shipping_pincode: pincode.trim(),
+                    coupon_code: couponApplied || null,
+                    discount_amount: discountPaise / 100,
+                  });
+                } catch (syncErr) {
+                  console.error("[checkout] db sync failed:", syncErr);
+                }
+
+                // Send order confirmation emails (best-effort, server-side)
+                try {
+                  await supabase.functions.invoke("send-order-confirmation", {
+                    body: {
+                      customerEmail: recipientEmail,
+                      customerName: fullName.trim(),
+                      customerPhone: "+91" + cleanPhone,
+                      orderId: response.razorpay_order_id,
+                      paymentId: response.razorpay_payment_id,
+                      items: items.map((d) => ({
+                        productName: d.name,
+                        quantity: d.qty,
+                        price: d.unitPricePaise / 100,
+                      })),
+                      total: confirmedTotalPaise / 100,
+                      discountAmount: discountPaise / 100,
+                      couponCode: couponApplied || null,
+                      shippingAddress: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
+                      shippingCity: city.trim(),
+                      shippingState: state.trim(),
+                      shippingPincode: pincode.trim(),
+                    },
+                  });
+                } catch (emailErr) {
+                  console.error("[checkout] confirmation email failed:", emailErr);
+                }
+
+                setSuccessReference(response.razorpay_payment_id || "");
+                useCartStore.getState().clearCart();
+                setSearchParams({}, { replace: true });
+                resolve();
+              } catch (err: any) {
+                console.error("[checkout] handler error:", err);
+                setErrorMsg(err.message || "Payment verification failed");
+                setPageState("error");
+                reject(err);
+              }
+            },
+            modal: {
+              ondismiss: () => {
+                setPaying(false);
+                setPageState("form");
+                reject(new Error("cancelled"));
+              },
+              backdropclose: false,
+              escape: false,
+            },
+          });
+
+          // Catch card-declined / network failures that don't trigger handler/ondismiss
+          if (typeof rzp.on === "function") {
+            rzp.on("payment.failed", (resp: any) => {
+              console.error("[checkout] payment.failed:", resp?.error);
+              const reason = resp?.error?.description || resp?.error?.reason || "Your payment could not be processed. Please try a different method.";
+              setErrorMsg(reason);
+              setPageState("error");
+              setPaying(false);
+              reject(new Error(reason));
+            });
+          }
+
+          rzp.open();
+        } catch (openErr: any) {
+          console.error("[checkout] razorpay open failed:", openErr);
+          reject(new Error(openErr?.message || "Could not open payment window. Please try again."));
+        }
       });
     } catch (err: any) {
       if (err.message !== "cancelled") {
+        console.error("[checkout] outer error:", err);
         setErrorMsg(err.message || "Something went wrong");
         setPageState("error");
       }
       setPaying(false);
     }
   };
+
 
   // ─── Auto-apply coupon from URL (?coupon=CODE) or MAY10 promo ─
   const autoAppliedRef = useRef(false);
