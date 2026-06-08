@@ -889,6 +889,37 @@ export default function RhythmBandProduct() {
         </div>
       </section>
 
+      {/* Watch it in action — YouTube videos */}
+      <section className="py-16 md:py-20 bg-gray-950">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10">
+            <p className="text-xs uppercase tracking-widest text-[#7C4DFF] mb-2 font-semibold">
+              Watch It In Action
+            </p>
+            <h2 className="text-2xl md:text-4xl font-bold text-white">
+              See the Rhythm Band in real life
+            </h2>
+          </div>
+
+          <div className="mb-6">
+            <VideoCard video={{ id: "j8QwXnQwozg", title: "How to Set Up & Pair EasyTouch Rhythm" }} hero />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <VideoCard video={{ id: "m57UYezHL0U", title: "Why Rhythm, Not Just Numbers" }} />
+            <VideoCard video={{ id: "Y1uqW-9hbQQ", title: "The Band That Understands Your Body" }} />
+            <VideoCard video={{ id: "lvJMaIAO4mo", title: "Stop Tracking Numbers" }} />
+            <VideoCard video={{ id: "FSstgD0nujQ", title: "Stop Tracking, Start Understanding" }} />
+            <VideoCard video={{ id: "hyl6mvSf-Ew", title: "It Doesn't Just Track — It Explains" }} />
+            <VideoCard video={{ id: "4U9wV6nHflI", title: "India's First Rhythm Band" }} />
+            <VideoCard video={{ id: "-DumCEShm0w", title: "Your Daily Rhythm Tells a Story" }} />
+            <VideoCard video={{ id: "ZMOBfNFOwXY", title: "India's First Daily Rhythm Band" }} />
+          </div>
+
+          <YouTubeChannelLink />
+        </div>
+      </section>
+
       <AwardsTrustSection />
       <ProductReviewsSection reviews={easytouchRhythmReviews} />
 
