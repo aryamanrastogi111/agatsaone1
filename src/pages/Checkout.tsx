@@ -285,13 +285,18 @@ export default function CheckoutPage() {
           </div>
           <h1 className="text-2xl font-bold text-foreground">Order Confirmed!</h1>
           <p className="text-muted-foreground">
-            Your device ships within 24 hours on business days. You'll receive a confirmation on your phone shortly.
+            We've sent a confirmation to <strong className="text-foreground">{email}</strong>. Your device ships within 24 hours on business days.
           </p>
           <div className="bg-muted/50 rounded-xl p-4 text-sm space-y-1">
             <p className="font-medium text-foreground">Shipping to</p>
             <p className="text-muted-foreground">{fullName}</p>
             <p className="text-muted-foreground">{addressLine1}, {city}, {state} - {pincode}</p>
             <p className="text-muted-foreground">+91 {phone}</p>
+            {successReference && (
+              <p className="text-xs text-muted-foreground pt-2 border-t border-border mt-2">
+                Reference: <span className="font-mono">{successReference}</span>
+              </p>
+            )}
           </div>
           <p className="text-sm text-muted-foreground">
             📱 Download the <strong>Agatsa One</strong> app and log in with <strong>+91 {phone}</strong> to activate your device and Nera AI plan.
