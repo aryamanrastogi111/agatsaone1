@@ -1,60 +1,51 @@
-## Simplify partnership enquiry questionnaires
 
-Trim the per-partner-type questionnaire in `src/data/partnershipQuestions.ts` so people aren't asked operational/sensitive numbers upfront. Keep only essentials needed to triage the lead — the rest can be asked on the first call.
+## What's actually happening
 
-The shared fields on the form (organisation name, contact, email, phone, goal description, consent) stay as-is. Only the **type-specific questionnaire** below each partner type changes.
+I traced the checkout flow end-to-end:
 
-### New (simplified) field sets
+1. **Confirmation emails** — The `send-order-confirmation` edge function is working (latest run 14:08:49 returned `success: true` for both customer + team). The real problem is in `src/pages/Checkout.tsx`:
+   - The **email field is optional**. When a user skips it, the code falls back to `${phone}@noemail.agatsa.com` (line 362). Emails get "sent" successfully to a fake address — so the buyer never receives anything. Most recent paid orders are exactly this pattern (e.g. `7678459923@noemail.agatsa.com`, `9717234008@noemail.agatsa.com`).
+   - Email sending is fired from the **browser** after Razorpay's `handler` runs. If the user closes the tab, loses network, or the external `/v1/orders/website/verify` call hangs, the email is never queued.
 
-**Hospital / Clinic Group**
+2. **Blank screen after payment** — In `Checkout.tsx`:
+   - The handler does `clearCart()` + `setSearchParams({}, { replace: true })` before `setPageState("success")`. If React commits the URL change first on a slow render path, the component re-evaluates with no SKUs and shows the success screen — but if the verify call throws *before* `setPageState` runs (e.g. external API is slow or returns non-JSON), nothing transitions and the user is stuck on the previous frame (which already had the Razorpay modal closed). There is no timeout, no fallback, and the only error path requires the verify fetch to actually return.
+   - Same goes for a failed payment: Razorpay's `modal.ondismiss` is the only failure exit. If Razorpay throws an inline error after `rzp.open()` (e.g. invalid order id, blocked popup), neither `handler` nor `ondismiss` runs and the page stays in `"form"` with no feedback. Recent orders are all `confirmed`, so we can't see the failure trail.
 
-- Type of facility (Single clinic / Multi-specialty hospital / Hospital chain / Diagnostic centre) — required
-- Timeline (Immediate / 1–3 months / 3–6 months / Just exploring) — required
-- *Removed: number of beds, monthly OPD volume, current solution, devices of interest, integration needs,* Departments interested (multiselect: Cardiology, Diabetology, Preventive Health, Post-discharge, ICU/CCU, OPD) 
+## Plan
 
-**Corporate / Employee Wellness**
+### 1. Make confirmation emails reliable
 
-- Company size (Small <100 / Mid 100–1,000 / Large 1,000+) — required
-- Primary interest (multiselect: Screening camps, Ongoing monitoring, Executive health, Insurance-linked) — required
-- Timeline (Within 30 days / 1–3 months / 3–6 months / Just exploring) — required
-- *Removed: number of locations, current vendor, indicative budget*
+- **Make the email field required** in step 2 (`step2Valid` must include a valid email regex). Remove the `noemail.agatsa.com` fallback for the customer-facing send (still OK to keep as a placeholder for the external API if it requires a value, but never send a real confirmation to it).
+- **Move the email trigger server-side**: in `supabase/functions/razorpay-verify-payment/index.ts` we already fire `send-order-confirmation` after signature verification. Update the **client verify path** (`/v1/orders/website/verify` in `Checkout.tsx`) to *also* call our `razorpay-verify-payment` edge function (or call `send-order-confirmation` from a small new edge function triggered by an order row insert) so that email delivery does not depend on the browser staying open.
+- Guard against duplicate emails using `razorpay_payment_id` as an idempotency key inside `send-order-confirmation`.
 
-**Doctor / Independent Clinic**
+### 2. Fix the post-payment blank screen
 
-- Speciality — required
-- What interests you (multiselect: Join Provider Network, Stock devices, Referral programme, Remote monitoring) — required
-- *Removed: years in practice, monthly patient volume*
+In `src/pages/Checkout.tsx` `handlePay`:
 
-**Distributor / Reseller**
+- Set `pageState` **before** any side-effect that changes URL/cart. New order: `setPageState("success")` → `clearCart()` → `setSearchParams({}, { replace: true })`.
+- Wrap the Razorpay open in a try/catch so a synchronous `rzp.open()` failure routes to `pageState="error"` with a clear message.
+- Add a `payment.failed` listener (`rzp.on("payment.failed", ...)`), in addition to `modal.ondismiss`, so card-declined / network-fail cases land on the error screen with the gateway's reason.
+- Add a 30s timeout around the `/v1/orders/website/verify` fetch; on timeout, show the error screen with a "Your payment may still have succeeded — we'll email you once confirmed. Reference: {payment_id}" message instead of leaving the user stuck.
+- Make the verify fetch tolerant of non-JSON responses (text fallback so `await res.json()` doesn't throw an unhandled rejection).
 
-- Territory (India single state / India multi-state / India pan-India / International) — required
-- Specific region / country — required
-- *Removed: current portfolio, years distributing, indicative volume, GST, import licence*
+### 3. Light diagnostics
 
-**NGO / Government / CSR**
+- Add `console.error` lines at every catch in `handlePay` with the step name (`quote`, `create`, `razorpay-open`, `verify`, `db-sync`, `email`) so the next failure shows up immediately in browser logs.
+- Surface the order id and payment id on the success screen so support can trace a customer if email delivery ever fails downstream.
 
-- Programme focus (short textarea) — required
-- Geography (states/districts) — optional
-- *Removed: beneficiaries, funding source, timeline*
+## Files touched
 
-**Academic / Research**
+- `src/pages/Checkout.tsx` — email required, reordered state transitions, Razorpay error listener, verify timeout, logs, success screen reference id.
+- `supabase/functions/razorpay-verify-payment/index.ts` *(optional, only if we route verify through our own function)* — idempotent email trigger.
+- `supabase/functions/send-order-confirmation/index.ts` — short-circuit if recipient ends with `@noemail.agatsa.com`, idempotency by `razorpay_payment_id`.
 
-- Institution name — required
-- Research focus (textarea) — required
-- *Removed: sample size, ethics approval, publication intent*
+## What I'm not changing
 
-**Investor / Strategic**
+- The external `agatsa-one-api` order/verify/coupon endpoints (still the source of truth for pricing + fulfillment).
+- The admin coupon table mismatch from the previous thread — not in scope here.
 
-- Fund / company name — required
-- Stage focus (Seed / Series A / Series B+ / Growth-PE / Strategic) — required
-- *Removed: cheque size, prior healthtech investments*
+## Confirm before I build
 
-**Other Collaboration** — unchanged (single "tell us what you have in mind" textarea).
-
-### Implementation
-
-Single file change: `src/data/partnershipQuestions.ts` — rewrite the `fields` arrays for each `PartnerType` per the above. No DB changes, no edge-function changes (the function already accepts whatever `questionnaire_answers` array is sent). The admin Partnerships page renders answers dynamically, so it adapts automatically.
-
-### Result
-
-Hospital form drops from 7 questions to 3, corporate from 6 to 3, distributor from 7 to 2, etc. — should feel ~60% lighter while still giving the team enough signal to score and prioritise.
+- OK to make **email required**? (Currently optional — this is the single biggest cause of "no confirmation email".)
+- OK to also fire `send-order-confirmation` from `razorpay-verify-payment` (server-side, won't depend on browser)? Risk: tiny chance of a duplicate email until the idempotency guard lands — I'll add the guard in the same change.
