@@ -1338,6 +1338,7 @@ export default function NeraAIPage() {
   return (
     <SiteLayout>
       <HeroSection />
+      <TrustBar />
       <WhyNeraExists />
 
       <DeviceInsightSection
