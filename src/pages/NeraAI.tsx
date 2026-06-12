@@ -1,5 +1,6 @@
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
+import NeraDevicesCTA from "@/components/nera/NeraDevicesCTA";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -1451,6 +1452,7 @@ export default function NeraAIPage() {
 
       <PriyaReportStory />
       <FutureHealth />
+      <NeraDevicesCTA />
       <WhySubscribe />
       <FinalCTA />
     </SiteLayout>
