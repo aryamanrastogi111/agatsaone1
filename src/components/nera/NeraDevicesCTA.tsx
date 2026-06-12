@@ -180,7 +180,7 @@ export default function NeraDevicesCTA() {
             <div className="md:shrink-0">
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                  <Button size="lg" className="text-base px-7 h-12 btn-glow">
+                  <Button size="lg" className="w-full md:w-auto text-sm md:text-base px-5 md:px-7 h-11 md:h-12 btn-glow">
                     Request NERA AI License <ArrowRight className="ml-1 w-4 h-4" />
                   </Button>
                 </DialogTrigger>
