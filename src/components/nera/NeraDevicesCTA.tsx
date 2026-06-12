@@ -96,7 +96,7 @@ export default function NeraDevicesCTA() {
   };
 
   return (
-    <section className="relative bg-[hsl(var(--dark-bg))] text-white py-20 md:py-28 overflow-hidden">
+    <section className="relative bg-[hsl(var(--dark-bg))] text-white py-12 md:py-20 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 right-1/4 w-[500px] h-[500px] rounded-full bg-primary/10 blur-[160px]" />
         <div className="absolute bottom-10 left-1/4 w-[420px] h-[420px] rounded-full bg-secondary/10 blur-[140px]" />
@@ -108,24 +108,24 @@ export default function NeraDevicesCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto text-center mb-12 md:mb-16"
+          className="max-w-3xl mx-auto text-center mb-8 md:mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold uppercase tracking-wider mb-5">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] md:text-xs font-semibold uppercase tracking-wider mb-3 md:mb-4">
             <Sparkles className="w-3 h-3" />
             Get NERA AI Working For You
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-balance">
+          <h2 className="text-2xl md:text-5xl font-bold tracking-tight text-balance leading-tight">
             Pick your device.{" "}
             <span className="text-white/60">Or license NERA AI for your own.</span>
           </h2>
-          <p className="mt-5 text-base md:text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="mt-3 md:mt-5 text-sm md:text-lg text-white/70 max-w-2xl mx-auto">
             NERA AI ships free for 1 year with every Agatsa device. Already have a wearable platform?
             License NERA AI as the intelligence layer for your own hardware.
           </p>
         </motion.div>
 
         {/* Device cards */}
-        <div className="grid md:grid-cols-3 gap-5 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5 max-w-6xl mx-auto">
           {DEVICES.map((d) => (
             <motion.div
               key={d.name}
@@ -133,22 +133,24 @@ export default function NeraDevicesCTA() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5 }}
-              className={`group relative rounded-2xl border bg-gradient-to-br ${d.tone} p-6 flex flex-col backdrop-blur-sm hover:scale-[1.01] transition-transform`}
+              className={`group relative rounded-2xl border bg-gradient-to-br ${d.tone} p-4 md:p-6 flex flex-row md:flex-col items-center md:items-start gap-4 md:gap-0 backdrop-blur-sm hover:scale-[1.01] transition-transform`}
             >
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${d.iconTone} mb-5`}>
-                <d.icon className="w-6 h-6" />
+              <div className={`shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center border ${d.iconTone} md:mb-4`}>
+                <d.icon className="w-5 h-5 md:w-6 md:h-6" />
               </div>
-              <h3 className="text-xl font-bold text-white">{d.name}</h3>
-              <p className="mt-1.5 text-sm text-white/70">{d.tagline}</p>
-              <div className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-primary">
-                <Sparkles className="w-3 h-3" />
-                1 year NERA AI free
+              <div className="flex-1 min-w-0 md:w-full">
+                <h3 className="text-base md:text-xl font-bold text-white leading-tight">{d.name}</h3>
+                <p className="mt-0.5 md:mt-1.5 text-xs md:text-sm text-white/70">{d.tagline}</p>
+                <div className="mt-1 md:mt-2 inline-flex items-center gap-1 text-[10px] md:text-[11px] font-semibold uppercase tracking-wider text-primary">
+                  <Sparkles className="w-3 h-3" />
+                  1 yr NERA AI free
+                </div>
+                <Button asChild size="sm" className="mt-3 md:mt-5 btn-glow w-full md:h-11 md:text-base">
+                  <Link to={d.href}>
+                    {d.cta} <ArrowRight className="ml-1 w-4 h-4" />
+                  </Link>
+                </Button>
               </div>
-              <Button asChild size="lg" className="mt-6 btn-glow w-full">
-                <Link to={d.href}>
-                  {d.cta} <ArrowRight className="ml-1 w-4 h-4" />
-                </Link>
-              </Button>
             </motion.div>
           ))}
         </div>
@@ -159,18 +161,18 @@ export default function NeraDevicesCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="mt-10 max-w-6xl mx-auto rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/15 via-secondary/10 to-transparent p-7 md:p-10 backdrop-blur-sm"
+          className="mt-6 md:mt-10 max-w-6xl mx-auto rounded-2xl md:rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/15 via-secondary/10 to-transparent p-5 md:p-10 backdrop-blur-sm"
         >
-          <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
             <div className="flex-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-semibold uppercase tracking-wider mb-4">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] md:text-[11px] font-semibold uppercase tracking-wider mb-2.5 md:mb-4">
                 <Building2 className="w-3 h-3" />
                 For Wearable Brands & Enterprises
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
+              <h3 className="text-xl md:text-3xl font-bold tracking-tight text-white leading-tight">
                 License NERA AI for your own wearable.
               </h3>
-              <p className="mt-3 text-white/70 max-w-2xl text-sm md:text-base leading-relaxed">
+              <p className="mt-2 md:mt-3 text-white/70 max-w-2xl text-sm md:text-base leading-relaxed">
                 Plug NERA's health intelligence engine into your smartwatch, band, ring, or biosensor.
                 Health scores, risk drivers, lifestyle correlations and predictive alerts — under your brand.
               </p>
