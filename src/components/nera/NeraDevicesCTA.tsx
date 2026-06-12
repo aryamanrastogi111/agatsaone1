@@ -37,7 +37,7 @@ const DEVICES = [
 export default function NeraDevicesCTA() {
 
   return (
-    <section className="relative bg-[hsl(var(--dark-bg))] text-white py-12 md:py-20 overflow-hidden">
+    <section id="nera-for-business" className="relative bg-[hsl(var(--dark-bg))] text-white py-12 md:py-20 overflow-hidden scroll-mt-20">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 right-1/4 w-[500px] h-[500px] rounded-full bg-primary/10 blur-[160px]" />
         <div className="absolute bottom-10 left-1/4 w-[420px] h-[420px] rounded-full bg-secondary/10 blur-[140px]" />
