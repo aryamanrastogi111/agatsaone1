@@ -116,13 +116,15 @@ function HeroSection() {
             <br />
             <span className="text-white/70">Your Metabolism Knows Another.</span>
             <br />
+            <span className="text-white/70">Your sleep, activity, HRV, stress, more.</span>
+            <br />
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              NERA Connects Them Both.
+              NERA Connects Them All.
             </span>
           </h1>
           <p className="mt-7 text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
             Powered by SanketLife ECG, EasyTouch Wellness, and Rhythm Band data, NERA transforms
-            disconnected health readings into personalized health intelligence.
+            disconnected health readings — ECG, metabolic, sleep, activity, HRV, and stress — into personalized health intelligence.
           </p>
           <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button asChild size="lg" className="text-base px-8 h-12 btn-glow">
@@ -442,6 +444,168 @@ function RhythmVisual() {
           <div className="font-medium">Burnout Risk</div>
           <div className="text-right font-bold text-warning">Elevated</div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function SleepVisual() {
+  const nights = [
+    { day: "Mon", score: 72, deep: "1h 12m", rem: "1h 40m" },
+    { day: "Tue", score: 58, deep: "0h 45m", rem: "1h 05m" },
+    { day: "Wed", score: 81, deep: "1h 30m", rem: "1h 55m" },
+    { day: "Thu", score: 64, deep: "0h 55m", rem: "1h 20m" },
+    { day: "Fri", score: 77, deep: "1h 20m", rem: "1h 45m" },
+    { day: "Sat", score: 85, deep: "1h 45m", rem: "2h 05m" },
+    { day: "Sun", score: 79, deep: "1h 25m", rem: "1h 50m" },
+  ];
+  return (
+    <div className="rounded-3xl border border-border bg-gradient-to-br from-indigo-500/5 to-background p-6 md:p-8">
+      <div className="flex items-center justify-between mb-6">
+        <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+          Sleep Score Trend
+        </div>
+        <Moon className="w-5 h-5 text-indigo-500" />
+      </div>
+      <div className="space-y-3">
+        {nights.map((n) => (
+          <div key={n.day} className="flex items-center gap-3">
+            <div className="w-10 text-xs font-semibold text-muted-foreground">{n.day}</div>
+            <div className="flex-1 h-2.5 rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-indigo-500 to-primary rounded-full"
+                style={{ width: `${n.score}%` }}
+              />
+            </div>
+            <div className="w-10 text-right text-sm font-bold">{n.score}</div>
+            <div className="hidden sm:block text-xs text-muted-foreground w-24 text-right">
+              {n.deep} deep
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 pt-6 border-t border-border text-xs text-muted-foreground">
+        Deep sleep is below your baseline on weekdays. NERA links this to higher evening stress.
+      </div>
+    </div>
+  );
+}
+
+function ActivityVisual() {
+  const days = [
+    { day: "Mon", steps: 8400, active: "42 min", calories: 420 },
+    { day: "Tue", steps: 6200, active: "28 min", calories: 380 },
+    { day: "Wed", steps: 11200, active: "65 min", calories: 510 },
+    { day: "Thu", steps: 5400, active: "22 min", calories: 350 },
+    { day: "Fri", steps: 9800, active: "55 min", calories: 480 },
+    { day: "Sat", steps: 14600, active: "92 min", calories: 620 },
+    { day: "Sun", steps: 7200, active: "35 min", calories: 390 },
+  ];
+  return (
+    <div className="rounded-3xl border border-border bg-gradient-to-br from-amber-500/5 to-background p-6 md:p-8">
+      <div className="flex items-center justify-between mb-6">
+        <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+          Weekly Activity
+        </div>
+        <Zap className="w-5 h-5 text-amber-500" />
+      </div>
+      <div className="space-y-3">
+        {days.map((d) => (
+          <div key={d.day} className="flex items-center gap-3">
+            <div className="w-10 text-xs font-semibold text-muted-foreground">{d.day}</div>
+            <div className="flex-1 h-2.5 rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"
+                style={{ width: `${Math.min((d.steps / 15000) * 100, 100)}%` }}
+              />
+            </div>
+            <div className="w-14 text-right text-sm font-bold">{d.steps.toLocaleString()}</div>
+            <div className="hidden sm:block text-xs text-muted-foreground w-16 text-right">
+              {d.active}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 pt-6 border-t border-border text-xs text-muted-foreground">
+        Activity drops mid-week. NERA correlates this dip with reduced metabolic recovery.
+      </div>
+    </div>
+  );
+}
+
+function HRVVisual() {
+  const readings = [
+    { label: "6 AM", ms: 52, note: "Low" },
+    { label: "9 AM", ms: 58, note: "Rising" },
+    { label: "12 PM", ms: 64, note: "Peak" },
+    { label: "3 PM", ms: 61, note: "Stable" },
+    { label: "6 PM", ms: 48, note: "Dip" },
+    { label: "9 PM", ms: 55, note: "Recovering" },
+  ];
+  const maxMs = 80;
+  return (
+    <div className="rounded-3xl border border-border bg-gradient-to-br from-rose-500/5 to-background p-6 md:p-8">
+      <div className="flex items-center justify-between mb-6">
+        <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+          HRV Through The Day
+        </div>
+        <Activity className="w-5 h-5 text-rose-500" />
+      </div>
+      <div className="space-y-3">
+        {readings.map((r) => (
+          <div key={r.label} className="flex items-center gap-3">
+            <div className="w-12 text-xs text-muted-foreground">{r.label}</div>
+            <div className="flex-1 h-2.5 rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-rose-500 to-pink-400 rounded-full"
+                style={{ width: `${(r.ms / maxMs) * 100}%` }}
+              />
+            </div>
+            <div className="w-10 text-right text-sm font-bold">{r.ms}ms</div>
+            <div className="w-16 text-right text-xs text-muted-foreground hidden sm:block">{r.note}</div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 pt-6 border-t border-border text-xs text-muted-foreground">
+        Evening HRV dips signal accumulated stress. NERA flags this before it affects sleep quality.
+      </div>
+    </div>
+  );
+}
+
+function StressVisual() {
+  const periods = [
+    { time: "Morning", level: 32, state: "Low", color: "from-emerald-500 to-emerald-400" },
+    { time: "Midday", level: 58, state: "Moderate", color: "from-amber-500 to-amber-400" },
+    { time: "Afternoon", level: 71, state: "High", color: "from-orange-500 to-orange-400" },
+    { time: "Evening", level: 45, state: "Moderate", color: "from-amber-500 to-amber-400" },
+    { time: "Night", level: 28, state: "Low", color: "from-emerald-500 to-emerald-400" },
+  ];
+  return (
+    <div className="rounded-3xl border border-border bg-gradient-to-br from-violet-500/5 to-background p-6 md:p-8">
+      <div className="flex items-center justify-between mb-6">
+        <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+          Stress Burden Timeline
+        </div>
+        <Brain className="w-5 h-5 text-violet-500" />
+      </div>
+      <div className="space-y-3">
+        {periods.map((p) => (
+          <div key={p.time} className="flex items-center gap-3">
+            <div className="w-20 text-xs text-muted-foreground">{p.time}</div>
+            <div className="flex-1 h-2.5 rounded-full bg-muted overflow-hidden">
+              <div
+                className={`h-full bg-gradient-to-r ${p.color} rounded-full`}
+                style={{ width: `${p.level}%` }}
+              />
+            </div>
+            <div className="w-10 text-right text-sm font-bold">{p.level}</div>
+            <div className="w-20 text-right text-xs text-muted-foreground hidden sm:block">{p.state}</div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 pt-6 border-t border-border text-xs text-muted-foreground">
+        Afternoon stress peaks repeat on workdays. NERA suggests a 10-minute movement break at 2 PM.
       </div>
     </div>
   );
@@ -1159,6 +1323,80 @@ export default function NeraAIPage() {
         ]}
         quote="Three consecutive weeks of poor recovery are impacting both metabolic and cardiac health markers."
         visual={<RhythmVisual />}
+      />
+
+      <DeviceInsightSection
+        reverse
+        eyebrow="Sleep Intelligence"
+        title={<>Understand How You Rest.</>}
+        subtitle="NERA analyzes your sleep architecture — deep sleep, REM, and wake patterns — and connects rest quality to heart recovery and metabolic stability."
+        icon={Moon}
+        iconTone="bg-indigo-500/10 text-indigo-500 border border-indigo-500/20"
+        insights={[
+          "Sleep Quality Score",
+          "Deep & REM sleep tracking",
+          "Sleep consistency patterns",
+          "Bedtime routine impact",
+          "Sleep-heart recovery link",
+          "Next-day energy prediction",
+        ]}
+        quote="Your deep sleep drops by 40 minutes on high-stress days. NERA suggests a wind-down routine starting 30 minutes earlier."
+        visual={<SleepVisual />}
+      />
+
+      <DeviceInsightSection
+        eyebrow="Activity Intelligence"
+        title={<>See Movement As Medicine.</>}
+        subtitle="NERA tracks daily activity, steps, and active minutes — then correlates movement patterns with metabolic response and cardiovascular recovery."
+        icon={Zap}
+        iconTone="bg-amber-500/10 text-amber-600 border border-amber-500/20"
+        insights={[
+          "Activity Balance Score",
+          "Steps & active minutes trend",
+          "Sedentary behaviour alerts",
+          "Movement-metabolism link",
+          "Workout recovery tracking",
+          "Weekly consistency insights",
+        ]}
+        quote="Your metabolic zone improves by 18% on days with 45+ minutes of moderate activity. NERA builds this into your weekly target."
+        visual={<ActivityVisual />}
+      />
+
+      <DeviceInsightSection
+        reverse
+        eyebrow="HRV Intelligence"
+        title={<>Read Your Nervous System.</>}
+        subtitle="NERA monitors heart rate variability throughout the day — a window into how your body balances stress and recovery in real time."
+        icon={Activity}
+        iconTone="bg-rose-500/10 text-rose-500 border border-rose-500/20"
+        insights={[
+          "HRV Baseline Tracking",
+          "Morning readiness score",
+          "Autonomic nervous system balance",
+          "Stress-recovery ratio",
+          "Overtraining & burnout flags",
+          "Lifestyle intervention response",
+        ]}
+        quote="Your evening HRV drops below baseline 3 days in a row. NERA flags this as early fatigue — before it affects sleep or mood."
+        visual={<HRVVisual />}
+      />
+
+      <DeviceInsightSection
+        eyebrow="Stress Intelligence"
+        title={<>Know Your Stress Before It Knows You.</>}
+        subtitle="NERA measures stress burden across your day — identifying triggers, recovery gaps, and the cumulative impact on heart and metabolic health."
+        icon={Brain}
+        iconTone="bg-violet-500/10 text-violet-500 border border-violet-500/20"
+        insights={[
+          "Stress Burden Score",
+          "Peak stress time identification",
+          "Recovery window tracking",
+          "Stress-sleep disruption link",
+          "Stress-metabolic spike alerts",
+          "Personalized calm-down prompts",
+        ]}
+        quote="Afternoon stress peaks repeat at 2 PM on workdays. NERA suggests a 10-minute breathing window — your HRV recovers 22% faster."
+        visual={<StressVisual />}
       />
 
       <PriyaReportStory />
