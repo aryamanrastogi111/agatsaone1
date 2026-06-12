@@ -163,6 +163,34 @@ function HeroSection() {
           </div>
         </motion.div>
 
+        {/* NERA AI App Screenshot */}
+        <motion.div {...fadeUp} className="mt-12 md:mt-16 max-w-xs mx-auto">
+          <div className="relative mx-auto w-[260px] md:w-[280px]">
+            {/* Phone frame */}
+            <div className="rounded-[2.5rem] border-[6px] border-white/15 bg-white/5 p-2 shadow-2xl shadow-primary/20 backdrop-blur-sm">
+              {/* Notch */}
+              <div className="flex justify-center mb-2">
+                <div className="w-24 h-5 rounded-full bg-white/10" />
+              </div>
+              {/* Screen */}
+              <div className="rounded-[2rem] overflow-hidden bg-black">
+                <img
+                  src={neraScore.url}
+                  alt="NERA AI Score Dashboard"
+                  className="w-full h-auto object-cover"
+                  loading="eager"
+                />
+              </div>
+            </div>
+            {/* Floating label */}
+            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap">
+              <div className="px-4 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-semibold shadow-lg">
+                Your NERA Score — 7 days away
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Devices → Brain → Outputs diagram */}
         <motion.div {...fadeUp} className="mt-16 md:mt-20 max-w-5xl mx-auto">
           <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6 md:gap-10 items-center">
