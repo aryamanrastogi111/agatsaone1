@@ -133,6 +133,15 @@ function HeroSection() {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-secondary/20 blur-[120px]" />
       </div>
 
+      {/* Corner logo */}
+      <div className="absolute top-6 left-6 md:top-8 md:left-8 z-10">
+        <img
+          src={agatsaLogo}
+          alt="Agatsa"
+          className="h-10 w-10 md:h-12 md:w-12 object-contain drop-shadow-lg"
+        />
+      </div>
+
       <div className="container relative mx-auto px-4 md:px-6 py-20 md:py-28">
         <motion.div {...fadeUp} className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 mb-5">
