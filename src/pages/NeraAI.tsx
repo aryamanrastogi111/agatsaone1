@@ -28,6 +28,7 @@ import neraSignals from "@/assets/nera-signals.jpeg.asset.json";
 import neraRisk from "@/assets/nera-risk.jpeg.asset.json";
 import neraActions from "@/assets/nera-actions.jpeg.asset.json";
 import neraPlans from "@/assets/nera-plans.jpeg.asset.json";
+import priyaPersona from "@/assets/priya-persona.jpg.asset.json";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -700,9 +701,14 @@ function PriyaReportStory() {
             <span className="text-white/60">Yours will look like this in 7 days.</span>
           </h2>
           <div className="mt-7 inline-flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur-sm">
-            <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-lg">
-              P
-            </div>
+            <img
+              src={priyaPersona.url}
+              alt="Priya Sharma"
+              width={44}
+              height={44}
+              loading="lazy"
+              className="w-11 h-11 rounded-full object-cover border border-white/20"
+            />
             <div className="text-left">
               <div className="text-sm font-semibold text-white">Priya Sharma, 34</div>
               <div className="text-xs text-white/60">Bengaluru · 3 connected devices</div>
