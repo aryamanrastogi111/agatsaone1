@@ -115,12 +115,12 @@ export default function NeraDevicesCTA() {
             Get NERA AI Working For You
           </div>
           <h2 className="text-2xl md:text-5xl font-bold tracking-tight text-balance leading-tight">
-            Pick your device.{" "}
-            <span className="text-white/60">Or license NERA AI for your own.</span>
+            <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">Pick your device.</span>{" "}
+            <span className="text-white/70">Or license NERA AI for your own.</span>
           </h2>
           <p className="mt-3 md:mt-5 text-sm md:text-lg text-white/70 max-w-2xl mx-auto">
-            NERA AI ships free for 1 year with every Agatsa device. Already have a wearable platform?
-            License NERA AI as the intelligence layer for your own hardware.
+            NERA AI ships free for 3 months with every Agatsa device. Already have a wearable or
+            health platform? License NERA AI as the intelligence layer for your own product.
           </p>
         </motion.div>
 
