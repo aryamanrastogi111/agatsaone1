@@ -163,20 +163,46 @@ export default function NeraDevicesCTA() {
           transition={{ duration: 0.6 }}
           className="mt-6 md:mt-10 max-w-6xl mx-auto rounded-2xl md:rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/15 via-secondary/10 to-transparent p-5 md:p-10 backdrop-blur-sm"
         >
-          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
-            <div className="flex-1">
+          <div className="flex flex-col gap-5 md:gap-8">
+            <div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] md:text-[11px] font-semibold uppercase tracking-wider mb-2.5 md:mb-4">
                 <Building2 className="w-3 h-3" />
-                For Wearable Brands & Enterprises
+                For Businesses & Platforms
               </div>
               <h3 className="text-xl md:text-3xl font-bold tracking-tight text-white leading-tight">
-                License NERA AI for your own wearable.
+                License NERA AI for your customers.
               </h3>
-              <p className="mt-2 md:mt-3 text-white/70 max-w-2xl text-sm md:text-base leading-relaxed">
-                Plug NERA's health intelligence engine into your smartwatch, band, ring, or biosensor.
+              <p className="mt-2 md:mt-3 text-white/70 max-w-3xl text-sm md:text-base leading-relaxed">
+                Plug NERA's health intelligence engine into your product or programme.
                 Health scores, risk drivers, lifestyle correlations and predictive alerts — under your brand.
               </p>
             </div>
+
+            {/* Persona grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3">
+              {[
+                { emoji: "🏢", title: "Corporates", desc: "Employee wellness & executive health programmes" },
+                { emoji: "🏥", title: "Hospitals & Clinics", desc: "RPM, post-discharge & preventive cardiology" },
+                { emoji: "⌚", title: "Wearable / Device OEMs", desc: "Smartwatches, bands, rings, biosensors" },
+                { emoji: "💬", title: "Telehealth Platforms", desc: "AI triage, longitudinal insights, nudges" },
+              ].map((p) => (
+                <div
+                  key={p.title}
+                  className="rounded-xl border border-white/10 bg-white/[0.04] p-3 md:p-4 hover:bg-white/[0.07] transition-colors"
+                >
+                  <div className="text-xl md:text-2xl mb-1">{p.emoji}</div>
+                  <div className="text-xs md:text-sm font-semibold text-white leading-tight">{p.title}</div>
+                  <div className="mt-1 text-[11px] md:text-xs text-white/60 leading-snug">{p.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5 md:mt-7 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-6">
+            <p className="text-xs md:text-sm text-white/60">
+              Don't see your use case? Tell us — we partner across health, fitness, insurance and research.
+            </p>
+            <div>
             <div className="md:shrink-0">
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
