@@ -116,13 +116,15 @@ function HeroSection() {
             <br />
             <span className="text-white/70">Your Metabolism Knows Another.</span>
             <br />
+            <span className="text-white/70">Your sleep, activity, HRV, stress, more.</span>
+            <br />
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              NERA Connects Them Both.
+              NERA Connects Them All.
             </span>
           </h1>
           <p className="mt-7 text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
             Powered by SanketLife ECG, EasyTouch Wellness, and Rhythm Band data, NERA transforms
-            disconnected health readings into personalized health intelligence.
+            disconnected health readings — ECG, metabolic, sleep, activity, HRV, and stress — into personalized health intelligence.
           </p>
           <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button asChild size="lg" className="text-base px-8 h-12 btn-glow">
