@@ -18,6 +18,7 @@ export interface BlogPost {
 
 import blogSmartwatchEcg from "@/assets/blog-smartwatch-ecg.webp";
 import sanketlifeHand from "@/assets/sanketlife-hand-new.webp";
+import blogMetabolicHealth from "@/assets/blog-metabolic-health-trends.jpg";
 
 export const blogPosts: BlogPost[] = [
   {
