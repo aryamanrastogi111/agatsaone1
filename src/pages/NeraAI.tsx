@@ -27,7 +27,7 @@ import neraScore from "@/assets/nera-score.jpeg.asset.json";
 import neraSignals from "@/assets/nera-signals.jpeg.asset.json";
 import neraRisk from "@/assets/nera-risk.jpeg.asset.json";
 import neraActions from "@/assets/nera-actions.jpeg.asset.json";
-import neraPlans from "@/assets/nera-plans.jpeg.asset.json";
+// neraPlans replaced with in-frame narrative
 import priyaPersona from "@/assets/priya-persona.jpg.asset.json";
 
 const fadeUp = {
