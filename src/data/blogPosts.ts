@@ -132,7 +132,7 @@ export const blogPosts: BlogPost[] = [
       }
     ],
     ctaText: "Start Early Detection at Home with SanketLife 12-Lead ECG",
-    ctaLink: "/products/sanketlife"
+    ctaLink: "/devices/sanketlife-ecg"
   },
   {
     slug: "smartwatch-vs-clinical-ecg",
@@ -207,6 +207,6 @@ export const blogPosts: BlogPost[] = [
       }
     ],
     ctaText: "Explore SanketLife: The World's Smallest 12-Lead ECG",
-    ctaLink: "/products/sanketlife"
+    ctaLink: "/devices/sanketlife-ecg"
   }
 ];
