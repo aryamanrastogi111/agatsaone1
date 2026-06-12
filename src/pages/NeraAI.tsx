@@ -23,6 +23,11 @@ import {
   Network,
   Telescope,
 } from "lucide-react";
+import neraScore from "@/assets/nera-score.jpeg.asset.json";
+import neraSignals from "@/assets/nera-signals.jpeg.asset.json";
+import neraRisk from "@/assets/nera-risk.jpeg.asset.json";
+import neraActions from "@/assets/nera-actions.jpeg.asset.json";
+import neraPlans from "@/assets/nera-plans.jpeg.asset.json";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -761,6 +766,80 @@ function FinalCTA() {
   );
 }
 
+function AppShowcase() {
+  const shots = [
+    {
+      src: neraScore.url,
+      title: "Your NERA Score",
+      body: "A single, honest health score with the four pillars driving it — Lifestyle, Cardiac, Metabolic, Food.",
+    },
+    {
+      src: neraSignals.url,
+      title: "9 Signals, One Picture",
+      body: "Sleep, activity, HRV, blood pressure, ECG, metabolic zone, sugar, body composition and nutrition — read together.",
+    },
+    {
+      src: neraRisk.url,
+      title: "Disease Risk Estimate",
+      body: "Clinical-grade metabolic intelligence (SD, MAGE, TIR, MODD) with cardiac and metabolic risk trajectories.",
+    },
+    {
+      src: neraActions.url,
+      title: "Top Actions, Ranked by Impact",
+      body: "NERA tells you exactly what to do next — and how many points each action is worth to your score.",
+    },
+    {
+      src: neraPlans.url,
+      title: "Inside NERA AI Premium",
+      body: "Weekly AI report, predictive warnings, city health rank, recovery forecast and unlimited lifestyle correlations.",
+    },
+  ];
+  return (
+    <Section
+      dark
+      eyebrow="Inside The App"
+      title={
+        <>
+          This Is What{" "}
+          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            NERA AI
+          </span>{" "}
+          Actually Looks Like.
+        </>
+      }
+      subtitle="Real screens from the Agatsa One app — not concepts. Every signal you measure becomes a story you can act on."
+    >
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {shots.map((s, i) => (
+          <motion.div
+            key={s.title}
+            {...fadeUp}
+            className={`group rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm hover:border-primary/40 transition-colors ${
+              i === 4 ? "sm:col-span-2 lg:col-span-1" : ""
+            }`}
+          >
+            <div className="relative mx-auto w-full max-w-[260px] rounded-[2rem] border-[6px] border-neutral-800 bg-black overflow-hidden shadow-2xl aspect-[9/19]">
+              <img
+                src={s.src}
+                alt={s.title}
+                loading="lazy"
+                className="w-full h-full object-cover object-top"
+              />
+              <div className="absolute inset-x-0 top-0 h-5 flex justify-center">
+                <div className="mt-1 h-3 w-20 rounded-full bg-neutral-900" />
+              </div>
+            </div>
+            <div className="mt-5 text-center">
+              <div className="text-base md:text-lg font-bold text-white">{s.title}</div>
+              <p className="mt-1.5 text-sm text-white/65 leading-relaxed">{s.body}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
 export default function NeraAIPage() {
   useSEO({
     title: "NERA AI — The Intelligence Layer for Agatsa Devices | Agatsa One",
@@ -832,6 +911,7 @@ export default function NeraAIPage() {
         visual={<RhythmVisual />}
       />
 
+      <AppShowcase />
       <CombinedIntelligence />
       <FutureHealth />
       <SampleInsights />
