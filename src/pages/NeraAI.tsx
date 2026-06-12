@@ -1542,10 +1542,10 @@ export default function NeraAIPage() {
         visual={<StressVisual />}
       />
 
+      <WhySubscribe />
       <PriyaReportStory />
       <FutureHealth />
       <NeraDevicesCTA />
-      <WhySubscribe />
       <FinalCTA />
     </SiteLayout>
   );
