@@ -128,26 +128,27 @@ export function NeraLicenseDialog({
 }
 
 export function NeraLicenseButton({ variant = "outline" }: { variant?: "outline" | "default" }) {
+  const scrollToBusiness = () => {
+    const el = document.getElementById("nera-for-business");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   if (variant === "outline") {
     return (
-      <NeraLicenseDialog>
-        <Button
-          size="lg"
-          variant="outline"
-          className="text-base px-8 h-12 bg-white/5 border-white/20 text-white hover:bg-white/10 hover:text-white"
-        >
-          <Building2 className="mr-2 w-4 h-4" />
-          License NERA AI for Business
-        </Button>
-      </NeraLicenseDialog>
-    );
-  }
-  return (
-    <NeraLicenseDialog>
-      <Button size="lg" className="text-base px-8 h-12 btn-glow">
+      <Button
+        size="lg"
+        variant="outline"
+        onClick={scrollToBusiness}
+        className="text-base px-8 h-12 bg-white/5 border-white/20 text-white hover:bg-white/10 hover:text-white"
+      >
         <Building2 className="mr-2 w-4 h-4" />
         License NERA AI for Business
       </Button>
-    </NeraLicenseDialog>
+    );
+  }
+  return (
+    <Button size="lg" onClick={scrollToBusiness} className="text-base px-8 h-12 btn-glow">
+      <Building2 className="mr-2 w-4 h-4" />
+      License NERA AI for Business
+    </Button>
   );
 }
