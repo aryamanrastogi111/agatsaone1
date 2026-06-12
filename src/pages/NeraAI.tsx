@@ -718,7 +718,7 @@ function PriyaReportStory() {
             image={neraScore.url}
             imageAlt="Priya's NERA score of 49"
           >
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance">
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance text-white">
               Day 7. NERA gives Priya a score of{" "}
               <span className="text-warning">49</span>.
             </h3>
