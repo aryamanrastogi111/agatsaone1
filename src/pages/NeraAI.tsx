@@ -1034,7 +1034,8 @@ function PriyaReportStory() {
             image={neraPlans.url}
             imageAlt="NERA AI Premium plans"
           >
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance">
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance text-white">
+
               Your report is{" "}
               <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                 7 days away
