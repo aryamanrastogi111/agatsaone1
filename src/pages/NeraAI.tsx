@@ -29,6 +29,7 @@ import neraScore from "@/assets/nera-score.jpeg.asset.json";
 import neraSignals from "@/assets/nera-signals.jpeg.asset.json";
 import neraRisk from "@/assets/nera-risk.jpeg.asset.json";
 import neraActions from "@/assets/nera-actions.jpeg.asset.json";
+import agatsaLogo from "@/assets/agatsa-logo.webp";
 // neraPlans replaced with in-frame narrative
 import priyaPersona from "@/assets/priya-persona.jpg.asset.json";
 import sanketlifeDevice from "@/assets/sanketlife-2.0-device.webp";
