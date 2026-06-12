@@ -446,100 +446,7 @@ function RhythmVisual() {
   );
 }
 
-function CombinedIntelligence() {
-  const chains = [
-    {
-      from: "Poor Sleep",
-      via: "Higher Morning Glucose Variability",
-      to: "Reduced Cardiac Recovery",
-      icon: Moon,
-    },
-    {
-      from: "Reduced Activity",
-      via: "Rising Body Fat %",
-      to: "Lower Metabolic Score",
-      icon: TrendingDown,
-    },
-    {
-      from: "Persistent Stress",
-      via: "Elevated Resting Heart Rate",
-      to: "Declining Recovery Capacity",
-      icon: AlertTriangle,
-    },
-    {
-      from: "Late Night Eating",
-      via: "Glucose Instability → Lower Sleep Quality",
-      to: "Reduced Heart Recovery",
-      icon: Utensils,
-    },
-  ];
-  return (
-    <Section
-      dark
-      eyebrow="Combined Intelligence"
-      title={
-        <>
-          The Real Magic Happens When{" "}
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Everything Connects.
-          </span>
-        </>
-      }
-      subtitle="NERA correlates data across all your devices to reveal cause-and-effect patterns invisible in isolated reports."
-    >
-      <div className="grid md:grid-cols-2 gap-4 max-w-5xl mx-auto mb-12">
-        {chains.map((c) => (
-          <motion.div
-            key={c.from}
-            {...fadeUp}
-            className="rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm"
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-9 h-9 rounded-lg bg-primary/20 flex items-center justify-center">
-                <c.icon className="w-4 h-4 text-primary" />
-              </div>
-              <div className="text-sm font-bold">{c.from}</div>
-            </div>
-            <div className="pl-2 border-l-2 border-primary/40 ml-4 space-y-2 text-sm text-white/70">
-              <div className="flex items-start gap-2">
-                <ArrowRight className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                <span>{c.via}</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <ArrowRight className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                <span className="text-white font-medium">{c.to}</span>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Network diagram */}
-      <motion.div
-        {...fadeUp}
-        className="relative max-w-3xl mx-auto rounded-3xl border border-white/10 bg-white/[0.03] p-8 md:p-12"
-      >
-        <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-white/60 font-semibold mb-6 justify-center">
-          <Network className="w-4 h-4" />
-          NERA Correlation Network
-        </div>
-        <div className="grid grid-cols-3 gap-4 text-center">
-          {["Sleep", "Stress", "Activity", "ECG", "Metabolic", "Recovery"].map((n) => (
-            <div
-              key={n}
-              className="rounded-2xl border border-white/10 bg-gradient-to-br from-primary/15 to-secondary/10 px-3 py-4 text-sm font-semibold"
-            >
-              {n}
-            </div>
-          ))}
-        </div>
-        <div className="mt-6 text-center text-xs text-white/50">
-          Every node influences every other node. NERA finds the strongest signals.
-        </div>
-      </motion.div>
-    </Section>
-  );
-}
+// CombinedIntelligence removed — replaced by PriyaReportStory narrative.
 
 function FutureHealth() {
   return (
@@ -608,65 +515,7 @@ function FutureHealth() {
   );
 }
 
-function SampleInsights() {
-  const cards = [
-    {
-      title: "Heart Intelligence",
-      icon: HeartPulse,
-      tone: "text-red-500",
-      body: "Your ECG patterns remain stable overall. However, episodes of poor sleep correlate with temporary declines in recovery markers.",
-    },
-    {
-      title: "Metabolic Intelligence",
-      icon: Activity,
-      tone: "text-emerald-500",
-      body: "Late evening meals are associated with higher glucose variability and reduced next-day energy stability.",
-    },
-    {
-      title: "Lifestyle Intelligence",
-      icon: Watch,
-      tone: "text-sky-500",
-      body: "Increasing activity by 2,000 steps daily may improve both metabolic and recovery scores.",
-    },
-    {
-      title: "Future Intelligence",
-      icon: Telescope,
-      tone: "text-primary",
-      body: "Current trends suggest elevated diabetes risk over the next 3 years if lifestyle patterns remain unchanged.",
-    },
-  ];
-  return (
-    <Section
-      eyebrow="Sample Insights"
-      title={
-        <>
-          What NERA Tells You,{" "}
-          <span className="text-primary">In Your Own Words.</span>
-        </>
-      }
-    >
-      <div className="grid sm:grid-cols-2 gap-4 max-w-5xl mx-auto">
-        {cards.map((c) => (
-          <motion.div
-            key={c.title}
-            {...fadeUp}
-            className="rounded-3xl border border-border bg-card p-6 hover-lift"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-11 h-11 rounded-xl bg-muted flex items-center justify-center">
-                <c.icon className={`w-5 h-5 ${c.tone}`} />
-              </div>
-              <div className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
-                {c.title}
-              </div>
-            </div>
-            <p className="text-base leading-relaxed">{c.body}</p>
-          </motion.div>
-        ))}
-      </div>
-    </Section>
-  );
-}
+// SampleInsights removed — replaced by PriyaReportStory narrative.
 
 function WhySubscribe() {
   return (
@@ -766,77 +615,378 @@ function FinalCTA() {
   );
 }
 
-function AppShowcase() {
-  const shots = [
-    {
-      src: neraScore.url,
-      title: "Your NERA Score",
-      body: "A single, honest health score with the four pillars driving it — Lifestyle, Cardiac, Metabolic, Food.",
-    },
-    {
-      src: neraSignals.url,
-      title: "9 Signals, One Picture",
-      body: "Sleep, activity, HRV, blood pressure, ECG, metabolic zone, sugar, body composition and nutrition — read together.",
-    },
-    {
-      src: neraRisk.url,
-      title: "Disease Risk Estimate",
-      body: "Clinical-grade metabolic intelligence (SD, MAGE, TIR, MODD) with cardiac and metabolic risk trajectories.",
-    },
-    {
-      src: neraActions.url,
-      title: "Top Actions, Ranked by Impact",
-      body: "NERA tells you exactly what to do next — and how many points each action is worth to your score.",
-    },
-    {
-      src: neraPlans.url,
-      title: "Inside NERA AI Premium",
-      body: "Weekly AI report, predictive warnings, city health rank, recovery forecast and unlimited lifestyle correlations.",
-    },
-  ];
+function ChapterShell({
+  index,
+  total,
+  eyebrow,
+  reverse = false,
+  image,
+  imageAlt,
+  children,
+}: {
+  index: number;
+  total: number;
+  eyebrow: string;
+  reverse?: boolean;
+  image: string;
+  imageAlt: string;
+  children: React.ReactNode;
+}) {
   return (
-    <Section
-      dark
-      eyebrow="Inside The App"
-      title={
-        <>
-          This Is What{" "}
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            NERA AI
-          </span>{" "}
-          Actually Looks Like.
-        </>
-      }
-      subtitle="Real screens from the Agatsa One app — not concepts. Every signal you measure becomes a story you can act on."
+    <motion.div
+      {...fadeUp}
+      className="relative grid lg:grid-cols-[1fr_auto] gap-10 lg:gap-16 items-center"
     >
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {shots.map((s, i) => (
-          <motion.div
-            key={s.title}
-            {...fadeUp}
-            className={`group rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm hover:border-primary/40 transition-colors ${
-              i === 4 ? "sm:col-span-2 lg:col-span-1" : ""
-            }`}
+      {/* Narrative column */}
+      <div className={reverse ? "lg:order-2" : ""}>
+        <div className="flex items-center gap-3 mb-5">
+          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/15 border border-primary/30 text-primary text-sm font-bold tabular-nums">
+            {String(index).padStart(2, "0")}
+          </div>
+          <div className="text-[11px] uppercase tracking-[0.18em] text-white/50 font-semibold">
+            {eyebrow} · Chapter {index} of {total}
+          </div>
+        </div>
+        {children}
+      </div>
+
+      {/* Phone column */}
+      <div className={reverse ? "lg:order-1" : ""}>
+        <div className="relative mx-auto w-full max-w-[280px]">
+          <div className="absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-primary/30 to-secondary/10 blur-2xl opacity-60" />
+          <div className="relative rounded-[2.5rem] border-[8px] border-neutral-800 bg-black overflow-hidden shadow-2xl aspect-[9/19.5]">
+            <img
+              src={image}
+              alt={imageAlt}
+              loading="lazy"
+              className="w-full h-full object-cover object-top"
+            />
+            <div className="absolute inset-x-0 top-0 h-6 flex justify-center pointer-events-none">
+              <div className="mt-1.5 h-4 w-24 rounded-full bg-neutral-900" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function PriyaReportStory() {
+  const TOTAL = 6;
+  return (
+    <section className="relative bg-[hsl(var(--dark-bg))] text-white py-20 md:py-28 overflow-hidden">
+      {/* Ambient */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-40 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/15 blur-[160px]" />
+        <div className="absolute bottom-20 right-1/4 w-[400px] h-[400px] rounded-full bg-secondary/10 blur-[140px]" />
+      </div>
+
+      <div className="container relative mx-auto px-4 md:px-6">
+        {/* Section intro */}
+        <motion.div {...fadeUp} className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold uppercase tracking-wider mb-5">
+            <Sparkles className="w-3 h-3" />
+            A Real NERA Report
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-balance text-white">
+            Meet Priya. This is her NERA report.{" "}
+            <span className="text-white/60">Yours will look like this in 7 days.</span>
+          </h2>
+          <div className="mt-7 inline-flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur-sm">
+            <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-lg">
+              P
+            </div>
+            <div className="text-left">
+              <div className="text-sm font-semibold text-white">Priya Sharma, 34</div>
+              <div className="text-xs text-white/60">Bengaluru · 3 connected devices</div>
+            </div>
+            <div className="hidden sm:block w-px h-9 bg-white/15" />
+            <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-primary">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              Day 7 · Report ready
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Chapters */}
+        <div className="max-w-6xl mx-auto space-y-24 md:space-y-32">
+          {/* Ch 1 — The verdict */}
+          <ChapterShell
+            index={1}
+            total={TOTAL}
+            eyebrow="The Verdict"
+            image={neraScore.url}
+            imageAlt="Priya's NERA score of 49"
           >
-            <div className="relative mx-auto w-full max-w-[260px] rounded-[2rem] border-[6px] border-neutral-800 bg-black overflow-hidden shadow-2xl aspect-[9/19]">
-              <img
-                src={s.src}
-                alt={s.title}
-                loading="lazy"
-                className="w-full h-full object-cover object-top"
-              />
-              <div className="absolute inset-x-0 top-0 h-5 flex justify-center">
-                <div className="mt-1 h-3 w-20 rounded-full bg-neutral-900" />
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance">
+              Day 7. NERA gives Priya a score of{" "}
+              <span className="text-warning">49</span>.
+            </h3>
+            <p className="mt-5 text-base md:text-lg text-white/70 leading-relaxed">
+              Not the number she wanted to see. But for the first time, she understands{" "}
+              <span className="text-white">why</span>. Four pillars, one honest picture — no
+              dashboards to interpret.
+            </p>
+            <div className="mt-6 grid grid-cols-4 gap-2 max-w-md">
+              {[
+                { label: "Lifestyle", value: 50, tone: "text-primary" },
+                { label: "Cardiac", value: 65, tone: "text-red-400" },
+                { label: "Metabolic", value: 22, tone: "text-orange-400" },
+                { label: "Food", value: 53, tone: "text-emerald-400" },
+              ].map((p) => (
+                <div
+                  key={p.label}
+                  className="rounded-xl border border-white/10 bg-white/[0.04] px-2 py-3 text-center"
+                >
+                  <div className={`text-xl font-bold ${p.tone} tabular-nums`}>{p.value}</div>
+                  <div className="text-[10px] uppercase tracking-wider text-white/55 mt-0.5">
+                    {p.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-warning/15 border border-warning/30 text-warning px-3 py-1.5 text-xs font-semibold">
+              <AlertTriangle className="w-3.5 h-3.5" />
+              Some signals need attention
+            </div>
+          </ChapterShell>
+
+          {/* Ch 2 — The 9 signals */}
+          <ChapterShell
+            index={2}
+            total={TOTAL}
+            eyebrow="The Signals"
+            reverse
+            image={neraSignals.url}
+            imageAlt="NERA reads 9 health signals"
+          >
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance">
+              NERA read all{" "}
+              <span className="text-primary">9 of 9 health signals</span>. Most apps read two.
+            </h3>
+            <p className="mt-5 text-base md:text-lg text-white/70 leading-relaxed">
+              Priya's Rhythm Band streams sleep, activity and HRV. SanketLife ECG handles cardiac.
+              EasyTouch Wellness tracks her metabolic zone and sugar response. NERA reads them
+              together — so one weak signal can't hide behind a strong one.
+            </p>
+            <div className="mt-6 space-y-2.5 max-w-md">
+              {[
+                { label: "Sleep", value: "35/100", note: "1.5h avg · Rhythm Band", tone: "from-violet-500/70 to-violet-500/0", text: "text-violet-300" },
+                { label: "Metabolic Zone", value: "22/100", note: "15 readings · high zone", tone: "from-orange-500/70 to-orange-500/0", text: "text-orange-300" },
+                { label: "Body Composition", value: "90/100", note: "BMI 24.4 · 66.3 kg", tone: "from-emerald-500/70 to-emerald-500/0", text: "text-emerald-300" },
+              ].map((r) => (
+                <div
+                  key={r.label}
+                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3"
+                >
+                  <div className="flex-1">
+                    <div className="text-sm font-semibold text-white">{r.label}</div>
+                    <div className="text-[11px] text-white/50 mt-0.5">{r.note}</div>
+                  </div>
+                  <div className={`text-sm font-bold tabular-nums ${r.text}`}>{r.value}</div>
+                </div>
+              ))}
+            </div>
+          </ChapterShell>
+
+          {/* Ch 3 — Risk estimate */}
+          <ChapterShell
+            index={3}
+            total={TOTAL}
+            eyebrow="The Risk Estimate"
+            image={neraRisk.url}
+            imageAlt="Cardiac and metabolic risk estimates"
+          >
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance">
+              Then NERA does the math{" "}
+              <span className="text-primary">no single device can</span>.
+            </h3>
+            <p className="mt-5 text-base md:text-lg text-white/70 leading-relaxed">
+              124 sugar readings across 6 days. Clinical thresholds — Rodbard, Monnier — applied
+              against her ECG and lifestyle data. Not a diagnosis. A direction.
+            </p>
+            <div className="mt-6 grid sm:grid-cols-2 gap-3 max-w-md">
+              <div className="rounded-2xl border border-warning/30 bg-warning/[0.08] p-4">
+                <div className="text-[11px] uppercase tracking-wider text-warning/90 font-bold">
+                  Cardiac Risk
+                </div>
+                <div className="mt-1 text-3xl font-bold text-warning tabular-nums">29%</div>
+                <div className="text-xs text-white/60 mt-1">Moderate — sleep & HR trends</div>
+              </div>
+              <div className="rounded-2xl border border-orange-500/30 bg-orange-500/[0.08] p-4">
+                <div className="text-[11px] uppercase tracking-wider text-orange-300 font-bold">
+                  Metabolic Risk
+                </div>
+                <div className="mt-1 text-3xl font-bold text-orange-300 tabular-nums">52%</div>
+                <div className="text-xs text-white/60 mt-1">Elevated — add monitoring</div>
               </div>
             </div>
-            <div className="mt-5 text-center">
-              <div className="text-base md:text-lg font-bold text-white">{s.title}</div>
-              <p className="mt-1.5 text-sm text-white/65 leading-relaxed">{s.body}</p>
+            <div className="mt-5 rounded-xl border border-orange-500/30 bg-orange-500/[0.06] px-4 py-3 max-w-md">
+              <div className="text-[10px] uppercase tracking-[0.15em] text-orange-300 font-bold mb-1">
+                Worth Watching
+              </div>
+              <div className="text-sm text-white/85">
+                Time in optimal metabolic zone is lower than ideal.
+              </div>
             </div>
+          </ChapterShell>
+
+          {/* Ch 4 — Ranked actions */}
+          <ChapterShell
+            index={4}
+            total={TOTAL}
+            eyebrow="The Plan"
+            reverse
+            image={neraActions.url}
+            imageAlt="Top actions ranked by impact"
+          >
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance">
+              Then it tells her{" "}
+              <span className="text-primary">exactly what to do</span> — ranked by impact.
+            </h3>
+            <p className="mt-5 text-base md:text-lg text-white/70 leading-relaxed">
+              Not 30 generic tips. Two changes, each weighed in points she'll actually recover on
+              her score.
+            </p>
+            <div className="mt-6 space-y-3 max-w-md">
+              <div className="rounded-2xl border-l-4 border-primary bg-white/[0.04] border-y border-r border-white/10 px-5 py-4">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-primary font-bold text-lg tabular-nums">#1</span>
+                  <span className="text-white font-bold text-lg">Sleep 7–8 hours consistently</span>
+                </div>
+                <div className="mt-1 text-sm text-primary/90 font-semibold">
+                  +44 pts — highest single impact
+                </div>
+              </div>
+              <div className="rounded-2xl border-l-4 border-sky-400 bg-white/[0.04] border-y border-r border-white/10 px-5 py-4">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-sky-400 font-bold text-lg tabular-nums">#2</span>
+                  <span className="text-white font-bold text-lg">Add 4,897 more steps daily</span>
+                </div>
+                <div className="mt-1 text-sm text-sky-300 font-semibold">
+                  Reduces metabolic and cardiac risk
+                </div>
+              </div>
+            </div>
+          </ChapterShell>
+
+          {/* Ch 5 — Outcome (no screenshot) */}
+          <motion.div {...fadeUp} className="relative">
+            <div className="text-center max-w-3xl mx-auto">
+              <div className="flex items-center justify-center gap-3 mb-5">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/15 border border-primary/30 text-primary text-sm font-bold tabular-nums">
+                  05
+                </div>
+                <div className="text-[11px] uppercase tracking-[0.18em] text-white/50 font-semibold">
+                  Six Weeks Later · Chapter 5 of {TOTAL}
+                </div>
+              </div>
+              <h3 className="text-3xl md:text-5xl font-bold tracking-tight text-balance">
+                Priya's NERA score climbed from{" "}
+                <span className="text-warning">49</span>{" "}
+                <ArrowRight className="inline w-7 h-7 text-white/40 mx-1 -translate-y-1" />{" "}
+                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  72
+                </span>
+                .
+              </h3>
+              <p className="mt-4 text-base md:text-lg text-white/70">
+                Same devices. Same body. New understanding.
+              </p>
+            </div>
+
+            <div className="mt-10 grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+              {[
+                { label: "Sleep score", from: 35, to: 71, tone: "from-violet-500/20 to-transparent", text: "text-violet-300" },
+                { label: "Metabolic zone", from: 22, to: 58, tone: "from-orange-500/20 to-transparent", text: "text-orange-300" },
+                { label: "Diabetes risk", from: 52, to: 31, tone: "from-emerald-500/20 to-transparent", text: "text-emerald-300", suffix: "%", invert: true },
+              ].map((m) => (
+                <div
+                  key={m.label}
+                  className={`rounded-2xl border border-white/10 bg-gradient-to-br ${m.tone} p-5`}
+                >
+                  <div className="text-[11px] uppercase tracking-wider text-white/55 font-semibold">
+                    {m.label}
+                  </div>
+                  <div className="mt-3 flex items-baseline gap-2">
+                    <span className="text-2xl font-bold text-white/40 tabular-nums line-through">
+                      {m.from}
+                      {m.suffix || ""}
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-white/40" />
+                    <span className={`text-4xl font-bold tabular-nums ${m.text}`}>
+                      {m.to}
+                      {m.suffix || ""}
+                    </span>
+                  </div>
+                  <div className="mt-2 text-xs text-white/55">
+                    {m.invert ? "Lower is better" : "Higher is better"}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-10 text-center text-xs text-white/40 max-w-2xl mx-auto leading-relaxed">
+              Priya is an illustrative composite based on typical NERA reports. Not a medical case.
+              Individual results vary.
+            </p>
           </motion.div>
-        ))}
+
+          {/* Ch 6 — Start your own */}
+          <ChapterShell
+            index={6}
+            total={TOTAL}
+            eyebrow="Your Turn"
+            reverse
+            image={neraPlans.url}
+            imageAlt="NERA AI Premium plans"
+          >
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance">
+              Your report is{" "}
+              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                7 days away
+              </span>
+              .
+            </h3>
+            <p className="mt-5 text-base md:text-lg text-white/70 leading-relaxed">
+              Connect your Agatsa devices. NERA AI does the rest — a weekly report every Monday,
+              daily nudges, predictive warnings, a 3-day recovery forecast and unlimited lifestyle
+              correlations.
+            </p>
+            <ul className="mt-6 grid sm:grid-cols-2 gap-2.5 max-w-md">
+              {[
+                "Weekly AI health report",
+                "Daily nudges from NERA",
+                "Predictive health warnings",
+                "3-day recovery forecast",
+                "City health rank vs peers",
+                "Unlimited lifestyle correlations",
+              ].map((f) => (
+                <li key={f} className="flex items-start gap-2 text-sm text-white/80">
+                  <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-7 flex flex-col sm:flex-row gap-3">
+              <Button asChild size="lg" className="text-base px-7 h-12 btn-glow">
+                <Link to="/pricing">
+                  Activate NERA AI <ArrowRight className="ml-1 w-4 h-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="text-base px-7 h-12 bg-white/5 border-white/20 text-white hover:bg-white/10 hover:text-white"
+              >
+                <Link to="/devices">Browse Devices</Link>
+              </Button>
+            </div>
+          </ChapterShell>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
@@ -911,10 +1061,8 @@ export default function NeraAIPage() {
         visual={<RhythmVisual />}
       />
 
-      <AppShowcase />
-      <CombinedIntelligence />
+      <PriyaReportStory />
       <FutureHealth />
-      <SampleInsights />
       <WhySubscribe />
       <FinalCTA />
     </SiteLayout>
