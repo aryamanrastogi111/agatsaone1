@@ -1,6 +1,7 @@
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import NeraDevicesCTA from "@/components/nera/NeraDevicesCTA";
+import { NeraLicenseButton } from "@/components/nera/NeraLicenseDialog";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -133,14 +134,7 @@ function HeroSection() {
                 Unlock NERA AI <ArrowRight className="ml-1 w-4 h-4" />
               </Link>
             </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="text-base px-8 h-12 bg-white/5 border-white/20 text-white hover:bg-white/10 hover:text-white"
-            >
-              <a href="#how-it-works">See How It Works</a>
-            </Button>
+            <NeraLicenseButton />
           </div>
         </motion.div>
 
