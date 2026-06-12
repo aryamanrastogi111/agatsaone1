@@ -31,6 +31,9 @@ import neraRisk from "@/assets/nera-risk.jpeg.asset.json";
 import neraActions from "@/assets/nera-actions.jpeg.asset.json";
 // neraPlans replaced with in-frame narrative
 import priyaPersona from "@/assets/priya-persona.jpg.asset.json";
+import sanketlifeDevice from "@/assets/sanketlife-2.0-device.webp";
+import easytouchDevice from "@/assets/easytouch-wellness-device.webp";
+import rhythmBand from "@/assets/easytouch-rhythm-band.webp";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
