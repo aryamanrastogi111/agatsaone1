@@ -1,21 +1,8 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { HeartPulse, Activity, Watch, Sparkles, ArrowRight, Building2, Loader2 } from "lucide-react";
+import { HeartPulse, Activity, Watch, Sparkles, ArrowRight, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { NeraLicenseDialog } from "./NeraLicenseDialog";
 
 const DEVICES = [
   {
