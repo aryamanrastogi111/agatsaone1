@@ -143,7 +143,7 @@ export default function NeraDevicesCTA() {
                 <p className="mt-0.5 md:mt-1.5 text-xs md:text-sm text-white/70">{d.tagline}</p>
                 <div className="mt-1 md:mt-2 inline-flex items-center gap-1 text-[10px] md:text-[11px] font-semibold uppercase tracking-wider text-primary">
                   <Sparkles className="w-3 h-3" />
-                  1 yr NERA AI free
+                  3 months NERA AI free
                 </div>
                 <Button asChild size="sm" className="mt-3 md:mt-5 btn-glow w-full md:h-11 md:text-base">
                   <Link to={d.href}>
