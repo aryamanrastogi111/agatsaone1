@@ -27,7 +27,7 @@ import neraScore from "@/assets/nera-score.jpeg.asset.json";
 import neraSignals from "@/assets/nera-signals.jpeg.asset.json";
 import neraRisk from "@/assets/nera-risk.jpeg.asset.json";
 import neraActions from "@/assets/nera-actions.jpeg.asset.json";
-import neraPlans from "@/assets/nera-plans.jpeg.asset.json";
+// neraPlans replaced with in-frame narrative
 import priyaPersona from "@/assets/priya-persona.jpg.asset.json";
 
 const fadeUp = {
@@ -1201,8 +1201,58 @@ function PriyaReportStory() {
             total={TOTAL}
             eyebrow="Your Turn"
             reverse
-            image={neraPlans.url}
-            imageAlt="NERA AI Premium plans"
+            visual={
+              <div className="w-full h-full bg-gradient-to-b from-[#0b0b1a] via-[#10102a] to-[#0b0b1a] p-4 flex flex-col gap-3 overflow-hidden">
+                <div className="text-center pt-4">
+                  <div className="text-[10px] uppercase tracking-[0.18em] text-primary/80 font-semibold">Nera AI Premium</div>
+                  <div className="mt-1 text-lg font-bold text-white leading-tight">Your weekly report,<br/>powered by AI</div>
+                  <div className="mt-1 text-[9px] text-white/50 italic">Used by 12,000+ across India</div>
+                </div>
+                <div className="rounded-xl bg-white/[0.04] border border-white/10 p-2.5 space-y-1.5">
+                  {[
+                    ["📊", "Weekly AI report — every Monday"],
+                    ["🧠", "Health score with risk drivers"],
+                    ["🏙️", "City rank vs your peers"],
+                    ["🔔", "Daily nudges from NERA"],
+                    ["⚠️", "Predictive health warnings"],
+                    ["💤", "Sleep + HRV intelligence"],
+                    ["🔮", "3-day recovery forecast"],
+                    ["🔗", "Unlimited lifestyle correlations"],
+                  ].map(([e, t]) => (
+                    <div key={t} className="flex items-center gap-2 text-[10px] text-white/85">
+                      <span className="text-sm leading-none">{e}</span>
+                      <span className="truncate">{t}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-auto space-y-2">
+                  <div className="text-[9px] uppercase tracking-wider text-white/40 font-semibold px-1">Choose a plan</div>
+                  <div className="rounded-lg border border-primary/50 bg-primary/10 p-2.5 flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-xs font-bold text-white">Annual</span>
+                        <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-primary text-white font-bold">SAVE 66%</span>
+                      </div>
+                      <div className="text-[9px] text-white/55">Best value</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-bold text-white">₹4,999</div>
+                      <div className="text-[8px] text-white/50">/year</div>
+                    </div>
+                  </div>
+                  <div className="rounded-lg border border-white/15 bg-white/[0.03] p-2.5 flex items-center justify-between">
+                    <div>
+                      <div className="text-xs font-bold text-white/90">Monthly</div>
+                      <div className="text-[9px] text-white/55">Billed monthly</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-bold text-white/90">₹499</div>
+                      <div className="text-[8px] text-white/50">/month</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
           >
             <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance text-white">
 
