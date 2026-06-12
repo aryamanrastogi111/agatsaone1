@@ -202,7 +202,6 @@ export default function NeraDevicesCTA() {
             <p className="text-xs md:text-sm text-white/60">
               Don't see your use case? Tell us — we partner across health, fitness, insurance and research.
             </p>
-            <div>
             <div className="md:shrink-0">
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
