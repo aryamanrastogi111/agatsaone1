@@ -129,7 +129,7 @@ export function NeraLicenseDialog({
 
 export function NeraLicenseButton({ variant = "outline" }: { variant?: "outline" | "default" }) {
   const scrollToBusiness = () => {
-    const el = document.getElementById("nera-for-business");
+    const el = document.getElementById("for-businesses-and-platforms");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   if (variant === "outline") {
