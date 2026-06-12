@@ -845,10 +845,83 @@ function PriyaReportStory() {
             total={TOTAL}
             eyebrow="The Plan"
             reverse
-            image={neraActions.url}
             imageAlt="Top actions ranked by impact"
+            visual={
+              <div className="w-full h-full bg-gradient-to-b from-[#0c0c1a] via-[#10102a] to-[#0a0a18] text-white p-4 pt-8 flex flex-col gap-3">
+                <div className="text-[9px] uppercase tracking-[0.18em] text-primary font-bold">
+                  Sparkles · Ranked by Impact
+                </div>
+                <div className="text-[15px] font-bold leading-tight">
+                  Two changes. <span className="text-primary">Biggest score lift.</span>
+                </div>
+
+                {/* Action 1 */}
+                <div className="rounded-xl border border-primary/40 bg-primary/[0.08] p-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-primary">#1 SLEEP</span>
+                    <span className="text-[10px] font-bold text-primary tabular-nums">+44 pts</span>
+                  </div>
+                  <div className="mt-1 text-[12px] font-bold leading-snug">
+                    Sleep 7–8 hrs consistently
+                  </div>
+                  <div className="mt-2 h-1 rounded-full bg-white/10 overflow-hidden">
+                    <div className="h-full w-[88%] bg-gradient-to-r from-primary to-secondary" />
+                  </div>
+                </div>
+
+                {/* Action 2 */}
+                <div className="rounded-xl border border-sky-400/40 bg-sky-400/[0.08] p-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-sky-300">#2 MOVE</span>
+                    <span className="text-[10px] font-bold text-sky-300 tabular-nums">+28 pts</span>
+                  </div>
+                  <div className="mt-1 text-[12px] font-bold leading-snug">
+                    Add 4,897 steps daily
+                  </div>
+                  <div className="mt-2 h-1 rounded-full bg-white/10 overflow-hidden">
+                    <div className="h-full w-[62%] bg-sky-400" />
+                  </div>
+                </div>
+
+                {/* 6-week projection */}
+                <div className="mt-1 rounded-xl border border-emerald-400/30 bg-emerald-400/[0.06] p-3">
+                  <div className="text-[9px] uppercase tracking-wider text-emerald-300 font-bold mb-1.5">
+                    6-Week Projection
+                  </div>
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <div className="text-[9px] text-white/50">Score</div>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-lg font-bold text-white/40 tabular-nums line-through">49</span>
+                        <ArrowRight className="w-3 h-3 text-white/40" />
+                        <span className="text-2xl font-bold tabular-nums text-emerald-300">72</span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-[9px] text-white/50">Diabetes risk</div>
+                      <div className="flex items-baseline gap-1 justify-end">
+                        <span className="text-sm font-bold text-white/40 tabular-nums line-through">52%</span>
+                        <ArrowRight className="w-3 h-3 text-white/40" />
+                        <span className="text-lg font-bold tabular-nums text-emerald-300">31%</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Trend line */}
+                  <svg viewBox="0 0 100 30" className="mt-2 w-full h-7">
+                    <defs>
+                      <linearGradient id="trendGrad" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stopColor="rgb(110 231 183)" stopOpacity="0.5" />
+                        <stop offset="100%" stopColor="rgb(110 231 183)" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M0 24 L20 22 L40 17 L60 12 L80 7 L100 3 L100 30 L0 30 Z" fill="url(#trendGrad)" />
+                    <path d="M0 24 L20 22 L40 17 L60 12 L80 7 L100 3" stroke="rgb(52 211 153)" strokeWidth="1.5" fill="none" />
+                  </svg>
+                </div>
+              </div>
+            }
           >
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance">
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance text-white">
               Then it tells her{" "}
               <span className="text-primary">exactly what to do</span> — ranked by impact.
             </h3>
@@ -875,8 +948,20 @@ function PriyaReportStory() {
                   Reduces metabolic and cardiac risk
                 </div>
               </div>
+              <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/[0.06] px-5 py-4">
+                <div className="text-[11px] uppercase tracking-wider text-emerald-300 font-bold">
+                  Projected in 6 weeks
+                </div>
+                <div className="mt-1 text-sm text-white/85">
+                  Score <span className="text-white/50 line-through">49</span> →{" "}
+                  <span className="text-emerald-300 font-bold">72</span> · Diabetes risk{" "}
+                  <span className="text-white/50 line-through">52%</span> →{" "}
+                  <span className="text-emerald-300 font-bold">31%</span>
+                </div>
+              </div>
             </div>
           </ChapterShell>
+
 
           {/* Ch 5 — Outcome (no screenshot) */}
           <motion.div {...fadeUp} className="relative">
