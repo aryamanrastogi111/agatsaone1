@@ -35,52 +35,6 @@ const DEVICES = [
 ] as const;
 
 export default function NeraDevicesCTA() {
-  const [open, setOpen] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    company: "",
-    email: "",
-    phone: "",
-    requirement: "",
-  });
-
-  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm((f) => ({ ...f, [k]: e.target.value }));
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { name, company, email, phone, requirement } = form;
-    if (!name.trim() || !company.trim() || !email.trim() || !phone.trim() || !requirement.trim()) {
-      toast.error("Please fill in all fields");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      toast.error("Please enter a valid email");
-      return;
-    }
-    setSubmitting(true);
-    try {
-      const { error } = await supabase.functions.invoke("send-nera-license-enquiry", {
-        body: {
-          name: name.trim(),
-          company: company.trim(),
-          email: email.trim(),
-          phone: phone.trim(),
-          requirement: requirement.trim(),
-        },
-      });
-      if (error) throw error;
-      toast.success("Thanks! Our team will reach out within 1 business day.");
-      setForm({ name: "", company: "", email: "", phone: "", requirement: "" });
-      setOpen(false);
-    } catch (err) {
-      console.error(err);
-      toast.error("Could not send. Please email info@agatsa.com directly.");
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   return (
     <section className="relative bg-[hsl(var(--dark-bg))] text-white py-12 md:py-20 overflow-hidden">
