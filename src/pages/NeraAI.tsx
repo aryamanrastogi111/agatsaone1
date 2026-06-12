@@ -118,7 +118,7 @@ function HeroSection() {
             <br />
             <span className="text-white/70">Your Metabolism Knows Another.</span>
             <br />
-            <span className="text-white/70">Your sleep, activity, HRV, stress, more.</span>
+            <span className="text-xl md:text-3xl lg:text-4xl font-medium text-white/70">Your sleep, activity, HRV, stress, more.</span>
             <br />
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               NERA Connects Them All.
