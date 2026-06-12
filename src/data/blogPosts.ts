@@ -17,12 +17,12 @@ export interface BlogPost {
 }
 
 import blogSmartwatchEcg from "@/assets/blog-smartwatch-ecg.webp";
-import blogEcgEarlyDetection from "@/assets/blog-ecg-early-detection.webp.asset.json";
+import sanketlifeHand from "@/assets/sanketlife-hand-new.webp";
 
 export const blogPosts: BlogPost[] = [
   {
     slug: "can-ecg-detect-heart-disease-before-symptoms",
-    image: blogEcgEarlyDetection.url,
+    image: sanketlifeHand,
     title: "Can ECG Detect Heart Disease Before Symptoms Appear? A Guide to Early Detection",
     excerpt: "Most heart attacks don't arrive without warning — the warnings just go unnoticed. Here's how a simple ECG, used routinely at home, can catch silent heart disease, arrhythmias, and early cardiac risk long before chest pain ever shows up.",
     date: "2026-06-12",
