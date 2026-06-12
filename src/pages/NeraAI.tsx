@@ -105,7 +105,7 @@ function HeroSection() {
             <Brain className="w-3 h-3" />
             NERA AI — The Intelligence Layer
           </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-balance">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-balance text-white">
             Your ECG Knows One Story.
             <br />
             <span className="text-white/70">Your Metabolism Knows Another.</span>
@@ -721,7 +721,7 @@ function FinalCTA() {
       </div>
       <div className="container relative mx-auto px-4 md:px-6 text-center">
         <motion.div {...fadeUp} className="max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] text-balance">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] text-balance text-white">
             Your Devices Measure.
             <br />
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
