@@ -98,11 +98,12 @@ export default function NeraDevicesCTA() {
 
         {/* B2B License card */}
         <motion.div
+          id="for-businesses-and-platforms"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="mt-6 md:mt-10 max-w-6xl mx-auto rounded-2xl md:rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/15 via-secondary/10 to-transparent p-5 md:p-10 backdrop-blur-sm"
+          className="mt-6 md:mt-10 max-w-6xl mx-auto rounded-2xl md:rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/15 via-secondary/10 to-transparent p-5 md:p-10 backdrop-blur-sm scroll-mt-20"
         >
           <div className="flex flex-col gap-5 md:gap-8">
             <div>
