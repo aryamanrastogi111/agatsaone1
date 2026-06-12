@@ -622,14 +622,16 @@ function ChapterShell({
   reverse = false,
   image,
   imageAlt,
+  visual,
   children,
 }: {
   index: number;
   total: number;
   eyebrow: string;
   reverse?: boolean;
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
+  visual?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
@@ -655,13 +657,17 @@ function ChapterShell({
         <div className="relative mx-auto w-full max-w-[280px]">
           <div className="absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-primary/30 to-secondary/10 blur-2xl opacity-60" />
           <div className="relative rounded-[2.5rem] border-[8px] border-neutral-800 bg-black overflow-hidden shadow-2xl aspect-[9/19.5]">
-            <img
-              src={image}
-              alt={imageAlt}
-              loading="lazy"
-              className="w-full h-full object-cover object-top"
-            />
-            <div className="absolute inset-x-0 top-0 h-6 flex justify-center pointer-events-none">
+            {visual ? (
+              <div className="w-full h-full overflow-hidden">{visual}</div>
+            ) : image ? (
+              <img
+                src={image}
+                alt={imageAlt || ""}
+                loading="lazy"
+                className="w-full h-full object-cover object-top"
+              />
+            ) : null}
+            <div className="absolute inset-x-0 top-0 h-6 flex justify-center pointer-events-none z-10">
               <div className="mt-1.5 h-4 w-24 rounded-full bg-neutral-900" />
             </div>
           </div>
@@ -670,6 +676,7 @@ function ChapterShell({
     </motion.div>
   );
 }
+
 
 function PriyaReportStory() {
   const TOTAL = 6;
