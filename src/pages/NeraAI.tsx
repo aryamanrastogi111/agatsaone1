@@ -31,6 +31,9 @@ import neraRisk from "@/assets/nera-risk.jpeg.asset.json";
 import neraActions from "@/assets/nera-actions.jpeg.asset.json";
 // neraPlans replaced with in-frame narrative
 import priyaPersona from "@/assets/priya-persona.jpg.asset.json";
+import sanketlifeDevice from "@/assets/sanketlife-2.0-device.webp";
+import easytouchDevice from "@/assets/easytouch-wellness-device.webp";
+import rhythmBand from "@/assets/easytouch-rhythm-band.webp";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -144,18 +147,19 @@ function HeroSection() {
             {/* Devices */}
             <div className="grid gap-3">
               {[
-                { icon: HeartPulse, label: "SanketLife ECG", tone: "from-red-500/30 to-red-500/0" },
-                { icon: Activity, label: "EasyTouch Wellness", tone: "from-emerald-500/30 to-emerald-500/0" },
-                { icon: Watch, label: "Rhythm Band", tone: "from-sky-500/30 to-sky-500/0" },
+                { icon: HeartPulse, label: "SanketLife ECG", tone: "from-red-500/30 to-red-500/0", image: sanketlifeDevice },
+                { icon: Activity, label: "EasyTouch Wellness", tone: "from-emerald-500/30 to-emerald-500/0", image: easytouchDevice },
+                { icon: Watch, label: "Rhythm Band", tone: "from-sky-500/30 to-sky-500/0", image: rhythmBand },
               ].map((d) => (
                 <div
                   key={d.label}
                   className={`relative flex items-center gap-3 rounded-2xl border border-white/10 bg-gradient-to-r ${d.tone} px-4 py-3 backdrop-blur-sm`}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                    <d.icon className="w-5 h-5 text-white" />
+                  <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center overflow-hidden">
+                    <img src={d.image} alt={d.label} loading="lazy" className="w-10 h-10 object-contain" />
                   </div>
                   <span className="text-sm md:text-base font-medium">{d.label}</span>
+                  <d.icon className="w-4 h-4 text-white/60 ml-auto" />
                 </div>
               ))}
             </div>
@@ -347,7 +351,10 @@ function ECGTimelineVisual() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
           ECG Longitudinal Trend
         </div>
-        <HeartPulse className="w-5 h-5 text-red-500" />
+        <div className="flex items-center gap-2">
+          <img src={sanketlifeDevice} alt="SanketLife ECG" loading="lazy" className="w-12 h-12 object-contain drop-shadow-md" />
+          <HeartPulse className="w-5 h-5 text-red-500" />
+        </div>
       </div>
       <div className="space-y-3">
         {points.map((p) => (
@@ -378,7 +385,7 @@ function MetabolicVisual() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
           Meals → Glucose → Insight
         </div>
-        <Activity className="w-5 h-5 text-emerald-500" />
+        <div className="flex items-center gap-2"><img src={easytouchDevice} alt="EasyTouch Wellness" loading="lazy" className="w-12 h-12 object-contain drop-shadow-md" /><Activity className="w-5 h-5 text-emerald-500" /></div>
       </div>
       <div className="space-y-4">
         {[
@@ -414,7 +421,7 @@ function RhythmVisual() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
           Daily Signals
         </div>
-        <Watch className="w-5 h-5 text-sky-500" />
+        <div className="flex items-center gap-2"><img src={rhythmBand} alt="Rhythm Band" loading="lazy" className="w-12 h-12 object-contain drop-shadow-md" /><Watch className="w-5 h-5 text-sky-500" /></div>
       </div>
       <div className="grid grid-cols-3 gap-2.5">
         {inputs.map((i) => (
@@ -460,7 +467,7 @@ function SleepVisual() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
           Sleep Score Trend
         </div>
-        <Moon className="w-5 h-5 text-indigo-500" />
+        <div className="flex items-center gap-2"><img src={rhythmBand} alt="Rhythm Band" loading="lazy" className="w-12 h-12 object-contain drop-shadow-md" /><Moon className="w-5 h-5 text-indigo-500" /></div>
       </div>
       <div className="space-y-3">
         {nights.map((n) => (
@@ -502,7 +509,7 @@ function ActivityVisual() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
           Weekly Activity
         </div>
-        <Zap className="w-5 h-5 text-amber-500" />
+        <div className="flex items-center gap-2"><img src={rhythmBand} alt="Rhythm Band" loading="lazy" className="w-12 h-12 object-contain drop-shadow-md" /><Zap className="w-5 h-5 text-amber-500" /></div>
       </div>
       <div className="space-y-3">
         {days.map((d) => (
@@ -544,7 +551,7 @@ function HRVVisual() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
           HRV Through The Day
         </div>
-        <Activity className="w-5 h-5 text-rose-500" />
+        <div className="flex items-center gap-2"><img src={rhythmBand} alt="Rhythm Band" loading="lazy" className="w-12 h-12 object-contain drop-shadow-md" /><Activity className="w-5 h-5 text-rose-500" /></div>
       </div>
       <div className="space-y-3">
         {readings.map((r) => (
@@ -582,7 +589,7 @@ function StressVisual() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
           Stress Burden Timeline
         </div>
-        <Brain className="w-5 h-5 text-violet-500" />
+        <div className="flex items-center gap-2"><img src={rhythmBand} alt="Rhythm Band" loading="lazy" className="w-12 h-12 object-contain drop-shadow-md" /><Brain className="w-5 h-5 text-violet-500" /></div>
       </div>
       <div className="space-y-3">
         {periods.map((p) => (
