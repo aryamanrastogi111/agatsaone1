@@ -29,6 +29,7 @@ import neraScore from "@/assets/nera-score.jpeg.asset.json";
 import neraSignals from "@/assets/nera-signals.jpeg.asset.json";
 import neraRisk from "@/assets/nera-risk.jpeg.asset.json";
 import neraActions from "@/assets/nera-actions.jpeg.asset.json";
+import agatsaLogo from "@/assets/agatsa-logo.webp";
 // neraPlans replaced with in-frame narrative
 import priyaPersona from "@/assets/priya-persona.jpg.asset.json";
 import sanketlifeDevice from "@/assets/sanketlife-2.0-device.webp";
@@ -134,6 +135,11 @@ function HeroSection() {
 
       <div className="container relative mx-auto px-4 md:px-6 py-20 md:py-28">
         <motion.div {...fadeUp} className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 mb-5">
+            <img src={agatsaLogo} alt="Agatsa" className="h-6 w-6 object-contain" />
+            <span className="text-sm font-bold text-white/90">Agatsa One</span>
+            <span className="text-primary font-bold">●</span>
+          </div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold uppercase tracking-wider mb-6">
             <Brain className="w-3 h-3" />
             NERA AI — The Intelligence Layer
