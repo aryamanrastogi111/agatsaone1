@@ -147,18 +147,19 @@ function HeroSection() {
             {/* Devices */}
             <div className="grid gap-3">
               {[
-                { icon: HeartPulse, label: "SanketLife ECG", tone: "from-red-500/30 to-red-500/0" },
-                { icon: Activity, label: "EasyTouch Wellness", tone: "from-emerald-500/30 to-emerald-500/0" },
-                { icon: Watch, label: "Rhythm Band", tone: "from-sky-500/30 to-sky-500/0" },
+                { icon: HeartPulse, label: "SanketLife ECG", tone: "from-red-500/30 to-red-500/0", image: sanketlifeDevice },
+                { icon: Activity, label: "EasyTouch Wellness", tone: "from-emerald-500/30 to-emerald-500/0", image: easytouchDevice },
+                { icon: Watch, label: "Rhythm Band", tone: "from-sky-500/30 to-sky-500/0", image: rhythmBand },
               ].map((d) => (
                 <div
                   key={d.label}
                   className={`relative flex items-center gap-3 rounded-2xl border border-white/10 bg-gradient-to-r ${d.tone} px-4 py-3 backdrop-blur-sm`}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                    <d.icon className="w-5 h-5 text-white" />
+                  <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center overflow-hidden">
+                    <img src={d.image} alt={d.label} loading="lazy" className="w-10 h-10 object-contain" />
                   </div>
                   <span className="text-sm md:text-base font-medium">{d.label}</span>
+                  <d.icon className="w-4 h-4 text-white/60 ml-auto" />
                 </div>
               ))}
             </div>
