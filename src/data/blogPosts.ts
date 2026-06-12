@@ -17,6 +17,7 @@ export interface BlogPost {
 }
 
 import blogSmartwatchEcg from "@/assets/blog-smartwatch-ecg.webp";
+import blogEcgEarlyDetection from "@/assets/blog-ecg-early-detection.webp.asset.json";
 
 export const blogPosts: BlogPost[] = [
   {
