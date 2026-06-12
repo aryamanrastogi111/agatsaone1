@@ -101,6 +101,28 @@ function Section({
   );
 }
 
+function TrustBar() {
+  const items = [
+    "Built on 1.5+ crore ECG data points",
+    "Powered by Agatsa AI",
+    "Designed for preventive health, not reactive healthcare",
+  ];
+  return (
+    <section className="bg-background border-b border-border">
+      <div className="container mx-auto px-4 md:px-6 py-5 md:py-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 md:gap-12">
+          {items.map((item) => (
+            <div key={item} className="flex items-center gap-2 text-sm md:text-base text-muted-foreground">
+              <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-[hsl(var(--dark-bg))] text-white">
@@ -1316,6 +1338,7 @@ export default function NeraAIPage() {
   return (
     <SiteLayout>
       <HeroSection />
+      <TrustBar />
       <WhyNeraExists />
 
       <DeviceInsightSection
