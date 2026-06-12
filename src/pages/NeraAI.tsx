@@ -735,6 +735,19 @@ function FutureHealth() {
 // SampleInsights removed — replaced by PriyaReportStory narrative.
 
 function WhySubscribe() {
+  const without = [
+    { label: "Individual Reports", desc: "One number, no context", icon: LineChart },
+    { label: "Disconnected numbers", desc: "Signals in silos", icon: Network },
+    { label: "Static snapshots", desc: "Today only, no trend", icon: AlertTriangle },
+    { label: "No predictions", desc: "Reactive, never ahead", icon: XCircle },
+  ];
+  const withNera = [
+    { label: "Health Intelligence", desc: "All signals, one brain", icon: Brain, tone: "from-primary/20 to-primary/5" },
+    { label: "Pattern Discovery", desc: "Hidden links surfaced", icon: Network, tone: "from-secondary/20 to-secondary/5" },
+    { label: "Risk Prediction", desc: "Cardiac & metabolic forecasts", icon: AlertTriangle, tone: "from-amber-500/20 to-amber-500/5" },
+    { label: "Personalized Guidance", desc: "Ranked by impact for you", icon: Sparkles, tone: "from-violet-500/20 to-violet-500/5" },
+    { label: "Longitudinal Tracking", desc: "6-week trends, not snapshots", icon: TrendingUp, tone: "from-emerald-500/20 to-emerald-500/5" },
+  ];
   return (
     <Section
       eyebrow="Why Subscribe"
@@ -745,40 +758,67 @@ function WhySubscribe() {
         </>
       }
     >
-      <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-        <div className="rounded-3xl border border-border bg-muted/40 p-6 md:p-8">
-          <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground mb-5">
-            <XCircle className="w-4 h-4" /> Without NERA
+      <div className="grid md:grid-cols-2 gap-5 md:gap-6 max-w-6xl mx-auto items-start">
+        {/* Without NERA */}
+        <motion.div {...fadeUp} className="relative rounded-3xl border border-border bg-muted/40 p-5 md:p-7 overflow-hidden">
+          <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-foreground/[0.03] blur-2xl" />
+          <div className="relative flex items-center gap-2 mb-5">
+            <div className="w-9 h-9 rounded-xl bg-muted flex items-center justify-center border border-border">
+              <XCircle className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div>
+              <div className="text-sm font-bold text-foreground leading-none">Without NERA</div>
+              <div className="text-[11px] text-muted-foreground mt-0.5">Raw numbers, no narrative</div>
+            </div>
           </div>
-          <ul className="space-y-2.5 text-sm">
-            {["Individual Reports", "Disconnected numbers", "Static snapshots", "No predictions"].map(
-              (i) => (
-                <li key={i} className="flex items-center gap-2 text-muted-foreground">
-                  <span className="w-1 h-1 rounded-full bg-muted-foreground" />
-                  {i}
-                </li>
-              ),
-            )}
-          </ul>
-        </div>
-        <div className="rounded-3xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-secondary/5 p-6 md:p-8 shadow-[var(--purple-shadow)]">
-          <div className="flex items-center gap-2 text-sm font-semibold text-primary mb-5">
-            <CheckCircle2 className="w-4 h-4" /> With NERA
-          </div>
-          <ul className="space-y-2.5 text-sm">
-            {[
-              "Health Intelligence",
-              "Pattern Discovery",
-              "Risk Prediction",
-              "Personalized Guidance",
-              "Longitudinal Tracking",
-            ].map((i) => (
-              <li key={i} className="flex items-center gap-2 font-medium">
-                <CheckCircle2 className="w-4 h-4 text-primary" /> {i}
-              </li>
+          <div className="grid grid-cols-1 gap-2 relative">
+            {without.map((i) => (
+              <div key={i.label} className="flex items-center gap-3 rounded-xl bg-background/60 border border-border/60 px-3 py-2.5">
+                <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                  <i.icon className="w-4 h-4 text-muted-foreground/70" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-sm font-semibold text-foreground/80 leading-tight">{i.label}</div>
+                  <div className="text-[11px] text-muted-foreground leading-tight mt-0.5">{i.desc}</div>
+                </div>
+              </div>
             ))}
-          </ul>
-        </div>
+          </div>
+        </motion.div>
+
+        {/* With NERA */}
+        <motion.div {...fadeUp} className="relative rounded-3xl border-2 border-primary/40 bg-gradient-to-br from-primary/[0.07] via-background to-secondary/[0.07] p-5 md:p-7 shadow-[var(--purple-shadow)] overflow-hidden">
+          <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-primary/15 blur-3xl" />
+          <div className="absolute -bottom-16 -left-16 w-56 h-56 rounded-full bg-secondary/15 blur-3xl" />
+          <div className="relative flex items-center justify-between gap-2 mb-5">
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white shadow-md">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-primary leading-none">With NERA</div>
+                <div className="text-[11px] text-muted-foreground mt-0.5">Every reading, one story</div>
+              </div>
+            </div>
+            <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+              Recommended
+            </span>
+          </div>
+          <div className="grid grid-cols-1 gap-2 relative">
+            {withNera.map((i) => (
+              <div key={i.label} className={`flex items-center gap-3 rounded-xl bg-gradient-to-r ${i.tone} border border-primary/15 px-3 py-2.5`}>
+                <div className="w-8 h-8 rounded-lg bg-background/70 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+                  <i.icon className="w-4 h-4" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-bold text-foreground leading-tight">{i.label}</div>
+                  <div className="text-[11px] text-muted-foreground leading-tight mt-0.5">{i.desc}</div>
+                </div>
+                <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </Section>
   );
@@ -1502,10 +1542,10 @@ export default function NeraAIPage() {
         visual={<StressVisual />}
       />
 
+      <WhySubscribe />
       <PriyaReportStory />
       <FutureHealth />
       <NeraDevicesCTA />
-      <WhySubscribe />
       <FinalCTA />
     </SiteLayout>
   );
