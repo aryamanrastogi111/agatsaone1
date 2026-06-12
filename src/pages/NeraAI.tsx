@@ -420,7 +420,7 @@ function RhythmVisual() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
           Daily Signals
         </div>
-        <Watch className="w-5 h-5 text-sky-500" />
+        <div className="flex items-center gap-2"><img src={rhythmBand} alt="Rhythm Band" loading="lazy" className="w-12 h-12 object-contain drop-shadow-md" /><Watch className="w-5 h-5 text-sky-500" /></div>
       </div>
       <div className="grid grid-cols-3 gap-2.5">
         {inputs.map((i) => (
