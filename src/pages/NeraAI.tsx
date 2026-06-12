@@ -804,10 +804,11 @@ function PriyaReportStory() {
             image={neraRisk.url}
             imageAlt="Cardiac and metabolic risk estimates"
           >
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance">
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-balance text-white">
               Then NERA does the math{" "}
               <span className="text-primary">no single device can</span>.
             </h3>
+
             <p className="mt-5 text-base md:text-lg text-white/70 leading-relaxed">
               124 sugar readings across 6 days. Clinical thresholds — Rodbard, Monnier — applied
               against her ECG and lifestyle data. Not a diagnosis. A direction.
