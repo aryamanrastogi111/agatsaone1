@@ -1325,6 +1325,80 @@ export default function NeraAIPage() {
         visual={<RhythmVisual />}
       />
 
+      <DeviceInsightSection
+        reverse
+        eyebrow="Sleep Intelligence"
+        title={<>Understand How You Rest.</>}
+        subtitle="NERA analyzes your sleep architecture — deep sleep, REM, and wake patterns — and connects rest quality to heart recovery and metabolic stability."
+        icon={Moon}
+        iconTone="bg-indigo-500/10 text-indigo-500 border border-indigo-500/20"
+        insights={[
+          "Sleep Quality Score",
+          "Deep & REM sleep tracking",
+          "Sleep consistency patterns",
+          "Bedtime routine impact",
+          "Sleep-heart recovery link",
+          "Next-day energy prediction",
+        ]}
+        quote="Your deep sleep drops by 40 minutes on high-stress days. NERA suggests a wind-down routine starting 30 minutes earlier."
+        visual={<SleepVisual />}
+      />
+
+      <DeviceInsightSection
+        eyebrow="Activity Intelligence"
+        title={<>See Movement As Medicine.</>}
+        subtitle="NERA tracks daily activity, steps, and active minutes — then correlates movement patterns with metabolic response and cardiovascular recovery."
+        icon={Zap}
+        iconTone="bg-amber-500/10 text-amber-600 border border-amber-500/20"
+        insights={[
+          "Activity Balance Score",
+          "Steps & active minutes trend",
+          "Sedentary behaviour alerts",
+          "Movement-metabolism link",
+          "Workout recovery tracking",
+          "Weekly consistency insights",
+        ]}
+        quote="Your metabolic zone improves by 18% on days with 45+ minutes of moderate activity. NERA builds this into your weekly target."
+        visual={<ActivityVisual />}
+      />
+
+      <DeviceInsightSection
+        reverse
+        eyebrow="HRV Intelligence"
+        title={<>Read Your Nervous System.</>}
+        subtitle="NERA monitors heart rate variability throughout the day — a window into how your body balances stress and recovery in real time."
+        icon={Activity}
+        iconTone="bg-rose-500/10 text-rose-500 border border-rose-500/20"
+        insights={[
+          "HRV Baseline Tracking",
+          "Morning readiness score",
+          "Autonomic nervous system balance",
+          "Stress-recovery ratio",
+          "Overtraining & burnout flags",
+          "Lifestyle intervention response",
+        ]}
+        quote="Your evening HRV drops below baseline 3 days in a row. NERA flags this as early fatigue — before it affects sleep or mood."
+        visual={<HRVVisual />}
+      />
+
+      <DeviceInsightSection
+        eyebrow="Stress Intelligence"
+        title={<>Know Your Stress Before It Knows You.</>}
+        subtitle="NERA measures stress burden across your day — identifying triggers, recovery gaps, and the cumulative impact on heart and metabolic health."
+        icon={Brain}
+        iconTone="bg-violet-500/10 text-violet-500 border border-violet-500/20"
+        insights={[
+          "Stress Burden Score",
+          "Peak stress time identification",
+          "Recovery window tracking",
+          "Stress-sleep disruption link",
+          "Stress-metabolic spike alerts",
+          "Personalized calm-down prompts",
+        ]}
+        quote="Afternoon stress peaks repeat at 2 PM on workdays. NERA suggests a 10-minute breathing window — your HRV recovers 22% faster."
+        visual={<StressVisual />}
+      />
+
       <PriyaReportStory />
       <FutureHealth />
       <WhySubscribe />
