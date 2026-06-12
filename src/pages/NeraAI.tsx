@@ -384,7 +384,7 @@ function MetabolicVisual() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
           Meals → Glucose → Insight
         </div>
-        <Activity className="w-5 h-5 text-emerald-500" />
+        <div className="flex items-center gap-2"><img src={easytouchDevice} alt="EasyTouch Wellness" loading="lazy" className="w-12 h-12 object-contain drop-shadow-md" /><Activity className="w-5 h-5 text-emerald-500" /></div>
       </div>
       <div className="space-y-4">
         {[
