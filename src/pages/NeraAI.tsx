@@ -350,8 +350,10 @@ function ECGTimelineVisual() {
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
           ECG Longitudinal Trend
         </div>
-        <HeartPulse className="w-5 h-5 text-red-500" />
-      </div>
+        <div className="flex items-center gap-2">
+          <img src={sanketlifeDevice} alt="SanketLife ECG" loading="lazy" className="w-12 h-12 object-contain drop-shadow-md" />
+          <HeartPulse className="w-5 h-5 text-red-500" />
+        </div>
       <div className="space-y-3">
         {points.map((p) => (
           <div key={p.label} className="flex items-center gap-3">
