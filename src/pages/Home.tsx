@@ -24,6 +24,7 @@ export default function HomePage() {
     <SiteLayout>
       <HeroSection />
       <ProblemSection />
+      <IntersectionSection />
       <TimelineInsightSection />
       <NeraAISection />
       <DeviceShowcaseSection />
