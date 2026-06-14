@@ -3,6 +3,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import {
   HeroSection,
   ProblemSection,
+  IntersectionSection,
   DeviceShowcaseSection,
   TimelineInsightSection,
   NeraAISection,
@@ -23,6 +24,7 @@ export default function HomePage() {
     <SiteLayout>
       <HeroSection />
       <ProblemSection />
+      <IntersectionSection />
       <TimelineInsightSection />
       <NeraAISection />
       <DeviceShowcaseSection />
