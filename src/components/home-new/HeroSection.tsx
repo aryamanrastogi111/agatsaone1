@@ -9,6 +9,8 @@ import appScreenNera from "@/assets/app-screen-nera.webp";
 import sanketDevice from "@/assets/sanketlife-card.webp";
 import easytouchDevice from "@/assets/easytouch-rhythm-new.webp";
 import coreBalanceDevice from "@/assets/corebalance-card.webp";
+import lifestyleImage from "@/assets/easytouch-meal-lifestyle.webp";
+import sanketHandImage from "@/assets/sanketlife-hand-new.jpg";
 
 const phoneScreens = [appScreenNera, appScreen1, appScreen2, appScreen3];
 
@@ -97,6 +99,43 @@ export function HeroSection() {
                 </li>
               ))}
             </motion.ul>
+
+            <motion.div {...stagger(5)} className="grid grid-cols-2 gap-3 pt-1 max-w-[540px]">
+              <div className="relative rounded-xl overflow-hidden aspect-[4/3] border border-border bg-muted">
+                <img
+                  src={sanketHandImage}
+                  alt="Taking an ECG at home with SanketLife"
+                  loading="eager"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-foreground bg-background/90 backdrop-blur px-2 py-1 rounded">
+                    ECG at home
+                  </span>
+                  <span className="text-[10px] font-mono text-muted-foreground bg-background/90 backdrop-blur px-1.5 py-1 rounded">
+                    60s
+                  </span>
+                </div>
+              </div>
+              <div className="relative rounded-xl overflow-hidden aspect-[4/3] border border-border bg-muted">
+                <img
+                  src={lifestyleImage}
+                  alt="Everyday metabolic wellness tracking"
+                  loading="eager"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-foreground bg-background/90 backdrop-blur px-2 py-1 rounded">
+                    Metabolic wellness
+                  </span>
+                  <span className="text-[10px] font-mono text-muted-foreground bg-background/90 backdrop-blur px-1.5 py-1 rounded">
+                    Daily
+                  </span>
+                </div>
+              </div>
+            </motion.div>
 
             <motion.div {...stagger(5)} className="flex flex-wrap gap-3 pt-2">
               <Link
