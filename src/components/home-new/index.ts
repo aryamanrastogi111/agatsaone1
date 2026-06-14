@@ -1,5 +1,6 @@
 export { HeroSection } from "./HeroSection";
 export { ProblemSection } from "./ProblemSection";
+export { IntersectionSection } from "./IntersectionSection";
 export { HowItWorksSection } from "./HowItWorksSection";
 export { DeviceShowcaseSection } from "./DeviceShowcaseSection";
 export { TimelineInsightSection } from "./TimelineInsightSection";
