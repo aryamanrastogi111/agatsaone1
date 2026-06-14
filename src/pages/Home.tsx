@@ -3,6 +3,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import {
   HeroSection,
   ProblemSection,
+  IntersectionSection,
   DeviceShowcaseSection,
   TimelineInsightSection,
   NeraAISection,
