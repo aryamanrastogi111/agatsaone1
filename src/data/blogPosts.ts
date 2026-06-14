@@ -23,6 +23,171 @@ import blogEcgPreventive from "@/assets/blog-ecg-preventive-heart.jpg";
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "can-ecg-detect-heart-disease-before-symptoms-appear",
+    image: blogEcgPreventive,
+    title: "Can ECG Detect Heart Disease Before Symptoms Appear?",
+    excerpt: "Heart disease remains one of the leading causes of death worldwide. Many people develop heart abnormalities years before experiencing symptoms. Here's how ECG monitoring can help detect problems early.",
+    date: "2026-06-14",
+    readTime: "8 min read",
+    sections: [
+      {
+        type: "paragraph",
+        content: "Heart disease remains one of the leading causes of death worldwide. The alarming part? Many people develop heart abnormalities years before experiencing symptoms such as chest pain, shortness of breath, palpitations, or fatigue."
+      },
+      {
+        type: "paragraph",
+        content: "This raises an important question: Can an ECG detect heart disease before symptoms appear? The answer is: sometimes, yes. An Electrocardiogram (ECG) is one of the most widely used tools for evaluating the electrical activity of the heart and can often identify abnormalities long before a person feels anything unusual."
+      },
+      {
+        type: "heading",
+        content: "What Does An ECG Actually Detect?"
+      },
+      {
+        type: "paragraph",
+        content: "An ECG records the electrical signals that control your heartbeat. A standard 12-lead ECG can help identify:"
+      },
+      {
+        type: "list",
+        items: [
+          "Heart rhythm abnormalities (Arrhythmias)",
+          "Atrial Fibrillation (AFib)",
+          "Conduction abnormalities",
+          "Previous silent heart attacks",
+          "Ischemic changes",
+          "Ventricular enlargement",
+          "Certain structural heart abnormalities",
+          "Abnormal heart rates"
+        ]
+      },
+      {
+        type: "paragraph",
+        content: "In many cases, these changes may appear before noticeable symptoms develop. This is why ECG testing remains one of the most valuable tools in preventive cardiology."
+      },
+      {
+        type: "heading",
+        content: "Can Heart Disease Exist Without Symptoms?"
+      },
+      {
+        type: "paragraph",
+        content: "Yes. Many cardiac conditions progress silently. For example:"
+      },
+      {
+        type: "list",
+        items: [
+          "High blood pressure may gradually affect heart function.",
+          "Coronary artery disease can develop over years.",
+          "Certain rhythm abnormalities may occur intermittently.",
+          "Early cardiac stress may not produce obvious symptoms."
+        ]
+      },
+      {
+        type: "paragraph",
+        content: "A person may feel completely healthy while subtle changes are already occurring within the heart. This is one reason why cardiologists often recommend ECG testing for individuals with risk factors such as:"
+      },
+      {
+        type: "list",
+        items: [
+          "Diabetes",
+          "Hypertension",
+          "Obesity",
+          "Family history of heart disease",
+          "Smoking",
+          "High stress levels",
+          "Age above 40"
+        ]
+      },
+      {
+        type: "heading",
+        content: "The Limitation Of A Single ECG"
+      },
+      {
+        type: "paragraph",
+        content: "While ECGs are powerful, there is an important limitation. An ECG captures only a snapshot of your heart at one moment in time. Think of it like taking a photograph. If an abnormality is not occurring during that recording, it may not appear. This is why a normal ECG does not always guarantee the absence of heart disease. The more important question is often: How is your ECG changing over time?"
+      },
+      {
+        type: "heading",
+        content: "Why Longitudinal ECG Monitoring Matters"
+      },
+      {
+        type: "paragraph",
+        content: "The future of preventive heart care is moving beyond isolated ECG reports. Instead of looking at one ECG, healthcare professionals increasingly focus on trends. Changes that may seem insignificant in a few a report can become meaningful when observed over months or years. Longitudinal ECG monitoring helps answer questions such as:"
+      },
+      {
+        type: "list",
+        items: [
+          "Is heart rhythm becoming less stable?",
+          "Are electrical patterns changing over time?",
+          "Is lifestyle affecting heart health?",
+          "Are stress and sleep influencing cardiac recovery?"
+        ]
+      },
+      {
+        type: "paragraph",
+        content: "This trend-based approach can provide deeper insights than a single ECG reading."
+      },
+      {
+        type: "heading",
+        content: "How Mobile ECG Devices Are Changing Heart Monitoring"
+      },
+      {
+        type: "paragraph",
+        content: "Traditionally, ECGs were available only in hospitals and diagnostic centres. Today, advancements in mobile ECG devices have made heart monitoring more accessible than ever. Portable ECG devices allow users to record ECGs conveniently at home, during travel, at workplaces, health camps, and remote locations. This increased accessibility enables more frequent monitoring and better visibility into heart health trends."
+      },
+      {
+        type: "heading",
+        content: "The Role Of Leadless ECG Technology"
+      },
+      {
+        type: "paragraph",
+        content: "Leadless ECG technology is making cardiac screening simpler and more convenient. Unlike conventional ECG setups that require multiple wires and complex preparation, modern leadless ECG devices can acquire ECG recordings quickly and efficiently. This has significantly improved adoption in preventive screening programs, community health initiatives, telemedicine, and home-based cardiac monitoring. As leadless ECG technology becomes more accessible, more individuals can proactively monitor their heart health rather than waiting for symptoms to appear."
+      },
+      {
+        type: "heading",
+        content: "SanketLife ECG: Bringing Hospital-Grade ECG Accessibility Anywhere"
+      },
+      {
+        type: "paragraph",
+        content: "SanketLife ECG was developed with a simple vision: To make high-quality ECG testing available beyond hospitals. As a portable mobile ECG device capable of recording a 12-lead ECG, SanketLife enables healthcare professionals, clinics, corporations, screening programs, and individuals to access ECG recordings conveniently."
+      },
+      {
+        type: "paragraph",
+        content: "The real value of a mobile ECG device is not simply recording an ECG. It is enabling more frequent monitoring, earlier detection opportunities, and improved access to cardiac screening. Whether used in preventive health checkups, telemedicine programs, rural healthcare initiatives, or home-based monitoring, SanketLife ECG helps bridge the gap between accessibility and cardiac care."
+      },
+      {
+        type: "heading",
+        content: "The Future Is ECG Intelligence"
+      },
+      {
+        type: "paragraph",
+        content: "The future of heart health is not about collecting more reports. It is about understanding what those reports mean over time. As ECG intelligence evolves, healthcare will increasingly focus on:"
+      },
+      {
+        type: "list",
+        items: [
+          "Trend analysis",
+          "Longitudinal monitoring",
+          "Early risk identification",
+          "AI-assisted interpretation",
+          "Personalized cardiac insights"
+        ]
+      },
+      {
+        type: "paragraph",
+        content: "The goal is not merely detecting disease. The goal is identifying changes before disease progresses."
+      },
+      {
+        type: "heading",
+        content: "So, Can ECG Detect Heart Disease Before Symptoms Appear?"
+      },
+      {
+        type: "paragraph",
+        content: "In many cases, yes. An ECG can reveal abnormalities before symptoms become obvious. However, the greatest value often comes not from a single ECG but from monitoring heart health consistently over time. Because when it comes to heart disease, waiting for symptoms may mean waiting too long. The earlier we understand the heart's signals, the greater the opportunity to act before serious problems develop."
+      }
+    ],
+    ctaText: "Start Monitoring Your Heart with SanketLife ECG",
+    ctaLink: "/devices/sanketlife-ecg"
+  },
+  {
     slug: "why-your-blood-sugar-can-be-unstable-even-if-not-diabetic",
     image: blogMetabolicHealth,
     title: "Why Your Blood Sugar Can Be Unstable Even If You're Not Diabetic?",
