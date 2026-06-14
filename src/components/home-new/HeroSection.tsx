@@ -9,6 +9,8 @@ import appScreenNera from "@/assets/app-screen-nera.webp";
 import sanketDevice from "@/assets/sanketlife-card.webp";
 import easytouchDevice from "@/assets/easytouch-rhythm-new.webp";
 import coreBalanceDevice from "@/assets/corebalance-card.webp";
+import lifestyleImage from "@/assets/easytouch-meal-lifestyle.webp";
+import sanketHandImage from "@/assets/sanketlife-hand-new.jpg";
 
 const phoneScreens = [appScreenNera, appScreen1, appScreen2, appScreen3];
 
