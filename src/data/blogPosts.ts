@@ -32,11 +32,31 @@ export const blogPosts: BlogPost[] = [
     sections: [
       {
         type: "paragraph",
-        content: "Heart disease remains one of the leading causes of death worldwide. The alarming part? Many people develop heart abnormalities years before experiencing symptoms such as chest pain, shortness of breath, palpitations, or fatigue."
+        content: "Heart disease remains one of the leading causes of death worldwide."
       },
       {
         type: "paragraph",
-        content: "This raises an important question: Can an ECG detect heart disease before symptoms appear? The answer is: sometimes, yes. An Electrocardiogram (ECG) is one of the most widely used tools for evaluating the electrical activity of the heart and can often identify abnormalities long before a person feels anything unusual."
+        content: "The alarming part?"
+      },
+      {
+        type: "paragraph",
+        content: "Many people develop heart abnormalities years before experiencing symptoms such as chest pain, shortness of breath, palpitations, or fatigue."
+      },
+      {
+        type: "paragraph",
+        content: "This raises an important question:"
+      },
+      {
+        type: "paragraph",
+        content: "Can an ECG detect heart disease before symptoms appear?"
+      },
+      {
+        type: "paragraph",
+        content: "The answer is: sometimes, yes."
+      },
+      {
+        type: "paragraph",
+        content: "An Electrocardiogram (ECG) is one of the most widely used tools for evaluating the electrical activity of the heart and can often identify abnormalities long before a person feels anything unusual."
       },
       {
         type: "heading",
@@ -44,7 +64,11 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "An ECG records the electrical signals that control your heartbeat. A standard 12-lead ECG can help identify:"
+        content: "An ECG records the electrical signals that control your heartbeat."
+      },
+      {
+        type: "paragraph",
+        content: "A standard 12-lead ECG can help identify:"
       },
       {
         type: "list",
@@ -61,7 +85,11 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "In many cases, these changes may appear before noticeable symptoms develop. This is why ECG testing remains one of the most valuable tools in preventive cardiology."
+        content: "In many cases, these changes may appear before noticeable symptoms develop."
+      },
+      {
+        type: "paragraph",
+        content: "This is why ECG testing remains one of the most valuable tools in preventive cardiology."
       },
       {
         type: "heading",
@@ -69,7 +97,15 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "Yes. Many cardiac conditions progress silently. For example:"
+        content: "Yes."
+      },
+      {
+        type: "paragraph",
+        content: "Many cardiac conditions progress silently."
+      },
+      {
+        type: "paragraph",
+        content: "For example:"
       },
       {
         type: "list",
@@ -82,7 +118,11 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "A person may feel completely healthy while subtle changes are already occurring within the heart. This is one reason why cardiologists often recommend ECG testing for individuals with risk factors such as:"
+        content: "A person may feel completely healthy while subtle changes are already occurring within the heart."
+      },
+      {
+        type: "paragraph",
+        content: "This is one reason why cardiologists often recommend ECG testing for individuals with risk factors such as:"
       },
       {
         type: "list",
@@ -102,7 +142,31 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "While ECGs are powerful, there is an important limitation. An ECG captures only a snapshot of your heart at one moment in time. Think of it like taking a photograph. If an abnormality is not occurring during that recording, it may not appear. This is why a normal ECG does not always guarantee the absence of heart disease. The more important question is often: How is your ECG changing over time?"
+        content: "While ECGs are powerful, there is an important limitation."
+      },
+      {
+        type: "paragraph",
+        content: "An ECG captures only a snapshot of your heart at one moment in time."
+      },
+      {
+        type: "paragraph",
+        content: "Think of it like taking a photograph."
+      },
+      {
+        type: "paragraph",
+        content: "If an abnormality is not occurring during that recording, it may not appear."
+      },
+      {
+        type: "paragraph",
+        content: "This is why a normal ECG does not always guarantee the absence of heart disease."
+      },
+      {
+        type: "paragraph",
+        content: "The more important question is often:"
+      },
+      {
+        type: "paragraph",
+        content: "How is your ECG changing over time?"
       },
       {
         type: "heading",
@@ -110,7 +174,19 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "The future of preventive heart care is moving beyond isolated ECG reports. Instead of looking at one ECG, healthcare professionals increasingly focus on trends. Changes that may seem insignificant in a few a report can become meaningful when observed over months or years. Longitudinal ECG monitoring helps answer questions such as:"
+        content: "The future of preventive heart care is moving beyond isolated ECG reports."
+      },
+      {
+        type: "paragraph",
+        content: "Instead of looking at one ECG, healthcare professionals increasingly focus on trends."
+      },
+      {
+        type: "paragraph",
+        content: "Changes that may seem insignificant in a single report can become meaningful when observed over months or years."
+      },
+      {
+        type: "paragraph",
+        content: "Longitudinal ECG monitoring helps answer questions such as:"
       },
       {
         type: "list",
@@ -131,7 +207,19 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "Traditionally, ECGs were available only in hospitals and diagnostic centres. Today, advancements in mobile ECG devices have made heart monitoring more accessible than ever. Portable ECG devices allow users to record ECGs conveniently at home, during travel, at workplaces, health camps, and remote locations. This increased accessibility enables more frequent monitoring and better visibility into heart health trends."
+        content: "Traditionally, ECGs were available only in hospitals and diagnostic centres."
+      },
+      {
+        type: "paragraph",
+        content: "Today, advancements in mobile ECG devices have made heart monitoring more accessible than ever."
+      },
+      {
+        type: "paragraph",
+        content: "Portable ECG devices allow users to record ECGs conveniently at home, during travel, at workplaces, health camps, and remote locations."
+      },
+      {
+        type: "paragraph",
+        content: "This increased accessibility enables more frequent monitoring and better visibility into heart health trends."
       },
       {
         type: "heading",
@@ -139,7 +227,19 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "Leadless ECG technology is making cardiac screening simpler and more convenient. Unlike conventional ECG setups that require multiple wires and complex preparation, modern leadless ECG devices can acquire ECG recordings quickly and efficiently. This has significantly improved adoption in preventive screening programs, community health initiatives, telemedicine, and home-based cardiac monitoring. As leadless ECG technology becomes more accessible, more individuals can proactively monitor their heart health rather than waiting for symptoms to appear."
+        content: "Leadless ECG technology is making cardiac screening simpler and more convenient."
+      },
+      {
+        type: "paragraph",
+        content: "Unlike conventional ECG setups that require multiple wires and complex preparation, modern leadless ECG devices can acquire ECG recordings quickly and efficiently."
+      },
+      {
+        type: "paragraph",
+        content: "This has significantly improved adoption in preventive screening programs, community health initiatives, telemedicine, and home-based cardiac monitoring."
+      },
+      {
+        type: "paragraph",
+        content: "As leadless ECG technology becomes more accessible, more individuals can proactively monitor their heart health rather than waiting for symptoms to appear."
       },
       {
         type: "heading",
@@ -147,11 +247,27 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "SanketLife ECG was developed with a simple vision: To make high-quality ECG testing available beyond hospitals. As a portable mobile ECG device capable of recording a 12-lead ECG, SanketLife enables healthcare professionals, clinics, corporations, screening programs, and individuals to access ECG recordings conveniently."
+        content: "SanketLife ECG was developed with a simple vision:"
       },
       {
         type: "paragraph",
-        content: "The real value of a mobile ECG device is not simply recording an ECG. It is enabling more frequent monitoring, earlier detection opportunities, and improved access to cardiac screening. Whether used in preventive health checkups, telemedicine programs, rural healthcare initiatives, or home-based monitoring, SanketLife ECG helps bridge the gap between accessibility and cardiac care."
+        content: "To make high-quality ECG testing available beyond hospitals."
+      },
+      {
+        type: "paragraph",
+        content: "As a portable mobile ECG device capable of recording a 12-lead ECG, SanketLife enables healthcare professionals, clinics, corporations, screening programs, and individuals to access ECG recordings conveniently."
+      },
+      {
+        type: "paragraph",
+        content: "The real value of a mobile ECG device is not simply recording an ECG."
+      },
+      {
+        type: "paragraph",
+        content: "It is enabling more frequent monitoring, earlier detection opportunities, and improved access to cardiac screening."
+      },
+      {
+        type: "paragraph",
+        content: "Whether used in preventive health checkups, telemedicine programs, rural healthcare initiatives, or home-based monitoring, SanketLife ECG helps bridge the gap between accessibility and cardiac care."
       },
       {
         type: "heading",
@@ -159,7 +275,15 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "The future of heart health is not about collecting more reports. It is about understanding what those reports mean over time. As ECG intelligence evolves, healthcare will increasingly focus on:"
+        content: "The future of heart health is not about collecting more reports."
+      },
+      {
+        type: "paragraph",
+        content: "It is about understanding what those reports mean over time."
+      },
+      {
+        type: "paragraph",
+        content: "As ECG intelligence evolves, healthcare will increasingly focus on:"
       },
       {
         type: "list",
@@ -173,7 +297,11 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "The goal is not merely detecting disease. The goal is identifying changes before disease progresses."
+        content: "The goal is not merely detecting disease."
+      },
+      {
+        type: "paragraph",
+        content: "The goal is identifying changes before disease progresses."
       },
       {
         type: "heading",
@@ -181,7 +309,23 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content: "In many cases, yes. An ECG can reveal abnormalities before symptoms become obvious. However, the greatest value often comes not from a single ECG but from monitoring heart health consistently over time. Because when it comes to heart disease, waiting for symptoms may mean waiting too long. The earlier we understand the heart's signals, the greater the opportunity to act before serious problems develop."
+        content: "In many cases, yes."
+      },
+      {
+        type: "paragraph",
+        content: "An ECG can reveal abnormalities before symptoms become obvious."
+      },
+      {
+        type: "paragraph",
+        content: "However, the greatest value often comes not from a single ECG but from monitoring heart health consistently over time."
+      },
+      {
+        type: "paragraph",
+        content: "Because when it comes to heart disease, waiting for symptoms may mean waiting too long."
+      },
+      {
+        type: "paragraph",
+        content: "The earlier we understand the heart's signals, the greater the opportunity to act before serious problems develop."
       }
     ],
     ctaText: "Start Monitoring Your Heart with SanketLife ECG",
