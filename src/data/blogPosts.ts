@@ -18,13 +18,14 @@ export interface BlogPost {
 
 import blogSmartwatchEcg from "@/assets/blog-smartwatch-ecg.webp";
 import sanketlifeHand from "@/assets/sanketlife-hand-new.webp";
+import sanketlife2Product from "@/assets/sanketlife-2-product-new.webp";
 import blogMetabolicHealth from "@/assets/blog-metabolic-health-trends.jpg";
 import blogEcgPreventive from "@/assets/blog-ecg-preventive-heart.jpg";
 
 export const blogPosts: BlogPost[] = [
   {
     slug: "can-ecg-detect-heart-disease-before-symptoms-appear",
-    image: blogEcgPreventive,
+    image: sanketlife2Product,
     title: "Can ECG Detect Heart Disease Before Symptoms Appear?",
     excerpt: "Heart disease remains one of the leading causes of death worldwide. Many people develop heart abnormalities years before experiencing symptoms. Here's how ECG monitoring can help detect problems early.",
     date: "2026-06-14",
