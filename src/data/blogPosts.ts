@@ -18,6 +18,7 @@ export interface BlogPost {
 
 import blogSmartwatchEcg from "@/assets/blog-smartwatch-ecg.webp";
 import sanketlifeHand from "@/assets/sanketlife-hand-new.webp";
+import sanketlife2Product from "@/assets/sanketlife-2-product-new.webp";
 import blogMetabolicHealth from "@/assets/blog-metabolic-health-trends.jpg";
 import blogEcgPreventive from "@/assets/blog-ecg-preventive-heart.jpg";
 
