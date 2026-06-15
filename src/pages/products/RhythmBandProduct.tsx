@@ -128,9 +128,17 @@ export default function RhythmBandProduct() {
           <motion.p
             {...fadeUp}
             transition={{ duration: 0.7, delay: 0.03 }}
-            className="mb-5 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-sm font-semibold tracking-[0.1em] uppercase text-primary"
+            className="mb-3 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-sm font-semibold tracking-[0.1em] uppercase text-primary"
           >
             EasyTouch Rhythm Band
+          </motion.p>
+
+          <motion.p
+            {...fadeUp}
+            transition={{ duration: 0.7, delay: 0.05 }}
+            className="mb-5 text-sm md:text-base font-medium text-muted-foreground tracking-wide"
+          >
+            A Preventive Health Intelligence Band
           </motion.p>
 
           <motion.h1
