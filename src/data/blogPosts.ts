@@ -25,7 +25,7 @@ import blogEcgPreventive from "@/assets/blog-ecg-preventive-heart.jpg";
 export const blogPosts: BlogPost[] = [
   {
     slug: "can-ecg-detect-heart-disease-before-symptoms-appear",
-    image: blogEcgPreventive,
+    image: sanketlife2Product,
     title: "Can ECG Detect Heart Disease Before Symptoms Appear?",
     excerpt: "Heart disease remains one of the leading causes of death worldwide. Many people develop heart abnormalities years before experiencing symptoms. Here's how ECG monitoring can help detect problems early.",
     date: "2026-06-14",
