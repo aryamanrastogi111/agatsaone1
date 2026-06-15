@@ -706,7 +706,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "paragraph",
-        content:                   : "The bigger concern is a pattern."
+        content: "The bigger concern is a pattern."
       },
       {
         type: "paragraph",
