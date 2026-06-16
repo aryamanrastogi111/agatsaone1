@@ -762,6 +762,10 @@ export default function CheckoutPage() {
               </div>
             </>
           )}
+          <div className="flex justify-between text-sm text-muted-foreground">
+            <span>Shipping {isIntl ? "(International)" : "(India)"}</span>
+            <span>{isIntl ? fmtPaise(INTL_SHIPPING_PAISE) : "FREE"}</span>
+          </div>
           <div className="flex justify-between text-base font-bold text-foreground">
             <span>Total</span>
             <span>{quoteLoading ? "…" : fmtPaise(displayTotalPaise)}</span>
@@ -772,6 +776,31 @@ export default function CheckoutPage() {
         {step === 1 && (
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-foreground">Delivery Address</h2>
+
+            {/* Country */}
+            <div>
+              <label className="text-sm font-medium text-foreground block mb-1.5">Country</label>
+              <select
+                value={country}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setCountry(v);
+                  // Reset pincode-derived fields when toggling country
+                  setPincodeChecked(false);
+                  setCityAutoFilled(false);
+                }}
+                className="w-full px-4 py-3 border border-border rounded-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
+              >
+                {COUNTRIES.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              {isIntl && (
+                <p className="text-xs text-amber-600 mt-1.5">
+                  Flat ₹2,000 international shipping will be added at checkout.
+                </p>
+              )}
+            </div>
 
             {/* Pincode */}
             <div>
@@ -920,7 +949,10 @@ export default function CheckoutPage() {
             <div className="bg-muted/30 rounded-xl p-3 text-sm text-muted-foreground border border-border">
               <p className="font-medium text-foreground mb-1">Shipping to</p>
               <p>{addressLine1}{addressLine2 ? `, ${addressLine2}` : ""}</p>
-              <p>{city}, {state} - {pincode}</p>
+              <p>{city}, {state} - {pincode}{isIntl ? `, ${country}` : ""}</p>
+              {isIntl && (
+                <p className="text-xs text-amber-600 mt-1">+ ₹2,000 international shipping included</p>
+              )}
             </div>
 
             {/* Pay button */}
