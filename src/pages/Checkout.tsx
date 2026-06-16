@@ -30,17 +30,54 @@ const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 // Flat international shipping surcharge: ₹2000
 const INTL_SHIPPING_PAISE = 200000;
 
-const COUNTRIES = [
-  "India",
-  "United States", "United Kingdom", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain",
-  "Singapore", "Malaysia", "Australia", "New Zealand", "Canada",
-  "Germany", "France", "Netherlands", "Spain", "Italy", "Switzerland", "Sweden", "Ireland",
-  "Japan", "Hong Kong", "South Korea", "Thailand", "Indonesia", "Philippines", "Vietnam",
-  "South Africa", "Kenya", "Nigeria", "Nepal", "Bangladesh", "Sri Lanka", "Bhutan",
-  "Other",
-];
+// Country → { ISO-2, phone dial code }. ISO-2 also drives zippopotam.us postal lookup.
+const COUNTRY_META: Record<string, { iso2: string; dial: string }> = {
+  "India":                { iso2: "IN", dial: "+91"  },
+  "United States":        { iso2: "US", dial: "+1"   },
+  "United Kingdom":       { iso2: "GB", dial: "+44"  },
+  "United Arab Emirates": { iso2: "AE", dial: "+971" },
+  "Saudi Arabia":         { iso2: "SA", dial: "+966" },
+  "Qatar":                { iso2: "QA", dial: "+974" },
+  "Kuwait":               { iso2: "KW", dial: "+965" },
+  "Oman":                 { iso2: "OM", dial: "+968" },
+  "Bahrain":              { iso2: "BH", dial: "+973" },
+  "Singapore":            { iso2: "SG", dial: "+65"  },
+  "Malaysia":             { iso2: "MY", dial: "+60"  },
+  "Australia":            { iso2: "AU", dial: "+61"  },
+  "New Zealand":          { iso2: "NZ", dial: "+64"  },
+  "Canada":               { iso2: "CA", dial: "+1"   },
+  "Germany":              { iso2: "DE", dial: "+49"  },
+  "France":               { iso2: "FR", dial: "+33"  },
+  "Netherlands":          { iso2: "NL", dial: "+31"  },
+  "Spain":                { iso2: "ES", dial: "+34"  },
+  "Italy":                { iso2: "IT", dial: "+39"  },
+  "Switzerland":          { iso2: "CH", dial: "+41"  },
+  "Sweden":               { iso2: "SE", dial: "+46"  },
+  "Ireland":              { iso2: "IE", dial: "+353" },
+  "Japan":                { iso2: "JP", dial: "+81"  },
+  "Hong Kong":            { iso2: "HK", dial: "+852" },
+  "South Korea":          { iso2: "KR", dial: "+82"  },
+  "Thailand":             { iso2: "TH", dial: "+66"  },
+  "Indonesia":            { iso2: "ID", dial: "+62"  },
+  "Philippines":          { iso2: "PH", dial: "+63"  },
+  "Vietnam":              { iso2: "VN", dial: "+84"  },
+  "South Africa":         { iso2: "ZA", dial: "+27"  },
+  "Kenya":                { iso2: "KE", dial: "+254" },
+  "Nigeria":              { iso2: "NG", dial: "+234" },
+  "Nepal":                { iso2: "NP", dial: "+977" },
+  "Bangladesh":           { iso2: "BD", dial: "+880" },
+  "Sri Lanka":            { iso2: "LK", dial: "+94"  },
+  "Bhutan":               { iso2: "BT", dial: "+975" },
+  "Other":                { iso2: "",   dial: "+"    },
+};
+const COUNTRIES = Object.keys(COUNTRY_META);
 
-// ─── Pincode lookup ─────────────────────────────────────────────
+// Countries that zippopotam.us supports reliably (auto-fill city/state from postal)
+const ZIPPO_SUPPORTED = new Set([
+  "US","GB","CA","AU","NZ","DE","FR","NL","ES","IT","CH","SE","IE","JP","MY","PH","BR","MX","BE","AT","DK","FI","NO","PT","CZ","PL","TR","IN",
+]);
+
+// ─── India pincode lookup (city + state) ────────────────────────
 async function lookupPincode(pincode: string): Promise<{ city: string; state: string } | null> {
   if (pincode.length !== 6 || !/^\d{6}$/.test(pincode)) return null;
   try {
@@ -54,6 +91,25 @@ async function lookupPincode(pincode: string): Promise<{ city: string; state: st
     /* ignore */
   }
   return null;
+}
+
+// ─── International postal lookup via zippopotam.us ──────────────
+async function lookupIntlPostal(iso2: string, postal: string): Promise<{ city: string; state: string } | null> {
+  if (!iso2 || !postal || postal.trim().length < 3) return null;
+  if (!ZIPPO_SUPPORTED.has(iso2)) return null;
+  try {
+    const res = await fetch(`https://api.zippopotam.us/${iso2.toLowerCase()}/${encodeURIComponent(postal.trim())}`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const place = data?.places?.[0];
+    if (!place) return null;
+    return {
+      city: place["place name"] || "",
+      state: place["state"] || place["state abbreviation"] || "",
+    };
+  } catch {
+    return null;
+  }
 }
 
 // ─── Razorpay loader ────────────────────────────────────────────
