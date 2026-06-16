@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Truck, Clock, Globe, Package, MapPin, Mail, Phone } from "lucide-react";
 
 const ShippingPolicy = () => {
-  useSEO({ title: "Shipping Policy — Agatsa One", description: "Free shipping on all orders above ₹999. Pan-India delivery in 3-7 business days." });
+  useSEO({ title: "Shipping Policy — Agatsa One", description: "Free shipping across India. Flat ₹2000 international shipping to all countries." });
 
   return (
     <SiteLayout>
@@ -61,7 +61,7 @@ const ShippingPolicy = () => {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
-                      <span>International shipping is available to select countries</span>
+                      <span>International shipping available worldwide at a <strong>flat rate of ₹2000</strong> per order</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
@@ -156,7 +156,15 @@ const ShippingPolicy = () => {
                   <ul className="space-y-3 text-muted-foreground">
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
-                      <span>Estimated delivery: <strong>7–10 business days</strong> after dispatch</span>
+                      <span><strong>Flat shipping fee of ₹2000</strong> to all international destinations — no matter the country, weight or order size</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span>The ₹2000 surcharge is added automatically at checkout when you select a country other than India</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span>Estimated delivery: <strong>7–14 business days</strong> after dispatch</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
@@ -218,7 +226,7 @@ const ShippingPolicy = () => {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
-                      <span><strong>International:</strong> Shipping charges are calculated at checkout based on destination and package weight</span>
+                      <span><strong>International:</strong> Flat <strong>₹2000</strong> per order, applied automatically at checkout. Non-refundable on returns.</span>
                     </li>
                   </ul>
                 </div>
