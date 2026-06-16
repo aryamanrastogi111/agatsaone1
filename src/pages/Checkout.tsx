@@ -553,7 +553,7 @@ export default function CheckoutPage() {
             items: cartItems,
             couponCode: couponApplied || undefined,
             recipientName: fullName.trim(),
-            recipientPhone: "+91" + cleanPhone,
+            recipientPhone: fullPhone,
             recipientEmail,
             addressLine1: addressLine1.trim(),
             addressLine2: addressLine2.trim() || undefined,
@@ -598,7 +598,7 @@ export default function CheckoutPage() {
             prefill: {
               name: fullName.trim(),
               email: recipientEmail,
-              contact: "+91" + cleanPhone,
+              contact: fullPhone,
             },
             theme: { color: "#7C4DFF" },
             handler: async (response: any) => {
@@ -647,7 +647,7 @@ export default function CheckoutPage() {
                     paid_at: new Date().toISOString(),
                     customer_name: fullName.trim(),
                     customer_email: recipientEmail,
-                    customer_phone: "+91" + cleanPhone,
+                    customer_phone: fullPhone,
                     items: items.map((d) => ({ sku: d.sku, name: d.name, price: d.unitPricePaise / 100, qty: d.qty })),
                     shipping_address: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
                     shipping_city: city.trim(),
@@ -668,7 +668,7 @@ export default function CheckoutPage() {
                     body: {
                       customerEmail: recipientEmail,
                       customerName: fullName.trim(),
-                      customerPhone: "+91" + cleanPhone,
+                      customerPhone: fullPhone,
                       orderId: response.razorpay_order_id,
                       paymentId: response.razorpay_payment_id,
                       items: items.map((d) => ({
