@@ -307,10 +307,10 @@ export default function RhythmBandProduct() {
               <div className="relative">
                 <Sparkles className="h-6 w-6 text-primary" strokeWidth={1.75} />
                 <h3 className="mt-4 text-2xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground leading-[1.1]">
-                  Metabolic load,<br />read every day.
+                  Understand Your<br />Metabolic Health Every Day
                 </h3>
                 <p className="mt-4 text-sm md:text-base text-muted-foreground max-w-md leading-relaxed">
-                  Blood Glucose trend monitoring and knowing the energy rises and crash moments, diet impact on body and overall health and nudges.
+                  Track your glucose trends, identify energy spikes and crashes, understand how food affects your body, and receive personalized insights to help you make smarter health decisions.
                 </p>
               </div>
               <div className="relative mt-6 flex items-end justify-end">
