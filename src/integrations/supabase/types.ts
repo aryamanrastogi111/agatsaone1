@@ -486,8 +486,10 @@ export type Database = {
           shipped_at: string | null
           shipping_address: string | null
           shipping_city: string | null
+          shipping_country: string | null
           shipping_pincode: string | null
           shipping_state: string | null
+          shipping_surcharge: number
           status: string
           tracking_number: string | null
           updated_at: string
@@ -513,8 +515,10 @@ export type Database = {
           shipped_at?: string | null
           shipping_address?: string | null
           shipping_city?: string | null
+          shipping_country?: string | null
           shipping_pincode?: string | null
           shipping_state?: string | null
+          shipping_surcharge?: number
           status?: string
           tracking_number?: string | null
           updated_at?: string
@@ -540,8 +544,10 @@ export type Database = {
           shipped_at?: string | null
           shipping_address?: string | null
           shipping_city?: string | null
+          shipping_country?: string | null
           shipping_pincode?: string | null
           shipping_state?: string | null
+          shipping_surcharge?: number
           status?: string
           tracking_number?: string | null
           updated_at?: string
