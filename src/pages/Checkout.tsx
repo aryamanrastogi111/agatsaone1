@@ -136,8 +136,9 @@ export default function CheckoutPage() {
     (sum, s) => sum + (prices[s as DeviceSku] || 0) * 100 * (quantities[s] || 1),
     0
   );
-  // Use server total if available, else client-computed
-  const displayTotalPaise = quoteLoaded ? serverTotalPaise : clientTotalPaise;
+  const baseTotalPaise = quoteLoaded ? serverTotalPaise : clientTotalPaise;
+  const shippingPaise = isIntl ? INTL_SHIPPING_PAISE : 0;
+  const displayTotalPaise = baseTotalPaise + shippingPaise;
   const displayTotalRupees = displayTotalPaise / 100;
 
   const items = uniqueSkus.map((s) => ({
@@ -269,7 +270,8 @@ export default function CheckoutPage() {
     }
   }, []);
 
-  const step1Valid = pincode.length === 6 && addressLine1.trim().length >= 4 && city.trim().length > 0 && state.trim().length > 0;
+  const pincodeValid = isIntl ? pincode.trim().length >= 3 : pincode.length === 6;
+  const step1Valid = pincodeValid && addressLine1.trim().length >= 4 && city.trim().length > 0 && state.trim().length > 0 && country.trim().length > 0;
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const step2Valid = fullName.trim().length >= 2 && /^\d{10}$/.test(phone) && emailValid;
 
@@ -343,7 +345,7 @@ export default function CheckoutPage() {
           <div className="bg-muted/50 rounded-xl p-4 text-sm space-y-1">
             <p className="font-medium text-foreground">Shipping to</p>
             <p className="text-muted-foreground">{fullName}</p>
-            <p className="text-muted-foreground">{addressLine1}, {city}, {state} - {pincode}</p>
+            <p className="text-muted-foreground">{addressLine1}, {city}, {state} - {pincode}{isIntl ? `, ${country}` : ""}</p>
             <p className="text-muted-foreground">+91 {phone}</p>
             {successReference && (
               <p className="text-xs text-muted-foreground pt-2 border-t border-border mt-2">
