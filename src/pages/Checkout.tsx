@@ -30,17 +30,54 @@ const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 // Flat international shipping surcharge: ₹2000
 const INTL_SHIPPING_PAISE = 200000;
 
-const COUNTRIES = [
-  "India",
-  "United States", "United Kingdom", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain",
-  "Singapore", "Malaysia", "Australia", "New Zealand", "Canada",
-  "Germany", "France", "Netherlands", "Spain", "Italy", "Switzerland", "Sweden", "Ireland",
-  "Japan", "Hong Kong", "South Korea", "Thailand", "Indonesia", "Philippines", "Vietnam",
-  "South Africa", "Kenya", "Nigeria", "Nepal", "Bangladesh", "Sri Lanka", "Bhutan",
-  "Other",
-];
+// Country → { ISO-2, phone dial code }. ISO-2 also drives zippopotam.us postal lookup.
+const COUNTRY_META: Record<string, { iso2: string; dial: string }> = {
+  "India":                { iso2: "IN", dial: "+91"  },
+  "United States":        { iso2: "US", dial: "+1"   },
+  "United Kingdom":       { iso2: "GB", dial: "+44"  },
+  "United Arab Emirates": { iso2: "AE", dial: "+971" },
+  "Saudi Arabia":         { iso2: "SA", dial: "+966" },
+  "Qatar":                { iso2: "QA", dial: "+974" },
+  "Kuwait":               { iso2: "KW", dial: "+965" },
+  "Oman":                 { iso2: "OM", dial: "+968" },
+  "Bahrain":              { iso2: "BH", dial: "+973" },
+  "Singapore":            { iso2: "SG", dial: "+65"  },
+  "Malaysia":             { iso2: "MY", dial: "+60"  },
+  "Australia":            { iso2: "AU", dial: "+61"  },
+  "New Zealand":          { iso2: "NZ", dial: "+64"  },
+  "Canada":               { iso2: "CA", dial: "+1"   },
+  "Germany":              { iso2: "DE", dial: "+49"  },
+  "France":               { iso2: "FR", dial: "+33"  },
+  "Netherlands":          { iso2: "NL", dial: "+31"  },
+  "Spain":                { iso2: "ES", dial: "+34"  },
+  "Italy":                { iso2: "IT", dial: "+39"  },
+  "Switzerland":          { iso2: "CH", dial: "+41"  },
+  "Sweden":               { iso2: "SE", dial: "+46"  },
+  "Ireland":              { iso2: "IE", dial: "+353" },
+  "Japan":                { iso2: "JP", dial: "+81"  },
+  "Hong Kong":            { iso2: "HK", dial: "+852" },
+  "South Korea":          { iso2: "KR", dial: "+82"  },
+  "Thailand":             { iso2: "TH", dial: "+66"  },
+  "Indonesia":            { iso2: "ID", dial: "+62"  },
+  "Philippines":          { iso2: "PH", dial: "+63"  },
+  "Vietnam":              { iso2: "VN", dial: "+84"  },
+  "South Africa":         { iso2: "ZA", dial: "+27"  },
+  "Kenya":                { iso2: "KE", dial: "+254" },
+  "Nigeria":              { iso2: "NG", dial: "+234" },
+  "Nepal":                { iso2: "NP", dial: "+977" },
+  "Bangladesh":           { iso2: "BD", dial: "+880" },
+  "Sri Lanka":            { iso2: "LK", dial: "+94"  },
+  "Bhutan":               { iso2: "BT", dial: "+975" },
+  "Other":                { iso2: "",   dial: "+"    },
+};
+const COUNTRIES = Object.keys(COUNTRY_META);
 
-// ─── Pincode lookup ─────────────────────────────────────────────
+// Countries that zippopotam.us supports reliably (auto-fill city/state from postal)
+const ZIPPO_SUPPORTED = new Set([
+  "US","GB","CA","AU","NZ","DE","FR","NL","ES","IT","CH","SE","IE","JP","MY","PH","BR","MX","BE","AT","DK","FI","NO","PT","CZ","PL","TR","IN",
+]);
+
+// ─── India pincode lookup (city + state) ────────────────────────
 async function lookupPincode(pincode: string): Promise<{ city: string; state: string } | null> {
   if (pincode.length !== 6 || !/^\d{6}$/.test(pincode)) return null;
   try {
@@ -54,6 +91,25 @@ async function lookupPincode(pincode: string): Promise<{ city: string; state: st
     /* ignore */
   }
   return null;
+}
+
+// ─── International postal lookup via zippopotam.us ──────────────
+async function lookupIntlPostal(iso2: string, postal: string): Promise<{ city: string; state: string } | null> {
+  if (!iso2 || !postal || postal.trim().length < 3) return null;
+  if (!ZIPPO_SUPPORTED.has(iso2)) return null;
+  try {
+    const res = await fetch(`https://api.zippopotam.us/${iso2.toLowerCase()}/${encodeURIComponent(postal.trim())}`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const place = data?.places?.[0];
+    if (!place) return null;
+    return {
+      city: place["place name"] || "",
+      state: place["state"] || place["state abbreviation"] || "",
+    };
+  } catch {
+    return null;
+  }
 }
 
 // ─── Razorpay loader ────────────────────────────────────────────
@@ -250,7 +306,7 @@ export default function CheckoutPage() {
     }
   }, []);
 
-  // ─── Pincode auto-fill ─────────────────────────────────────
+  // ─── Pincode / postal auto-fill ────────────────────────────
   const handlePincodeChange = useCallback(async (val: string) => {
     const clean = val.replace(/\D/g, "").slice(0, 6);
     setPincode(clean);
@@ -274,10 +330,38 @@ export default function CheckoutPage() {
     }
   }, []);
 
+  // International postal lookup (zippopotam.us) — debounced
+  const intlLookupTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleIntlPostalChange = useCallback((val: string) => {
+    const clean = val.slice(0, 12);
+    setPincode(clean);
+    setPincodeChecked(false);
+    setCityAutoFilled(false);
+    if (intlLookupTimer.current) clearTimeout(intlLookupTimer.current);
+    if (clean.trim().length < 3) return;
+
+    const iso2 = COUNTRY_META[country]?.iso2 || "";
+    if (!ZIPPO_SUPPORTED.has(iso2)) return;
+
+    intlLookupTimer.current = setTimeout(async () => {
+      setPincodeLoading(true);
+      const result = await lookupIntlPostal(iso2, clean);
+      setPincodeLoading(false);
+      setPincodeChecked(true);
+      if (result) {
+        setCity(result.city);
+        if (result.state) setState(result.state);
+        setCityAutoFilled(true);
+      }
+    }, 450);
+  }, [country]);
+
+  const dialCode = COUNTRY_META[country]?.dial || "+91";
   const pincodeValid = isIntl ? pincode.trim().length >= 3 : pincode.length === 6;
   const step1Valid = pincodeValid && addressLine1.trim().length >= 4 && city.trim().length > 0 && state.trim().length > 0 && country.trim().length > 0;
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-  const step2Valid = fullName.trim().length >= 2 && /^\d{10}$/.test(phone) && emailValid;
+  const phoneValid = isIntl ? /^\d{6,15}$/.test(phone) : /^\d{10}$/.test(phone);
+  const step2Valid = fullName.trim().length >= 2 && phoneValid && emailValid;
 
   // ─── Meta Pixel Purchase event on success ───────────────────
   useEffect(() => {
@@ -350,7 +434,7 @@ export default function CheckoutPage() {
             <p className="font-medium text-foreground">Shipping to</p>
             <p className="text-muted-foreground">{fullName}</p>
             <p className="text-muted-foreground">{addressLine1}, {city}, {state} - {pincode}{isIntl ? `, ${country}` : ""}</p>
-            <p className="text-muted-foreground">+91 {phone}</p>
+            <p className="text-muted-foreground">{dialCode} {phone}</p>
             {successReference && (
               <p className="text-xs text-muted-foreground pt-2 border-t border-border mt-2">
                 Reference: <span className="font-mono">{successReference}</span>
@@ -358,7 +442,7 @@ export default function CheckoutPage() {
             )}
           </div>
           <p className="text-sm text-muted-foreground">
-            📱 Download the <strong>Agatsa One</strong> app and log in with <strong>+91 {phone}</strong> to activate your device and Nera AI plan.
+            📱 Download the <strong>Agatsa One</strong> app and log in with <strong>{dialCode} {phone}</strong> to activate your device and Nera AI plan.
           </p>
           <div className="flex gap-3 justify-center">
             <Button asChild variant="outline" className="rounded-full">
@@ -433,7 +517,9 @@ export default function CheckoutPage() {
     setPageState("processing");
     setErrorMsg("");
 
-    const cleanPhone = phone.replace(/\D/g, "").slice(-10);
+    const rawDigits = phone.replace(/\D/g, "");
+    const cleanPhone = isIntl ? rawDigits.slice(0, 15) : rawDigits.slice(-10);
+    const fullPhone = dialCode + cleanPhone;
     const recipientEmail = email.trim();
     let lastPaymentId = "";
 
@@ -467,7 +553,7 @@ export default function CheckoutPage() {
             items: cartItems,
             couponCode: couponApplied || undefined,
             recipientName: fullName.trim(),
-            recipientPhone: "+91" + cleanPhone,
+            recipientPhone: fullPhone,
             recipientEmail,
             addressLine1: addressLine1.trim(),
             addressLine2: addressLine2.trim() || undefined,
@@ -512,7 +598,7 @@ export default function CheckoutPage() {
             prefill: {
               name: fullName.trim(),
               email: recipientEmail,
-              contact: "+91" + cleanPhone,
+              contact: fullPhone,
             },
             theme: { color: "#7C4DFF" },
             handler: async (response: any) => {
@@ -561,7 +647,7 @@ export default function CheckoutPage() {
                     paid_at: new Date().toISOString(),
                     customer_name: fullName.trim(),
                     customer_email: recipientEmail,
-                    customer_phone: "+91" + cleanPhone,
+                    customer_phone: fullPhone,
                     items: items.map((d) => ({ sku: d.sku, name: d.name, price: d.unitPricePaise / 100, qty: d.qty })),
                     shipping_address: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
                     shipping_city: city.trim(),
@@ -582,7 +668,7 @@ export default function CheckoutPage() {
                     body: {
                       customerEmail: recipientEmail,
                       customerName: fullName.trim(),
-                      customerPhone: "+91" + cleanPhone,
+                      customerPhone: fullPhone,
                       orderId: response.razorpay_order_id,
                       paymentId: response.razorpay_payment_id,
                       items: items.map((d) => ({
@@ -789,9 +875,13 @@ export default function CheckoutPage() {
                 onChange={(e) => {
                   const v = e.target.value;
                   setCountry(v);
-                  // Reset pincode-derived fields when toggling country
+                  // Reset postal-derived + phone when toggling country
+                  setPincode("");
+                  setCity("");
+                  setState("");
                   setPincodeChecked(false);
                   setCityAutoFilled(false);
+                  setPhone("");
                 }}
                 className="w-full px-4 py-3 border border-border rounded-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
               >
@@ -818,7 +908,7 @@ export default function CheckoutPage() {
                   value={pincode}
                   onChange={(e) => {
                     if (isIntl) {
-                      setPincode(e.target.value.slice(0, 12));
+                      handleIntlPostalChange(e.target.value);
                     } else {
                       handlePincodeChange(e.target.value);
                     }
@@ -826,7 +916,7 @@ export default function CheckoutPage() {
                   placeholder={isIntl ? "Enter postal / ZIP code" : "Enter 6-digit pincode"}
                   className="w-full px-4 py-3 border border-border rounded-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
                 />
-                {!isIntl && pincodeLoading && (
+                {pincodeLoading && (
                   <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary animate-spin" />
                 )}
               </div>
@@ -927,17 +1017,19 @@ export default function CheckoutPage() {
             <div>
               <label className="text-sm font-medium text-foreground block mb-1.5">Mobile Number</label>
               <div className="flex">
-                <span className="flex items-center px-3 border border-r-0 border-border rounded-l-xl bg-muted text-sm text-muted-foreground">+91</span>
+                <span className="flex items-center px-3 border border-r-0 border-border rounded-l-xl bg-muted text-sm text-muted-foreground font-medium">{dialCode}</span>
                 <input
                   type="tel"
-                  maxLength={10}
+                  maxLength={isIntl ? 15 : 10}
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                  placeholder="10-digit mobile number"
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, isIntl ? 15 : 10))}
+                  placeholder={isIntl ? "Mobile number" : "10-digit mobile number"}
                   className="flex-1 px-4 py-3 border border-border rounded-r-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Use your Agatsa One app number for automatic plan activation</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {isIntl ? "We'll use this for delivery updates and order support." : "Use your Agatsa One app number for automatic plan activation"}
+              </p>
             </div>
 
             {/* Email */}
