@@ -434,7 +434,7 @@ export default function CheckoutPage() {
             <p className="font-medium text-foreground">Shipping to</p>
             <p className="text-muted-foreground">{fullName}</p>
             <p className="text-muted-foreground">{addressLine1}, {city}, {state} - {pincode}{isIntl ? `, ${country}` : ""}</p>
-            <p className="text-muted-foreground">+91 {phone}</p>
+            <p className="text-muted-foreground">{dialCode} {phone}</p>
             {successReference && (
               <p className="text-xs text-muted-foreground pt-2 border-t border-border mt-2">
                 Reference: <span className="font-mono">{successReference}</span>
@@ -442,7 +442,7 @@ export default function CheckoutPage() {
             )}
           </div>
           <p className="text-sm text-muted-foreground">
-            📱 Download the <strong>Agatsa One</strong> app and log in with <strong>+91 {phone}</strong> to activate your device and Nera AI plan.
+            📱 Download the <strong>Agatsa One</strong> app and log in with <strong>{dialCode} {phone}</strong> to activate your device and Nera AI plan.
           </p>
           <div className="flex gap-3 justify-center">
             <Button asChild variant="outline" className="rounded-full">
