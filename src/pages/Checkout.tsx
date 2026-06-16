@@ -306,7 +306,7 @@ export default function CheckoutPage() {
     }
   }, []);
 
-  // ─── Pincode auto-fill ─────────────────────────────────────
+  // ─── Pincode / postal auto-fill ────────────────────────────
   const handlePincodeChange = useCallback(async (val: string) => {
     const clean = val.replace(/\D/g, "").slice(0, 6);
     setPincode(clean);
@@ -330,10 +330,38 @@ export default function CheckoutPage() {
     }
   }, []);
 
+  // International postal lookup (zippopotam.us) — debounced
+  const intlLookupTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleIntlPostalChange = useCallback((val: string) => {
+    const clean = val.slice(0, 12);
+    setPincode(clean);
+    setPincodeChecked(false);
+    setCityAutoFilled(false);
+    if (intlLookupTimer.current) clearTimeout(intlLookupTimer.current);
+    if (clean.trim().length < 3) return;
+
+    const iso2 = COUNTRY_META[country]?.iso2 || "";
+    if (!ZIPPO_SUPPORTED.has(iso2)) return;
+
+    intlLookupTimer.current = setTimeout(async () => {
+      setPincodeLoading(true);
+      const result = await lookupIntlPostal(iso2, clean);
+      setPincodeLoading(false);
+      setPincodeChecked(true);
+      if (result) {
+        setCity(result.city);
+        if (result.state) setState(result.state);
+        setCityAutoFilled(true);
+      }
+    }, 450);
+  }, [country]);
+
+  const dialCode = COUNTRY_META[country]?.dial || "+91";
   const pincodeValid = isIntl ? pincode.trim().length >= 3 : pincode.length === 6;
   const step1Valid = pincodeValid && addressLine1.trim().length >= 4 && city.trim().length > 0 && state.trim().length > 0 && country.trim().length > 0;
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-  const step2Valid = fullName.trim().length >= 2 && /^\d{10}$/.test(phone) && emailValid;
+  const phoneValid = isIntl ? /^\d{6,15}$/.test(phone) : /^\d{10}$/.test(phone);
+  const step2Valid = fullName.trim().length >= 2 && phoneValid && emailValid;
 
   // ─── Meta Pixel Purchase event on success ───────────────────
   useEffect(() => {
