@@ -470,6 +470,8 @@ export default function CheckoutPage() {
             city: city.trim(),
             state: state.trim(),
             pincode: pincode.trim(),
+            postalCode: pincode.trim(),
+            country: country,
           }),
         });
         createData = await createRes.json().catch(() => ({}));
@@ -561,6 +563,8 @@ export default function CheckoutPage() {
                     shipping_city: city.trim(),
                     shipping_state: state.trim(),
                     shipping_pincode: pincode.trim(),
+                    shipping_country: country,
+                    shipping_surcharge: shippingPaise / 100,
                     coupon_code: couponApplied || null,
                     discount_amount: discountPaise / 100,
                   });
@@ -589,6 +593,8 @@ export default function CheckoutPage() {
                       shippingCity: city.trim(),
                       shippingState: state.trim(),
                       shippingPincode: pincode.trim(),
+                      shippingCountry: country,
+                      shippingSurcharge: shippingPaise / 100,
                     },
                   });
                 } catch (emailErr) {
