@@ -5,6 +5,7 @@ import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock, Plu
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { db } from "@/integrations/supabase/db";
 import { supabase } from "@/integrations/supabase/client";
 import { useCartStore } from "@/stores/cartStore";
@@ -68,9 +69,8 @@ function loadRazorpay(): Promise<boolean> {
   });
 }
 
-function fmtPaise(paise: number) {
-  return "₹" + (paise / 100).toLocaleString("en-IN");
-}
+// fmtPaise is defined inside CheckoutPage so it can read the visitor's
+// display currency from CurrencyContext (INR for India, USD otherwise).
 
 type CheckoutStep = 1 | 2;
 type PageState = "form" | "processing" | "success" | "error";
@@ -78,6 +78,10 @@ type PageState = "form" | "processing" | "success" | "error";
 export default function CheckoutPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { prices } = usePricing();
+  const { currency, formatPaise: formatPaiseCcy, rate } = useCurrency();
+  // Display-only currency conversion. Razorpay still charges in INR.
+  const fmtPaise = (paise: number) => formatPaiseCcy(paise);
+  const fmtPaiseINR = (paise: number) => "₹" + Math.round(paise / 100).toLocaleString("en-IN");
   const skuParam = searchParams.get("sku") || "";
   // Deduplicate SKUs — count occurrences as initial quantities
   const skuList = skuParam.split(",").filter((s) => s in DEVICE_NAMES);
@@ -975,6 +979,14 @@ export default function CheckoutPage() {
                 <span className="flex items-center gap-2"><Lock className="h-4 w-4" /> Pay {fmtPaise(displayTotalPaise)} securely</span>
               )}
             </Button>
+
+            {currency !== "INR" && (
+              <p className="text-center text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                Final charge is in INR ({fmtPaiseINR(displayTotalPaise)}) by Razorpay at today's rate
+                (1 USD ≈ ₹{rate > 0 ? Math.round(1 / rate).toLocaleString("en-IN") : "—"}).
+                Your bank converts the amount to your card's currency on your statement.
+              </p>
+            )}
 
             <p className="text-center text-xs text-muted-foreground">
               UPI · Cards · Net Banking · EMI · Secured by Razorpay

@@ -1,4 +1,6 @@
-import { useState, useEffect, useCallback, createContext, useContext } from "react";
+import { useState, useEffect, useCallback, createContext, useContext, useMemo } from "react";
+import { useCurrency } from "@/contexts/CurrencyContext";
+import { formatPrice } from "@/lib/currency";
 
 const API_URL = "https://agatsa-one-api-651017108992.asia-south1.run.app/v1/devices/catalog";
 const REFRESH_MS = 5 * 60 * 1000; // 5 minutes
@@ -95,11 +97,30 @@ const PricingContext = createContext<DevicePricingState | null>(null);
 
 export const PricingProvider = PricingContext.Provider;
 
+/**
+ * Currency-aware pricing accessor.
+ * Prices stay in INR (the source of truth) but fmt/emi auto-convert to
+ * the visitor's display currency (USD outside India). EMI hides for USD
+ * since no-cost EMI is an India-only Razorpay offer.
+ */
 export function usePricing(): DevicePricingState {
   const ctx = useContext(PricingContext);
-  if (!ctx) {
-    // fallback if used outside provider (shouldn't happen)
-    return { prices: FALLBACK_PRICES, loading: false, fmt: formatINR, emi: emiString };
-  }
-  return ctx;
+  const { currency, rate } = useCurrency();
+
+  const prices = ctx?.prices ?? FALLBACK_PRICES;
+  const loading = ctx?.loading ?? false;
+
+  return useMemo<DevicePricingState>(() => {
+    const fmt = (amount: number) => formatPrice(amount, currency, rate);
+    const emi = (amount: number) => {
+      if (currency !== "INR") {
+        // For non-INR display, show the converted full price as the "monthly"
+        // hook is India-only. Hide the EMI line by returning empty string so
+        // callers can conditionally render.
+        return "";
+      }
+      return emiString(amount);
+    };
+    return { prices, loading, fmt, emi };
+  }, [prices, loading, currency, rate]);
 }
