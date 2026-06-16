@@ -310,7 +310,7 @@ export default function RhythmBandProduct() {
                   Metabolic load,<br />read every day.
                 </h3>
                 <p className="mt-4 text-sm md:text-base text-muted-foreground max-w-md leading-relaxed">
-                  Stress and temperature signals tell Nera AI whether your body is balanced, loaded or overloaded — before symptoms show.
+                  Blood Glucose trend monitoring and knowing the energy rises and crash moments, diet impact on body and overall health and nudges.
                 </p>
               </div>
               <div className="relative mt-6 flex items-end justify-end">
