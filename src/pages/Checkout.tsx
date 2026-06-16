@@ -5,6 +5,7 @@ import { Loader2, CheckCircle2, AlertTriangle, ArrowLeft, ShieldCheck, Lock, Plu
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { db } from "@/integrations/supabase/db";
 import { supabase } from "@/integrations/supabase/client";
 import { useCartStore } from "@/stores/cartStore";
@@ -68,9 +69,8 @@ function loadRazorpay(): Promise<boolean> {
   });
 }
 
-function fmtPaise(paise: number) {
-  return "₹" + (paise / 100).toLocaleString("en-IN");
-}
+// fmtPaise is defined inside CheckoutPage so it can read the visitor's
+// display currency from CurrencyContext (INR for India, USD otherwise).
 
 type CheckoutStep = 1 | 2;
 type PageState = "form" | "processing" | "success" | "error";
@@ -78,6 +78,10 @@ type PageState = "form" | "processing" | "success" | "error";
 export default function CheckoutPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { prices } = usePricing();
+  const { currency, formatPaise: formatPaiseCcy, rate } = useCurrency();
+  // Display-only currency conversion. Razorpay still charges in INR.
+  const fmtPaise = (paise: number) => formatPaiseCcy(paise);
+  const fmtPaiseINR = (paise: number) => "₹" + Math.round(paise / 100).toLocaleString("en-IN");
   const skuParam = searchParams.get("sku") || "";
   // Deduplicate SKUs — count occurrences as initial quantities
   const skuList = skuParam.split(",").filter((s) => s in DEVICE_NAMES);
