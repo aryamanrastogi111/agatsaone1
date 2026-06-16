@@ -1,4 +1,9 @@
+import { useCurrency } from "@/contexts/CurrencyContext";
+
 export function EmiLine({ price }: { price: number }) {
+  const { currency } = useCurrency();
+  // No-cost EMI is an India-only Razorpay offer — hide for non-INR display.
+  if (currency !== "INR") return null;
   const monthly = Math.ceil(price / 12);
   return (
     <p className="text-sm text-muted-foreground/70 mt-0.5">

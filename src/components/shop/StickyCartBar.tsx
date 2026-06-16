@@ -3,6 +3,7 @@ import { ShoppingCart, ArrowRight, X } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 /**
  * A persistent sticky bar at the bottom of the page showing cart summary.
@@ -14,9 +15,7 @@ export const StickyCartBar = () => {
   const totalItems = useCartStore((s) => s.getTotalItems());
   const totalPrice = useCartStore((s) => s.getTotalPrice());
   const clearCart = useCartStore((s) => s.clearCart);
-
-  const formatINR = (amount: number) =>
-    "₹" + amount.toLocaleString("en-IN");
+  const { format } = useCurrency();
 
   const handleCheckout = () => {
     const skuList = items.flatMap((item) =>
@@ -55,7 +54,7 @@ export const StickyCartBar = () => {
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold truncate">
-                    {totalItems} {totalItems === 1 ? "device" : "devices"} · {formatINR(totalPrice)}
+                    {totalItems} {totalItems === 1 ? "device" : "devices"} · {format(totalPrice)}
                   </p>
                 </div>
               </div>

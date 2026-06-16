@@ -1,4 +1,5 @@
-import { formatINR, MRP_PRICES, type DeviceSku } from "@/hooks/useDevicePricing";
+import { MRP_PRICES, type DeviceSku } from "@/hooks/useDevicePricing";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { Badge } from "@/components/ui/badge";
 
 interface StrikePriceProps {
@@ -21,6 +22,7 @@ export function StrikePrice({
   showLabel = true,
   className = "",
 }: StrikePriceProps) {
+  const { format } = useCurrency();
   const mrp = MRP_PRICES[sku];
   const discount = Math.round(((mrp - price) / mrp) * 100);
 
@@ -35,10 +37,10 @@ export function StrikePrice({
   return (
     <div className={`flex flex-wrap items-center gap-2 ${className}`}>
       <span className={`${s.mrp} text-muted-foreground line-through`}>
-        {formatINR(mrp)}
+        {format(mrp)}
       </span>
       <span className={`${s.price} text-foreground`}>
-        {formatINR(price)}
+        {format(price)}
       </span>
       {showBadge && discount > 0 && (
         <Badge variant="secondary" className={`${s.badge} bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border-green-200 dark:border-green-800`}>
