@@ -875,9 +875,13 @@ export default function CheckoutPage() {
                 onChange={(e) => {
                   const v = e.target.value;
                   setCountry(v);
-                  // Reset pincode-derived fields when toggling country
+                  // Reset postal-derived + phone when toggling country
+                  setPincode("");
+                  setCity("");
+                  setState("");
                   setPincodeChecked(false);
                   setCityAutoFilled(false);
+                  setPhone("");
                 }}
                 className="w-full px-4 py-3 border border-border rounded-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
               >
