@@ -1,61 +1,54 @@
-## Goal
-Communicate "International shipping: flat ₹2000" everywhere on the site, and automatically add ₹2000 to checkout when the shipping address is outside India.
+# Multi-Currency Display (Live FX: INR for India, USD for Everyone Else)
 
-## 1. Policy & marketing copy (display only)
-Update these pages/components to state: *"International shipping: flat ₹2000 to all countries. Free shipping within India."*
+Display-only conversion. Razorpay still charges in INR. No DB changes.
 
-- `src/pages/ShippingPolicy.tsx` — rewrite "International Shipping" and "Shipping Charges" sections with the flat ₹2000 rule.
-- `src/pages/ReturnPolicy.tsx` — note that international return shipping is customer-borne; outbound ₹2000 is non-refundable.
-- `src/components/SiteFooter.tsx` — add a small line "International shipping ₹2000 flat" under the support column (optional, low-key).
-- `src/components/home-new/DeviceShowcaseSection.tsx` and any product page that prints "Free shipping" — append "(India). International ₹2000 flat." Touch: `src/pages/products/*Product.tsx` headers that mention shipping, and `src/lib/shipDate.ts` label consumers.
-- `src/pages/Checkout.tsx` order summary — render a "Shipping" row (₹0 India / ₹2000 International).
+## Detection
+- Call `ipapi.co/json/` once on first visit, read `country_code`, cache in `sessionStorage`.
+- `IN` → currency = `INR` (₹), no switcher.
+- anything else (or detection fails on a non-IN preview) → `USD` ($).
+- Manual override via `?currency=INR|USD` URL param (handy for testing without a VPN).
 
-## 2. Checkout: detect international address
-Currently `Checkout.tsx` is India-only (forces 6-digit pincode, no country field).
+## Live FX rate (the part you asked to fix)
+- Fetch live INR→USD rate from **Frankfurter** (`https://api.frankfurter.app/latest?from=INR&to=USD`) — free, no API key, no rate limit, ECB-sourced daily rates.
+- Cache result in `localStorage` for 12 hours so we don't refetch on every page nav (rates only update once a day anyway).
+- Fallback chain if Frankfurter is down:
+  1. Try **exchangerate.host** as backup (also free, no key).
+  2. If both fail, use last cached rate (even if expired).
+  3. If no cache exists at all, fall back to `0.012` so prices never break.
+- Cached object: `{ rate: 0.01198, fetchedAt: 1750000000000 }` under key `agatsa-fx-usd`.
 
-- Add a **Country** `<Select>` above the pincode field (default: India). Use a small country list (India + ~30 common destinations + "Other").
-- When country ≠ India:
-  - Replace the 6-digit pincode validator with a generic postal-code text field (3–10 chars).
-  - Skip the `postalpincode.in` auto-fill lookup.
-  - Show State as free-text instead of auto-filled.
-  - Add a flat **₹2000 international shipping** line to the order summary.
-- When country = India: behavior unchanged.
+## What gets built
 
-## 3. Charging the surcharge (backend)
-`razorpay-create-order` currently forwards items to an external API (`agatsa-one-api...`) which computes `totalAmountPaise`. The client cannot unilaterally add ₹2000 without breaking the Razorpay signature.
+**New: `src/lib/currency.ts`**
+- `type Currency = "INR" | "USD"`
+- `fetchUsdRate(): Promise<number>` — Frankfurter → exchangerate.host → cache → constant fallback.
+- `formatPrice(rupees, currency, rate)`:
+  - `INR` → `₹4,999` (Indian grouping)
+  - `USD` → `$60` (rounded to whole dollar so prices don't look like `$59.94`)
 
-Approach: have the **edge function** add the surcharge after the backend returns the total, then re-create the Razorpay order at the new amount using `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` directly.
+**New: `src/contexts/CurrencyContext.tsx`**
+- On mount: resolves currency (URL param → sessionStorage → ipapi.co).
+- If currency is `USD`, kicks off `fetchUsdRate()` and stores in state.
+- Exposes `{ currency, rate, format(rupees), loading }`. Wrapped in `src/App.tsx`.
 
-Steps in `supabase/functions/razorpay-create-order/index.ts`:
-1. Accept new fields: `country`, `postalCode` (in addition to existing `pincode`).
-2. Call backend as today to get item totals + coupon math → `baseTotalPaise`.
-3. If `country` is provided and ≠ `"IN"`/`"India"`, compute `finalTotalPaise = baseTotalPaise + 200000`.
-4. Create a fresh Razorpay order via `POST https://api.razorpay.com/v1/orders` with `amount: finalTotalPaise` using basic auth (`RAZORPAY_KEY_ID:RAZORPAY_KEY_SECRET`). Return that new `id` as `razorpayOrderId`.
-5. Persist `shipping_country` and `shipping_surcharge` (₹2000 or 0) on the `orders` insert. Requires a tiny migration adding `shipping_country TEXT` and `shipping_surcharge NUMERIC DEFAULT 0` to `public.orders`.
-6. For Indian orders, keep forwarding the original backend `razorpayOrderId` unchanged (no regression).
+**Edits — one touchpoint cascades everywhere**
+- `src/hooks/useDevicePricing.ts` — `fmt()` becomes currency-aware. Every price across the site (home, /devices, /pricing, all product pages, sticky cart, checkout summary) already flows through this, so they all switch automatically.
+- `src/components/StrikePrice.tsx` and `src/components/EmiLine.tsx` — use the currency-aware formatter. EMI line hides for USD (no-cost EMI is an India-only offer).
+- `src/components/shop/StickyCartBar.tsx`, `src/pages/Checkout.tsx` — use the formatter. Checkout shows a persistent note when currency is USD:
+  > "Final charge is in INR (₹X,XXX) by Razorpay at today's rate (1 USD ≈ ₹Y). Your bank converts to USD on your statement."
 
-Verification: existing verify function (`razorpay-verify-payment`) only checks signature against the order id we hand back to the client, so swapping in our new Razorpay order id is safe.
+## Out of scope
+- GBP / EUR (USD only for non-IN, as you said).
+- Per-country pricing or true USD settlement (Razorpay would need separate Stripe-style setup).
+- Translating product copy or PDF invoices.
 
-## 4. Client wiring
-- Pass `country` and `postalCode` from `Checkout.tsx` to the edge function call.
-- Display the surcharge in the order summary and on the post-payment success screen.
-- Update `src/integrations/supabase/types.ts` will regenerate after the migration.
-
-## 5. Out of scope (call out for user)
-- Tax / GST recalculation for exports (currently no GST line shown — fine).
-- International courier selection / live rates (flat ₹2000 only, as requested).
-- COD is not offered internationally (Razorpay prepaid only — already the case).
+## Testing
+1. **Force USD in the preview:** add `?currency=USD` to any URL — e.g. `/devices?currency=USD`. All prices flip to live-converted USD.
+2. **Force INR:** `?currency=INR` or default (the preview's IP is in India).
+3. **Real geo test:** open the published URL through a free VPN (Proton VPN free, Opera VPN, 1.1.1.1 WARP set to US). Site auto-picks USD with no override.
+4. **Check the rate is live:** open DevTools → Network and filter for `frankfurter.app` on first non-IN load. You'll see the rate response. Refresh within 12h → no new call (served from cache). Clear `localStorage.agatsa-fx-usd` to force a refresh.
+5. **Razorpay sanity check:** on a USD session go to checkout, open Razorpay modal — the charge amount must still read `₹…` (we only convert *display*, not the actual charge). Don't complete payment.
 
 ## Files touched
-- `src/pages/ShippingPolicy.tsx`
-- `src/pages/ReturnPolicy.tsx`
-- `src/components/SiteFooter.tsx`
-- `src/pages/Checkout.tsx`
-- `src/pages/products/*Product.tsx` (only places that state "Free shipping")
-- `supabase/functions/razorpay-create-order/index.ts`
-- New migration: add `shipping_country`, `shipping_surcharge` to `orders`.
-
-## Confirm before I build
-1. Flat ₹2000 to **every** country outside India (no exclusions / no restricted list)?
-2. OK with the edge function creating the final Razorpay order directly (so the surcharge is actually charged), instead of routing through the external `agatsa-one-api` backend?
-3. Should the ₹2000 also apply to free / 99%-off coupon orders (i.e. surcharge is always added on top, never waived)?
+- New: `src/lib/currency.ts`, `src/contexts/CurrencyContext.tsx`
+- Edited: `src/App.tsx`, `src/hooks/useDevicePricing.ts`, `src/components/StrikePrice.tsx`, `src/components/EmiLine.tsx`, `src/components/shop/StickyCartBar.tsx`, `src/pages/Checkout.tsx`
