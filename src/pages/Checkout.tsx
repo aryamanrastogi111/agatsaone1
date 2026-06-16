@@ -980,6 +980,14 @@ export default function CheckoutPage() {
               )}
             </Button>
 
+            {currency !== "INR" && (
+              <p className="text-center text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                Final charge is in INR ({fmtPaiseINR(displayTotalPaise)}) by Razorpay at today's rate
+                (1 USD ≈ ₹{rate > 0 ? Math.round(1 / rate).toLocaleString("en-IN") : "—"}).
+                Your bank converts the amount to your card's currency on your statement.
+              </p>
+            )}
+
             <p className="text-center text-xs text-muted-foreground">
               UPI · Cards · Net Banking · EMI · Secured by Razorpay
             </p>
