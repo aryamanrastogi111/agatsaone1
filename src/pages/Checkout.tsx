@@ -26,6 +26,19 @@ const DEVICE_NAMES: Record<string, string> = {
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 
+// Flat international shipping surcharge: ₹2000
+const INTL_SHIPPING_PAISE = 200000;
+
+const COUNTRIES = [
+  "India",
+  "United States", "United Kingdom", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain",
+  "Singapore", "Malaysia", "Australia", "New Zealand", "Canada",
+  "Germany", "France", "Netherlands", "Spain", "Italy", "Switzerland", "Sweden", "Ireland",
+  "Japan", "Hong Kong", "South Korea", "Thailand", "Indonesia", "Philippines", "Vietnam",
+  "South Africa", "Kenya", "Nigeria", "Nepal", "Bangladesh", "Sri Lanka", "Bhutan",
+  "Other",
+];
+
 // ─── Pincode lookup ─────────────────────────────────────────────
 async function lookupPincode(pincode: string): Promise<{ city: string; state: string } | null> {
   if (pincode.length !== 6 || !/^\d{6}$/.test(pincode)) return null;
@@ -100,6 +113,7 @@ export default function CheckoutPage() {
   const [quoteLoaded, setQuoteLoaded] = useState(false);
 
   // Step 1
+  const [country, setCountry] = useState<string>("India");
   const [pincode, setPincode] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -108,6 +122,7 @@ export default function CheckoutPage() {
   const [pincodeChecked, setPincodeChecked] = useState(false);
   const [addressLine1, setAddressLine1] = useState("");
   const [addressLine2, setAddressLine2] = useState("");
+  const isIntl = country.trim().toLowerCase() !== "india";
 
   // Step 2
   const [fullName, setFullName] = useState("");
