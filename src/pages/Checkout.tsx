@@ -904,7 +904,7 @@ export default function CheckoutPage() {
                   value={pincode}
                   onChange={(e) => {
                     if (isIntl) {
-                      setPincode(e.target.value.slice(0, 12));
+                      handleIntlPostalChange(e.target.value);
                     } else {
                       handlePincodeChange(e.target.value);
                     }
@@ -912,7 +912,7 @@ export default function CheckoutPage() {
                   placeholder={isIntl ? "Enter postal / ZIP code" : "Enter 6-digit pincode"}
                   className="w-full px-4 py-3 border border-border rounded-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
                 />
-                {!isIntl && pincodeLoading && (
+                {pincodeLoading && (
                   <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary animate-spin" />
                 )}
               </div>
