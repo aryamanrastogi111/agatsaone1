@@ -517,7 +517,9 @@ export default function CheckoutPage() {
     setPageState("processing");
     setErrorMsg("");
 
-    const cleanPhone = phone.replace(/\D/g, "").slice(-10);
+    const rawDigits = phone.replace(/\D/g, "");
+    const cleanPhone = isIntl ? rawDigits.slice(0, 15) : rawDigits.slice(-10);
+    const fullPhone = dialCode + cleanPhone;
     const recipientEmail = email.trim();
     let lastPaymentId = "";
 
