@@ -1,0 +1,2 @@
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS shipping_country TEXT DEFAULT 'India';
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS shipping_surcharge NUMERIC NOT NULL DEFAULT 0;

@@ -8,6 +8,16 @@ const corsHeaders = {
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 
+// Flat international shipping surcharge: ₹2000 = 200000 paise
+const INTERNATIONAL_SHIPPING_PAISE = 200000;
+
+function isInternational(country: string | undefined | null): boolean {
+  if (!country) return false;
+  const c = country.trim().toLowerCase();
+  if (!c) return false;
+  return c !== "india" && c !== "in" && c !== "ind";
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -16,12 +26,12 @@ serve(async (req) => {
   try {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID");
+    const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET");
 
     const body = await req.json();
     const {
-      // New format: items array with qty
       items,
-      // Legacy format: flat skus array
       skus,
       couponCode,
       customerName,
@@ -32,7 +42,6 @@ serve(async (req) => {
       shippingCity,
       shippingState,
       shippingPincode,
-      // New format fields
       recipientName,
       recipientPhone,
       recipientEmail,
@@ -41,10 +50,11 @@ serve(async (req) => {
       city,
       state,
       pincode,
+      postalCode,
+      country,
       discountAmount,
     } = body;
 
-    // Normalize items: if caller sends items [{sku, qty}] use that, else convert legacy skus
     const normalizedItems: { sku: string; qty: number }[] = items
       ? items
       : skus
@@ -55,7 +65,11 @@ serve(async (req) => {
       throw new Error("No items provided");
     }
 
-    // Forward to backend API for order creation
+    const intl = isInternational(country);
+    // For backend (India-only system), pass a placeholder pincode for intl orders.
+    const effectivePincode = intl ? "000000" : (pincode || shippingPincode || "");
+
+    // 1. Forward to backend for item pricing + coupon math
     const createRes = await fetch(`${API_BASE}/v1/orders/website/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -69,7 +83,7 @@ serve(async (req) => {
         addressLine2: addressLine2 || "",
         city: city || shippingCity || "",
         state: state || shippingState || "",
-        pincode: pincode || shippingPincode || "",
+        pincode: effectivePincode,
       }),
     });
 
@@ -78,19 +92,63 @@ serve(async (req) => {
       throw new Error(createData.error || createData.message || `Backend error (${createRes.status})`);
     }
 
-    const {
+    let {
       razorpayOrderId,
       websiteOrderId,
       totalAmountPaise,
       keyId,
     } = createData;
 
-    // Save pending order to DB
+    const baseTotalPaise = totalAmountPaise || amountInPaise || 0;
+    const surchargePaise = intl ? INTERNATIONAL_SHIPPING_PAISE : 0;
+    let finalTotalPaise = baseTotalPaise + surchargePaise;
+
+    // 2. If international: create a NEW Razorpay order at the higher amount,
+    //    so the surcharge is actually charged. (Backend order id is replaced.)
+    if (intl && RAZORPAY_KEY_ID && RAZORPAY_KEY_SECRET) {
+      try {
+        const auth = btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`);
+        const rzpRes = await fetch("https://api.razorpay.com/v1/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${auth}`,
+          },
+          body: JSON.stringify({
+            amount: finalTotalPaise,
+            currency: "INR",
+            receipt: (websiteOrderId || razorpayOrderId || `intl_${Date.now()}`).toString().slice(0, 40),
+            notes: {
+              international: "true",
+              country: country || "",
+              shipping_surcharge_paise: surchargePaise.toString(),
+              base_order_id: razorpayOrderId || "",
+              website_order_id: websiteOrderId?.toString() || "",
+            },
+          }),
+        });
+        const rzpData = await rzpRes.json();
+        if (rzpRes.ok && rzpData.id) {
+          razorpayOrderId = rzpData.id;
+          totalAmountPaise = finalTotalPaise;
+        } else {
+          console.error("Razorpay intl order create failed:", rzpData);
+          throw new Error(rzpData?.error?.description || "Failed to create international order");
+        }
+      } catch (e) {
+        console.error("Razorpay intl create error:", e);
+        throw e;
+      }
+    } else {
+      totalAmountPaise = finalTotalPaise;
+    }
+
+    // 3. Save pending order to DB
     if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
       await supabase.from("orders").insert({
         razorpay_order_id: razorpayOrderId,
-        amount: (totalAmountPaise || amountInPaise || 0) / 100,
+        amount: totalAmountPaise / 100,
         currency: "INR",
         status: "created",
         customer_name: recipientName || customerName || null,
@@ -100,7 +158,9 @@ serve(async (req) => {
         shipping_address: addressLine1 || shippingAddress || null,
         shipping_city: city || shippingCity || null,
         shipping_state: state || shippingState || null,
-        shipping_pincode: pincode || shippingPincode || null,
+        shipping_pincode: postalCode || pincode || shippingPincode || null,
+        shipping_country: country || "India",
+        shipping_surcharge: surchargePaise / 100,
         coupon_code: couponCode || null,
         discount_amount: discountAmount || 0,
       });
@@ -114,7 +174,9 @@ serve(async (req) => {
         totalAmountPaise,
         amount: totalAmountPaise,
         currency: "INR",
-        keyId: keyId || Deno.env.get("RAZORPAY_KEY_ID"),
+        keyId: keyId || RAZORPAY_KEY_ID,
+        shippingSurchargePaise: surchargePaise,
+        international: intl,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );

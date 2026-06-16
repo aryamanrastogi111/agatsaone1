@@ -188,6 +188,10 @@ const ReturnPolicy = () => {
                       <span className="text-primary mt-1">•</span>
                       <span>You will receive an email confirmation once the refund has been initiated</span>
                     </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-1">•</span>
+                      <span><strong>International orders:</strong> The flat <strong>₹2,000 international shipping fee is non-refundable</strong>, and return shipping costs are borne by the customer</span>
+                    </li>
                   </ul>
                 </div>
               </motion.div>

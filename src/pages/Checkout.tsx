@@ -26,6 +26,19 @@ const DEVICE_NAMES: Record<string, string> = {
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 
+// Flat international shipping surcharge: ₹2000
+const INTL_SHIPPING_PAISE = 200000;
+
+const COUNTRIES = [
+  "India",
+  "United States", "United Kingdom", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain",
+  "Singapore", "Malaysia", "Australia", "New Zealand", "Canada",
+  "Germany", "France", "Netherlands", "Spain", "Italy", "Switzerland", "Sweden", "Ireland",
+  "Japan", "Hong Kong", "South Korea", "Thailand", "Indonesia", "Philippines", "Vietnam",
+  "South Africa", "Kenya", "Nigeria", "Nepal", "Bangladesh", "Sri Lanka", "Bhutan",
+  "Other",
+];
+
 // ─── Pincode lookup ─────────────────────────────────────────────
 async function lookupPincode(pincode: string): Promise<{ city: string; state: string } | null> {
   if (pincode.length !== 6 || !/^\d{6}$/.test(pincode)) return null;
@@ -100,6 +113,7 @@ export default function CheckoutPage() {
   const [quoteLoaded, setQuoteLoaded] = useState(false);
 
   // Step 1
+  const [country, setCountry] = useState<string>("India");
   const [pincode, setPincode] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -108,6 +122,7 @@ export default function CheckoutPage() {
   const [pincodeChecked, setPincodeChecked] = useState(false);
   const [addressLine1, setAddressLine1] = useState("");
   const [addressLine2, setAddressLine2] = useState("");
+  const isIntl = country.trim().toLowerCase() !== "india";
 
   // Step 2
   const [fullName, setFullName] = useState("");
@@ -121,8 +136,9 @@ export default function CheckoutPage() {
     (sum, s) => sum + (prices[s as DeviceSku] || 0) * 100 * (quantities[s] || 1),
     0
   );
-  // Use server total if available, else client-computed
-  const displayTotalPaise = quoteLoaded ? serverTotalPaise : clientTotalPaise;
+  const baseTotalPaise = quoteLoaded ? serverTotalPaise : clientTotalPaise;
+  const shippingPaise = isIntl ? INTL_SHIPPING_PAISE : 0;
+  const displayTotalPaise = baseTotalPaise + shippingPaise;
   const displayTotalRupees = displayTotalPaise / 100;
 
   const items = uniqueSkus.map((s) => ({
@@ -254,7 +270,8 @@ export default function CheckoutPage() {
     }
   }, []);
 
-  const step1Valid = pincode.length === 6 && addressLine1.trim().length >= 4 && city.trim().length > 0 && state.trim().length > 0;
+  const pincodeValid = isIntl ? pincode.trim().length >= 3 : pincode.length === 6;
+  const step1Valid = pincodeValid && addressLine1.trim().length >= 4 && city.trim().length > 0 && state.trim().length > 0 && country.trim().length > 0;
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const step2Valid = fullName.trim().length >= 2 && /^\d{10}$/.test(phone) && emailValid;
 
@@ -328,7 +345,7 @@ export default function CheckoutPage() {
           <div className="bg-muted/50 rounded-xl p-4 text-sm space-y-1">
             <p className="font-medium text-foreground">Shipping to</p>
             <p className="text-muted-foreground">{fullName}</p>
-            <p className="text-muted-foreground">{addressLine1}, {city}, {state} - {pincode}</p>
+            <p className="text-muted-foreground">{addressLine1}, {city}, {state} - {pincode}{isIntl ? `, ${country}` : ""}</p>
             <p className="text-muted-foreground">+91 {phone}</p>
             {successReference && (
               <p className="text-xs text-muted-foreground pt-2 border-t border-border mt-2">
@@ -453,6 +470,8 @@ export default function CheckoutPage() {
             city: city.trim(),
             state: state.trim(),
             pincode: pincode.trim(),
+            postalCode: pincode.trim(),
+            country: country,
           }),
         });
         createData = await createRes.json().catch(() => ({}));
@@ -544,6 +563,8 @@ export default function CheckoutPage() {
                     shipping_city: city.trim(),
                     shipping_state: state.trim(),
                     shipping_pincode: pincode.trim(),
+                    shipping_country: country,
+                    shipping_surcharge: shippingPaise / 100,
                     coupon_code: couponApplied || null,
                     discount_amount: discountPaise / 100,
                   });
@@ -572,6 +593,8 @@ export default function CheckoutPage() {
                       shippingCity: city.trim(),
                       shippingState: state.trim(),
                       shippingPincode: pincode.trim(),
+                      shippingCountry: country,
+                      shippingSurcharge: shippingPaise / 100,
                     },
                   });
                 } catch (emailErr) {
@@ -739,6 +762,10 @@ export default function CheckoutPage() {
               </div>
             </>
           )}
+          <div className="flex justify-between text-sm text-muted-foreground">
+            <span>Shipping {isIntl ? "(International)" : "(India)"}</span>
+            <span>{isIntl ? fmtPaise(INTL_SHIPPING_PAISE) : "FREE"}</span>
+          </div>
           <div className="flex justify-between text-base font-bold text-foreground">
             <span>Total</span>
             <span>{quoteLoading ? "…" : fmtPaise(displayTotalPaise)}</span>
@@ -750,19 +777,52 @@ export default function CheckoutPage() {
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-foreground">Delivery Address</h2>
 
-            {/* Pincode */}
+            {/* Country */}
             <div>
-              <label className="text-sm font-medium text-foreground block mb-1.5">Pincode</label>
+              <label className="text-sm font-medium text-foreground block mb-1.5">Country</label>
+              <select
+                value={country}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setCountry(v);
+                  // Reset pincode-derived fields when toggling country
+                  setPincodeChecked(false);
+                  setCityAutoFilled(false);
+                }}
+                className="w-full px-4 py-3 border border-border rounded-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
+              >
+                {COUNTRIES.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              {isIntl && (
+                <p className="text-xs text-amber-600 mt-1.5">
+                  Flat ₹2,000 international shipping will be added at checkout.
+                </p>
+              )}
+            </div>
+
+            {/* Pincode / Postal code */}
+            <div>
+              <label className="text-sm font-medium text-foreground block mb-1.5">
+                {isIntl ? "Postal / ZIP code" : "Pincode"}
+              </label>
               <div className="relative">
                 <input
-                  type="tel"
-                  maxLength={6}
+                  type={isIntl ? "text" : "tel"}
+                  maxLength={isIntl ? 12 : 6}
                   value={pincode}
-                  onChange={(e) => handlePincodeChange(e.target.value)}
-                  placeholder="Enter 6-digit pincode"
+                  onChange={(e) => {
+                    if (isIntl) {
+                      setPincode(e.target.value.slice(0, 12));
+                    } else {
+                      handlePincodeChange(e.target.value);
+                    }
+                  }}
+                  placeholder={isIntl ? "Enter postal / ZIP code" : "Enter 6-digit pincode"}
                   className="w-full px-4 py-3 border border-border rounded-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
                 />
-                {pincodeLoading && (
+                {!isIntl && pincodeLoading && (
                   <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary animate-spin" />
                 )}
               </div>
@@ -897,7 +957,10 @@ export default function CheckoutPage() {
             <div className="bg-muted/30 rounded-xl p-3 text-sm text-muted-foreground border border-border">
               <p className="font-medium text-foreground mb-1">Shipping to</p>
               <p>{addressLine1}{addressLine2 ? `, ${addressLine2}` : ""}</p>
-              <p>{city}, {state} - {pincode}</p>
+              <p>{city}, {state} - {pincode}{isIntl ? `, ${country}` : ""}</p>
+              {isIntl && (
+                <p className="text-xs text-amber-600 mt-1">+ ₹2,000 international shipping included</p>
+              )}
             </div>
 
             {/* Pay button */}

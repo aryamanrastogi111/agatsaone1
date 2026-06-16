@@ -1,69 +1,61 @@
-## Meet Priya — A Real NERA AI Report
+## Goal
+Communicate "International shipping: flat ₹2000" everywhere on the site, and automatically add ₹2000 to checkout when the shipping address is outside India.
 
-Rebuild the middle of `/nera-ai` as one continuous, narrative case study. The 5 app screenshots stop being a gallery and start being **the report itself** — each one anchoring a chapter of Priya's story.
+## 1. Policy & marketing copy (display only)
+Update these pages/components to state: *"International shipping: flat ₹2000 to all countries. Free shipping within India."*
 
-### Persona (sensible default — easy to tweak later)
+- `src/pages/ShippingPolicy.tsx` — rewrite "International Shipping" and "Shipping Charges" sections with the flat ₹2000 rule.
+- `src/pages/ReturnPolicy.tsx` — note that international return shipping is customer-borne; outbound ₹2000 is non-refundable.
+- `src/components/SiteFooter.tsx` — add a small line "International shipping ₹2000 flat" under the support column (optional, low-key).
+- `src/components/home-new/DeviceShowcaseSection.tsx` and any product page that prints "Free shipping" — append "(India). International ₹2000 flat." Touch: `src/pages/products/*Product.tsx` headers that mention shipping, and `src/lib/shipDate.ts` label consumers.
+- `src/pages/Checkout.tsx` order summary — render a "Shipping" row (₹0 India / ₹2000 International).
 
-**Priya Sharma, 34, Bengaluru.** Product manager. Sleeps ~5h, skips workouts, late dinners after 10pm. Owns SanketLife ECG, EasyTouch Wellness and Rhythm Band. Connects them to Agatsa One on Day 1. NERA AI builds her report over 7 days.
+## 2. Checkout: detect international address
+Currently `Checkout.tsx` is India-only (forces 6-digit pincode, no country field).
 
-### New section structure (replaces `CombinedIntelligence` + `SampleInsights`)
+- Add a **Country** `<Select>` above the pincode field (default: India). Use a small country list (India + ~30 common destinations + "Other").
+- When country ≠ India:
+  - Replace the 6-digit pincode validator with a generic postal-code text field (3–10 chars).
+  - Skip the `postalpincode.in` auto-fill lookup.
+  - Show State as free-text instead of auto-filled.
+  - Add a flat **₹2000 international shipping** line to the order summary.
+- When country = India: behavior unchanged.
 
-One section, `PriyaReportStory`, dark theme, scroll-anchored chapters. Each chapter = left column narrative + right column real screenshot in a phone frame. Alternate sides for rhythm.
+## 3. Charging the surcharge (backend)
+`razorpay-create-order` currently forwards items to an external API (`agatsa-one-api...`) which computes `totalAmountPaise`. The client cannot unilaterally add ₹2000 without breaking the Razorpay signature.
 
-**Chapter 0 — Cover card**
-- Eyebrow: "A Real NERA Report"
-- Headline: "This is Priya's report. Yours will look like this in 7 days."
-- Persona chip: avatar initial · Priya, 34 · Bengaluru · 3 connected devices
-- Day counter pill: "Day 7 · Report ready"
+Approach: have the **edge function** add the surcharge after the backend returns the total, then re-create the Razorpay order at the new amount using `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` directly.
 
-**Chapter 1 — The verdict** → `nera-score.jpeg`
-- Heading: "Day 7: NERA gives Priya a score of 49."
-- Body: "Not a number she wanted to see. But for the first time, she understands *why*. Lifestyle 50 · Cardiac 65 · Metabolic 22 · Food 53 — four pillars, one honest picture."
-- Pull-quote callout: "Some signals need attention."
+Steps in `supabase/functions/razorpay-create-order/index.ts`:
+1. Accept new fields: `country`, `postalCode` (in addition to existing `pincode`).
+2. Call backend as today to get item totals + coupon math → `baseTotalPaise`.
+3. If `country` is provided and ≠ `"IN"`/`"India"`, compute `finalTotalPaise = baseTotalPaise + 200000`.
+4. Create a fresh Razorpay order via `POST https://api.razorpay.com/v1/orders` with `amount: finalTotalPaise` using basic auth (`RAZORPAY_KEY_ID:RAZORPAY_KEY_SECRET`). Return that new `id` as `razorpayOrderId`.
+5. Persist `shipping_country` and `shipping_surcharge` (₹2000 or 0) on the `orders` insert. Requires a tiny migration adding `shipping_country TEXT` and `shipping_surcharge NUMERIC DEFAULT 0` to `public.orders`.
+6. For Indian orders, keep forwarding the original backend `razorpayOrderId` unchanged (no regression).
 
-**Chapter 2 — The 9 signals** → `nera-signals.jpeg`
-- Heading: "NERA read 9 of 9 health signals. Most apps read 2."
-- Body explains how each device contributes: Rhythm Band → Sleep/Activity/HRV. SanketLife ECG → Cardiac. EasyTouch Wellness → Metabolic Zone & sugar response. Self-logged → Food.
-- Three inline data callouts pulled from the screenshot: Sleep 35/100 (1.5h avg), Metabolic Zone 22/100, Body Composition 90/100.
+Verification: existing verify function (`razorpay-verify-payment`) only checks signature against the order id we hand back to the client, so swapping in our new Razorpay order id is safe.
 
-**Chapter 3 — The risk estimate** → `nera-risk.jpeg`
-- Heading: "Then NERA does the math no single device can."
-- Body: "Cardiac risk 29% · moderate. Metabolic / diabetes risk 52% · elevated. Clinical thresholds — Rodbard, Monnier — applied to 124 sugar readings across 6 days. Not a diagnosis. A direction."
-- Worth-watching strip echoing the screenshot's amber alert: "Time in optimal metabolic zone is lower than ideal."
+## 4. Client wiring
+- Pass `country` and `postalCode` from `Checkout.tsx` to the edge function call.
+- Display the surcharge in the order summary and on the post-payment success screen.
+- Update `src/integrations/supabase/types.ts` will regenerate after the migration.
 
-**Chapter 4 — Ranked actions** → `nera-actions.jpeg`
-- Heading: "Then it tells Priya exactly what to do — ranked by impact."
-- Body: "Not 30 generic tips. Two changes, weighed by points she'll actually recover."
-- Two action rows mirroring the screenshot: #1 Sleep 7–8 hrs (+44 pts, highest single impact). #2 Add 4,897 more steps daily (reduces metabolic + cardiac risk).
+## 5. Out of scope (call out for user)
+- Tax / GST recalculation for exports (currently no GST line shown — fine).
+- International courier selection / live rates (flat ₹2000 only, as requested).
+- COD is not offered internationally (Razorpay prepaid only — already the case).
 
-**Chapter 5 — The outcome (6 weeks later)**
-- Heading: "Six weeks later, Priya's NERA score climbed from 49 → 72."
-- Three small metric cards (no screenshot — pure data viz built in code): Sleep 35 → 71 · Metabolic Zone 22 → 58 · Diabetes risk 52% → 31%.
-- Closing line: "Same devices. Same body. New understanding."
+## Files touched
+- `src/pages/ShippingPolicy.tsx`
+- `src/pages/ReturnPolicy.tsx`
+- `src/components/SiteFooter.tsx`
+- `src/pages/Checkout.tsx`
+- `src/pages/products/*Product.tsx` (only places that state "Free shipping")
+- `supabase/functions/razorpay-create-order/index.ts`
+- New migration: add `shipping_country`, `shipping_surcharge` to `orders`.
 
-**Chapter 6 — How to start your own report** → `nera-plans.jpeg`
-- Heading: "Your report is 7 days away."
-- Body: short list of what unlocks with NERA AI Premium (weekly report, daily nudges, predictive warnings, 3-day recovery forecast, unlimited correlations).
-- CTA buttons: "Activate NERA AI" → /pricing, "Browse Devices" → /devices.
-
-### What gets removed
-
-- `AppShowcase` section (the gallery I just added)
-- `CombinedIntelligence` section (abstract correlation cards + network diagram)
-- `SampleInsights` section (generic insight cards)
-
-### What stays
-
-- Hero, `WhyNeraExists`, the three device sections (ECG/Wellness/Rhythm), `FutureHealth`, `WhySubscribe`, `FinalCTA`. The narrative replaces only the abstract middle.
-
-### Disclaimer
-
-Add a small footnote under Chapter 5: "Priya is an illustrative composite based on typical NERA reports. Not a medical case. Individual results vary."
-
-### Technical notes
-
-- Single new component `PriyaReportStory` in `src/pages/NeraAI.tsx` (keeps file self-contained, same pattern as other sections).
-- Reuse existing phone-frame styling from the removed `AppShowcase`, but each screenshot sits inside a larger narrative card (not standalone).
-- Framer Motion `fadeUp` per chapter on scroll, alternating image side via CSS order.
-- All existing imports (`neraScore`, `neraSignals`, `neraRisk`, `neraActions`, `neraPlans`) stay — just used inside `PriyaReportStory` instead of the gallery.
-- No new routes, no backend, no copy that mentions "glucose" (use "sugar reading/response/zone" per project core rules).
+## Confirm before I build
+1. Flat ₹2000 to **every** country outside India (no exclusions / no restricted list)?
+2. OK with the edge function creating the final Razorpay order directly (so the surcharge is actually charged), instead of routing through the external `agatsa-one-api` backend?
+3. Should the ₹2000 also apply to free / 99%-off coupon orders (i.e. surcharge is always added on top, never waived)?
