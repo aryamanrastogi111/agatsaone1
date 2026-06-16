@@ -543,35 +543,62 @@ export default function CheckoutPage() {
       }
 
       // 2. Create order
-      let createRes: Response;
+      // For India: hit the external API directly.
+      // For international: go through the Supabase edge function so the
+      // ₹2000 shipping surcharge is added to the actual Razorpay charge.
       let createData: any = {};
       try {
-        createRes = await fetchWithTimeout(`${API_BASE}/v1/orders/website/create`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            items: cartItems,
-            couponCode: couponApplied || undefined,
-            recipientName: fullName.trim(),
-            recipientPhone: fullPhone,
-            recipientEmail,
-            addressLine1: addressLine1.trim(),
-            addressLine2: addressLine2.trim() || undefined,
-            city: city.trim(),
-            state: state.trim(),
-            pincode: pincode.trim(),
-            postalCode: pincode.trim(),
-            country: country,
-          }),
-        });
-        createData = await createRes.json().catch(() => ({}));
+        if (isIntl) {
+          const { data, error } = await supabase.functions.invoke("razorpay-create-order", {
+            body: {
+              items: cartItems,
+              couponCode: couponApplied || undefined,
+              recipientName: fullName.trim(),
+              recipientPhone: fullPhone,
+              recipientEmail,
+              addressLine1: addressLine1.trim(),
+              addressLine2: addressLine2.trim() || undefined,
+              city: city.trim(),
+              state: state.trim(),
+              pincode: pincode.trim(),
+              postalCode: pincode.trim(),
+              country: country,
+              discountAmount: discountPaise / 100,
+            },
+          });
+          if (error) {
+            console.error("[checkout] intl create failed:", error);
+            throw new Error(error.message || "Order creation failed");
+          }
+          createData = data || {};
+        } else {
+          const createRes = await fetchWithTimeout(`${API_BASE}/v1/orders/website/create`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              items: cartItems,
+              couponCode: couponApplied || undefined,
+              recipientName: fullName.trim(),
+              recipientPhone: fullPhone,
+              recipientEmail,
+              addressLine1: addressLine1.trim(),
+              addressLine2: addressLine2.trim() || undefined,
+              city: city.trim(),
+              state: state.trim(),
+              pincode: pincode.trim(),
+              postalCode: pincode.trim(),
+              country: country,
+            }),
+          });
+          createData = await createRes.json().catch(() => ({}));
+          if (!createRes.ok) {
+            console.error("[checkout] create non-ok:", createRes.status, createData);
+            throw new Error(createData.error || createData.message || `Order creation failed (${createRes.status})`);
+          }
+        }
       } catch (e: any) {
         console.error("[checkout] create failed:", e);
-        throw new Error("We couldn't reach the payment server. Please check your connection and try again.");
-      }
-      if (!createRes.ok) {
-        console.error("[checkout] create non-ok:", createRes.status, createData);
-        throw new Error(createData.error || createData.message || `Order creation failed (${createRes.status})`);
+        throw new Error(e?.message || "We couldn't reach the payment server. Please check your connection and try again.");
       }
 
       const razorpayOrderId = createData.razorpayOrderId || createData.razorpay_order_id;
