@@ -1013,17 +1013,19 @@ export default function CheckoutPage() {
             <div>
               <label className="text-sm font-medium text-foreground block mb-1.5">Mobile Number</label>
               <div className="flex">
-                <span className="flex items-center px-3 border border-r-0 border-border rounded-l-xl bg-muted text-sm text-muted-foreground">+91</span>
+                <span className="flex items-center px-3 border border-r-0 border-border rounded-l-xl bg-muted text-sm text-muted-foreground font-medium">{dialCode}</span>
                 <input
                   type="tel"
-                  maxLength={10}
+                  maxLength={isIntl ? 15 : 10}
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                  placeholder="10-digit mobile number"
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, isIntl ? 15 : 10))}
+                  placeholder={isIntl ? "Mobile number" : "10-digit mobile number"}
                   className="flex-1 px-4 py-3 border border-border rounded-r-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Use your Agatsa One app number for automatic plan activation</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {isIntl ? "We'll use this for delivery updates and order support." : "Use your Agatsa One app number for automatic plan activation"}
+              </p>
             </div>
 
             {/* Email */}
