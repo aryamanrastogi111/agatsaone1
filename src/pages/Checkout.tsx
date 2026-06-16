@@ -802,19 +802,27 @@ export default function CheckoutPage() {
               )}
             </div>
 
-            {/* Pincode */}
+            {/* Pincode / Postal code */}
             <div>
-              <label className="text-sm font-medium text-foreground block mb-1.5">Pincode</label>
+              <label className="text-sm font-medium text-foreground block mb-1.5">
+                {isIntl ? "Postal / ZIP code" : "Pincode"}
+              </label>
               <div className="relative">
                 <input
-                  type="tel"
-                  maxLength={6}
+                  type={isIntl ? "text" : "tel"}
+                  maxLength={isIntl ? 12 : 6}
                   value={pincode}
-                  onChange={(e) => handlePincodeChange(e.target.value)}
-                  placeholder="Enter 6-digit pincode"
+                  onChange={(e) => {
+                    if (isIntl) {
+                      setPincode(e.target.value.slice(0, 12));
+                    } else {
+                      handlePincodeChange(e.target.value);
+                    }
+                  }}
+                  placeholder={isIntl ? "Enter postal / ZIP code" : "Enter 6-digit pincode"}
                   className="w-full px-4 py-3 border border-border rounded-xl text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
                 />
-                {pincodeLoading && (
+                {!isIntl && pincodeLoading && (
                   <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary animate-spin" />
                 )}
               </div>
