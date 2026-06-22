@@ -23,10 +23,9 @@ const navLinks = [
       { label: "HeartGuard Kit", href: "/heartguard" },
       { label: "For Hospitals", href: "/for-hospitals" },
       { label: "For Corporates", href: "/for-corporates" },
-      { label: "Partner with Us", href: "/partner-with-us" },
     ],
   },
-  ...(isMyEasyTouchHost() ? [] : [{ label: "Pricing", href: "/pricing" }]),
+  { label: "Partner with Us", href: "/partner-with-us" },
   { label: "About", href: "/about" },
 ];
 
