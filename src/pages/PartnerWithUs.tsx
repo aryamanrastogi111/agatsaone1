@@ -210,6 +210,44 @@ export default function PartnerWithUs() {
         </div>
       </section>
 
+      {/* Customer segment tiles */}
+      <section className="py-10 bg-background">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">Explore by customer segment</h2>
+            <p className="text-sm text-muted-foreground mt-2">Pick the one closest to you to see what we offer — or scroll down to fill the open enquiry form.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5">
+            {PARTNER_SEGMENTS.map((s, i) => (
+              <motion.div
+                key={s.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+              >
+                <Link
+                  to={`/partner/segments/${s.slug}`}
+                  className="group block h-full bg-card border border-border rounded-2xl p-6 hover:border-primary hover:shadow-purple transition-all"
+                >
+                  <div className="text-3xl mb-3" aria-hidden>{s.emoji}</div>
+                  <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
+                    {s.shortTitle}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+                    {s.tagline}
+                  </p>
+                  <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary mt-4">
+                    Learn more <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
       <section className="py-10">
         <div className="max-w-3xl mx-auto px-4">
           <Tabs defaultValue="apply" className="w-full">
