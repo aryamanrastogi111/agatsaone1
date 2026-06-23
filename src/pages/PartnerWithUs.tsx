@@ -18,7 +18,8 @@ import {
   HEARD_FROM_OPTIONS,
   type Field,
 } from "@/data/partnershipQuestions";
-import { useSearchParams } from "react-router-dom";
+import { PARTNER_SEGMENTS } from "@/data/partnerSegments";
+import { useSearchParams, Link } from "react-router-dom";
 
 type AnswerMap = Record<string, string | string[]>;
 
