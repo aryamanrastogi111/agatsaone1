@@ -365,8 +365,8 @@ export default function SmartScaleProduct() {
             <div className="flex items-center gap-3 bg-primary/10 rounded-xl border border-primary/20 p-4">
               <Package className="h-5 w-5 text-primary shrink-0" />
               <div className="flex flex-col">
-                <span className="text-sm font-semibold text-primary">1-year Nera AI subscription</span>
-                <span className="text-xs text-muted-foreground">No subscription needed</span>
+                <span className="text-sm font-semibold text-primary">7-day Nera AI free</span>
+                <span className="text-xs text-muted-foreground">Activates on pairing</span>
               </div>
             </div>
           </div>

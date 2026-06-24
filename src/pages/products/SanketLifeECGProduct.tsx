@@ -723,7 +723,7 @@ export default function SanketLifeECGProduct() {
             ))}
             <div className="flex items-center gap-3 bg-primary/10 rounded-xl border border-primary/20 p-4">
               <Package className="h-5 w-5 text-primary shrink-0" />
-              <span className="text-sm font-semibold text-primary">3-month Nera AI Premium (₹1,197 value)</span>
+              <span className="text-sm font-semibold text-primary">14-day Nera AI Premium free</span>
             </div>
           </div>
         </div>
