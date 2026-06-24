@@ -304,6 +304,16 @@ serve(async (req) => {
                   </td>
                 </tr>
               </table>
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:10px;margin-bottom:24px;">
+                <tr>
+                  <td style="padding:16px 18px;">
+                    <p style="margin:0 0 6px;font-size:14px;color:#6b21a8;font-weight:700;">🎁 Your free Nera AI trial</p>
+                    <p style="margin:0;font-size:13px;color:#581c87;line-height:1.6;">
+                      Each device in your order comes with a free Nera AI trial — <strong>14 days of Nera AI Premium</strong> with SanketLife ECG, and <strong>7 days</strong> with EasyTouch Wellness, Rhythm Band and Smart Scale. Your trial activates the moment you pair the device in <strong>Agatsa One</strong>.
+                    </p>
+                  </td>
+                </tr>
+              </table>
               ${invoicePdfBase64 ? `<table width="100%" cellpadding="0" cellspacing="0" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;margin-bottom:24px;">
                 <tr>
                   <td style="padding:14px 18px;font-size:13px;color:#166534;">
