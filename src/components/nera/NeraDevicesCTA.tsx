@@ -64,7 +64,7 @@ export default function NeraDevicesCTA() {
             <span className="text-white/70">Or license NERA AI for your own.</span>
           </h2>
           <p className="mt-3 md:mt-5 text-sm md:text-lg text-white/70 max-w-2xl mx-auto">
-            NERA AI ships free for 3 months with every Agatsa device. Already have a wearable or
+            Every Agatsa device ships with a free NERA AI trial that activates the moment you pair it in Agatsa One. Already have a wearable or
             health platform? License NERA AI as the intelligence layer for your own product.
           </p>
         </motion.div>
@@ -88,7 +88,7 @@ export default function NeraDevicesCTA() {
                 <p className="mt-0.5 md:mt-1.5 text-xs md:text-sm text-white/70">{d.tagline}</p>
                 <div className="mt-1 md:mt-2 inline-flex items-center gap-1 text-[10px] md:text-[11px] font-semibold uppercase tracking-wider text-primary">
                   <Sparkles className="w-3 h-3" />
-                  3 months NERA AI free
+                  {d.trial}
                 </div>
                 <Button asChild size="sm" className="mt-3 md:mt-5 btn-glow w-full md:h-11 md:text-base">
                   <Link to={d.href}>
