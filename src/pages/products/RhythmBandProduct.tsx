@@ -175,7 +175,7 @@ export default function RhythmBandProduct() {
 
           <motion.div {...fadeUp} transition={{ duration: 0.8, delay: 0.35 }} className="mt-4 text-xs text-muted-foreground">
             <StrikePrice sku="band_sub" price={bandPrice} size="sm" showLabel={false} />
-            <span className="block mt-2">Free 1-year Nera AI included · Free shipping · 7-day returns</span>
+            <span className="block mt-2">7-day Nera AI Premium free · Free shipping · 7-day returns</span>
           </motion.div>
 
           {/* Band + App Screen composition */}
@@ -226,7 +226,7 @@ export default function RhythmBandProduct() {
                   <span className="text-white/80">Let Nera AI do the rest.</span>
                 </h2>
                 <p className="mt-5 text-white/85 text-base md:text-lg leading-relaxed max-w-md">
-                  Lightweight. Comfortable. Always on. Get your daily Rhythm Score with a 1-year Nera AI plan included.
+                  Lightweight. Comfortable. Always on. Get your daily Rhythm Score with a 7-day Nera AI Premium trial included.
                 </p>
                 <div className="mt-7 flex flex-wrap items-center gap-3">
                   <Button
@@ -243,7 +243,7 @@ export default function RhythmBandProduct() {
                   </Link>
                 </div>
                 <p className="mt-4 text-xs text-white/70">
-                  Free 1-year Nera AI · Free shipping · 7-day returns
+                  7-day Nera AI Premium free · Free shipping · 7-day returns
                 </p>
               </div>
 
@@ -892,7 +892,7 @@ export default function RhythmBandProduct() {
             </Link>
           </div>
           <p className="mt-6 text-xs text-muted-foreground">
-            Free 1-year Nera AI · Free shipping · 7-day returns
+            7-day Nera AI Premium free · Free shipping · 7-day returns
           </p>
         </div>
       </section>

@@ -206,10 +206,10 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 export default function PricingPage() {
   const { prices, fmt } = usePricing();
   const deviceBonuses = [
-    { device: `SanketLife ECG (${fmt(prices.ecg_bundle)})`, bonus: "3 months Nera AI Premium free — ₹897 value", color: "bg-green-100 text-green-700" },
-    { device: `EasyTouch Wellness (${fmt(prices.wellness_sub)})`, bonus: "3 months Nera AI Weekly free — ₹447 value", color: "bg-purple-100 text-purple-700" },
-    { device: `Rhythm Band (${fmt(prices.band_sub)})`, bonus: "3 months Nera AI Weekly free — ₹447 value", color: "bg-purple-100 text-purple-700" },
-    { device: `ECG + Band Bundle (${fmt(prices.bundle_ecg_band)})`, bonus: "3 months Nera AI Premium free — ₹897 value", color: "bg-green-100 text-green-700" },
+    { device: `SanketLife ECG (${fmt(prices.ecg_bundle)})`, bonus: "14-day Nera AI Premium free", color: "bg-green-100 text-green-700" },
+    { device: `EasyTouch Wellness (${fmt(prices.wellness_sub)})`, bonus: "7-day Nera AI free", color: "bg-purple-100 text-purple-700" },
+    { device: `Rhythm Band (${fmt(prices.band_sub)})`, bonus: "7-day Nera AI Premium free", color: "bg-purple-100 text-purple-700" },
+    { device: `ECG + Band Bundle (${fmt(prices.bundle_ecg_band)})`, bonus: "14-day Nera AI Premium free", color: "bg-green-100 text-green-700" },
   ];
   useSEO({
     title: "Pricing — Agatsa One | Nera AI Health Plans from ₹0",

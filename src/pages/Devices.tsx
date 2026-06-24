@@ -347,7 +347,7 @@ export default function DevicesPage() {
       {/* Urgency bar */}
       <div className="bg-primary py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-primary-foreground text-sm font-medium text-center">
-          <span>🎁 Free 1-year Nera AI included with every device (worth ₹3,999)</span>
+          <span>🎁 Free Nera AI trial with every device — 14 days Premium on SanketLife, 7 days on EasyTouch / Rhythm / Smart Scale</span>
           <span className="hidden sm:block text-primary-foreground/40">|</span>
           <span>🚚 Ships within 24 hours</span>
           <span className="hidden sm:block text-primary-foreground/40">|</span>

@@ -99,7 +99,7 @@ const FAQS = [
   { q: "Do I need the Agatsa Smart Scale to join?", a: "Yes — the scale is how we measure visceral fat, which is the primary goal. For Standard, it's rented free and you return it after Day 90. For Plus, it's yours to keep. The scale ships within 48 hours of purchase." },
   { q: "What if I don't hit 2 of 3 goals — is the refund automatic?", a: "The refund button appears in the app automatically if your Day 90 scan misses 2 of 3 goals. You tap it. We process the refund to your original card in 7 working days. There is no form to fill, no support call, and no proof-of-effort requirement." },
   { q: "Does the nutritionist speak Hindi?", a: "Yes. All nutritionists speak Hindi and English. If you have a regional language preference, mention it on your first call and we'll do our best to accommodate." },
-  { q: "What happens to my data after Day 90?", a: "Your health data, scan history, and meal logs remain in the Agatsa One app indefinitely. Your 1-year Nera AI access continues for the remainder of your subscription period regardless of verdict." },
+  { q: "What happens to my data after Day 90?", a: "Your health data, scan history, and meal logs remain in the Agatsa One app indefinitely. Your Nera AI access continues for the remainder of your subscription period regardless of verdict." },
   { q: "Is the calorie target the same for everyone?", a: "No — it's calculated individually using your weight, lean muscle mass (from the Smart Scale), and a clinically safe 0.7%/week loss rate. A 90 kg person and a 65 kg person will have different targets. The target also updates automatically if your weight changes significantly." },
 ];
 

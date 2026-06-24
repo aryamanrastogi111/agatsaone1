@@ -121,14 +121,14 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
       },
       {
         id: "etw-nera-ai-not-active",
-        title: "My 1-year free Nera AI is not activated",
+        title: "My free Nera AI trial is not activated",
         priority: "medium",
         questionnaire: [
           "Did you complete account setup using the email used at checkout?",
           "Did you scan the activation QR / enter the activation code from the box?",
           "Has it been more than 24 hours since your order was delivered?",
         ],
-        hint: "Share your order number — we'll activate it manually from our end.",
+        hint: "Share your order number — we'll activate your 7-day Nera AI trial manually from our end.",
       },
     ],
   },
@@ -308,7 +308,7 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
   {
     id: "nera-ai",
     label: "Nera AI / Agatsa One App",
-    blurb: "The Agatsa One app + your 1-year free Nera AI insights",
+    blurb: "The Agatsa One app + your free Nera AI trial",
     issues: [
       {
         id: "app-otp",
@@ -322,13 +322,13 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
       },
       {
         id: "app-nera-not-applied",
-        title: "1-year free Nera AI not applied to my account",
+        title: "Free Nera AI trial not applied to my account",
         priority: "medium",
         questionnaire: [
           "Did you sign up with the email used at checkout?",
           "Has it been more than 24 hours since your device was delivered?",
         ],
-        hint: "Share your order number — we'll activate it manually.",
+        hint: "Share your order number — we'll activate your Nera AI trial manually.",
       },
       {
         id: "app-data-sync",

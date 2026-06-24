@@ -66,7 +66,7 @@ export default function MyEasyTouchLanding() {
   useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 3999);
   useSEO({
     title: "EasyTouch Rhythm Band — 24/7 Sleep, HRV & SpO2 Tracking",
-    description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Powered by Nera AI. Free 1-year subscription included.",
+    description: "Continuous heart rate, SpO2, sleep stage tracking, HRV, and stress score. 7-day battery. Powered by Nera AI. 7-day Nera AI Premium free on activation.",
   });
 
   const handleAddToCart = (qtyOrEvent?: number | React.MouseEvent) => {
@@ -138,8 +138,8 @@ export default function MyEasyTouchLanding() {
                   </div>
                   <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                     <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
-                    <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 1 year</span>
-                    <span className="text-xs text-muted-foreground">No subscription needed</span>
+                    <span className="text-sm font-semibold text-foreground">7-day Nera AI Premium trial</span>
+                    <span className="text-xs text-muted-foreground">Auto-activates on pairing</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-1 mt-3">
@@ -317,7 +317,7 @@ export default function MyEasyTouchLanding() {
               ))}
               <div className="flex items-center gap-3 bg-primary/10 rounded-xl border border-primary/20 p-4">
                 <Package className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-sm font-semibold text-primary">Nera AI — 1 year free</span>
+                <span className="text-sm font-semibold text-primary">7-day Nera AI Premium free</span>
               </div>
             </div>
           </div>

@@ -147,8 +147,8 @@ export default function SanketLifeECGProduct() {
               <TrustBar showCDSCO />
               <div className="mt-3 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
                 <span className="text-xs font-bold text-primary uppercase tracking-wide">Included FREE</span>
-                <span className="text-sm font-semibold text-foreground">Nera AI Premium — 1 year</span>
-                <span className="text-xs text-muted-foreground">No subscription needed</span>
+                <span className="text-sm font-semibold text-foreground">Nera AI + 14-day Premium trial</span>
+                <span className="text-xs text-muted-foreground">Auto-activates on pairing</span>
               </div>
 
               <p className="text-xs text-muted-foreground mt-3">
@@ -552,7 +552,7 @@ export default function SanketLifeECGProduct() {
             <Button onClick={handleAddToCart} disabled={adding} size="lg" className="rounded-full px-10 text-base bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold">
               Get SanketLife + Nera AI — {fmt(ecgPrice)}
             </Button>
-            <p className="text-[hsl(240,10%,70%)] text-sm mt-3">Includes Nera AI Premium — 1 year free</p>
+            <p className="text-[hsl(240,10%,70%)] text-sm mt-3">Includes Nera AI + 14-day Nera AI Premium free</p>
           </div>
         </div>
       </section>
@@ -684,7 +684,7 @@ export default function SanketLifeECGProduct() {
               Add to Cart — {fmt(ecgPrice)}
             </Button>
             <p className="text-primary-foreground/70 text-sm mt-4">
-              Free shipping · 1-year warranty · Nera AI Premium 1 year free
+              Free shipping · 1-year warranty · 14-day Nera AI Premium free
             </p>
 
             {/* Inline trust chips */}
@@ -723,7 +723,7 @@ export default function SanketLifeECGProduct() {
             ))}
             <div className="flex items-center gap-3 bg-primary/10 rounded-xl border border-primary/20 p-4">
               <Package className="h-5 w-5 text-primary shrink-0" />
-              <span className="text-sm font-semibold text-primary">3-month Nera AI Premium (₹1,197 value)</span>
+              <span className="text-sm font-semibold text-primary">14-day Nera AI Premium free</span>
             </div>
           </div>
         </div>

@@ -464,7 +464,7 @@ export default function LoseBelly() {
               { t: "Agatsa Smart Scale", b: "BIA-enabled. Measures weight, body fat %, visceral fat, muscle mass.", v: "₹4,999 value" },
               { t: "Body-tape & wall chart", b: "Track waist, hips, thighs weekly. Hangs in your bathroom.", v: "Included" },
               { t: "90-day playbook", b: "Printed booklet with the science, the meal patterns, the rules.", v: "Plus & above" },
-              { t: "Nera AI app access", b: "Photo meal logging, daily voice check-ins, weekly visceral-fat insights.", v: "1 year free" },
+              { t: "Nera AI app access", b: "Photo meal logging, daily voice check-ins, weekly visceral-fat insights.", v: "7-day trial free" },
             ].map((k, i) => (
               <Card key={i} className="border-2 border-[#0B2A4A]/10 p-6 transition-shadow hover:shadow-lg">
                 <Badge className="bg-[#1F7A4D]/10 text-[#1F7A4D] hover:bg-[#1F7A4D]/10">{k.v}</Badge>

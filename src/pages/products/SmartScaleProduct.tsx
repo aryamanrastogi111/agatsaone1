@@ -137,8 +137,8 @@ export default function SmartScaleProduct() {
                 </div>
                 <div className="mt-2 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
                   <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
-                  <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 1 year</span>
-                  <span className="text-xs text-muted-foreground">No subscription needed</span>
+                  <span className="text-sm font-semibold text-foreground">Nera AI — 7 days free</span>
+                  <span className="text-xs text-muted-foreground">Auto-activates on pairing</span>
                 </div>
               </div>
               <div className="flex items-center gap-1 mt-3">
@@ -240,8 +240,8 @@ export default function SmartScaleProduct() {
           </Button>
           <div className="mt-4 inline-flex items-center gap-2 bg-[hsl(270,60%,96%)] dark:bg-[hsl(270,40%,20%)] border border-[hsl(270,60%,80%)] dark:border-[hsl(270,40%,40%)] rounded-lg px-3 py-2">
             <span className="text-xs font-bold text-[hsl(270,80%,50%)] uppercase tracking-wide">Included FREE</span>
-            <span className="text-sm font-semibold text-foreground">Nera AI Weekly — 1 year</span>
-            <span className="text-xs text-muted-foreground">No subscription needed</span>
+            <span className="text-sm font-semibold text-foreground">Nera AI — 7 days free</span>
+            <span className="text-xs text-muted-foreground">Auto-activates on pairing</span>
           </div>
           <TrustBar />
         </div>
@@ -365,8 +365,8 @@ export default function SmartScaleProduct() {
             <div className="flex items-center gap-3 bg-primary/10 rounded-xl border border-primary/20 p-4">
               <Package className="h-5 w-5 text-primary shrink-0" />
               <div className="flex flex-col">
-                <span className="text-sm font-semibold text-primary">1-year Nera AI subscription</span>
-                <span className="text-xs text-muted-foreground">No subscription needed</span>
+                <span className="text-sm font-semibold text-primary">7-day Nera AI free</span>
+                <span className="text-xs text-muted-foreground">Activates on pairing</span>
               </div>
             </div>
           </div>

@@ -821,7 +821,7 @@ export default function CheckoutPage() {
               <p className="text-sm font-semibold text-foreground w-20 text-right">{fmtPaise(d.unitPricePaise * d.qty)}</p>
             </div>
           ))}
-          <p className="text-xs text-primary font-medium">+ Free 1-year Nera AI Plan</p>
+          <p className="text-xs text-primary font-medium">+ Free Nera AI trial included (auto-activates on device pairing)</p>
         </div>
 
         {/* ─── Coupon code input ─────────────────────────────── */}

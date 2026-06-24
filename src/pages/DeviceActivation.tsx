@@ -4,8 +4,10 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { Activity, Loader2, AlertCircle, XCircle } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
+import { getNeraAiActivationLine } from "@/lib/neraAiPlan";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "https://agatsa-one-api-651017108992.asia-south1.run.app";
+
 
 const DEVICE_CONFIG: Record<string, { name: string; headline: string; copy: string; steps: string[] }> = {
   ecg: {
@@ -171,7 +173,7 @@ export default function DeviceActivationPage() {
             ))}
             <p className="text-sm text-muted-foreground">
               <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs font-bold mr-2">{steps.length + 1}</span>
-              Your device code <span className="font-mono font-bold text-foreground">{code}</span> will activate your 3-month Nera AI subscription automatically
+              Your device code <span className="font-mono font-bold text-foreground">{code}</span> — {getNeraAiActivationLine(deviceType ?? "")}
             </p>
           </div>
 

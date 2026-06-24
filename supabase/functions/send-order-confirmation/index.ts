@@ -186,18 +186,31 @@ serve(async (req) => {
       console.error("Delivery slip generation failed (non-fatal):", slipErr);
     }
 
+    // Map productId / SKU → free Nera AI trial copy for the confirmation email.
+    const neraTrialFor = (raw: string): string | null => {
+      const k = (raw || "").toLowerCase();
+      if (k.includes("ecg") || k.includes("sanketlife")) return "Includes 14-day Nera AI Premium trial — activates on pairing";
+      if (k.includes("wellness") || k.includes("easytouch") && !k.includes("rhythm") || k.includes("multivital")) return "Includes 7-day Nera AI trial — activates on pairing";
+      if (k.includes("rhythm") || k.includes("band")) return "Includes 7-day Nera AI Premium trial — activates on pairing";
+      if (k.includes("scale") || k.includes("corebalance")) return "Includes 7-day Nera AI trial — activates on pairing";
+      return null;
+    };
+
     const itemsHtml = (items || [])
       .map(
-        (item: { productName: string; variantTitle?: string; quantity: number; price: number }) =>
-          `<tr>
+        (item: { productName: string; variantTitle?: string; quantity: number; price: number; sku?: string; productId?: string }) => {
+          const trial = neraTrialFor(item.sku || item.productId || item.productName || "");
+          return `<tr>
             <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-size:14px;color:#374151;">
-              <strong>${item.productName}</strong>${item.variantTitle && item.variantTitle !== "Default Title" ? `<br/><span style="font-size:12px;color:#64748b;">${item.variantTitle}</span>` : ""}
+              <strong>${item.productName}</strong>${item.variantTitle && item.variantTitle !== "Default Title" ? `<br/><span style="font-size:12px;color:#64748b;">${item.variantTitle}</span>` : ""}${trial ? `<br/><span style="font-size:12px;color:#7c3aed;font-weight:600;">🎁 ${trial}</span>` : ""}
             </td>
             <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;text-align:center;font-size:14px;color:#374151;">${item.quantity}</td>
             <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;text-align:right;font-size:14px;color:#374151;font-weight:600;">Rs. ${(item.price * item.quantity).toLocaleString("en-IN")}</td>
-          </tr>`
+          </tr>`;
+        }
       )
       .join("");
+
 
     // ─── CUSTOMER EMAIL HTML ───────────────────────────────────────────────────
     const customerEmailHtml = `<!DOCTYPE html>
@@ -288,6 +301,16 @@ serve(async (req) => {
                       <li>You will receive a shipping confirmation with tracking details once dispatched.</li>
                       <li>Estimated delivery: <strong>${delivery.from} - ${delivery.to}</strong></li>
                     </ul>
+                  </td>
+                </tr>
+              </table>
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:10px;margin-bottom:24px;">
+                <tr>
+                  <td style="padding:16px 18px;">
+                    <p style="margin:0 0 6px;font-size:14px;color:#6b21a8;font-weight:700;">🎁 Your free Nera AI trial</p>
+                    <p style="margin:0;font-size:13px;color:#581c87;line-height:1.6;">
+                      Each device in your order comes with a free Nera AI trial — <strong>14 days of Nera AI Premium</strong> with SanketLife ECG, and <strong>7 days</strong> with EasyTouch Wellness, Rhythm Band and Smart Scale. Your trial activates the moment you pair the device in <strong>Agatsa One</strong>.
+                    </p>
                   </td>
                 </tr>
               </table>

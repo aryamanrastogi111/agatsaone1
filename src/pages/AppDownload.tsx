@@ -64,7 +64,7 @@ const deviceConfigs: Record<
       "Download Agatsa One using the button below — it's free",
       "Create your account or sign in with your phone number",
       "Tap 'Add Device' and select SanketLife ECG from the list",
-      "Your device activates automatically and your 3-month Nera AI Premium subscription is applied",
+      "Your device activates automatically and your 14-day Nera AI Premium trial is applied",
     ],
   },
   easytouch: {
@@ -76,7 +76,7 @@ const deviceConfigs: Record<
       "Download Agatsa One using the button below — it's free",
       "Create your account or sign in with your phone number",
       "Tap 'Add Device' and select EasyTouch Wellness from the list",
-      "Your device activates and your 3-month Nera AI subscription is applied automatically",
+      "Your device activates and your 7-day Nera AI trial is applied automatically",
     ],
   },
   rhythm: {
