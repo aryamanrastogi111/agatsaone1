@@ -186,18 +186,31 @@ serve(async (req) => {
       console.error("Delivery slip generation failed (non-fatal):", slipErr);
     }
 
+    // Map productId / SKU → free Nera AI trial copy for the confirmation email.
+    const neraTrialFor = (raw: string): string | null => {
+      const k = (raw || "").toLowerCase();
+      if (k.includes("ecg") || k.includes("sanketlife")) return "Includes 14-day Nera AI Premium trial — activates on pairing";
+      if (k.includes("wellness") || k.includes("easytouch") && !k.includes("rhythm") || k.includes("multivital")) return "Includes 7-day Nera AI trial — activates on pairing";
+      if (k.includes("rhythm") || k.includes("band")) return "Includes 7-day Nera AI Premium trial — activates on pairing";
+      if (k.includes("scale") || k.includes("corebalance")) return "Includes 7-day Nera AI trial — activates on pairing";
+      return null;
+    };
+
     const itemsHtml = (items || [])
       .map(
-        (item: { productName: string; variantTitle?: string; quantity: number; price: number }) =>
-          `<tr>
+        (item: { productName: string; variantTitle?: string; quantity: number; price: number; sku?: string; productId?: string }) => {
+          const trial = neraTrialFor(item.sku || item.productId || item.productName || "");
+          return `<tr>
             <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-size:14px;color:#374151;">
-              <strong>${item.productName}</strong>${item.variantTitle && item.variantTitle !== "Default Title" ? `<br/><span style="font-size:12px;color:#64748b;">${item.variantTitle}</span>` : ""}
+              <strong>${item.productName}</strong>${item.variantTitle && item.variantTitle !== "Default Title" ? `<br/><span style="font-size:12px;color:#64748b;">${item.variantTitle}</span>` : ""}${trial ? `<br/><span style="font-size:12px;color:#7c3aed;font-weight:600;">🎁 ${trial}</span>` : ""}
             </td>
             <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;text-align:center;font-size:14px;color:#374151;">${item.quantity}</td>
             <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;text-align:right;font-size:14px;color:#374151;font-weight:600;">Rs. ${(item.price * item.quantity).toLocaleString("en-IN")}</td>
-          </tr>`
+          </tr>`;
+        }
       )
       .join("");
+
 
     // ─── CUSTOMER EMAIL HTML ───────────────────────────────────────────────────
     const customerEmailHtml = `<!DOCTYPE html>
