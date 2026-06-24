@@ -11,6 +11,7 @@ const DEVICES = [
     cta: "Buy SanketLife ECG",
     href: "/devices/sanketlife-ecg",
     icon: HeartPulse,
+    trial: "14-day Nera AI Premium free",
     tone: "from-red-500/20 to-rose-500/5 border-red-500/30 text-red-300",
     iconTone: "bg-red-500/15 text-red-400 border-red-500/30",
   },
@@ -20,6 +21,7 @@ const DEVICES = [
     cta: "Buy EasyTouch Wellness",
     href: "/devices/easytouch-wellness",
     icon: Activity,
+    trial: "7-day Nera AI free",
     tone: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30 text-emerald-300",
     iconTone: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
   },
@@ -29,10 +31,12 @@ const DEVICES = [
     cta: "Buy Rhythm Band",
     href: "/devices/rhythm-band",
     icon: Watch,
+    trial: "7-day Nera AI Premium free",
     tone: "from-sky-500/20 to-sky-500/5 border-sky-500/30 text-sky-300",
     iconTone: "bg-sky-500/15 text-sky-400 border-sky-500/30",
   },
 ] as const;
+
 
 export default function NeraDevicesCTA() {
 
