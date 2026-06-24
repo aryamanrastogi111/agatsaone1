@@ -164,7 +164,7 @@ export default function SanketLifeECGProduct() {
         <div className="max-w-5xl mx-auto px-4">
           <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto mb-8">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
-              One Touch · Lifelong Intelligence
+              Agatsa ONE App Showcase
             </p>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
               A single touch today.{" "}
@@ -177,7 +177,10 @@ export default function SanketLifeECGProduct() {
             </p>
           </motion.div>
 
-          <motion.div {...fadeUp} className="relative rounded-3xl overflow-hidden shadow-2xl border border-primary/20 bg-black mx-auto max-w-2xl">
+          <motion.div {...fadeUp} className="relative rounded-[2rem] overflow-hidden shadow-2xl border border-primary/20 bg-black mx-auto max-w-[260px] sm:max-w-xs">
+            <div className="absolute top-0 inset-x-0 z-10 flex justify-center">
+              <div className="mt-1 h-1.5 w-16 rounded-full bg-white/20" />
+            </div>
             <video
               src="/videos/sanketlife-touch-demo.mp4"
               className="w-full h-auto"
@@ -188,6 +191,9 @@ export default function SanketLifeECGProduct() {
               controls
             />
           </motion.div>
+          <p className="text-center text-xs text-muted-foreground mt-3 font-medium">
+            Agatsa ONE App Showcase
+          </p>
 
           <motion.div {...fadeUp} className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 max-w-3xl mx-auto">
             {[
