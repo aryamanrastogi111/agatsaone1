@@ -87,7 +87,7 @@ const devices: DeviceData[] = [
     appFeatures: [
       "Metabolic wellness trend analysis and HbA1c prediction",
       "Post-meal metabolic scoring (log meals, see impact)",
-      "SpO2 alerts below 94%",
+      
       "Compatible with Diabetic Cardiac Care Programme",
       "Compatible with Hypertension Control Programme",
     ],
