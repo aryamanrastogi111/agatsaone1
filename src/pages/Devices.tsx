@@ -71,7 +71,7 @@ const devices: DeviceData[] = [
     image: easytouchImg,
     badge: "Metabolic Health",
     name: "EasyTouch Wellness Metabolic Health Monitor",
-    tagline: "Metabolic health, BP, SpO2 — no needles, no cuffs",
+    tagline: "Metabolic health — no needles",
     keyStat: "8 vitals in 60 seconds — 15,000+ active users across India",
     sku: "wellness_sub",
     rating: "4.6",
@@ -87,7 +87,6 @@ const devices: DeviceData[] = [
     appFeatures: [
       "Metabolic wellness trend analysis and HbA1c prediction",
       "Post-meal metabolic scoring (log meals, see impact)",
-      "BP trend analysis with hypertension stage tracking",
       "SpO2 alerts below 94%",
       "Compatible with Diabetic Cardiac Care Programme",
       "Compatible with Hypertension Control Programme",
