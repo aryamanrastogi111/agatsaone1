@@ -77,12 +77,8 @@ const devices: DeviceData[] = [
     rating: "4.6",
     reviews: "834",
     measures: [
-      "Non-invasive metabolic load tracking (optical, no finger prick)",
-      "Blood pressure (systolic and diastolic)",
-      "Blood oxygen saturation (SpO2)",
-      "Pulse rate",
-      "Perfusion index",
-      "Waveform quality index",
+      "Non-invasive glucose trend monitoring (optical, no finger prick)",
+      "Nera AI insights on energy spikes, crashes and diet impact",
     ],
     appFeatures: [
       "Metabolic wellness trend analysis and HbA1c prediction",
