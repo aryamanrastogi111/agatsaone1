@@ -25,7 +25,7 @@ const deviceDefs = [
     name: "EasyTouch Wellness",
     sku: "wellness_sub" as const,
     badge: null,
-    tagline: "Non-invasive metabolic health + BP + SpO2, no needles",
+    tagline: "Non-invasive blood glucose trends, no pricks",
     stat: "8 vitals in 60 seconds",
     link: "/devices/easytouch-wellness",
     slug: "easytouch-wellness",
