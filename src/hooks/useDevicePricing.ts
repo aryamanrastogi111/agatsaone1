@@ -24,7 +24,7 @@ const FALLBACK_PRICES: Record<DeviceSku, number> = {
 // MRP (Maximum Retail Price) — rounded figures for strikethrough display
 export const MRP_PRICES: Record<DeviceSku, number> = {
   ecg_bundle: 6999,
-  wellness_sub: 5999,
+  wellness_sub: 5499,
   band_sub: 5499,
   scale_sub: 2999,
   bundle_ecg_band: 7999,
