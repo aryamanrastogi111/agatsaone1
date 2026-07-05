@@ -366,9 +366,7 @@ export default function AppDownloadPage() {
   useSEO({ title: "Download Agatsa One — Free AI Health Monitoring App", description: "Download Agatsa One free on iOS and Android. Connect your health devices. Get AI insights from Nera. Start monitoring your heart, metabolic health, and vitals today." });
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'Lead');
-    }
+    import("@/lib/metaCapi").then(({ trackMetaEvent }) => trackMetaEvent("Lead"));
   }, []);
 
   const [searchParams] = useSearchParams();
