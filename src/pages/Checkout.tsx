@@ -10,6 +10,7 @@ import { db } from "@/integrations/supabase/db";
 import { supabase } from "@/integrations/supabase/client";
 import { useCartStore } from "@/stores/cartStore";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
+import { trackMetaEvent, setPixelAdvancedMatching, splitName, toIso2, sendCapiEvent } from "@/lib/metaCapi";
 
 // ─── Device display names ───────────────────────────────────────
 const DEVICE_NAMES: Record<string, string> = {
@@ -288,23 +289,37 @@ export default function CheckoutPage() {
     fetchQuote(cartItems, null);
   };
 
-  // ─── Preload Razorpay + InitiateCheckout pixel ──────────────
+  // ─── Preload Razorpay + InitiateCheckout (Pixel + CAPI, deduped) ──
   useEffect(() => {
     loadRazorpay();
-    if (typeof window !== "undefined" && (window as any).fbq && uniqueSkus.length > 0) {
-      try {
-        (window as any).fbq("track", "InitiateCheckout", {
+    if (uniqueSkus.length > 0) {
+      trackMetaEvent("InitiateCheckout", {
+        custom: {
           content_ids: uniqueSkus,
           content_type: "product",
           num_items: cartItems.reduce((s, i) => s + i.qty, 0),
           value: displayTotalRupees,
           currency: "INR",
-        });
-      } catch (e) {
-        console.error("Meta Pixel InitiateCheckout error:", e);
-      }
+        },
+      });
     }
   }, []);
+
+  // ─── Meta Pixel Advanced Matching — refresh when user fills details ─
+  useEffect(() => {
+    if (!emailValid && !phoneValid) return;
+    const { first_name, last_name } = splitName(fullName);
+    setPixelAdvancedMatching({
+      email: emailValid ? email : undefined,
+      phone: phoneValid ? `${dialCode.replace("+", "")}${phone}` : undefined,
+      first_name,
+      last_name,
+      city: city || undefined,
+      state: state || undefined,
+      zip: pincode || undefined,
+      country: toIso2(country),
+    });
+  }, [emailValid, phoneValid, email, phone, fullName, city, state, pincode, country, dialCode]);
 
   // ─── Pincode / postal auto-fill ────────────────────────────
   const handlePincodeChange = useCallback(async (val: string) => {
