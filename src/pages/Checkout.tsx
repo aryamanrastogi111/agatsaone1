@@ -10,6 +10,7 @@ import { db } from "@/integrations/supabase/db";
 import { supabase } from "@/integrations/supabase/client";
 import { useCartStore } from "@/stores/cartStore";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
+import { trackMetaEvent, setPixelAdvancedMatching, splitName, toIso2, sendCapiEvent } from "@/lib/metaCapi";
 
 // ─── Device display names ───────────────────────────────────────
 const DEVICE_NAMES: Record<string, string> = {
@@ -288,23 +289,22 @@ export default function CheckoutPage() {
     fetchQuote(cartItems, null);
   };
 
-  // ─── Preload Razorpay + InitiateCheckout pixel ──────────────
+  // ─── Preload Razorpay + InitiateCheckout (Pixel + CAPI, deduped) ──
   useEffect(() => {
     loadRazorpay();
-    if (typeof window !== "undefined" && (window as any).fbq && uniqueSkus.length > 0) {
-      try {
-        (window as any).fbq("track", "InitiateCheckout", {
+    if (uniqueSkus.length > 0) {
+      trackMetaEvent("InitiateCheckout", {
+        custom: {
           content_ids: uniqueSkus,
           content_type: "product",
           num_items: cartItems.reduce((s, i) => s + i.qty, 0),
           value: displayTotalRupees,
           currency: "INR",
-        });
-      } catch (e) {
-        console.error("Meta Pixel InitiateCheckout error:", e);
-      }
+        },
+      });
     }
   }, []);
+
 
   // ─── Pincode / postal auto-fill ────────────────────────────
   const handlePincodeChange = useCallback(async (val: string) => {
@@ -363,21 +363,47 @@ export default function CheckoutPage() {
   const phoneValid = isIntl ? /^\d{6,15}$/.test(phone) : /^\d{10}$/.test(phone);
   const step2Valid = fullName.trim().length >= 2 && phoneValid && emailValid;
 
-  // ─── Meta Pixel Purchase event on success ───────────────────
+  // ─── Meta Pixel Advanced Matching — refresh when user fills details ─
   useEffect(() => {
-    if (pageState === "success" && typeof window !== "undefined" && (window as any).fbq) {
-      try {
-        (window as any).fbq("track", "Purchase", {
-          value: displayTotalRupees,
-          currency: "INR",
-          content_ids: uniqueSkus,
-          content_type: "product",
-          num_items: cartItems.reduce((s, i) => s + i.qty, 0),
-        });
-      } catch (e) {
-        console.error("Meta Pixel Purchase error:", e);
-      }
-    }
+    if (!emailValid && !phoneValid) return;
+    const { first_name, last_name } = splitName(fullName);
+    setPixelAdvancedMatching({
+      email: emailValid ? email : undefined,
+      phone: phoneValid ? `${dialCode.replace("+", "")}${phone}` : undefined,
+      first_name,
+      last_name,
+      city: city || undefined,
+      state: state || undefined,
+      zip: pincode || undefined,
+      country: toIso2(country),
+    });
+  }, [emailValid, phoneValid, email, phone, fullName, city, state, pincode, country, dialCode]);
+
+  // ─── Meta Pixel + CAPI Purchase event on success (deduped, with user data) ─
+  useEffect(() => {
+    if (pageState !== "success") return;
+    const { first_name, last_name } = splitName(fullName);
+    trackMetaEvent("Purchase", {
+      user: {
+        email: emailValid ? email : undefined,
+        phone: phoneValid ? `${dialCode.replace("+", "")}${phone}` : undefined,
+        first_name,
+        last_name,
+        city: city || undefined,
+        state: state || undefined,
+        zip: pincode || undefined,
+        country: toIso2(country),
+        external_id: successReference || undefined,
+      },
+      custom: {
+        value: displayTotalRupees,
+        currency: "INR",
+        content_ids: uniqueSkus,
+        content_type: "product",
+        num_items: cartItems.reduce((s, i) => s + i.qty, 0),
+        order_id: successReference || undefined,
+      },
+    });
   }, [pageState]);
 
   // ─── Auto-apply coupon from URL (?coupon=CODE) or MAY10 promo ─
