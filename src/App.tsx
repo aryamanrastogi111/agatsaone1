@@ -42,6 +42,7 @@ const Press = lazy(() => import("./pages/Press"));
 const Partner = lazy(() => import("./pages/Partner"));
 const PartnerWithUs = lazy(() => import("./pages/PartnerWithUs"));
 const PartnerSegment = lazy(() => import("./pages/PartnerSegment"));
+const SdkPartners = lazy(() => import("./pages/SdkPartners"));
 const Demo = lazy(() => import("./pages/Demo"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const CheckoutPage = lazy(() => import("./pages/Checkout"));
