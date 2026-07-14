@@ -42,6 +42,7 @@ const Press = lazy(() => import("./pages/Press"));
 const Partner = lazy(() => import("./pages/Partner"));
 const PartnerWithUs = lazy(() => import("./pages/PartnerWithUs"));
 const PartnerSegment = lazy(() => import("./pages/PartnerSegment"));
+const SdkPartners = lazy(() => import("./pages/SdkPartners"));
 const Demo = lazy(() => import("./pages/Demo"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const CheckoutPage = lazy(() => import("./pages/Checkout"));
@@ -147,6 +148,7 @@ function AppWithPricing() {
               <Route path="/partner" element={<Partner />} />
               <Route path="/partner-with-us" element={<PartnerWithUs />} />
               <Route path="/partner/segments/:slug" element={<PartnerSegment />} />
+              <Route path="/partners" element={<SdkPartners />} />
               <Route path="/demo" element={<Demo />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="/checkout" element={<CheckoutPage />} />
