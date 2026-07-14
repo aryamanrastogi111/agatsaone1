@@ -148,6 +148,7 @@ function AppWithPricing() {
               <Route path="/partner" element={<Partner />} />
               <Route path="/partner-with-us" element={<PartnerWithUs />} />
               <Route path="/partner/segments/:slug" element={<PartnerSegment />} />
+              <Route path="/partners" element={<SdkPartners />} />
               <Route path="/demo" element={<Demo />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="/checkout" element={<CheckoutPage />} />
