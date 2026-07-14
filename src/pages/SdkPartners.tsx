@@ -25,7 +25,22 @@ import {
   Boxes,
   ArrowRight,
   Loader2,
+  Heart,
+  Award,
+  BookOpen,
+  Cable,
+  Zap,
+  Wifi,
+  Battery,
+  Trophy,
 } from "lucide-react";
+import sanketProPlusImg from "@/assets/sanketlife-proplus.jpg";
+import sanketLifeImg from "@/assets/sanketlife-2-product.jpg";
+import awardAegis from "@/assets/award-aegis-grahambell.webp";
+import awardMashelkar from "@/assets/award-anjani-mashelkar.webp";
+import awardBioIndia from "@/assets/award-bio-india.webp";
+import awardIgp from "@/assets/award-igp.webp";
+import awardMbillionth from "@/assets/award-mbillionth-new.png";
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 const USE_CASES = ["Clinic", "Telehealth", "Diagnostics", "OEM", "Other"];
