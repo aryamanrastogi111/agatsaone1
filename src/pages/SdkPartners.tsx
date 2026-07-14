@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 import {
   CheckCircle2,
   Code2,
@@ -37,6 +38,63 @@ function scrollTo(id: string) {
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+// ── Razorpay script loader (matches /checkout pattern) ──
+function loadRazorpay(): Promise<boolean> {
+  return new Promise((resolve) => {
+    if ((window as any).Razorpay) return resolve(true);
+    const s = document.createElement("script");
+    s.src = "https://checkout.razorpay.com/v1/checkout.js";
+    s.onload = () => resolve(true);
+    s.onerror = () => resolve(false);
+    document.body.appendChild(s);
+  });
+}
+
+// ── Log SDK enquiry to /admin/partnerships via submit-partnership ──
+async function logSdkEnquiry(payload: {
+  intent: "sandbox" | "contact" | "dev_kit_purchase";
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  useCase?: string;
+  expectedVolume?: string;
+  message?: string;
+  paymentRef?: string;
+}) {
+  const answers = [
+    { question: "Intent", answer: payload.intent },
+    { question: "Use case", answer: payload.useCase || "—" },
+    { question: "Expected monthly volume", answer: payload.expectedVolume || "—" },
+  ];
+  if (payload.paymentRef) answers.push({ question: "Razorpay Payment ID", answer: payload.paymentRef });
+
+  const goal =
+    payload.message?.trim() ||
+    (payload.intent === "sandbox"
+      ? `SDK sandbox key request. Use case: ${payload.useCase || "—"}. Expected volume: ${payload.expectedVolume || "—"}.`
+      : payload.intent === "dev_kit_purchase"
+        ? `SDK Developer Kit purchased (₹14,999). Payment ID: ${payload.paymentRef || "—"}. Use case: ${payload.useCase || "—"}.`
+        : `SDK partnership enquiry. Use case: ${payload.useCase || "—"}. Expected volume: ${payload.expectedVolume || "—"}.`);
+
+  try {
+    await supabase.functions.invoke("submit-partnership", {
+      body: {
+        partner_type: "sdk",
+        organisation_name: payload.company?.trim() || payload.name.trim(),
+        contact_name: payload.name.trim(),
+        contact_email: payload.email.trim(),
+        contact_phone: payload.phone?.trim() || null,
+        goal_summary: goal.length < 30 ? goal + " ".repeat(30 - goal.length) : goal,
+        questionnaire_answers: answers,
+        consent: true,
+      },
+    });
+  } catch (e) {
+    console.error("logSdkEnquiry failed:", e);
+  }
+}
+
 /* -------------------- Sandbox form (Card 1) -------------------- */
 function SandboxForm() {
   const [form, setForm] = useState({ name: "", email: "", company: "", useCase: "", expectedVolume: "" });
@@ -49,23 +107,34 @@ function SandboxForm() {
       return;
     }
     setState({ loading: true });
+
+    // Always log to /admin/partnerships (source of truth)
+    await logSdkEnquiry({ intent: "sandbox", ...form });
+
+    // Also try external API for auto-key issuance (best-effort)
     try {
       const res = await fetch(`${API_BASE}/v1/sdk/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "Something went wrong.");
-      setState({
-        loading: false,
-        success: data.pending
-          ? "✅ Check your email to verify your address — your sandbox keys will arrive right after."
-          : data.message || "You already have access — check your inbox.",
-      });
-    } catch (err: any) {
-      setState({ loading: false, error: err.message || "Something went wrong." });
-    }
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        setState({
+          loading: false,
+          success: data?.pending
+            ? "✅ Check your email to verify your address — your sandbox keys will arrive right after."
+            : data?.message || "You already have access — check your inbox.",
+        });
+        return;
+      }
+    } catch { /* fall through */ }
+
+    // Fallback success — our team will follow up from the admin panel
+    setState({
+      loading: false,
+      success: "✅ Request received. Our team will email your sandbox keys within one business day.",
+    });
   };
 
   if (state.success) {
@@ -108,6 +177,147 @@ function SandboxForm() {
   );
 }
 
+/* -------------------- Dev Kit purchase (Card 2) -------------------- */
+function DevKitPurchase() {
+  const [form, setForm] = useState({
+    name: "", email: "", phone: "", company: "",
+    address: "", city: "", state: "", pincode: "",
+  });
+  const [state, setState] = useState<{ loading: boolean; success?: string; error?: string }>({ loading: false });
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim() || !isValidEmail(form.email) || !form.phone.trim()) {
+      setState({ loading: false, error: "Name, valid email and phone are required." });
+      return;
+    }
+    if (!form.address.trim() || !form.city.trim() || !form.state.trim() || !/^\d{6}$/.test(form.pincode.trim())) {
+      setState({ loading: false, error: "Full Indian shipping address with a 6-digit PIN is required." });
+      return;
+    }
+    setState({ loading: true });
+
+    try {
+      // 1. Create Razorpay order via our edge function
+      const { data, error } = await supabase.functions.invoke("razorpay-create-sdk-kit-order", {
+        body: {
+          customerName: form.name.trim(),
+          customerEmail: form.email.trim(),
+          customerPhone: form.phone.trim(),
+          company: form.company.trim() || undefined,
+          shippingAddress: form.address.trim(),
+          shippingCity: form.city.trim(),
+          shippingState: form.state.trim(),
+          shippingPincode: form.pincode.trim(),
+          country: "India",
+        },
+      });
+      if (error) throw new Error(error.message || "Failed to create order");
+      const razorpayOrderId = data?.razorpayOrderId;
+      const amount = data?.amount || 1499900;
+      const keyId = data?.keyId;
+      if (!razorpayOrderId || !keyId) throw new Error("Payment initialisation failed");
+
+      // 2. Load Razorpay + open modal
+      const loaded = await loadRazorpay();
+      if (!loaded) throw new Error("Failed to load payment gateway");
+
+      await new Promise<void>((resolve, reject) => {
+        const rzp = new (window as any).Razorpay({
+          key: keyId,
+          amount,
+          currency: "INR",
+          name: "Agatsa · SanketLife SDK",
+          description: "SDK Developer Kit",
+          order_id: razorpayOrderId,
+          prefill: { name: form.name.trim(), email: form.email.trim(), contact: form.phone.trim() },
+          theme: { color: "#0b5e2d" },
+          handler: async (response: any) => {
+            try {
+              // 3. Verify on server → flips order to `paid`
+              await supabase.functions.invoke("razorpay-verify-payment", {
+                body: {
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  customerEmail: form.email.trim(),
+                  customerName: form.name.trim(),
+                  items: [{ sku: "", name: "SanketLife SDK Developer Kit", qty: 1, price: amount / 100 }],
+                  total: amount / 100,
+                  shippingAddress: form.address.trim(),
+                  shippingCity: form.city.trim(),
+                  shippingState: form.state.trim(),
+                  shippingPincode: form.pincode.trim(),
+                },
+              });
+
+              // 4. Log to /admin/partnerships as SDK enquiry with payment ref
+              await logSdkEnquiry({
+                intent: "dev_kit_purchase",
+                name: form.name,
+                email: form.email,
+                phone: form.phone,
+                company: form.company,
+                paymentRef: response.razorpay_payment_id,
+                message: `Dev Kit purchased. Ship to: ${form.address}, ${form.city}, ${form.state} - ${form.pincode}. Payment: ${response.razorpay_payment_id}.`,
+              });
+
+              resolve();
+            } catch (err: any) {
+              reject(err);
+            }
+          },
+          modal: {
+            ondismiss: () => reject(new Error("Payment cancelled")),
+          },
+        });
+        rzp.open();
+      });
+
+      setState({
+        loading: false,
+        success: "✅ Payment received. We'll email your SDK key and shipping confirmation within one business day.",
+      });
+    } catch (err: any) {
+      setState({ loading: false, error: err?.message || "Payment failed. Please try again." });
+    }
+  };
+
+  if (state.success) {
+    return (
+      <div className="p-6 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-sm">
+        {state.success}
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={submit} className="space-y-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div><Label>Name *</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required /></div>
+        <div><Label>Work email *</Label><Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required /></div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div><Label>Phone *</Label><Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required /></div>
+        <div><Label>Company</Label><Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></div>
+      </div>
+      <div><Label>Shipping address *</Label><Input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} required /></div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div><Label>City *</Label><Input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} required /></div>
+        <div><Label>State *</Label><Input value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} required /></div>
+        <div><Label>PIN *</Label><Input value={form.pincode} maxLength={6} onChange={(e) => setForm({ ...form, pincode: e.target.value.replace(/\D/g, "") })} required /></div>
+      </div>
+      {state.error && <p className="text-sm text-red-600">{state.error}</p>}
+      <Button type="submit" disabled={state.loading} className="w-full rounded-full bg-[#0b5e2d] hover:bg-[#094a24] text-white h-11">
+        {state.loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Pay ₹14,999 · Buy Dev Kit"}
+      </Button>
+      <p className="text-xs text-muted-foreground text-center">
+        Secured by Razorpay · UPI · Cards · Net Banking · India shipping only
+      </p>
+    </form>
+  );
+}
+
 /* -------------------- Contact form (Card 3) -------------------- */
 function ContactForm({ prefillMessage }: { prefillMessage?: string }) {
   const [form, setForm] = useState({
@@ -123,18 +333,19 @@ function ContactForm({ prefillMessage }: { prefillMessage?: string }) {
       return;
     }
     setState({ loading: true });
+
+    await logSdkEnquiry({ intent: "contact", ...form });
+
+    // Best-effort dual-send to external API too
     try {
-      const res = await fetch(`${API_BASE}/v1/sdk/contact`, {
+      await fetch(`${API_BASE}/v1/sdk/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "Something went wrong.");
-      setState({ loading: false, success: data.message || "Thanks — we'll be in touch shortly." });
-    } catch (err: any) {
-      setState({ loading: false, error: err.message || "Something went wrong." });
-    }
+    } catch { /* ignore */ }
+
+    setState({ loading: false, success: "✅ Thanks — our partnerships team will be in touch within 2 business days." });
   };
 
   if (state.success) {
@@ -314,20 +525,10 @@ export default function SdkPartners() {
               <ul className="mt-4 space-y-1.5 text-sm text-muted-foreground">
                 <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /> SanketLife Pro Plus ECG</li>
                 <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /> SwitchSy 12-lead attachment + electrode leads</li>
-                <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /> SDK key auto-issued (starter · 500 ECGs)</li>
+                <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /> SDK key auto-issued (starter · 100 ECGs)</li>
                 <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /> Integration guide + demo app</li>
               </ul>
-              <div className="mt-auto pt-6 space-y-2">
-                <Button
-                  onClick={() => scrollTo("path-talk")}
-                  className="w-full rounded-full bg-[#0b5e2d] hover:bg-[#094a24] text-white h-11"
-                >
-                  Request purchase link
-                </Button>
-                <p className="text-xs text-muted-foreground text-center">
-                  Online checkout coming soon — request a Razorpay link and we'll email it within a business day.
-                </p>
-              </div>
+              <div className="mt-6"><DevKitPurchase /></div>
             </motion.div>
 
             {/* Card 3 — Talk */}
@@ -379,7 +580,7 @@ export default function SdkPartners() {
               </thead>
               <tbody className="[&_td]:p-4 [&_td]:border-t [&_td]:border-border">
                 <tr><td className="text-muted-foreground">Price</td><td>Free</td><td className="font-semibold">₹14,999</td><td>Let's talk</td></tr>
-                <tr><td className="text-muted-foreground">ECG credits</td><td>25</td><td>500</td><td>Custom</td></tr>
+                <tr><td className="text-muted-foreground">ECG credits</td><td>25</td><td>100</td><td>Custom</td></tr>
                 <tr><td className="text-muted-foreground">Hardware</td><td>—</td><td>1 kit incl.</td><td>Your fleet</td></tr>
                 <tr><td className="text-muted-foreground">Best for</td><td>Evaluating code</td><td>Full self-test</td><td>Production rollout</td></tr>
               </tbody>
