@@ -602,7 +602,197 @@ export default function SdkPartners() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* THE DEVICES — What powers the SDK */}
+      <section className="py-20 px-4 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fade} className="text-center max-w-3xl mx-auto mb-14">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#0b5e2d]/10 text-[#0b5e2d] px-3 py-1 text-xs font-semibold uppercase tracking-widest mb-4">
+              <Heart className="h-3.5 w-3.5" /> Clinical-grade hardware
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">The ECG hardware behind the SDK</h2>
+            <p className="text-muted-foreground mt-3">
+              Two pocket-sized, CDSCO-licensed ECG devices — the same hardware trusted by 2.1 Lac+ users and hundreds of Indian cardiologists — now programmable through a single Android SDK.
+            </p>
+          </motion.div>
+
+          {/* Pro Plus 12-lead */}
+          <motion.div {...fade} className="grid lg:grid-cols-2 gap-10 items-center mb-16">
+            <div className="order-2 lg:order-1">
+              <span className="inline-block bg-[#0b5e2d] text-white text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wider">Included in Dev Kit</span>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mt-3">SanketLife Pro Plus — 12-lead ECG</h3>
+              <p className="text-muted-foreground mt-2">
+                Connect the SwitchSy 12-lead attachment with electrode leads to capture a full diagnostic-grade 12-lead ECG — the same test hospitals use — from a device that fits in your palm.
+              </p>
+              <ul className="mt-5 space-y-2.5 text-sm">
+                <li className="flex gap-3"><Cable className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /><span><strong>12-lead capture</strong> via SwitchSy attachment + chest & limb electrodes</span></li>
+                <li className="flex gap-3"><Activity className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /><span><strong>Single-lead Lead-I</strong> mode also available — no leads needed</span></li>
+                <li className="flex gap-3"><FileText className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /><span><strong>Auto PDF report</strong> — HR, axis, intervals, rhythm interpretation</span></li>
+                <li className="flex gap-3"><Wifi className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /><span><strong>BLE 5.0</strong> connectivity · pairs in seconds</span></li>
+                <li className="flex gap-3"><Battery className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /><span><strong>Rechargeable</strong> · 30-day standby · USB-C</span></li>
+                <li className="flex gap-3"><ShieldCheck className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /><span><strong>CDSCO Class B</strong> licensed medical device · ISO 13485 manufacturing</span></li>
+              </ul>
+              <div className="grid grid-cols-3 gap-3 mt-6">
+                <div className="bg-muted/40 rounded-lg p-3 text-center"><p className="text-2xl font-bold text-[#0b5e2d]">12</p><p className="text-[11px] text-muted-foreground">Leads</p></div>
+                <div className="bg-muted/40 rounded-lg p-3 text-center"><p className="text-2xl font-bold text-[#0b5e2d]">30s</p><p className="text-[11px] text-muted-foreground">Capture</p></div>
+                <div className="bg-muted/40 rounded-lg p-3 text-center"><p className="text-2xl font-bold text-[#0b5e2d]">500Hz</p><p className="text-[11px] text-muted-foreground">Sample rate</p></div>
+              </div>
+            </div>
+            <div className="order-1 lg:order-2">
+              <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-[#0b5e2d]/5 to-muted/30 p-6 md:p-10 border border-border">
+                <img src={sanketProPlusImg} alt="SanketLife Pro Plus 12-lead ECG device" className="w-full max-w-md mx-auto object-contain" loading="lazy" />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* SanketLife single-lead */}
+          <motion.div {...fade} className="grid lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-muted/30 to-[#0b5e2d]/5 p-6 md:p-10 border border-border">
+                <img src={sanketLifeImg} alt="SanketLife single-lead ECG device" className="w-full max-w-md mx-auto object-contain" loading="lazy" />
+              </div>
+            </div>
+            <div>
+              <span className="inline-block bg-muted text-foreground text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wider">Also supported</span>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mt-3">SanketLife — Single-lead ECG</h3>
+              <p className="text-muted-foreground mt-2">
+                The credit-card-sized ECG that started it all — perfect for high-volume screening, home monitoring, and AF/arrhythmia detection where a full 12-lead isn't required.
+              </p>
+              <ul className="mt-5 space-y-2.5 text-sm">
+                <li className="flex gap-3"><Zap className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /><span><strong>Lead-I capture in 30 seconds</strong> — no leads, no gel, no prep</span></li>
+                <li className="flex gap-3"><Activity className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /><span><strong>AF detection & rhythm analysis</strong> auto-generated in the report</span></li>
+                <li className="flex gap-3"><Smartphone className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /><span><strong>Same SDK, same API</strong> — one integration covers both devices</span></li>
+                <li className="flex gap-3"><ShieldCheck className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /><span><strong>CDSCO licensed</strong> · 97.8% concordance with hospital ECGs</span></li>
+              </ul>
+              <p className="text-xs text-muted-foreground mt-5">
+                Ideal for telehealth, camps, and OEM integrations where thousands of quick spot-checks matter more than diagnostic 12-lead.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CREDENTIALS · AWARDS · PUBLICATIONS */}
+      <section className="py-20 px-4 bg-muted/30">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fade} className="text-center max-w-3xl mx-auto mb-12">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#0b5e2d]/10 text-[#0b5e2d] px-3 py-1 text-xs font-semibold uppercase tracking-widest mb-4">
+              <Trophy className="h-3.5 w-3.5" /> Proven & recognised
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">You're integrating a proven platform</h2>
+            <p className="text-muted-foreground mt-3">
+              Not a prototype. The SanketLife ECG has been in the market since 2016, backed by 36+ awards, clinical validation studies, and India's top regulatory certifications.
+            </p>
+          </motion.div>
+
+          {/* Stat strip */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
+            {[
+              { n: "2.1 Lac+", l: "Users worldwide" },
+              { n: "1.5 Cr+", l: "ECG records analysed" },
+              { n: "97.8%", l: "Concordance vs. hospital ECG" },
+              { n: "36+", l: "Awards & recognitions" },
+            ].map((s) => (
+              <div key={s.l} className="bg-card border border-border rounded-xl p-5 text-center">
+                <p className="text-2xl md:text-3xl font-extrabold text-[#0b5e2d]">{s.n}</p>
+                <p className="text-xs text-muted-foreground mt-1">{s.l}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Certifications */}
+          <motion.div {...fade} className="mb-14">
+            <h3 className="text-center text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6">Regulatory & Quality Certifications</h3>
+            <div className="flex flex-wrap justify-center gap-3">
+              {[
+                { n: "CDSCO Class B", d: "Licensed medical device (India)" },
+                { n: "ISO 13485", d: "Medical device quality" },
+                { n: "ISO 9001:2015", d: "Manufacturing quality" },
+                { n: "BIS Approved", d: "Bureau of Indian Standards" },
+                { n: "UL Certified", d: "Electrical safety" },
+                { n: "AIMED Member", d: "Indian medical device body" },
+              ].map((c) => (
+                <div key={c.n} className="bg-card border border-border rounded-xl px-4 py-3 flex items-center gap-3">
+                  <ShieldCheck className="h-5 w-5 text-[#0b5e2d] shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{c.n}</p>
+                    <p className="text-[11px] text-muted-foreground">{c.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Awards */}
+          <motion.div {...fade} className="mb-14">
+            <h3 className="text-center text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6">Featured Awards</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+              {[
+                { img: awardAegis, name: "Aegis Graham Bell", year: "2022" },
+                { img: awardMashelkar, name: "Anjani Mashelkar Prize", year: "2025" },
+                { img: awardBioIndia, name: "Global Bio-India", year: "2020" },
+                { img: awardIgp, name: "DST-Lockheed Martin IIGP", year: "2018" },
+                { img: awardMbillionth, name: "mBillionth South Asia", year: "2019" },
+              ].map((a) => (
+                <div key={a.name} className="bg-card border border-border rounded-xl p-4 flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                  <div className="aspect-[4/3] w-full flex items-center justify-center mb-2">
+                    <img src={a.img} alt={a.name} className="max-h-full max-w-full object-contain" loading="lazy" />
+                  </div>
+                  <p className="text-xs font-semibold text-foreground leading-tight">{a.name}</p>
+                  <p className="text-[10px] text-muted-foreground">({a.year})</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-center text-xs text-muted-foreground mt-4">
+              + 30 more from NASSCOM, BIRAC, Forbes, TiE, DST, NIF, ET Now, CII and others.
+            </p>
+          </motion.div>
+
+          {/* Publications & clinical validation */}
+          <motion.div {...fade} className="mb-14">
+            <h3 className="text-center text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6">Clinical Validation & Publications</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  title: "Concordance with 12-lead hospital ECG",
+                  body: "Independent clinical evaluation demonstrated 97.8% concordance between SanketLife Pro Plus and standard 12-lead hospital ECG across 1,200+ patient recordings.",
+                  tag: "Clinical Study",
+                },
+                {
+                  title: "AIIMS — SanketLife screening event",
+                  body: "SanketLife deployed in a cardiology outreach programme at AIIMS Delhi for pre-symptomatic arrhythmia screening. Presented on the AIIMS platform.",
+                  tag: "Hospital Programme",
+                },
+                {
+                  title: "Endorsed by leading cardiologists",
+                  body: "Recommended on record by Dr. Sanjeev Gera, Dr. Vanita Arora and others as a reliable at-home ECG for early cardiac detection.",
+                  tag: "Expert Endorsement",
+                },
+              ].map((p) => (
+                <div key={p.title} className="bg-card border border-border rounded-xl p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <BookOpen className="h-4 w-4 text-[#0b5e2d]" />
+                    <span className="text-[10px] uppercase tracking-wider font-semibold text-[#0b5e2d]">{p.tag}</span>
+                  </div>
+                  <h4 className="font-semibold text-foreground text-sm leading-snug">{p.title}</h4>
+                  <p className="text-xs text-muted-foreground mt-2 leading-relaxed">{p.body}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Media */}
+          <motion.div {...fade}>
+            <h3 className="text-center text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6">As Seen In</h3>
+            <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
+              {["The Economic Times","Forbes India","YourStory","Inc42","NEWS9","The Hindu","Business Standard","Express Healthcare"].map((m) => (
+                <span key={m} className="text-muted-foreground/80 font-semibold text-sm md:text-base">{m}</span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+
       <section className="py-16 px-4 bg-muted/30">
         <div className="max-w-3xl mx-auto">
           <motion.h2 {...fade} className="text-3xl font-bold text-center text-foreground">FAQ</motion.h2>
