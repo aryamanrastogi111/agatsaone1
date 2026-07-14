@@ -26,6 +26,7 @@ const navLinks = [
     ],
   },
   { label: "Partner with Us", href: "/partner-with-us" },
+  { label: "SDK Partners", href: "/partners" },
   { label: "About", href: "/about" },
 ];
 
