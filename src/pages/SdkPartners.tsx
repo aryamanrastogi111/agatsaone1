@@ -404,8 +404,6 @@ const audience = [
 
 const sdkFeatures = [
   { icon: Activity, title: "12-lead ECG (Pro Plus) + single-lead ECG" },
-  { icon: Cpu, title: "SpO₂, Blood Pressure, Temperature" },
-  { icon: ShieldCheck, title: "BMI (with the smart scale)" },
   { icon: FileText, title: "Auto cloud processing + clinical PDF report" },
   { icon: Smartphone, title: "On-device history · Android, minSdk 28" },
 ];
@@ -421,7 +419,7 @@ export default function SdkPartners() {
   useSEO({
     title: "SanketLife SDK — Add clinical 12-lead ECG to your app | Agatsa",
     description:
-      "Embed a full 12-lead ECG, SpO₂, BP, temperature and clinical PDF report into your Android app. Free sandbox, ₹14,999 dev kit, or talk to us for volume.",
+      "Embed a full clinical 12-lead ECG with an auto-generated PDF report into your Android app. Free sandbox, ₹14,999 dev kit, or talk to us for volume.",
   });
 
   return (
@@ -438,7 +436,7 @@ export default function SdkPartners() {
               to your product — <span className="text-[#0b5e2d]">in a day.</span>
             </h1>
             <p className="text-lg text-muted-foreground mt-5 max-w-3xl mx-auto">
-              The SanketLife SDK gives your Android app a full 12-lead ECG (plus SpO₂, BP, temperature, BMI and an auto-generated PDF report) from one pocket device. Start free, or buy a single developer kit and test everything yourself.
+              The SanketLife SDK gives your Android app a full clinical 12-lead ECG with an auto-generated PDF report — from one pocket device. Start free, or buy a single developer kit and test everything yourself.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
               <Button onClick={() => scrollTo("path-sandbox")} className="rounded-full bg-[#0b5e2d] hover:bg-[#094a24] text-white px-7 h-12">
