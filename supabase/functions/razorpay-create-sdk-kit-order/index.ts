@@ -1,4 +1,4 @@
-// Creates a Razorpay order for the SanketLife SDK Developer Kit (₹14,999).
+// Creates a Razorpay order for the SanketLife SDK Developer Kit (₹18,999).
 // Inserts a pending row into `orders` so razorpay-verify-payment can flip it
 // to paid on success — same lifecycle as the main checkout.
 
@@ -13,7 +13,7 @@ const corsHeaders = {
 
 const DEV_KIT_SKU = "sdk_dev_kit_v1";
 const DEV_KIT_NAME = "SanketLife SDK Developer Kit";
-const DEV_KIT_PRICE_PAISE = 1499900; // ₹14,999
+const DEV_KIT_PRICE_PAISE = 1899900; // ₹18,999
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
