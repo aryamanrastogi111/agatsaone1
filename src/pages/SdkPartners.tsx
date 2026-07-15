@@ -34,8 +34,8 @@ import {
   Battery,
   Trophy,
 } from "lucide-react";
-import sanketProPlusImg from "@/assets/sanketlife-proplus.jpg";
-import sanketLifeImg from "@/assets/sanketlife-2-product.jpg";
+import sanketProPlusImg from "@/assets/sanketlife-proplus-new.webp";
+import sanketLifeImg from "@/assets/sanketlife-2-product-new.webp";
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardMashelkar from "@/assets/award-anjani-mashelkar.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
