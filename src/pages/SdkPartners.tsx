@@ -34,8 +34,8 @@ import {
   Battery,
   Trophy,
 } from "lucide-react";
-import sanketProPlusImg from "@/assets/sanketlife-proplus.jpg";
-import sanketLifeImg from "@/assets/sanketlife-2-product.jpg";
+import sanketProPlusImg from "@/assets/sanketlife-proplus-new.webp";
+import sanketLifeImg from "@/assets/sanketlife-2-product-new.webp";
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardMashelkar from "@/assets/award-anjani-mashelkar.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
@@ -89,7 +89,7 @@ async function logSdkEnquiry(payload: {
     (payload.intent === "sandbox"
       ? `SDK sandbox key request. Use case: ${payload.useCase || "—"}. Expected volume: ${payload.expectedVolume || "—"}.`
       : payload.intent === "dev_kit_purchase"
-        ? `SDK Developer Kit purchased (₹14,999). Payment ID: ${payload.paymentRef || "—"}. Use case: ${payload.useCase || "—"}.`
+        ? `SDK Developer Kit purchased (₹18,999). Payment ID: ${payload.paymentRef || "—"}. Use case: ${payload.useCase || "—"}.`
         : `SDK partnership enquiry. Use case: ${payload.useCase || "—"}. Expected volume: ${payload.expectedVolume || "—"}.`);
 
   try {
@@ -229,7 +229,7 @@ function DevKitPurchase() {
       });
       if (error) throw new Error(error.message || "Failed to create order");
       const razorpayOrderId = data?.razorpayOrderId;
-      const amount = data?.amount || 1499900;
+      const amount = data?.amount || 1899900;
       const keyId = data?.keyId;
       if (!razorpayOrderId || !keyId) throw new Error("Payment initialisation failed");
 
@@ -324,7 +324,7 @@ function DevKitPurchase() {
       </div>
       {state.error && <p className="text-sm text-red-600">{state.error}</p>}
       <Button type="submit" disabled={state.loading} className="w-full rounded-full bg-[#0b5e2d] hover:bg-[#094a24] text-white h-11">
-        {state.loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Pay ₹14,999 · Buy Dev Kit"}
+        {state.loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Pay ₹18,999 · Buy Dev Kit"}
       </Button>
       <p className="text-xs text-muted-foreground text-center">
         Secured by Razorpay · UPI · Cards · Net Banking · India shipping only
@@ -434,7 +434,7 @@ export default function SdkPartners() {
   useSEO({
     title: "SanketLife SDK — Add clinical 12-lead ECG to your app | Agatsa",
     description:
-      "Embed a full clinical 12-lead ECG with an auto-generated PDF report into your Android app. Free sandbox, ₹14,999 dev kit, or talk to us for volume.",
+      "Embed a full clinical 12-lead ECG with an auto-generated PDF report into your Android app. Free sandbox, ₹18,999 dev kit, or talk to us for volume.",
   });
 
   return (
@@ -458,7 +458,7 @@ export default function SdkPartners() {
                 Start free <ArrowRight className="h-4 w-4 ml-1.5" />
               </Button>
               <Button onClick={() => scrollTo("path-kit")} variant="outline" className="rounded-full h-12 px-7 border-[#0b5e2d] text-[#0b5e2d] hover:bg-[#0b5e2d]/5">
-                Buy a Dev Kit — ₹14,999
+                Buy a Dev Kit — ₹18,999
               </Button>
               <Button onClick={() => scrollTo("path-talk")} variant="ghost" className="rounded-full h-12 px-7 text-foreground">
                 Talk to us
@@ -533,7 +533,7 @@ export default function SdkPartners() {
               <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0b5e2d] text-white text-xs font-semibold px-3 py-1 rounded-full">Most popular</span>
               <div className="flex items-center gap-2 text-[#0b5e2d]"><Package className="h-5 w-5" /><span className="text-xs font-semibold uppercase tracking-wider">Path 2 · Hardware</span></div>
               <h3 className="text-2xl font-bold text-foreground mt-2">Developer Kit</h3>
-              <p className="text-3xl font-extrabold text-foreground mt-1">₹14,999 <span className="text-sm font-normal text-muted-foreground">/ one kit</span></p>
+              <p className="text-3xl font-extrabold text-foreground mt-1">₹18,999 <span className="text-sm font-normal text-muted-foreground">/ one kit</span></p>
               <p className="text-sm text-muted-foreground mt-2">Test the full flow yourself — no sales call, no bulk order.</p>
               <ul className="mt-4 space-y-1.5 text-sm text-muted-foreground">
                 <li className="flex gap-2"><CheckCircle2 className="h-4 w-4 text-[#0b5e2d] shrink-0 mt-0.5" /> SanketLife Pro Plus ECG</li>
@@ -592,7 +592,7 @@ export default function SdkPartners() {
                 </tr>
               </thead>
               <tbody className="[&_td]:p-4 [&_td]:border-t [&_td]:border-border">
-                <tr><td className="text-muted-foreground">Price</td><td>Free</td><td className="font-semibold">₹14,999</td><td>Let's talk</td></tr>
+                <tr><td className="text-muted-foreground">Price</td><td>Free</td><td className="font-semibold">₹18,999</td><td>Let's talk</td></tr>
                 <tr><td className="text-muted-foreground">ECG credits</td><td>25</td><td>100</td><td>Custom</td></tr>
                 <tr><td className="text-muted-foreground">Hardware</td><td>—</td><td>1 kit incl.</td><td>Your fleet</td></tr>
                 <tr><td className="text-muted-foreground">Best for</td><td>Evaluating code</td><td>Full self-test</td><td>Production rollout</td></tr>
