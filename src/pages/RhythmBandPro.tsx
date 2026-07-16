@@ -419,8 +419,8 @@ export default function RhythmBandPro() {
                   className="rounded-2xl border border-white/10 bg-white/[0.02] p-6"
                 >
                   <div className="text-white/70 text-xs tracking-wider">★★★★★</div>
-                  <p className="mt-3 text-white/80 text-sm leading-relaxed">"{r.review}"</p>
-                  <p className="mt-4 text-white/40 text-xs">— {r.name}{r.location ? `, ${r.location}` : ""}</p>
+                  <p className="mt-3 text-white/80 text-sm leading-relaxed">"{r.body}"</p>
+                  <p className="mt-4 text-white/40 text-xs">— {r.name}{r.city ? `, ${r.city}` : ""}</p>
                 </motion.div>
               ))}
             </div>
