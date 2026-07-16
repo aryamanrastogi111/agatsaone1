@@ -217,6 +217,7 @@ export default function CheckoutPage() {
     name: DEVICE_NAMES[s],
     unitPricePaise: (prices[s as DeviceSku] || 0) * 100,
     qty: quantities[s] || 1,
+    variantTitle: variantBySku[s] || undefined,
   }));
 
   // ─── Quote fetch ──────────────────────────────────────────
