@@ -158,6 +158,15 @@ export default function CheckoutPage() {
   // Quantities
   const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
 
+  // Per-SKU variant title (e.g. Rhythm Band color).
+  // Seeded from ?variants=band_sub:Terracotta and defaults to Olive when the
+  // Rhythm Band is in the cart but no color was passed.
+  const initialVariants = decodeVariantsParam(searchParams.get("variants"));
+  if (uniqueSkus.includes(BAND_SKU) && !initialVariants[BAND_SKU]) {
+    initialVariants[BAND_SKU] = BAND_COLORS[0].name;
+  }
+  const [variantBySku, setVariantBySku] = useState<Record<string, string>>(initialVariants);
+
   // Coupon
   const [couponInput, setCouponInput] = useState("");
   const [couponApplied, setCouponApplied] = useState<string | null>(null);
