@@ -342,41 +342,18 @@ export default function RhythmBandPro() {
               </p>
             </motion.div>
 
-            <motion.div {...fadeUp}>
-              <GlassCard className="p-6 md:p-8">
-                <div className="flex items-center gap-3 text-xs text-white/40 mb-4">
-                  <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Nera AI · 2:14 PM
-                </div>
-                <p className="text-lg md:text-xl leading-relaxed">
-                  Looks like your body had a <span className="text-emerald-400">sugar response</span> after lunch.
-                </p>
-                <p className="mt-3 text-white/60">What did you eat?</p>
-
-                <div className="mt-6 flex gap-2 flex-wrap">
-                  {["Pav bhaji", "Rice + dal", "Sandwich", "Other…"].map(c => (
-                    <span key={c} className="text-sm px-3 py-1.5 rounded-full border border-white/10 text-white/80 hover:border-emerald-400/60 hover:text-white transition cursor-default">
-                      {c}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-8 pt-6 border-t border-white/10">
-                  <svg viewBox="0 0 300 90" className="w-full h-20">
-                    <defs>
-                      <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="0" stopColor={EMERALD} stopOpacity="0.4" />
-                        <stop offset="1" stopColor={EMERALD} stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M0 70 C 40 70, 70 68, 110 60 C 140 54, 155 18, 180 22 C 210 26, 240 60, 300 62 L 300 90 L 0 90 Z" fill="url(#g)" />
-                    <path d="M0 70 C 40 70, 70 68, 110 60 C 140 54, 155 18, 180 22 C 210 26, 240 60, 300 62" fill="none" stroke={EMERALD} strokeWidth="2" />
-                  </svg>
-                  <div className="mt-2 text-xs text-white/40 flex justify-between">
-                    <span>11:00</span><span>13:00</span><span>15:00</span>
-                  </div>
-                </div>
-              </GlassCard>
+            <motion.div {...fadeUp} className="relative">
+              <div className="absolute -inset-6 -z-10 rounded-[3rem] blur-3xl opacity-40"
+                style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.5), transparent)" }} />
+              <div className="mx-auto max-w-[340px] rounded-[2.2rem] border border-white/10 bg-white/[0.02] p-2 shadow-2xl">
+                <img
+                  src={appMetabolic.url}
+                  alt="Nera AI metabolic zone chart — sugar-response visualised through the day"
+                  className="w-full h-auto rounded-[1.9rem]"
+                  loading="lazy"
+                />
+              </div>
+              <p className="mt-6 text-center text-xs text-white/40">Actual Nera AI screen · your day, decoded</p>
             </motion.div>
           </div>
         </section>
