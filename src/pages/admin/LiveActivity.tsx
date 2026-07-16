@@ -738,13 +738,19 @@ export default function LiveActivity() {
     const tenMinAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
     const last7d = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
-    const [ordersRes, recentRes, lostRes, todayVisRes] = await Promise.all([
+    const paidStatuses = ["paid", "confirmed", "processing", "shipped", "delivered"];
+    const [ordersRes, recentRes, todayAggRes, lostRes, todayVisRes] = await Promise.all([
       // Pending: created in last 10 min (still actively paying)
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created").gte("created_at", tenMinAgo).order("created_at", { ascending: false }),
+      // Recent list for display (capped)
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
-        .in("status", ["paid", "confirmed", "processing", "shipped", "delivered"])
+        .in("status", paidStatuses)
         .gte("created_at", todayStartIso).order("created_at", { ascending: false }).limit(20),
+      // Aggregation: all today's paid orders (amount only, no limit)
+      db.from("orders").select("amount")
+        .in("status", paidStatuses)
+        .gte("created_at", todayStartIso),
       // Lost: created > 10 min ago within last 7 days
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, customer_phone, amount, status, created_at")
         .eq("status", "created")
@@ -757,10 +763,11 @@ export default function LiveActivity() {
     setPendingOrders(ordersRes.data ?? []);
     setRecentOrders(recentRes.data ?? []);
     setLostCheckouts(lostRes.data ?? []);
-    const paid: TodayOrder[] = recentRes.data ?? [];
-    const revenue = paid.reduce((s: number, o: TodayOrder) => s + o.amount, 0);
+    const allPaid: { amount: number }[] = todayAggRes.data ?? [];
+    const revenue = allPaid.reduce((s, o) => s + Number(o.amount), 0);
+    const orderCount = allPaid.length;
     const tv = todayVisRes.data?.total_visitors ?? 0;
-    setTodayStats({ orders: paid.length, revenue, avgOrder: paid.length ? Math.round(revenue / paid.length) : 0, totalVisitors: tv });
+    setTodayStats({ orders: orderCount, revenue, avgOrder: orderCount ? Math.round(revenue / orderCount) : 0, totalVisitors: tv });
     setLastRefresh(new Date());
     setLoading(false);
   }, []);
