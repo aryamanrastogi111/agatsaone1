@@ -167,6 +167,12 @@ export default function RhythmBandPro() {
     }
   };
 
+  const buyNow = () => {
+    addToCart();
+    const variants = encodeVariantsParam({ [BAND_SKU]: selectedColor.name });
+    navigate(`/checkout?sku=${BAND_SKU}${variants ? `&variants=${variants}` : ""}`);
+  };
+
   return (
     <SiteLayout>
       <div className="bg-black text-white selection:bg-emerald-400 selection:text-black">
