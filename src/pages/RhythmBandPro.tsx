@@ -100,7 +100,7 @@ const FAQS = [
   { q: "Is this a smartwatch?", a: "No screen. No notifications. Nothing to check. The band reads your body 24/7 in silence — the answers live in the app, once a day." },
   { q: "Battery?", a: "Up to 7 days on a single charge. Magnetic charging in under 90 minutes." },
   { q: "Water?", a: "IP67. Sweat, rain and handwashing are fine. Skip the pool for now." },
-  { q: "What's in the box?", a: "Rhythm Band, magnetic charger, quick-start card, and a 7-day Nera AI Premium free trial that activates the moment you pair the device." },
+  { q: "What's in the box?", a: "Rhythm Band, magnetic charger, quick-start card, and free access to Nera AI — no subscription needed for now." },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -668,7 +668,7 @@ export default function RhythmBandPro() {
                   <div>
                     <div className="text-xs uppercase tracking-widest text-emerald-400">EasyTouch Rhythm Band</div>
                     <div className="mt-2 text-2xl md:text-3xl font-semibold">{selectedColor.name}</div>
-                    <div className="mt-1 text-white/50 text-sm">Includes 7-day Nera AI Premium</div>
+                    <div className="mt-1 text-white/50 text-sm">Includes free Nera AI access</div>
                   </div>
                   <div className="text-right shrink-0">
                     <div className="text-3xl md:text-4xl font-semibold">{fmt(price)}</div>
@@ -706,7 +706,7 @@ export default function RhythmBandPro() {
                   </Button>
                 </div>
                 <div className="mt-4 flex items-center justify-center gap-6 text-xs text-white/40">
-                  <span>✓ 7-day trial</span>
+                  <span>✓ Free Nera AI</span>
                   <span>✓ 1-year warranty</span>
                   <span>✓ Easy returns</span>
                 </div>
