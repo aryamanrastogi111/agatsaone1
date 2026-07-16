@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Check, X, ArrowRight, HeartPulse, MoonStar, Flame, Activity, Wind, Sparkles,
+  Thermometer, Waves, Footprints,
 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
