@@ -52,13 +52,13 @@ export const CartDrawer = ({
 
   const handleCheckout = () => {
     if (items.length === 0) return;
-    const skuList = items.flatMap((item) =>
-      Array(item.quantity).fill(item.productId)
-    );
     setCartOpen(false);
-    if (skuList.length > 0) {
-      navigate(`/checkout?sku=${skuList.join(",")}`);
-    }
+    // buildCheckoutUrl encodes variant/color info (e.g. Rhythm Band color)
+    // into the URL so the checkout page can display + confirm it.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { buildCheckoutUrl } = require("@/lib/bandColors");
+    const url = buildCheckoutUrl(items);
+    if (url !== "/checkout") navigate(url);
   };
 
   return (
