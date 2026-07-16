@@ -588,7 +588,7 @@ export default function RhythmBandPro() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="grid md:grid-cols-2 gap-16 items-center">
               <motion.div {...fadeUp}>
-                <img src={rhythmPortrait4} alt="Rhythm Band on wrist" className="w-full rounded-3xl" />
+                <img src={rhythmLifestyleBasketball.url} alt="Man wearing Rhythm Band during a basketball workout" className="w-full rounded-3xl aspect-[4/5] object-cover" />
               </motion.div>
               <motion.div {...fadeUp}>
                 <h2 className="font-semibold tracking-tight text-[36px] leading-[1.05] md:text-[64px]">
