@@ -20,6 +20,9 @@ import rhythmPortrait1 from "@/assets/rhythm-portrait-1.jpg";
 import rhythmPortrait2 from "@/assets/rhythm-portrait-2.jpg";
 import rhythmPortrait3 from "@/assets/rhythm-portrait-3.jpg";
 import rhythmPortrait4 from "@/assets/rhythm-portrait-4.jpg";
+import appWearable from "@/assets/rhythm-app-wearable.png.asset.json";
+import appMeals from "@/assets/rhythm-app-meals.jpg.asset.json";
+import appMetabolic from "@/assets/rhythm-app-metabolic.jpg.asset.json";
 
 /* ------------------------------------------------------------------ */
 /* Theme: Black + Emerald. Apple keynote pacing.                       */
@@ -339,41 +342,18 @@ export default function RhythmBandPro() {
               </p>
             </motion.div>
 
-            <motion.div {...fadeUp}>
-              <GlassCard className="p-6 md:p-8">
-                <div className="flex items-center gap-3 text-xs text-white/40 mb-4">
-                  <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Nera AI · 2:14 PM
-                </div>
-                <p className="text-lg md:text-xl leading-relaxed">
-                  Looks like your body had a <span className="text-emerald-400">sugar response</span> after lunch.
-                </p>
-                <p className="mt-3 text-white/60">What did you eat?</p>
-
-                <div className="mt-6 flex gap-2 flex-wrap">
-                  {["Pav bhaji", "Rice + dal", "Sandwich", "Other…"].map(c => (
-                    <span key={c} className="text-sm px-3 py-1.5 rounded-full border border-white/10 text-white/80 hover:border-emerald-400/60 hover:text-white transition cursor-default">
-                      {c}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-8 pt-6 border-t border-white/10">
-                  <svg viewBox="0 0 300 90" className="w-full h-20">
-                    <defs>
-                      <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="0" stopColor={EMERALD} stopOpacity="0.4" />
-                        <stop offset="1" stopColor={EMERALD} stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M0 70 C 40 70, 70 68, 110 60 C 140 54, 155 18, 180 22 C 210 26, 240 60, 300 62 L 300 90 L 0 90 Z" fill="url(#g)" />
-                    <path d="M0 70 C 40 70, 70 68, 110 60 C 140 54, 155 18, 180 22 C 210 26, 240 60, 300 62" fill="none" stroke={EMERALD} strokeWidth="2" />
-                  </svg>
-                  <div className="mt-2 text-xs text-white/40 flex justify-between">
-                    <span>11:00</span><span>13:00</span><span>15:00</span>
-                  </div>
-                </div>
-              </GlassCard>
+            <motion.div {...fadeUp} className="relative">
+              <div className="absolute -inset-6 -z-10 rounded-[3rem] blur-3xl opacity-40"
+                style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.5), transparent)" }} />
+              <div className="mx-auto max-w-[340px] rounded-[2.2rem] border border-white/10 bg-white/[0.02] p-2 shadow-2xl">
+                <img
+                  src={appMetabolic.url}
+                  alt="Nera AI metabolic zone chart — sugar-response visualised through the day"
+                  className="w-full h-auto rounded-[1.9rem]"
+                  loading="lazy"
+                />
+              </div>
+              <p className="mt-6 text-center text-xs text-white/40">Actual Nera AI screen · your day, decoded</p>
             </motion.div>
           </div>
         </section>
@@ -391,28 +371,44 @@ export default function RhythmBandPro() {
               Not calorie counting. Not a generic diet chart. Nera AI learns <span className="text-white">your</span> body.
             </motion.p>
 
-            <div className="mt-16 max-w-2xl mx-auto">
-              <GlassCard className="divide-y divide-white/5">
-                {FOOD_PROFILE.map(f => (
-                  <div key={f.label} className="flex items-center gap-5 p-5">
-                    <div className="text-3xl">{f.emoji}</div>
-                    <div className="flex-1">
-                      <div className="text-white font-medium">{f.label}</div>
-                      <div className="text-xs text-white/40">{f.note}</div>
+            <div className="mt-16 grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+              <motion.div {...fadeUp} className="relative order-2 md:order-1">
+                <GlassCard className="divide-y divide-white/5">
+                  {FOOD_PROFILE.map(f => (
+                    <div key={f.label} className="flex items-center gap-5 p-5">
+                      <div className="text-3xl">{f.emoji}</div>
+                      <div className="flex-1">
+                        <div className="text-white font-medium">{f.label}</div>
+                        <div className="text-xs text-white/40">{f.note}</div>
+                      </div>
+                      <div className="w-24 h-1.5 rounded-full bg-white/5 overflow-hidden">
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: f.tone === "high" ? "90%" : f.tone === "mid" ? "55%" : "25%",
+                            background: f.tone === "high" ? "#ef4444" : f.tone === "mid" ? "#f59e0b" : EMERALD,
+                          }}
+                        />
+                      </div>
+                      <ToneDot tone={f.tone as any} />
                     </div>
-                    <div className="w-32 h-1.5 rounded-full bg-white/5 overflow-hidden">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: f.tone === "high" ? "90%" : f.tone === "mid" ? "55%" : "25%",
-                          background: f.tone === "high" ? "#ef4444" : f.tone === "mid" ? "#f59e0b" : EMERALD,
-                        }}
-                      />
-                    </div>
-                    <ToneDot tone={f.tone as any} />
-                  </div>
-                ))}
-              </GlassCard>
+                  ))}
+                </GlassCard>
+              </motion.div>
+
+              <motion.div {...fadeUp} className="relative order-1 md:order-2">
+                <div className="absolute -inset-6 -z-10 rounded-[3rem] blur-3xl opacity-40"
+                  style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.4), transparent)" }} />
+                <div className="mx-auto max-w-[320px] rounded-[2.2rem] border border-white/10 bg-white/[0.02] p-2 shadow-2xl">
+                  <img
+                    src={appMeals.url}
+                    alt="Today's meal responses — metabolic spikes detected by Nera AI"
+                    className="w-full h-auto rounded-[1.9rem]"
+                    loading="lazy"
+                  />
+                </div>
+                <p className="mt-6 text-center text-xs text-white/40">Tag your meals · Nera learns faster every day</p>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -428,6 +424,23 @@ export default function RhythmBandPro() {
               <br />
               <span className="text-white/50">Your whole body.</span>
             </motion.h2>
+            <motion.p {...fadeUp} className="mt-6 text-center text-white/55 max-w-xl mx-auto text-lg">
+              HRV, heart rate, temperature, sleep, stress, SpO₂, activity — one silent band, one daily answer.
+            </motion.p>
+
+            <motion.div {...fadeUp} className="mt-16 relative mx-auto max-w-[340px]">
+              <div className="absolute -inset-8 -z-10 rounded-[3rem] blur-3xl opacity-50"
+                style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.55), transparent)" }} />
+              <div className="rounded-[2.2rem] border border-white/10 bg-white/[0.02] p-2 shadow-2xl">
+                <img
+                  src={appWearable.url}
+                  alt="Rhythm Band wearable dashboard — HRV, live HR, SpO₂, temperature, sleep"
+                  className="w-full h-auto rounded-[1.9rem]"
+                  loading="lazy"
+                />
+              </div>
+            </motion.div>
+
 
             <div className="mt-20 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {CAPABILITIES.map((c, i) => (
