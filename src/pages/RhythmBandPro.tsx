@@ -20,6 +20,9 @@ import rhythmPortrait1 from "@/assets/rhythm-portrait-1.jpg";
 import rhythmPortrait2 from "@/assets/rhythm-portrait-2.jpg";
 import rhythmPortrait3 from "@/assets/rhythm-portrait-3.jpg";
 import rhythmPortrait4 from "@/assets/rhythm-portrait-4.jpg";
+import appWearable from "@/assets/rhythm-app-wearable.png.asset.json";
+import appMeals from "@/assets/rhythm-app-meals.jpg.asset.json";
+import appMetabolic from "@/assets/rhythm-app-metabolic.jpg.asset.json";
 
 /* ------------------------------------------------------------------ */
 /* Theme: Black + Emerald. Apple keynote pacing.                       */
