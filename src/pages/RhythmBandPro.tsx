@@ -431,8 +431,10 @@ export default function RhythmBandPro() {
                   Just wear the band. Nera AI does the rest.
                 </h3>
                 <p className="mt-5 text-white/60 md:text-lg leading-relaxed max-w-2xl mx-auto">
-                  No logging spikes. No manual tracking. The band silently detects every sugar-response event through the day.
-                  When you eat, simply tap the meal type — Nera AI instantly classifies it as a
+                  No logging spikes. No manual tracking. The band silently detects every sugar-response event through the day —
+                  each spike is automatically recorded and shown to you on the app as an
+                  <span className="text-white"> insulin spike event</span>, with the exact time and intensity already filled in.
+                  All you do is add what food it was — a quick tap like "dal-rice" or "cold coffee" — and Nera AI instantly classifies it as a
                   <span className="text-red-400"> high-spike</span>,
                   <span className="text-amber-400"> moderate</span> or
                   <span className="text-emerald-400"> friendly</span> meal for <span className="text-white">your</span> body.
