@@ -668,7 +668,7 @@ export default function RhythmBandPro() {
                   <div>
                     <div className="text-xs uppercase tracking-widest text-emerald-400">EasyTouch Rhythm Band</div>
                     <div className="mt-2 text-2xl md:text-3xl font-semibold">{selectedColor.name}</div>
-                    <div className="mt-1 text-white/50 text-sm">Includes 7-day Nera AI Premium</div>
+                    <div className="mt-1 text-white/50 text-sm">Includes free Nera AI access</div>
                   </div>
                   <div className="text-right shrink-0">
                     <div className="text-3xl md:text-4xl font-semibold">{fmt(price)}</div>
