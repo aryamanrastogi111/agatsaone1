@@ -432,7 +432,7 @@ export default function RhythmBandPro() {
                 </h3>
                 <p className="mt-5 text-white/60 md:text-lg leading-relaxed max-w-2xl mx-auto">
                   No logging spikes. No manual tracking. The band silently detects every sugar-response event through the day —
-                  each spike is automatically recorded and shown to you on the app as an
+                  each spike is automatically recorded by the band and shown to you on the app as an
                   <span className="text-white"> insulin spike event</span>, with the exact time and intensity already filled in.
                   All you do is add what food it was — a quick tap like "dal-rice" or "cold coffee" — and Nera AI instantly classifies it as a
                   <span className="text-red-400"> high-spike</span>,
