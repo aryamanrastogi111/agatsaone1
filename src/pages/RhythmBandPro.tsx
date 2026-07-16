@@ -134,6 +134,7 @@ function ToneDot({ tone }: { tone: "low" | "mid" | "high" }) {
 
 export default function RhythmBandPro() {
   const { prices, fmt } = usePricing();
+  const navigate = useNavigate();
   const price = prices.band_sub;
   const [selectedColor, setSelectedColor] = useState(COLORS[0]);
 
