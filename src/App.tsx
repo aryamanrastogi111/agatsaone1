@@ -25,6 +25,7 @@ const AppDownload = lazy(() => import("./pages/AppDownload"));
 const SanketLifeECGProduct = lazy(() => import("./pages/products/SanketLifeECGProduct"));
 const EasyTouchWellnessProduct = lazy(() => import("./pages/products/EasyTouchWellnessProduct"));
 const RhythmBandProduct = lazy(() => import("./pages/products/RhythmBandProduct"));
+const RhythmBandPro = lazy(() => import("./pages/RhythmBandPro"));
 const SmartScaleProduct = lazy(() => import("./pages/products/SmartScaleProduct"));
 const DeviceActivation = lazy(() => import("./pages/DeviceActivation"));
 const ReferralPage = lazy(() => import("./pages/Referral"));
