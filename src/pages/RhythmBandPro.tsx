@@ -295,9 +295,9 @@ export default function RhythmBandPro() {
 
             <div className="mt-20 grid md:grid-cols-3 gap-6">
               {[
-                { name: "Aditi, 32",  img: rhythmPortrait1, curve: "high", note: "Sharp spike, slow return" },
-                { name: "Rohan, 41",  img: rhythmPortrait2, curve: "mid",  note: "Moderate rise" },
-                { name: "Meera, 28",  img: rhythmPortrait3, curve: "low",  note: "Barely a ripple" },
+                { name: "Rohan, 41",  img: rhythmPortrait1, curve: "high", note: "Sharp spike, slow return" },
+                { name: "Aditi, 28",  img: rhythmPortrait2, curve: "mid",  note: "Moderate rise" },
+                { name: "Mr. Menon, 65",  img: rhythmPortrait3, curve: "low",  note: "Barely a ripple" },
               ].map((p, i) => (
                 <motion.div key={p.name}
                   initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
