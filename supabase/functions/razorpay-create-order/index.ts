@@ -167,7 +167,7 @@ serve(async (req) => {
         customer_name: recipientName || customerName || null,
         customer_email: recipientEmail || customerEmail || null,
         customer_phone: recipientPhone || customerPhone || null,
-        items: normalizedItems,
+        items: enrichedItems,
         shipping_address: addressLine1 || shippingAddress || null,
         shipping_city: city || shippingCity || null,
         shipping_state: state || shippingState || null,
