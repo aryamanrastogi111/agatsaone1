@@ -839,30 +839,53 @@ export default function CheckoutPage() {
         {/* ─── Order summary with quantity controls ─────────── */}
         <div className="bg-muted/50 rounded-xl p-4 mb-4 border border-border space-y-3">
           {items.map((d) => (
-            <div key={d.sku} className="flex items-center justify-between gap-2">
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">{d.name}</p>
-                <p className="text-xs text-muted-foreground">{fmtPaise(d.unitPricePaise)} each</p>
+            <div key={d.sku} className="space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">{d.name}</p>
+                  <p className="text-xs text-muted-foreground">{fmtPaise(d.unitPricePaise)} each</p>
+                </div>
+                {/* Qty controls */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    onClick={() => changeQty(d.sku, -1)}
+                    disabled={d.qty <= 1}
+                    className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted disabled:opacity-30 transition-colors"
+                  >
+                    <Minus className="h-3.5 w-3.5 text-foreground" />
+                  </button>
+                  <span className="w-6 text-center text-sm font-semibold text-foreground">{d.qty}</span>
+                  <button
+                    onClick={() => changeQty(d.sku, 1)}
+                    disabled={d.qty >= 5}
+                    className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted disabled:opacity-30 transition-colors"
+                  >
+                    <Plus className="h-3.5 w-3.5 text-foreground" />
+                  </button>
+                </div>
+                <p className="text-sm font-semibold text-foreground w-20 text-right">{fmtPaise(d.unitPricePaise * d.qty)}</p>
               </div>
-              {/* Qty controls */}
-              <div className="flex items-center gap-1.5 shrink-0">
-                <button
-                  onClick={() => changeQty(d.sku, -1)}
-                  disabled={d.qty <= 1}
-                  className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted disabled:opacity-30 transition-colors"
-                >
-                  <Minus className="h-3.5 w-3.5 text-foreground" />
-                </button>
-                <span className="w-6 text-center text-sm font-semibold text-foreground">{d.qty}</span>
-                <button
-                  onClick={() => changeQty(d.sku, 1)}
-                  disabled={d.qty >= 5}
-                  className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted disabled:opacity-30 transition-colors"
-                >
-                  <Plus className="h-3.5 w-3.5 text-foreground" />
-                </button>
-              </div>
-              <p className="text-sm font-semibold text-foreground w-20 text-right">{fmtPaise(d.unitPricePaise * d.qty)}</p>
+              {/* Rhythm Band color picker */}
+              {d.sku === BAND_SKU && (
+                <div className="flex items-center justify-between gap-3 pl-1">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span
+                      className="inline-block h-4 w-4 rounded-full border border-border shrink-0"
+                      style={{ background: findBandColorByName(variantBySku[BAND_SKU])?.hex || "#999" }}
+                    />
+                    <span className="text-xs text-muted-foreground truncate">Band color</span>
+                  </div>
+                  <select
+                    value={variantBySku[BAND_SKU] || BAND_COLORS[0].name}
+                    onChange={(e) => setVariantBySku((v) => ({ ...v, [BAND_SKU]: e.target.value }))}
+                    className="text-xs font-medium px-2 py-1 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
+                    {BAND_COLORS.map((c) => (
+                      <option key={c.id} value={c.name}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
           ))}
           <p className="text-xs text-primary font-medium">+ Free Nera AI trial included (auto-activates on device pairing)</p>
