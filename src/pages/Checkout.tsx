@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useCartStore } from "@/stores/cartStore";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
 import { trackMetaEvent, setPixelAdvancedMatching, splitName, toIso2, sendCapiEvent } from "@/lib/metaCapi";
+import { BAND_COLORS, BAND_SKU, decodeVariantsParam, findBandColorByName } from "@/lib/bandColors";
 
 // ─── Device display names ───────────────────────────────────────
 const DEVICE_NAMES: Record<string, string> = {
@@ -157,6 +158,15 @@ export default function CheckoutPage() {
   // Quantities
   const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
 
+  // Per-SKU variant title (e.g. Rhythm Band color).
+  // Seeded from ?variants=band_sub:Terracotta and defaults to Olive when the
+  // Rhythm Band is in the cart but no color was passed.
+  const initialVariants = decodeVariantsParam(searchParams.get("variants"));
+  if (uniqueSkus.includes(BAND_SKU) && !initialVariants[BAND_SKU]) {
+    initialVariants[BAND_SKU] = BAND_COLORS[0].name;
+  }
+  const [variantBySku, setVariantBySku] = useState<Record<string, string>>(initialVariants);
+
   // Coupon
   const [couponInput, setCouponInput] = useState("");
   const [couponApplied, setCouponApplied] = useState<string | null>(null);
@@ -207,6 +217,7 @@ export default function CheckoutPage() {
     name: DEVICE_NAMES[s],
     unitPricePaise: (prices[s as DeviceSku] || 0) * 100,
     qty: quantities[s] || 1,
+    variantTitle: variantBySku[s] || undefined,
   }));
 
   // ─── Quote fetch ──────────────────────────────────────────
@@ -578,6 +589,9 @@ export default function CheckoutPage() {
           const { data, error } = await supabase.functions.invoke("razorpay-create-order", {
             body: {
               items: cartItems,
+              // Variants (e.g. Rhythm Band color) — stored in Razorpay notes + orders.items JSON.
+              // Not forwarded to the external pricing API (which only expects sku+qty).
+              variants: variantBySku,
               couponCode: couponApplied || undefined,
               recipientName: fullName.trim(),
               recipientPhone: fullPhone,
@@ -646,7 +660,10 @@ export default function CheckoutPage() {
             amount: confirmedTotalPaise,
             currency: createData.currency || "INR",
             name: "Agatsa One",
-            description: items.map((d) => d.qty > 1 ? `${d.name} ×${d.qty}` : d.name).join(", "),
+            description: items.map((d) => {
+              const label = d.variantTitle ? `${d.name} (${d.variantTitle})` : d.name;
+              return d.qty > 1 ? `${label} ×${d.qty}` : label;
+            }).join(", "),
             order_id: razorpayOrderId,
             prefill: {
               name: fullName.trim(),
@@ -701,7 +718,7 @@ export default function CheckoutPage() {
                     customer_name: fullName.trim(),
                     customer_email: recipientEmail,
                     customer_phone: fullPhone,
-                    items: items.map((d) => ({ sku: d.sku, name: d.name, price: d.unitPricePaise / 100, qty: d.qty })),
+                    items: items.map((d) => ({ sku: d.sku, name: d.name, productName: d.name, variantTitle: d.variantTitle, price: d.unitPricePaise / 100, qty: d.qty })),
                     shipping_address: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
                     shipping_city: city.trim(),
                     shipping_state: state.trim(),
@@ -726,6 +743,7 @@ export default function CheckoutPage() {
                       paymentId: response.razorpay_payment_id,
                       items: items.map((d) => ({
                         productName: d.name,
+                        variantTitle: d.variantTitle,
                         quantity: d.qty,
                         price: d.unitPricePaise / 100,
                       })),
@@ -821,30 +839,53 @@ export default function CheckoutPage() {
         {/* ─── Order summary with quantity controls ─────────── */}
         <div className="bg-muted/50 rounded-xl p-4 mb-4 border border-border space-y-3">
           {items.map((d) => (
-            <div key={d.sku} className="flex items-center justify-between gap-2">
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">{d.name}</p>
-                <p className="text-xs text-muted-foreground">{fmtPaise(d.unitPricePaise)} each</p>
+            <div key={d.sku} className="space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">{d.name}</p>
+                  <p className="text-xs text-muted-foreground">{fmtPaise(d.unitPricePaise)} each</p>
+                </div>
+                {/* Qty controls */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    onClick={() => changeQty(d.sku, -1)}
+                    disabled={d.qty <= 1}
+                    className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted disabled:opacity-30 transition-colors"
+                  >
+                    <Minus className="h-3.5 w-3.5 text-foreground" />
+                  </button>
+                  <span className="w-6 text-center text-sm font-semibold text-foreground">{d.qty}</span>
+                  <button
+                    onClick={() => changeQty(d.sku, 1)}
+                    disabled={d.qty >= 5}
+                    className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted disabled:opacity-30 transition-colors"
+                  >
+                    <Plus className="h-3.5 w-3.5 text-foreground" />
+                  </button>
+                </div>
+                <p className="text-sm font-semibold text-foreground w-20 text-right">{fmtPaise(d.unitPricePaise * d.qty)}</p>
               </div>
-              {/* Qty controls */}
-              <div className="flex items-center gap-1.5 shrink-0">
-                <button
-                  onClick={() => changeQty(d.sku, -1)}
-                  disabled={d.qty <= 1}
-                  className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted disabled:opacity-30 transition-colors"
-                >
-                  <Minus className="h-3.5 w-3.5 text-foreground" />
-                </button>
-                <span className="w-6 text-center text-sm font-semibold text-foreground">{d.qty}</span>
-                <button
-                  onClick={() => changeQty(d.sku, 1)}
-                  disabled={d.qty >= 5}
-                  className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:bg-muted disabled:opacity-30 transition-colors"
-                >
-                  <Plus className="h-3.5 w-3.5 text-foreground" />
-                </button>
-              </div>
-              <p className="text-sm font-semibold text-foreground w-20 text-right">{fmtPaise(d.unitPricePaise * d.qty)}</p>
+              {/* Rhythm Band color picker */}
+              {d.sku === BAND_SKU && (
+                <div className="flex items-center justify-between gap-3 pl-1">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span
+                      className="inline-block h-4 w-4 rounded-full border border-border shrink-0"
+                      style={{ background: findBandColorByName(variantBySku[BAND_SKU])?.hex || "#999" }}
+                    />
+                    <span className="text-xs text-muted-foreground truncate">Band color</span>
+                  </div>
+                  <select
+                    value={variantBySku[BAND_SKU] || BAND_COLORS[0].name}
+                    onChange={(e) => setVariantBySku((v) => ({ ...v, [BAND_SKU]: e.target.value }))}
+                    className="text-xs font-medium px-2 py-1 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  >
+                    {BAND_COLORS.map((c) => (
+                      <option key={c.id} value={c.name}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
           ))}
           <p className="text-xs text-primary font-medium">+ Free Nera AI trial included (auto-activates on device pairing)</p>

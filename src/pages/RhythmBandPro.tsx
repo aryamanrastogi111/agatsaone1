@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { encodeVariantsParam, BAND_SKU } from "@/lib/bandColors";
 import {
   Check, X, ArrowRight, HeartPulse, MoonStar, Flame, Activity, Wind, Sparkles,
   Thermometer, Waves, Footprints,
@@ -132,6 +134,7 @@ function ToneDot({ tone }: { tone: "low" | "mid" | "high" }) {
 
 export default function RhythmBandPro() {
   const { prices, fmt } = usePricing();
+  const navigate = useNavigate();
   const price = prices.band_sub;
   const [selectedColor, setSelectedColor] = useState(COLORS[0]);
 
@@ -162,6 +165,12 @@ export default function RhythmBandPro() {
         });
       } catch {}
     }
+  };
+
+  const buyNow = () => {
+    addToCart();
+    const variants = encodeVariantsParam({ [BAND_SKU]: selectedColor.name });
+    navigate(`/checkout?sku=${BAND_SKU}${variants ? `&variants=${variants}` : ""}`);
   };
 
   return (
@@ -639,13 +648,23 @@ export default function RhythmBandPro() {
                   ))}
                 </div>
 
-                <Button
-                  onClick={addToCart}
-                  size="lg"
-                  className="mt-8 w-full bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-full h-12"
-                >
-                  Add to cart
-                </Button>
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <Button
+                    onClick={addToCart}
+                    size="lg"
+                    variant="outline"
+                    className="w-full border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-full h-12"
+                  >
+                    Add to cart
+                  </Button>
+                  <Button
+                    onClick={buyNow}
+                    size="lg"
+                    className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-full h-12"
+                  >
+                    Buy now · {selectedColor.name}
+                  </Button>
+                </div>
                 <div className="mt-4 flex items-center justify-center gap-6 text-xs text-white/40">
                   <span>✓ 7-day trial</span>
                   <span>✓ 1-year warranty</span>

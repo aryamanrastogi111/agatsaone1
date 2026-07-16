@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { buildCheckoutUrl } from "@/lib/bandColors";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -52,13 +53,9 @@ export const CartDrawer = ({
 
   const handleCheckout = () => {
     if (items.length === 0) return;
-    const skuList = items.flatMap((item) =>
-      Array(item.quantity).fill(item.productId)
-    );
     setCartOpen(false);
-    if (skuList.length > 0) {
-      navigate(`/checkout?sku=${skuList.join(",")}`);
-    }
+    const url = buildCheckoutUrl(items);
+    if (url !== "/checkout") navigate(url);
   };
 
   return (
