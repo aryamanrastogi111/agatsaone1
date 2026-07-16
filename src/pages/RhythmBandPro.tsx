@@ -420,6 +420,42 @@ export default function RhythmBandPro() {
                 <p className="mt-6 text-center text-xs text-white/40">Tag your meals · Nera learns faster every day</p>
               </motion.div>
             </div>
+
+            {/* Automatic detection callout */}
+            <motion.div {...fadeUp} className="mt-20 max-w-4xl mx-auto">
+              <GlassCard className="p-8 md:p-12 text-center">
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/5 px-3 py-1 text-[11px] tracking-[0.25em] uppercase text-emerald-300">
+                  Fully Automatic
+                </div>
+                <h3 className="mt-5 font-semibold tracking-tight text-[26px] md:text-[36px] leading-tight">
+                  Just wear the band. Nera AI does the rest.
+                </h3>
+                <p className="mt-5 text-white/60 md:text-lg leading-relaxed max-w-2xl mx-auto">
+                  No logging spikes. No manual tracking. The band silently detects every sugar-response event through the day.
+                  When you eat, simply tap the meal type — Nera AI instantly classifies it as a
+                  <span className="text-red-400"> high-spike</span>,
+                  <span className="text-amber-400"> moderate</span> or
+                  <span className="text-emerald-400"> friendly</span> meal for <span className="text-white">your</span> body.
+                </p>
+                <div className="mt-8 grid sm:grid-cols-3 gap-4 text-left">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+                    <div className="text-emerald-400 text-xs tracking-widest uppercase">Step 1</div>
+                    <div className="mt-2 text-white font-medium">Wear it</div>
+                    <div className="mt-1 text-sm text-white/50">Band auto-detects spikes 24/7.</div>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+                    <div className="text-emerald-400 text-xs tracking-widest uppercase">Step 2</div>
+                    <div className="mt-2 text-white font-medium">Tap your meal</div>
+                    <div className="mt-1 text-sm text-white/50">One tap — dal-rice, dosa, biryani, fruit.</div>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+                    <div className="text-emerald-400 text-xs tracking-widest uppercase">Step 3</div>
+                    <div className="mt-2 text-white font-medium">Nera classifies</div>
+                    <div className="mt-1 text-sm text-white/50">Instantly tagged as high, moderate or safe for you.</div>
+                  </div>
+                </div>
+              </GlassCard>
+            </motion.div>
           </div>
         </section>
 
