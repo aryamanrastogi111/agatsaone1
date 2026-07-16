@@ -132,6 +132,11 @@ serve(async (req) => {
               shipping_surcharge_paise: surchargePaise.toString(),
               base_order_id: razorpayOrderId || "",
               website_order_id: websiteOrderId?.toString() || "",
+              // Variants (e.g. Rhythm Band color) — visible in Razorpay dashboard.
+              variants: enrichedItems
+                .filter((i) => i.variantTitle)
+                .map((i) => `${i.sku}:${i.variantTitle}`)
+                .join(", ") || "",
             },
           }),
         });
