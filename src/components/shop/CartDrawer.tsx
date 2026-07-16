@@ -54,10 +54,6 @@ export const CartDrawer = ({
   const handleCheckout = () => {
     if (items.length === 0) return;
     setCartOpen(false);
-    // buildCheckoutUrl encodes variant/color info (e.g. Rhythm Band color)
-    // into the URL so the checkout page can display + confirm it.
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { buildCheckoutUrl } = require("@/lib/bandColors");
     const url = buildCheckoutUrl(items);
     if (url !== "/checkout") navigate(url);
   };
