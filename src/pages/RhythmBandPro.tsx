@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { encodeVariantsParam, BAND_SKU } from "@/lib/bandColors";
 import {
   Check, X, ArrowRight, HeartPulse, MoonStar, Flame, Activity, Wind, Sparkles,
   Thermometer, Waves, Footprints,
