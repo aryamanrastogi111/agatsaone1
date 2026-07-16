@@ -424,6 +424,23 @@ export default function RhythmBandPro() {
               <br />
               <span className="text-white/50">Your whole body.</span>
             </motion.h2>
+            <motion.p {...fadeUp} className="mt-6 text-center text-white/55 max-w-xl mx-auto text-lg">
+              HRV, heart rate, temperature, sleep, stress, SpO₂, activity — one silent band, one daily answer.
+            </motion.p>
+
+            <motion.div {...fadeUp} className="mt-16 relative mx-auto max-w-[340px]">
+              <div className="absolute -inset-8 -z-10 rounded-[3rem] blur-3xl opacity-50"
+                style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.55), transparent)" }} />
+              <div className="rounded-[2.2rem] border border-white/10 bg-white/[0.02] p-2 shadow-2xl">
+                <img
+                  src={appWearable.url}
+                  alt="Rhythm Band wearable dashboard — HRV, live HR, SpO₂, temperature, sleep"
+                  className="w-full h-auto rounded-[1.9rem]"
+                  loading="lazy"
+                />
+              </div>
+            </motion.div>
+
 
             <div className="mt-20 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {CAPABILITIES.map((c, i) => (
