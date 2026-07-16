@@ -718,7 +718,7 @@ export default function CheckoutPage() {
                     customer_name: fullName.trim(),
                     customer_email: recipientEmail,
                     customer_phone: fullPhone,
-                    items: items.map((d) => ({ sku: d.sku, name: d.name, price: d.unitPricePaise / 100, qty: d.qty })),
+                    items: items.map((d) => ({ sku: d.sku, name: d.name, productName: d.name, variantTitle: d.variantTitle, price: d.unitPricePaise / 100, qty: d.qty })),
                     shipping_address: addressLine1.trim() + (addressLine2.trim() ? `, ${addressLine2.trim()}` : ""),
                     shipping_city: city.trim(),
                     shipping_state: state.trim(),
