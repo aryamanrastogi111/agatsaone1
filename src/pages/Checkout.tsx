@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useCartStore } from "@/stores/cartStore";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
 import { trackMetaEvent, setPixelAdvancedMatching, splitName, toIso2, sendCapiEvent } from "@/lib/metaCapi";
+import { BAND_COLORS, BAND_SKU, decodeVariantsParam, findBandColorByName } from "@/lib/bandColors";
 
 // ─── Device display names ───────────────────────────────────────
 const DEVICE_NAMES: Record<string, string> = {
