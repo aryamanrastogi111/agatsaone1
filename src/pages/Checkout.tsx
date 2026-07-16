@@ -660,7 +660,10 @@ export default function CheckoutPage() {
             amount: confirmedTotalPaise,
             currency: createData.currency || "INR",
             name: "Agatsa One",
-            description: items.map((d) => d.qty > 1 ? `${d.name} ×${d.qty}` : d.name).join(", "),
+            description: items.map((d) => {
+              const label = d.variantTitle ? `${d.name} (${d.variantTitle})` : d.name;
+              return d.qty > 1 ? `${label} ×${d.qty}` : label;
+            }).join(", "),
             order_id: razorpayOrderId,
             prefill: {
               name: fullName.trim(),
