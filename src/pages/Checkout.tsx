@@ -589,6 +589,9 @@ export default function CheckoutPage() {
           const { data, error } = await supabase.functions.invoke("razorpay-create-order", {
             body: {
               items: cartItems,
+              // Variants (e.g. Rhythm Band color) — stored in Razorpay notes + orders.items JSON.
+              // Not forwarded to the external pricing API (which only expects sku+qty).
+              variants: variantBySku,
               couponCode: couponApplied || undefined,
               recipientName: fullName.trim(),
               recipientPhone: fullPhone,
