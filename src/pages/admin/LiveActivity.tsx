@@ -743,10 +743,10 @@ export default function LiveActivity() {
       // Pending: created in last 10 min (still actively paying)
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .eq("status", "created").gte("created_at", tenMinAgo).order("created_at", { ascending: false }),
-      // Recent list for display (capped)
+      // Today's paid orders for display (uncapped)
       db.from("orders").select("id, razorpay_order_id, customer_name, customer_email, amount, status, created_at")
         .in("status", paidStatuses)
-        .gte("created_at", todayStartIso).order("created_at", { ascending: false }).limit(20),
+        .gte("created_at", todayStartIso).order("created_at", { ascending: false }),
       // Aggregation: all today's paid orders (amount only, no limit)
       db.from("orders").select("amount")
         .in("status", paidStatuses)
@@ -981,7 +981,7 @@ export default function LiveActivity() {
       <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
         <div className="flex items-center gap-2 px-5 py-4 border-b border-gray-100">
           <Package size={15} className="text-green-600" /><h3 className="font-semibold text-gray-900">Today's Purchases</h3>
-          <span className="text-xs text-gray-400 ml-auto">Last 20</span>
+          <span className="text-xs text-gray-400 ml-auto">{recentOrders.length} shown today</span>
         </div>
         {recentOrders.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-gray-400">
