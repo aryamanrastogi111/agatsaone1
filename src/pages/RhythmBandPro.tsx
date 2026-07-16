@@ -56,12 +56,15 @@ const FOOD_PROFILE = [
 ];
 
 const CAPABILITIES = [
-  { icon: HeartPulse, title: "Heart",            copy: "Continuous heart insights. Resting HR, HRV, cardiac load." },
-  { icon: MoonStar,   title: "Sleep",            copy: "Deep · REM · Light · Sleep Score · Sleep Trends." },
-  { icon: Sparkles,   title: "Recovery",         copy: "Recovery Score · Readiness · HRV · Morning Recovery." },
-  { icon: Wind,       title: "Stress",           copy: "Stress · Calm · Breathing · Recovery." },
-  { icon: Flame,      title: "Food Intelligence", copy: "Sugar-response patterns · Personal Food Profile · Meal discoveries." },
-  { icon: Activity,   title: "Nera AI",          copy: "Daily insights · Weekly reports · Health coach · Predictions." },
+  { icon: HeartPulse,  title: "Heart",             copy: "Continuous heart insights. Resting HR, rhythm patterns, cardiac load." },
+  { icon: Waves,       title: "HRV & Readiness",   copy: "Overnight HRV, autonomic balance and morning readiness score." },
+  { icon: MoonStar,    title: "Sleep",             copy: "Deep · REM · Light · Sleep Score · Sleep Trends." },
+  { icon: Sparkles,    title: "Recovery",          copy: "Recovery Score · Strain · Morning Recovery · Trend graphs." },
+  { icon: Wind,        title: "Stress",            copy: "Stress · Calm · Breathing · Recovery windows." },
+  { icon: Thermometer, title: "Skin Temperature",  copy: "24/7 wrist temperature — early illness and cycle signals." },
+  { icon: Footprints,  title: "Activity & Movement", copy: "Steps, active minutes, calories and daily movement load." },
+  { icon: Flame,       title: "Food Intelligence", copy: "Sugar-response patterns · Personal Food Profile · Meal discoveries." },
+  { icon: Activity,    title: "Nera AI",           copy: "Daily insights · Weekly reports · Health coach · Predictions." },
 ];
 
 const COMPARE = [
