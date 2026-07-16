@@ -676,6 +676,33 @@ export default function RhythmBandPro() {
           </div>
         </section>
       </div>
+      <StickyAddToCart
+        productName={`EasyTouch Rhythm Band · ${selectedColor.name}`}
+        price={`₹${price.toLocaleString("en-IN")}`}
+        unitPrice={price}
+        onBuyNow={(qty) => {
+          useCartStore.getState().addItem({
+            productId: "band_sub",
+            productName: "EasyTouch Rhythm Band",
+            variantTitle: selectedColor.name,
+            price,
+            quantity: qty,
+          });
+          const variants = encodeVariantsParam({ [BAND_SKU]: selectedColor.name });
+          navigate(`/checkout?sku=${BAND_SKU}${variants ? `&variants=${variants}` : ""}`);
+        }}
+        onAddToCart={(qty) => {
+          useCartStore.getState().addItem({
+            productId: "band_sub",
+            productName: "EasyTouch Rhythm Band",
+            variantTitle: selectedColor.name,
+            price,
+            quantity: qty,
+          });
+          toast.success(`Rhythm Band · ${selectedColor.name} added`, { position: "top-center" });
+        }}
+        themeColor="emerald"
+      />
     </SiteLayout>
   );
 }
