@@ -371,28 +371,44 @@ export default function RhythmBandPro() {
               Not calorie counting. Not a generic diet chart. Nera AI learns <span className="text-white">your</span> body.
             </motion.p>
 
-            <div className="mt-16 max-w-2xl mx-auto">
-              <GlassCard className="divide-y divide-white/5">
-                {FOOD_PROFILE.map(f => (
-                  <div key={f.label} className="flex items-center gap-5 p-5">
-                    <div className="text-3xl">{f.emoji}</div>
-                    <div className="flex-1">
-                      <div className="text-white font-medium">{f.label}</div>
-                      <div className="text-xs text-white/40">{f.note}</div>
+            <div className="mt-16 grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+              <motion.div {...fadeUp} className="relative order-2 md:order-1">
+                <GlassCard className="divide-y divide-white/5">
+                  {FOOD_PROFILE.map(f => (
+                    <div key={f.label} className="flex items-center gap-5 p-5">
+                      <div className="text-3xl">{f.emoji}</div>
+                      <div className="flex-1">
+                        <div className="text-white font-medium">{f.label}</div>
+                        <div className="text-xs text-white/40">{f.note}</div>
+                      </div>
+                      <div className="w-24 h-1.5 rounded-full bg-white/5 overflow-hidden">
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: f.tone === "high" ? "90%" : f.tone === "mid" ? "55%" : "25%",
+                            background: f.tone === "high" ? "#ef4444" : f.tone === "mid" ? "#f59e0b" : EMERALD,
+                          }}
+                        />
+                      </div>
+                      <ToneDot tone={f.tone as any} />
                     </div>
-                    <div className="w-32 h-1.5 rounded-full bg-white/5 overflow-hidden">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: f.tone === "high" ? "90%" : f.tone === "mid" ? "55%" : "25%",
-                          background: f.tone === "high" ? "#ef4444" : f.tone === "mid" ? "#f59e0b" : EMERALD,
-                        }}
-                      />
-                    </div>
-                    <ToneDot tone={f.tone as any} />
-                  </div>
-                ))}
-              </GlassCard>
+                  ))}
+                </GlassCard>
+              </motion.div>
+
+              <motion.div {...fadeUp} className="relative order-1 md:order-2">
+                <div className="absolute -inset-6 -z-10 rounded-[3rem] blur-3xl opacity-40"
+                  style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.4), transparent)" }} />
+                <div className="mx-auto max-w-[320px] rounded-[2.2rem] border border-white/10 bg-white/[0.02] p-2 shadow-2xl">
+                  <img
+                    src={appMeals.url}
+                    alt="Today's meal responses — metabolic spikes detected by Nera AI"
+                    className="w-full h-auto rounded-[1.9rem]"
+                    loading="lazy"
+                  />
+                </div>
+                <p className="mt-6 text-center text-xs text-white/40">Tag your meals · Nera learns faster every day</p>
+              </motion.div>
             </div>
           </div>
         </section>
