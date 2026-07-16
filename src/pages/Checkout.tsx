@@ -743,6 +743,7 @@ export default function CheckoutPage() {
                       paymentId: response.razorpay_payment_id,
                       items: items.map((d) => ({
                         productName: d.name,
+                        variantTitle: d.variantTitle,
                         quantity: d.qty,
                         price: d.unitPricePaise / 100,
                       })),
