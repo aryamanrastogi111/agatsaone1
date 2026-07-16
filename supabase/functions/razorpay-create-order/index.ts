@@ -33,6 +33,7 @@ serve(async (req) => {
     const {
       items,
       skus,
+      variants, // { sku: variantTitle } — e.g. Rhythm Band color
       couponCode,
       customerName,
       customerEmail,
@@ -55,11 +56,18 @@ serve(async (req) => {
       discountAmount,
     } = body;
 
-    const normalizedItems: { sku: string; qty: number }[] = items
-      ? items
+    // Items enriched with variantTitle for downstream storage / notes.
+    // Backend forwarding still only sends { sku, qty } — external API contract unchanged.
+    const enrichedItems: { sku: string; qty: number; variantTitle?: string }[] = items
+      ? items.map((i: any) => ({
+          sku: i.sku,
+          qty: i.qty,
+          variantTitle: i.variantTitle || (variants && variants[i.sku]) || undefined,
+        }))
       : skus
-        ? skus.map((s: string) => ({ sku: s, qty: 1 }))
+        ? skus.map((s: string) => ({ sku: s, qty: 1, variantTitle: variants?.[s] }))
         : [];
+    const normalizedItems: { sku: string; qty: number }[] = enrichedItems.map((i) => ({ sku: i.sku, qty: i.qty }));
 
     if (normalizedItems.length === 0) {
       throw new Error("No items provided");
