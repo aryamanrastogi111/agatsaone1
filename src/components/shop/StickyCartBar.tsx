@@ -4,6 +4,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { buildCheckoutUrl, findBandColorByName, BAND_SKU } from "@/lib/bandColors";
 
 /**
  * A persistent sticky bar at the bottom of the page showing cart summary.
@@ -18,13 +19,13 @@ export const StickyCartBar = () => {
   const { format } = useCurrency();
 
   const handleCheckout = () => {
-    const skuList = items.flatMap((item) =>
-      Array(item.quantity).fill(item.productId)
-    );
-    if (skuList.length > 0) {
-      navigate(`/checkout?sku=${skuList.join(",")}`);
-    }
+    const url = buildCheckoutUrl(items);
+    if (url !== "/checkout") navigate(url);
   };
+
+  // Show a color chip for the Rhythm Band if one is in the cart.
+  const bandItem = items.find((i) => i.productId === BAND_SKU);
+  const bandColor = bandItem ? findBandColorByName(bandItem.variantTitle) : undefined;
 
   return (
     <AnimatePresence>
@@ -56,6 +57,15 @@ export const StickyCartBar = () => {
                   <p className="text-sm font-semibold truncate">
                     {totalItems} {totalItems === 1 ? "device" : "devices"} · {format(totalPrice)}
                   </p>
+                  {bandColor && (
+                    <p className="text-[11px] opacity-90 flex items-center gap-1.5 mt-0.5">
+                      <span
+                        className="inline-block h-2.5 w-2.5 rounded-full ring-1 ring-primary-foreground/40"
+                        style={{ background: bandColor.hex }}
+                      />
+                      Rhythm Band · {bandColor.name}
+                    </p>
+                  )}
                 </div>
               </div>
               <Button
