@@ -150,8 +150,8 @@ export async function fetchCountryCode(): Promise<string | null> {
   }
 }
 
-/** IN visitors see INR; everyone else (or detection failure) sees USD. */
+/** Default is INR (primary market). Only switch to USD when we're confident the visitor is outside India. */
 export function currencyForCountry(code: string | null): Currency {
-  if (code && code.toUpperCase() === "IN") return "INR";
-  return "USD";
+  if (!code) return "INR"; // geo detection failed — don't guess USD
+  return code.toUpperCase() === "IN" ? "INR" : "USD";
 }
