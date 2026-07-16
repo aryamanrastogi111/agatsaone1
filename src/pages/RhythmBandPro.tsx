@@ -706,7 +706,7 @@ export default function RhythmBandPro() {
                   </Button>
                 </div>
                 <div className="mt-4 flex items-center justify-center gap-6 text-xs text-white/40">
-                  <span>✓ 7-day trial</span>
+                  <span>✓ Free Nera AI</span>
                   <span>✓ 1-year warranty</span>
                   <span>✓ Easy returns</span>
                 </div>
