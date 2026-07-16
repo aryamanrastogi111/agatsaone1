@@ -648,13 +648,23 @@ export default function RhythmBandPro() {
                   ))}
                 </div>
 
-                <Button
-                  onClick={addToCart}
-                  size="lg"
-                  className="mt-8 w-full bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-full h-12"
-                >
-                  Add to cart
-                </Button>
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <Button
+                    onClick={addToCart}
+                    size="lg"
+                    variant="outline"
+                    className="w-full border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-full h-12"
+                  >
+                    Add to cart
+                  </Button>
+                  <Button
+                    onClick={buyNow}
+                    size="lg"
+                    className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-full h-12"
+                  >
+                    Buy now · {selectedColor.name}
+                  </Button>
+                </div>
                 <div className="mt-4 flex items-center justify-center gap-6 text-xs text-white/40">
                   <span>✓ 7-day trial</span>
                   <span>✓ 1-year warranty</span>
