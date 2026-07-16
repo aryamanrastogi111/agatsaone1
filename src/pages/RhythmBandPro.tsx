@@ -351,7 +351,7 @@ export default function RhythmBandPro() {
                 { icon: Zap,         t: "7-day battery", s: "Continuous 24/7 monitoring" },
                 { icon: Sparkles,    t: "Screenless", s: "Nothing to check. Nothing to notify." },
               ].map((f) => (
-                <div key={t => t?.toString() || f.t} className="rounded-2xl border border-white/10 p-6 bg-white/[0.02]">
+                <div key={f.t} className="rounded-2xl border border-white/10 p-6 bg-white/[0.02]">
                   <f.icon className="h-5 w-5 text-white/70 mx-auto" />
                   <p className="mt-3 text-base font-medium">{f.t}</p>
                   <p className="mt-1 text-sm text-white/50">{f.s}</p>
