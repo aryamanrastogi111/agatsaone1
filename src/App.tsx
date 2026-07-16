@@ -127,6 +127,7 @@ function AppWithPricing() {
               <Route path="/devices/sanketlife-ecg" element={<SanketLifeECGProduct />} />
               <Route path="/devices/easytouch-wellness" element={<EasyTouchWellnessProduct />} />
               <Route path="/devices/rhythm-band" element={<RhythmBandProduct />} />
+              <Route path="/rhythm" element={<RhythmBandPro />} />
               <Route path="/devices/smart-scale" element={<SmartScaleProduct />} />
               <Route path="/programmes" element={<ProgrammesPage />} />
               <Route path="/pricing" element={isMyEasyTouchHost() ? <Navigate to="/" replace /> : <PricingPage />} />

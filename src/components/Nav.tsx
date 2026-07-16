@@ -7,6 +7,7 @@ import { isMyEasyTouchHost } from "@/hooks/useIsMyEasyTouch";
 
 const navLinks = [
   { label: "Devices", href: "/devices" },
+  { label: "Rhythm", href: "/rhythm" },
   { label: "NERA AI", href: "/nera-ai" },
   {
     label: "Programmes",
