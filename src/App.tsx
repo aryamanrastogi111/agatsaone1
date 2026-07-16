@@ -25,6 +25,7 @@ const AppDownload = lazy(() => import("./pages/AppDownload"));
 const SanketLifeECGProduct = lazy(() => import("./pages/products/SanketLifeECGProduct"));
 const EasyTouchWellnessProduct = lazy(() => import("./pages/products/EasyTouchWellnessProduct"));
 const RhythmBandProduct = lazy(() => import("./pages/products/RhythmBandProduct"));
+const RhythmBandPro = lazy(() => import("./pages/RhythmBandPro"));
 const SmartScaleProduct = lazy(() => import("./pages/products/SmartScaleProduct"));
 const DeviceActivation = lazy(() => import("./pages/DeviceActivation"));
 const ReferralPage = lazy(() => import("./pages/Referral"));
@@ -126,6 +127,7 @@ function AppWithPricing() {
               <Route path="/devices/sanketlife-ecg" element={<SanketLifeECGProduct />} />
               <Route path="/devices/easytouch-wellness" element={<EasyTouchWellnessProduct />} />
               <Route path="/devices/rhythm-band" element={<RhythmBandProduct />} />
+              <Route path="/rhythm" element={<RhythmBandPro />} />
               <Route path="/devices/smart-scale" element={<SmartScaleProduct />} />
               <Route path="/programmes" element={<ProgrammesPage />} />
               <Route path="/pricing" element={isMyEasyTouchHost() ? <Navigate to="/" replace /> : <PricingPage />} />
