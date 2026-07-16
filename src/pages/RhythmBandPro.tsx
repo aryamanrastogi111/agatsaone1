@@ -176,7 +176,7 @@ export default function RhythmBandPro() {
 
   return (
     <SiteLayout>
-      <div className="bg-black text-white selection:bg-emerald-400 selection:text-black">
+      <div className="bg-black text-white selection:bg-emerald-400 selection:text-black [&_h1]:text-white [&_h2]:text-white [&_h3]:text-white [&_h4]:text-white">
 
         {/* 1. HERO ---------------------------------------------------- */}
         <section className="relative overflow-hidden">
