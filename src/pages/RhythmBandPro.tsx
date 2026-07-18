@@ -678,7 +678,12 @@ export default function RhythmBandPro() {
                   </div>
                 </div>
 
+                <div className="mt-6 [&_.text-xs]:text-white/70">
+                  <StockUrgencyBar productKey="easytouch-rhythm" />
+                </div>
+
                 <div className="mt-6 flex flex-wrap gap-2">
+
                   {COLORS.map(c => (
                     <button
                       key={c.id}
