@@ -749,6 +749,8 @@ export default function RhythmBandPro() {
         }}
         themeColor="emerald"
       />
+      <RecentPurchasePopup productName="EasyTouch Rhythm Band" />
     </SiteLayout>
+
   );
 }
