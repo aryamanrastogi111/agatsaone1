@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
+import { RecentPurchasePopup } from "@/components/products/RecentPurchasePopup";
 import { Button } from "@/components/ui/button";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
