@@ -468,7 +468,7 @@ export default function RhythmBandPro() {
             </motion.div>
 
             {/* Real spike video — proof */}
-            <motion.div {...fadeUp} className="mt-24 md:mt-32">
+            <motion.div id="proof-video" {...fadeUp} className="mt-24 md:mt-32 scroll-mt-24">
               <div className="text-center max-w-3xl mx-auto mb-10 md:mb-14">
                 <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/5 px-3 py-1 text-[11px] tracking-[0.3em] uppercase text-emerald-300">
                   <span className="relative flex h-2 w-2">
