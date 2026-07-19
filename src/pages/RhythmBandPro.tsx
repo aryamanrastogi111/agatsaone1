@@ -29,6 +29,13 @@ import appWearable from "@/assets/rhythm-app-wearable.png.asset.json";
 import appMeals from "@/assets/rhythm-app-meals.jpg.asset.json";
 import appMetabolic from "@/assets/rhythm-app-metabolic.jpg.asset.json";
 import rhythmLifestyleBasketball from "@/assets/rhythm-lifestyle-basketball.jpg.asset.json";
+import bandOlive from "@/assets/bands/band-olive.png.asset.json";
+import bandGraphite from "@/assets/bands/band-graphite.png.asset.json";
+import bandKhaki from "@/assets/bands/band-khaki.png.asset.json";
+import bandSlate from "@/assets/bands/band-slate.png.asset.json";
+import bandRosewood from "@/assets/bands/band-rosewood.png.asset.json";
+import bandTerracotta from "@/assets/bands/band-terracotta.png.asset.json";
+import bandTeal from "@/assets/bands/band-teal.png.asset.json";
 
 /* ------------------------------------------------------------------ */
 /* Theme: Black + Emerald. Apple keynote pacing.                       */
@@ -37,13 +44,13 @@ import rhythmLifestyleBasketball from "@/assets/rhythm-lifestyle-basketball.jpg.
 const EMERALD = "#10b981";
 
 const COLORS = [
-  { id: "olive",      name: "Olive",      hex: "#6B7A3A" },
-  { id: "graphite",   name: "Graphite",   hex: "#2E2E2E" },
-  { id: "khaki",      name: "Khaki",      hex: "#B8A55C" },
-  { id: "slate",      name: "Slate",      hex: "#6B7BA8" },
-  { id: "rosewood",   name: "Rosewood",   hex: "#8E3B4E" },
-  { id: "terracotta", name: "Terracotta", hex: "#C1502E" },
-  { id: "teal",       name: "Teal",       hex: "#1F6F86" },
+  { id: "olive",      name: "Olive",      hex: "#6B7A3A", photo: bandOlive.url },
+  { id: "graphite",   name: "Graphite",   hex: "#2E2E2E", photo: bandGraphite.url },
+  { id: "khaki",      name: "Khaki",      hex: "#B8A55C", photo: bandKhaki.url },
+  { id: "slate",      name: "Slate",      hex: "#7A7A9E", photo: bandSlate.url },
+  { id: "rosewood",   name: "Rosewood",   hex: "#8E3B4E", photo: bandRosewood.url },
+  { id: "terracotta", name: "Terracotta", hex: "#C1502E", photo: bandTerracotta.url },
+  { id: "teal",       name: "Teal",       hex: "#1F6F86", photo: bandTeal.url },
 ];
 
 const MYSTERY_FOODS = [
