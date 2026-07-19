@@ -20,7 +20,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { toast } from "sonner";
 
-import rhythmHero from "@/assets/easytouch-rhythm-new.webp";
+
 import rhythmPortrait1 from "@/assets/rhythm-portrait-1.jpg";
 import rhythmPortrait2 from "@/assets/rhythm-portrait-2.jpg";
 import rhythmPortrait3 from "@/assets/rhythm-portrait-3.jpg";
