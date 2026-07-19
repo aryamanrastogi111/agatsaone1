@@ -441,8 +441,34 @@ export default function RhythmBandPro() {
               </motion.div>
             </div>
 
+            {/* Highlight banner — no more manual logging */}
+            <motion.div {...fadeUp} className="mt-24 relative">
+              <div className="absolute inset-0 -z-10 rounded-[2.5rem] blur-3xl opacity-60"
+                style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.28), transparent 70%)" }} />
+              <div className="relative overflow-hidden rounded-[2.5rem] border border-emerald-400/20 bg-gradient-to-b from-emerald-500/[0.06] to-transparent px-6 py-16 md:py-24 text-center">
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/5 px-3 py-1 text-[11px] tracking-[0.3em] uppercase text-emerald-300">
+                  No more food journaling
+                </div>
+                <h3 className="mt-8 font-semibold tracking-tight text-[34px] leading-[1.1] md:text-[64px] md:leading-[1.05] max-w-4xl mx-auto">
+                  <span className="text-white/40 line-through decoration-white/20 decoration-[3px]">
+                    Gone are the days of logging every bite.
+                  </span>
+                  <br />
+                  <span className="bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">
+                    Your band spots the spike.
+                  </span>
+                  <br />
+                  <span className="text-white">You just name the meal.</span>
+                </h3>
+                <p className="mt-8 text-white/50 text-sm tracking-[0.2em] uppercase">
+                  Automatic spike detection · Nera AI meal classification
+                </p>
+              </div>
+            </motion.div>
+
             {/* Automatic detection callout */}
             <motion.div {...fadeUp} className="mt-20 max-w-4xl mx-auto">
+
               <GlassCard className="p-8 md:p-12 text-center">
                 <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/5 px-3 py-1 text-[11px] tracking-[0.25em] uppercase text-emerald-300">
                   Fully Automatic
