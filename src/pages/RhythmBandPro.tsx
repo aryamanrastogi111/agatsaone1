@@ -251,7 +251,7 @@ export default function RhythmBandPro() {
             >
               <div className="absolute inset-0 -z-10 blur-3xl opacity-60"
                 style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.5), transparent)" }} />
-              <img src={bandGraphite.url} alt="EasyTouch Rhythm Band in Graphite" className="w-full h-auto object-contain drop-shadow-2xl" />
+              <img src={bandOlive.url} alt="EasyTouch Rhythm Band in Olive" className="w-full h-auto object-contain drop-shadow-2xl" />
             </motion.div>
 
             <motion.p
