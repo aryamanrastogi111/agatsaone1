@@ -241,7 +241,7 @@ export default function RhythmBandPro() {
                   Get yours — {fmt(price)}
                 </Button>
               </a>
-              <a href="#discover" className="text-white/70 hover:text-white text-sm inline-flex items-center gap-2">
+              <a href="#proof-video" className="text-white/70 hover:text-white text-sm inline-flex items-center gap-2">
                 See how it works <ArrowRight className="h-4 w-4" />
               </a>
             </motion.div>
