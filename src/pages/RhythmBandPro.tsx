@@ -28,6 +28,7 @@ import rhythmPortrait4 from "@/assets/rhythm-portrait-4.jpg";
 import appWearable from "@/assets/rhythm-app-wearable.png.asset.json";
 import appMeals from "@/assets/rhythm-app-meals.jpg.asset.json";
 import appMetabolic from "@/assets/rhythm-app-metabolic.jpg.asset.json";
+import spikeDemo from "@/assets/rhythm-spike-demo.mp4.asset.json";
 
 import bandOlive from "@/assets/bands/band-olive.png.asset.json";
 import bandOliveHero from "@/assets/bands/band-olive-hero.png.asset.json";
