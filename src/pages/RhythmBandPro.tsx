@@ -593,41 +593,91 @@ export default function RhythmBandPro() {
         </section>
 
         {/* 9. DESIGN + COLORS ---------------------------------------- */}
-        <section className="relative py-32 md:py-48 border-t border-white/5">
+        <section className="relative py-32 md:py-48 border-t border-white/5 overflow-hidden">
+          {/* soft glow that tints to the selected color */}
+          <div
+            className="absolute inset-0 -z-10 transition-colors duration-700"
+            style={{ background: `radial-gradient(1000px 600px at 50% 40%, ${selectedColor.hex}22, transparent 70%)` }}
+          />
           <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              <motion.div {...fadeUp}>
-                <img src={rhythmLifestyleBasketball.url} alt="Man wearing Rhythm Band during a basketball workout" className="w-full rounded-3xl aspect-[4/5] object-cover" />
-              </motion.div>
-              <motion.div {...fadeUp}>
-                <h2 className="font-semibold tracking-tight text-[36px] leading-[1.05] md:text-[64px]">
-                  Screenless.
-                  <br />
-                  <span className="text-white/50">By design.</span>
-                </h2>
-                <p className="mt-6 text-white/60 text-lg max-w-md">
-                  Nothing to check. Nothing to notify. The band listens quietly. Nera AI does the talking — once a day, on your phone.
-                </p>
+            <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+              <div className="text-xs uppercase tracking-[0.28em] text-emerald-400 mb-4">Design</div>
+              <h2 className="font-semibold tracking-tight text-[36px] leading-[1.05] md:text-[64px]">
+                Screenless.
+                <br />
+                <span className="text-white/50">By design.</span>
+              </h2>
+              <p className="mt-6 text-white/60 text-lg">
+                Nothing to check. Nothing to notify. The band listens quietly. Nera AI does the talking — once a day, on your phone.
+              </p>
+            </motion.div>
 
-                <div className="mt-12">
-                  <div className="text-xs uppercase tracking-[0.28em] text-white/40 mb-4">Choose your colour</div>
-                  <div className="flex flex-wrap gap-3">
-                    {COLORS.map(c => (
-                      <button
-                        key={c.id}
-                        onClick={() => setSelectedColor(c)}
-                        aria-label={c.name}
-                        className={`h-11 w-11 rounded-full border-2 transition ${selectedColor.id === c.id ? "border-emerald-400 scale-110" : "border-white/15 hover:border-white/40"}`}
-                        style={{ background: c.hex }}
-                      />
-                    ))}
-                  </div>
-                  <div className="mt-3 text-sm text-white/60">{selectedColor.name}</div>
-                </div>
-              </motion.div>
-            </div>
+            {/* Big hero band photo that cross-fades on color change */}
+            <motion.div {...fadeUp} className="relative mx-auto aspect-square w-full max-w-[720px]">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={selectedColor.id}
+                  src={selectedColor.photo}
+                  alt={`EasyTouch Rhythm Band in ${selectedColor.name}`}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.02 }}
+                  transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                  className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.5)]"
+                  loading="lazy"
+                />
+              </AnimatePresence>
+            </motion.div>
+
+            {/* Selected name in large type */}
+            <motion.div {...fadeUp} className="mt-8 text-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedColor.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-3xl md:text-5xl font-semibold tracking-tight"
+                >
+                  {selectedColor.name}
+                </motion.div>
+              </AnimatePresence>
+              <div className="mt-2 text-xs uppercase tracking-[0.28em] text-white/40">
+                {COLORS.findIndex(c => c.id === selectedColor.id) + 1} of {COLORS.length} colours
+              </div>
+            </motion.div>
+
+            {/* Thumbnail selector */}
+            <motion.div {...fadeUp} className="mt-10 flex flex-wrap justify-center gap-3 md:gap-4">
+              {COLORS.map(c => {
+                const active = selectedColor.id === c.id;
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => setSelectedColor(c)}
+                    aria-label={c.name}
+                    aria-pressed={active}
+                    className={`group relative h-16 w-16 md:h-20 md:w-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
+                      active
+                        ? "border-emerald-400 scale-110 shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                        : "border-white/10 hover:border-white/30 hover:scale-105"
+                    }`}
+                    style={{ background: `${c.hex}22` }}
+                  >
+                    <img
+                      src={c.photo}
+                      alt={c.name}
+                      className="absolute inset-0 h-full w-full object-cover scale-[1.6]"
+                      loading="lazy"
+                    />
+                  </button>
+                );
+              })}
+            </motion.div>
           </div>
         </section>
+
 
         {/* 10. FAQ --------------------------------------------------- */}
         <section className="relative py-32 md:py-40 border-t border-white/5">
