@@ -35,7 +35,7 @@ import bandGraphite from "@/assets/bands/band-graphite.png.asset.json";
 import bandKhaki from "@/assets/bands/band-khaki.png.asset.json";
 import bandSlate from "@/assets/bands/band-slate.png.asset.json";
 import bandRosewood from "@/assets/bands/band-rosewood.png.asset.json";
-import bandTerracotta from "@/assets/bands/band-terracotta.png.asset.json";
+
 import bandTeal from "@/assets/bands/band-teal.png.asset.json";
 
 /* ------------------------------------------------------------------ */
@@ -50,7 +50,7 @@ const COLORS = [
   { id: "khaki",      name: "Khaki",      hex: "#B8A55C", photo: bandKhaki.url },
   { id: "slate",      name: "Slate",      hex: "#7A7A9E", photo: bandSlate.url },
   { id: "rosewood",   name: "Rosewood",   hex: "#8E3B4E", photo: bandRosewood.url },
-  { id: "terracotta", name: "Terracotta", hex: "#C1502E", photo: bandTerracotta.url },
+  
   { id: "teal",       name: "Teal",       hex: "#1F6F86", photo: bandTeal.url },
 ];
 
