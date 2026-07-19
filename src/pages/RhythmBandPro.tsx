@@ -30,6 +30,7 @@ import appMeals from "@/assets/rhythm-app-meals.jpg.asset.json";
 import appMetabolic from "@/assets/rhythm-app-metabolic.jpg.asset.json";
 
 import bandOlive from "@/assets/bands/band-olive.png.asset.json";
+import bandOliveHero from "@/assets/bands/band-olive-hero.png.asset.json";
 import bandGraphite from "@/assets/bands/band-graphite.png.asset.json";
 import bandKhaki from "@/assets/bands/band-khaki.png.asset.json";
 import bandSlate from "@/assets/bands/band-slate.png.asset.json";
@@ -251,7 +252,7 @@ export default function RhythmBandPro() {
             >
               <div className="absolute inset-0 -z-10 blur-3xl opacity-60"
                 style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.5), transparent)" }} />
-              <img src={bandOlive.url} alt="EasyTouch Rhythm Band in Olive" className="w-full h-auto object-contain drop-shadow-2xl" />
+              <img src={bandOliveHero.url} alt="EasyTouch Rhythm Band in Olive" className="w-full h-auto object-contain drop-shadow-2xl" />
             </motion.div>
 
             <motion.p
