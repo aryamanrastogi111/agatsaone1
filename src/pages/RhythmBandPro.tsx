@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { encodeVariantsParam, BAND_SKU } from "@/lib/bandColors";
 import {
   Check, X, ArrowRight, HeartPulse, MoonStar, Flame, Activity, Wind, Sparkles,
@@ -28,7 +28,14 @@ import rhythmPortrait4 from "@/assets/rhythm-portrait-4.jpg";
 import appWearable from "@/assets/rhythm-app-wearable.png.asset.json";
 import appMeals from "@/assets/rhythm-app-meals.jpg.asset.json";
 import appMetabolic from "@/assets/rhythm-app-metabolic.jpg.asset.json";
-import rhythmLifestyleBasketball from "@/assets/rhythm-lifestyle-basketball.jpg.asset.json";
+
+import bandOlive from "@/assets/bands/band-olive.png.asset.json";
+import bandGraphite from "@/assets/bands/band-graphite.png.asset.json";
+import bandKhaki from "@/assets/bands/band-khaki.png.asset.json";
+import bandSlate from "@/assets/bands/band-slate.png.asset.json";
+import bandRosewood from "@/assets/bands/band-rosewood.png.asset.json";
+import bandTerracotta from "@/assets/bands/band-terracotta.png.asset.json";
+import bandTeal from "@/assets/bands/band-teal.png.asset.json";
 
 /* ------------------------------------------------------------------ */
 /* Theme: Black + Emerald. Apple keynote pacing.                       */
@@ -37,13 +44,13 @@ import rhythmLifestyleBasketball from "@/assets/rhythm-lifestyle-basketball.jpg.
 const EMERALD = "#10b981";
 
 const COLORS = [
-  { id: "olive",      name: "Olive",      hex: "#6B7A3A" },
-  { id: "graphite",   name: "Graphite",   hex: "#2E2E2E" },
-  { id: "khaki",      name: "Khaki",      hex: "#B8A55C" },
-  { id: "slate",      name: "Slate",      hex: "#6B7BA8" },
-  { id: "rosewood",   name: "Rosewood",   hex: "#8E3B4E" },
-  { id: "terracotta", name: "Terracotta", hex: "#C1502E" },
-  { id: "teal",       name: "Teal",       hex: "#1F6F86" },
+  { id: "olive",      name: "Olive",      hex: "#6B7A3A", photo: bandOlive.url },
+  { id: "graphite",   name: "Graphite",   hex: "#2E2E2E", photo: bandGraphite.url },
+  { id: "khaki",      name: "Khaki",      hex: "#B8A55C", photo: bandKhaki.url },
+  { id: "slate",      name: "Slate",      hex: "#7A7A9E", photo: bandSlate.url },
+  { id: "rosewood",   name: "Rosewood",   hex: "#8E3B4E", photo: bandRosewood.url },
+  { id: "terracotta", name: "Terracotta", hex: "#C1502E", photo: bandTerracotta.url },
+  { id: "teal",       name: "Teal",       hex: "#1F6F86", photo: bandTeal.url },
 ];
 
 const MYSTERY_FOODS = [
@@ -586,41 +593,91 @@ export default function RhythmBandPro() {
         </section>
 
         {/* 9. DESIGN + COLORS ---------------------------------------- */}
-        <section className="relative py-32 md:py-48 border-t border-white/5">
+        <section className="relative py-32 md:py-48 border-t border-white/5 overflow-hidden">
+          {/* soft glow that tints to the selected color */}
+          <div
+            className="absolute inset-0 -z-10 transition-colors duration-700"
+            style={{ background: `radial-gradient(1000px 600px at 50% 40%, ${selectedColor.hex}22, transparent 70%)` }}
+          />
           <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              <motion.div {...fadeUp}>
-                <img src={rhythmLifestyleBasketball.url} alt="Man wearing Rhythm Band during a basketball workout" className="w-full rounded-3xl aspect-[4/5] object-cover" />
-              </motion.div>
-              <motion.div {...fadeUp}>
-                <h2 className="font-semibold tracking-tight text-[36px] leading-[1.05] md:text-[64px]">
-                  Screenless.
-                  <br />
-                  <span className="text-white/50">By design.</span>
-                </h2>
-                <p className="mt-6 text-white/60 text-lg max-w-md">
-                  Nothing to check. Nothing to notify. The band listens quietly. Nera AI does the talking — once a day, on your phone.
-                </p>
+            <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+              <div className="text-xs uppercase tracking-[0.28em] text-emerald-400 mb-4">Design</div>
+              <h2 className="font-semibold tracking-tight text-[36px] leading-[1.05] md:text-[64px]">
+                Screenless.
+                <br />
+                <span className="text-white/50">By design.</span>
+              </h2>
+              <p className="mt-6 text-white/60 text-lg">
+                Nothing to check. Nothing to notify. The band listens quietly. Nera AI does the talking — once a day, on your phone.
+              </p>
+            </motion.div>
 
-                <div className="mt-12">
-                  <div className="text-xs uppercase tracking-[0.28em] text-white/40 mb-4">Choose your colour</div>
-                  <div className="flex flex-wrap gap-3">
-                    {COLORS.map(c => (
-                      <button
-                        key={c.id}
-                        onClick={() => setSelectedColor(c)}
-                        aria-label={c.name}
-                        className={`h-11 w-11 rounded-full border-2 transition ${selectedColor.id === c.id ? "border-emerald-400 scale-110" : "border-white/15 hover:border-white/40"}`}
-                        style={{ background: c.hex }}
-                      />
-                    ))}
-                  </div>
-                  <div className="mt-3 text-sm text-white/60">{selectedColor.name}</div>
-                </div>
-              </motion.div>
-            </div>
+            {/* Big hero band photo that cross-fades on color change */}
+            <motion.div {...fadeUp} className="relative mx-auto aspect-square w-full max-w-[720px]">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={selectedColor.id}
+                  src={selectedColor.photo}
+                  alt={`EasyTouch Rhythm Band in ${selectedColor.name}`}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.02 }}
+                  transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                  className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.5)]"
+                  loading="lazy"
+                />
+              </AnimatePresence>
+            </motion.div>
+
+            {/* Selected name in large type */}
+            <motion.div {...fadeUp} className="mt-8 text-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedColor.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-3xl md:text-5xl font-semibold tracking-tight"
+                >
+                  {selectedColor.name}
+                </motion.div>
+              </AnimatePresence>
+              <div className="mt-2 text-xs uppercase tracking-[0.28em] text-white/40">
+                {COLORS.findIndex(c => c.id === selectedColor.id) + 1} of {COLORS.length} colours
+              </div>
+            </motion.div>
+
+            {/* Thumbnail selector */}
+            <motion.div {...fadeUp} className="mt-10 flex flex-wrap justify-center gap-3 md:gap-4">
+              {COLORS.map(c => {
+                const active = selectedColor.id === c.id;
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => setSelectedColor(c)}
+                    aria-label={c.name}
+                    aria-pressed={active}
+                    className={`group relative h-16 w-16 md:h-20 md:w-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
+                      active
+                        ? "border-emerald-400 scale-110 shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                        : "border-white/10 hover:border-white/30 hover:scale-105"
+                    }`}
+                    style={{ background: `${c.hex}22` }}
+                  >
+                    <img
+                      src={c.photo}
+                      alt={c.name}
+                      className="absolute inset-0 h-full w-full object-cover scale-[1.6]"
+                      loading="lazy"
+                    />
+                  </button>
+                );
+              })}
+            </motion.div>
           </div>
         </section>
+
 
         {/* 10. FAQ --------------------------------------------------- */}
         <section className="relative py-32 md:py-40 border-t border-white/5">
@@ -683,17 +740,22 @@ export default function RhythmBandPro() {
                 </div>
 
                 <div className="mt-6 flex flex-wrap gap-2">
-
-                  {COLORS.map(c => (
-                    <button
-                      key={c.id}
-                      onClick={() => setSelectedColor(c)}
-                      aria-label={c.name}
-                      className={`h-9 w-9 rounded-full border-2 transition ${selectedColor.id === c.id ? "border-emerald-400 scale-110" : "border-white/15 hover:border-white/40"}`}
-                      style={{ background: c.hex }}
-                    />
-                  ))}
+                  {COLORS.map(c => {
+                    const active = selectedColor.id === c.id;
+                    return (
+                      <button
+                        key={c.id}
+                        onClick={() => setSelectedColor(c)}
+                        aria-label={c.name}
+                        className={`relative h-11 w-11 rounded-xl overflow-hidden border-2 transition ${active ? "border-emerald-400 scale-110" : "border-white/15 hover:border-white/40"}`}
+                        style={{ background: `${c.hex}22` }}
+                      >
+                        <img src={c.photo} alt={c.name} className="absolute inset-0 h-full w-full object-cover scale-[1.6]" loading="lazy" />
+                      </button>
+                    );
+                  })}
                 </div>
+
 
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Button
