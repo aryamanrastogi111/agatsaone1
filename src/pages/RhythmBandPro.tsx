@@ -740,17 +740,22 @@ export default function RhythmBandPro() {
                 </div>
 
                 <div className="mt-6 flex flex-wrap gap-2">
-
-                  {COLORS.map(c => (
-                    <button
-                      key={c.id}
-                      onClick={() => setSelectedColor(c)}
-                      aria-label={c.name}
-                      className={`h-9 w-9 rounded-full border-2 transition ${selectedColor.id === c.id ? "border-emerald-400 scale-110" : "border-white/15 hover:border-white/40"}`}
-                      style={{ background: c.hex }}
-                    />
-                  ))}
+                  {COLORS.map(c => {
+                    const active = selectedColor.id === c.id;
+                    return (
+                      <button
+                        key={c.id}
+                        onClick={() => setSelectedColor(c)}
+                        aria-label={c.name}
+                        className={`relative h-11 w-11 rounded-xl overflow-hidden border-2 transition ${active ? "border-emerald-400 scale-110" : "border-white/15 hover:border-white/40"}`}
+                        style={{ background: `${c.hex}22` }}
+                      >
+                        <img src={c.photo} alt={c.name} className="absolute inset-0 h-full w-full object-cover scale-[1.6]" loading="lazy" />
+                      </button>
+                    );
+                  })}
                 </div>
+
 
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Button
