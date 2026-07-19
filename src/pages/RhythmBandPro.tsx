@@ -20,7 +20,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { toast } from "sonner";
 
-import rhythmHero from "@/assets/easytouch-rhythm-new.webp";
+
 import rhythmPortrait1 from "@/assets/rhythm-portrait-1.jpg";
 import rhythmPortrait2 from "@/assets/rhythm-portrait-2.jpg";
 import rhythmPortrait3 from "@/assets/rhythm-portrait-3.jpg";
@@ -251,8 +251,17 @@ export default function RhythmBandPro() {
             >
               <div className="absolute inset-0 -z-10 blur-3xl opacity-60"
                 style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.5), transparent)" }} />
-              <img src={rhythmHero} alt="EasyTouch Rhythm Band" className="w-full h-auto object-contain drop-shadow-2xl" />
+              <img src={bandGraphite.url} alt="EasyTouch Rhythm Band in Graphite" className="w-full h-auto object-contain drop-shadow-2xl" />
             </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.55 }}
+              className="mt-10 text-center text-xl md:text-2xl font-semibold tracking-tight text-white"
+            >
+              Available in <span className="text-emerald-400">{COLORS.length} colours</span>.
+            </motion.p>
+
           </div>
         </section>
 
