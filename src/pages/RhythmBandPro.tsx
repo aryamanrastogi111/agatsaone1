@@ -467,6 +467,57 @@ export default function RhythmBandPro() {
               </div>
             </motion.div>
 
+            {/* Real spike video — proof */}
+            <motion.div {...fadeUp} className="mt-24 md:mt-32">
+              <div className="text-center max-w-3xl mx-auto mb-10 md:mb-14">
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/5 px-3 py-1 text-[11px] tracking-[0.3em] uppercase text-emerald-300">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                  </span>
+                  Real recording · Zero edits
+                </div>
+                <h3 className="mt-6 font-semibold tracking-tight text-[28px] md:text-[44px] leading-[1.1] text-white">
+                  Watch a real spike get caught. Live.
+                </h3>
+                <p className="mt-4 text-white/55 md:text-lg">
+                  This is the actual Rhythm app on a real user's phone — the band detected the sugar-response event and logged it automatically. No typing. No CGM patch.
+                </p>
+              </div>
+
+              <div className="relative mx-auto max-w-[340px] md:max-w-[400px]">
+                {/* Emerald glow */}
+                <div className="absolute inset-0 -z-10 blur-[120px] opacity-70 rounded-full"
+                  style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.55), transparent 70%)" }} />
+
+                {/* iPhone-style mockup frame */}
+                <div className="relative rounded-[3rem] border-[10px] border-neutral-800 bg-neutral-900 shadow-[0_40px_120px_-20px_rgba(16,185,129,0.35)] overflow-hidden">
+                  {/* Notch */}
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 h-6 w-28 rounded-full bg-black" />
+                  <video
+                    src={spikeDemo.url}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="block w-full h-auto rounded-[2.2rem]"
+                  />
+                </div>
+
+                {/* Floating LIVE badge */}
+                <div className="absolute -top-3 -right-3 md:-top-4 md:-right-6 z-20 rounded-full bg-black border border-emerald-400/40 px-3 py-1.5 text-[10px] tracking-[0.25em] uppercase text-emerald-300 shadow-xl backdrop-blur">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 mr-1.5 align-middle animate-pulse" />
+                  Recorded on band
+                </div>
+              </div>
+
+              <p className="mt-8 text-center text-xs md:text-sm text-white/40 tracking-wide">
+                No manual entry · No CGM patch · No blood pricks
+              </p>
+            </motion.div>
+
+
             {/* Automatic detection callout */}
             <motion.div {...fadeUp} className="mt-20 max-w-4xl mx-auto">
 
