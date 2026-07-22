@@ -26,12 +26,17 @@ Deno.serve(async (req) => {
 
     // ── 1. Gather current data ──
     const now = new Date();
-    const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
+    // Compute "today" in IST (UTC+5:30) so India orders between IST midnight
+    // and 05:30 IST aren't excluded from today's numbers.
+    const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000;
+    const istNow = new Date(now.getTime() + IST_OFFSET_MS);
+    const istDateStr = istNow.toISOString().split("T")[0];
+    const todayStart = new Date(`${istDateStr}T00:00:00+05:30`);
     const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     const prevWeekStart = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
     const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
     const tenMinAgo = new Date(now.getTime() - 10 * 60 * 1000);
-    const today = now.toISOString().split("T")[0];
+    const today = istDateStr;
 
     const [
       thisWeekOrders, prevWeekOrders, monthOrders,
