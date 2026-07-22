@@ -186,6 +186,19 @@ export default function RhythmBandPro() {
     navigate(`/checkout?sku=${BAND_SKU}${variants ? `&variants=${variants}` : ""}`);
   };
 
+  const buyNowWithQuantity = (qty: number) => {
+    useCartStore.getState().addItem({
+      productId: "band_sub",
+      productName: "EasyTouch Rhythm Band",
+      variantTitle: selectedColor.name,
+      price,
+      quantity: qty,
+    });
+    const variants = encodeVariantsParam({ [BAND_SKU]: selectedColor.name });
+    const sku = Array.from({ length: qty }, () => BAND_SKU).join(",");
+    navigate(`/checkout?sku=${sku}${variants ? `&variants=${variants}` : ""}`);
+  };
+
   return (
     <SiteLayout>
       <div className="bg-black text-white selection:bg-emerald-400 selection:text-black [&_h1]:text-white [&_h2]:text-white [&_h3]:text-white [&_h4]:text-white">
@@ -876,17 +889,7 @@ export default function RhythmBandPro() {
         productName={`EasyTouch Rhythm Band · ${selectedColor.name}`}
         price={`₹${price.toLocaleString("en-IN")}`}
         unitPrice={price}
-        onBuyNow={(qty) => {
-          useCartStore.getState().addItem({
-            productId: "band_sub",
-            productName: "EasyTouch Rhythm Band",
-            variantTitle: selectedColor.name,
-            price,
-            quantity: qty,
-          });
-          const variants = encodeVariantsParam({ [BAND_SKU]: selectedColor.name });
-          navigate(`/checkout?sku=${BAND_SKU}${variants ? `&variants=${variants}` : ""}`);
-        }}
+        onBuyNow={buyNowWithQuantity}
         onAddToCart={(qty) => {
           useCartStore.getState().addItem({
             productId: "band_sub",

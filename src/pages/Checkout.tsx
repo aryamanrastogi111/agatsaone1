@@ -219,6 +219,11 @@ export default function CheckoutPage() {
     qty: quantities[s] || 1,
     variantTitle: variantBySku[s] || undefined,
   }));
+  const cartItemsWithVariants = items.map((d) => ({
+    sku: d.sku,
+    qty: d.qty,
+    variantTitle: d.variantTitle,
+  }));
 
   // ─── Quote fetch ──────────────────────────────────────────
   const fetchQuote = useCallback(async (itemsArr: { sku: string; qty: number }[], coupon: string | null) => {
@@ -588,7 +593,7 @@ export default function CheckoutPage() {
         if (isIntl) {
           const { data, error } = await supabase.functions.invoke("razorpay-create-order", {
             body: {
-              items: cartItems,
+              items: cartItemsWithVariants,
               // Variants (e.g. Rhythm Band color) — stored in Razorpay notes + orders.items JSON.
               // Not forwarded to the external pricing API (which only expects sku+qty).
               variants: variantBySku,
@@ -616,7 +621,9 @@ export default function CheckoutPage() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              items: cartItems,
+              items: cartItemsWithVariants,
+              // Variant data is required for operations fulfilment (Rhythm Band colour).
+              variants: variantBySku,
               couponCode: couponApplied || undefined,
               recipientName: fullName.trim(),
               recipientPhone: fullPhone,
