@@ -21,9 +21,9 @@ async function handleOrderInvoiceDownload(order: RazorpayOrder) {
     shippingState: order.shipping_state ?? "",
     shippingPincode: order.shipping_pincode ?? "",
     items: items.map((i) => ({
-      productName: i.productName ?? "Product",
-      variantTitle: undefined,
-      quantity: i.quantity ?? 1,
+      productName: i.productName ?? i.name ?? "Product",
+      variantTitle: i.variantTitle ?? undefined,
+      quantity: i.quantity ?? i.qty ?? 1,
       price: i.price ?? 0,
     })),
     subtotal,
@@ -48,9 +48,9 @@ async function handleDeliverySlipDownload(order: RazorpayOrder) {
         shippingState: order.shipping_state ?? "",
         shippingPincode: order.shipping_pincode ?? "",
         items: items.map((i) => ({
-          productName: i.productName ?? "Product",
-          variantTitle: undefined,
-          quantity: i.quantity ?? 1,
+          productName: i.productName ?? i.name ?? "Product",
+          variantTitle: i.variantTitle ?? undefined,
+          quantity: i.quantity ?? i.qty ?? 1,
           price: i.price ?? 0,
         })),
         total: order.amount ?? 0,
@@ -106,7 +106,7 @@ interface RazorpayOrder {
   customer_phone: string | null;
   shipping_address: string | null; shipping_city: string | null;
   shipping_state: string | null; shipping_pincode: string | null;
-  items: { productName: string; quantity: number; price: number }[] | null;
+  items: { productName?: string; name?: string; variantTitle?: string; quantity?: number; qty?: number; price: number }[] | null;
   coupon_code: string | null; discount_amount: number | null;
   paid_at: string | null; created_at: string;
 }
@@ -272,7 +272,11 @@ function RazorpayOrdersTab() {
                     ) : "—"}
                   </td>
                   <td className="px-5 py-3 hidden md:table-cell text-xs text-gray-400">
-                    {order.items?.map((i) => `${i.productName} ×${i.quantity}`).join(", ") ?? "—"}
+                    {order.items?.map((i) => {
+                      const productName = i.productName ?? i.name ?? "Product";
+                      const variant = i.variantTitle && i.variantTitle !== "Default Title" ? ` · ${i.variantTitle}` : "";
+                      return `${productName}${variant} ×${i.quantity ?? i.qty ?? 1}`;
+                    }).join(", ") ?? "—"}
                   </td>
                   <td className="px-5 py-3 hidden xl:table-cell">
                     {order.coupon_code ? (
