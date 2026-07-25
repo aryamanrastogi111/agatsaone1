@@ -215,7 +215,7 @@ export default function CompleteHealthKitPage() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="relative"
+            className="relative order-1 md:order-2"
           >
             <img
               src={bundleHeroImg}
