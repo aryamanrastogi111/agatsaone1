@@ -179,7 +179,7 @@ export default function CompleteHealthKitPage() {
                   Save ₹{SAVINGS.toLocaleString("en-IN")}
                 </span>
               </div>
-              <p className="text-sm text-primary font-medium mt-1">{emi(BUNDLE_PRICE)}</p>
+              
               <p className="text-sm text-foreground mt-2 flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-primary" />
                 <span className="font-semibold">3 months Nera AI Premium — free</span>
@@ -610,7 +610,7 @@ export default function CompleteHealthKitPage() {
             </Button>
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
-            No-cost EMI · Free shipping · 7-day easy returns
+            Free shipping · 7-day easy returns
           </p>
         </div>
       </section>
