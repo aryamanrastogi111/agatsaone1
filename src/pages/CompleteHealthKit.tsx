@@ -120,30 +120,33 @@ export default function CompleteHealthKitPage() {
   return (
     <SiteLayout>
       {/* HERO */}
-      <section className="relative pt-16 pb-16 md:pt-24 md:pb-20 bg-gradient-to-b from-primary/5 via-background to-background overflow-hidden">
+      <section className="relative pt-8 pb-10 md:pt-24 md:pb-20 bg-gradient-to-b from-primary/5 via-background to-background overflow-hidden">
         {/* Decorative rings */}
         <div className="pointer-events-none absolute top-1/2 right-0 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-primary/10 hidden md:block" />
         <div className="pointer-events-none absolute top-1/2 right-20 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-primary/10 hidden md:block" />
 
-        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center relative">
+        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-6 md:gap-10 items-center relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="order-2 md:order-1"
           >
-            <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider mb-4">
-              <Sparkles className="h-3.5 w-3.5" /> Agatsa One + Nera AI
-            </div>
-            <div className="inline-flex items-center gap-2 border border-primary/30 rounded-full px-3 py-1 text-xs font-semibold text-primary mb-6 ml-2">
-              <Package className="h-3.5 w-3.5" /> Complete Device Bundle
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <div className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground rounded-full px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider">
+                <Sparkles className="h-3 w-3 md:h-3.5 md:w-3.5" /> Agatsa One + Nera AI
+              </div>
+              <div className="inline-flex items-center gap-1.5 border border-primary/30 rounded-full px-2.5 py-1 text-[10px] md:text-xs font-semibold text-primary">
+                <Package className="h-3 w-3 md:h-3.5 md:w-3.5" /> Complete Bundle
+              </div>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-[1.05]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-[1.1] md:leading-[1.05]">
               Your Heart, Glucose Trends, Sleep &{" "}
               <span className="text-primary">Recovery</span> change every day.
             </h1>
 
-            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
+            <p className="mt-4 md:mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
               Agatsa devices track the signals.{" "}
               <span className="font-semibold text-primary">Nera AI</span> connects the patterns.
             </p>
@@ -167,15 +170,15 @@ export default function CompleteHealthKitPage() {
             </div>
 
             {/* Price block */}
-            <div className="mt-8 p-5 bg-card border border-border rounded-2xl shadow-sm">
-              <div className="flex items-baseline gap-3 flex-wrap">
-                <span className="text-4xl font-extrabold text-foreground">
+            <div className="mt-6 md:mt-8 p-4 md:p-5 bg-card border border-border rounded-2xl shadow-sm">
+              <div className="flex items-baseline gap-2 md:gap-3 flex-wrap">
+                <span className="text-3xl md:text-4xl font-extrabold text-foreground">
                   ₹{BUNDLE_PRICE.toLocaleString("en-IN")}
                 </span>
-                <span className="text-xl text-muted-foreground line-through">
+                <span className="text-lg md:text-xl text-muted-foreground line-through">
                   ₹{BUNDLE_MRP.toLocaleString("en-IN")}
                 </span>
-                <span className="bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-400 text-xs font-bold px-2 py-1 rounded-full">
+                <span className="bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-400 text-[10px] md:text-xs font-bold px-2 py-1 rounded-full">
                   Save ₹{SAVINGS.toLocaleString("en-IN")}
                 </span>
               </div>
@@ -212,7 +215,7 @@ export default function CompleteHealthKitPage() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="relative"
+            className="relative order-1 md:order-2"
           >
             <img
               src={bundleHeroImg}
@@ -228,13 +231,13 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* WHY LONGITUDINAL — Episodic vs Continuous */}
-      <section className="py-20 bg-gradient-to-b from-background to-muted/30">
+      <section className="py-12 md:py-20 bg-gradient-to-b from-background to-muted/30">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12 max-w-3xl mx-auto">
+          <div className="text-center mb-8 md:mb-12 max-w-3xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
               Why this bundle exists
             </span>
-            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="mt-2 text-2xl md:text-4xl font-bold text-foreground">
               Episodic care is broken. Your body doesn't wait for a check-up.
             </h2>
             <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
@@ -245,8 +248,8 @@ export default function CompleteHealthKitPage() {
           </div>
 
           {/* Episodic vs Longitudinal */}
-          <div className="grid md:grid-cols-2 gap-6 mb-14">
-            <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
+          <div className="grid md:grid-cols-2 gap-6 mb-10 md:mb-14">
+            <div className="bg-card border border-border rounded-2xl p-5 md:p-8">
               <div className="inline-flex items-center gap-2 bg-muted rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">
                 The old way
               </div>
@@ -263,7 +266,7 @@ export default function CompleteHealthKitPage() {
               </ul>
             </div>
 
-            <div className="bg-primary/5 border border-primary/30 rounded-2xl p-6 md:p-8 relative overflow-hidden">
+            <div className="bg-primary/5 border border-primary/30 rounded-2xl p-5 md:p-8 relative overflow-hidden">
               <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider mb-4">
                 The Agatsa way
               </div>
@@ -291,7 +294,7 @@ export default function CompleteHealthKitPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-card border border-border rounded-2xl p-6 md:p-8"
+              className="bg-card border border-border rounded-2xl p-5 md:p-8"
             >
               <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/40 flex items-center justify-center mb-4">
                 <HeartPulse className="h-6 w-6 text-red-500" />
@@ -318,7 +321,7 @@ export default function CompleteHealthKitPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-card border border-border rounded-2xl p-6 md:p-8"
+              className="bg-card border border-border rounded-2xl p-5 md:p-8"
             >
               <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/40 flex items-center justify-center mb-4">
                 <Droplet className="h-6 w-6 text-emerald-600" />
@@ -345,7 +348,7 @@ export default function CompleteHealthKitPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mt-12 bg-foreground text-background rounded-3xl p-8 md:p-12 text-center"
+            className="mt-10 md:mt-12 bg-foreground text-background rounded-3xl p-6 md:p-12 text-center"
           >
             <p className="text-sm font-bold uppercase tracking-widest text-primary/80">
               Predict · Prevent · Report
@@ -364,13 +367,13 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* WHAT'S INSIDE */}
-      <section id="whats-inside" className="py-20 bg-background">
+      <section id="whats-inside" className="py-12 md:py-20 bg-background">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 md:mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
               What's in the Kit
             </span>
-            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="mt-2 text-2xl md:text-4xl font-bold text-foreground">
               Four devices. One connected health system.
             </h2>
             <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
@@ -379,7 +382,7 @@ export default function CompleteHealthKitPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
             {devices.map((d, i) => (
               <motion.div
                 key={d.name}
@@ -389,7 +392,7 @@ export default function CompleteHealthKitPage() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="bg-card border border-border rounded-2xl overflow-hidden"
               >
-                <div className="aspect-square bg-white flex items-center justify-center p-6">
+                <div className="aspect-square bg-white flex items-center justify-center p-4 md:p-6">
                   <img
                     src={d.image}
                     alt={d.name}
@@ -397,10 +400,10 @@ export default function CompleteHealthKitPage() {
                     loading="lazy"
                   />
                 </div>
-                <div className="p-5">
-                  <h3 className="text-base font-bold text-foreground">{d.name}</h3>
-                  <p className="text-sm text-primary font-medium mt-1">{d.tagline}</p>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{d.bullet}</p>
+                <div className="p-4 md:p-5">
+                  <h3 className="text-sm md:text-base font-bold text-foreground">{d.name}</h3>
+                  <p className="text-xs md:text-sm text-primary font-medium mt-1">{d.tagline}</p>
+                  <p className="text-xs md:text-sm text-muted-foreground mt-2 leading-relaxed">{d.bullet}</p>
                 </div>
               </motion.div>
             ))}
@@ -409,14 +412,14 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* NERA AI BLOCK */}
-      <section className="py-20 bg-gradient-to-br from-primary/5 via-background to-primary/5">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-primary/5 via-background to-primary/5">
         <div className="max-w-5xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-card border border-primary/20 rounded-3xl p-8 md:p-12 shadow-lg"
+            className="bg-card border border-primary/20 rounded-3xl p-6 md:p-12 shadow-lg"
           >
             <div className="flex items-center gap-2 mb-4">
               <div className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider">
@@ -424,7 +427,7 @@ export default function CompleteHealthKitPage() {
               </div>
               <span className="text-xs font-semibold text-primary">Worth ₹1,497</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground">
               3 months of <span className="text-primary">Nera AI Premium</span> — on us.
             </h2>
             <p className="mt-4 text-muted-foreground text-lg leading-relaxed max-w-3xl">
@@ -456,18 +459,18 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="py-20 bg-background">
+      <section className="py-12 md:py-20 bg-background">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12 max-w-2xl mx-auto">
+          <div className="text-center mb-8 md:mb-12 max-w-2xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
               From real users
             </span>
-            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="mt-2 text-2xl md:text-4xl font-bold text-foreground">
               People who stopped guessing about their health.
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
             {[
               {
                 name: "Rajeev M.",
@@ -515,15 +518,15 @@ export default function CompleteHealthKitPage() {
 
 
       {/* HOW IT WORKS */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 md:py-20 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground">
               From four devices to <span className="text-primary">one intelligence layer</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6 relative">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 relative">
             <div className="hidden md:block absolute top-[36px] left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-primary/20 via-primary/60 to-primary/20" />
             {[
               { icon: Activity, title: "Capture", desc: "ECG, glucose, sleep, weight — every signal, medical-grade." },
@@ -551,7 +554,7 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* TRUST */}
-      <section className="py-14 bg-background">
+      <section className="py-10 md:py-14 bg-background">
         <div className="max-w-5xl mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-4">
             {[
@@ -574,9 +577,9 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 md:py-20 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-8">
+          <h2 className="text-2xl md:text-4xl font-bold text-foreground text-center mb-8">
             Frequently asked
           </h2>
           <div className="bg-card border border-border rounded-2xl px-6">
@@ -588,9 +591,9 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-20 bg-background">
+      <section className="py-12 md:py-20 pb-32 md:pb-20 bg-background">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          <h2 className="text-2xl md:text-4xl font-bold text-foreground">
             One order. One AI. Every signal that matters.
           </h2>
           <p className="mt-4 text-muted-foreground">
