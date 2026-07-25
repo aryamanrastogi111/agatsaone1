@@ -61,7 +61,7 @@ const ShippingPolicy = () => {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
-                      <span>International shipping available worldwide at a <strong>flat rate of ₹2000</strong> per order</span>
+                      <span>International shipping available worldwide at a <strong>flat rate of ₹3000</strong> per order</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
