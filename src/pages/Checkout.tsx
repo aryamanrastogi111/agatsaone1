@@ -29,8 +29,8 @@ const DEVICE_NAMES: Record<string, string> = {
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 
-// Flat international shipping surcharge: ₹2000
-const INTL_SHIPPING_PAISE = 200000;
+// Flat international shipping surcharge: ₹3000
+const INTL_SHIPPING_PAISE = 300000;
 
 // Country → { ISO-2, phone dial code }. ISO-2 also drives zippopotam.us postal lookup.
 const COUNTRY_META: Record<string, { iso2: string; dial: string }> = {
@@ -587,7 +587,7 @@ export default function CheckoutPage() {
       // 2. Create order
       // For India: hit the external API directly.
       // For international: go through the Supabase edge function so the
-      // ₹2000 shipping surcharge is added to the actual Razorpay charge.
+      // ₹3000 shipping surcharge is added to the actual Razorpay charge.
       let createData: any = {};
       try {
         if (isIntl) {
@@ -992,7 +992,7 @@ export default function CheckoutPage() {
               </select>
               {isIntl && (
                 <p className="text-xs text-amber-600 mt-1.5">
-                  Flat ₹2,000 international shipping will be added at checkout.
+                  Flat ₹3,000 international shipping will be added at checkout.
                 </p>
               )}
             </div>
@@ -1156,7 +1156,7 @@ export default function CheckoutPage() {
               <p>{addressLine1}{addressLine2 ? `, ${addressLine2}` : ""}</p>
               <p>{city}, {state} - {pincode}{isIntl ? `, ${country}` : ""}</p>
               {isIntl && (
-                <p className="text-xs text-amber-600 mt-1">+ ₹2,000 international shipping included</p>
+                <p className="text-xs text-amber-600 mt-1">+ ₹3,000 international shipping included</p>
               )}
             </div>
 

@@ -8,8 +8,8 @@ const corsHeaders = {
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 
-// Flat international shipping surcharge: ₹2000 = 200000 paise
-const INTERNATIONAL_SHIPPING_PAISE = 200000;
+// Flat international shipping surcharge: ₹3000 = 300000 paise
+const INTERNATIONAL_SHIPPING_PAISE = 300000;
 
 function isInternational(country: string | undefined | null): boolean {
   if (!country) return false;
