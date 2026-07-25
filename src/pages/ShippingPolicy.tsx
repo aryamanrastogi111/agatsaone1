@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Truck, Clock, Globe, Package, MapPin, Mail, Phone } from "lucide-react";
 
 const ShippingPolicy = () => {
-  useSEO({ title: "Shipping Policy — Agatsa One", description: "Free shipping across India. Flat ₹2000 international shipping to all countries." });
+  useSEO({ title: "Shipping Policy — Agatsa One", description: "Free shipping across India. Flat ₹3000 international shipping to all countries." });
 
   return (
     <SiteLayout>
