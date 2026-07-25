@@ -392,7 +392,7 @@ export default function CompleteHealthKitPage() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="bg-card border border-border rounded-2xl overflow-hidden"
               >
-                <div className="aspect-square bg-white flex items-center justify-center p-6">
+                <div className="aspect-square bg-white flex items-center justify-center p-4 md:p-6">
                   <img
                     src={d.image}
                     alt={d.name}
@@ -400,10 +400,10 @@ export default function CompleteHealthKitPage() {
                     loading="lazy"
                   />
                 </div>
-                <div className="p-5">
-                  <h3 className="text-base font-bold text-foreground">{d.name}</h3>
-                  <p className="text-sm text-primary font-medium mt-1">{d.tagline}</p>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{d.bullet}</p>
+                <div className="p-4 md:p-5">
+                  <h3 className="text-sm md:text-base font-bold text-foreground">{d.name}</h3>
+                  <p className="text-xs md:text-sm text-primary font-medium mt-1">{d.tagline}</p>
+                  <p className="text-xs md:text-sm text-muted-foreground mt-2 leading-relaxed">{d.bullet}</p>
                 </div>
               </motion.div>
             ))}
