@@ -66,7 +66,7 @@ const neraFeatures = [
   { icon: Brain, text: "Weekly AI health reports across every device" },
   { icon: Zap, text: "Early anomaly alerts before symptoms show" },
   { icon: Activity, text: "Voice health assistant — ask Nera anything" },
-  { icon: Sparkles, text: "Full access to all 5 Care Programmes" },
+  { icon: Sparkles, text: "AI Heart disease interpretation" },
 ];
 
 const faqs = [
