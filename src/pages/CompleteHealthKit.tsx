@@ -233,11 +233,11 @@ export default function CompleteHealthKitPage() {
       {/* WHY LONGITUDINAL — Episodic vs Continuous */}
       <section className="py-12 md:py-20 bg-gradient-to-b from-background to-muted/30">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12 max-w-3xl mx-auto">
+          <div className="text-center mb-8 md:mb-12 max-w-3xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
               Why this bundle exists
             </span>
-            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="mt-2 text-2xl md:text-4xl font-bold text-foreground">
               Episodic care is broken. Your body doesn't wait for a check-up.
             </h2>
             <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
@@ -248,8 +248,8 @@ export default function CompleteHealthKitPage() {
           </div>
 
           {/* Episodic vs Longitudinal */}
-          <div className="grid md:grid-cols-2 gap-6 mb-14">
-            <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
+          <div className="grid md:grid-cols-2 gap-6 mb-10 md:mb-14">
+            <div className="bg-card border border-border rounded-2xl p-5 md:p-8">
               <div className="inline-flex items-center gap-2 bg-muted rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">
                 The old way
               </div>
@@ -266,7 +266,7 @@ export default function CompleteHealthKitPage() {
               </ul>
             </div>
 
-            <div className="bg-primary/5 border border-primary/30 rounded-2xl p-6 md:p-8 relative overflow-hidden">
+            <div className="bg-primary/5 border border-primary/30 rounded-2xl p-5 md:p-8 relative overflow-hidden">
               <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider mb-4">
                 The Agatsa way
               </div>
@@ -294,7 +294,7 @@ export default function CompleteHealthKitPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-card border border-border rounded-2xl p-6 md:p-8"
+              className="bg-card border border-border rounded-2xl p-5 md:p-8"
             >
               <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/40 flex items-center justify-center mb-4">
                 <HeartPulse className="h-6 w-6 text-red-500" />
@@ -321,7 +321,7 @@ export default function CompleteHealthKitPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-card border border-border rounded-2xl p-6 md:p-8"
+              className="bg-card border border-border rounded-2xl p-5 md:p-8"
             >
               <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/40 flex items-center justify-center mb-4">
                 <Droplet className="h-6 w-6 text-emerald-600" />
@@ -348,7 +348,7 @@ export default function CompleteHealthKitPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mt-12 bg-foreground text-background rounded-3xl p-8 md:p-12 text-center"
+            className="mt-10 md:mt-12 bg-foreground text-background rounded-3xl p-6 md:p-12 text-center"
           >
             <p className="text-sm font-bold uppercase tracking-widest text-primary/80">
               Predict · Prevent · Report
@@ -369,11 +369,11 @@ export default function CompleteHealthKitPage() {
       {/* WHAT'S INSIDE */}
       <section id="whats-inside" className="py-12 md:py-20 bg-background">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 md:mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
               What's in the Kit
             </span>
-            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="mt-2 text-2xl md:text-4xl font-bold text-foreground">
               Four devices. One connected health system.
             </h2>
             <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
@@ -419,7 +419,7 @@ export default function CompleteHealthKitPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-card border border-primary/20 rounded-3xl p-8 md:p-12 shadow-lg"
+            className="bg-card border border-primary/20 rounded-3xl p-6 md:p-12 shadow-lg"
           >
             <div className="flex items-center gap-2 mb-4">
               <div className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider">
@@ -427,7 +427,7 @@ export default function CompleteHealthKitPage() {
               </div>
               <span className="text-xs font-semibold text-primary">Worth ₹1,497</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground">
               3 months of <span className="text-primary">Nera AI Premium</span> — on us.
             </h2>
             <p className="mt-4 text-muted-foreground text-lg leading-relaxed max-w-3xl">
@@ -461,11 +461,11 @@ export default function CompleteHealthKitPage() {
       {/* TESTIMONIALS */}
       <section className="py-12 md:py-20 bg-background">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12 max-w-2xl mx-auto">
+          <div className="text-center mb-8 md:mb-12 max-w-2xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
               From real users
             </span>
-            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="mt-2 text-2xl md:text-4xl font-bold text-foreground">
               People who stopped guessing about their health.
             </h2>
           </div>
@@ -520,8 +520,8 @@ export default function CompleteHealthKitPage() {
       {/* HOW IT WORKS */}
       <section className="py-12 md:py-20 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground">
               From four devices to <span className="text-primary">one intelligence layer</span>
             </h2>
           </div>
@@ -579,7 +579,7 @@ export default function CompleteHealthKitPage() {
       {/* FAQ */}
       <section className="py-12 md:py-20 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-8">
+          <h2 className="text-2xl md:text-4xl font-bold text-foreground text-center mb-8">
             Frequently asked
           </h2>
           <div className="bg-card border border-border rounded-2xl px-6">
@@ -593,7 +593,7 @@ export default function CompleteHealthKitPage() {
       {/* FINAL CTA */}
       <section className="py-12 md:py-20 bg-background">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          <h2 className="text-2xl md:text-4xl font-bold text-foreground">
             One order. One AI. Every signal that matters.
           </h2>
           <p className="mt-4 text-muted-foreground">
