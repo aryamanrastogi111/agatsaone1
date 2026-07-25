@@ -29,8 +29,8 @@ const DEVICE_NAMES: Record<string, string> = {
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
 
-// Flat international shipping surcharge: ₹2000
-const INTL_SHIPPING_PAISE = 200000;
+// Flat international shipping surcharge: ₹3000
+const INTL_SHIPPING_PAISE = 300000;
 
 // Country → { ISO-2, phone dial code }. ISO-2 also drives zippopotam.us postal lookup.
 const COUNTRY_META: Record<string, { iso2: string; dial: string }> = {
