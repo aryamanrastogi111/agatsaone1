@@ -1156,7 +1156,7 @@ export default function CheckoutPage() {
               <p>{addressLine1}{addressLine2 ? `, ${addressLine2}` : ""}</p>
               <p>{city}, {state} - {pincode}{isIntl ? `, ${country}` : ""}</p>
               {isIntl && (
-                <p className="text-xs text-amber-600 mt-1">+ ₹2,000 international shipping included</p>
+                <p className="text-xs text-amber-600 mt-1">+ ₹3,000 international shipping included</p>
               )}
             </div>
 
