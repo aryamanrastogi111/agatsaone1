@@ -350,10 +350,10 @@ export default function CompleteHealthKitPage() {
 
           <div className="bg-card border border-border rounded-2xl overflow-hidden">
             {[
-              { name: "SanketLife ECG", price: 6999 },
-              { name: "EasyTouch Wellness", price: 5499 },
-              { name: "EasyTouch Rhythm Band", price: 3999 },
-              { name: "Agatsa Smart Scale", price: 2999 },
+              { name: "SanketLife ECG", price: 4999 },
+              { name: "EasyTouch Wellness", price: 3999 },
+              { name: "EasyTouch Rhythm Band", price: 4999 },
+              { name: "Agatsa Smart Scale", price: 1800 },
             ].map((row) => (
               <div
                 key={row.name}
@@ -368,7 +368,7 @@ export default function CompleteHealthKitPage() {
             <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-muted/40">
               <span className="text-sm font-semibold text-foreground">Buy separately</span>
               <span className="text-sm font-semibold text-muted-foreground line-through">
-                ₹19,496
+                ₹15,797
               </span>
             </div>
             <div className="flex items-center justify-between px-6 py-5 bg-primary/10">
@@ -383,11 +383,147 @@ export default function CompleteHealthKitPage() {
                   ₹{BUNDLE_PRICE.toLocaleString("en-IN")}
                 </p>
                 <p className="text-xs font-bold text-green-600">
-                  Save ₹{SAVINGS.toLocaleString("en-IN")}+
+                  Save ₹798 + Nera AI free
                 </p>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* WHY LONGITUDINAL — Episodic vs Continuous */}
+      <section className="py-20 bg-gradient-to-b from-background to-muted/30">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary">
+              Why this bundle exists
+            </span>
+            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground">
+              Episodic care is broken. Your body doesn't wait for a check-up.
+            </h2>
+            <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
+              A heart attack doesn't start on the day of the ECG. Diabetes doesn't begin on the
+              morning of your HbA1c test. By the time a symptom is obvious, the disease has
+              already had a long, silent runway.
+            </p>
+          </div>
+
+          {/* Episodic vs Longitudinal */}
+          <div className="grid md:grid-cols-2 gap-6 mb-14">
+            <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
+              <div className="inline-flex items-center gap-2 bg-muted rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">
+                The old way
+              </div>
+              <h3 className="text-xl font-bold text-foreground">Episodic snapshots</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                One ECG a year. One blood test every six months. One BP reading in a noisy
+                clinic. Each is a single frame — and single frames miss the story.
+              </p>
+              <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
+                <li className="flex gap-2"><span className="text-red-500">✕</span> A "normal" ECG at rest can miss silent ischemia.</li>
+                <li className="flex gap-2"><span className="text-red-500">✕</span> A fasting sugar reading hides the after-meal spikes that damage vessels.</li>
+                <li className="flex gap-2"><span className="text-red-500">✕</span> A clinic BP reading is often 10–20 mmHg off your real one.</li>
+                <li className="flex gap-2"><span className="text-red-500">✕</span> Reports live in silos — heart, metabolism, sleep never talk to each other.</li>
+              </ul>
+            </div>
+
+            <div className="bg-primary/5 border border-primary/30 rounded-2xl p-6 md:p-8 relative overflow-hidden">
+              <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider mb-4">
+                The Agatsa way
+              </div>
+              <h3 className="text-xl font-bold text-foreground">
+                Longitudinal signals + Nera AI
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                Continuous data from four medical-grade devices, stitched together by AI that
+                actually understands the connections between heart, metabolism, sleep and
+                recovery.
+              </p>
+              <ul className="mt-5 space-y-2 text-sm text-foreground">
+                <li className="flex gap-2"><Check className="h-4 w-4 text-primary shrink-0 mt-0.5" /> ECG on demand — every time your chest feels off, not once a year.</li>
+                <li className="flex gap-2"><Check className="h-4 w-4 text-primary shrink-0 mt-0.5" /> Glucose trends across meals, sleep and stress — not one fasting number.</li>
+                <li className="flex gap-2"><Check className="h-4 w-4 text-primary shrink-0 mt-0.5" /> Sleep, HRV and recovery tracked 24/7 — the earliest warning system your body has.</li>
+                <li className="flex gap-2"><Check className="h-4 w-4 text-primary shrink-0 mt-0.5" /> Nera AI cross-references every signal and flags drift before it becomes disease.</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Cardiac + Metabolic dual cards */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="bg-card border border-border rounded-2xl p-6 md:p-8"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950/40 flex items-center justify-center mb-4">
+                <HeartPulse className="h-6 w-6 text-red-500" />
+              </div>
+              <h3 className="text-xl font-bold text-foreground">Cardiac health, tracked over time</h3>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                Roughly <span className="font-semibold text-foreground">50% of first heart
+                attacks in India happen without prior warning symptoms</span> — but the
+                electrical, rhythm and recovery changes are almost always there weeks in
+                advance. A once-a-year ECG cannot catch them. Continuous rhythm data from the
+                Rhythm Band, on-demand 12-lead ECGs from SanketLife, and Nera AI's trend
+                analysis can.
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                Nera AI watches your resting heart rate, HRV, ST-segment behaviour and recovery
+                night after night. When your baseline drifts — <span className="italic">before</span>{" "}
+                you feel anything — it tells you, and it tells your doctor with a
+                cardiologist-ready PDF.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="bg-card border border-border rounded-2xl p-6 md:p-8"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/40 flex items-center justify-center mb-4">
+                <Droplet className="h-6 w-6 text-emerald-600" />
+              </div>
+              <h3 className="text-xl font-bold text-foreground">Metabolic health, before HbA1c breaks</h3>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                Metabolic dysfunction begins <span className="font-semibold text-foreground">7–10
+                years before</span> a lab test calls it diabetes. The post-meal glucose spikes,
+                the disturbed sleep, the visceral fat creeping up, the metabolic age climbing —
+                all of it is happening on ordinary weekdays, not in a lab.
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                EasyTouch Wellness and the Rhythm Band record glucose trend patterns after
+                every meal. The Smart Scale tracks visceral fat, muscle mass and metabolic
+                age. Nera AI ties it all to your sleep and stress data — so you see which
+                meals, which nights and which weeks are quietly nudging you toward disease.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Predict → Prevent framing */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-12 bg-foreground text-background rounded-3xl p-8 md:p-12 text-center"
+          >
+            <p className="text-sm font-bold uppercase tracking-widest text-primary/80">
+              Predict · Prevent · Report
+            </p>
+            <h3 className="mt-3 text-2xl md:text-3xl font-bold">
+              Agatsa's job is to see the problem before it becomes obvious.
+            </h3>
+            <p className="mt-4 text-base md:text-lg text-background/80 max-w-3xl mx-auto leading-relaxed">
+              The devices capture the raw signals. Nera AI learns your personal baseline,
+              predicts drift, flags early warnings and generates the report your doctor needs —
+              so a routine consultation becomes a targeted, data-backed conversation instead of
+              a guessing game.
+            </p>
+          </motion.div>
         </div>
       </section>
 
