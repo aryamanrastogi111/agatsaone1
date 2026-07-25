@@ -25,7 +25,7 @@ import { usePricing } from "@/hooks/useDevicePricing";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
 
-import sanketImg from "@/assets/sanketlife-hero-v2.png";
+import sanketImg from "@/assets/sanketlife-hero-new.webp";
 import wellnessImg from "@/assets/easytouch-wellness-hero.webp";
 import scaleImg from "@/assets/corebalance-hero.webp";
 import bandAsset from "@/assets/bands/band-olive-hero.png.asset.json";
@@ -83,9 +83,7 @@ const faqs = [
     a: `Orders placed before 6 PM IST ship the same working day. ${shipDateLabel()} — expected delivery ${deliveryDateLabel()}.`,
   },
   {
-    q: "Is EMI available?",
-    a: "Yes. No-cost EMI is available at checkout from ₹1,083/month over 12 months on all major banks and cards.",
-  },
+    q: "Is the ECG device really medical-grade?",
   {
     q: "Is the ECG device really medical-grade?",
     a: "Yes. SanketLife is CDSCO Class B certified and validated at Narayana Health and Sri Jayadeva Institute of Cardiovascular Sciences with 98.5% accuracy vs hospital ECG machines.",
