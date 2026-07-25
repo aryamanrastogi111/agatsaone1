@@ -170,15 +170,15 @@ export default function CompleteHealthKitPage() {
             </div>
 
             {/* Price block */}
-            <div className="mt-8 p-5 bg-card border border-border rounded-2xl shadow-sm">
-              <div className="flex items-baseline gap-3 flex-wrap">
-                <span className="text-4xl font-extrabold text-foreground">
+            <div className="mt-6 md:mt-8 p-4 md:p-5 bg-card border border-border rounded-2xl shadow-sm">
+              <div className="flex items-baseline gap-2 md:gap-3 flex-wrap">
+                <span className="text-3xl md:text-4xl font-extrabold text-foreground">
                   ₹{BUNDLE_PRICE.toLocaleString("en-IN")}
                 </span>
-                <span className="text-xl text-muted-foreground line-through">
+                <span className="text-lg md:text-xl text-muted-foreground line-through">
                   ₹{BUNDLE_MRP.toLocaleString("en-IN")}
                 </span>
-                <span className="bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-400 text-xs font-bold px-2 py-1 rounded-full">
+                <span className="bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-400 text-[10px] md:text-xs font-bold px-2 py-1 rounded-full">
                   Save ₹{SAVINGS.toLocaleString("en-IN")}
                 </span>
               </div>
