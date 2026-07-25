@@ -30,6 +30,9 @@ import wellnessImg from "@/assets/easytouch-wellness-hero.webp";
 import scaleImg from "@/assets/corebalance-hero.webp";
 import bandAsset from "@/assets/bands/band-olive-hero.png.asset.json";
 import bundleHeroImg from "@/assets/bundle-devices-hero.png";
+import neraReportUnified from "@/assets/nera-report-unified.jpg";
+import neraReportWeekly from "@/assets/nera-report-weekly.jpg";
+import neraReportCardiac from "@/assets/nera-report-cardiac.jpg";
 
 const BUNDLE_PRICE = 12999;
 const BUNDLE_MRP = 18999;
