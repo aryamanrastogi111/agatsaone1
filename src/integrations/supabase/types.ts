@@ -464,6 +464,51 @@ export type Database = {
         }
         Relationships: []
       }
+      nera_ai_grants: {
+        Row: {
+          activated_at: string
+          created_at: string
+          duration_days: number
+          email: string | null
+          expires_at: string
+          id: string
+          order_id: string | null
+          phone: string | null
+          plan: string
+          source: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          activated_at?: string
+          created_at?: string
+          duration_days?: number
+          email?: string | null
+          expires_at?: string
+          id?: string
+          order_id?: string | null
+          phone?: string | null
+          plan?: string
+          source?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          activated_at?: string
+          created_at?: string
+          duration_days?: number
+          email?: string | null
+          expires_at?: string
+          id?: string
+          order_id?: string | null
+          phone?: string | null
+          plan?: string
+          source?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           amount: number
