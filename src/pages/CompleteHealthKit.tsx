@@ -350,10 +350,10 @@ export default function CompleteHealthKitPage() {
 
           <div className="bg-card border border-border rounded-2xl overflow-hidden">
             {[
-              { name: "SanketLife ECG", price: 6999 },
-              { name: "EasyTouch Wellness", price: 5499 },
-              { name: "EasyTouch Rhythm Band", price: 3999 },
-              { name: "Agatsa Smart Scale", price: 2999 },
+              { name: "SanketLife ECG", price: 4999 },
+              { name: "EasyTouch Wellness", price: 3999 },
+              { name: "EasyTouch Rhythm Band", price: 4999 },
+              { name: "Agatsa Smart Scale", price: 1800 },
             ].map((row) => (
               <div
                 key={row.name}
@@ -368,7 +368,7 @@ export default function CompleteHealthKitPage() {
             <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-muted/40">
               <span className="text-sm font-semibold text-foreground">Buy separately</span>
               <span className="text-sm font-semibold text-muted-foreground line-through">
-                ₹19,496
+                ₹15,797
               </span>
             </div>
             <div className="flex items-center justify-between px-6 py-5 bg-primary/10">
