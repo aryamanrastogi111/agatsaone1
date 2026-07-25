@@ -29,8 +29,9 @@ import sanketImg from "@/assets/sanketlife-hero-v2.png";
 import wellnessImg from "@/assets/easytouch-wellness-hero.webp";
 import scaleImg from "@/assets/corebalance-hero.webp";
 import bandAsset from "@/assets/bands/band-olive-hero.png.asset.json";
+import bundleHeroImg from "@/assets/bundle-devices-hero.png";
 
-const BUNDLE_PRICE = 14999;
+const BUNDLE_PRICE = 12999;
 const BUNDLE_MRP = 18999;
 const SAVINGS = BUNDLE_MRP - BUNDLE_PRICE;
 
