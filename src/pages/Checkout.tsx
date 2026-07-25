@@ -587,7 +587,7 @@ export default function CheckoutPage() {
       // 2. Create order
       // For India: hit the external API directly.
       // For international: go through the Supabase edge function so the
-      // ₹2000 shipping surcharge is added to the actual Razorpay charge.
+      // ₹3000 shipping surcharge is added to the actual Razorpay charge.
       let createData: any = {};
       try {
         if (isIntl) {
