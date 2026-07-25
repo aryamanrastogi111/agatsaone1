@@ -992,7 +992,7 @@ export default function CheckoutPage() {
               </select>
               {isIntl && (
                 <p className="text-xs text-amber-600 mt-1.5">
-                  Flat ₹2,000 international shipping will be added at checkout.
+                  Flat ₹3,000 international shipping will be added at checkout.
                 </p>
               )}
             </div>
