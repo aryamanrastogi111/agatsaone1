@@ -591,7 +591,7 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-12 md:py-20 bg-background">
+      <section className="py-12 md:py-20 pb-32 md:pb-20 bg-background">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-4xl font-bold text-foreground">
             One order. One AI. Every signal that matters.
