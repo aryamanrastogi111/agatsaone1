@@ -84,8 +84,6 @@ const faqs = [
   },
   {
     q: "Is the ECG device really medical-grade?",
-  {
-    q: "Is the ECG device really medical-grade?",
     a: "Yes. SanketLife is CDSCO Class B certified and validated at Narayana Health and Sri Jayadeva Institute of Cardiovascular Sciences with 98.5% accuracy vs hospital ECG machines.",
   },
 ];
