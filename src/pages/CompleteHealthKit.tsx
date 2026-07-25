@@ -383,7 +383,7 @@ export default function CompleteHealthKitPage() {
                   ₹{BUNDLE_PRICE.toLocaleString("en-IN")}
                 </p>
                 <p className="text-xs font-bold text-green-600">
-                  Save ₹{SAVINGS.toLocaleString("en-IN")}+
+                  Save ₹798 + Nera AI free
                 </p>
               </div>
             </div>
