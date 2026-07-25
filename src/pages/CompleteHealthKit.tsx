@@ -462,6 +462,87 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* TESTIMONIALS */}
+      </section>
+
+      {/* NERA AI REPORT SHOWCASE */}
+      <section className="py-12 md:py-20 bg-foreground text-background overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary">
+              What Nera AI actually shows you
+            </span>
+            <h2 className="mt-3 text-2xl md:text-4xl font-bold">
+              Four devices in. <span className="text-primary">One report out.</span>
+            </h2>
+            <p className="mt-4 text-sm md:text-base text-background/70 leading-relaxed">
+              Nera AI combines every signal — ECG, glucose trends, sleep, HRV, body composition —
+              into a single, readable story of your health. Here's what it looks like on your
+              phone.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+            {[
+              {
+                img: neraReportUnified,
+                tag: "Daily dashboard",
+                title: "All signals, one view",
+                desc: "Heart rhythm, glucose, sleep and recovery — cross-referenced every day.",
+              },
+              {
+                img: neraReportWeekly,
+                tag: "Weekly review",
+                title: "Your week, explained",
+                desc: "Metabolic load, cardiac trend, sleep score and body composition in plain English.",
+              },
+              {
+                img: neraReportCardiac,
+                tag: "Doctor-ready",
+                title: "Cardiologist-grade PDF",
+                desc: "12-lead ECG with 30-day HRV trend and AI interpretation. Share in one tap.",
+              },
+            ].map((r, i) => (
+              <motion.div
+                key={r.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="flex flex-col"
+              >
+                <div className="relative bg-gradient-to-br from-primary/20 to-transparent rounded-3xl p-4 md:p-6 border border-white/10">
+                  <img
+                    src={r.img}
+                    alt={r.title}
+                    width={768}
+                    height={1280}
+                    loading="lazy"
+                    className="w-full h-auto object-contain drop-shadow-2xl"
+                  />
+                </div>
+                <div className="mt-4 px-1">
+                  <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-primary">
+                    {r.tag}
+                  </span>
+                  <h3 className="mt-1 text-base md:text-lg font-bold text-background">
+                    {r.title}
+                  </h3>
+                  <p className="mt-1 text-xs md:text-sm text-background/70 leading-relaxed">
+                    {r.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <p className="mt-8 md:mt-10 text-center text-xs text-background/50 max-w-2xl mx-auto">
+            App visuals shown for illustration. Nera AI does not provide medical diagnosis; reports
+            are for informational purposes and to support conversations with your clinician.
+          </p>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
       <section className="py-12 md:py-20 bg-background">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-8 md:mb-12 max-w-2xl mx-auto">
