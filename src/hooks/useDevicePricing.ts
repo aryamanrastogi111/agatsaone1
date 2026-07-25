@@ -19,7 +19,7 @@ const FALLBACK_PRICES: Record<DeviceSku, number> = {
   lb90_plus: 9999,
   heartguard_starter: 24999,
   er30_standard: 4999,
-  complete_kit: 14999,
+  complete_kit: 12999,
 };
 
 // MRP (Maximum Retail Price) — rounded figures for strikethrough display
