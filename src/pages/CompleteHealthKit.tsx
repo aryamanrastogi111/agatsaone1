@@ -382,7 +382,7 @@ export default function CompleteHealthKitPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
             {devices.map((d, i) => (
               <motion.div
                 key={d.name}
@@ -470,7 +470,7 @@ export default function CompleteHealthKitPage() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
             {[
               {
                 name: "Rajeev M.",
@@ -526,7 +526,7 @@ export default function CompleteHealthKitPage() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6 relative">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 relative">
             <div className="hidden md:block absolute top-[36px] left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-primary/20 via-primary/60 to-primary/20" />
             {[
               { icon: Activity, title: "Capture", desc: "ECG, glucose, sleep, weight — every signal, medical-grade." },
