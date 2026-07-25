@@ -446,9 +446,9 @@ export default function DevicesPage() {
             <Package className="h-6 w-6 text-primary shrink-0" />
             <div>
               <p className="text-sm md:text-base font-medium text-foreground">
-                <span className="font-bold">Complete Health Kit</span> — all 4 devices + 3 months Nera AI Premium. ₹14,999 <span className="text-muted-foreground line-through ml-1">₹18,999</span> · Save ₹4,000.
+                <span className="font-bold">Complete Health Kit</span> — all 4 devices + 3 months Nera AI Premium. ₹12,999 <span className="text-muted-foreground line-through ml-1">₹18,999</span> · Save ₹6,000.
               </p>
-              <p className="text-primary text-sm mt-1">No-cost EMI from ₹1,250/month · Free shipping</p>
+              <p className="text-primary text-sm mt-1">No-cost EMI from ₹1,083/month · Free shipping</p>
             </div>
           </div>
           <Link
