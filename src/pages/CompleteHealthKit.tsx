@@ -231,7 +231,7 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* WHY LONGITUDINAL — Episodic vs Continuous */}
-      <section className="py-20 bg-gradient-to-b from-background to-muted/30">
+      <section className="py-12 md:py-20 bg-gradient-to-b from-background to-muted/30">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12 max-w-3xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
@@ -367,7 +367,7 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* WHAT'S INSIDE */}
-      <section id="whats-inside" className="py-20 bg-background">
+      <section id="whats-inside" className="py-12 md:py-20 bg-background">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
@@ -412,7 +412,7 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* NERA AI BLOCK */}
-      <section className="py-20 bg-gradient-to-br from-primary/5 via-background to-primary/5">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-primary/5 via-background to-primary/5">
         <div className="max-w-5xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -459,7 +459,7 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="py-20 bg-background">
+      <section className="py-12 md:py-20 bg-background">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12 max-w-2xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
@@ -518,7 +518,7 @@ export default function CompleteHealthKitPage() {
 
 
       {/* HOW IT WORKS */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 md:py-20 bg-muted/30">
         <div className="max-w-5xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -554,7 +554,7 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* TRUST */}
-      <section className="py-14 bg-background">
+      <section className="py-10 md:py-14 bg-background">
         <div className="max-w-5xl mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-4">
             {[
@@ -577,7 +577,7 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 md:py-20 bg-muted/30">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-8">
             Frequently asked
@@ -591,7 +591,7 @@ export default function CompleteHealthKitPage() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-20 bg-background">
+      <section className="py-12 md:py-20 bg-background">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             One order. One AI. Every signal that matters.
