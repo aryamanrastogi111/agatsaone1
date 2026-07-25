@@ -76,7 +76,7 @@ const faqs = [
   },
   {
     q: "How much am I saving vs buying separately?",
-    a: `Buying the four devices individually adds up to ₹15,797. In this bundle, you pay ₹12,999 — a flat ₹${SAVINGS.toLocaleString("en-IN")} saving vs MRP, and Nera AI Premium is included free for 3 months.`,
+    a: "Buying the four devices individually adds up to ₹15,797. In this bundle, you pay ₹12,999 — that's ₹2,798 off the individual total (and ₹6,000 off MRP of ₹18,999). Nera AI Premium is also included free for 3 months.",
   },
   {
     q: "When will my order ship?",
@@ -85,10 +85,6 @@ const faqs = [
   {
     q: "Is EMI available?",
     a: "Yes. No-cost EMI is available at checkout from ₹1,083/month over 12 months on all major banks and cards.",
-  },
-  {
-    q: "What if one device doesn't work for me?",
-    a: "You get a 7-day easy return on the full bundle. All four devices carry a 1-year manufacturer warranty.",
   },
   {
     q: "Is the ECG device really medical-grade?",
