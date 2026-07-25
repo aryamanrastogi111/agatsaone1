@@ -215,32 +215,20 @@ export default function CompleteHealthKitPage() {
             </div>
           </motion.div>
 
-          {/* Devices composition */}
+          {/* Devices composition — hero product photograph */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.15 }}
             className="relative"
           >
-            <div className="grid grid-cols-2 gap-4">
-              {devices.map((d, i) => (
-                <motion.div
-                  key={d.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 + i * 0.08 }}
-                  className="aspect-square bg-white rounded-3xl border border-border p-4 flex items-center justify-center shadow-sm"
-                >
-                  <img
-                    src={d.image}
-                    alt={d.name}
-                    className="max-h-full max-w-full object-contain"
-                    loading="eager"
-                  />
-                </motion.div>
-              ))}
-            </div>
-            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground rounded-full px-5 py-2 text-xs font-bold shadow-lg whitespace-nowrap">
+            <img
+              src={bundleHeroImg}
+              alt="Complete Health Kit — SanketLife ECG, EasyTouch Wellness, Rhythm Band and Agatsa Smart Scale"
+              className="w-full h-auto object-contain drop-shadow-xl"
+              loading="eager"
+            />
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground rounded-full px-5 py-2 text-xs font-bold shadow-lg whitespace-nowrap">
               4 devices · 1 AI · 1 order
             </div>
           </motion.div>
