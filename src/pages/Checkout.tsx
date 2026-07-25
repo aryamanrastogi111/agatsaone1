@@ -25,6 +25,7 @@ const DEVICE_NAMES: Record<string, string> = {
   lb90_standard:   "Lose Your Belly 90 — Standard",
   lb90_plus:       "Lose Your Belly 90 — Plus",
   er30_standard:   "Wake Up Like 25 Again — 30-Day Programme",
+  complete_kit:    "Complete Health Kit (4 Devices + 3 months Nera AI Premium)",
 };
 
 const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
