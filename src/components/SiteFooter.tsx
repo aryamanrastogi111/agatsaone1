@@ -123,7 +123,7 @@ export function SiteFooter() {
         <div className="border-t border-white/10 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
           <p>© 2026 Agatsa Software Pvt. Ltd.</p>
           <p className="text-center">
-            CDSCO Class B Medical Device · Free shipping in India · ₹2,000 flat international shipping
+            CDSCO Class B Medical Device · Free shipping in India · ₹3,000 flat international shipping
           </p>
           <div className="flex gap-4">
             {bottomLinks.map((link) => (

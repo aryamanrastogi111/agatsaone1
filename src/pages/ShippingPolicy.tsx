@@ -156,11 +156,11 @@ const ShippingPolicy = () => {
                   <ul className="space-y-3 text-muted-foreground">
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
-                      <span><strong>Flat shipping fee of ₹2000</strong> to all international destinations — no matter the country, weight or order size</span>
+                      <span><strong>Flat shipping fee of ₹3000</strong> to all international destinations — no matter the country, weight or order size</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
-                      <span>The ₹2000 surcharge is added automatically at checkout when you select a country other than India</span>
+                      <span>The ₹3000 surcharge is added automatically at checkout when you select a country other than India</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
@@ -226,7 +226,7 @@ const ShippingPolicy = () => {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-1">•</span>
-                      <span><strong>International:</strong> Flat <strong>₹2000</strong> per order, applied automatically at checkout. Non-refundable on returns.</span>
+                      <span><strong>International:</strong> Flat <strong>₹3000</strong> per order, applied automatically at checkout. Non-refundable on returns.</span>
                     </li>
                   </ul>
                 </div>
