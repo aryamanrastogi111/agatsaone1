@@ -99,6 +99,29 @@ serve(async (req) => {
       }
     }
 
+    // Grant 3-month Nera AI Premium for Complete Health Kit bundle
+    try {
+      const allItemsForGrant: any[] = items || order?.items || [];
+      const hasBundle = allItemsForGrant.some((i: any) =>
+        (i.sku || i.productId || "") === "complete_kit"
+      );
+      if (hasBundle) {
+        const expiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
+        await supabase.from("nera_ai_grants").insert({
+          order_id: order?.id ?? null,
+          email: order?.customer_email || customerEmail || null,
+          phone: order?.customer_phone || null,
+          plan: "premium",
+          duration_days: 90,
+          expires_at: expiresAt,
+          source: "complete_kit_bundle",
+          status: "active",
+        });
+      }
+    } catch (err) {
+      console.error("Failed to write nera_ai_grants:", err);
+    }
+
     // Fire-and-forget: call the website order completion endpoint
     const allItems: { variant_id?: string; quantity?: number; productId?: string; sku?: string }[] =
       items || order?.items || [];

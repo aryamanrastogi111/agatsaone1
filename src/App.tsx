@@ -15,6 +15,7 @@ import Home from "./pages/Home";
 
 // All other pages are lazy-loaded
 const DevicesPage = lazy(() => import("./pages/Devices"));
+const CompleteHealthKit = lazy(() => import("./pages/CompleteHealthKit"));
 const ProgrammesPage = lazy(() => import("./pages/Programmes"));
 const PricingPage = lazy(() => import("./pages/Pricing"));
 const About = lazy(() => import("./pages/About"));
@@ -124,6 +125,7 @@ function AppWithPricing() {
               {/* Public marketing pages */}
               <Route path="/" element={<Home />} />
               <Route path="/devices" element={<DevicesPage />} />
+              <Route path="/complete-health-kit" element={<CompleteHealthKit />} />
               <Route path="/devices/sanketlife-ecg" element={<SanketLifeECGProduct />} />
               <Route path="/devices/easytouch-wellness" element={<EasyTouchWellnessProduct />} />
               <Route path="/devices/rhythm-band" element={<RhythmBandProduct />} />
