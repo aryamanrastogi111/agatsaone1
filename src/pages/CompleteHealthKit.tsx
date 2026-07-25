@@ -461,8 +461,7 @@ export default function CompleteHealthKitPage() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      </section>
+      {/* NERA AI REPORT SHOWCASE */}
 
       {/* NERA AI REPORT SHOWCASE */}
       <section className="py-12 md:py-20 bg-foreground text-background overflow-hidden">
