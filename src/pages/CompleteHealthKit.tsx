@@ -130,20 +130,23 @@ export default function CompleteHealthKitPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="order-2 md:order-1"
           >
-            <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider mb-4">
-              <Sparkles className="h-3.5 w-3.5" /> Agatsa One + Nera AI
-            </div>
-            <div className="inline-flex items-center gap-2 border border-primary/30 rounded-full px-3 py-1 text-xs font-semibold text-primary mb-6 ml-2">
-              <Package className="h-3.5 w-3.5" /> Complete Device Bundle
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <div className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground rounded-full px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider">
+                <Sparkles className="h-3 w-3 md:h-3.5 md:w-3.5" /> Agatsa One + Nera AI
+              </div>
+              <div className="inline-flex items-center gap-1.5 border border-primary/30 rounded-full px-2.5 py-1 text-[10px] md:text-xs font-semibold text-primary">
+                <Package className="h-3 w-3 md:h-3.5 md:w-3.5" /> Complete Bundle
+              </div>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-[1.05]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-[1.1] md:leading-[1.05]">
               Your Heart, Glucose Trends, Sleep &{" "}
               <span className="text-primary">Recovery</span> change every day.
             </h1>
 
-            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
+            <p className="mt-4 md:mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
               Agatsa devices track the signals.{" "}
               <span className="font-semibold text-primary">Nera AI</span> connects the patterns.
             </p>
