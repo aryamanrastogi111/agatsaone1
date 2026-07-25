@@ -120,12 +120,12 @@ export default function CompleteHealthKitPage() {
   return (
     <SiteLayout>
       {/* HERO */}
-      <section className="relative pt-16 pb-16 md:pt-24 md:pb-20 bg-gradient-to-b from-primary/5 via-background to-background overflow-hidden">
+      <section className="relative pt-8 pb-10 md:pt-24 md:pb-20 bg-gradient-to-b from-primary/5 via-background to-background overflow-hidden">
         {/* Decorative rings */}
         <div className="pointer-events-none absolute top-1/2 right-0 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-primary/10 hidden md:block" />
         <div className="pointer-events-none absolute top-1/2 right-20 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-primary/10 hidden md:block" />
 
-        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center relative">
+        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-6 md:gap-10 items-center relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
