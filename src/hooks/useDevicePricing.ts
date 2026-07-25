@@ -52,8 +52,8 @@ export function formatINR(amount: number): string {
   return "₹" + amount.toLocaleString("en-IN");
 }
 
-export function emiString(amount: number): string {
-  return `No-cost EMI from ₹${Math.round(amount / 12).toLocaleString("en-IN")}/month`;
+export function emiString(_amount: number): string {
+  return "";
 }
 
 /** Raw hook — prefer using the context provider + usePricing() in components */

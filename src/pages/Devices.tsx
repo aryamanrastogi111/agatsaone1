@@ -202,7 +202,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
               {device.rating}/5 ({device.reviews} reviews)
             </span>
           </div>
-          <p className="text-xs text-primary font-medium mt-0.5">{emi(price)}</p>
+          
           <StockUrgencyBar productKey={device.id} className="mt-3" />
           <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
             <span>📦</span>
@@ -448,7 +448,7 @@ export default function DevicesPage() {
               <p className="text-sm md:text-base font-medium text-foreground">
                 <span className="font-bold">Complete Health Kit</span> — all 4 devices + 3 months Nera AI Premium. ₹12,999 <span className="text-muted-foreground line-through ml-1">₹18,999</span> · Save ₹6,000.
               </p>
-              <p className="text-primary text-sm mt-1">No-cost EMI from ₹1,083/month · Free shipping</p>
+              <p className="text-primary text-sm mt-1">Free shipping · 7-day easy returns</p>
             </div>
           </div>
           <Link

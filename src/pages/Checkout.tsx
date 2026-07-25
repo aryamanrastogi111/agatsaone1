@@ -1183,7 +1183,7 @@ export default function CheckoutPage() {
             )}
 
             <p className="text-center text-xs text-muted-foreground">
-              UPI · Cards · Net Banking · EMI · Secured by Razorpay
+              UPI · Cards · Net Banking · Secured by Razorpay
             </p>
 
             <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground pt-2">

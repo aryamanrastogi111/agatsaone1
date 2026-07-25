@@ -740,7 +740,7 @@ export default function LoseBelly() {
                 ["Will the Smart Scale really arrive in time?", "Yes — we ship within 48 hours of your enrollment. Smart Scale arrives in 5–7 days. Your daily lessons start the morning after."],
                 ["How does the refund actually work?", "If your Day 90 scan misses 2 of 3 goals, the app shows a 'Claim refund' button. Auto-credited to your card in 7 working days. App access continues for 30 more days as goodwill."],
                 ["What happens after Day 90 if I succeed?", "You get a maintenance plan, a shareable transformation card, and a 30% discount to continue for another 90 days."],
-                ["Can I pay with UPI / Netbanking / EMI?", "Yes — Razorpay supports all UPI apps (PhonePe, GPay, Paytm), all Indian cards, netbanking, and 9-month EMI on cards above ₹5,000."],
+                ["Can I pay with UPI / Netbanking?", "Yes — Razorpay supports all UPI apps (PhonePe, GPay, Paytm), all Indian cards, and netbanking."],
               ].map(([q, a], i) => (
                 <AccordionItem key={i} value={`item-${i}`}>
                   <AccordionTrigger className="text-left text-base font-semibold text-[#0B2A4A]">{q}</AccordionTrigger>

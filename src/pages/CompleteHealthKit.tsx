@@ -25,7 +25,7 @@ import { usePricing } from "@/hooks/useDevicePricing";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { shipDateLabel, deliveryDateLabel } from "@/lib/shipDate";
 
-import sanketImg from "@/assets/sanketlife-hero-v2.png";
+import sanketImg from "@/assets/sanketlife-hero-new.webp";
 import wellnessImg from "@/assets/easytouch-wellness-hero.webp";
 import scaleImg from "@/assets/corebalance-hero.webp";
 import bandAsset from "@/assets/bands/band-olive-hero.png.asset.json";
@@ -81,10 +81,6 @@ const faqs = [
   {
     q: "When will my order ship?",
     a: `Orders placed before 6 PM IST ship the same working day. ${shipDateLabel()} — expected delivery ${deliveryDateLabel()}.`,
-  },
-  {
-    q: "Is EMI available?",
-    a: "Yes. No-cost EMI is available at checkout from ₹1,083/month over 12 months on all major banks and cards.",
   },
   {
     q: "Is the ECG device really medical-grade?",
@@ -183,7 +179,7 @@ export default function CompleteHealthKitPage() {
                   Save ₹{SAVINGS.toLocaleString("en-IN")}
                 </span>
               </div>
-              <p className="text-sm text-primary font-medium mt-1">{emi(BUNDLE_PRICE)}</p>
+              
               <p className="text-sm text-foreground mt-2 flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-primary" />
                 <span className="font-semibold">3 months Nera AI Premium — free</span>
@@ -614,7 +610,7 @@ export default function CompleteHealthKitPage() {
             </Button>
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
-            No-cost EMI · Free shipping · 7-day easy returns
+            Free shipping · 7-day easy returns
           </p>
         </div>
       </section>
