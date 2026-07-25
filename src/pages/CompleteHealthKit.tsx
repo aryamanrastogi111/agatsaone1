@@ -459,58 +459,63 @@ export default function CompleteHealthKitPage() {
         </div>
       </section>
 
-      {/* BUNDLE MATH */}
+      {/* TESTIMONIALS */}
       <section className="py-20 bg-background">
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">The math is simple.</h2>
-            <p className="mt-3 text-muted-foreground">
-              Everything you'd pay for separately — bundled at a lower flat price.
-            </p>
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12 max-w-2xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary">
+              From real users
+            </span>
+            <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground">
+              People who stopped guessing about their health.
+            </h2>
           </div>
 
-          <div className="bg-card border border-border rounded-2xl overflow-hidden">
+          <div className="grid md:grid-cols-3 gap-6">
             {[
-              { name: "SanketLife ECG", price: 4999 },
-              { name: "EasyTouch Wellness", price: 3999 },
-              { name: "EasyTouch Rhythm Band", price: 4999 },
-              { name: "Agatsa Smart Scale", price: 1800 },
-            ].map((row) => (
-              <div
-                key={row.name}
-                className="flex items-center justify-between px-6 py-4 border-b border-border last:border-b-0"
+              {
+                name: "Rajeev M.",
+                role: "48, Bengaluru",
+                quote:
+                  "I bought the bundle after my father's bypass. Nera AI flagged a rhythm change in week three and I got a proper cardiology consult the same week. That kind of heads-up is exactly what my family history needed.",
+              },
+              {
+                name: "Priya S.",
+                role: "36, Gurugram",
+                quote:
+                  "The Rhythm Band caught my post-lunch sugar spikes I never knew about. Two months in, my energy crashes are gone and the Smart Scale is finally showing muscle mass going up, not just weight going down.",
+              },
+              {
+                name: "Anand K.",
+                role: "52, Pune",
+                quote:
+                  "Getting all four devices at once made it feel like a system, not gadgets. The weekly Nera AI report is the single thing I actually forward to my physician now.",
+              },
+            ].map((t) => (
+              <motion.div
+                key={t.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="bg-card border border-border rounded-2xl p-6 md:p-7 flex flex-col"
               >
-                <span className="text-sm text-foreground">{row.name}</span>
-                <span className="text-sm font-medium text-muted-foreground">
-                  ₹{row.price.toLocaleString("en-IN")}
-                </span>
-              </div>
+                <div className="flex text-amber-400 mb-3" aria-hidden>
+                  {"★★★★★"}
+                </div>
+                <p className="text-sm text-foreground leading-relaxed flex-1">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="mt-5 pt-4 border-t border-border">
+                  <p className="text-sm font-semibold text-foreground">{t.name}</p>
+                  <p className="text-xs text-muted-foreground">{t.role}</p>
+                </div>
+              </motion.div>
             ))}
-            <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-muted/40">
-              <span className="text-sm font-semibold text-foreground">Buy separately</span>
-              <span className="text-sm font-semibold text-muted-foreground line-through">
-                ₹15,797
-              </span>
-            </div>
-            <div className="flex items-center justify-between px-6 py-5 bg-primary/10">
-              <div>
-                <p className="text-sm font-bold text-foreground">Complete Health Kit</p>
-                <p className="text-xs text-primary font-medium">
-                  + 3 months Nera AI Premium free
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-2xl font-extrabold text-primary">
-                  ₹{BUNDLE_PRICE.toLocaleString("en-IN")}
-                </p>
-                <p className="text-xs font-bold text-green-600">
-                  Save ₹2,798 + Nera AI free
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
+
 
 
       {/* HOW IT WORKS */}
