@@ -18,6 +18,14 @@ import {
   Zap,
   ChevronDown,
   ChevronUp,
+  Sunrise,
+  Utensils,
+  Briefcase,
+  Bed,
+  Heart,
+  ShieldAlert,
+  Home,
+  Stethoscope,
 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
