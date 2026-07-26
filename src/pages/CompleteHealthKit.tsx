@@ -367,7 +367,7 @@ export default function CompleteHealthKitPage() {
             <h3 className="mt-3 text-2xl md:text-3xl font-bold text-white">
               Agatsa's job is to see the problem before it becomes obvious.
             </h3>
-            <p className="mt-4 text-base md:text-lg text-background/80 max-w-3xl mx-auto leading-relaxed">
+            <p className="mt-4 text-base md:text-lg text-white/80 max-w-3xl mx-auto leading-relaxed">
               The devices capture the raw signals. Nera AI learns your personal baseline,
               predicts drift, flags early warnings and generates the report your doctor needs —
               so a routine consultation becomes a targeted, data-backed conversation instead of
