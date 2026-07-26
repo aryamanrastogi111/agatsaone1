@@ -702,16 +702,16 @@ export default function CompleteHealthKitPage() {
       {/* NERA AI REPORT SHOWCASE */}
 
       {/* NERA AI REPORT SHOWCASE */}
-      <section className="py-12 md:py-20 bg-foreground text-background overflow-hidden">
+      <section className="py-12 md:py-20 bg-slate-900 text-white overflow-hidden">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
               What Nera AI actually shows you
             </span>
-            <h2 className="mt-3 text-2xl md:text-4xl font-bold">
+            <h2 className="mt-3 text-2xl md:text-4xl font-bold text-white">
               Four devices in. <span className="text-primary">One report out.</span>
             </h2>
-            <p className="mt-4 text-sm md:text-base text-background/70 leading-relaxed">
+            <p className="mt-4 text-sm md:text-base text-white/70 leading-relaxed">
               Nera AI combines every signal — ECG, glucose trends, sleep, HRV, body composition —
               into a single, readable story of your health. Here's what it looks like on your
               phone.
