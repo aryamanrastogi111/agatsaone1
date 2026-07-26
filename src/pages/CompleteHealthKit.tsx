@@ -18,6 +18,14 @@ import {
   Zap,
   ChevronDown,
   ChevronUp,
+  Sunrise,
+  Utensils,
+  Briefcase,
+  Bed,
+  Heart,
+  ShieldAlert,
+  Home,
+  Stethoscope,
 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
@@ -410,6 +418,236 @@ export default function CompleteHealthKitPage() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* A DAY IN YOUR LIFE — how each device supplements you */}
+      <section className="py-12 md:py-20 bg-background">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary">
+              A day in your life with Agatsa
+            </span>
+            <h2 className="mt-2 text-2xl md:text-4xl font-bold text-foreground">
+              Four devices. One rhythm. From your first coffee to your deepest sleep.
+            </h2>
+            <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
+              Health isn't a yearly check-up — it's what happens between breakfast and bedtime,
+              every single day. Here's how the bundle quietly works around you.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-5 md:gap-6">
+            {[
+              {
+                icon: Sunrise,
+                time: "6:30 AM · Wake",
+                device: "Rhythm Band",
+                title: "Start with a real recovery score, not a guess",
+                body:
+                  "You wake up and glance at Nera AI: HRV, resting heart rate and deep-sleep minutes from the Rhythm Band. It tells you whether today is a push day or a recover day — before the coffee kicks in.",
+                accent: "from-amber-400/20 to-transparent",
+                iconBg: "bg-amber-100 dark:bg-amber-950/40 text-amber-600",
+              },
+              {
+                icon: Utensils,
+                time: "9:00 AM · Breakfast",
+                device: "Rhythm Band + EasyTouch Wellness",
+                title: "See what your food actually did to you",
+                body:
+                  "The Rhythm Band auto-detects your post-meal glucose spike and asks one question: what did you eat? EasyTouch Wellness lets you spot-check when curiosity strikes. Nera AI labels the meal as a high, medium or low-spike food — for the next time you order the same thing.",
+                accent: "from-emerald-400/20 to-transparent",
+                iconBg: "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-600",
+              },
+              {
+                icon: Briefcase,
+                time: "1:30 PM · That chest twinge at work",
+                device: "SanketLife ECG",
+                title: "Take a 12-lead ECG in 30 seconds",
+                body:
+                  "A palpitation, a tight moment, a family history nagging at you. Instead of Googling symptoms, you place your fingers on SanketLife and get a hospital-grade 12-lead ECG PDF — right at your desk. Nera AI compares it to your last one and tells you if anything has drifted.",
+                accent: "from-rose-400/20 to-transparent",
+                iconBg: "bg-rose-100 dark:bg-rose-950/40 text-rose-600",
+              },
+              {
+                icon: Home,
+                time: "7:00 PM · Home",
+                device: "Agatsa Smart Scale",
+                title: "Weight is one number. Your body is fourteen.",
+                body:
+                  "A 5-second step tracks visceral fat, muscle mass, body water, metabolic age and more. Nera AI ties it back to how you ate and slept this week — so progress is about muscle going up and visceral fat going down, not just the scale number.",
+                accent: "from-sky-400/20 to-transparent",
+                iconBg: "bg-sky-100 dark:bg-sky-950/40 text-sky-600",
+              },
+              {
+                icon: Bed,
+                time: "11:00 PM · Sleep",
+                device: "Rhythm Band",
+                title: "Your body files the day's report while you rest",
+                body:
+                  "The Band keeps recording heart rhythm, HRV, SpO₂, temperature and sleep stages. Nera AI runs its overnight analysis so the next morning's dashboard is ready — no logging, no charging drama, just insight.",
+                accent: "from-indigo-400/20 to-transparent",
+                iconBg: "bg-indigo-100 dark:bg-indigo-950/40 text-indigo-600",
+              },
+              {
+                icon: Stethoscope,
+                time: "Sunday · The Nera AI weekly report",
+                device: "All four devices",
+                title: "Seven days of your body, in one screen",
+                body:
+                  "Every Sunday, Nera AI cross-references cardiac, metabolic, sleep and body-composition data into a single readable report. It highlights what improved, what drifted, and what's worth showing your doctor — before it becomes a symptom.",
+                accent: "from-primary/20 to-transparent",
+                iconBg: "bg-primary/10 text-primary",
+              },
+            ].map((s, i) => (
+              <motion.div
+                key={s.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: (i % 2) * 0.08 }}
+                className={`relative bg-card border border-border rounded-2xl p-5 md:p-6 overflow-hidden`}
+              >
+                <div className={`pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full bg-gradient-to-br ${s.accent} blur-2xl`} />
+                <div className="relative flex items-start gap-4">
+                  <div className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 ${s.iconBg}`}>
+                    <s.icon className="h-5 w-5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-primary">
+                        {s.time}
+                      </span>
+                      <span className="text-[10px] md:text-xs font-semibold text-muted-foreground">
+                        · {s.device}
+                      </span>
+                    </div>
+                    <h3 className="mt-1.5 text-base md:text-lg font-bold text-foreground leading-snug">
+                      {s.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                      {s.body}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Why now */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-10 md:mt-14 grid md:grid-cols-3 gap-4 md:gap-5"
+          >
+            {[
+              {
+                icon: ShieldAlert,
+                stat: "1 in 4",
+                label: "Indian adults under 40 now show early cardiac or metabolic markers.",
+              },
+              {
+                icon: HeartPulse,
+                stat: "50%",
+                label: "of first heart events happen without prior warning symptoms.",
+              },
+              {
+                icon: Droplet,
+                stat: "7–10 yrs",
+                label: "of silent metabolic dysfunction before a lab test calls it diabetes.",
+              },
+            ].map((s) => (
+              <div
+                key={s.stat}
+                className="bg-muted/40 border border-border rounded-2xl p-5 flex items-start gap-4"
+              >
+                <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                  <s.icon className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-2xl md:text-3xl font-extrabold text-foreground">{s.stat}</p>
+                  <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{s.label}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
+          <p className="mt-6 md:mt-8 text-center text-sm md:text-base text-muted-foreground max-w-3xl mx-auto">
+            Any one device gives you a slice. Four together — with Nera AI on top — give you the
+            full picture. That's why this bundle is the single most useful health purchase you can
+            make this year.
+          </p>
+        </div>
+      </section>
+
+      {/* PEACE OF MIND */}
+      <section className="py-12 md:py-20 bg-gradient-to-b from-primary/5 via-background to-primary/5">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="text-center mb-8 md:mb-12 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary">
+              And the real reason people buy this
+            </span>
+            <h2 className="mt-2 text-2xl md:text-4xl font-bold text-foreground">
+              Peace of mind — for you, and for the people who love you.
+            </h2>
+            <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
+              Most people don't buy medical devices for themselves. They buy them for the parent
+              they worry about, the spouse with a family history, the child moving to a new city.
+              The bundle is a quiet promise: <span className="text-foreground font-semibold">if
+              something drifts, we'll see it early.</span>
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-4 md:gap-5">
+            {[
+              {
+                icon: Heart,
+                title: "For the parent you worry about",
+                body:
+                  "One-tap 12-lead ECG at home, continuous heart-rhythm tracking on the wrist, weekly Nera AI report you can review from another city.",
+              },
+              {
+                icon: ShieldAlert,
+                title: "For the family history you can't ignore",
+                body:
+                  "Diabetes, hypertension or cardiac disease in the family? Nera AI learns your baseline early — so the first sign of drift is caught, not the first hospitalisation.",
+              },
+              {
+                icon: Sparkles,
+                title: "For your own quiet confidence",
+                body:
+                  "No more late-night symptom Googling. You have data, a trend, and an AI second opinion — before you decide whether to call the doctor.",
+              },
+            ].map((c) => (
+              <motion.div
+                key={c.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="bg-card border border-border rounded-2xl p-5 md:p-6"
+              >
+                <div className="w-11 h-11 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4">
+                  <c.icon className="h-5 w-5" />
+                </div>
+                <h3 className="text-base md:text-lg font-bold text-foreground">{c.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{c.body}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-10 md:mt-12 text-center">
+            <Button asChild size="lg" className="rounded-full px-8">
+              <Link to="/checkout?sku=complete_kit">
+                Bring home peace of mind — ₹{BUNDLE_PRICE.toLocaleString("en-IN")}
+              </Link>
+            </Button>
+            <p className="mt-3 text-xs text-muted-foreground">
+              Ships in 24 hours · 3 months Nera AI Premium included · 7-day easy returns
+            </p>
           </div>
         </div>
       </section>
