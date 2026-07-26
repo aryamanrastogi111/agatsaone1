@@ -761,10 +761,10 @@ export default function CompleteHealthKitPage() {
                   <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-primary">
                     {r.tag}
                   </span>
-                  <h3 className="mt-1 text-base md:text-lg font-bold text-background">
+                  <h3 className="mt-1 text-base md:text-lg font-bold text-white">
                     {r.title}
                   </h3>
-                  <p className="mt-1 text-xs md:text-sm text-background/70 leading-relaxed">
+                  <p className="mt-1 text-xs md:text-sm text-white/70 leading-relaxed">
                     {r.desc}
                   </p>
                 </div>
@@ -772,7 +772,7 @@ export default function CompleteHealthKitPage() {
             ))}
           </div>
 
-          <p className="mt-8 md:mt-10 text-center text-xs text-background/50 max-w-2xl mx-auto">
+          <p className="mt-8 md:mt-10 text-center text-xs text-white/50 max-w-2xl mx-auto">
             App visuals shown for illustration. Nera AI does not provide medical diagnosis; reports
             are for informational purposes and to support conversations with your clinician.
           </p>
