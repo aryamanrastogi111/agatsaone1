@@ -400,24 +400,11 @@ export default function CheckoutPage() {
     fetchQuote(cartItems, null);
   };
 
-  // ─── Preload Razorpay + InitiateCheckout (Pixel + CAPI, deduped) ──
+  // ─── Preload Razorpay only (InitiateCheckout now fires on Pay click) ──
   useEffect(() => {
     loadRazorpay();
-    if (uniqueSkus.length > 0) {
-      const cartKey = `${uniqueSkus.join("_")}_${searchParams.get("variants") || "default"}`;
-      const eventId = getStableCheckoutEventId(cartKey);
-      trackMetaEvent("InitiateCheckout", {
-        eventId,
-        custom: {
-          content_ids: uniqueSkus,
-          content_type: "product",
-          num_items: cartItems.reduce((s, i) => s + i.qty, 0),
-          value: displayTotalRupees,
-          currency: "INR",
-        },
-      });
-    }
   }, []);
+
 
   useEffect(() => {
     const channel = supabase.channel("checkout-live-events");
