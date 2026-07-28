@@ -33,7 +33,7 @@ interface MetaData {
     ctr: number; cpc: number; metaPurchases: number; metaInitiateCheckout: number;
   };
   accounts?: AccountSummary[];
-  site: { fbSessions: number; paidOrders: number; revenueToday: number; roas: number };
+  site: { fbSessions: number; paidOrders: number; revenueToday: number; roas: number; attributedPaidOrders?: number; unattributedPaidOrders?: number; unattributedRevenue?: number };
   campaigns: Campaign[];
   recentFbSessions: Array<{ session_id: string; started_at: string; utm_campaign: string | null; utm_content: string | null; exit_page: string | null }>;
   historic30d?: {
