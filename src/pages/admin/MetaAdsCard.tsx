@@ -116,10 +116,16 @@ interface MetaData {
 interface AiAnalysis {
   overallHealth: "good" | "warning" | "critical";
   headline: string;
+  diagnosis?: string;
+  targetScorecard?: Array<{ metric: string; actual: string; target: string; grade: "green" | "amber" | "red"; comment: string }>;
   keyMetrics: Array<{ label: string; value: string; trend: "up" | "down" | "flat"; insight: string }>;
   bestDays: Array<{ date: string; revenue: number; spend: number; roas: number; why: string }>;
   worstDays: Array<{ date: string; revenue: number; spend: number; roas: number; why: string }>;
-  topCampaigns: Array<{ name: string; spend: number; revenue_est: number; verdict: string; reason: string }>;
+  campaignActions?: Array<{ name: string; spend: number; roas: number; verdict: string; reason: string; nextStep: string }>;
+  creativeAnalysis?: Array<{ adName: string; spend: number; ctr: number; frequency: number; purchases: number; verdict: string; creativeCritique: string; recommendation: string }>;
+  budgetReallocation?: { summary: string; moves: Array<{ from: string; to: string; amountPct: number; rationale: string }> };
+  actionPlan7Day?: Array<{ day: string; action: string; owner: string; expectedImpact: string }>;
+  topCampaigns?: Array<{ name: string; spend: number; revenue_est: number; verdict: string; reason: string }>;
   recommendations: Array<{ priority: string; action: string; expectedImpact: string; timeframe: string }>;
   alerts: string[];
 }
