@@ -197,6 +197,14 @@ export default function MetaAdsCard() {
     return () => clearInterval(t);
   }, [fetchInsights]);
 
+  // Auto-run AI analysis once data is loaded (only first time)
+  useEffect(() => {
+    if (data?.historic30d && !ai && !aiLoading && !aiError) {
+      runAi();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   const inr = (n: number) => `₹${Math.round(n).toLocaleString("en-IN")}`;
 
   const daily = data?.historic30d?.daily ?? [];
