@@ -183,6 +183,7 @@ export default function CheckoutPage() {
   const checkoutLiveSubscribedRef = useRef(false);
   const lastCheckoutLiveEventRef = useRef("");
   const checkoutStageRef = useRef("/checkout");
+  const hotLeadFiredRef = useRef<Set<string>>(new Set());
 
   // Quantities
   const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
@@ -319,6 +320,49 @@ export default function CheckoutPage() {
 
     await syncCheckoutSession(true, undefined, stage);
   }, [city, country, displayTotalPaise, email, fullName, isIntl, items, phone, state, syncCheckoutSession]);
+
+  // ─── Hot lead notifier: email the internal team when a visitor captures a
+  // phone (or clicks pay / fails / cancels) so they can WhatsApp immediately.
+  // Deduped per (session, trigger) both client-side and server-side.
+  const notifyHotLead = useCallback(async (
+    trigger: "phone_captured" | "payment_clicked" | "payment_failed" | "payment_cancelled"
+  ) => {
+    const rawDigits = phone.replace(/\D/g, "");
+    const phoneReady = isIntl ? rawDigits.length >= 6 : rawDigits.length === 10;
+    const emailTrim = email.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrim);
+    if (!phoneReady && !emailOk) return;
+
+    const dedupKey = `${trigger}:${visitorSessionIdRef.current}`;
+    if (hotLeadFiredRef.current.has(dedupKey)) return;
+    hotLeadFiredRef.current.add(dedupKey);
+
+    const dial = COUNTRY_META[country]?.dial || "+91";
+    try {
+      await supabase.functions.invoke("notify-abandoned-checkout", {
+        body: {
+          sessionId: visitorSessionIdRef.current,
+          email: emailOk ? emailTrim.toLowerCase() : null,
+          phone: phoneReady ? (isIntl ? rawDigits.slice(0, 15) : rawDigits) : null,
+          dialCode: dial,
+          name: fullName.trim() || null,
+          city: city.trim() || null,
+          state: state.trim() || null,
+          country,
+          subtotalPaise: displayTotalPaise,
+          itemCount: items.reduce((sum, d) => sum + d.qty, 0),
+          items: items.map((d) => ({ name: d.name, qty: d.qty, variantTitle: d.variantTitle })),
+          stage: checkoutStageRef.current,
+          trigger,
+        },
+      });
+    } catch (e) {
+      console.error("[checkout] notifyHotLead failed:", e);
+      hotLeadFiredRef.current.delete(dedupKey);
+    }
+  }, [phone, isIntl, email, fullName, city, state, country, displayTotalPaise, items]);
+
+
 
   // ─── Quote fetch ──────────────────────────────────────────
   const fetchQuote = useCallback(async (itemsArr: { sku: string; qty: number }[], coupon: string | null) => {
@@ -530,6 +574,15 @@ export default function CheckoutPage() {
     }
   }, [emailValid, phoneValid, email, phone, fullName, city, state, pincode, country, dialCode, emitCheckoutActivity]);
 
+  // Fire hot-lead email to internal team the moment we have a valid phone
+  // (waits 8s after the phone becomes valid so we don't ping on every keystroke
+  // and so users who continue straight to payment aren't flagged as abandoned).
+  useEffect(() => {
+    if (!phoneValid) return;
+    const t = setTimeout(() => { void notifyHotLead("phone_captured"); }, 8000);
+    return () => clearTimeout(t);
+  }, [phoneValid, notifyHotLead]);
+
   // Purchase is fired inline in the Razorpay handler (immediate, before any
   // async work that could be interrupted by a tab close) and duplicated server
   // side by send-order-confirmation. Same event_id → Meta dedups.
@@ -672,6 +725,7 @@ export default function CheckoutPage() {
     setPageState("processing");
     setErrorMsg("");
     void emitCheckoutActivity("payment_clicked");
+    void notifyHotLead("payment_clicked");
 
     // Fire InitiateCheckout only when the user actually clicks Pay (Razorpay launch)
     try {
@@ -975,6 +1029,7 @@ export default function CheckoutPage() {
                 setPaying(false);
                 setPageState("form");
                 void emitCheckoutActivity("payment_cancelled");
+                void notifyHotLead("payment_cancelled");
                 reject(new Error("cancelled"));
               },
               backdropclose: false,
@@ -991,6 +1046,7 @@ export default function CheckoutPage() {
               setPageState("error");
               setPaying(false);
               void emitCheckoutActivity("payment_failed");
+              void notifyHotLead("payment_failed");
               reject(new Error(reason));
             });
           }
