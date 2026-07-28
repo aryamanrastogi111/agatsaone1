@@ -906,7 +906,7 @@ export default function CheckoutPage() {
                 }
 
                 try {
-                  await syncCheckoutSession(true, response.razorpay_order_id || websiteOrderId || response.razorpay_payment_id);
+                  await syncCheckoutSession(true, response.razorpay_order_id || websiteOrderId || response.razorpay_payment_id, "checkout_payment_success");
                 } catch (cartSyncErr) {
                   console.error("[checkout] cart conversion sync failed:", cartSyncErr);
                 }
