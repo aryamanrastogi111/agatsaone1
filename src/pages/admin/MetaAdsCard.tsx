@@ -12,6 +12,10 @@ interface Campaign {
   cpc: number;
   metaPurchases: number;
   siteSessions: number;
+  siteOrders?: number;
+  siteRevenue?: number;
+  siteRoas?: number;
+
 }
 
 interface AccountSummary {
