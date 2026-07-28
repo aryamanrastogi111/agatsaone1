@@ -23,7 +23,7 @@ Deno.serve(async (req) => {
       method: "POST",
       headers: { Authorization: `Bearer ${lovableApiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "google/gemini-2.0-flash-001",
         messages: [
           {
             role: "system",
@@ -43,6 +43,9 @@ Return STRICT JSON:
 }
 
 Rules:
+- Factor in "Delivery Health": CPM (cost per 1000 impressions), CTR (click-through rate), and Frequency.
+- High CPM (> ₹800) or high Frequency (> 2.0) are warning signs for creative fatigue or auction competition.
+- Very low CTR (< 0.8%) suggests poor creative or audience mismatch.
 - ROAS = site revenue / meta spend (already computed per day).
 - Weekend vs weekday patterns matter; call out spend-heavy low-ROAS days.
 - "Top campaigns" are ranked by spend; use site-side sessions (siteSessions) and metaPurchases to judge.

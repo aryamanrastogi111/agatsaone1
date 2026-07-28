@@ -67,19 +67,19 @@ Deno.serve(async (req) => {
 
     // TODAY + LAST 30 DAYS for each account in parallel
     const perAccount = await Promise.all(accountIds.map(async (acct) => {
-      const [accountLevel, campaignLevel, hist30Daily, hist30Campaign] = await Promise.all([
+      const [accountLevel, campaignLevel, hist30Daily, hist30Campaign, campaignMeta, adLevel] = await Promise.all([
         fetchMeta(`${acct}/insights`, {
-          fields: "spend,impressions,clicks,ctr,cpc,reach,actions,action_values",
+          fields: "spend,impressions,clicks,ctr,cpc,reach,cpm,frequency,actions,action_values",
           date_preset: "today",
         }),
         fetchMeta(`${acct}/insights`, {
-          fields: "campaign_id,campaign_name,spend,impressions,clicks,ctr,cpc,actions,action_values",
+          fields: "campaign_id,campaign_name,spend,impressions,clicks,ctr,cpc,cpm,frequency,actions,action_values",
           date_preset: "today",
           level: "campaign",
           limit: "50",
         }),
         fetchMeta(`${acct}/insights`, {
-          fields: "spend,impressions,clicks,actions,action_values",
+          fields: "spend,impressions,clicks,ctr,cpm,actions,action_values",
           date_preset: "last_30d",
           time_increment: "1",
           limit: "500",
@@ -90,14 +90,26 @@ Deno.serve(async (req) => {
           level: "campaign",
           limit: "200",
         }),
+        fetchMeta(`${acct}/campaigns`, {
+          fields: "id,name,status,effective_status,configured_status,objective,updated_time",
+          limit: "100",
+        }),
+        fetchMeta(`${acct}/insights`, {
+          fields: "campaign_id,campaign_name,ad_id,ad_name,spend,impressions,clicks,ctr,cpc,cpm,frequency,actions",
+          date_preset: "today",
+          level: "ad",
+          limit: "100",
+        }),
       ]);
-      return { acct, accountLevel, campaignLevel, hist30Daily, hist30Campaign };
+      return { acct, accountLevel, campaignLevel, hist30Daily, hist30Campaign, campaignMeta, adLevel };
     }));
 
     // ── TODAY aggregation ──
     let spend = 0, impressions = 0, clicks = 0, reach = 0;
     let metaPurchases = 0, metaInitiateCheckout = 0;
     const perAccountSummary: any[] = [];
+    const campaignStatusRows: any[] = [];
+    const adRows: any[] = [];
     for (const { acct, accountLevel } of perAccount) {
       const s = accountLevel.data?.[0] || {};
       const aSpend = parseFloat(s.spend || "0");
@@ -110,8 +122,43 @@ Deno.serve(async (req) => {
       metaPurchases += aPurch; metaInitiateCheckout += aIC;
       perAccountSummary.push({
         accountId: acct, spend: aSpend, impressions: aImp, clicks: aClicks,
-        ctr: parseFloat(s.ctr || "0"), cpc: parseFloat(s.cpc || "0"), metaPurchases: aPurch,
+        ctr: parseFloat(s.ctr || "0"), cpc: parseFloat(s.cpc || "0"), 
+        cpm: parseFloat(s.cpm || "0"), frequency: parseFloat(s.frequency || "0"),
+        metaPurchases: aPurch,
       });
+    }
+
+    for (const { acct, campaignMeta, adLevel } of perAccount) {
+      for (const c of campaignMeta?.data || []) {
+        campaignStatusRows.push({
+          accountId: acct,
+          id: c.id,
+          name: c.name,
+          status: c.status,
+          effectiveStatus: c.effective_status,
+          configuredStatus: c.configured_status,
+          objective: c.objective,
+          updatedTime: c.updated_time,
+        });
+      }
+      for (const ad of adLevel?.data || []) {
+        adRows.push({
+          accountId: acct,
+          campaignId: ad.campaign_id,
+          campaignName: ad.campaign_name,
+          adId: ad.ad_id,
+          adName: ad.ad_name,
+          spend: parseFloat(ad.spend || "0"),
+          impressions: parseInt(ad.impressions || "0", 10),
+          clicks: parseInt(ad.clicks || "0", 10),
+          ctr: parseFloat(ad.ctr || "0"),
+          cpc: parseFloat(ad.cpc || "0"),
+          cpm: parseFloat(ad.cpm || "0"),
+          frequency: parseFloat(ad.frequency || "0"),
+          metaPurchases: findAction(ad.actions || [], "purchase"),
+          metaInitiateCheckout: findAction(ad.actions || [], "initiate_checkout"),
+        });
+      }
     }
 
     // DB queries
@@ -136,9 +183,6 @@ Deno.serve(async (req) => {
     const roas = spend > 0 ? revenueToday / spend : 0;
 
     // ── Attribute paid orders to Meta campaigns ──
-    // Link: orders.customer_email/phone → cart_sessions (has session_id + email/phone)
-    //       → visitor_sessions.session_id (has utm_campaign + utm_source)
-    // Only counts orders whose ACTUAL buyer's session came from a Meta source.
     const emails = Array.from(new Set(
       (paidOrdersToday || []).map((o: any) => (o.customer_email || "").toLowerCase().trim()).filter(Boolean)
     ));
@@ -146,7 +190,6 @@ Deno.serve(async (req) => {
       (paidOrdersToday || []).map((o: any) => (o.customer_phone || "").replace(/\D/g, "").slice(-10)).filter((p) => p.length === 10)
     ));
 
-    // Fetch cart_sessions matching these buyers (30d window to catch pre-purchase carts)
     let cartRows: any[] = [];
     if (emails.length || phones.length) {
       const orFilters: string[] = [];
@@ -162,7 +205,6 @@ Deno.serve(async (req) => {
       cartRows = carts || [];
     }
 
-    // For each buyer identity, collect their session_ids
     const sessionIdsByEmail = new Map<string, string[]>();
     const sessionIdsByPhone = new Map<string, string[]>();
     for (const c of cartRows) {
@@ -180,7 +222,6 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Fetch visitor_sessions for those session_ids that came from Meta
     const allBuyerSessionIds = Array.from(new Set(cartRows.map((c) => c.session_id).filter(Boolean)));
     let buyerFbSessions: any[] = [];
     if (allBuyerSessionIds.length) {
@@ -195,7 +236,6 @@ Deno.serve(async (req) => {
     }
     const fbSessionById = new Map<string, any>();
     for (const s of buyerFbSessions) {
-      // keep most recent per session_id (already sorted desc)
       if (!fbSessionById.has(s.session_id)) fbSessionById.set(s.session_id, s);
     }
 
@@ -210,7 +250,6 @@ Deno.serve(async (req) => {
         ...(phone.length === 10 ? sessionIdsByPhone.get(phone) || [] : []),
       ];
       const orderTs = new Date(order.paid_at || order.created_at).getTime();
-      // Pick this buyer's most recent FB session started before payment (last-touch)
       let best: any = null;
       for (const sid of candidateSessionIds) {
         const s = fbSessionById.get(sid);
@@ -219,7 +258,7 @@ Deno.serve(async (req) => {
         if (!best || new Date(s.started_at).getTime() > new Date(best.started_at).getTime()) best = s;
       }
       if (best?.utm_campaign) {
-        const key = String(best.utm_campaign);
+        const key = String(best.utm_campaign).toLowerCase();
         if (!campaignAttribution[key]) campaignAttribution[key] = { orders: 0, revenue: 0 };
         campaignAttribution[key].orders += 1;
         campaignAttribution[key].revenue += Number(order.amount || 0);
@@ -231,51 +270,63 @@ Deno.serve(async (req) => {
     const unattributedRevenue = (paidOrdersToday || []).filter((o: any) => !orderIdsAttributed.has(o.id))
       .reduce((s: number, o: any) => s + Number(o.amount || 0), 0);
 
-    // Campaign match by ID (utm_campaign stores the numeric Meta campaign ID)
-    const campaigns = perAccount.flatMap(({ acct, campaignLevel }) =>
-      (campaignLevel.data || []).map((c: any) => {
+    // Campaign match
+    const campaigns = perAccount.flatMap(({ acct, campaignLevel, campaignMeta }) => {
+      const metaMap = new Map((campaignMeta?.data || []).map((m: any) => [m.id, m]));
+      return (campaignLevel.data || []).map((c: any) => {
         const cid = String(c.campaign_id || "");
         const cname = (c.campaign_name || "").toLowerCase();
         const sessions = (fbSessionsToday || []).filter((s: any) => {
           const u = (s.utm_campaign || "").toString();
           return u === cid || u.toLowerCase() === cname;
         });
-        const attr = campaignAttribution[cid] || { orders: 0, revenue: 0 };
+        const nameKey = String(c.campaign_name || "").toLowerCase();
+        const byId = campaignAttribution[cid.toLowerCase()] || { orders: 0, revenue: 0 };
+        const byName = campaignAttribution[nameKey] || { orders: 0, revenue: 0 };
+        const attr = {
+          orders: byId.orders + (nameKey !== cid.toLowerCase() ? byName.orders : 0),
+          revenue: byId.revenue + (nameKey !== cid.toLowerCase() ? byName.revenue : 0),
+        };
+        const meta = metaMap.get(cid) || {};
         return {
           accountId: acct,
           id: c.campaign_id,
           name: c.campaign_name,
+          status: meta.effective_status || "UNKNOWN",
+          objective: meta.objective,
           spend: parseFloat(c.spend || "0"),
           impressions: parseInt(c.impressions || "0", 10),
           clicks: parseInt(c.clicks || "0", 10),
           ctr: parseFloat(c.ctr || "0"),
           cpc: parseFloat(c.cpc || "0"),
+          cpm: parseFloat(c.cpm || "0"),
+          frequency: parseFloat(c.frequency || "0"),
           metaPurchases: findAction(c.actions || [], "purchase"),
           siteSessions: sessions.length,
           siteOrders: attr.orders,
           siteRevenue: attr.revenue,
           siteRoas: parseFloat(c.spend || "0") > 0 ? attr.revenue / parseFloat(c.spend) : 0,
         };
-      })
-    );
+      });
+    });
 
-
-    // ── HISTORIC 30D: daily + campaign totals ──
-    // Daily meta spend rolled up across accounts
-    const dailySpendMap: Record<string, { spend: number; impressions: number; clicks: number; metaPurchases: number }> = {};
+    // ── HISTORIC 30D ──
+    const dailySpendMap: Record<string, { spend: number; impressions: number; clicks: number; metaPurchases: number; ctr: number; cpm: number; count: number }> = {};
     for (const { hist30Daily } of perAccount) {
       for (const row of (hist30Daily.data || [])) {
         const day = row.date_start;
         if (!day) continue;
-        if (!dailySpendMap[day]) dailySpendMap[day] = { spend: 0, impressions: 0, clicks: 0, metaPurchases: 0 };
+        if (!dailySpendMap[day]) dailySpendMap[day] = { spend: 0, impressions: 0, clicks: 0, metaPurchases: 0, ctr: 0, cpm: 0, count: 0 };
         dailySpendMap[day].spend += parseFloat(row.spend || "0");
         dailySpendMap[day].impressions += parseInt(row.impressions || "0", 10);
         dailySpendMap[day].clicks += parseInt(row.clicks || "0", 10);
         dailySpendMap[day].metaPurchases += findAction(row.actions || [], "purchase");
+        dailySpendMap[day].ctr += parseFloat(row.ctr || "0");
+        dailySpendMap[day].cpm += parseFloat(row.cpm || "0");
+        dailySpendMap[day].count += 1;
       }
     }
 
-    // Site-side daily revenue/orders (IST) from actual paid orders in last 30d
     const { data: paidOrders30 } = await supabase
       .from("orders").select("id,amount,created_at,status")
       .gte("created_at", start30Utc).lt("created_at", endUtc).in("status", PAID);
@@ -295,6 +346,8 @@ Deno.serve(async (req) => {
       impressions: dailySpendMap[d]?.impressions || 0,
       clicks: dailySpendMap[d]?.clicks || 0,
       metaPurchases: dailySpendMap[d]?.metaPurchases || 0,
+      ctr: dailySpendMap[d]?.count > 0 ? dailySpendMap[d].ctr / dailySpendMap[d].count : 0,
+      cpm: dailySpendMap[d]?.count > 0 ? dailySpendMap[d].cpm / dailySpendMap[d].count : 0,
       orders: dailyRevMap[d]?.orders || 0,
       revenue: dailyRevMap[d]?.revenue || 0,
       roas: (dailySpendMap[d]?.spend || 0) > 0 ? (dailyRevMap[d]?.revenue || 0) / dailySpendMap[d].spend : 0,
@@ -318,7 +371,6 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Site sessions per campaign (last 30d) by campaign_id in utm_campaign
     const { data: fbSessions30 } = await supabase
       .from("visitor_sessions")
       .select("utm_campaign")
@@ -340,6 +392,26 @@ Deno.serve(async (req) => {
       siteSessions: sessionByCampaign[String(c.id)] || 0,
     })).sort((a: any, b: any) => b.spend - a.spend);
 
+    const todayKey = istDateKey(new Date().toISOString());
+    const previous7 = daily30.filter((d) => d.date < todayKey && d.spend > 0).slice(-7);
+    const avg = (key: string) => previous7.length
+      ? previous7.reduce((sum, d: any) => sum + Number(d[key] || 0), 0) / previous7.length
+      : 0;
+    const last7AvgSpend = avg("spend");
+    const last7AvgImpressions = avg("impressions");
+    const spendChangePct = last7AvgSpend > 0 ? ((spend - last7AvgSpend) / last7AvgSpend) * 100 : 0;
+    const impressionChangePct = last7AvgImpressions > 0 ? ((impressions - last7AvgImpressions) / last7AvgImpressions) * 100 : 0;
+    const frequencyToday = reach > 0 ? impressions / reach : 0;
+    const cpmToday = impressions > 0 ? (spend / impressions) * 1000 : 0;
+    const activeCampaigns = campaignStatusRows.filter((c) => c.effectiveStatus === "ACTIVE").length;
+    const issueStatuses = new Set(["PAUSED", "ARCHIVED", "DELETED", "DISAPPROVED", "WITH_ISSUES", "PENDING_REVIEW"]);
+    const issueCampaigns = campaignStatusRows.filter((c) => issueStatuses.has(c.effectiveStatus)).slice(0, 10);
+    const deliveryAlerts: string[] = [];
+    if (last7AvgSpend > 0 && spend < last7AvgSpend * 0.4) deliveryAlerts.push("Spend is down more than 60% versus the recent 7-day average.");
+    if (last7AvgImpressions > 0 && impressions < last7AvgImpressions * 0.4) deliveryAlerts.push("Impressions are down more than 60% versus the recent 7-day average.");
+    if (frequencyToday >= 3.5) deliveryAlerts.push("Frequency is high; audience fatigue may be reducing delivery quality.");
+    if (campaignStatusRows.length > 0 && activeCampaigns === 0) deliveryAlerts.push("No active campaigns were detected in connected ad accounts.");
+
     return new Response(JSON.stringify({
       generatedAt: new Date().toISOString(),
       accountIds,
@@ -347,9 +419,36 @@ Deno.serve(async (req) => {
         spend, impressions, clicks, reach,
         ctr: impressions > 0 ? (clicks / impressions) * 100 : 0,
         cpc: clicks > 0 ? spend / clicks : 0,
+        cpm: cpmToday,
+        frequency: frequencyToday,
         metaPurchases, metaInitiateCheckout,
       },
       accounts: perAccountSummary,
+      deliveryHealth: {
+        status: deliveryAlerts.length >= 2 ? "critical" : deliveryAlerts.length === 1 ? "warning" : "good",
+        alerts: deliveryAlerts,
+        today: {
+          spend,
+          impressions,
+          clicks,
+          reach,
+          ctr: impressions > 0 ? (clicks / impressions) * 100 : 0,
+          cpm: cpmToday,
+          frequency: frequencyToday,
+        },
+        last7Average: {
+          spend: last7AvgSpend,
+          impressions: last7AvgImpressions,
+          clicks: avg("clicks"),
+          ctr: avg("ctr"),
+          cpm: avg("cpm"),
+        },
+        spendChangePct,
+        impressionChangePct,
+        activeCampaigns,
+        issueCampaigns,
+        topAds: adRows.sort((a, b) => b.spend - a.spend).slice(0, 8),
+      },
       site: {
         fbSessions: (fbSessionsToday || []).length,
         paidOrders: (paidOrdersToday || []).length,
@@ -359,7 +458,6 @@ Deno.serve(async (req) => {
         unattributedPaidOrders,
         unattributedRevenue,
       },
-
       campaigns,
       recentFbSessions: (fbSessionsToday || []).slice(0, 15),
       historic30d: {
