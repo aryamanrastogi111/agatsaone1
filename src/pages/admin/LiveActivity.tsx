@@ -936,6 +936,52 @@ export default function LiveActivity() {
       .forEach((row: CheckoutEventRow) => upsertLiveCheckoutEvent(normalizeCheckoutEvent(row)));
   }, [upsertLiveCheckoutEvent]);
 
+  // ── Abandoned checkouts with phone (5 min – 24 h stale, not converted) ──
+  const fetchAbandonedWithPhone = useCallback(async () => {
+    const staleCutoff = new Date(Date.now() - 5 * 60 * 1000).toISOString();
+    const oldest = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { data, error } = await db.from("cart_sessions")
+      .select("session_id, items, email, phone, subtotal, item_count, last_page, updated_at")
+      .not("phone", "is", null)
+      .is("converted_order_id", null)
+      .gte("updated_at", oldest)
+      .lte("updated_at", staleCutoff)
+      .order("updated_at", { ascending: false })
+      .limit(50);
+    if (error) {
+      console.error("[LiveActivity] abandoned-with-phone fetch failed:", error.message);
+      return;
+    }
+    const rows = (data ?? []) as AbandonedCheckout[];
+    // Chime once when brand-new abandoned checkouts arrive
+    const nextSet = new Set<string>();
+    let hasNew = false;
+    for (const row of rows) {
+      nextSet.add(row.session_id);
+      if (!seenAbandonedRef.current.has(row.session_id)) hasNew = true;
+    }
+    if (hasNew && seenAbandonedRef.current.size > 0) {
+      try {
+        const Ctx = (window as any).AudioContext || (window as any).webkitAudioContext;
+        if (Ctx) {
+          const ctx = new Ctx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine"; osc.frequency.value = 880;
+          gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.4);
+          osc.connect(gain).connect(ctx.destination);
+          osc.start(); osc.stop(ctx.currentTime + 0.45);
+          setTimeout(() => ctx.close().catch(() => {}), 900);
+        }
+      } catch { /* no-op */ }
+    }
+    seenAbandonedRef.current = nextSet;
+    setAbandonedWithPhone(rows);
+  }, []);
+
+
   // ── DB data: orders ──
   const fetchData = useCallback(async () => {
     const istOffsetMs = 5.5 * 60 * 60 * 1000;
