@@ -253,11 +253,14 @@ export default function MetaAdsCard() {
                       <th className="text-right px-3 py-2 font-medium">CTR</th>
                       <th className="text-right px-3 py-2 font-medium">Purch.</th>
                       <th className="text-right px-3 py-2 font-medium">Sessions</th>
+                      <th className="text-right px-3 py-2 font-medium">Orders</th>
+                      <th className="text-right px-3 py-2 font-medium">Revenue</th>
+                      <th className="text-right px-3 py-2 font-medium">ROAS</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.campaigns.length === 0 ? (
-                      <tr><td colSpan={6} className="text-center text-gray-400 py-6">No active campaigns today</td></tr>
+                      <tr><td colSpan={9} className="text-center text-gray-400 py-6">No active campaigns today</td></tr>
                     ) : (
                       data.campaigns.slice().sort((a, b) => b.spend - a.spend).map((c) => (
                         <tr key={`${c.accountId || ""}-${c.id}`} className="border-b border-gray-50 hover:bg-gray-50/50">
@@ -272,10 +275,16 @@ export default function MetaAdsCard() {
                           <td className="px-3 py-2 text-right">{c.ctr.toFixed(2)}%</td>
                           <td className="px-3 py-2 text-right">{c.metaPurchases}</td>
                           <td className="px-3 py-2 text-right text-blue-600 font-medium">{c.siteSessions}</td>
+                          <td className="px-3 py-2 text-right font-medium">{c.siteOrders ?? 0}</td>
+                          <td className="px-3 py-2 text-right">{inr(c.siteRevenue ?? 0)}</td>
+                          <td className={`px-3 py-2 text-right font-semibold ${(c.siteRoas ?? 0) >= 1 ? "text-emerald-600" : (c.siteRoas ?? 0) > 0 ? "text-amber-600" : "text-gray-400"}`}>
+                            {c.siteRoas && c.siteRoas > 0 ? `${c.siteRoas.toFixed(2)}x` : "—"}
+                          </td>
                         </tr>
                       ))
                     )}
                   </tbody>
+
                 </table>
               </div>
             </div>
