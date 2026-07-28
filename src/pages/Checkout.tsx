@@ -1020,6 +1020,7 @@ export default function CheckoutPage() {
                 setPaying(false);
                 setPageState("form");
                 void emitCheckoutActivity("payment_cancelled");
+                void notifyHotLead("payment_cancelled");
                 reject(new Error("cancelled"));
               },
               backdropclose: false,
