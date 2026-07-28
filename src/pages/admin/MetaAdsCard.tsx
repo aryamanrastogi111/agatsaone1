@@ -188,6 +188,18 @@ export default function MetaAdsCard() {
             <KPI icon={ShoppingCart} label="Purchases" value={data.account.metaPurchases.toLocaleString("en-IN")} color="bg-green-50 text-green-600" sub={`${data.site.paidOrders} paid on site`} />
           </div>
 
+          {typeof data.site.unattributedPaidOrders === "number" && data.site.paidOrders > 0 && (
+            <div className="mx-5 mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-900 flex flex-wrap items-center gap-x-4 gap-y-1">
+              <span className="font-semibold">Attribution today:</span>
+              <span>{data.site.attributedPaidOrders ?? 0} of {data.site.paidOrders} paid orders matched to a Meta campaign</span>
+              {data.site.unattributedPaidOrders > 0 && (
+                <span className="text-amber-800">· {data.site.unattributedPaidOrders} unattributed ({inr(data.site.unattributedRevenue || 0)})</span>
+              )}
+              <span className="text-amber-700/80">— unattributed orders had no FB UTM/fbclid in their session; 30-day localStorage window is now enabled for future clicks.</span>
+            </div>
+          )}
+
+
           {data.accounts && data.accounts.length > 1 && (
             <div className="px-5 pb-3">
               <div className="border border-gray-100 rounded-lg overflow-hidden">
