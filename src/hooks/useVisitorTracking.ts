@@ -62,30 +62,63 @@ function getSessionId(): string {
   return id;
 }
 
+// 30-day attribution window for paid/social clicks
+const ATTR_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+const ATTR_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "gclid"] as const;
+
+function readAttr(key: string): string | null {
+  try {
+    const raw = localStorage.getItem(`agatsa_attr_${key}`);
+    if (!raw) return sessionStorage.getItem(`agatsa_${key}`);
+    const parsed = JSON.parse(raw) as { v: string; t: number };
+    if (Date.now() - parsed.t > ATTR_TTL_MS) {
+      localStorage.removeItem(`agatsa_attr_${key}`);
+      return sessionStorage.getItem(`agatsa_${key}`);
+    }
+    return parsed.v;
+  } catch {
+    return null;
+  }
+}
+
+function writeAttr(key: string, value: string) {
+  try {
+    localStorage.setItem(`agatsa_attr_${key}`, JSON.stringify({ v: value, t: Date.now() }));
+    sessionStorage.setItem(`agatsa_${key}`, value);
+  } catch {
+    /* ignore quota errors */
+  }
+}
+
 function getUtmParams() {
   const url = new URL(window.location.href);
+  const fbclid = url.searchParams.get("fbclid") || readAttr("fbclid");
+  let utm_source = url.searchParams.get("utm_source") || readAttr("utm_source");
+  // If a Meta click landed without UTMs, treat fbclid as a Facebook click.
+  if (!utm_source && fbclid) utm_source = "facebook";
   return {
-    utm_source: url.searchParams.get("utm_source") || sessionStorage.getItem("agatsa_utm_source") || null,
-    utm_medium: url.searchParams.get("utm_medium") || sessionStorage.getItem("agatsa_utm_medium") || null,
-    utm_campaign: url.searchParams.get("utm_campaign") || sessionStorage.getItem("agatsa_utm_campaign") || null,
-    utm_content: url.searchParams.get("utm_content") || sessionStorage.getItem("agatsa_utm_content") || null,
-    utm_term: url.searchParams.get("utm_term") || sessionStorage.getItem("agatsa_utm_term") || null,
+    utm_source: utm_source || null,
+    utm_medium: url.searchParams.get("utm_medium") || readAttr("utm_medium") || (fbclid ? "paid_social" : null),
+    utm_campaign: url.searchParams.get("utm_campaign") || readAttr("utm_campaign") || null,
+    utm_content: url.searchParams.get("utm_content") || readAttr("utm_content") || null,
+    utm_term: url.searchParams.get("utm_term") || readAttr("utm_term") || null,
   };
 }
 
 function captureUtmParams() {
   const url = new URL(window.location.href);
-  const src = url.searchParams.get("utm_source");
-  const med = url.searchParams.get("utm_medium");
-  const camp = url.searchParams.get("utm_campaign");
-  const cont = url.searchParams.get("utm_content");
-  const term = url.searchParams.get("utm_term");
-  if (src) sessionStorage.setItem("agatsa_utm_source", src);
-  if (med) sessionStorage.setItem("agatsa_utm_medium", med);
-  if (camp) sessionStorage.setItem("agatsa_utm_campaign", camp);
-  if (cont) sessionStorage.setItem("agatsa_utm_content", cont);
-  if (term) sessionStorage.setItem("agatsa_utm_term", term);
+  for (const key of ATTR_KEYS) {
+    const val = url.searchParams.get(key);
+    if (val) writeAttr(key, val);
+  }
+  // Meta's _fbc cookie encodes fbclid; store our own copy as backup too.
+  const fbclid = url.searchParams.get("fbclid");
+  if (fbclid && !url.searchParams.get("utm_source")) {
+    writeAttr("utm_source", "facebook");
+    writeAttr("utm_medium", "paid_social");
+  }
 }
+
 
 // Increment total_visitors once per unique visitor per day
 async function incrementDailyVisitor() {

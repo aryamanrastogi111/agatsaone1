@@ -12,6 +12,10 @@ interface Campaign {
   cpc: number;
   metaPurchases: number;
   siteSessions: number;
+  siteOrders?: number;
+  siteRevenue?: number;
+  siteRoas?: number;
+
 }
 
 interface AccountSummary {
@@ -33,7 +37,7 @@ interface MetaData {
     ctr: number; cpc: number; metaPurchases: number; metaInitiateCheckout: number;
   };
   accounts?: AccountSummary[];
-  site: { fbSessions: number; paidOrders: number; revenueToday: number; roas: number };
+  site: { fbSessions: number; paidOrders: number; revenueToday: number; roas: number; attributedPaidOrders?: number; unattributedPaidOrders?: number; unattributedRevenue?: number };
   campaigns: Campaign[];
   recentFbSessions: Array<{ session_id: string; started_at: string; utm_campaign: string | null; utm_content: string | null; exit_page: string | null }>;
   historic30d?: {
@@ -188,6 +192,18 @@ export default function MetaAdsCard() {
             <KPI icon={ShoppingCart} label="Purchases" value={data.account.metaPurchases.toLocaleString("en-IN")} color="bg-green-50 text-green-600" sub={`${data.site.paidOrders} paid on site`} />
           </div>
 
+          {typeof data.site.unattributedPaidOrders === "number" && data.site.paidOrders > 0 && (
+            <div className="mx-5 mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-900 flex flex-wrap items-center gap-x-4 gap-y-1">
+              <span className="font-semibold">Attribution today:</span>
+              <span>{data.site.attributedPaidOrders ?? 0} of {data.site.paidOrders} paid orders matched to a Meta campaign</span>
+              {data.site.unattributedPaidOrders > 0 && (
+                <span className="text-amber-800">· {data.site.unattributedPaidOrders} unattributed ({inr(data.site.unattributedRevenue || 0)})</span>
+              )}
+              <span className="text-amber-700/80">— unattributed orders had no FB UTM/fbclid in their session; 30-day localStorage window is now enabled for future clicks.</span>
+            </div>
+          )}
+
+
           {data.accounts && data.accounts.length > 1 && (
             <div className="px-5 pb-3">
               <div className="border border-gray-100 rounded-lg overflow-hidden">
@@ -237,11 +253,14 @@ export default function MetaAdsCard() {
                       <th className="text-right px-3 py-2 font-medium">CTR</th>
                       <th className="text-right px-3 py-2 font-medium">Purch.</th>
                       <th className="text-right px-3 py-2 font-medium">Sessions</th>
+                      <th className="text-right px-3 py-2 font-medium">Orders</th>
+                      <th className="text-right px-3 py-2 font-medium">Revenue</th>
+                      <th className="text-right px-3 py-2 font-medium">ROAS</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.campaigns.length === 0 ? (
-                      <tr><td colSpan={6} className="text-center text-gray-400 py-6">No active campaigns today</td></tr>
+                      <tr><td colSpan={9} className="text-center text-gray-400 py-6">No active campaigns today</td></tr>
                     ) : (
                       data.campaigns.slice().sort((a, b) => b.spend - a.spend).map((c) => (
                         <tr key={`${c.accountId || ""}-${c.id}`} className="border-b border-gray-50 hover:bg-gray-50/50">
@@ -256,10 +275,16 @@ export default function MetaAdsCard() {
                           <td className="px-3 py-2 text-right">{c.ctr.toFixed(2)}%</td>
                           <td className="px-3 py-2 text-right">{c.metaPurchases}</td>
                           <td className="px-3 py-2 text-right text-blue-600 font-medium">{c.siteSessions}</td>
+                          <td className="px-3 py-2 text-right font-medium">{c.siteOrders ?? 0}</td>
+                          <td className="px-3 py-2 text-right">{inr(c.siteRevenue ?? 0)}</td>
+                          <td className={`px-3 py-2 text-right font-semibold ${(c.siteRoas ?? 0) >= 1 ? "text-emerald-600" : (c.siteRoas ?? 0) > 0 ? "text-amber-600" : "text-gray-400"}`}>
+                            {c.siteRoas && c.siteRoas > 0 ? `${c.siteRoas.toFixed(2)}x` : "—"}
+                          </td>
                         </tr>
                       ))
                     )}
                   </tbody>
+
                 </table>
               </div>
             </div>
