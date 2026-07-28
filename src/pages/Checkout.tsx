@@ -450,21 +450,41 @@ export default function CheckoutPage() {
   const phoneValid = isIntl ? /^\d{6,15}$/.test(phone) : /^\d{10}$/.test(phone);
   const step2Valid = fullName.trim().length >= 2 && phoneValid && emailValid;
 
-  // ─── Meta Pixel Advanced Matching — refresh when user fills details ─
+  // ─── Mark session as "reached checkout" on arrival so abandoned-cart
+  // dashboards know the visitor got this far, even before any typing.
   useEffect(() => {
-    if (!emailValid && !phoneValid) return;
-    const { first_name, last_name } = splitName(fullName);
-    setPixelAdvancedMatching({
-      email: emailValid ? email : undefined,
-      phone: phoneValid ? `${dialCode.replace("+", "")}${phone}` : undefined,
-      first_name,
-      last_name,
-      city: city || undefined,
-      state: state || undefined,
-      zip: pincode || undefined,
-      country: toIso2(country),
-    });
     void syncCheckoutSession(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ─── Meta Pixel Advanced Matching + early contact capture ───────
+  // Capture partial email/phone the moment the user starts typing so we can
+  // recover abandoned checkouts (attribution, retargeting, follow-up).
+  useEffect(() => {
+    const emailLooksLikely = email.includes("@");
+    const cleanPhone = phone.replace(/\D/g, "");
+    const phoneLooksLikely = cleanPhone.length >= 6;
+
+    if (emailValid || phoneValid) {
+      const { first_name, last_name } = splitName(fullName);
+      setPixelAdvancedMatching({
+        email: emailValid ? email : undefined,
+        phone: phoneValid ? `${dialCode.replace("+", "")}${phone}` : undefined,
+        first_name,
+        last_name,
+        city: city || undefined,
+        state: state || undefined,
+        zip: pincode || undefined,
+        country: toIso2(country),
+      });
+    }
+
+    // Sync to cart_sessions on any plausible partial contact — debounced by
+    // React batching + upsert is idempotent per session_id.
+    if (emailValid || phoneValid || emailLooksLikely || phoneLooksLikely) {
+      const t = setTimeout(() => { void syncCheckoutSession(true); }, 600);
+      return () => clearTimeout(t);
+    }
   }, [emailValid, phoneValid, email, phone, fullName, city, state, pincode, country, dialCode]);
 
   // Purchase is fired inline in the Razorpay handler (immediate, before any
