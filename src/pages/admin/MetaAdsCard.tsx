@@ -413,7 +413,7 @@ export default function MetaAdsCard() {
                      <h4 className="text-xs font-bold text-gray-700 uppercase mb-3 flex items-center gap-1"><Sparkles size={13} className="text-purple-600"/> Creative Analysis (Top Ads)</h4>
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                        {ai.creativeAnalysis.map((c, i) => {
-                         const thumb = data?.deliveryHealth?.topAds?.find((a: any) => a.adName === c.adName)?.creative?.thumbnailUrl;
+                         const thumb = (data?.deliveryHealth?.topAds as any[])?.find((a: any) => a.adName === c.adName)?.creative?.thumbnailUrl;
                          const badge =
                            c.verdict === 'winner' ? 'bg-emerald-100 text-emerald-700' :
                            c.verdict === 'fatiguing' ? 'bg-amber-100 text-amber-700' :
