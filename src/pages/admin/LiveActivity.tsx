@@ -54,6 +54,11 @@ interface LiveCheckoutEvent {
   occurred_at: string;
 }
 
+type CheckoutEventRow = Partial<LiveCheckoutEvent> & {
+  last_page?: string | null;
+  updated_at?: string | null;
+};
+
 interface DailyStat {
   stat_date: string;
   total_orders: number;
@@ -148,7 +153,7 @@ function checkoutStageStyle(stage: string, eventType?: string) {
   return "bg-purple-100 text-purple-700 border-purple-200";
 }
 
-function normalizeCheckoutEvent(row: any): LiveCheckoutEvent | null {
+function normalizeCheckoutEvent(row: CheckoutEventRow): LiveCheckoutEvent | null {
   const sessionId = row.session_id;
   if (!sessionId) return null;
   const stage = row.stage || row.last_page || "/checkout";
@@ -914,8 +919,8 @@ export default function LiveActivity() {
       return;
     }
     (data ?? [])
-      .filter((row: any) => String(row.last_page || "").includes("checkout"))
-      .forEach((row: any) => upsertLiveCheckoutEvent(normalizeCheckoutEvent(row)));
+      .filter((row: CheckoutEventRow) => String(row.last_page || "").includes("checkout"))
+      .forEach((row: CheckoutEventRow) => upsertLiveCheckoutEvent(normalizeCheckoutEvent(row)));
   }, [upsertLiveCheckoutEvent]);
 
   // ── DB data: orders ──
@@ -1127,7 +1132,7 @@ export default function LiveActivity() {
                   </thead>
                   <tbody className="divide-y divide-red-50">
                     {lostCheckouts.map((o) => {
-                      const phone = (o as any).customer_phone;
+                      const phone = o.customer_phone;
                       const name = o.customer_name ?? "there";
                       const waMsg = encodeURIComponent(`Hi ${name}, we noticed you were checking out on Agatsa (₹${o.amount.toLocaleString("en-IN")}). Can we help you complete your order?`);
                       const waLink = phone ? `https://wa.me/91${phone.replace(/\D/g, "").slice(-10)}?text=${waMsg}` : null;
