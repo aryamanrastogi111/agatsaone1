@@ -183,6 +183,7 @@ export default function CheckoutPage() {
   const checkoutLiveSubscribedRef = useRef(false);
   const lastCheckoutLiveEventRef = useRef("");
   const checkoutStageRef = useRef("/checkout");
+  const hotLeadFiredRef = useRef<Set<string>>(new Set());
 
   // Quantities
   const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
