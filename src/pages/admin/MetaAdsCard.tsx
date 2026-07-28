@@ -1,49 +1,97 @@
 import { useCallback, useEffect, useState } from "react";
-import { RefreshCw, TrendingUp, DollarSign, MousePointerClick, Eye, ShoppingCart, Target, AlertCircle, Sparkles, Calendar, type LucideIcon } from "lucide-react";
+import { 
+  RefreshCw, TrendingUp, DollarSign, MousePointerClick, 
+  Eye, ShoppingCart, Target, AlertCircle, Sparkles, 
+  Calendar, ShieldCheck, Activity, BarChart2,
+  type LucideIcon 
+} from "lucide-react";
 
 interface Campaign {
   accountId?: string;
   id: string;
   name: string;
+  status?: string;
+  objective?: string;
   spend: number;
   impressions: number;
   clicks: number;
   ctr: number;
   cpc: number;
+  cpm?: number;
+  frequency?: number;
   metaPurchases: number;
   siteSessions: number;
   siteOrders?: number;
   siteRevenue?: number;
   siteRoas?: number;
-
 }
 
 interface AccountSummary {
   accountId: string;
-  spend: number; impressions: number; clicks: number;
-  ctr: number; cpc: number; metaPurchases: number;
+  spend: number; 
+  impressions: number; 
+  clicks: number;
+  ctr: number; 
+  cpc: number; 
+  cpm?: number;
+  frequency?: number;
+  metaPurchases: number;
 }
 
 interface DailyRow {
-  date: string; spend: number; impressions: number; clicks: number;
-  metaPurchases: number; orders: number; revenue: number; roas: number;
+  date: string; 
+  spend: number; 
+  impressions: number; 
+  clicks: number;
+  cpm?: number;
+  metaPurchases: number; 
+  orders: number; 
+  revenue: number; 
+  roas: number;
 }
 
 interface MetaData {
   generatedAt: string;
   accountIds?: string[];
   account: {
-    spend: number; impressions: number; clicks: number; reach: number;
-    ctr: number; cpc: number; metaPurchases: number; metaInitiateCheckout: number;
+    spend: number; 
+    impressions: number; 
+    clicks: number; 
+    reach: number;
+    ctr: number; 
+    cpc: number; 
+    cpm?: number;
+    frequency?: number;
+    metaPurchases: number; 
+    metaInitiateCheckout: number;
   };
   accounts?: AccountSummary[];
-  site: { fbSessions: number; paidOrders: number; revenueToday: number; roas: number; attributedPaidOrders?: number; unattributedPaidOrders?: number; unattributedRevenue?: number };
+  site: { 
+    fbSessions: number; 
+    paidOrders: number; 
+    revenueToday: number; 
+    roas: number; 
+    attributedPaidOrders?: number; 
+    unattributedPaidOrders?: number; 
+    unattributedRevenue?: number 
+  };
   campaigns: Campaign[];
-  recentFbSessions: Array<{ session_id: string; started_at: string; utm_campaign: string | null; utm_content: string | null; exit_page: string | null }>;
+  recentFbSessions: Array<{ 
+    session_id: string; 
+    started_at: string; 
+    utm_campaign: string | null; 
+    utm_content: string | null; 
+    exit_page: string | null 
+  }>;
   historic30d?: {
     daily: DailyRow[];
     campaigns: Campaign[];
-    totals: { spend: number; revenue: number; orders: number; metaPurchases: number };
+    totals: { 
+      spend: number; 
+      revenue: number; 
+      orders: number; 
+      metaPurchases: number 
+    };
   };
 }
 
@@ -127,17 +175,8 @@ export default function MetaAdsCard() {
   const inr = (n: number) => `₹${Math.round(n).toLocaleString("en-IN")}`;
 
   const daily = data?.historic30d?.daily ?? [];
-  const bestDays = [...daily].filter(d => d.spend > 0 || d.revenue > 0)
-    .sort((a, b) => b.revenue - a.revenue).slice(0, 5);
-  const bestRoasDays = [...daily].filter(d => d.spend > 100)
-    .sort((a, b) => b.roas - a.roas).slice(0, 5);
   const totals = data?.historic30d?.totals;
   const histRoas = totals && totals.spend > 0 ? totals.revenue / totals.spend : 0;
-
-  const healthColor = (h?: string) =>
-    h === "good" ? "bg-emerald-50 border-emerald-200 text-emerald-800"
-    : h === "critical" ? "bg-rose-50 border-rose-200 text-rose-800"
-    : "bg-amber-50 border-amber-200 text-amber-800";
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
@@ -147,7 +186,7 @@ export default function MetaAdsCard() {
           <div>
             <h2 className="text-base font-bold text-gray-900">Facebook / Meta Ads</h2>
             <p className="text-xs text-gray-500">
-              Live spend, ROAS, and campaign performance (IST)
+              Live spend, delivery health, and performance (IST)
               {data?.accountIds && data.accountIds.length > 0 && ` · ${data.accountIds.length} ad account${data.accountIds.length > 1 ? "s" : ""}`}
             </p>
           </div>
@@ -182,148 +221,84 @@ export default function MetaAdsCard() {
 
       {data && tab === "today" && (
         <>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 p-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3 p-5 pb-2">
             <KPI icon={DollarSign} label="Spend" value={inr(data.account.spend)} color="bg-rose-50 text-rose-600" />
             <KPI icon={Target} label="ROAS" value={data.site.roas > 0 ? `${data.site.roas.toFixed(2)}x` : "—"} color="bg-emerald-50 text-emerald-600" sub={`${inr(data.site.revenueToday)} rev`} />
             <KPI icon={Eye} label="Impressions" value={data.account.impressions.toLocaleString("en-IN")} color="bg-blue-50 text-blue-600" />
+            <KPI icon={BarChart2} label="CPM" value={data.account.cpm ? inr(data.account.cpm) : "—"} color="bg-indigo-50 text-indigo-600" />
             <KPI icon={MousePointerClick} label="Clicks" value={data.account.clicks.toLocaleString("en-IN")} color="bg-indigo-50 text-indigo-600" sub={`${data.account.ctr.toFixed(2)}% CTR`} />
-            <KPI icon={TrendingUp} label="CPC" value={data.account.cpc > 0 ? inr(data.account.cpc) : "—"} color="bg-purple-50 text-purple-600" />
+            <KPI icon={Activity} label="Frequency" value={data.account.frequency ? data.account.frequency.toFixed(2) : "—"} color="bg-amber-50 text-amber-600" />
             <KPI icon={ShoppingCart} label="Initiate Checkout" value={data.account.metaInitiateCheckout.toLocaleString("en-IN")} color="bg-orange-50 text-orange-600" sub="Meta reported" />
-            <KPI icon={ShoppingCart} label="Purchases" value={data.account.metaPurchases.toLocaleString("en-IN")} color="bg-green-50 text-green-600" sub={`${data.site.paidOrders} paid on site`} />
+            <KPI icon={ShoppingCart} label="Purchases" value={data.account.metaPurchases.toLocaleString("en-IN")} color="bg-green-50 text-green-600" sub={`${data.site.paidOrders} on site`} />
           </div>
 
-          {daily.length > 0 && (
-            <div className="px-5 pb-2">
-              <RoasChart daily={daily} todayRoas={data.site.roas} todayRevenue={data.site.revenueToday} todaySpend={data.account.spend} />
-            </div>
-          )}
-
-
-          {typeof data.site.unattributedPaidOrders === "number" && data.site.paidOrders > 0 && (
-            <div className="mx-5 mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-900 flex flex-wrap items-center gap-x-4 gap-y-1">
-              <span className="font-semibold">Attribution today:</span>
-              <span>{data.site.attributedPaidOrders ?? 0} of {data.site.paidOrders} paid orders matched to a Meta campaign</span>
-              {data.site.unattributedPaidOrders > 0 && (
-                <span className="text-amber-800">· {data.site.unattributedPaidOrders} unattributed ({inr(data.site.unattributedRevenue || 0)})</span>
-              )}
-              <span className="text-amber-700/80">— unattributed orders had no FB UTM/fbclid in their session; 30-day localStorage window is now enabled for future clicks.</span>
-            </div>
-          )}
-
-
-          {data.accounts && data.accounts.length > 1 && (
-            <div className="px-5 pb-3">
-              <div className="border border-gray-100 rounded-lg overflow-hidden">
-                <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700">Per ad account</div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
-                    <thead>
-                      <tr className="text-gray-500 border-b border-gray-100">
-                        <th className="text-left px-3 py-2 font-medium">Account</th>
-                        <th className="text-right px-3 py-2 font-medium">Spend</th>
-                        <th className="text-right px-3 py-2 font-medium">Impr.</th>
-                        <th className="text-right px-3 py-2 font-medium">Clicks</th>
-                        <th className="text-right px-3 py-2 font-medium">CTR</th>
-                        <th className="text-right px-3 py-2 font-medium">CPC</th>
-                        <th className="text-right px-3 py-2 font-medium">Purch.</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.accounts.map((a) => (
-                        <tr key={a.accountId} className="border-b border-gray-50">
-                          <td className="px-3 py-2 font-mono text-gray-700">{a.accountId}</td>
-                          <td className="px-3 py-2 text-right">{inr(a.spend)}</td>
-                          <td className="px-3 py-2 text-right">{a.impressions.toLocaleString("en-IN")}</td>
-                          <td className="px-3 py-2 text-right">{a.clicks.toLocaleString("en-IN")}</td>
-                          <td className="px-3 py-2 text-right">{a.ctr.toFixed(2)}%</td>
-                          <td className="px-3 py-2 text-right">{a.cpc > 0 ? inr(a.cpc) : "—"}</td>
-                          <td className="px-3 py-2 text-right">{a.metaPurchases}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div className="px-5 pb-5 grid grid-cols-1 lg:grid-cols-3 gap-5">
-            <div className="lg:col-span-2 border border-gray-100 rounded-lg overflow-hidden">
-              <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700">Campaigns (today)</div>
-              <div className="overflow-x-auto max-h-[380px] overflow-y-auto">
-                <table className="w-full text-xs">
-                  <thead className="bg-white sticky top-0">
-                    <tr className="text-gray-500 border-b border-gray-100">
-                      <th className="text-left px-3 py-2 font-medium">Campaign</th>
-                      <th className="text-right px-3 py-2 font-medium">Spend</th>
-                      <th className="text-right px-3 py-2 font-medium">Clicks</th>
-                      <th className="text-right px-3 py-2 font-medium">CTR</th>
-                      <th className="text-right px-3 py-2 font-medium">Purch.</th>
-                      <th className="text-right px-3 py-2 font-medium">Sessions</th>
-                      <th className="text-right px-3 py-2 font-medium">Orders</th>
-                      <th className="text-right px-3 py-2 font-medium">Revenue</th>
-                      <th className="text-right px-3 py-2 font-medium">ROAS</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+          <div className="px-5 pb-5 grid grid-cols-1 lg:grid-cols-3 gap-5 pt-3">
+             <div className="lg:col-span-2 space-y-5">
+               <DeliveryHealthPanel data={data} />
+               <RoasChart daily={daily} todayRoas={data.site.roas} todayRevenue={data.site.revenueToday} todaySpend={data.account.spend} />
+             </div>
+             
+             <div className="space-y-5">
+                <div className="border border-gray-100 rounded-lg overflow-hidden bg-white">
+                  <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700">
+                    Active Campaigns ({data.campaigns.filter(c => c.status === 'ACTIVE').length})
+                  </div>
+                  <div className="max-h-[500px] overflow-y-auto divide-y divide-gray-50">
                     {data.campaigns.length === 0 ? (
-                      <tr><td colSpan={9} className="text-center text-gray-400 py-6">No active campaigns today</td></tr>
+                      <div className="p-6 text-center text-xs text-gray-400">No active campaigns today</div>
                     ) : (
                       data.campaigns.slice().sort((a, b) => b.spend - a.spend).map((c) => (
-                        <tr key={`${c.accountId || ""}-${c.id}`} className="border-b border-gray-50 hover:bg-gray-50/50">
-                          <td className="px-3 py-2 font-medium text-gray-800 truncate max-w-[220px]">
-                            {c.name}
-                            {c.accountId && data.accounts && data.accounts.length > 1 && (
-                              <div className="text-[10px] text-gray-400 font-mono truncate">{c.accountId}</div>
-                            )}
-                          </td>
-                          <td className="px-3 py-2 text-right">{inr(c.spend)}</td>
-                          <td className="px-3 py-2 text-right">{c.clicks}</td>
-                          <td className="px-3 py-2 text-right">{c.ctr.toFixed(2)}%</td>
-                          <td className="px-3 py-2 text-right">{c.metaPurchases}</td>
-                          <td className="px-3 py-2 text-right text-blue-600 font-medium">{c.siteSessions}</td>
-                          <td className="px-3 py-2 text-right font-medium">{c.siteOrders ?? 0}</td>
-                          <td className="px-3 py-2 text-right">{inr(c.siteRevenue ?? 0)}</td>
-                          <td className={`px-3 py-2 text-right font-semibold ${(c.siteRoas ?? 0) >= 1 ? "text-emerald-600" : (c.siteRoas ?? 0) > 0 ? "text-amber-600" : "text-gray-400"}`}>
-                            {c.siteRoas && c.siteRoas > 0 ? `${c.siteRoas.toFixed(2)}x` : "—"}
-                          </td>
-                        </tr>
+                        <div key={`${c.accountId || ""}-${c.id}`} className="px-4 py-3 hover:bg-gray-50/50 transition">
+                          <div className="flex justify-between items-start mb-1">
+                            <div className="font-medium text-[13px] text-gray-900 truncate pr-2 max-w-[180px]" title={c.name}>{c.name}</div>
+                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${c.status === 'ACTIVE' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-gray-50 text-gray-500 border border-gray-100'}`}>
+                              {c.status}
+                            </span>
+                          </div>
+                          <div className="flex justify-between text-[11px] text-gray-500">
+                            <span>{inr(c.spend)} spend</span>
+                            <span className={c.siteRoas && c.siteRoas >= 1 ? "text-emerald-600 font-bold" : "text-gray-400"}>
+                              {c.siteRoas && c.siteRoas > 0 ? `${c.siteRoas.toFixed(2)}x ROAS` : "No conversion"}
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 mt-2 text-[10px] text-gray-400">
+                            <div>CPM: {c.cpm ? inr(c.cpm) : "—"}</div>
+                            <div>CTR: {c.ctr.toFixed(2)}%</div>
+                            <div>Freq: {c.frequency?.toFixed(2) || "—"}</div>
+                          </div>
+                        </div>
                       ))
                     )}
-                  </tbody>
+                  </div>
+                </div>
 
-                </table>
-              </div>
-            </div>
-
-            <div className="border border-gray-100 rounded-lg overflow-hidden">
-              <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700">
-                Recent FB visitors ({data.site.fbSessions} today)
-              </div>
-              <div className="max-h-[380px] overflow-y-auto divide-y divide-gray-50">
-                {data.recentFbSessions.length === 0 ? (
-                  <div className="p-6 text-center text-xs text-gray-400">No FB-attributed sessions yet today</div>
-                ) : (
-                  data.recentFbSessions.map((s) => (
-                    <div key={s.session_id} className="px-3 py-2 text-xs">
-                      <div className="font-medium text-gray-800 truncate">{s.utm_campaign || "(no campaign)"}</div>
-                      {s.utm_content && <div className="text-gray-500 truncate">Ad: {s.utm_content}</div>}
-                      <div className="flex justify-between text-gray-400 mt-0.5">
-                        <span className="truncate">{s.exit_page || "/"}</span>
-                        <span>{new Date(s.started_at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</span>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
+                <div className="border border-gray-100 rounded-lg overflow-hidden">
+                  <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700">
+                    Recent FB visitors ({data.site.fbSessions} today)
+                  </div>
+                  <div className="max-h-[300px] overflow-y-auto divide-y divide-gray-50">
+                    {data.recentFbSessions.length === 0 ? (
+                      <div className="p-6 text-center text-xs text-gray-400">No FB sessions yet</div>
+                    ) : (
+                      data.recentFbSessions.map((s) => (
+                        <div key={s.session_id} className="px-3 py-2 text-xs">
+                          <div className="font-medium text-gray-800 truncate">{s.utm_campaign || "(no campaign)"}</div>
+                          <div className="flex justify-between text-gray-400 mt-0.5">
+                            <span className="truncate">{s.exit_page || "/"}</span>
+                            <span>{new Date(s.started_at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</span>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+             </div>
           </div>
         </>
       )}
 
       {data && tab === "history" && (
         <div className="p-5 space-y-5">
-          {/* 30d totals */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <KPI icon={DollarSign} label="30d Spend" value={inr(totals?.spend || 0)} color="bg-rose-50 text-rose-600" />
             <KPI icon={TrendingUp} label="30d Revenue" value={inr(totals?.revenue || 0)} color="bg-emerald-50 text-emerald-600" />
@@ -331,252 +306,148 @@ export default function MetaAdsCard() {
             <KPI icon={ShoppingCart} label="30d Orders" value={String(totals?.orders || 0)} color="bg-green-50 text-green-600" sub={`${totals?.metaPurchases || 0} Meta purch.`} />
           </div>
 
-          {/* AI Analysis */}
           <div className="border border-gray-100 rounded-lg overflow-hidden">
             <div className="flex items-center justify-between px-4 py-2.5 bg-gradient-to-r from-purple-50 to-pink-50 border-b border-gray-100">
               <div className="flex items-center gap-2 text-xs font-semibold text-gray-800">
-                <Sparkles size={14} className="text-purple-600" /> AI Facebook Analysis
+                <Sparkles size={14} className="text-purple-600" /> AI Performance Analysis
               </div>
               <button onClick={runAi} disabled={aiLoading || !data.historic30d}
                 className="text-xs bg-purple-600 text-white px-3 py-1.5 rounded-md hover:bg-purple-700 disabled:opacity-50">
-                {aiLoading ? "Analyzing…" : ai ? "Re-analyze" : "Run analysis"}
+                {aiLoading ? "Thinking..." : "Regenerate AI Analysis"}
               </button>
             </div>
-            {aiError && <div className="p-3 text-xs text-rose-700 bg-rose-50">{aiError}</div>}
-            {!ai && !aiLoading && !aiError && (
-              <div className="p-6 text-center text-xs text-gray-400">Click "Run analysis" to get AI insights on spend vs revenue, best/worst days, and campaign verdicts.</div>
-            )}
+            {aiError && <div className="p-4 text-xs text-rose-600 bg-rose-50 border-b border-rose-100">{aiError}</div>}
             {ai && (
-              <div className="p-4 space-y-4">
-                <div className={`border rounded-lg p-3 text-sm ${healthColor(ai.overallHealth)}`}>
-                  <div className="text-[10px] uppercase font-semibold opacity-70">{ai.overallHealth}</div>
-                  <div className="font-medium">{ai.headline}</div>
-                </div>
-
-                {ai.alerts?.length > 0 && (
-                  <div className="space-y-1">
-                    {ai.alerts.map((a, i) => (
-                      <div key={i} className="text-xs bg-amber-50 border border-amber-200 text-amber-800 rounded-md px-3 py-2 flex items-start gap-2">
-                        <AlertCircle size={13} className="mt-0.5 shrink-0" /> {a}
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {ai.keyMetrics?.length > 0 && (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                    {ai.keyMetrics.map((m, i) => (
-                      <div key={i} className="border border-gray-100 rounded-md p-2.5">
-                        <div className="text-[10px] uppercase text-gray-500">{m.label}</div>
-                        <div className="text-sm font-bold text-gray-900">{m.value}</div>
-                        <div className="text-[10px] text-gray-500 mt-0.5">{m.insight}</div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {ai.bestDays?.length > 0 && (
-                    <div className="border border-emerald-100 rounded-lg overflow-hidden">
-                      <div className="px-3 py-2 bg-emerald-50 text-xs font-semibold text-emerald-800">Best days</div>
-                      <div className="divide-y divide-gray-50">
-                        {ai.bestDays.map((d, i) => (
-                          <div key={i} className="px-3 py-2 text-xs">
-                            <div className="flex justify-between font-medium text-gray-800">
-                              <span>{d.date}</span>
-                              <span>{inr(d.revenue)} · {d.roas.toFixed(2)}x</span>
-                            </div>
-                            <div className="text-gray-500 mt-0.5">{d.why}</div>
-                          </div>
-                        ))}
-                      </div>
+              <div className="p-5 space-y-6">
+                 <div>
+                    <div className="flex items-center gap-2 mb-2">
+                       <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                         ai.overallHealth === 'good' ? 'bg-emerald-100 text-emerald-700' : 
+                         ai.overallHealth === 'critical' ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-700'
+                       }`}>{ai.overallHealth}</span>
+                       <h3 className="font-bold text-gray-900">{ai.headline}</h3>
                     </div>
-                  )}
-                  {ai.worstDays?.length > 0 && (
-                    <div className="border border-rose-100 rounded-lg overflow-hidden">
-                      <div className="px-3 py-2 bg-rose-50 text-xs font-semibold text-rose-800">Worst days</div>
-                      <div className="divide-y divide-gray-50">
-                        {ai.worstDays.map((d, i) => (
-                          <div key={i} className="px-3 py-2 text-xs">
-                            <div className="flex justify-between font-medium text-gray-800">
-                              <span>{d.date}</span>
-                              <span>{inr(d.revenue)} · {d.roas.toFixed(2)}x</span>
-                            </div>
-                            <div className="text-gray-500 mt-0.5">{d.why}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {ai.topCampaigns?.length > 0 && (
-                  <div className="border border-gray-100 rounded-lg overflow-hidden">
-                    <div className="px-3 py-2 bg-gray-50 text-xs font-semibold text-gray-700">Campaign verdicts</div>
-                    <table className="w-full text-xs">
-                      <tbody>
-                        {ai.topCampaigns.map((c, i) => (
-                          <tr key={i} className="border-b border-gray-50">
-                            <td className="px-3 py-2 font-medium text-gray-800 truncate max-w-[280px]">{c.name}</td>
-                            <td className="px-3 py-2 text-right text-gray-600">{inr(c.spend)}</td>
-                            <td className="px-3 py-2 text-right">
-                              <span className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase ${
-                                c.verdict === "scale" ? "bg-emerald-100 text-emerald-800"
-                                : c.verdict === "cut" ? "bg-rose-100 text-rose-800"
-                                : "bg-amber-100 text-amber-800"
-                              }`}>{c.verdict}</span>
-                            </td>
-                            <td className="px-3 py-2 text-gray-500 max-w-[300px]">{c.reason}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-
-                {ai.recommendations?.length > 0 && (
-                  <div className="space-y-2">
-                    <div className="text-xs font-semibold text-gray-700">Recommendations</div>
-                    {ai.recommendations.map((r, i) => (
-                      <div key={i} className="border border-gray-100 rounded-md p-3 text-xs">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase ${
-                            r.priority === "high" ? "bg-rose-100 text-rose-800"
-                            : r.priority === "medium" ? "bg-amber-100 text-amber-800"
-                            : "bg-gray-100 text-gray-700"
-                          }`}>{r.priority}</span>
-                          <span className="text-[10px] text-gray-500">{r.timeframe}</span>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                      {ai.keyMetrics.map((m, i) => (
+                        <div key={i} className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+                           <div className="flex justify-between items-start mb-1">
+                             <span className="text-xs text-gray-500">{m.label}</span>
+                             <span className={m.trend === 'up' ? 'text-emerald-600' : m.trend === 'down' ? 'text-rose-600' : 'text-gray-400'}>
+                               {m.trend === 'up' ? '↑' : m.trend === 'down' ? '↓' : '→'}
+                             </span>
+                           </div>
+                           <div className="font-bold text-gray-900">{m.value}</div>
+                           <p className="text-[10px] text-gray-500 mt-1">{m.insight}</p>
                         </div>
-                        <div className="font-medium text-gray-900">{r.action}</div>
-                        <div className="text-gray-500 mt-0.5">{r.expectedImpact}</div>
+                      ))}
+                    </div>
+                 </div>
+                 
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                      <h4 className="text-xs font-bold text-gray-700 uppercase mb-3 flex items-center gap-1"><ShieldCheck size={13} className="text-emerald-600"/> Recommendations</h4>
+                      <div className="space-y-2">
+                        {ai.recommendations.map((r, i) => (
+                          <div key={i} className="bg-white border border-gray-100 rounded-lg p-3 text-xs">
+                             <div className="flex justify-between mb-1">
+                               <span className="font-bold text-gray-900">{r.action}</span>
+                               <span className={`text-[9px] uppercase font-bold ${r.priority === 'high' ? 'text-rose-600' : 'text-amber-600'}`}>{r.priority}</span>
+                             </div>
+                             <p className="text-gray-600">{r.expectedImpact}</p>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                )}
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-gray-700 uppercase mb-3">Health Alerts</h4>
+                      <div className="space-y-2">
+                        {ai.alerts.map((a, i) => (
+                          <div key={i} className="flex items-start gap-2 text-xs text-rose-700 bg-rose-50 p-2 rounded border border-rose-100">
+                             <AlertCircle size={14} className="shrink-0 mt-0.5" />
+                             <span>{a}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                 </div>
               </div>
             )}
           </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
-          {/* ROAS trend chart */}
-          <RoasChart daily={daily} todayRoas={data.site.roas} todayRevenue={data.site.revenueToday} todaySpend={data.account.spend} />
+function DeliveryHealthPanel({ data }: { data: MetaData }) {
+  const cpm = data.account.cpm || 0;
+  const ctr = data.account.ctr || 0;
+  const freq = data.account.frequency || 0;
+  
+  // Basic threshold logic
+  const isCpmHigh = cpm > 800; // Example INR threshold
+  const isCtrLow = ctr < 0.8;
+  const isFreqHigh = freq > 1.8;
 
-          {/* Daily table */}
-          <div className="border border-gray-100 rounded-lg overflow-hidden">
-            <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700 flex items-center gap-1.5">
-              <Calendar size={13} /> Daily performance (last 30 days)
-            </div>
-            <div className="overflow-x-auto max-h-[420px] overflow-y-auto">
-              <table className="w-full text-xs">
-                <thead className="bg-white sticky top-0">
-                  <tr className="text-gray-500 border-b border-gray-100">
-                    <th className="text-left px-3 py-2 font-medium">Date</th>
-                    <th className="text-right px-3 py-2 font-medium">Spend</th>
-                    <th className="text-right px-3 py-2 font-medium">Impr.</th>
-                    <th className="text-right px-3 py-2 font-medium">Clicks</th>
-                    <th className="text-right px-3 py-2 font-medium">Meta Purch.</th>
-                    <th className="text-right px-3 py-2 font-medium">Orders</th>
-                    <th className="text-right px-3 py-2 font-medium">Revenue</th>
-                    <th className="text-right px-3 py-2 font-medium">ROAS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {daily.length === 0 ? (
-                    <tr><td colSpan={8} className="text-center text-gray-400 py-6">No data</td></tr>
-                  ) : (
-                    daily.slice().reverse().map((d) => (
-                      <tr key={d.date} className="border-b border-gray-50 hover:bg-gray-50/50">
-                        <td className="px-3 py-2 font-medium text-gray-800">{d.date}</td>
-                        <td className="px-3 py-2 text-right">{inr(d.spend)}</td>
-                        <td className="px-3 py-2 text-right">{d.impressions.toLocaleString("en-IN")}</td>
-                        <td className="px-3 py-2 text-right">{d.clicks}</td>
-                        <td className="px-3 py-2 text-right">{d.metaPurchases}</td>
-                        <td className="px-3 py-2 text-right">{d.orders}</td>
-                        <td className="px-3 py-2 text-right">{inr(d.revenue)}</td>
-                        <td className={`px-3 py-2 text-right font-medium ${
-                          d.roas >= 2 ? "text-emerald-700"
-                          : d.roas >= 1 ? "text-amber-700"
-                          : d.spend > 0 ? "text-rose-700" : "text-gray-400"
-                        }`}>{d.spend > 0 ? `${d.roas.toFixed(2)}x` : "—"}</td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+  const alerts = [];
+  if (isCpmHigh) alerts.push({ label: "High CPM", text: "Auction is expensive today. Monitor ROAS closely.", level: "warning" });
+  if (isCtrLow) alerts.push({ label: "Low CTR", text: "Creative fatigue or poor audience match suspected.", level: "critical" });
+  if (isFreqHigh) alerts.push({ label: "High Frequency", text: "Users are seeing ads multiple times. Audience saturation.", level: "warning" });
+
+  return (
+    <div className="bg-indigo-900 text-white rounded-lg p-5 shadow-lg relative overflow-hidden">
+      <div className="absolute top-0 right-0 p-10 opacity-10 pointer-events-none">
+        <Activity size={120} />
+      </div>
+      <div className="relative z-10">
+        <div className="flex items-center gap-2 mb-4">
+          <ShieldCheck className="text-indigo-300" size={20} />
+          <h3 className="font-bold text-lg uppercase tracking-tight">Delivery Health</h3>
+        </div>
+        
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm border border-white/10">
+            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-1">CPM Health</div>
+            <div className="text-xl font-bold">{cpm > 0 ? `₹${Math.round(cpm)}` : '—'}</div>
+            <div className={`text-[10px] mt-1 ${isCpmHigh ? 'text-rose-300' : 'text-emerald-300'}`}>
+              {isCpmHigh ? '● High' : '● Healthy'}
             </div>
           </div>
-
-          {/* 30d campaigns */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="border border-gray-100 rounded-lg overflow-hidden">
-              <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700">Top revenue days</div>
-              <table className="w-full text-xs">
-                <tbody>
-                  {bestDays.map((d) => (
-                    <tr key={d.date} className="border-b border-gray-50">
-                      <td className="px-3 py-2 font-medium text-gray-800">{d.date}</td>
-                      <td className="px-3 py-2 text-right">{inr(d.revenue)}</td>
-                      <td className="px-3 py-2 text-right text-gray-500">{d.orders} orders</td>
-                      <td className="px-3 py-2 text-right text-emerald-700 font-medium">{d.spend > 0 ? `${d.roas.toFixed(2)}x` : "—"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="border border-gray-100 rounded-lg overflow-hidden">
-              <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700">Best ROAS days (spend &gt; ₹100)</div>
-              <table className="w-full text-xs">
-                <tbody>
-                  {bestRoasDays.map((d) => (
-                    <tr key={d.date} className="border-b border-gray-50">
-                      <td className="px-3 py-2 font-medium text-gray-800">{d.date}</td>
-                      <td className="px-3 py-2 text-right">{inr(d.spend)} spend</td>
-                      <td className="px-3 py-2 text-right">{inr(d.revenue)}</td>
-                      <td className="px-3 py-2 text-right text-emerald-700 font-medium">{d.roas.toFixed(2)}x</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm border border-white/10">
+            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-1">CTR Health</div>
+            <div className="text-xl font-bold">{ctr.toFixed(2)}%</div>
+            <div className={`text-[10px] mt-1 ${isCtrLow ? 'text-rose-300' : 'text-emerald-300'}`}>
+              {isCtrLow ? '● Low Engagement' : '● Healthy'}
             </div>
           </div>
-
-          <div className="border border-gray-100 rounded-lg overflow-hidden">
-            <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700">Campaigns (last 30 days)</div>
-            <div className="overflow-x-auto max-h-[420px] overflow-y-auto">
-              <table className="w-full text-xs">
-                <thead className="bg-white sticky top-0">
-                  <tr className="text-gray-500 border-b border-gray-100">
-                    <th className="text-left px-3 py-2 font-medium">Campaign</th>
-                    <th className="text-right px-3 py-2 font-medium">Spend</th>
-                    <th className="text-right px-3 py-2 font-medium">Clicks</th>
-                    <th className="text-right px-3 py-2 font-medium">CTR</th>
-                    <th className="text-right px-3 py-2 font-medium">CPC</th>
-                    <th className="text-right px-3 py-2 font-medium">Meta Purch.</th>
-                    <th className="text-right px-3 py-2 font-medium">Sessions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(data.historic30d?.campaigns ?? []).map((c) => (
-                    <tr key={`${c.accountId || ""}-${c.id}`} className="border-b border-gray-50 hover:bg-gray-50/50">
-                      <td className="px-3 py-2 font-medium text-gray-800 truncate max-w-[260px]">
-                        {c.name}
-                        {c.accountId && data.accounts && data.accounts.length > 1 && (
-                          <div className="text-[10px] text-gray-400 font-mono truncate">{c.accountId}</div>
-                        )}
-                      </td>
-                      <td className="px-3 py-2 text-right">{inr(c.spend)}</td>
-                      <td className="px-3 py-2 text-right">{c.clicks}</td>
-                      <td className="px-3 py-2 text-right">{c.ctr.toFixed(2)}%</td>
-                      <td className="px-3 py-2 text-right">{c.cpc > 0 ? inr(c.cpc) : "—"}</td>
-                      <td className="px-3 py-2 text-right">{c.metaPurchases}</td>
-                      <td className="px-3 py-2 text-right text-blue-600 font-medium">{c.siteSessions}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm border border-white/10">
+            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-1">Daily Frequency</div>
+            <div className="text-xl font-bold">{freq.toFixed(2)}x</div>
+            <div className={`text-[10px] mt-1 ${isFreqHigh ? 'text-rose-300' : 'text-emerald-300'}`}>
+              {isFreqHigh ? '● High Saturation' : '● Healthy'}
             </div>
           </div>
         </div>
-      )}
+
+        {alerts.length > 0 ? (
+          <div className="space-y-2">
+            {alerts.map((a, i) => (
+              <div key={i} className={`flex items-start gap-2 p-2 rounded text-[11px] ${a.level === 'critical' ? 'bg-rose-500/20 border border-rose-500/30' : 'bg-amber-500/20 border border-amber-500/30'}`}>
+                <AlertCircle size={14} className="shrink-0" />
+                <div>
+                  <span className="font-bold">{a.label}: </span>
+                  <span className="opacity-90">{a.text}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex items-center gap-2 text-[11px] bg-emerald-500/20 border border-emerald-500/30 p-2 rounded">
+            <ShieldCheck size={14} className="text-emerald-300" />
+            <span>Delivery metrics are within healthy thresholds for today.</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -600,7 +471,6 @@ function RoasChart({ daily, todayRoas, todayRevenue, todaySpend }: {
   todayRevenue?: number;
   todaySpend?: number;
 }) {
-  // Build series: last 30 days + today as final point
   const series = daily.slice().sort((a, b) => a.date.localeCompare(b.date));
   const todayKey = new Date(Date.now() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
   const hasToday = series.some(d => d.date === todayKey);
@@ -628,25 +498,18 @@ function RoasChart({ daily, todayRoas, todayRevenue, todaySpend }: {
   const labelEvery = Math.max(1, Math.ceil(n / 8));
 
   return (
-    <div className="border border-gray-100 rounded-lg overflow-hidden">
+    <div className="border border-gray-100 rounded-lg overflow-hidden bg-white shadow-sm">
       <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700 flex items-center justify-between">
-        <span className="flex items-center gap-1.5"><TrendingUp size={13} /> ROAS over time (last 30 days + today, IST)</span>
-        <span className="flex items-center gap-3 text-[11px] font-normal text-gray-500">
-          <span className="flex items-center gap-1"><span className="inline-block w-2.5 h-2.5 rounded-sm bg-indigo-500" /> Daily ROAS</span>
-          <span className="flex items-center gap-1"><span className="inline-block w-3 h-0 border-t border-dashed border-emerald-500" /> 30d avg {avgRoas.toFixed(2)}x</span>
-        </span>
+        <span className="flex items-center gap-1.5"><TrendingUp size={13} /> ROAS Trend (Last 30 days)</span>
       </div>
       <div className="p-3 bg-white">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[220px]" preserveAspectRatio="none">
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[180px]" preserveAspectRatio="none">
           {yTicks.map((t, i) => (
             <g key={i}>
               <line x1={PAD_L} x2={W - PAD_R} y1={y(t)} y2={y(t)} stroke="#f1f5f9" strokeWidth={1} />
               <text x={PAD_L - 6} y={y(t) + 3} textAnchor="end" fontSize={10} fill="#94a3b8">{t.toFixed(1)}x</text>
             </g>
           ))}
-          {maxRoas > 1 && (
-            <line x1={PAD_L} x2={W - PAD_R} y1={y(1)} y2={y(1)} stroke="#fca5a5" strokeWidth={1} strokeDasharray="4 3" />
-          )}
           {avgRoas > 0 && (
             <line x1={PAD_L} x2={W - PAD_R} y1={y(avgRoas)} y2={y(avgRoas)} stroke="#10b981" strokeWidth={1} strokeDasharray="5 4" />
           )}
@@ -666,23 +529,12 @@ function RoasChart({ daily, todayRoas, todayRevenue, todaySpend }: {
                 <circle cx={cx} cy={cy} r={isToday ? 5 : 2.5}
                   fill={isToday ? "#f59e0b" : "#6366f1"}
                   stroke={isToday ? "#fff" : "none"} strokeWidth={isToday ? 2 : 0}>
-                  <title>{p.date} · ROAS {p.roas.toFixed(2)}x · Spend ₹{Math.round(p.spend).toLocaleString("en-IN")} · Rev ₹{Math.round(p.revenue).toLocaleString("en-IN")}</title>
+                  <title>{p.date} · ROAS {p.roas.toFixed(2)}x</title>
                 </circle>
-                {i % labelEvery === 0 && (
-                  <text x={cx} y={H - 10} textAnchor="middle" fontSize={9} fill="#94a3b8">
-                    {p.date.slice(5)}
-                  </text>
-                )}
               </g>
             );
           })}
         </svg>
-        <div className="flex flex-wrap gap-4 text-[11px] text-gray-500 mt-1 px-1">
-          <span>Today: <span className="font-semibold text-amber-600">{(todayRoas ?? 0).toFixed(2)}x</span></span>
-          <span>30d avg: <span className="font-semibold text-emerald-600">{avgRoas.toFixed(2)}x</span></span>
-          <span>Best day: <span className="font-semibold text-gray-800">{active.length ? Math.max(...active.map(p => p.roas)).toFixed(2) : "0.00"}x</span></span>
-          <span className="text-gray-400">Dashed red = breakeven (1x)</span>
-        </div>
       </div>
     </div>
   );

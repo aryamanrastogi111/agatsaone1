@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { useVisitorTracking } from "@/hooks/useVisitorTracking";
+import { useCartSync } from "@/hooks/useCartSync";
 import { useDevicePricingFetch, PricingProvider } from "@/hooks/useDevicePricing";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import { isMyEasyTouchHost } from "@/hooks/useIsMyEasyTouch";
@@ -104,6 +105,11 @@ function VisitorTracker() {
   return null;
 }
 
+function CartSessionTracker() {
+  useCartSync();
+  return null;
+}
+
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
     <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
@@ -120,6 +126,7 @@ function AppWithPricing() {
         <BrowserRouter>
           <ScrollToTop />
           <VisitorTracker />
+          <CartSessionTracker />
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Public marketing pages */}
