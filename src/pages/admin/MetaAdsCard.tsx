@@ -583,3 +583,97 @@ function KPI({ icon: Icon, label, value, sub, color }: { icon: LucideIcon; label
     </div>
   );
 }
+
+function RoasChart({ daily, todayRoas, todayRevenue, todaySpend }: {
+  daily: DailyRow[];
+  todayRoas?: number;
+  todayRevenue?: number;
+  todaySpend?: number;
+}) {
+  // Build series: last 30 days + today as final point
+  const series = daily.slice().sort((a, b) => a.date.localeCompare(b.date));
+  const todayKey = new Date(Date.now() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
+  const hasToday = series.some(d => d.date === todayKey);
+  const points = hasToday ? series : [...series, {
+    date: todayKey, spend: todaySpend || 0, impressions: 0, clicks: 0,
+    metaPurchases: 0, orders: 0, revenue: todayRevenue || 0, roas: todayRoas || 0,
+  }];
+
+  const active = points.filter(p => p.spend > 0);
+  const avgRoas = active.length > 0
+    ? active.reduce((s, p) => s + p.roas, 0) / active.length
+    : 0;
+
+  const W = 800, H = 200, PAD_L = 36, PAD_R = 12, PAD_T = 16, PAD_B = 28;
+  const innerW = W - PAD_L - PAD_R;
+  const innerH = H - PAD_T - PAD_B;
+  const maxRoas = Math.max(2, ...points.map(p => p.roas), avgRoas) * 1.15;
+  const n = points.length;
+  const x = (i: number) => PAD_L + (n <= 1 ? innerW / 2 : (i * innerW) / (n - 1));
+  const y = (v: number) => PAD_T + innerH - (v / maxRoas) * innerH;
+
+  const linePath = points.map((p, i) => `${i === 0 ? "M" : "L"} ${x(i).toFixed(1)} ${y(p.roas).toFixed(1)}`).join(" ");
+  const areaPath = `${linePath} L ${x(n - 1).toFixed(1)} ${(PAD_T + innerH).toFixed(1)} L ${x(0).toFixed(1)} ${(PAD_T + innerH).toFixed(1)} Z`;
+  const yTicks = [0, maxRoas / 2, maxRoas];
+  const labelEvery = Math.max(1, Math.ceil(n / 8));
+
+  return (
+    <div className="border border-gray-100 rounded-lg overflow-hidden">
+      <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700 flex items-center justify-between">
+        <span className="flex items-center gap-1.5"><TrendingUp size={13} /> ROAS over time (last 30 days + today, IST)</span>
+        <span className="flex items-center gap-3 text-[11px] font-normal text-gray-500">
+          <span className="flex items-center gap-1"><span className="inline-block w-2.5 h-2.5 rounded-sm bg-indigo-500" /> Daily ROAS</span>
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-0 border-t border-dashed border-emerald-500" /> 30d avg {avgRoas.toFixed(2)}x</span>
+        </span>
+      </div>
+      <div className="p-3 bg-white">
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[220px]" preserveAspectRatio="none">
+          {yTicks.map((t, i) => (
+            <g key={i}>
+              <line x1={PAD_L} x2={W - PAD_R} y1={y(t)} y2={y(t)} stroke="#f1f5f9" strokeWidth={1} />
+              <text x={PAD_L - 6} y={y(t) + 3} textAnchor="end" fontSize={10} fill="#94a3b8">{t.toFixed(1)}x</text>
+            </g>
+          ))}
+          {maxRoas > 1 && (
+            <line x1={PAD_L} x2={W - PAD_R} y1={y(1)} y2={y(1)} stroke="#fca5a5" strokeWidth={1} strokeDasharray="4 3" />
+          )}
+          {avgRoas > 0 && (
+            <line x1={PAD_L} x2={W - PAD_R} y1={y(avgRoas)} y2={y(avgRoas)} stroke="#10b981" strokeWidth={1} strokeDasharray="5 4" />
+          )}
+          <defs>
+            <linearGradient id="roasFill" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="#6366f1" stopOpacity={0.28} />
+              <stop offset="100%" stopColor="#6366f1" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <path d={areaPath} fill="url(#roasFill)" />
+          <path d={linePath} fill="none" stroke="#6366f1" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+          {points.map((p, i) => {
+            const isToday = p.date === todayKey;
+            const cx = x(i), cy = y(p.roas);
+            return (
+              <g key={p.date}>
+                <circle cx={cx} cy={cy} r={isToday ? 5 : 2.5}
+                  fill={isToday ? "#f59e0b" : "#6366f1"}
+                  stroke={isToday ? "#fff" : "none"} strokeWidth={isToday ? 2 : 0}>
+                  <title>{p.date} · ROAS {p.roas.toFixed(2)}x · Spend ₹{Math.round(p.spend).toLocaleString("en-IN")} · Rev ₹{Math.round(p.revenue).toLocaleString("en-IN")}</title>
+                </circle>
+                {i % labelEvery === 0 && (
+                  <text x={cx} y={H - 10} textAnchor="middle" fontSize={9} fill="#94a3b8">
+                    {p.date.slice(5)}
+                  </text>
+                )}
+              </g>
+            );
+          })}
+        </svg>
+        <div className="flex flex-wrap gap-4 text-[11px] text-gray-500 mt-1 px-1">
+          <span>Today: <span className="font-semibold text-amber-600">{(todayRoas ?? 0).toFixed(2)}x</span></span>
+          <span>30d avg: <span className="font-semibold text-emerald-600">{avgRoas.toFixed(2)}x</span></span>
+          <span>Best day: <span className="font-semibold text-gray-800">{active.length ? Math.max(...active.map(p => p.roas)).toFixed(2) : "0.00"}x</span></span>
+          <span className="text-gray-400">Dashed red = breakeven (1x)</span>
+        </div>
+      </div>
+    </div>
+  );
+}
