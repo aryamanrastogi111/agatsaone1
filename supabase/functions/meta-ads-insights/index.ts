@@ -134,33 +134,38 @@ Deno.serve(async (req) => {
     const revenueToday = (paidOrders || []).reduce((s: number, o: any) => s + Number(o.amount || 0), 0);
     const roas = spend > 0 ? revenueToday / spend : 0;
 
-    // Campaign breakdown enriched with our own session counts by utm_campaign
-    const campaigns = (campaignLevel.data || []).map((c: any) => {
-      const sessions = (fbSessions || []).filter(
-        (s: any) => (s.utm_campaign || "").toLowerCase() === (c.campaign_name || "").toLowerCase()
-      );
-      return {
-        id: c.campaign_id,
-        name: c.campaign_name,
-        spend: parseFloat(c.spend || "0"),
-        impressions: parseInt(c.impressions || "0", 10),
-        clicks: parseInt(c.clicks || "0", 10),
-        ctr: parseFloat(c.ctr || "0"),
-        cpc: parseFloat(c.cpc || "0"),
-        metaPurchases: findAction(c.actions || [], "purchase"),
-        siteSessions: sessions.length,
-      };
-    });
+    // Campaign breakdown across all accounts, enriched with our own session counts
+    const campaigns = perAccount.flatMap(({ acct, campaignLevel }) =>
+      (campaignLevel.data || []).map((c: any) => {
+        const sessions = (fbSessions || []).filter(
+          (s: any) => (s.utm_campaign || "").toLowerCase() === (c.campaign_name || "").toLowerCase()
+        );
+        return {
+          accountId: acct,
+          id: c.campaign_id,
+          name: c.campaign_name,
+          spend: parseFloat(c.spend || "0"),
+          impressions: parseInt(c.impressions || "0", 10),
+          clicks: parseInt(c.clicks || "0", 10),
+          ctr: parseFloat(c.ctr || "0"),
+          cpc: parseFloat(c.cpc || "0"),
+          metaPurchases: findAction(c.actions || [], "purchase"),
+          siteSessions: sessions.length,
+        };
+      })
+    );
 
     return new Response(JSON.stringify({
       generatedAt: new Date().toISOString(),
+      accountIds,
       account: {
         spend, impressions, clicks, reach,
-        ctr: parseFloat(summary.ctr || "0"),
-        cpc: parseFloat(summary.cpc || "0"),
+        ctr: summary.ctr,
+        cpc: summary.cpc,
         metaPurchases,
         metaInitiateCheckout,
       },
+      accounts: perAccountSummary,
       site: {
         fbSessions: (fbSessions || []).length,
         paidOrders: (paidOrders || []).length,
