@@ -113,6 +113,45 @@ export default function MetaAdsCard() {
             <KPI icon={ShoppingCart} label="Purchases" value={data.account.metaPurchases.toLocaleString("en-IN")} color="bg-green-50 text-green-600" sub={`${data.site.paidOrders} paid on site`} />
           </div>
 
+          {data.accounts && data.accounts.length > 1 && (
+            <div className="px-5 pb-3">
+              <div className="border border-gray-100 rounded-lg overflow-hidden">
+                <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700">
+                  Per ad account
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="text-gray-500 border-b border-gray-100">
+                        <th className="text-left px-3 py-2 font-medium">Account</th>
+                        <th className="text-right px-3 py-2 font-medium">Spend</th>
+                        <th className="text-right px-3 py-2 font-medium">Impr.</th>
+                        <th className="text-right px-3 py-2 font-medium">Clicks</th>
+                        <th className="text-right px-3 py-2 font-medium">CTR</th>
+                        <th className="text-right px-3 py-2 font-medium">CPC</th>
+                        <th className="text-right px-3 py-2 font-medium">Purch.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.accounts.map((a) => (
+                        <tr key={a.accountId} className="border-b border-gray-50">
+                          <td className="px-3 py-2 font-mono text-gray-700">{a.accountId}</td>
+                          <td className="px-3 py-2 text-right">{inr(a.spend)}</td>
+                          <td className="px-3 py-2 text-right">{a.impressions.toLocaleString("en-IN")}</td>
+                          <td className="px-3 py-2 text-right">{a.clicks.toLocaleString("en-IN")}</td>
+                          <td className="px-3 py-2 text-right">{a.ctr.toFixed(2)}%</td>
+                          <td className="px-3 py-2 text-right">{a.cpc > 0 ? inr(a.cpc) : "—"}</td>
+                          <td className="px-3 py-2 text-right">{a.metaPurchases}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
+
           <div className="px-5 pb-5 grid grid-cols-1 lg:grid-cols-3 gap-5">
             {/* Campaigns table */}
             <div className="lg:col-span-2 border border-gray-100 rounded-lg overflow-hidden">
