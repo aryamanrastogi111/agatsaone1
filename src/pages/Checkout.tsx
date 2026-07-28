@@ -680,8 +680,10 @@ export default function CheckoutPage() {
         const eventId = getStableCheckoutEventId(cartKey);
         trackMetaEvent("InitiateCheckout", {
           eventId,
-          email: email.trim() || undefined,
-          phone: (dialCode + phone.replace(/\D/g, "")) || undefined,
+          user: {
+            email: email.trim() || undefined,
+            phone: (dialCode + phone.replace(/\D/g, "")) || undefined,
+          },
           custom: {
             content_ids: uniqueSkus,
             content_type: "product",
