@@ -348,14 +348,49 @@ export default function MetaAdsCard() {
             {aiError && <div className="p-4 text-xs text-rose-600 bg-rose-50 border-b border-rose-100">{aiError}</div>}
             {ai && (
               <div className="p-5 space-y-6">
+                 {/* Headline + diagnosis */}
                  <div>
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                         ai.overallHealth === 'good' ? 'bg-emerald-100 text-emerald-700' : 
+                         ai.overallHealth === 'good' ? 'bg-emerald-100 text-emerald-700' :
                          ai.overallHealth === 'critical' ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-700'
                        }`}>{ai.overallHealth}</span>
                        <h3 className="font-bold text-gray-900">{ai.headline}</h3>
                     </div>
+                    {ai.diagnosis && (
+                      <p className="text-sm text-gray-600 leading-relaxed bg-gray-50 border border-gray-100 rounded-lg p-3">{ai.diagnosis}</p>
+                    )}
+                 </div>
+
+                 {/* Target scorecard */}
+                 {ai.targetScorecard && ai.targetScorecard.length > 0 && (
+                    <div>
+                      <h4 className="text-xs font-bold text-gray-700 uppercase mb-3 flex items-center gap-1"><Target size={13} className="text-indigo-600"/> Target Scorecard</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+                        {ai.targetScorecard.map((t, i) => (
+                          <div key={i} className={`rounded-lg p-3 border ${
+                            t.grade === 'green' ? 'bg-emerald-50 border-emerald-200' :
+                            t.grade === 'red' ? 'bg-rose-50 border-rose-200' : 'bg-amber-50 border-amber-200'
+                          }`}>
+                            <div className="flex justify-between items-start">
+                              <div className="text-[10px] font-bold text-gray-700 uppercase">{t.metric}</div>
+                              <div className={`text-[9px] font-bold uppercase ${
+                                t.grade === 'green' ? 'text-emerald-700' :
+                                t.grade === 'red' ? 'text-rose-700' : 'text-amber-700'
+                              }`}>{t.grade}</div>
+                            </div>
+                            <div className="text-base font-bold text-gray-900 mt-1">{t.actual}</div>
+                            <div className="text-[10px] text-gray-500">target {t.target}</div>
+                            <p className="text-[10px] text-gray-600 mt-1.5 leading-snug">{t.comment}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                 )}
+
+                 {/* Key metrics */}
+                 <div>
+                    <h4 className="text-xs font-bold text-gray-700 uppercase mb-3">Key Metrics</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       {ai.keyMetrics.map((m, i) => (
                         <div key={i} className="bg-gray-50 rounded-lg p-3 border border-gray-100">
@@ -371,7 +406,111 @@ export default function MetaAdsCard() {
                       ))}
                     </div>
                  </div>
-                 
+
+                 {/* Creative analysis */}
+                 {ai.creativeAnalysis && ai.creativeAnalysis.length > 0 && (
+                   <div>
+                     <h4 className="text-xs font-bold text-gray-700 uppercase mb-3 flex items-center gap-1"><Sparkles size={13} className="text-purple-600"/> Creative Analysis (Top Ads)</h4>
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                       {ai.creativeAnalysis.map((c, i) => {
+                         const thumb = data?.deliveryHealth?.topAds?.find((a: any) => a.adName === c.adName)?.creative?.thumbnailUrl;
+                         const badge =
+                           c.verdict === 'winner' ? 'bg-emerald-100 text-emerald-700' :
+                           c.verdict === 'fatiguing' ? 'bg-amber-100 text-amber-700' :
+                           c.verdict === 'underperforming' ? 'bg-rose-100 text-rose-700' : 'bg-blue-100 text-blue-700';
+                         return (
+                           <div key={i} className="border border-gray-100 rounded-lg p-3 bg-white flex gap-3">
+                             {thumb ? (
+                               <img src={thumb} alt="" className="w-16 h-16 rounded object-cover shrink-0 border border-gray-100" />
+                             ) : (
+                               <div className="w-16 h-16 rounded bg-gray-100 shrink-0" />
+                             )}
+                             <div className="flex-1 min-w-0">
+                               <div className="flex justify-between items-start gap-2 mb-1">
+                                 <div className="font-semibold text-xs text-gray-900 truncate" title={c.adName}>{c.adName}</div>
+                                 <span className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded ${badge}`}>{c.verdict}</span>
+                               </div>
+                               <div className="text-[10px] text-gray-500 mb-1.5">
+                                 ₹{Math.round(c.spend).toLocaleString('en-IN')} · CTR {c.ctr?.toFixed(2)}% · Freq {c.frequency?.toFixed(2)} · {c.purchases} purch
+                               </div>
+                               <p className="text-[11px] text-gray-700 leading-snug">{c.creativeCritique}</p>
+                               <p className="text-[11px] text-indigo-700 font-medium mt-1">→ {c.recommendation}</p>
+                             </div>
+                           </div>
+                         );
+                       })}
+                     </div>
+                   </div>
+                 )}
+
+                 {/* Campaign actions */}
+                 {ai.campaignActions && ai.campaignActions.length > 0 && (
+                   <div>
+                     <h4 className="text-xs font-bold text-gray-700 uppercase mb-3">Campaign Verdicts</h4>
+                     <div className="space-y-2">
+                       {ai.campaignActions.map((c, i) => {
+                         const badge =
+                           c.verdict === 'scale' ? 'bg-emerald-100 text-emerald-700' :
+                           c.verdict === 'cut' ? 'bg-rose-100 text-rose-700' :
+                           c.verdict === 'rotate' ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-700';
+                         return (
+                           <div key={i} className="border border-gray-100 rounded-lg p-3 bg-white flex items-start justify-between gap-3">
+                             <div className="min-w-0 flex-1">
+                               <div className="flex items-center gap-2 mb-1">
+                                 <span className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded ${badge}`}>{c.verdict}</span>
+                                 <span className="font-semibold text-xs text-gray-900 truncate">{c.name}</span>
+                               </div>
+                               <p className="text-[11px] text-gray-600 leading-snug">{c.reason}</p>
+                               <p className="text-[11px] text-indigo-700 font-medium mt-1">→ {c.nextStep}</p>
+                             </div>
+                             <div className="text-right shrink-0">
+                               <div className="text-[10px] text-gray-400">Spend</div>
+                               <div className="text-xs font-bold text-gray-800">₹{Math.round(c.spend).toLocaleString('en-IN')}</div>
+                               <div className={`text-[10px] font-bold ${c.roas >= 1 ? 'text-emerald-600' : 'text-rose-600'}`}>{c.roas?.toFixed(2)}x</div>
+                             </div>
+                           </div>
+                         );
+                       })}
+                     </div>
+                   </div>
+                 )}
+
+                 {/* Budget reallocation */}
+                 {ai.budgetReallocation && ai.budgetReallocation.moves && ai.budgetReallocation.moves.length > 0 && (
+                   <div>
+                     <h4 className="text-xs font-bold text-gray-700 uppercase mb-2 flex items-center gap-1"><DollarSign size={13} className="text-emerald-600"/> Budget Reallocation</h4>
+                     <p className="text-xs text-gray-600 mb-2">{ai.budgetReallocation.summary}</p>
+                     <div className="space-y-1.5">
+                       {ai.budgetReallocation.moves.map((m, i) => (
+                         <div key={i} className="text-[11px] text-gray-700 bg-emerald-50/50 border border-emerald-100 rounded px-3 py-2">
+                           <span className="font-bold">{m.amountPct}%</span> from <span className="font-semibold">{m.from}</span> → <span className="font-semibold">{m.to}</span>
+                           <div className="text-gray-500 text-[10px] mt-0.5">{m.rationale}</div>
+                         </div>
+                       ))}
+                     </div>
+                   </div>
+                 )}
+
+                 {/* 7-day action plan */}
+                 {ai.actionPlan7Day && ai.actionPlan7Day.length > 0 && (
+                   <div>
+                     <h4 className="text-xs font-bold text-gray-700 uppercase mb-3 flex items-center gap-1"><Calendar size={13} className="text-blue-600"/> 7-Day Action Plan</h4>
+                     <div className="space-y-2">
+                       {ai.actionPlan7Day.map((a, i) => (
+                         <div key={i} className="border-l-4 border-blue-500 bg-blue-50/40 pl-3 pr-3 py-2 rounded-r">
+                           <div className="flex justify-between items-baseline">
+                             <span className="text-[10px] font-bold uppercase text-blue-700">{a.day}</span>
+                             <span className="text-[10px] text-gray-500">{a.owner}</span>
+                           </div>
+                           <div className="text-xs font-semibold text-gray-900">{a.action}</div>
+                           <div className="text-[11px] text-gray-600">→ {a.expectedImpact}</div>
+                         </div>
+                       ))}
+                     </div>
+                   </div>
+                 )}
+
+                 {/* Recommendations + alerts */}
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
                       <h4 className="text-xs font-bold text-gray-700 uppercase mb-3 flex items-center gap-1"><ShieldCheck size={13} className="text-emerald-600"/> Recommendations</h4>
@@ -380,9 +519,10 @@ export default function MetaAdsCard() {
                           <div key={i} className="bg-white border border-gray-100 rounded-lg p-3 text-xs">
                              <div className="flex justify-between mb-1">
                                <span className="font-bold text-gray-900">{r.action}</span>
-                               <span className={`text-[9px] uppercase font-bold ${r.priority === 'high' ? 'text-rose-600' : 'text-amber-600'}`}>{r.priority}</span>
+                               <span className={`text-[9px] uppercase font-bold ${r.priority === 'high' ? 'text-rose-600' : r.priority === 'medium' ? 'text-amber-600' : 'text-gray-500'}`}>{r.priority}</span>
                              </div>
                              <p className="text-gray-600">{r.expectedImpact}</p>
+                             <p className="text-[10px] text-gray-400 mt-0.5">{r.timeframe}</p>
                           </div>
                         ))}
                       </div>
