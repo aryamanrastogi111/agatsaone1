@@ -69,11 +69,11 @@ Deno.serve(async (req) => {
     const perAccount = await Promise.all(accountIds.map(async (acct) => {
       const [accountLevel, campaignLevel, hist30Daily, hist30Campaign] = await Promise.all([
         fetchMeta(`${acct}/insights`, {
-          fields: "spend,impressions,clicks,ctr,cpc,reach,actions,action_values",
+          fields: "spend,impressions,clicks,ctr,cpc,reach,cpm,frequency,actions,action_values",
           date_preset: "today",
         }),
         fetchMeta(`${acct}/insights`, {
-          fields: "campaign_id,campaign_name,spend,impressions,clicks,ctr,cpc,actions,action_values",
+          fields: "campaign_id,campaign_name,spend,impressions,clicks,ctr,cpc,cpm,frequency,actions,action_values",
           date_preset: "today",
           level: "campaign",
           limit: "50",
