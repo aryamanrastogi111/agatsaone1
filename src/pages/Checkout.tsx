@@ -179,6 +179,10 @@ export default function CheckoutPage() {
   const purchaseEventIdRef = useRef<string>("");
   const visitorSessionIdRef = useRef(getVisitorSessionId());
   const cartSyncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const checkoutLiveChannelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+  const checkoutLiveSubscribedRef = useRef(false);
+  const lastCheckoutLiveEventRef = useRef("");
+  const checkoutStageRef = useRef("/checkout");
 
   // Quantities
   const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
@@ -250,37 +254,71 @@ export default function CheckoutPage() {
     variantTitle: d.variantTitle,
   }));
 
-  const syncCheckoutSession = useCallback(async (contactOnly = false, convertedOrderId?: string) => {
+  const syncCheckoutSession = useCallback(async (contactOnly = false, convertedOrderId?: string, checkoutStage?: string) => {
     const itemCount = items.reduce((sum, d) => sum + d.qty, 0);
     if (itemCount === 0) return;
+    if (checkoutStage) checkoutStageRef.current = checkoutStage;
 
     const cleanPhone = phone.replace(/\D/g, "");
     const contactPhone = cleanPhone ? (isIntl ? cleanPhone.slice(0, 15) : cleanPhone.slice(-10)) : null;
-    const payload: Record<string, unknown> = {
-      session_id: visitorSessionIdRef.current,
-      email: email.trim().toLowerCase() || null,
-      phone: contactPhone,
-      last_page: "/checkout",
-      updated_at: new Date().toISOString(),
-    };
-
-    if (!contactOnly) {
-      payload.items = items.map((d) => ({
+    const cartPayload = items.map((d) => ({
         productId: d.sku,
         productName: d.name,
         variantTitle: d.variantTitle || "Default Title",
         price: d.unitPricePaise / 100,
         quantity: d.qty,
-      }));
-      payload.subtotal = displayTotalPaise / 100;
-      payload.item_count = itemCount;
-    }
+    }));
 
-    if (convertedOrderId) payload.converted_order_id = convertedOrderId;
-
-    const { error } = await db.from("cart_sessions").upsert(payload, { onConflict: "session_id" });
+    const { error } = await db.rpc("save_cart_session", {
+      _session_id: visitorSessionIdRef.current,
+      _items: contactOnly ? [] : cartPayload,
+      _email: email.trim().toLowerCase() || null,
+      _phone: contactPhone,
+      _subtotal: displayTotalPaise / 100,
+      _item_count: itemCount,
+      _last_page: checkoutStageRef.current,
+      _converted_order_id: convertedOrderId || null,
+    });
     if (error) console.error("[checkout] cart session sync failed:", error.message);
   }, [items, phone, email, isIntl, displayTotalPaise]);
+
+  const emitCheckoutActivity = useCallback(async (
+    eventType: "checkout_reached" | "contact_typing" | "payment_clicked" | "payment_window_opened" | "payment_cancelled" | "payment_failed" | "payment_success"
+  ) => {
+    const cleanPhone = phone.replace(/\D/g, "");
+    const contactPhone = cleanPhone ? (isIntl ? cleanPhone.slice(0, 15) : cleanPhone.slice(-10)) : "";
+    const stage = `checkout_${eventType}`;
+    const fingerprint = [eventType, email.trim().toLowerCase(), contactPhone, fullName.trim(), displayTotalPaise].join("|");
+
+    if (lastCheckoutLiveEventRef.current !== fingerprint || eventType !== "contact_typing") {
+      lastCheckoutLiveEventRef.current = fingerprint;
+      const payload = {
+        event_type: eventType,
+        session_id: visitorSessionIdRef.current,
+        email: email.trim().toLowerCase() || null,
+        phone: contactPhone || null,
+        name: fullName.trim() || null,
+        item_count: items.reduce((sum, d) => sum + d.qty, 0),
+        subtotal: displayTotalPaise / 100,
+        items: items.map((d) => ({ sku: d.sku, name: d.name, variantTitle: d.variantTitle, qty: d.qty })),
+        country,
+        city: city.trim() || null,
+        state: state.trim() || null,
+        stage,
+        occurred_at: new Date().toISOString(),
+      };
+
+      if (checkoutLiveChannelRef.current && checkoutLiveSubscribedRef.current) {
+        await checkoutLiveChannelRef.current.send({
+          type: "broadcast",
+          event: "checkout_activity",
+          payload,
+        });
+      }
+    }
+
+    await syncCheckoutSession(true, undefined, stage);
+  }, [city, country, displayTotalPaise, email, fullName, isIntl, items, phone, state, syncCheckoutSession]);
 
   // ─── Quote fetch ──────────────────────────────────────────
   const fetchQuote = useCallback(async (itemsArr: { sku: string; qty: number }[], coupon: string | null) => {
@@ -379,6 +417,24 @@ export default function CheckoutPage() {
         },
       });
     }
+  }, []);
+
+  useEffect(() => {
+    const channel = supabase.channel("checkout-live-events");
+    checkoutLiveChannelRef.current = channel;
+    channel.subscribe((status) => {
+      checkoutLiveSubscribedRef.current = status === "SUBSCRIBED";
+      if (status === "SUBSCRIBED") {
+        void emitCheckoutActivity("checkout_reached");
+      }
+    });
+
+    return () => {
+      checkoutLiveSubscribedRef.current = false;
+      checkoutLiveChannelRef.current = null;
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -481,11 +537,11 @@ export default function CheckoutPage() {
 
     // Sync to cart_sessions on any plausible partial contact — debounced by
     // React batching + upsert is idempotent per session_id.
-    if (emailValid || phoneValid || emailLooksLikely || phoneLooksLikely) {
-      const t = setTimeout(() => { void syncCheckoutSession(true); }, 600);
+    if (emailValid || phoneValid || emailLooksLikely || phoneLooksLikely || email.trim().length >= 3 || cleanPhone.length >= 3) {
+      const t = setTimeout(() => { void emitCheckoutActivity("contact_typing"); }, 600);
       return () => clearTimeout(t);
     }
-  }, [emailValid, phoneValid, email, phone, fullName, city, state, pincode, country, dialCode]);
+  }, [emailValid, phoneValid, email, phone, fullName, city, state, pincode, country, dialCode, emitCheckoutActivity]);
 
   // Purchase is fired inline in the Razorpay handler (immediate, before any
   // async work that could be interrupted by a tab close) and duplicated server
@@ -628,6 +684,7 @@ export default function CheckoutPage() {
     setPaying(true);
     setPageState("processing");
     setErrorMsg("");
+    void emitCheckoutActivity("payment_clicked");
 
     const rawDigits = phone.replace(/\D/g, "");
     const cleanPhone = isIntl ? rawDigits.slice(0, 15) : rawDigits.slice(-10);
@@ -728,6 +785,7 @@ export default function CheckoutPage() {
       if (!razorpayLoaded) throw new Error("Failed to load payment gateway. Please refresh and try again.");
 
       setPageState("form"); // hide processing overlay while Razorpay modal is open
+      void emitCheckoutActivity("payment_window_opened");
 
       await new Promise<void>((resolve, reject) => {
         let rzp: any;
@@ -781,6 +839,7 @@ export default function CheckoutPage() {
 
                 // Transition success FIRST so user always sees confirmation
                 setPageState("success");
+                void emitCheckoutActivity("payment_success");
 
                 // ── Meta Purchase: fire Pixel + browser CAPI IMMEDIATELY, with a
                 // stable event_id we also pass to send-order-confirmation for a
@@ -844,7 +903,7 @@ export default function CheckoutPage() {
                 }
 
                 try {
-                  await syncCheckoutSession(true, response.razorpay_order_id || websiteOrderId || response.razorpay_payment_id);
+                  await syncCheckoutSession(true, response.razorpay_order_id || websiteOrderId || response.razorpay_payment_id, "checkout_payment_success");
                 } catch (cartSyncErr) {
                   console.error("[checkout] cart conversion sync failed:", cartSyncErr);
                 }
@@ -903,6 +962,7 @@ export default function CheckoutPage() {
               ondismiss: () => {
                 setPaying(false);
                 setPageState("form");
+                void emitCheckoutActivity("payment_cancelled");
                 reject(new Error("cancelled"));
               },
               backdropclose: false,
@@ -918,6 +978,7 @@ export default function CheckoutPage() {
               setErrorMsg(reason);
               setPageState("error");
               setPaying(false);
+              void emitCheckoutActivity("payment_failed");
               reject(new Error(reason));
             });
           }
