@@ -551,6 +551,57 @@ serve(async (req) => {
     // Update order status
     await supabase.from("orders").update({ status: "confirmed" }).eq("razorpay_order_id", orderId);
 
+    // ── Meta Conversions API: server-side Purchase backup ──────────────────
+    // Runs regardless of whether the buyer's tab is still open. Uses the same
+    // event_id as the browser Pixel/CAPI fire in Checkout so Meta deduplicates.
+    if (metaEventId) {
+      const nameParts = (customerName || "").trim().split(/\s+/);
+      const first_name = nameParts[0] || undefined;
+      const last_name = nameParts.length > 1 ? nameParts.slice(1).join(" ") : undefined;
+      const capiPayload = {
+        event_name: "Purchase",
+        event_id: metaEventId,
+        event_source_url: metaSourceUrl,
+        action_source: "website",
+        user_data: {
+          email: customerEmail,
+          phone: customerPhone,
+          first_name,
+          last_name,
+          city: shippingCity,
+          state: shippingState,
+          zip: shippingPincode,
+          country: metaCountryIso2,
+          external_id: paymentId || orderId,
+          fbp: metaFbp,
+          fbc: metaFbc,
+          client_user_agent: metaUserAgent,
+          client_ip_address: (req.headers.get("x-forwarded-for") || "").split(",")[0].trim() || undefined,
+        },
+        custom_data: {
+          value: total,
+          currency: "INR",
+          content_ids: metaContentIds,
+          content_type: "product",
+          num_items: metaNumItems,
+          order_id: orderId,
+        },
+      };
+      try {
+        await fetch(`${SUPABASE_URL}/functions/v1/meta-capi`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          },
+          body: JSON.stringify(capiPayload),
+        });
+      } catch (capiErr) {
+        console.error("meta-capi server-side Purchase failed:", capiErr);
+      }
+    }
+
+
     return new Response(
       JSON.stringify({
         success: true,
