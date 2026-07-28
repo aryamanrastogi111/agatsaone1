@@ -606,8 +606,10 @@ export type Database = {
           page_path: string
           session_id: string
           utm_campaign: string | null
+          utm_content: string | null
           utm_medium: string | null
           utm_source: string | null
+          utm_term: string | null
         }
         Insert: {
           created_at?: string
@@ -615,8 +617,10 @@ export type Database = {
           page_path: string
           session_id: string
           utm_campaign?: string | null
+          utm_content?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          utm_term?: string | null
         }
         Update: {
           created_at?: string
@@ -624,8 +628,10 @@ export type Database = {
           page_path?: string
           session_id?: string
           utm_campaign?: string | null
+          utm_content?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          utm_term?: string | null
         }
         Relationships: []
       }
@@ -1403,8 +1409,10 @@ export type Database = {
           session_id: string
           started_at: string
           utm_campaign: string | null
+          utm_content: string | null
           utm_medium: string | null
           utm_source: string | null
+          utm_term: string | null
         }
         Insert: {
           city?: string | null
@@ -1419,8 +1427,10 @@ export type Database = {
           session_id: string
           started_at?: string
           utm_campaign?: string | null
+          utm_content?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          utm_term?: string | null
         }
         Update: {
           city?: string | null
@@ -1435,8 +1445,10 @@ export type Database = {
           session_id?: string
           started_at?: string
           utm_campaign?: string | null
+          utm_content?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          utm_term?: string | null
         }
         Relationships: []
       }

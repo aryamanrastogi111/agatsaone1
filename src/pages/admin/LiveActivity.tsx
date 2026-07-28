@@ -11,6 +11,7 @@ import {
 import {
   ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid,
 } from "recharts";
+import MetaAdsCard from "./MetaAdsCard";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const db = supabase as any;
@@ -826,6 +827,9 @@ export default function LiveActivity() {
 
       {/* AI Insights — Top of page */}
       <AIInsightsCard data={aiData} loading={aiLoading} onRefresh={fetchAIAnalysis} />
+
+      {/* Meta Ads live block */}
+      <MetaAdsCard />
 
       {/* Stats Row */}
       <div className="grid grid-cols-2 lg:grid-cols-7 gap-4">

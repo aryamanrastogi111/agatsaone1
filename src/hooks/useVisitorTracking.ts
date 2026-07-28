@@ -68,6 +68,8 @@ function getUtmParams() {
     utm_source: url.searchParams.get("utm_source") || sessionStorage.getItem("agatsa_utm_source") || null,
     utm_medium: url.searchParams.get("utm_medium") || sessionStorage.getItem("agatsa_utm_medium") || null,
     utm_campaign: url.searchParams.get("utm_campaign") || sessionStorage.getItem("agatsa_utm_campaign") || null,
+    utm_content: url.searchParams.get("utm_content") || sessionStorage.getItem("agatsa_utm_content") || null,
+    utm_term: url.searchParams.get("utm_term") || sessionStorage.getItem("agatsa_utm_term") || null,
   };
 }
 
@@ -76,9 +78,13 @@ function captureUtmParams() {
   const src = url.searchParams.get("utm_source");
   const med = url.searchParams.get("utm_medium");
   const camp = url.searchParams.get("utm_campaign");
+  const cont = url.searchParams.get("utm_content");
+  const term = url.searchParams.get("utm_term");
   if (src) sessionStorage.setItem("agatsa_utm_source", src);
   if (med) sessionStorage.setItem("agatsa_utm_medium", med);
   if (camp) sessionStorage.setItem("agatsa_utm_campaign", camp);
+  if (cont) sessionStorage.setItem("agatsa_utm_content", cont);
+  if (term) sessionStorage.setItem("agatsa_utm_term", term);
 }
 
 // Increment total_visitors once per unique visitor per day
@@ -119,6 +125,8 @@ async function upsertSession(sessionId: string, pagePath: string, isFirst: boole
       utm_source: utm.utm_source,
       utm_medium: utm.utm_medium,
       utm_campaign: utm.utm_campaign,
+      utm_content: utm.utm_content,
+      utm_term: utm.utm_term,
       device,
       referrer,
       city: geo.city,
