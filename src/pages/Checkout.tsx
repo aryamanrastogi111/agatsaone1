@@ -716,6 +716,7 @@ export default function CheckoutPage() {
     setPageState("processing");
     setErrorMsg("");
     void emitCheckoutActivity("payment_clicked");
+    void notifyHotLead("payment_clicked");
 
     // Fire InitiateCheckout only when the user actually clicks Pay (Razorpay launch)
     try {
