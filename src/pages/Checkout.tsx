@@ -779,6 +779,15 @@ export default function CheckoutPage() {
                       shippingPincode: pincode.trim(),
                       shippingCountry: country,
                       shippingSurcharge: shippingPaise / 100,
+                      // Meta CAPI server-side backup (dedup by same event_id).
+                      metaEventId,
+                      metaFbp: readFbCookies().fbp,
+                      metaFbc: readFbCookies().fbc,
+                      metaUserAgent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
+                      metaSourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
+                      metaCountryIso2: toIso2(country),
+                      metaContentIds: uniqueSkus,
+                      metaNumItems: items.reduce((s, d) => s + d.qty, 0),
                     },
                   });
                 } catch (emailErr) {
