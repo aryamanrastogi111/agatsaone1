@@ -79,7 +79,7 @@ Deno.serve(async (req) => {
           limit: "50",
         }),
         fetchMeta(`${acct}/insights`, {
-          fields: "spend,impressions,clicks,cpm,actions,action_values",
+          fields: "spend,impressions,clicks,ctr,cpm,actions,action_values",
           date_preset: "last_30d",
           time_increment: "1",
           limit: "500",
@@ -258,7 +258,7 @@ Deno.serve(async (req) => {
         if (!best || new Date(s.started_at).getTime() > new Date(best.started_at).getTime()) best = s;
       }
       if (best?.utm_campaign) {
-        const key = String(best.utm_campaign);
+        const key = String(best.utm_campaign).toLowerCase();
         if (!campaignAttribution[key]) campaignAttribution[key] = { orders: 0, revenue: 0 };
         campaignAttribution[key].orders += 1;
         campaignAttribution[key].revenue += Number(order.amount || 0);
@@ -280,7 +280,13 @@ Deno.serve(async (req) => {
           const u = (s.utm_campaign || "").toString();
           return u === cid || u.toLowerCase() === cname;
         });
-        const attr = campaignAttribution[cid] || { orders: 0, revenue: 0 };
+        const nameKey = String(c.campaign_name || "").toLowerCase();
+        const byId = campaignAttribution[cid.toLowerCase()] || { orders: 0, revenue: 0 };
+        const byName = campaignAttribution[nameKey] || { orders: 0, revenue: 0 };
+        const attr = {
+          orders: byId.orders + (nameKey !== cid.toLowerCase() ? byName.orders : 0),
+          revenue: byId.revenue + (nameKey !== cid.toLowerCase() ? byName.revenue : 0),
+        };
         const meta = metaMap.get(cid) || {};
         return {
           accountId: acct,
@@ -305,16 +311,17 @@ Deno.serve(async (req) => {
     });
 
     // ── HISTORIC 30D ──
-    const dailySpendMap: Record<string, { spend: number; impressions: number; clicks: number; metaPurchases: number; cpm: number; count: number }> = {};
+    const dailySpendMap: Record<string, { spend: number; impressions: number; clicks: number; metaPurchases: number; ctr: number; cpm: number; count: number }> = {};
     for (const { hist30Daily } of perAccount) {
       for (const row of (hist30Daily.data || [])) {
         const day = row.date_start;
         if (!day) continue;
-        if (!dailySpendMap[day]) dailySpendMap[day] = { spend: 0, impressions: 0, clicks: 0, metaPurchases: 0, cpm: 0, count: 0 };
+        if (!dailySpendMap[day]) dailySpendMap[day] = { spend: 0, impressions: 0, clicks: 0, metaPurchases: 0, ctr: 0, cpm: 0, count: 0 };
         dailySpendMap[day].spend += parseFloat(row.spend || "0");
         dailySpendMap[day].impressions += parseInt(row.impressions || "0", 10);
         dailySpendMap[day].clicks += parseInt(row.clicks || "0", 10);
         dailySpendMap[day].metaPurchases += findAction(row.actions || [], "purchase");
+        dailySpendMap[day].ctr += parseFloat(row.ctr || "0");
         dailySpendMap[day].cpm += parseFloat(row.cpm || "0");
         dailySpendMap[day].count += 1;
       }
@@ -339,6 +346,7 @@ Deno.serve(async (req) => {
       impressions: dailySpendMap[d]?.impressions || 0,
       clicks: dailySpendMap[d]?.clicks || 0,
       metaPurchases: dailySpendMap[d]?.metaPurchases || 0,
+      ctr: dailySpendMap[d]?.count > 0 ? dailySpendMap[d].ctr / dailySpendMap[d].count : 0,
       cpm: dailySpendMap[d]?.count > 0 ? dailySpendMap[d].cpm / dailySpendMap[d].count : 0,
       orders: dailyRevMap[d]?.orders || 0,
       revenue: dailyRevMap[d]?.revenue || 0,
