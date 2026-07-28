@@ -269,6 +269,15 @@ Deno.serve(async (req) => {
     const unattributedPaidOrders = (paidOrdersToday || []).length - orderIdsAttributed.size;
     const unattributedRevenue = (paidOrdersToday || []).filter((o: any) => !orderIdsAttributed.has(o.id))
       .reduce((s: number, o: any) => s + Number(o.amount || 0), 0);
+    const attributedRevenue = (paidOrdersToday || []).filter((o: any) => orderIdsAttributed.has(o.id))
+      .reduce((s: number, o: any) => s + Number(o.amount || 0), 0);
+    const attributedRoas = spend > 0 ? attributedRevenue / spend : 0;
+    const blendedRoas = spend > 0 ? revenueToday / spend : 0;
+    // Dedup approximation: browser pixel vs server CAPI purchases will show up as duplicate in Meta only if event_id mismatched.
+    // We compute a proxy: if metaPurchases > site.paidOrders * 1.4, likely double-counting.
+    const dedupRatio = metaPurchases > 0 && (paidOrdersToday || []).length > 0
+      ? Math.min(1, (paidOrdersToday || []).length / metaPurchases)
+      : 1;
 
     // Campaign match
     const campaigns = perAccount.flatMap(({ acct, campaignLevel, campaignMeta }) => {
