@@ -155,6 +155,9 @@ export default function CheckoutPage() {
   const [pageState, setPageState] = useState<PageState>("form");
   const [errorMsg, setErrorMsg] = useState("");
   const [successReference, setSuccessReference] = useState("");
+  // Meta CAPI: stable event_id shared between browser Pixel, browser CAPI, and
+  // server-side CAPI backup (send-order-confirmation) so Meta deduplicates.
+  const purchaseEventIdRef = useRef<string>("");
 
   // Quantities
   const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
