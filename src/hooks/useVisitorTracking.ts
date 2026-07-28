@@ -125,6 +125,8 @@ async function upsertSession(sessionId: string, pagePath: string, isFirst: boole
       utm_source: utm.utm_source,
       utm_medium: utm.utm_medium,
       utm_campaign: utm.utm_campaign,
+      utm_content: utm.utm_content,
+      utm_term: utm.utm_term,
       device,
       referrer,
       city: geo.city,
