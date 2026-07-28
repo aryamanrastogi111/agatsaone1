@@ -31,17 +31,16 @@ export function useCartSync() {
 
       if (item_count === 0) return; // don't sync empty carts
 
-      const { error } = await db.from("cart_sessions").upsert(
-        {
-          session_id: sessionId.current,
-          items,
-          subtotal,
-          item_count,
-          last_page: location.pathname,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: "session_id" }
-      );
+      const { error } = await db.rpc("save_cart_session", {
+        _session_id: sessionId.current,
+        _items: items,
+        _email: null,
+        _phone: null,
+        _subtotal: subtotal,
+        _item_count: item_count,
+        _last_page: location.pathname,
+        _converted_order_id: null,
+      });
       if (error) console.error("[CartSync] cart_sessions upsert failed:", error.message);
     }, 1500);
 

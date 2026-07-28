@@ -261,29 +261,24 @@ export default function CheckoutPage() {
 
     const cleanPhone = phone.replace(/\D/g, "");
     const contactPhone = cleanPhone ? (isIntl ? cleanPhone.slice(0, 15) : cleanPhone.slice(-10)) : null;
-    const payload: Record<string, unknown> = {
-      session_id: visitorSessionIdRef.current,
-      email: email.trim().toLowerCase() || null,
-      phone: contactPhone,
-      last_page: checkoutStageRef.current,
-      updated_at: new Date().toISOString(),
-    };
-
-    if (!contactOnly) {
-      payload.items = items.map((d) => ({
+    const cartPayload = items.map((d) => ({
         productId: d.sku,
         productName: d.name,
         variantTitle: d.variantTitle || "Default Title",
         price: d.unitPricePaise / 100,
         quantity: d.qty,
-      }));
-      payload.subtotal = displayTotalPaise / 100;
-      payload.item_count = itemCount;
-    }
+    }));
 
-    if (convertedOrderId) payload.converted_order_id = convertedOrderId;
-
-    const { error } = await db.from("cart_sessions").upsert(payload, { onConflict: "session_id" });
+    const { error } = await db.rpc("save_cart_session", {
+      _session_id: visitorSessionIdRef.current,
+      _items: contactOnly ? [] : cartPayload,
+      _email: email.trim().toLowerCase() || null,
+      _phone: contactPhone,
+      _subtotal: displayTotalPaise / 100,
+      _item_count: itemCount,
+      _last_page: checkoutStageRef.current,
+      _converted_order_id: convertedOrderId || null,
+    });
     if (error) console.error("[checkout] cart session sync failed:", error.message);
   }, [items, phone, email, isIntl, displayTotalPaise]);
 
