@@ -54,32 +54,62 @@ Deno.serve(async (req) => {
       });
     }
 
-    const acct = META_AD_ACCOUNT_ID.startsWith("act_") ? META_AD_ACCOUNT_ID : `act_${META_AD_ACCOUNT_ID}`;
+    const accountIds = resolveAccountIds();
+    if (!META_ACCESS_TOKEN || accountIds.length === 0) {
+      return new Response(JSON.stringify({ error: "Meta credentials not configured" }), {
+        status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
-    // Account-level insights (today, IST via timezone param)
-    const accountLevel = await fetchMeta(`${acct}/insights`, {
-      fields: "spend,impressions,clicks,ctr,cpc,reach,actions,action_values",
-      date_preset: "today",
-      time_increment: "1",
-    });
+    // Fetch account-level + campaign-level insights for each ad account in parallel
+    const perAccount = await Promise.all(accountIds.map(async (acct) => {
+      const [accountLevel, campaignLevel] = await Promise.all([
+        fetchMeta(`${acct}/insights`, {
+          fields: "spend,impressions,clicks,ctr,cpc,reach,actions,action_values",
+          date_preset: "today",
+          time_increment: "1",
+        }),
+        fetchMeta(`${acct}/insights`, {
+          fields: "campaign_id,campaign_name,spend,impressions,clicks,ctr,cpc,actions,action_values",
+          date_preset: "today",
+          level: "campaign",
+          limit: "50",
+        }),
+      ]);
+      return { acct, accountLevel, campaignLevel };
+    }));
 
-    // Per-campaign breakdown
-    const campaignLevel = await fetchMeta(`${acct}/insights`, {
-      fields: "campaign_id,campaign_name,spend,impressions,clicks,ctr,cpc,actions,action_values",
-      date_preset: "today",
-      level: "campaign",
-      limit: "50",
-    });
-
-    const summary = accountLevel.data?.[0] || {};
-    const spend = parseFloat(summary.spend || "0");
-    const impressions = parseInt(summary.impressions || "0", 10);
-    const clicks = parseInt(summary.clicks || "0", 10);
-    const reach = parseInt(summary.reach || "0", 10);
     const findAction = (actions: any[], type: string) =>
       parseInt(actions?.find((a: any) => a.action_type === type)?.value || "0", 10);
-    const metaPurchases = findAction(summary.actions || [], "purchase");
-    const metaInitiateCheckout = findAction(summary.actions || [], "initiate_checkout");
+
+    // Aggregate across all accounts
+    let spend = 0, impressions = 0, clicks = 0, reach = 0;
+    let metaPurchases = 0, metaInitiateCheckout = 0;
+    const perAccountSummary: any[] = [];
+
+    for (const { acct, accountLevel } of perAccount) {
+      const s = accountLevel.data?.[0] || {};
+      const aSpend = parseFloat(s.spend || "0");
+      const aImp = parseInt(s.impressions || "0", 10);
+      const aClicks = parseInt(s.clicks || "0", 10);
+      const aReach = parseInt(s.reach || "0", 10);
+      const aPurch = findAction(s.actions || [], "purchase");
+      const aIC = findAction(s.actions || [], "initiate_checkout");
+      spend += aSpend; impressions += aImp; clicks += aClicks; reach += aReach;
+      metaPurchases += aPurch; metaInitiateCheckout += aIC;
+      perAccountSummary.push({
+        accountId: acct,
+        spend: aSpend, impressions: aImp, clicks: aClicks,
+        ctr: parseFloat(s.ctr || "0"),
+        cpc: parseFloat(s.cpc || "0"),
+        metaPurchases: aPurch,
+      });
+    }
+
+    const summary = {
+      ctr: impressions > 0 ? (clicks / impressions) * 100 : 0,
+      cpc: clicks > 0 ? spend / clicks : 0,
+    };
 
     // Query our DB for ground-truth ROAS today
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
