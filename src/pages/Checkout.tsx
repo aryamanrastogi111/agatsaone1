@@ -10,7 +10,7 @@ import { db } from "@/integrations/supabase/db";
 import { supabase } from "@/integrations/supabase/client";
 import { useCartStore } from "@/stores/cartStore";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
-import { trackMetaEvent, setPixelAdvancedMatching, splitName, toIso2, sendCapiEvent } from "@/lib/metaCapi";
+import { trackMetaEvent, setPixelAdvancedMatching, splitName, toIso2, sendCapiEvent, readFbCookies, newEventId } from "@/lib/metaCapi";
 import { BAND_COLORS, BAND_SKU, decodeVariantsParam, findBandColorByName } from "@/lib/bandColors";
 
 // ─── Device display names ───────────────────────────────────────
