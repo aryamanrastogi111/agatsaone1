@@ -102,6 +102,15 @@ serve(async (req) => {
       shippingState,
       shippingPincode,
       _testTeamEmail,
+      // Meta CAPI server-side Purchase backup (deduped with browser via event_id)
+      metaEventId,
+      metaFbp,
+      metaFbc,
+      metaUserAgent,
+      metaSourceUrl,
+      metaCountryIso2,
+      metaContentIds,
+      metaNumItems,
     } = await req.json();
 
     const teamRecipients = _testTeamEmail
