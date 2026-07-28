@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { RefreshCw, TrendingUp, DollarSign, MousePointerClick, Eye, ShoppingCart, Target, AlertCircle, type LucideIcon } from "lucide-react";
 
 interface Campaign {
+  accountId?: string;
   id: string;
   name: string;
   spend: number;
@@ -13,12 +14,20 @@ interface Campaign {
   siteSessions: number;
 }
 
+interface AccountSummary {
+  accountId: string;
+  spend: number; impressions: number; clicks: number;
+  ctr: number; cpc: number; metaPurchases: number;
+}
+
 interface MetaData {
   generatedAt: string;
+  accountIds?: string[];
   account: {
     spend: number; impressions: number; clicks: number; reach: number;
     ctr: number; cpc: number; metaPurchases: number; metaInitiateCheckout: number;
   };
+  accounts?: AccountSummary[];
   site: { fbSessions: number; paidOrders: number; revenueToday: number; roas: number };
   campaigns: Campaign[];
   recentFbSessions: Array<{ session_id: string; started_at: string; utm_campaign: string | null; utm_content: string | null; exit_page: string | null }>;
