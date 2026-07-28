@@ -1037,6 +1037,7 @@ export default function CheckoutPage() {
               setPageState("error");
               setPaying(false);
               void emitCheckoutActivity("payment_failed");
+              void notifyHotLead("payment_failed");
               reject(new Error(reason));
             });
           }
