@@ -166,7 +166,7 @@ export default function MetaAdsCard() {
   );
 }
 
-function KPI({ icon: Icon, label, value, sub, color }: { icon: React.ComponentType<{ size?: number }>; label: string; value: string; sub?: string; color: string }) {
+function KPI({ icon: Icon, label, value, sub, color }: { icon: LucideIcon; label: string; value: string; sub?: string; color: string }) {
   return (
     <div className="bg-white border border-gray-100 rounded-lg p-3">
       <div className={`w-7 h-7 rounded-md ${color} flex items-center justify-center mb-2`}>
