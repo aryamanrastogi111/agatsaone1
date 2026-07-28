@@ -399,32 +399,10 @@ export default function CheckoutPage() {
     });
   }, [emailValid, phoneValid, email, phone, fullName, city, state, pincode, country, dialCode]);
 
-  // ─── Meta Pixel + CAPI Purchase event on success (deduped, with user data) ─
-  useEffect(() => {
-    if (pageState !== "success") return;
-    const { first_name, last_name } = splitName(fullName);
-    trackMetaEvent("Purchase", {
-      user: {
-        email: emailValid ? email : undefined,
-        phone: phoneValid ? `${dialCode.replace("+", "")}${phone}` : undefined,
-        first_name,
-        last_name,
-        city: city || undefined,
-        state: state || undefined,
-        zip: pincode || undefined,
-        country: toIso2(country),
-        external_id: successReference || undefined,
-      },
-      custom: {
-        value: displayTotalRupees,
-        currency: "INR",
-        content_ids: uniqueSkus,
-        content_type: "product",
-        num_items: cartItems.reduce((s, i) => s + i.qty, 0),
-        order_id: successReference || undefined,
-      },
-    });
-  }, [pageState]);
+  // Purchase is fired inline in the Razorpay handler (immediate, before any
+  // async work that could be interrupted by a tab close) and duplicated server
+  // side by send-order-confirmation. Same event_id → Meta dedups.
+
 
   // ─── Auto-apply coupon from URL (?coupon=CODE) or MAY10 promo ─
   const autoAppliedRef = useRef(false);
