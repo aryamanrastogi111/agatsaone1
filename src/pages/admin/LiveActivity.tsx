@@ -758,6 +758,114 @@ function PendingCheckoutPanel({ orders }: { orders: TodayOrder[] }) {
 
 type TimeRange = "7d" | "30d" | "90d";
 
+// ─── Abandoned Checkouts with Phone Panel ────────────────────
+function AbandonedWithPhonePanel({ rows }: { rows: AbandonedCheckout[] }) {
+  const [expanded, setExpanded] = useState(true);
+  const fmtAgo = (iso: string) => {
+    const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    return `${hrs}h ${mins % 60}m ago`;
+  };
+  const waLink = (phone: string, name: string | null, subtotal: number) => {
+    const digits = phone.replace(/\D/g, "");
+    const p = digits.length === 10 ? `91${digits}` : digits;
+    const msg = encodeURIComponent(
+      `Hi${name ? ` ${name}` : ""}! This is Agatsa. We saw you were checking out (${subtotal ? `₹${subtotal.toLocaleString("en-IN")}` : "your cart"}) but didn't finish. Any questions we can help with?`
+    );
+    return `https://wa.me/${p}?text=${msg}`;
+  };
+
+  return (
+    <div className="bg-white border-2 border-amber-200 rounded-xl shadow-sm overflow-hidden">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full flex items-center justify-between px-5 py-4 hover:bg-amber-50/50 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-amber-100 flex items-center justify-center">
+            <Phone size={18} className="text-amber-600" />
+          </div>
+          <div className="text-left">
+            <h3 className="font-bold text-gray-900 text-sm flex items-center gap-2">
+              Abandoned Checkouts · Phone Captured
+              <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-0.5 rounded-full">{rows.length}</span>
+            </h3>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Visitors who entered a phone number but stalled 5+ min ago — high-intent WhatsApp recovery targets
+            </p>
+          </div>
+        </div>
+        {expanded ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
+      </button>
+
+      {expanded && (
+        <div className="border-t border-amber-100">
+          {rows.length === 0 ? (
+            <div className="px-5 py-10 text-center text-sm text-gray-400">
+              No abandoned checkouts with a phone number in the last 24 hours.
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-amber-50/50 border-b border-amber-100 text-gray-500 text-xs uppercase tracking-wider">
+                  <tr>
+                    <th className="text-left px-5 py-3 font-medium">Contact</th>
+                    <th className="text-left px-5 py-3 font-medium">Cart</th>
+                    <th className="text-right px-5 py-3 font-medium">Value</th>
+                    <th className="text-left px-5 py-3 font-medium">Last Activity</th>
+                    <th className="text-right px-5 py-3 font-medium">Recover</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-amber-50">
+                  {rows.map((r) => {
+                    const itemLabel = (r.items ?? [])
+                      .map((it) => {
+                        const n = it.productName || it.name || "";
+                        const q = it.quantity ?? it.qty ?? 1;
+                        return n ? `${n} × ${q}` : null;
+                      })
+                      .filter(Boolean)
+                      .join(", ");
+                    return (
+                      <tr key={r.session_id} className="hover:bg-amber-50/30">
+                        <td className="px-5 py-3">
+                          <div className="font-medium text-gray-900 flex items-center gap-1.5">
+                            <Phone size={12} className="text-amber-600" />
+                            {r.phone}
+                          </div>
+                          {r.email && <div className="text-xs text-gray-500 mt-0.5">{r.email}</div>}
+                        </td>
+                        <td className="px-5 py-3 text-xs text-gray-600 max-w-xs truncate">
+                          {itemLabel || `${r.item_count} item${r.item_count === 1 ? "" : "s"}`}
+                        </td>
+                        <td className="px-5 py-3 text-right font-semibold text-gray-900">
+                          ₹{Number(r.subtotal || 0).toLocaleString("en-IN")}
+                        </td>
+                        <td className="px-5 py-3 text-xs text-gray-500 whitespace-nowrap">{fmtAgo(r.updated_at)}</td>
+                        <td className="px-5 py-3 text-right">
+                          <a
+                            href={waLink(r.phone!, null, Number(r.subtotal || 0))}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors"
+                          >
+                            <MessageCircle size={12} /> WhatsApp
+                          </a>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main Page ───────────────────────────────────────────────
 export default function LiveActivity() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
