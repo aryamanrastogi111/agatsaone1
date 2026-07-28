@@ -1265,7 +1265,7 @@ export default function CheckoutPage() {
                 !step1Valid ? "!bg-gray-300 !text-gray-500 !opacity-100 cursor-not-allowed" : ""
               }`}
             >
-              Continue to Payment
+              Continue to Contact Details
             </Button>
           </div>
         )}
