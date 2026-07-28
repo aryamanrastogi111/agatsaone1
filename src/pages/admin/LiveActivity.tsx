@@ -59,6 +59,17 @@ type CheckoutEventRow = Partial<LiveCheckoutEvent> & {
   updated_at?: string | null;
 };
 
+interface AbandonedCheckout {
+  session_id: string;
+  email: string | null;
+  phone: string | null;
+  subtotal: number;
+  item_count: number;
+  items: Array<{ name?: string; productName?: string; qty?: number; quantity?: number; variantTitle?: string }>;
+  last_page: string | null;
+  updated_at: string;
+}
+
 interface DailyStat {
   stat_date: string;
   total_orders: number;
