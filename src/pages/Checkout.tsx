@@ -329,19 +329,22 @@ export default function CheckoutPage() {
   ) => {
     const rawDigits = phone.replace(/\D/g, "");
     const phoneReady = isIntl ? rawDigits.length >= 6 : rawDigits.length === 10;
-    if (!phoneReady && !emailValid) return;
+    const emailTrim = email.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrim);
+    if (!phoneReady && !emailOk) return;
 
     const dedupKey = `${trigger}:${visitorSessionIdRef.current}`;
     if (hotLeadFiredRef.current.has(dedupKey)) return;
     hotLeadFiredRef.current.add(dedupKey);
 
+    const dial = COUNTRY_META[country]?.dial || "+91";
     try {
       await supabase.functions.invoke("notify-abandoned-checkout", {
         body: {
           sessionId: visitorSessionIdRef.current,
-          email: emailValid ? email.trim().toLowerCase() : null,
+          email: emailOk ? emailTrim.toLowerCase() : null,
           phone: phoneReady ? (isIntl ? rawDigits.slice(0, 15) : rawDigits) : null,
-          dialCode,
+          dialCode: dial,
           name: fullName.trim() || null,
           city: city.trim() || null,
           state: state.trim() || null,
@@ -355,9 +358,9 @@ export default function CheckoutPage() {
       });
     } catch (e) {
       console.error("[checkout] notifyHotLead failed:", e);
-      hotLeadFiredRef.current.delete(dedupKey); // allow retry
+      hotLeadFiredRef.current.delete(dedupKey);
     }
-  }, [phone, isIntl, emailValid, email, dialCode, fullName, city, state, country, displayTotalPaise, items]);
+  }, [phone, isIntl, email, fullName, city, state, country, displayTotalPaise, items]);
 
 
 
