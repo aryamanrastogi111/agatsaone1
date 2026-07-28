@@ -600,3 +600,118 @@ function RoasChart({ daily, todayRoas, todayRevenue, todaySpend }: {
     </div>
   );
 }
+
+function HealthTargetsRow({ data }: { data: MetaData }) {
+  const inr = (n: number) => `₹${Math.round(n).toLocaleString("en-IN")}`;
+  const blended = data.site.blendedRoas ?? data.site.roas ?? 0;
+  const attributed = data.site.attributedRoas ?? 0;
+  const dedupPct = Math.round((data.site.dedupRatio ?? 1) * 100);
+  const freq = data.account.frequency ?? 0;
+  const ctr = data.account.ctr ?? 0;
+  const cpm = data.account.cpm ?? 0;
+
+  const tiles: Array<{
+    label: string;
+    value: string;
+    target: string;
+    status: "good" | "warn" | "bad" | "neutral";
+    note: string;
+  }> = [
+    {
+      label: "Blended ROAS",
+      value: blended > 0 ? `${blended.toFixed(2)}x` : "—",
+      target: "Target ≥ 2.5x",
+      status: blended >= 2.5 ? "good" : blended >= 1.5 ? "warn" : blended > 0 ? "bad" : "neutral",
+      note: `All site revenue ÷ Meta spend · ${inr(data.site.revenueToday)} rev`,
+    },
+    {
+      label: "Attributed ROAS",
+      value: attributed > 0 ? `${attributed.toFixed(2)}x` : "—",
+      target: "Target ≥ 3.0x",
+      status: attributed >= 3 ? "good" : attributed >= 1.8 ? "warn" : attributed > 0 ? "bad" : "neutral",
+      note: `Meta-attributed rev ÷ spend · ${inr(data.site.attributedRevenue ?? 0)}`,
+    },
+    {
+      label: "Frequency",
+      value: freq > 0 ? freq.toFixed(2) : "—",
+      target: "Target 1.2 – 2.5",
+      status: freq === 0 ? "neutral" : freq <= 2.5 && freq >= 1 ? "good" : freq > 3.5 ? "bad" : "warn",
+      note: freq > 2.5 ? "Fatigue risk — rotate creative" : "Reach vs repetition balance",
+    },
+    {
+      label: "CTR",
+      value: ctr > 0 ? `${ctr.toFixed(2)}%` : "—",
+      target: "Target ≥ 1.5%",
+      status: ctr >= 1.5 ? "good" : ctr >= 0.8 ? "warn" : ctr > 0 ? "bad" : "neutral",
+      note: "Creative resonance signal",
+    },
+    {
+      label: "CPM",
+      value: cpm > 0 ? inr(cpm) : "—",
+      target: "Target ≤ ₹350",
+      status: cpm === 0 ? "neutral" : cpm <= 350 ? "good" : cpm <= 600 ? "warn" : "bad",
+      note: "Auction cost per 1k impressions",
+    },
+    {
+      label: "Dedup rate",
+      value: `${dedupPct}%`,
+      target: "Target ≥ 95%",
+      status: dedupPct >= 95 ? "good" : dedupPct >= 75 ? "warn" : "bad",
+      note: "Orders ÷ Meta-reported purchases",
+    },
+    {
+      label: "Match Quality (EMQ)",
+      value: "Check",
+      target: "Target ≥ 8.0 / 10",
+      status: "neutral",
+      note: "Events Manager → Data Sources → Overview",
+    },
+    {
+      label: "Attribution coverage",
+      value: `${data.site.paidOrders > 0 ? Math.round(((data.site.attributedPaidOrders ?? 0) / data.site.paidOrders) * 100) : 0}%`,
+      target: "Target ≥ 60%",
+      status: (() => {
+        if (data.site.paidOrders === 0) return "neutral";
+        const pct = ((data.site.attributedPaidOrders ?? 0) / data.site.paidOrders) * 100;
+        return pct >= 60 ? "good" : pct >= 30 ? "warn" : "bad";
+      })(),
+      note: `${data.site.attributedPaidOrders ?? 0}/${data.site.paidOrders} orders tied to Meta`,
+    },
+  ];
+
+  const ring = (s: string) =>
+    s === "good" ? "border-emerald-200 bg-emerald-50" :
+    s === "warn" ? "border-amber-200 bg-amber-50" :
+    s === "bad" ? "border-rose-200 bg-rose-50" :
+    "border-gray-200 bg-white";
+  const dot = (s: string) =>
+    s === "good" ? "bg-emerald-500" :
+    s === "warn" ? "bg-amber-500" :
+    s === "bad" ? "bg-rose-500" : "bg-gray-300";
+  const targetColor = (s: string) =>
+    s === "good" ? "text-emerald-700" :
+    s === "warn" ? "text-amber-700" :
+    s === "bad" ? "text-rose-700" : "text-gray-500";
+
+  return (
+    <div className="px-5 pt-1 pb-2">
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-xs font-bold uppercase tracking-wide text-gray-700">Health & Targets</h3>
+        <span className="text-[10px] text-gray-400">Green = on target · Amber = warning · Red = fix now</span>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
+        {tiles.map((t) => (
+          <div key={t.label} className={`rounded-lg border p-3 ${ring(t.status)}`}>
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className={`w-1.5 h-1.5 rounded-full ${dot(t.status)}`} />
+              <span className="text-[10px] uppercase font-semibold text-gray-500 tracking-wide">{t.label}</span>
+            </div>
+            <div className="text-lg font-bold text-gray-900 leading-tight">{t.value}</div>
+            <div className={`text-[10px] font-semibold mt-0.5 ${targetColor(t.status)}`}>{t.target}</div>
+            <div className="text-[10px] text-gray-500 mt-1 leading-snug">{t.note}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
