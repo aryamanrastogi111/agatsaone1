@@ -43,11 +43,24 @@ interface DailyRow {
   spend: number; 
   impressions: number; 
   clicks: number;
+  ctr?: number;
   cpm?: number;
   metaPurchases: number; 
   orders: number; 
   revenue: number; 
   roas: number;
+}
+
+interface DeliveryHealth {
+  status: "good" | "warning" | "critical";
+  alerts: string[];
+  today: { spend: number; impressions: number; clicks: number; reach: number; ctr: number; cpm: number; frequency: number };
+  last7Average: { spend: number; impressions: number; clicks: number; ctr: number; cpm: number };
+  spendChangePct: number;
+  impressionChangePct: number;
+  activeCampaigns: number;
+  issueCampaigns: Array<{ accountId: string; id: string; name: string; effectiveStatus: string; status: string }>;
+  topAds: Array<{ accountId: string; campaignName: string; adName: string; spend: number; impressions: number; clicks: number; ctr: number; cpm: number; frequency: number; metaPurchases: number; metaInitiateCheckout: number }>;
 }
 
 interface MetaData {
@@ -66,6 +79,7 @@ interface MetaData {
     metaInitiateCheckout: number;
   };
   accounts?: AccountSummary[];
+  deliveryHealth?: DeliveryHealth;
   site: { 
     fbSessions: number; 
     paidOrders: number; 
