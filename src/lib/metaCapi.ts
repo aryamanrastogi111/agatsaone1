@@ -77,12 +77,13 @@ export async function sendCapiEvent(
 export function trackMetaEvent(
   eventName: string,
   opts: {
+    eventId?: string;
     pixelParams?: Record<string, unknown>;
     user?: CapiUserData;
     custom?: CapiCustomData;
   } = {},
 ): string {
-  const eventId = newEventId();
+  const eventId = opts.eventId || newEventId();
   try {
     const w = window as any;
     if (w?.fbq) {
@@ -98,6 +99,16 @@ export function trackMetaEvent(
     custom: opts.custom,
   });
   return eventId;
+}
+
+/** Read _fbp / _fbc cookies for passing to server-side CAPI backups. */
+export function readFbCookies(): { fbp?: string; fbc?: string } {
+  if (typeof document === "undefined") return {};
+  const m = (n: string) => {
+    const r = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)"));
+    return r ? decodeURIComponent(r[1]) : undefined;
+  };
+  return { fbp: m("_fbp"), fbc: m("_fbc") };
 }
 
 /**

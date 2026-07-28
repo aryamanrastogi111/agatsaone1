@@ -10,7 +10,7 @@ import { db } from "@/integrations/supabase/db";
 import { supabase } from "@/integrations/supabase/client";
 import { useCartStore } from "@/stores/cartStore";
 import agatsaLogo from "@/assets/agatsa-logo.webp";
-import { trackMetaEvent, setPixelAdvancedMatching, splitName, toIso2, sendCapiEvent } from "@/lib/metaCapi";
+import { trackMetaEvent, setPixelAdvancedMatching, splitName, toIso2, sendCapiEvent, readFbCookies, newEventId } from "@/lib/metaCapi";
 import { BAND_COLORS, BAND_SKU, decodeVariantsParam, findBandColorByName } from "@/lib/bandColors";
 
 // ─── Device display names ───────────────────────────────────────
@@ -155,6 +155,9 @@ export default function CheckoutPage() {
   const [pageState, setPageState] = useState<PageState>("form");
   const [errorMsg, setErrorMsg] = useState("");
   const [successReference, setSuccessReference] = useState("");
+  // Meta CAPI: stable event_id shared between browser Pixel, browser CAPI, and
+  // server-side CAPI backup (send-order-confirmation) so Meta deduplicates.
+  const purchaseEventIdRef = useRef<string>("");
 
   // Quantities
   const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
@@ -396,32 +399,10 @@ export default function CheckoutPage() {
     });
   }, [emailValid, phoneValid, email, phone, fullName, city, state, pincode, country, dialCode]);
 
-  // ─── Meta Pixel + CAPI Purchase event on success (deduped, with user data) ─
-  useEffect(() => {
-    if (pageState !== "success") return;
-    const { first_name, last_name } = splitName(fullName);
-    trackMetaEvent("Purchase", {
-      user: {
-        email: emailValid ? email : undefined,
-        phone: phoneValid ? `${dialCode.replace("+", "")}${phone}` : undefined,
-        first_name,
-        last_name,
-        city: city || undefined,
-        state: state || undefined,
-        zip: pincode || undefined,
-        country: toIso2(country),
-        external_id: successReference || undefined,
-      },
-      custom: {
-        value: displayTotalRupees,
-        currency: "INR",
-        content_ids: uniqueSkus,
-        content_type: "product",
-        num_items: cartItems.reduce((s, i) => s + i.qty, 0),
-        order_id: successReference || undefined,
-      },
-    });
-  }, [pageState]);
+  // Purchase is fired inline in the Razorpay handler (immediate, before any
+  // async work that could be interrupted by a tab close) and duplicated server
+  // side by send-order-confirmation. Same event_id → Meta dedups.
+
 
   // ─── Auto-apply coupon from URL (?coupon=CODE) or MAY10 promo ─
   const autoAppliedRef = useRef(false);
@@ -713,6 +694,40 @@ export default function CheckoutPage() {
                 // Transition success FIRST so user always sees confirmation
                 setPageState("success");
 
+                // ── Meta Purchase: fire Pixel + browser CAPI IMMEDIATELY, with a
+                // stable event_id we also pass to send-order-confirmation for a
+                // server-side CAPI backup. Meta deduplicates by event_id.
+                const metaEventId = purchaseEventIdRef.current || newEventId();
+                purchaseEventIdRef.current = metaEventId;
+                try {
+                  const { first_name, last_name } = splitName(fullName);
+                  trackMetaEvent("Purchase", {
+                    eventId: metaEventId,
+                    user: {
+                      email: recipientEmail || undefined,
+                      phone: fullPhone || undefined,
+                      first_name,
+                      last_name,
+                      city: city || undefined,
+                      state: state || undefined,
+                      zip: pincode || undefined,
+                      country: toIso2(country),
+                      external_id: response.razorpay_payment_id || response.razorpay_order_id,
+                    },
+                    custom: {
+                      value: confirmedTotalPaise / 100,
+                      currency: "INR",
+                      content_ids: uniqueSkus,
+                      content_type: "product",
+                      num_items: items.reduce((s, d) => s + d.qty, 0),
+                      order_id: response.razorpay_order_id,
+                    },
+                  });
+                } catch (e) {
+                  console.error("[checkout] meta Purchase fire failed:", e);
+                }
+
+
                 // Sync order to Supabase (best-effort)
                 try {
                   await db.from("orders").insert({
@@ -764,6 +779,15 @@ export default function CheckoutPage() {
                       shippingPincode: pincode.trim(),
                       shippingCountry: country,
                       shippingSurcharge: shippingPaise / 100,
+                      // Meta CAPI server-side backup (dedup by same event_id).
+                      metaEventId,
+                      metaFbp: readFbCookies().fbp,
+                      metaFbc: readFbCookies().fbc,
+                      metaUserAgent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
+                      metaSourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
+                      metaCountryIso2: toIso2(country),
+                      metaContentIds: uniqueSkus,
+                      metaNumItems: items.reduce((s, d) => s + d.qty, 0),
                     },
                   });
                 } catch (emailErr) {
