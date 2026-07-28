@@ -1271,7 +1271,25 @@ export default function CheckoutPage() {
             </div>
 
             <Button
-              onClick={() => setStep(2)}
+              onClick={() => {
+                setStep(2);
+                try {
+                  const cartKey = `${uniqueSkus.join("_")}_${searchParams.get("variants") || "default"}`;
+                  const eventId = `apinfo_${getStableCheckoutEventId(cartKey)}`;
+                  trackMetaEvent("AddPaymentInfo", {
+                    eventId,
+                    custom: {
+                      content_ids: uniqueSkus,
+                      content_type: "product",
+                      num_items: cartItems.reduce((s, i) => s + i.qty, 0),
+                      value: displayTotalRupees,
+                      currency: "INR",
+                    },
+                  });
+                } catch (e) {
+                  console.error("[checkout] AddPaymentInfo track failed:", e);
+                }
+              }}
               disabled={!step1Valid}
               className={`w-full rounded-xl py-6 text-base font-semibold mt-2 ${
                 !step1Valid ? "!bg-gray-300 !text-gray-500 !opacity-100 cursor-not-allowed" : ""
