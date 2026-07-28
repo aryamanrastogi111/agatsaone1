@@ -1494,6 +1494,19 @@ export type Database = {
           read_ct: number
         }[]
       }
+      save_cart_session: {
+        Args: {
+          _converted_order_id?: string
+          _email?: string
+          _item_count?: number
+          _items?: Json
+          _last_page?: string
+          _phone?: string
+          _session_id: string
+          _subtotal?: number
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "user"
