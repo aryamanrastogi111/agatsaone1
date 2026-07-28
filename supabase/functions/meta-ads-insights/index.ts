@@ -135,24 +135,91 @@ Deno.serve(async (req) => {
     const revenueToday = (paidOrdersToday || []).reduce((s: number, o: any) => s + Number(o.amount || 0), 0);
     const roas = spend > 0 ? revenueToday / spend : 0;
 
-    // ── Attribute paid orders to Meta campaigns via visitor sessions ──
-    // Match on customer_email or phone against sessions in the last 30d
-    // whose utm_source is a Meta source. Last-touch attribution.
-    const emails = Array.from(new Set((paidOrdersToday || []).map((o: any) => (o.customer_email || "").toLowerCase()).filter(Boolean)));
-    const phones = Array.from(new Set((paidOrdersToday || []).map((o: any) => (o.customer_phone || "").replace(/\D/g, "").slice(-10)).filter(Boolean)));
+    // ── Attribute paid orders to Meta campaigns ──
+    // Link: orders.customer_email/phone → cart_sessions (has session_id + email/phone)
+    //       → visitor_sessions.session_id (has utm_campaign + utm_source)
+    // Only counts orders whose ACTUAL buyer's session came from a Meta source.
+    const emails = Array.from(new Set(
+      (paidOrdersToday || []).map((o: any) => (o.customer_email || "").toLowerCase().trim()).filter(Boolean)
+    ));
+    const phones = Array.from(new Set(
+      (paidOrdersToday || []).map((o: any) => (o.customer_phone || "").replace(/\D/g, "").slice(-10)).filter((p) => p.length === 10)
+    ));
 
-    // We don't have email/phone on visitor_sessions today; fall back to
-    // "any Meta session within 30d touching the same order timeframe" via
-    // exit_page containing /checkout — good enough for a directional attribution.
+    // Fetch cart_sessions matching these buyers (30d window to catch pre-purchase carts)
+    let cartRows: any[] = [];
+    if (emails.length || phones.length) {
+      const orFilters: string[] = [];
+      if (emails.length) orFilters.push(`email.in.(${emails.map((e) => `"${e}"`).join(",")})`);
+      if (phones.length) orFilters.push(`phone.in.(${phones.map((p) => `"${p}"`).join(",")})`);
+      const { data: carts } = await supabase
+        .from("cart_sessions")
+        .select("session_id,email,phone,updated_at")
+        .gte("updated_at", start30Utc)
+        .or(orFilters.join(","))
+        .order("updated_at", { ascending: false })
+        .limit(2000);
+      cartRows = carts || [];
+    }
+
+    // For each buyer identity, collect their session_ids
+    const sessionIdsByEmail = new Map<string, string[]>();
+    const sessionIdsByPhone = new Map<string, string[]>();
+    for (const c of cartRows) {
+      if (c.email) {
+        const k = c.email.toLowerCase().trim();
+        if (!sessionIdsByEmail.has(k)) sessionIdsByEmail.set(k, []);
+        sessionIdsByEmail.get(k)!.push(c.session_id);
+      }
+      if (c.phone) {
+        const k = c.phone.replace(/\D/g, "").slice(-10);
+        if (k.length === 10) {
+          if (!sessionIdsByPhone.has(k)) sessionIdsByPhone.set(k, []);
+          sessionIdsByPhone.get(k)!.push(c.session_id);
+        }
+      }
+    }
+
+    // Fetch visitor_sessions for those session_ids that came from Meta
+    const allBuyerSessionIds = Array.from(new Set(cartRows.map((c) => c.session_id).filter(Boolean)));
+    let buyerFbSessions: any[] = [];
+    if (allBuyerSessionIds.length) {
+      const { data: vs } = await supabase
+        .from("visitor_sessions")
+        .select("session_id,started_at,utm_source,utm_campaign,utm_content")
+        .in("session_id", allBuyerSessionIds)
+        .in("utm_source", FB_SOURCES)
+        .order("started_at", { ascending: false })
+        .limit(5000);
+      buyerFbSessions = vs || [];
+    }
+    const fbSessionById = new Map<string, any>();
+    for (const s of buyerFbSessions) {
+      // keep most recent per session_id (already sorted desc)
+      if (!fbSessionById.has(s.session_id)) fbSessionById.set(s.session_id, s);
+    }
+
     const orderIdsAttributed = new Set<string>();
     const campaignAttribution: Record<string, { orders: number; revenue: number }> = {};
 
     for (const order of paidOrdersToday || []) {
-      // Find the most recent FB session started before the order paid_at/created_at
+      const email = (order.customer_email || "").toLowerCase().trim();
+      const phone = (order.customer_phone || "").replace(/\D/g, "").slice(-10);
+      const candidateSessionIds = [
+        ...(email ? sessionIdsByEmail.get(email) || [] : []),
+        ...(phone.length === 10 ? sessionIdsByPhone.get(phone) || [] : []),
+      ];
       const orderTs = new Date(order.paid_at || order.created_at).getTime();
-      const candidate = (fbSessionsToday || []).find((s: any) => new Date(s.started_at).getTime() <= orderTs);
-      if (candidate?.utm_campaign) {
-        const key = String(candidate.utm_campaign);
+      // Pick this buyer's most recent FB session started before payment (last-touch)
+      let best: any = null;
+      for (const sid of candidateSessionIds) {
+        const s = fbSessionById.get(sid);
+        if (!s) continue;
+        if (new Date(s.started_at).getTime() > orderTs) continue;
+        if (!best || new Date(s.started_at).getTime() > new Date(best.started_at).getTime()) best = s;
+      }
+      if (best?.utm_campaign) {
+        const key = String(best.utm_campaign);
         if (!campaignAttribution[key]) campaignAttribution[key] = { orders: 0, revenue: 0 };
         campaignAttribution[key].orders += 1;
         campaignAttribution[key].revenue += Number(order.amount || 0);
