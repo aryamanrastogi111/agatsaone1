@@ -574,6 +574,15 @@ export default function CheckoutPage() {
     }
   }, [emailValid, phoneValid, email, phone, fullName, city, state, pincode, country, dialCode, emitCheckoutActivity]);
 
+  // Fire hot-lead email to internal team the moment we have a valid phone
+  // (waits 8s after the phone becomes valid so we don't ping on every keystroke
+  // and so users who continue straight to payment aren't flagged as abandoned).
+  useEffect(() => {
+    if (!phoneValid) return;
+    const t = setTimeout(() => { void notifyHotLead("phone_captured"); }, 8000);
+    return () => clearTimeout(t);
+  }, [phoneValid, notifyHotLead]);
+
   // Purchase is fired inline in the Razorpay handler (immediate, before any
   // async work that could be interrupted by a tab close) and duplicated server
   // side by send-order-confirmation. Same event_id → Meta dedups.
