@@ -192,6 +192,13 @@ export default function MetaAdsCard() {
             <KPI icon={ShoppingCart} label="Purchases" value={data.account.metaPurchases.toLocaleString("en-IN")} color="bg-green-50 text-green-600" sub={`${data.site.paidOrders} paid on site`} />
           </div>
 
+          {daily.length > 0 && (
+            <div className="px-5 pb-2">
+              <RoasChart daily={daily} todayRoas={data.site.roas} todayRevenue={data.site.revenueToday} todaySpend={data.account.spend} />
+            </div>
+          )}
+
+
           {typeof data.site.unattributedPaidOrders === "number" && data.site.paidOrders > 0 && (
             <div className="mx-5 mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-900 flex flex-wrap items-center gap-x-4 gap-y-1">
               <span className="font-semibold">Attribution today:</span>
