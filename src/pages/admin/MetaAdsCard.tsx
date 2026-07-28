@@ -172,9 +172,17 @@ export default function MetaAdsCard() {
                     {data.campaigns.length === 0 ? (
                       <tr><td colSpan={6} className="text-center text-gray-400 py-6">No active campaigns today</td></tr>
                     ) : (
-                      data.campaigns.map((c) => (
-                        <tr key={c.id} className="border-b border-gray-50 hover:bg-gray-50/50">
-                          <td className="px-3 py-2 font-medium text-gray-800 truncate max-w-[200px]">{c.name}</td>
+                      data.campaigns
+                        .slice()
+                        .sort((a, b) => b.spend - a.spend)
+                        .map((c) => (
+                        <tr key={`${c.accountId || ""}-${c.id}`} className="border-b border-gray-50 hover:bg-gray-50/50">
+                          <td className="px-3 py-2 font-medium text-gray-800 truncate max-w-[220px]">
+                            {c.name}
+                            {c.accountId && data.accounts && data.accounts.length > 1 && (
+                              <div className="text-[10px] text-gray-400 font-mono truncate">{c.accountId}</div>
+                            )}
+                          </td>
                           <td className="px-3 py-2 text-right">{inr(c.spend)}</td>
                           <td className="px-3 py-2 text-right">{c.clicks}</td>
                           <td className="px-3 py-2 text-right">{c.ctr.toFixed(2)}%</td>
