@@ -59,6 +59,17 @@ type CheckoutEventRow = Partial<LiveCheckoutEvent> & {
   updated_at?: string | null;
 };
 
+interface AbandonedCheckout {
+  session_id: string;
+  email: string | null;
+  phone: string | null;
+  subtotal: number;
+  item_count: number;
+  items: Array<{ name?: string; productName?: string; qty?: number; quantity?: number; variantTitle?: string }>;
+  last_page: string | null;
+  updated_at: string;
+}
+
 interface DailyStat {
   stat_date: string;
   total_orders: number;
@@ -747,6 +758,114 @@ function PendingCheckoutPanel({ orders }: { orders: TodayOrder[] }) {
 
 type TimeRange = "7d" | "30d" | "90d";
 
+// ─── Abandoned Checkouts with Phone Panel ────────────────────
+function AbandonedWithPhonePanel({ rows }: { rows: AbandonedCheckout[] }) {
+  const [expanded, setExpanded] = useState(true);
+  const fmtAgo = (iso: string) => {
+    const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    return `${hrs}h ${mins % 60}m ago`;
+  };
+  const waLink = (phone: string, name: string | null, subtotal: number) => {
+    const digits = phone.replace(/\D/g, "");
+    const p = digits.length === 10 ? `91${digits}` : digits;
+    const msg = encodeURIComponent(
+      `Hi${name ? ` ${name}` : ""}! This is Agatsa. We saw you were checking out (${subtotal ? `₹${subtotal.toLocaleString("en-IN")}` : "your cart"}) but didn't finish. Any questions we can help with?`
+    );
+    return `https://wa.me/${p}?text=${msg}`;
+  };
+
+  return (
+    <div className="bg-white border-2 border-amber-200 rounded-xl shadow-sm overflow-hidden">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full flex items-center justify-between px-5 py-4 hover:bg-amber-50/50 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-amber-100 flex items-center justify-center">
+            <Phone size={18} className="text-amber-600" />
+          </div>
+          <div className="text-left">
+            <h3 className="font-bold text-gray-900 text-sm flex items-center gap-2">
+              Abandoned Checkouts · Phone Captured
+              <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-0.5 rounded-full">{rows.length}</span>
+            </h3>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Visitors who entered a phone number but stalled 5+ min ago — high-intent WhatsApp recovery targets
+            </p>
+          </div>
+        </div>
+        {expanded ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
+      </button>
+
+      {expanded && (
+        <div className="border-t border-amber-100">
+          {rows.length === 0 ? (
+            <div className="px-5 py-10 text-center text-sm text-gray-400">
+              No abandoned checkouts with a phone number in the last 24 hours.
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-amber-50/50 border-b border-amber-100 text-gray-500 text-xs uppercase tracking-wider">
+                  <tr>
+                    <th className="text-left px-5 py-3 font-medium">Contact</th>
+                    <th className="text-left px-5 py-3 font-medium">Cart</th>
+                    <th className="text-right px-5 py-3 font-medium">Value</th>
+                    <th className="text-left px-5 py-3 font-medium">Last Activity</th>
+                    <th className="text-right px-5 py-3 font-medium">Recover</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-amber-50">
+                  {rows.map((r) => {
+                    const itemLabel = (r.items ?? [])
+                      .map((it) => {
+                        const n = it.productName || it.name || "";
+                        const q = it.quantity ?? it.qty ?? 1;
+                        return n ? `${n} × ${q}` : null;
+                      })
+                      .filter(Boolean)
+                      .join(", ");
+                    return (
+                      <tr key={r.session_id} className="hover:bg-amber-50/30">
+                        <td className="px-5 py-3">
+                          <div className="font-medium text-gray-900 flex items-center gap-1.5">
+                            <Phone size={12} className="text-amber-600" />
+                            {r.phone}
+                          </div>
+                          {r.email && <div className="text-xs text-gray-500 mt-0.5">{r.email}</div>}
+                        </td>
+                        <td className="px-5 py-3 text-xs text-gray-600 max-w-xs truncate">
+                          {itemLabel || `${r.item_count} item${r.item_count === 1 ? "" : "s"}`}
+                        </td>
+                        <td className="px-5 py-3 text-right font-semibold text-gray-900">
+                          ₹{Number(r.subtotal || 0).toLocaleString("en-IN")}
+                        </td>
+                        <td className="px-5 py-3 text-xs text-gray-500 whitespace-nowrap">{fmtAgo(r.updated_at)}</td>
+                        <td className="px-5 py-3 text-right">
+                          <a
+                            href={waLink(r.phone!, null, Number(r.subtotal || 0))}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors"
+                          >
+                            <MessageCircle size={12} /> WhatsApp
+                          </a>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main Page ───────────────────────────────────────────────
 export default function LiveActivity() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
@@ -760,6 +879,8 @@ export default function LiveActivity() {
   const [lostCheckouts, setLostCheckouts] = useState<TodayOrder[]>([]);
   const [lostExpanded, setLostExpanded] = useState(false);
   const [liveCheckoutEvents, setLiveCheckoutEvents] = useState<LiveCheckoutEvent[]>([]);
+  const [abandonedWithPhone, setAbandonedWithPhone] = useState<AbandonedCheckout[]>([]);
+  const seenAbandonedRef = useRef<Set<string>>(new Set());
   const addToCartTimestamps = useRef<number[]>([]);
   const [addToCartCount, setAddToCartCount] = useState(0);
 
@@ -923,6 +1044,52 @@ export default function LiveActivity() {
       .forEach((row: CheckoutEventRow) => upsertLiveCheckoutEvent(normalizeCheckoutEvent(row)));
   }, [upsertLiveCheckoutEvent]);
 
+  // ── Abandoned checkouts with phone (5 min – 24 h stale, not converted) ──
+  const fetchAbandonedWithPhone = useCallback(async () => {
+    const staleCutoff = new Date(Date.now() - 5 * 60 * 1000).toISOString();
+    const oldest = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { data, error } = await db.from("cart_sessions")
+      .select("session_id, items, email, phone, subtotal, item_count, last_page, updated_at")
+      .not("phone", "is", null)
+      .is("converted_order_id", null)
+      .gte("updated_at", oldest)
+      .lte("updated_at", staleCutoff)
+      .order("updated_at", { ascending: false })
+      .limit(50);
+    if (error) {
+      console.error("[LiveActivity] abandoned-with-phone fetch failed:", error.message);
+      return;
+    }
+    const rows = (data ?? []) as AbandonedCheckout[];
+    // Chime once when brand-new abandoned checkouts arrive
+    const nextSet = new Set<string>();
+    let hasNew = false;
+    for (const row of rows) {
+      nextSet.add(row.session_id);
+      if (!seenAbandonedRef.current.has(row.session_id)) hasNew = true;
+    }
+    if (hasNew && seenAbandonedRef.current.size > 0) {
+      try {
+        const Ctx = (window as any).AudioContext || (window as any).webkitAudioContext;
+        if (Ctx) {
+          const ctx = new Ctx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine"; osc.frequency.value = 880;
+          gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.4);
+          osc.connect(gain).connect(ctx.destination);
+          osc.start(); osc.stop(ctx.currentTime + 0.45);
+          setTimeout(() => ctx.close().catch(() => {}), 900);
+        }
+      } catch { /* no-op */ }
+    }
+    seenAbandonedRef.current = nextSet;
+    setAbandonedWithPhone(rows);
+  }, []);
+
+
   // ── DB data: orders ──
   const fetchData = useCallback(async () => {
     const istOffsetMs = 5.5 * 60 * 60 * 1000;
@@ -982,13 +1149,14 @@ export default function LiveActivity() {
   }, [timeRange]);
 
   useEffect(() => {
-    fetchData(); fetchHistory(); fetchLiveCheckoutSessions();
+    fetchData(); fetchHistory(); fetchLiveCheckoutSessions(); fetchAbandonedWithPhone();
     const interval = setInterval(fetchData, 30_000);
     const checkoutInterval = setInterval(fetchLiveCheckoutSessions, 10_000);
+    const abandonedInterval = setInterval(fetchAbandonedWithPhone, 30_000);
     const channel = supabase.channel("live-activity-db")
       .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, () => { fetchData(); }).subscribe();
-    return () => { clearInterval(interval); clearInterval(checkoutInterval); supabase.removeChannel(channel); };
-  }, [fetchData, fetchHistory, fetchLiveCheckoutSessions]);
+    return () => { clearInterval(interval); clearInterval(checkoutInterval); clearInterval(abandonedInterval); supabase.removeChannel(channel); };
+  }, [fetchData, fetchHistory, fetchLiveCheckoutSessions, fetchAbandonedWithPhone]);
 
   // Update peak visitors
   useEffect(() => {
@@ -1072,6 +1240,9 @@ export default function LiveActivity() {
 
       {/* Live checkout capture */}
       <LiveCheckoutPanel events={liveCheckoutEvents} />
+
+      {/* High-intent abandoned checkouts (phone captured, stalled 5+ min) */}
+      <AbandonedWithPhonePanel rows={abandonedWithPhone} />
 
       {/* Live Visitors + Page Breakdown + City Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
