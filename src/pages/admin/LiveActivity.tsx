@@ -32,9 +32,26 @@ interface TodayOrder {
   razorpay_order_id: string | null;
   customer_name: string | null;
   customer_email: string | null;
+  customer_phone?: string | null;
   amount: number;
   status: string;
   created_at: string;
+}
+
+interface LiveCheckoutEvent {
+  session_id: string;
+  email: string | null;
+  phone: string | null;
+  name: string | null;
+  item_count: number;
+  subtotal: number;
+  items: Array<{ name?: string; productName?: string; sku?: string; qty?: number; quantity?: number; variantTitle?: string }>;
+  country?: string | null;
+  city?: string | null;
+  state?: string | null;
+  stage: string;
+  event_type: string;
+  occurred_at: string;
 }
 
 interface DailyStat {
@@ -106,6 +123,129 @@ const PAGE_LABELS: Record<string, string> = {
 };
 
 function pageLabel(path: string) { return PAGE_LABELS[path] ?? path; }
+
+function checkoutStageLabel(stage: string, eventType?: string) {
+  const key = eventType || stage.replace(/^checkout_/, "");
+  const labels: Record<string, string> = {
+    checkout_reached: "Reached checkout",
+    reached: "Reached checkout",
+    contact_typing: "Typing contact",
+    payment_clicked: "Clicked payment",
+    payment_window_opened: "Payment window open",
+    payment_cancelled: "Payment cancelled",
+    payment_failed: "Payment failed",
+    payment_success: "Paid",
+  };
+  return labels[key] || labels[stage] || "Checkout active";
+}
+
+function checkoutStageStyle(stage: string, eventType?: string) {
+  const key = eventType || stage.replace(/^checkout_/, "");
+  if (key === "payment_clicked" || key === "payment_window_opened") return "bg-yellow-100 text-yellow-700 border-yellow-200";
+  if (key === "contact_typing") return "bg-blue-100 text-blue-700 border-blue-200";
+  if (key === "payment_failed" || key === "payment_cancelled") return "bg-red-100 text-red-700 border-red-200";
+  if (key === "payment_success") return "bg-green-100 text-green-700 border-green-200";
+  return "bg-purple-100 text-purple-700 border-purple-200";
+}
+
+function normalizeCheckoutEvent(row: any): LiveCheckoutEvent | null {
+  const sessionId = row.session_id;
+  if (!sessionId) return null;
+  const stage = row.stage || row.last_page || "/checkout";
+  return {
+    session_id: sessionId,
+    email: row.email || null,
+    phone: row.phone || null,
+    name: row.name || null,
+    item_count: Number(row.item_count || 0),
+    subtotal: Number(row.subtotal || 0),
+    items: Array.isArray(row.items) ? row.items : [],
+    country: row.country || null,
+    city: row.city || null,
+    state: row.state || null,
+    stage,
+    event_type: row.event_type || stage.replace(/^checkout_/, "") || "checkout_reached",
+    occurred_at: row.occurred_at || row.updated_at || new Date().toISOString(),
+  };
+}
+
+function LiveCheckoutPanel({ events }: { events: LiveCheckoutEvent[] }) {
+  const activeEvents = events.filter((e) => Date.now() - new Date(e.occurred_at).getTime() < 60 * 60 * 1000);
+
+  return (
+    <div className="bg-white border-2 border-purple-200 rounded-xl shadow-sm overflow-hidden">
+      <div className="flex items-center gap-2 px-5 py-4 border-b border-purple-100 bg-purple-50/40">
+        <StatusDot color="bg-purple-500" />
+        <CreditCard size={15} className="text-purple-700" />
+        <h3 className="font-semibold text-gray-900">Live Checkout Capture</h3>
+        <span className="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-full ml-auto">{activeEvents.length}</span>
+      </div>
+      {activeEvents.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-10 text-gray-400">
+          <CreditCard size={24} className="mb-2 opacity-30" />
+          <p className="text-sm">No one is filling checkout right now</p>
+        </div>
+      ) : (
+        <div className="max-h-96 overflow-y-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-purple-50 border-b border-purple-100 text-gray-500 text-xs">
+                <th className="text-left px-5 py-2.5 font-medium">Visitor</th>
+                <th className="text-left px-5 py-2.5 font-medium">Stage</th>
+                <th className="text-left px-5 py-2.5 font-medium hidden lg:table-cell">Cart</th>
+                <th className="text-right px-5 py-2.5 font-medium">Value</th>
+                <th className="text-right px-5 py-2.5 font-medium">Updated</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-purple-50">
+              {activeEvents.map((event) => {
+                const contact = event.email || event.phone || "Contact not typed yet";
+                const firstItem = event.items[0];
+                const firstItemName = firstItem?.productName || firstItem?.name || firstItem?.sku || "Checkout cart";
+                const itemSummary = event.items.length > 1 ? `${firstItemName} +${event.items.length - 1}` : firstItemName;
+                const digits = (event.phone || "").replace(/\D/g, "");
+                const phoneForLink = digits.length > 10 ? digits : digits.length === 10 ? `91${digits}` : digits;
+                const waLink = phoneForLink.length >= 10 ? `https://wa.me/${phoneForLink}` : null;
+
+                return (
+                  <tr key={event.session_id} className="hover:bg-purple-50/40 transition-colors">
+                    <td className="px-5 py-3 min-w-0">
+                      <p className="font-medium text-gray-800 truncate">{event.name || contact}</p>
+                      <div className="mt-0.5 space-y-0.5">
+                        {event.email && <p className="text-xs text-gray-500 truncate">{event.email}</p>}
+                        {event.phone && <p className="text-xs text-gray-500 truncate">{event.phone}</p>}
+                        {!event.email && !event.phone && <p className="text-xs text-gray-400 font-mono truncate">{event.session_id.slice(0, 18)}</p>}
+                      </div>
+                    </td>
+                    <td className="px-5 py-3">
+                      <span className={`inline-flex items-center border text-xs px-2 py-0.5 rounded-full font-semibold ${checkoutStageStyle(event.stage, event.event_type)}`}>
+                        {checkoutStageLabel(event.stage, event.event_type)}
+                      </span>
+                      {(event.city || event.country) && <p className="text-xs text-gray-400 mt-1">{[event.city, event.country].filter(Boolean).join(", ")}</p>}
+                    </td>
+                    <td className="px-5 py-3 hidden lg:table-cell">
+                      <p className="text-xs text-gray-700 truncate max-w-64">{itemSummary}</p>
+                      <p className="text-xs text-gray-400">{event.item_count || event.items.length || 1} item{(event.item_count || event.items.length || 1) === 1 ? "" : "s"}</p>
+                    </td>
+                    <td className="px-5 py-3 text-right font-bold text-gray-900">₹{Math.round(event.subtotal || 0).toLocaleString("en-IN")}</td>
+                    <td className="px-5 py-3 text-right">
+                      <span className="flex items-center justify-end gap-1 text-xs text-gray-400"><Clock size={11} /> {timeAgo(event.occurred_at)}</span>
+                      {waLink && (
+                        <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-green-700 hover:text-green-800 mt-1">
+                          <MessageCircle size={11} /> WhatsApp
+                        </a>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function StatusDot({ color }: { color: string }) {
   return <span className={`inline-block w-2 h-2 rounded-full ${color} animate-pulse`} />;
@@ -614,6 +754,7 @@ export default function LiveActivity() {
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
   const [lostCheckouts, setLostCheckouts] = useState<TodayOrder[]>([]);
   const [lostExpanded, setLostExpanded] = useState(false);
+  const [liveCheckoutEvents, setLiveCheckoutEvents] = useState<LiveCheckoutEvent[]>([]);
   const addToCartTimestamps = useRef<number[]>([]);
   const [addToCartCount, setAddToCartCount] = useState(0);
 
@@ -650,6 +791,28 @@ export default function LiveActivity() {
     processing: "bg-purple-100 text-purple-700", created: "bg-yellow-100 text-yellow-700",
     cancelled: "bg-red-100 text-red-700", refunded: "bg-gray-100 text-gray-600",
   };
+
+  const upsertLiveCheckoutEvent = useCallback((incoming: LiveCheckoutEvent | null) => {
+    if (!incoming) return;
+    setLiveCheckoutEvents((current) => {
+      const merged = new Map(current.map((event) => [event.session_id, event]));
+      const previous = merged.get(incoming.session_id);
+      merged.set(incoming.session_id, {
+        ...previous,
+        ...incoming,
+        email: incoming.email || previous?.email || null,
+        phone: incoming.phone || previous?.phone || null,
+        name: incoming.name || previous?.name || null,
+        items: incoming.items.length ? incoming.items : previous?.items || [],
+        subtotal: incoming.subtotal || previous?.subtotal || 0,
+        item_count: incoming.item_count || previous?.item_count || 0,
+      });
+      return Array.from(merged.values())
+        .filter((event) => Date.now() - new Date(event.occurred_at).getTime() < 2 * 60 * 60 * 1000)
+        .sort((a, b) => new Date(b.occurred_at).getTime() - new Date(a.occurred_at).getTime())
+        .slice(0, 30);
+    });
+  }, []);
 
   // ── AI Analysis fetch ──
   const fetchAIAnalysis = useCallback(async () => {
@@ -729,6 +892,32 @@ export default function LiveActivity() {
     return () => { clearInterval(pruneInterval); supabase.removeChannel(channel); };
   }, [pruneAddToCart]);
 
+  useEffect(() => {
+    const channel = supabase.channel("checkout-live-events")
+      .on("broadcast", { event: "checkout_activity" }, ({ payload }) => {
+        upsertLiveCheckoutEvent(normalizeCheckoutEvent(payload));
+      })
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [upsertLiveCheckoutEvent]);
+
+  const fetchLiveCheckoutSessions = useCallback(async () => {
+    const since = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { data, error } = await db.from("cart_sessions")
+      .select("session_id, items, email, phone, subtotal, item_count, last_page, updated_at")
+      .gte("updated_at", since)
+      .is("converted_order_id", null)
+      .order("updated_at", { ascending: false })
+      .limit(30);
+    if (error) {
+      console.error("[LiveActivity] live checkout fetch failed:", error.message);
+      return;
+    }
+    (data ?? [])
+      .filter((row: any) => String(row.last_page || "").includes("checkout"))
+      .forEach((row: any) => upsertLiveCheckoutEvent(normalizeCheckoutEvent(row)));
+  }, [upsertLiveCheckoutEvent]);
+
   // ── DB data: orders ──
   const fetchData = useCallback(async () => {
     const istOffsetMs = 5.5 * 60 * 60 * 1000;
@@ -788,12 +977,13 @@ export default function LiveActivity() {
   }, [timeRange]);
 
   useEffect(() => {
-    fetchData(); fetchHistory();
+    fetchData(); fetchHistory(); fetchLiveCheckoutSessions();
     const interval = setInterval(fetchData, 30_000);
+    const checkoutInterval = setInterval(fetchLiveCheckoutSessions, 10_000);
     const channel = supabase.channel("live-activity-db")
       .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, () => { fetchData(); }).subscribe();
-    return () => { clearInterval(interval); supabase.removeChannel(channel); };
-  }, [fetchData, fetchHistory]);
+    return () => { clearInterval(interval); clearInterval(checkoutInterval); supabase.removeChannel(channel); };
+  }, [fetchData, fetchHistory, fetchLiveCheckoutSessions]);
 
   // Update peak visitors
   useEffect(() => {
@@ -874,6 +1064,9 @@ export default function LiveActivity() {
           </div>
         )}
       </div>
+
+      {/* Live checkout capture */}
+      <LiveCheckoutPanel events={liveCheckoutEvents} />
 
       {/* Live Visitors + Page Breakdown + City Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
