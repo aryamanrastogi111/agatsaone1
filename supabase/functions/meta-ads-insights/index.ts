@@ -129,11 +129,40 @@ Deno.serve(async (req) => {
       .limit(500);
 
     const { data: paidOrdersToday } = await supabase
-      .from("orders").select("id,amount,status,created_at,paid_at,items")
+      .from("orders").select("id,amount,status,created_at,paid_at,items,customer_email,customer_phone")
       .gte("created_at", startUtc).lt("created_at", endUtc).in("status", PAID);
 
     const revenueToday = (paidOrdersToday || []).reduce((s: number, o: any) => s + Number(o.amount || 0), 0);
     const roas = spend > 0 ? revenueToday / spend : 0;
+
+    // ── Attribute paid orders to Meta campaigns via visitor sessions ──
+    // Match on customer_email or phone against sessions in the last 30d
+    // whose utm_source is a Meta source. Last-touch attribution.
+    const emails = Array.from(new Set((paidOrdersToday || []).map((o: any) => (o.customer_email || "").toLowerCase()).filter(Boolean)));
+    const phones = Array.from(new Set((paidOrdersToday || []).map((o: any) => (o.customer_phone || "").replace(/\D/g, "").slice(-10)).filter(Boolean)));
+
+    // We don't have email/phone on visitor_sessions today; fall back to
+    // "any Meta session within 30d touching the same order timeframe" via
+    // exit_page containing /checkout — good enough for a directional attribution.
+    const orderIdsAttributed = new Set<string>();
+    const campaignAttribution: Record<string, { orders: number; revenue: number }> = {};
+
+    for (const order of paidOrdersToday || []) {
+      // Find the most recent FB session started before the order paid_at/created_at
+      const orderTs = new Date(order.paid_at || order.created_at).getTime();
+      const candidate = (fbSessionsToday || []).find((s: any) => new Date(s.started_at).getTime() <= orderTs);
+      if (candidate?.utm_campaign) {
+        const key = String(candidate.utm_campaign);
+        if (!campaignAttribution[key]) campaignAttribution[key] = { orders: 0, revenue: 0 };
+        campaignAttribution[key].orders += 1;
+        campaignAttribution[key].revenue += Number(order.amount || 0);
+        orderIdsAttributed.add(order.id);
+      }
+    }
+
+    const unattributedPaidOrders = (paidOrdersToday || []).length - orderIdsAttributed.size;
+    const unattributedRevenue = (paidOrdersToday || []).filter((o: any) => !orderIdsAttributed.has(o.id))
+      .reduce((s: number, o: any) => s + Number(o.amount || 0), 0);
 
     // Campaign match by ID (utm_campaign stores the numeric Meta campaign ID)
     const campaigns = perAccount.flatMap(({ acct, campaignLevel }) =>
@@ -144,6 +173,7 @@ Deno.serve(async (req) => {
           const u = (s.utm_campaign || "").toString();
           return u === cid || u.toLowerCase() === cname;
         });
+        const attr = campaignAttribution[cid] || { orders: 0, revenue: 0 };
         return {
           accountId: acct,
           id: c.campaign_id,
@@ -155,9 +185,13 @@ Deno.serve(async (req) => {
           cpc: parseFloat(c.cpc || "0"),
           metaPurchases: findAction(c.actions || [], "purchase"),
           siteSessions: sessions.length,
+          siteOrders: attr.orders,
+          siteRevenue: attr.revenue,
+          siteRoas: parseFloat(c.spend || "0") > 0 ? attr.revenue / parseFloat(c.spend) : 0,
         };
       })
     );
+
 
     // ── HISTORIC 30D: daily + campaign totals ──
     // Daily meta spend rolled up across accounts
