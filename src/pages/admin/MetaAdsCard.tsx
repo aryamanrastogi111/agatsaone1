@@ -167,6 +167,7 @@ export default function MetaAdsCard() {
             today: { account: data.account, site: data.site, campaigns: data.campaigns },
             historic30d: data.historic30d,
             accounts: data.accounts,
+            deliveryHealth: data.deliveryHealth,
           },
         }),
       });
@@ -394,64 +395,69 @@ export default function MetaAdsCard() {
 }
 
 function DeliveryHealthPanel({ data }: { data: MetaData }) {
-  const cpm = data.account.cpm || 0;
-  const ctr = data.account.ctr || 0;
-  const freq = data.account.frequency || 0;
-  
-  // Basic threshold logic
-  const isCpmHigh = cpm > 800; // Example INR threshold
-  const isCtrLow = ctr < 0.8;
-  const isFreqHigh = freq > 1.8;
-
-  const alerts = [];
-  if (isCpmHigh) alerts.push({ label: "High CPM", text: "Auction is expensive today. Monitor ROAS closely.", level: "warning" });
-  if (isCtrLow) alerts.push({ label: "Low CTR", text: "Creative fatigue or poor audience match suspected.", level: "critical" });
-  if (isFreqHigh) alerts.push({ label: "High Frequency", text: "Users are seeing ads multiple times. Audience saturation.", level: "warning" });
+  const health = data.deliveryHealth;
+  const cpm = health?.today.cpm ?? data.account.cpm ?? 0;
+  const ctr = health?.today.ctr ?? data.account.ctr ?? 0;
+  const freq = health?.today.frequency ?? data.account.frequency ?? 0;
+  const inr = (n: number) => `₹${Math.round(n).toLocaleString("en-IN")}`;
+  const change = (n: number) => `${n >= 0 ? "+" : ""}${Math.round(n)}%`;
+  const badge = health?.status === "critical"
+    ? "bg-rose-500/20 text-rose-100 border-rose-400/30"
+    : health?.status === "warning"
+      ? "bg-amber-500/20 text-amber-100 border-amber-400/30"
+      : "bg-emerald-500/20 text-emerald-100 border-emerald-400/30";
 
   return (
     <div className="bg-indigo-900 text-white rounded-lg p-5 shadow-lg relative overflow-hidden">
       <div className="absolute top-0 right-0 p-10 opacity-10 pointer-events-none">
         <Activity size={120} />
       </div>
-      <div className="relative z-10">
-        <div className="flex items-center gap-2 mb-4">
-          <ShieldCheck className="text-indigo-300" size={20} />
-          <h3 className="font-bold text-lg uppercase tracking-tight">Delivery Health</h3>
+      <div className="relative z-10 space-y-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="text-indigo-300" size={20} />
+            <h3 className="font-bold text-lg uppercase tracking-tight">Delivery Health</h3>
+          </div>
+          <span className={`text-[10px] px-2 py-1 rounded-full border font-bold uppercase ${badge}`}>
+            {health?.status || "live"}
+          </span>
         </div>
-        
-        <div className="grid grid-cols-3 gap-4 mb-6">
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm border border-white/10">
-            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-1">CPM Health</div>
-            <div className="text-xl font-bold">{cpm > 0 ? `₹${Math.round(cpm)}` : '—'}</div>
-            <div className={`text-[10px] mt-1 ${isCpmHigh ? 'text-rose-300' : 'text-emerald-300'}`}>
-              {isCpmHigh ? '● High' : '● Healthy'}
+            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-1">Spend vs 7d avg</div>
+            <div className="text-xl font-bold">{inr(data.account.spend)}</div>
+            <div className={`text-[10px] mt-1 ${health && health.spendChangePct < -40 ? "text-rose-300" : "text-emerald-300"}`}>
+              {health ? `${change(health.spendChangePct)} · avg ${inr(health.last7Average.spend)}` : "Live"}
             </div>
           </div>
           <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm border border-white/10">
-            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-1">CTR Health</div>
-            <div className="text-xl font-bold">{ctr.toFixed(2)}%</div>
-            <div className={`text-[10px] mt-1 ${isCtrLow ? 'text-rose-300' : 'text-emerald-300'}`}>
-              {isCtrLow ? '● Low Engagement' : '● Healthy'}
+            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-1">Impressions</div>
+            <div className="text-xl font-bold">{data.account.impressions.toLocaleString("en-IN")}</div>
+            <div className={`text-[10px] mt-1 ${health && health.impressionChangePct < -40 ? "text-rose-300" : "text-emerald-300"}`}>
+              {health ? `${change(health.impressionChangePct)} vs 7d` : "Live"}
             </div>
           </div>
           <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm border border-white/10">
-            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-1">Daily Frequency</div>
+            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-1">CPM / CTR</div>
+            <div className="text-xl font-bold">{cpm > 0 ? inr(cpm) : "—"}</div>
+            <div className="text-[10px] mt-1 text-indigo-200">{ctr.toFixed(2)}% CTR</div>
+          </div>
+          <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm border border-white/10">
+            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-1">Frequency</div>
             <div className="text-xl font-bold">{freq.toFixed(2)}x</div>
-            <div className={`text-[10px] mt-1 ${isFreqHigh ? 'text-rose-300' : 'text-emerald-300'}`}>
-              {isFreqHigh ? '● High Saturation' : '● Healthy'}
+            <div className={`text-[10px] mt-1 ${freq >= 3.5 ? "text-rose-300" : "text-emerald-300"}`}>
+              {freq >= 3.5 ? "Audience fatigue risk" : "Healthy"}
             </div>
           </div>
         </div>
 
-        {alerts.length > 0 ? (
+        {health?.alerts && health.alerts.length > 0 ? (
           <div className="space-y-2">
-            {alerts.map((a, i) => (
-              <div key={i} className={`flex items-start gap-2 p-2 rounded text-[11px] ${a.level === 'critical' ? 'bg-rose-500/20 border border-rose-500/30' : 'bg-amber-500/20 border border-amber-500/30'}`}>
-                <AlertCircle size={14} className="shrink-0" />
-                <div>
-                  <span className="font-bold">{a.label}: </span>
-                  <span className="opacity-90">{a.text}</span>
-                </div>
+            {health.alerts.map((alert, i) => (
+              <div key={i} className="flex items-start gap-2 p-2 rounded text-[11px] bg-amber-500/20 border border-amber-500/30">
+                <AlertCircle size={14} className="shrink-0 mt-0.5" />
+                <span className="opacity-95">{alert}</span>
               </div>
             ))}
           </div>
@@ -459,6 +465,39 @@ function DeliveryHealthPanel({ data }: { data: MetaData }) {
           <div className="flex items-center gap-2 text-[11px] bg-emerald-500/20 border border-emerald-500/30 p-2 rounded">
             <ShieldCheck size={14} className="text-emerald-300" />
             <span>Delivery metrics are within healthy thresholds for today.</span>
+          </div>
+        )}
+
+        {health?.issueCampaigns && health.issueCampaigns.length > 0 && (
+          <div>
+            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-2">Campaigns needing attention</div>
+            <div className="space-y-1.5">
+              {health.issueCampaigns.slice(0, 4).map((c) => (
+                <div key={`${c.accountId}-${c.id}`} className="flex items-center justify-between gap-3 text-[11px] bg-white/10 border border-white/10 rounded px-2 py-1.5">
+                  <span className="truncate">{c.name}</span>
+                  <span className="shrink-0 text-amber-200 font-bold">{c.effectiveStatus || c.status}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {health?.topAds && health.topAds.length > 0 && (
+          <div>
+            <div className="text-[10px] text-indigo-200 uppercase font-bold mb-2">Top ads by spend today</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {health.topAds.slice(0, 4).map((ad) => (
+                <div key={`${ad.accountId}-${ad.adName}`} className="bg-white/10 border border-white/10 rounded p-2 text-[11px]">
+                  <div className="font-semibold truncate">{ad.adName || "Unnamed ad"}</div>
+                  <div className="text-indigo-200 truncate mt-0.5">{ad.campaignName}</div>
+                  <div className="flex justify-between gap-2 mt-2 text-indigo-100">
+                    <span>{inr(ad.spend)}</span>
+                    <span>{ad.ctr.toFixed(2)}% CTR</span>
+                    <span>{ad.metaPurchases} purch.</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
