@@ -457,6 +457,9 @@ export default function MetaAdsCard() {
             )}
           </div>
 
+          {/* ROAS trend chart */}
+          <RoasChart daily={daily} todayRoas={data.site.roas} todayRevenue={data.site.revenueToday} todaySpend={data.account.spend} />
+
           {/* Daily table */}
           <div className="border border-gray-100 rounded-lg overflow-hidden">
             <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700 flex items-center gap-1.5">
