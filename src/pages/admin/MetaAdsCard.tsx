@@ -197,6 +197,14 @@ export default function MetaAdsCard() {
     return () => clearInterval(t);
   }, [fetchInsights]);
 
+  // Auto-run AI analysis once data is loaded (only first time)
+  useEffect(() => {
+    if (data?.historic30d && !ai && !aiLoading && !aiError) {
+      runAi();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   const inr = (n: number) => `₹${Math.round(n).toLocaleString("en-IN")}`;
 
   const daily = data?.historic30d?.daily ?? [];
@@ -346,6 +354,17 @@ export default function MetaAdsCard() {
               </button>
             </div>
             {aiError && <div className="p-4 text-xs text-rose-600 bg-rose-50 border-b border-rose-100">{aiError}</div>}
+            {!ai && aiLoading && (
+              <div className="p-8 flex items-center justify-center gap-3 text-sm text-gray-500">
+                <div className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+                Analyzing 30 days of Meta ad data, delivery health, campaigns and creatives…
+              </div>
+            )}
+            {!ai && !aiLoading && !aiError && (
+              <div className="p-6 text-xs text-gray-500 bg-gray-50">
+                Click <span className="font-semibold text-purple-700">Regenerate AI Analysis</span> to run the detailed diagnosis.
+              </div>
+            )}
             {ai && (
               <div className="p-5 space-y-6">
                  {/* Headline + diagnosis */}
