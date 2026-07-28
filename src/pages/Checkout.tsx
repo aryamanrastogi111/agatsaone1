@@ -400,24 +400,11 @@ export default function CheckoutPage() {
     fetchQuote(cartItems, null);
   };
 
-  // ─── Preload Razorpay + InitiateCheckout (Pixel + CAPI, deduped) ──
+  // ─── Preload Razorpay only (InitiateCheckout now fires on Pay click) ──
   useEffect(() => {
     loadRazorpay();
-    if (uniqueSkus.length > 0) {
-      const cartKey = `${uniqueSkus.join("_")}_${searchParams.get("variants") || "default"}`;
-      const eventId = getStableCheckoutEventId(cartKey);
-      trackMetaEvent("InitiateCheckout", {
-        eventId,
-        custom: {
-          content_ids: uniqueSkus,
-          content_type: "product",
-          num_items: cartItems.reduce((s, i) => s + i.qty, 0),
-          value: displayTotalRupees,
-          currency: "INR",
-        },
-      });
-    }
   }, []);
+
 
   useEffect(() => {
     const channel = supabase.channel("checkout-live-events");
@@ -685,6 +672,31 @@ export default function CheckoutPage() {
     setPageState("processing");
     setErrorMsg("");
     void emitCheckoutActivity("payment_clicked");
+
+    // Fire InitiateCheckout only when the user actually clicks Pay (Razorpay launch)
+    try {
+      if (uniqueSkus.length > 0) {
+        const cartKey = `${uniqueSkus.join("_")}_${searchParams.get("variants") || "default"}`;
+        const eventId = getStableCheckoutEventId(cartKey);
+        trackMetaEvent("InitiateCheckout", {
+          eventId,
+          user: {
+            email: email.trim() || undefined,
+            phone: (dialCode + phone.replace(/\D/g, "")) || undefined,
+          },
+          custom: {
+            content_ids: uniqueSkus,
+            content_type: "product",
+            num_items: cartItems.reduce((s, i) => s + i.qty, 0),
+            value: displayTotalRupees,
+            currency: "INR",
+          },
+        });
+      }
+    } catch (e) {
+      console.error("[checkout] InitiateCheckout track failed:", e);
+    }
+
 
     const rawDigits = phone.replace(/\D/g, "");
     const cleanPhone = isIntl ? rawDigits.slice(0, 15) : rawDigits.slice(-10);
@@ -1259,7 +1271,25 @@ export default function CheckoutPage() {
             </div>
 
             <Button
-              onClick={() => setStep(2)}
+              onClick={() => {
+                setStep(2);
+                try {
+                  const cartKey = `${uniqueSkus.join("_")}_${searchParams.get("variants") || "default"}`;
+                  const eventId = `apinfo_${getStableCheckoutEventId(cartKey)}`;
+                  trackMetaEvent("AddPaymentInfo", {
+                    eventId,
+                    custom: {
+                      content_ids: uniqueSkus,
+                      content_type: "product",
+                      num_items: cartItems.reduce((s, i) => s + i.qty, 0),
+                      value: displayTotalRupees,
+                      currency: "INR",
+                    },
+                  });
+                } catch (e) {
+                  console.error("[checkout] AddPaymentInfo track failed:", e);
+                }
+              }}
               disabled={!step1Valid}
               className={`w-full rounded-xl py-6 text-base font-semibold mt-2 ${
                 !step1Valid ? "!bg-gray-300 !text-gray-500 !opacity-100 cursor-not-allowed" : ""
