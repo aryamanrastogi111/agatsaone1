@@ -760,6 +760,8 @@ export default function LiveActivity() {
   const [lostCheckouts, setLostCheckouts] = useState<TodayOrder[]>([]);
   const [lostExpanded, setLostExpanded] = useState(false);
   const [liveCheckoutEvents, setLiveCheckoutEvents] = useState<LiveCheckoutEvent[]>([]);
+  const [abandonedWithPhone, setAbandonedWithPhone] = useState<AbandonedCheckout[]>([]);
+  const seenAbandonedRef = useRef<Set<string>>(new Set());
   const addToCartTimestamps = useRef<number[]>([]);
   const [addToCartCount, setAddToCartCount] = useState(0);
 
