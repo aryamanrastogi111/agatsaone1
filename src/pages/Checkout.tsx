@@ -80,6 +80,25 @@ const ZIPPO_SUPPORTED = new Set([
   "US","GB","CA","AU","NZ","DE","FR","NL","ES","IT","CH","SE","IE","JP","MY","PH","BR","MX","BE","AT","DK","FI","NO","PT","CZ","PL","TR","IN",
 ]);
 
+function getVisitorSessionId(): string {
+  let id = sessionStorage.getItem("agatsa_vsid");
+  if (!id) {
+    id = `v_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+    sessionStorage.setItem("agatsa_vsid", id);
+    sessionStorage.setItem("agatsa_vsid_start", new Date().toISOString());
+  }
+  return id;
+}
+
+function getStableCheckoutEventId(cartKey: string): string {
+  const key = `agatsa_meta_ic_${cartKey || "cart"}`;
+  const existing = sessionStorage.getItem(key);
+  if (existing) return existing;
+  const id = newEventId();
+  sessionStorage.setItem(key, id);
+  return id;
+}
+
 // ─── India pincode lookup (city + state) ────────────────────────
 async function lookupPincode(pincode: string): Promise<{ city: string; state: string } | null> {
   if (pincode.length !== 6 || !/^\d{6}$/.test(pincode)) return null;
@@ -158,6 +177,8 @@ export default function CheckoutPage() {
   // Meta CAPI: stable event_id shared between browser Pixel, browser CAPI, and
   // server-side CAPI backup (send-order-confirmation) so Meta deduplicates.
   const purchaseEventIdRef = useRef<string>("");
+  const visitorSessionIdRef = useRef(getVisitorSessionId());
+  const cartSyncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Quantities
   const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
@@ -228,6 +249,38 @@ export default function CheckoutPage() {
     qty: d.qty,
     variantTitle: d.variantTitle,
   }));
+
+  const syncCheckoutSession = useCallback(async (contactOnly = false, convertedOrderId?: string) => {
+    const itemCount = items.reduce((sum, d) => sum + d.qty, 0);
+    if (itemCount === 0) return;
+
+    const cleanPhone = phone.replace(/\D/g, "");
+    const contactPhone = cleanPhone ? (isIntl ? cleanPhone.slice(0, 15) : cleanPhone.slice(-10)) : null;
+    const payload: Record<string, unknown> = {
+      session_id: visitorSessionIdRef.current,
+      email: email.trim().toLowerCase() || null,
+      phone: contactPhone,
+      last_page: "/checkout",
+      updated_at: new Date().toISOString(),
+    };
+
+    if (!contactOnly) {
+      payload.items = items.map((d) => ({
+        productId: d.sku,
+        productName: d.name,
+        variantTitle: d.variantTitle || "Default Title",
+        price: d.unitPricePaise / 100,
+        quantity: d.qty,
+      }));
+      payload.subtotal = displayTotalPaise / 100;
+      payload.item_count = itemCount;
+    }
+
+    if (convertedOrderId) payload.converted_order_id = convertedOrderId;
+
+    const { error } = await db.from("cart_sessions").upsert(payload, { onConflict: "session_id" });
+    if (error) console.error("[checkout] cart session sync failed:", error.message);
+  }, [items, phone, email, isIntl, displayTotalPaise]);
 
   // ─── Quote fetch ──────────────────────────────────────────
   const fetchQuote = useCallback(async (itemsArr: { sku: string; qty: number }[], coupon: string | null) => {
@@ -313,7 +366,10 @@ export default function CheckoutPage() {
   useEffect(() => {
     loadRazorpay();
     if (uniqueSkus.length > 0) {
+      const cartKey = `${uniqueSkus.join("_")}_${searchParams.get("variants") || "default"}`;
+      const eventId = getStableCheckoutEventId(cartKey);
       trackMetaEvent("InitiateCheckout", {
+        eventId,
         custom: {
           content_ids: uniqueSkus,
           content_type: "product",
@@ -324,6 +380,17 @@ export default function CheckoutPage() {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (uniqueSkus.length === 0) return;
+    if (cartSyncTimerRef.current) clearTimeout(cartSyncTimerRef.current);
+    cartSyncTimerRef.current = setTimeout(() => {
+      void syncCheckoutSession(false);
+    }, 600);
+    return () => {
+      if (cartSyncTimerRef.current) clearTimeout(cartSyncTimerRef.current);
+    };
+  }, [uniqueSkus.length, JSON.stringify(items), displayTotalPaise, syncCheckoutSession]);
 
 
   // ─── Pincode / postal auto-fill ────────────────────────────
@@ -397,6 +464,7 @@ export default function CheckoutPage() {
       zip: pincode || undefined,
       country: toIso2(country),
     });
+    void syncCheckoutSession(true);
   }, [emailValid, phoneValid, email, phone, fullName, city, state, pincode, country, dialCode]);
 
   // Purchase is fired inline in the Razorpay handler (immediate, before any
@@ -753,6 +821,12 @@ export default function CheckoutPage() {
                   });
                 } catch (syncErr) {
                   console.error("[checkout] db sync failed:", syncErr);
+                }
+
+                try {
+                  await syncCheckoutSession(true, response.razorpay_order_id || websiteOrderId || response.razorpay_payment_id);
+                } catch (cartSyncErr) {
+                  console.error("[checkout] cart conversion sync failed:", cartSyncErr);
                 }
 
                 // Send order confirmation emails (best-effort, server-side)
