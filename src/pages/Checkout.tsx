@@ -673,6 +673,29 @@ export default function CheckoutPage() {
     setErrorMsg("");
     void emitCheckoutActivity("payment_clicked");
 
+    // Fire InitiateCheckout only when the user actually clicks Pay (Razorpay launch)
+    try {
+      if (uniqueSkus.length > 0) {
+        const cartKey = `${uniqueSkus.join("_")}_${searchParams.get("variants") || "default"}`;
+        const eventId = getStableCheckoutEventId(cartKey);
+        trackMetaEvent("InitiateCheckout", {
+          eventId,
+          email: email.trim() || undefined,
+          phone: (dialCode + phone.replace(/\D/g, "")) || undefined,
+          custom: {
+            content_ids: uniqueSkus,
+            content_type: "product",
+            num_items: cartItems.reduce((s, i) => s + i.qty, 0),
+            value: displayTotalRupees,
+            currency: "INR",
+          },
+        });
+      }
+    } catch (e) {
+      console.error("[checkout] InitiateCheckout track failed:", e);
+    }
+
+
     const rawDigits = phone.replace(/\D/g, "");
     const cleanPhone = isIntl ? rawDigits.slice(0, 15) : rawDigits.slice(-10);
     const fullPhone = dialCode + cleanPhone;
