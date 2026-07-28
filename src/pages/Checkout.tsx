@@ -182,6 +182,7 @@ export default function CheckoutPage() {
   const checkoutLiveChannelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const checkoutLiveSubscribedRef = useRef(false);
   const lastCheckoutLiveEventRef = useRef("");
+  const checkoutStageRef = useRef("/checkout");
 
   // Quantities
   const [quantities, setQuantities] = useState<Record<string, number>>(initialQty);
@@ -253,9 +254,10 @@ export default function CheckoutPage() {
     variantTitle: d.variantTitle,
   }));
 
-  const syncCheckoutSession = useCallback(async (contactOnly = false, convertedOrderId?: string, checkoutStage = "/checkout") => {
+  const syncCheckoutSession = useCallback(async (contactOnly = false, convertedOrderId?: string, checkoutStage?: string) => {
     const itemCount = items.reduce((sum, d) => sum + d.qty, 0);
     if (itemCount === 0) return;
+    if (checkoutStage) checkoutStageRef.current = checkoutStage;
 
     const cleanPhone = phone.replace(/\D/g, "");
     const contactPhone = cleanPhone ? (isIntl ? cleanPhone.slice(0, 15) : cleanPhone.slice(-10)) : null;
@@ -263,7 +265,7 @@ export default function CheckoutPage() {
       session_id: visitorSessionIdRef.current,
       email: email.trim().toLowerCase() || null,
       phone: contactPhone,
-      last_page: checkoutStage,
+      last_page: checkoutStageRef.current,
       updated_at: new Date().toISOString(),
     };
 
