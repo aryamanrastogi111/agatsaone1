@@ -694,6 +694,40 @@ export default function CheckoutPage() {
                 // Transition success FIRST so user always sees confirmation
                 setPageState("success");
 
+                // ── Meta Purchase: fire Pixel + browser CAPI IMMEDIATELY, with a
+                // stable event_id we also pass to send-order-confirmation for a
+                // server-side CAPI backup. Meta deduplicates by event_id.
+                const metaEventId = purchaseEventIdRef.current || newEventId();
+                purchaseEventIdRef.current = metaEventId;
+                try {
+                  const { first_name, last_name } = splitName(fullName);
+                  trackMetaEvent("Purchase", {
+                    eventId: metaEventId,
+                    user: {
+                      email: recipientEmail || undefined,
+                      phone: fullPhone || undefined,
+                      first_name,
+                      last_name,
+                      city: city || undefined,
+                      state: state || undefined,
+                      zip: pincode || undefined,
+                      country: toIso2(country),
+                      external_id: response.razorpay_payment_id || response.razorpay_order_id,
+                    },
+                    custom: {
+                      value: confirmedTotalPaise / 100,
+                      currency: "INR",
+                      content_ids: uniqueSkus,
+                      content_type: "product",
+                      num_items: items.reduce((s, d) => s + d.qty, 0),
+                      order_id: response.razorpay_order_id,
+                    },
+                  });
+                } catch (e) {
+                  console.error("[checkout] meta Purchase fire failed:", e);
+                }
+
+
                 // Sync order to Supabase (best-effort)
                 try {
                   await db.from("orders").insert({
