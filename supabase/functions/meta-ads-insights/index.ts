@@ -4,9 +4,20 @@ import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const META_ACCESS_TOKEN = Deno.env.get("META_ACCESS_TOKEN")!;
-const META_AD_ACCOUNT_ID = Deno.env.get("META_AD_ACCOUNT_ID")!;
+const META_AD_ACCOUNT_ID = Deno.env.get("META_AD_ACCOUNT_ID") || "";
+const META_AD_ACCOUNT_IDS = Deno.env.get("META_AD_ACCOUNT_IDS") || "";
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+
+function resolveAccountIds(): string[] {
+  const raw = [META_AD_ACCOUNT_ID, META_AD_ACCOUNT_IDS]
+    .join(",")
+    .split(/[,\s]+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const uniq = Array.from(new Set(raw));
+  return uniq.map((id) => (id.startsWith("act_") ? id : `act_${id}`));
+}
 
 const GRAPH_VERSION = "v21.0";
 
