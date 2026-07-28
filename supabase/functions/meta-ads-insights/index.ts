@@ -4,9 +4,20 @@ import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const META_ACCESS_TOKEN = Deno.env.get("META_ACCESS_TOKEN")!;
-const META_AD_ACCOUNT_ID = Deno.env.get("META_AD_ACCOUNT_ID")!;
+const META_AD_ACCOUNT_ID = Deno.env.get("META_AD_ACCOUNT_ID") || "";
+const META_AD_ACCOUNT_IDS = Deno.env.get("META_AD_ACCOUNT_IDS") || "";
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+
+function resolveAccountIds(): string[] {
+  const raw = [META_AD_ACCOUNT_ID, META_AD_ACCOUNT_IDS]
+    .join(",")
+    .split(/[,\s]+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const uniq = Array.from(new Set(raw));
+  return uniq.map((id) => (id.startsWith("act_") ? id : `act_${id}`));
+}
 
 const GRAPH_VERSION = "v21.0";
 
@@ -43,32 +54,62 @@ Deno.serve(async (req) => {
       });
     }
 
-    const acct = META_AD_ACCOUNT_ID.startsWith("act_") ? META_AD_ACCOUNT_ID : `act_${META_AD_ACCOUNT_ID}`;
+    const accountIds = resolveAccountIds();
+    if (!META_ACCESS_TOKEN || accountIds.length === 0) {
+      return new Response(JSON.stringify({ error: "Meta credentials not configured" }), {
+        status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
-    // Account-level insights (today, IST via timezone param)
-    const accountLevel = await fetchMeta(`${acct}/insights`, {
-      fields: "spend,impressions,clicks,ctr,cpc,reach,actions,action_values",
-      date_preset: "today",
-      time_increment: "1",
-    });
+    // Fetch account-level + campaign-level insights for each ad account in parallel
+    const perAccount = await Promise.all(accountIds.map(async (acct) => {
+      const [accountLevel, campaignLevel] = await Promise.all([
+        fetchMeta(`${acct}/insights`, {
+          fields: "spend,impressions,clicks,ctr,cpc,reach,actions,action_values",
+          date_preset: "today",
+          time_increment: "1",
+        }),
+        fetchMeta(`${acct}/insights`, {
+          fields: "campaign_id,campaign_name,spend,impressions,clicks,ctr,cpc,actions,action_values",
+          date_preset: "today",
+          level: "campaign",
+          limit: "50",
+        }),
+      ]);
+      return { acct, accountLevel, campaignLevel };
+    }));
 
-    // Per-campaign breakdown
-    const campaignLevel = await fetchMeta(`${acct}/insights`, {
-      fields: "campaign_id,campaign_name,spend,impressions,clicks,ctr,cpc,actions,action_values",
-      date_preset: "today",
-      level: "campaign",
-      limit: "50",
-    });
-
-    const summary = accountLevel.data?.[0] || {};
-    const spend = parseFloat(summary.spend || "0");
-    const impressions = parseInt(summary.impressions || "0", 10);
-    const clicks = parseInt(summary.clicks || "0", 10);
-    const reach = parseInt(summary.reach || "0", 10);
     const findAction = (actions: any[], type: string) =>
       parseInt(actions?.find((a: any) => a.action_type === type)?.value || "0", 10);
-    const metaPurchases = findAction(summary.actions || [], "purchase");
-    const metaInitiateCheckout = findAction(summary.actions || [], "initiate_checkout");
+
+    // Aggregate across all accounts
+    let spend = 0, impressions = 0, clicks = 0, reach = 0;
+    let metaPurchases = 0, metaInitiateCheckout = 0;
+    const perAccountSummary: any[] = [];
+
+    for (const { acct, accountLevel } of perAccount) {
+      const s = accountLevel.data?.[0] || {};
+      const aSpend = parseFloat(s.spend || "0");
+      const aImp = parseInt(s.impressions || "0", 10);
+      const aClicks = parseInt(s.clicks || "0", 10);
+      const aReach = parseInt(s.reach || "0", 10);
+      const aPurch = findAction(s.actions || [], "purchase");
+      const aIC = findAction(s.actions || [], "initiate_checkout");
+      spend += aSpend; impressions += aImp; clicks += aClicks; reach += aReach;
+      metaPurchases += aPurch; metaInitiateCheckout += aIC;
+      perAccountSummary.push({
+        accountId: acct,
+        spend: aSpend, impressions: aImp, clicks: aClicks,
+        ctr: parseFloat(s.ctr || "0"),
+        cpc: parseFloat(s.cpc || "0"),
+        metaPurchases: aPurch,
+      });
+    }
+
+    const summary = {
+      ctr: impressions > 0 ? (clicks / impressions) * 100 : 0,
+      cpc: clicks > 0 ? spend / clicks : 0,
+    };
 
     // Query our DB for ground-truth ROAS today
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
@@ -93,33 +134,38 @@ Deno.serve(async (req) => {
     const revenueToday = (paidOrders || []).reduce((s: number, o: any) => s + Number(o.amount || 0), 0);
     const roas = spend > 0 ? revenueToday / spend : 0;
 
-    // Campaign breakdown enriched with our own session counts by utm_campaign
-    const campaigns = (campaignLevel.data || []).map((c: any) => {
-      const sessions = (fbSessions || []).filter(
-        (s: any) => (s.utm_campaign || "").toLowerCase() === (c.campaign_name || "").toLowerCase()
-      );
-      return {
-        id: c.campaign_id,
-        name: c.campaign_name,
-        spend: parseFloat(c.spend || "0"),
-        impressions: parseInt(c.impressions || "0", 10),
-        clicks: parseInt(c.clicks || "0", 10),
-        ctr: parseFloat(c.ctr || "0"),
-        cpc: parseFloat(c.cpc || "0"),
-        metaPurchases: findAction(c.actions || [], "purchase"),
-        siteSessions: sessions.length,
-      };
-    });
+    // Campaign breakdown across all accounts, enriched with our own session counts
+    const campaigns = perAccount.flatMap(({ acct, campaignLevel }) =>
+      (campaignLevel.data || []).map((c: any) => {
+        const sessions = (fbSessions || []).filter(
+          (s: any) => (s.utm_campaign || "").toLowerCase() === (c.campaign_name || "").toLowerCase()
+        );
+        return {
+          accountId: acct,
+          id: c.campaign_id,
+          name: c.campaign_name,
+          spend: parseFloat(c.spend || "0"),
+          impressions: parseInt(c.impressions || "0", 10),
+          clicks: parseInt(c.clicks || "0", 10),
+          ctr: parseFloat(c.ctr || "0"),
+          cpc: parseFloat(c.cpc || "0"),
+          metaPurchases: findAction(c.actions || [], "purchase"),
+          siteSessions: sessions.length,
+        };
+      })
+    );
 
     return new Response(JSON.stringify({
       generatedAt: new Date().toISOString(),
+      accountIds,
       account: {
         spend, impressions, clicks, reach,
-        ctr: parseFloat(summary.ctr || "0"),
-        cpc: parseFloat(summary.cpc || "0"),
+        ctr: summary.ctr,
+        cpc: summary.cpc,
         metaPurchases,
         metaInitiateCheckout,
       },
+      accounts: perAccountSummary,
       site: {
         fbSessions: (fbSessions || []).length,
         paidOrders: (paidOrders || []).length,

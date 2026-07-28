@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { RefreshCw, TrendingUp, DollarSign, MousePointerClick, Eye, ShoppingCart, Target, AlertCircle, type LucideIcon } from "lucide-react";
 
 interface Campaign {
+  accountId?: string;
   id: string;
   name: string;
   spend: number;
@@ -13,12 +14,20 @@ interface Campaign {
   siteSessions: number;
 }
 
+interface AccountSummary {
+  accountId: string;
+  spend: number; impressions: number; clicks: number;
+  ctr: number; cpc: number; metaPurchases: number;
+}
+
 interface MetaData {
   generatedAt: string;
+  accountIds?: string[];
   account: {
     spend: number; impressions: number; clicks: number; reach: number;
     ctr: number; cpc: number; metaPurchases: number; metaInitiateCheckout: number;
   };
+  accounts?: AccountSummary[];
   site: { fbSessions: number; paidOrders: number; revenueToday: number; roas: number };
   campaigns: Campaign[];
   recentFbSessions: Array<{ session_id: string; started_at: string; utm_campaign: string | null; utm_content: string | null; exit_page: string | null }>;
@@ -66,7 +75,10 @@ export default function MetaAdsCard() {
           <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center text-sm font-bold">f</div>
           <div>
             <h2 className="text-base font-bold text-gray-900">Facebook / Meta Ads — Today</h2>
-            <p className="text-xs text-gray-500">Live spend, ROAS, and campaign performance (IST)</p>
+            <p className="text-xs text-gray-500">
+              Live spend, ROAS, and campaign performance (IST)
+              {data?.accountIds && data.accountIds.length > 0 && ` · ${data.accountIds.length} ad account${data.accountIds.length > 1 ? "s" : ""}`}
+            </p>
           </div>
         </div>
         <button onClick={fetchInsights} disabled={loading}
@@ -101,6 +113,45 @@ export default function MetaAdsCard() {
             <KPI icon={ShoppingCart} label="Purchases" value={data.account.metaPurchases.toLocaleString("en-IN")} color="bg-green-50 text-green-600" sub={`${data.site.paidOrders} paid on site`} />
           </div>
 
+          {data.accounts && data.accounts.length > 1 && (
+            <div className="px-5 pb-3">
+              <div className="border border-gray-100 rounded-lg overflow-hidden">
+                <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-700">
+                  Per ad account
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="text-gray-500 border-b border-gray-100">
+                        <th className="text-left px-3 py-2 font-medium">Account</th>
+                        <th className="text-right px-3 py-2 font-medium">Spend</th>
+                        <th className="text-right px-3 py-2 font-medium">Impr.</th>
+                        <th className="text-right px-3 py-2 font-medium">Clicks</th>
+                        <th className="text-right px-3 py-2 font-medium">CTR</th>
+                        <th className="text-right px-3 py-2 font-medium">CPC</th>
+                        <th className="text-right px-3 py-2 font-medium">Purch.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.accounts.map((a) => (
+                        <tr key={a.accountId} className="border-b border-gray-50">
+                          <td className="px-3 py-2 font-mono text-gray-700">{a.accountId}</td>
+                          <td className="px-3 py-2 text-right">{inr(a.spend)}</td>
+                          <td className="px-3 py-2 text-right">{a.impressions.toLocaleString("en-IN")}</td>
+                          <td className="px-3 py-2 text-right">{a.clicks.toLocaleString("en-IN")}</td>
+                          <td className="px-3 py-2 text-right">{a.ctr.toFixed(2)}%</td>
+                          <td className="px-3 py-2 text-right">{a.cpc > 0 ? inr(a.cpc) : "—"}</td>
+                          <td className="px-3 py-2 text-right">{a.metaPurchases}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
+
           <div className="px-5 pb-5 grid grid-cols-1 lg:grid-cols-3 gap-5">
             {/* Campaigns table */}
             <div className="lg:col-span-2 border border-gray-100 rounded-lg overflow-hidden">
@@ -121,9 +172,17 @@ export default function MetaAdsCard() {
                     {data.campaigns.length === 0 ? (
                       <tr><td colSpan={6} className="text-center text-gray-400 py-6">No active campaigns today</td></tr>
                     ) : (
-                      data.campaigns.map((c) => (
-                        <tr key={c.id} className="border-b border-gray-50 hover:bg-gray-50/50">
-                          <td className="px-3 py-2 font-medium text-gray-800 truncate max-w-[200px]">{c.name}</td>
+                      data.campaigns
+                        .slice()
+                        .sort((a, b) => b.spend - a.spend)
+                        .map((c) => (
+                        <tr key={`${c.accountId || ""}-${c.id}`} className="border-b border-gray-50 hover:bg-gray-50/50">
+                          <td className="px-3 py-2 font-medium text-gray-800 truncate max-w-[220px]">
+                            {c.name}
+                            {c.accountId && data.accounts && data.accounts.length > 1 && (
+                              <div className="text-[10px] text-gray-400 font-mono truncate">{c.accountId}</div>
+                            )}
+                          </td>
                           <td className="px-3 py-2 text-right">{inr(c.spend)}</td>
                           <td className="px-3 py-2 text-right">{c.clicks}</td>
                           <td className="px-3 py-2 text-right">{c.ctr.toFixed(2)}%</td>
