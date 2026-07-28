@@ -501,7 +501,7 @@ export default function CheckoutPage() {
 
   const dialCode = COUNTRY_META[country]?.dial || "+91";
   const pincodeValid = isIntl ? pincode.trim().length >= 3 : pincode.length === 6;
-  const step1Valid = pincodeValid && addressLine1.trim().length >= 4 && city.trim().length > 0 && state.trim().length > 0 && country.trim().length > 0;
+  const step1Valid = pincodeValid && addressLine1.trim().length >= 2 && city.trim().length > 0 && state.trim().length > 0 && country.trim().length > 0;
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const phoneValid = isIntl ? /^\d{6,15}$/.test(phone) : /^\d{10}$/.test(phone);
   const step2Valid = fullName.trim().length >= 2 && phoneValid && emailValid;
