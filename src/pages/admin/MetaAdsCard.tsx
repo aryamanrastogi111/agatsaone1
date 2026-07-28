@@ -85,9 +85,13 @@ interface MetaData {
     paidOrders: number; 
     revenueToday: number; 
     roas: number; 
+    blendedRoas?: number;
+    attributedRevenue?: number;
+    attributedRoas?: number;
     attributedPaidOrders?: number; 
     unattributedPaidOrders?: number; 
-    unattributedRevenue?: number 
+    unattributedRevenue?: number;
+    dedupRatio?: number;
   };
   campaigns: Campaign[];
   recentFbSessions: Array<{ 
