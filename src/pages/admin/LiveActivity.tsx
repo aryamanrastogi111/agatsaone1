@@ -1133,6 +1133,9 @@ export default function LiveActivity() {
       {/* Live checkout capture */}
       <LiveCheckoutPanel events={liveCheckoutEvents} />
 
+      {/* High-intent abandoned checkouts (phone captured, stalled 5+ min) */}
+      <AbandonedWithPhonePanel rows={abandonedWithPhone} />
+
       {/* Live Visitors + Page Breakdown + City Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <LiveVisitorsPanel visitors={visitors} />
