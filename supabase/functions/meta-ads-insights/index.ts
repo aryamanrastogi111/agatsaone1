@@ -456,7 +456,33 @@ Deno.serve(async (req) => {
         impressionChangePct,
         activeCampaigns,
         issueCampaigns,
-        topAds: adRows.sort((a, b) => b.spend - a.spend).slice(0, 8),
+        topAds: await (async () => {
+          const top = adRows.sort((a, b) => b.spend - a.spend).slice(0, 8);
+          // Enrich with creative details (thumbnail, headline, body) so AI can review creatives
+          const enriched = await Promise.all(top.map(async (ad) => {
+            try {
+              const r = await fetchMeta(`${ad.adId}`, {
+                fields: "creative{thumbnail_url,image_url,body,title,name,object_story_spec}",
+              });
+              const c = r.creative || {};
+              const oss = c.object_story_spec || {};
+              const link = oss.link_data || oss.video_data || {};
+              return {
+                ...ad,
+                creative: {
+                  thumbnailUrl: c.thumbnail_url || link.image_url || c.image_url || null,
+                  headline: link.name || c.title || c.name || null,
+                  body: link.message || c.body || null,
+                  cta: link.call_to_action?.type || null,
+                  landingUrl: link.link || null,
+                },
+              };
+            } catch {
+              return ad;
+            }
+          }));
+          return enriched;
+        })(),
       },
       site: {
         fbSessions: (fbSessionsToday || []).length,
