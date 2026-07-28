@@ -75,7 +75,10 @@ export default function MetaAdsCard() {
           <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center text-sm font-bold">f</div>
           <div>
             <h2 className="text-base font-bold text-gray-900">Facebook / Meta Ads — Today</h2>
-            <p className="text-xs text-gray-500">Live spend, ROAS, and campaign performance (IST)</p>
+            <p className="text-xs text-gray-500">
+              Live spend, ROAS, and campaign performance (IST)
+              {data?.accountIds && data.accountIds.length > 0 && ` · ${data.accountIds.length} ad account${data.accountIds.length > 1 ? "s" : ""}`}
+            </p>
           </div>
         </div>
         <button onClick={fetchInsights} disabled={loading}
