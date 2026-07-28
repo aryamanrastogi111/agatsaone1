@@ -288,7 +288,11 @@ Deno.serve(async (req) => {
         paidOrders: (paidOrdersToday || []).length,
         revenueToday,
         roas,
+        attributedPaidOrders: orderIdsAttributed.size,
+        unattributedPaidOrders,
+        unattributedRevenue,
       },
+
       campaigns,
       recentFbSessions: (fbSessionsToday || []).slice(0, 15),
       historic30d: {
