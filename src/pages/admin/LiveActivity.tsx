@@ -1041,13 +1041,14 @@ export default function LiveActivity() {
   }, [timeRange]);
 
   useEffect(() => {
-    fetchData(); fetchHistory(); fetchLiveCheckoutSessions();
+    fetchData(); fetchHistory(); fetchLiveCheckoutSessions(); fetchAbandonedWithPhone();
     const interval = setInterval(fetchData, 30_000);
     const checkoutInterval = setInterval(fetchLiveCheckoutSessions, 10_000);
+    const abandonedInterval = setInterval(fetchAbandonedWithPhone, 30_000);
     const channel = supabase.channel("live-activity-db")
       .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, () => { fetchData(); }).subscribe();
-    return () => { clearInterval(interval); clearInterval(checkoutInterval); supabase.removeChannel(channel); };
-  }, [fetchData, fetchHistory, fetchLiveCheckoutSessions]);
+    return () => { clearInterval(interval); clearInterval(checkoutInterval); clearInterval(abandonedInterval); supabase.removeChannel(channel); };
+  }, [fetchData, fetchHistory, fetchLiveCheckoutSessions, fetchAbandonedWithPhone]);
 
   // Update peak visitors
   useEffect(() => {
