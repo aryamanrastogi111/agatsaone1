@@ -343,12 +343,23 @@ export default function MediaRecognition() {
           <p className="mt-3 opacity-90">
             Download our media kit, request interviews or brand assets. For press enquiries and story collaborations, reach our communications team.
           </p>
-          <a
-            href="mailto:info@agatsa.com?subject=Media%20%26%20Recognition%20Enquiry"
-            className="inline-flex items-center gap-2 mt-6 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-8 py-3 transition-colors"
-          >
-            <ExternalLink className="h-4 w-4" /> info@agatsa.com
-          </a>
+          <div className="flex flex-wrap justify-center gap-3 mt-6">
+            <a
+              href={pdfPublications1Pager.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-6 py-3 transition-colors"
+            >
+              <FileText className="h-4 w-4" /> Download Publications 1-Pager
+            </a>
+            <a
+              href="mailto:info@agatsa.com?subject=Media%20%26%20Recognition%20Enquiry"
+              className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 border border-white/40 text-primary-foreground hover:bg-primary-foreground/20 font-semibold px-6 py-3 transition-colors"
+            >
+              <ExternalLink className="h-4 w-4" /> info@agatsa.com
+            </a>
+          </div>
+
         </motion.div>
       </section>
     </SiteLayout>
