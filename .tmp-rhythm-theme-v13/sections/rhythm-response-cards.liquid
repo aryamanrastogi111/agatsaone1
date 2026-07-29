@@ -1,0 +1,63 @@
+<section class="section-pad-lg section-border">
+  <div class="container">
+    <h2 class="h2 fade-up">{{ section.settings.title }}</h2>
+    {%- if section.settings.subtitle != blank -%}<p class="subhead fade-up">{{ section.settings.subtitle }}</p>{%- endif -%}
+    <div class="portraits">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign fallback = 'rhythm-portrait-1.jpg'
+          if forloop.index == 2
+            assign fallback = 'rhythm-portrait-2.jpg'
+          elsif forloop.index == 3
+            assign fallback = 'rhythm-portrait-3.jpg'
+          elsif forloop.index == 4
+            assign fallback = 'rhythm-portrait-4.jpg'
+          endif
+        -%}
+        <div class="glass portrait-card fade-up" {{ block.shopify_attributes }}>
+          <div class="img">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.name }}
+            {%- else -%}
+              <img src="{{ fallback | asset_url }}" alt="{{ block.settings.name | escape }}" loading="lazy">
+            {%- endif -%}
+          </div>
+          <div class="body">
+            <div class="tag">{{ block.settings.tag }}</div>
+            <svg viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+              {%- if block.settings.response == 'high' -%}
+                <path d="M0 50 C 40 50, 60 5, 100 8 C 140 12, 160 45, 200 48" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+              {%- elsif block.settings.response == 'medium' -%}
+                <path d="M0 45 C 40 45, 70 22, 110 25 C 150 28, 170 42, 200 44" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+              {%- else -%}
+                <path d="M0 40 C 60 40, 100 32, 140 35 C 170 37, 185 40, 200 40" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+              {%- endif -%}
+            </svg>
+            <div class="meta"><span class="name">{{ block.settings.name }}</span><span class="note">{{ block.settings.note }}</span></div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Response cards",
+  "settings":[
+    {"type":"html","id":"title","label":"Title","default":"The same food.<br><span class=\"muted\">Different bodies.</span>"},
+    {"type":"text","id":"subtitle","label":"Subtitle","default":"Nobody reacts to food exactly the same way."}
+  ],
+  "blocks":[{"type":"person","name":"Person card","settings":[
+    {"type":"image_picker","id":"image","label":"Portrait image"},
+    {"type":"text","id":"name","label":"Name/age","default":"Rohan, 41"},
+    {"type":"text","id":"tag","label":"Tag","default":"🍕 Same pizza"},
+    {"type":"select","id":"response","label":"Response curve","default":"high","options":[{"value":"high","label":"High"},{"value":"medium","label":"Medium"},{"value":"low","label":"Low"}]},
+    {"type":"text","id":"note","label":"Note","default":"Sharp spike, slow return"}
+  ]}],
+  "presets":[{"name":"Response cards","blocks":[
+    {"type":"person","settings":{"name":"Rohan, 41","response":"high","note":"Sharp spike, slow return"}},
+    {"type":"person","settings":{"name":"Aditi, 28","response":"medium","note":"Moderate rise"}},
+    {"type":"person","settings":{"name":"Mr. Menon, 65","response":"low","note":"Barely a ripple"}}
+  ]}]
+}
+{% endschema %}

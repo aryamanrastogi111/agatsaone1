@@ -1,0 +1,624 @@
+{
+  "sections": {
+    "rhythm_hero": {
+      "type": "rhythm-hero",
+      "settings": {}
+    },
+    "food_mystery": {
+      "type": "rhythm-mystery-grid",
+      "settings": {},
+      "blocks": {
+        "rice": {
+          "type": "food",
+          "settings": {
+            "icon": "🍚",
+            "label": "Rice",
+            "show_question": true
+          }
+        },
+        "mango": {
+          "type": "food",
+          "settings": {
+            "icon": "🥭",
+            "label": "Mango",
+            "show_question": true
+          }
+        },
+        "pizza": {
+          "type": "food",
+          "settings": {
+            "icon": "🍕",
+            "label": "Pizza",
+            "show_question": true
+          }
+        },
+        "chai": {
+          "type": "food",
+          "settings": {
+            "icon": "☕",
+            "label": "Chai",
+            "show_question": true
+          }
+        },
+        "banana": {
+          "type": "food",
+          "settings": {
+            "icon": "🍌",
+            "label": "Banana",
+            "show_question": true
+          }
+        },
+        "icecream": {
+          "type": "food",
+          "settings": {
+            "icon": "🍦",
+            "label": "Ice cream",
+            "show_question": true
+          }
+        }
+      },
+      "block_order": [
+        "rice",
+        "mango",
+        "pizza",
+        "chai",
+        "banana",
+        "icecream"
+      ]
+    },
+    "response_cards": {
+      "type": "rhythm-response-cards",
+      "settings": {},
+      "blocks": {
+        "rohan": {
+          "type": "person",
+          "settings": {
+            "name": "Rohan, 41",
+            "tag": "🍕 Same pizza",
+            "response": "high",
+            "note": "Sharp spike, slow return"
+          }
+        },
+        "aditi": {
+          "type": "person",
+          "settings": {
+            "name": "Aditi, 28",
+            "tag": "🍕 Same pizza",
+            "response": "medium",
+            "note": "Moderate rise"
+          }
+        },
+        "menon": {
+          "type": "person",
+          "settings": {
+            "name": "Mr. Menon, 65",
+            "tag": "🍕 Same pizza",
+            "response": "low",
+            "note": "Barely a ripple"
+          }
+        }
+      },
+      "block_order": [
+        "rohan",
+        "aditi",
+        "menon"
+      ]
+    },
+    "app_showcase": {
+      "type": "rhythm-app-showcase",
+      "settings": {}
+    },
+    "food_profile": {
+      "type": "rhythm-food-profile",
+      "settings": {},
+      "blocks": {
+        "pizza": {
+          "type": "food",
+          "settings": {
+            "icon": "🍕",
+            "label": "Pizza",
+            "note": "Larger response",
+            "level": "high",
+            "intensity": 90
+          }
+        },
+        "rice": {
+          "type": "food",
+          "settings": {
+            "icon": "🍚",
+            "label": "Rice",
+            "note": "Moderate",
+            "level": "medium",
+            "intensity": 55
+          }
+        },
+        "paneer": {
+          "type": "food",
+          "settings": {
+            "icon": "🧀",
+            "label": "Paneer",
+            "note": "Smaller",
+            "level": "low",
+            "intensity": 25
+          }
+        },
+        "tea": {
+          "type": "food",
+          "settings": {
+            "icon": "☕",
+            "label": "Tea",
+            "note": "Smaller",
+            "level": "low",
+            "intensity": 25
+          }
+        },
+        "mango": {
+          "type": "food",
+          "settings": {
+            "icon": "🥭",
+            "label": "Mango",
+            "note": "Moderate",
+            "level": "medium",
+            "intensity": 55
+          }
+        },
+        "icecream": {
+          "type": "food",
+          "settings": {
+            "icon": "🍦",
+            "label": "Ice cream",
+            "note": "Larger response",
+            "level": "high",
+            "intensity": 90
+          }
+        }
+      },
+      "block_order": [
+        "pizza",
+        "rice",
+        "paneer",
+        "tea",
+        "mango",
+        "icecream"
+      ]
+    },
+    "highlight": {
+      "type": "rhythm-highlight",
+      "settings": {}
+    },
+    "proof_video": {
+      "type": "rhythm-proof-video",
+      "settings": {}
+    },
+    "auto_callout": {
+      "type": "rhythm-auto-callout",
+      "settings": {},
+      "blocks": {
+        "step1": {
+          "type": "step",
+          "settings": {
+            "kicker": "Step 1",
+            "title": "Wear it",
+            "copy": "Band auto-detects spikes 24/7."
+          }
+        },
+        "step2": {
+          "type": "step",
+          "settings": {
+            "kicker": "Step 2",
+            "title": "Tap your meal",
+            "copy": "One tap — dal-rice, dosa, biryani, fruit."
+          }
+        },
+        "step3": {
+          "type": "step",
+          "settings": {
+            "kicker": "Step 3",
+            "title": "Nera classifies",
+            "copy": "Instantly tagged as high, moderate or safe for you."
+          }
+        }
+      },
+      "block_order": [
+        "step1",
+        "step2",
+        "step3"
+      ]
+    },
+    "features": {
+      "type": "rhythm-feature-grid",
+      "settings": {},
+      "blocks": {
+        "heart": {
+          "type": "feature",
+          "settings": {
+            "title": "Heart",
+            "copy": "Continuous heart insights. Resting HR, rhythm patterns, cardiac load."
+          }
+        },
+        "hrv": {
+          "type": "feature",
+          "settings": {
+            "title": "HRV & Readiness",
+            "copy": "Overnight HRV, autonomic balance and morning readiness score."
+          }
+        },
+        "sleep": {
+          "type": "feature",
+          "settings": {
+            "title": "Sleep",
+            "copy": "Deep · REM · Light · Sleep Score · Sleep Trends."
+          }
+        },
+        "recovery": {
+          "type": "feature",
+          "settings": {
+            "title": "Recovery",
+            "copy": "Recovery Score · Strain · Morning Recovery · Trend graphs."
+          }
+        },
+        "stress": {
+          "type": "feature",
+          "settings": {
+            "title": "Stress",
+            "copy": "Stress · Calm · Breathing · Recovery windows."
+          }
+        },
+        "food": {
+          "type": "feature",
+          "settings": {
+            "title": "Food Intelligence",
+            "copy": "Sugar-response patterns · Personal Food Profile · Meal discoveries."
+          }
+        }
+      },
+      "block_order": [
+        "heart",
+        "hrv",
+        "sleep",
+        "recovery",
+        "stress",
+        "food"
+      ]
+    },
+    "timeline": {
+      "type": "rhythm-timeline",
+      "settings": {},
+      "blocks": {
+        "wake": {
+          "type": "event",
+          "settings": {
+            "time": "07:12",
+            "title": "Wake up",
+            "note": "Recovery Score 82"
+          }
+        },
+        "breakfast": {
+          "type": "event",
+          "settings": {
+            "time": "08:30",
+            "title": "Breakfast",
+            "note": "Sugar-response logged"
+          }
+        },
+        "work": {
+          "type": "event",
+          "settings": {
+            "time": "11:00",
+            "title": "Deep work",
+            "note": "Stress rising"
+          }
+        },
+        "walk": {
+          "type": "event",
+          "settings": {
+            "time": "13:45",
+            "title": "Lunch walk",
+            "note": "Response improves"
+          }
+        },
+        "dinner": {
+          "type": "event",
+          "settings": {
+            "time": "19:30",
+            "title": "Dinner",
+            "note": "Meal impact recorded"
+          }
+        },
+        "sleep": {
+          "type": "event",
+          "settings": {
+            "time": "23:10",
+            "title": "Sleep",
+            "note": "Tomorrow's Body Score forming"
+          }
+        }
+      },
+      "block_order": [
+        "wake",
+        "breakfast",
+        "work",
+        "walk",
+        "dinner",
+        "sleep"
+      ]
+    },
+    "comparison": {
+      "type": "rhythm-comparison",
+      "settings": {},
+      "blocks": {
+        "sugar": {
+          "type": "row",
+          "settings": {
+            "feature": "Sugar-response insights",
+            "other_has": false,
+            "rhythm_has": true
+          }
+        },
+        "profile": {
+          "type": "row",
+          "settings": {
+            "feature": "Personalised food profile (AI-learned)",
+            "other_has": false,
+            "rhythm_has": true
+          }
+        },
+        "ai": {
+          "type": "row",
+          "settings": {
+            "feature": "AI health conversation",
+            "other_has": false,
+            "rhythm_has": true
+          }
+        },
+        "hrv": {
+          "type": "row",
+          "settings": {
+            "feature": "24/7 heart & HRV",
+            "other_has": true,
+            "rhythm_has": true
+          }
+        },
+        "sleep": {
+          "type": "row",
+          "settings": {
+            "feature": "Sleep staging",
+            "other_has": true,
+            "rhythm_has": true
+          }
+        },
+        "screenless": {
+          "type": "row",
+          "settings": {
+            "feature": "Screenless, no notifications",
+            "other_has": false,
+            "rhythm_has": true
+          }
+        }
+      },
+      "block_order": [
+        "sugar",
+        "profile",
+        "ai",
+        "hrv",
+        "sleep",
+        "screenless"
+      ]
+    },
+    "colors": {
+      "type": "rhythm-color-showcase",
+      "settings": {},
+      "blocks": {
+        "olive": {
+          "type": "colour",
+          "settings": {
+            "name": "Olive",
+            "swatch": "#6B7A3A"
+          }
+        },
+        "graphite": {
+          "type": "colour",
+          "settings": {
+            "name": "Graphite",
+            "swatch": "#2E2E2E"
+          }
+        },
+        "khaki": {
+          "type": "colour",
+          "settings": {
+            "name": "Khaki",
+            "swatch": "#B8A55C"
+          }
+        },
+        "slate": {
+          "type": "colour",
+          "settings": {
+            "name": "Slate",
+            "swatch": "#7A7A9E"
+          }
+        },
+        "rosewood": {
+          "type": "colour",
+          "settings": {
+            "name": "Rosewood",
+            "swatch": "#8E3B4E"
+          }
+        },
+        "teal": {
+          "type": "colour",
+          "settings": {
+            "name": "Teal",
+            "swatch": "#1F6F86"
+          }
+        },
+        "black": {
+          "type": "colour",
+          "settings": {
+            "name": "Black",
+            "swatch": "#0A0A0A"
+          }
+        }
+      },
+      "block_order": [
+        "olive",
+        "graphite",
+        "khaki",
+        "slate",
+        "rosewood",
+        "teal",
+        "black"
+      ]
+    },
+    "faq": {
+      "type": "rhythm-faq",
+      "settings": {},
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "Is this a CGM?",
+            "answer": "No. Rhythm Band is non-invasive. Nera AI learns your personal sugar-response patterns from your heart, sleep, temperature, movement and meal timing — no needles, no strips."
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "How does it discover which foods spike my sugar?",
+            "answer": "Every meal you log is matched against how your body actually responded — HRV, resting heart rate, energy dips, sleep quality that night. Nera AI turns that into a personal Food Profile that gets more accurate the longer you wear it."
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Is this a smartwatch?",
+            "answer": "No screen. No notifications. Nothing to check. The band reads your body 24/7 in silence — the answers live in the app, once a day."
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "Battery?",
+            "answer": "Up to 7 days on a single charge. Magnetic charging in under 90 minutes."
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ]
+    },
+    "buy": {
+      "type": "rhythm-buy-box",
+      "settings": {},
+      "blocks": {
+        "olive": {
+          "type": "colour",
+          "settings": {
+            "name": "Olive",
+            "swatch": "#6B7A3A"
+          }
+        },
+        "graphite": {
+          "type": "colour",
+          "settings": {
+            "name": "Graphite",
+            "swatch": "#2E2E2E"
+          }
+        },
+        "khaki": {
+          "type": "colour",
+          "settings": {
+            "name": "Khaki",
+            "swatch": "#B8A55C"
+          }
+        },
+        "slate": {
+          "type": "colour",
+          "settings": {
+            "name": "Slate",
+            "swatch": "#7A7A9E"
+          }
+        },
+        "rosewood": {
+          "type": "colour",
+          "settings": {
+            "name": "Rosewood",
+            "swatch": "#8E3B4E"
+          }
+        },
+        "teal": {
+          "type": "colour",
+          "settings": {
+            "name": "Teal",
+            "swatch": "#1F6F86"
+          }
+        },
+        "black": {
+          "type": "colour",
+          "settings": {
+            "name": "Black",
+            "swatch": "#0A0A0A"
+          }
+        },
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Free Nera AI"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "text": "1-year warranty"
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "text": "Easy returns"
+          }
+        }
+      },
+      "block_order": [
+        "olive",
+        "graphite",
+        "khaki",
+        "slate",
+        "rosewood",
+        "teal",
+        "black",
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "reviews": {
+      "type": "rhythm-reviews",
+      "settings": {}
+    },
+    "activity_popup": {
+      "type": "rhythm-recent-purchase",
+      "settings": {}
+    }
+  },
+  "order": [
+    "rhythm_hero",
+    "food_mystery",
+    "response_cards",
+    "app_showcase",
+    "food_profile",
+    "highlight",
+    "proof_video",
+    "auto_callout",
+    "features",
+    "timeline",
+    "comparison",
+    "colors",
+    "faq",
+    "buy",
+    "reviews",
+    "activity_popup"
+  ]
+}

@@ -1,0 +1,41 @@
+<section class="section-pad-lg section-border">
+  <div class="container-md">
+    <h2 class="h2 smaller fade-up">{{ section.settings.title }}</h2>
+    <div class="glass compare fade-up">
+      <div class="compare-grid">
+        <div class="h feature">{{ section.settings.feature_heading }}</div>
+        <div class="h other">{{ section.settings.other_heading }}</div>
+        <div class="h ours">{{ section.settings.ours_heading }}</div>
+        {%- for block in section.blocks -%}
+          <div class="row" {{ block.shopify_attributes }}>{{ block.settings.feature }}</div>
+          <div class="cell">{%- if block.settings.other_has -%}<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>{%- else -%}<svg class="x-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>{%- endif -%}</div>
+          <div class="cell">{%- if block.settings.rhythm_has -%}<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>{%- else -%}<svg class="x-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>{%- endif -%}</div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Comparison table",
+  "settings":[
+    {"type":"html","id":"title","label":"Title","default":"Everyone else counts steps.<br><span class=\"accent\">Rhythm reads you.</span>"},
+    {"type":"text","id":"feature_heading","label":"Feature heading","default":"Feature"},
+    {"type":"text","id":"other_heading","label":"Other column heading","default":"Other bands"},
+    {"type":"text","id":"ours_heading","label":"Rhythm column heading","default":"Rhythm"}
+  ],
+  "blocks":[{"type":"row","name":"Comparison row","settings":[
+    {"type":"text","id":"feature","label":"Feature","default":"Sugar-response insights"},
+    {"type":"checkbox","id":"other_has","label":"Other bands have this","default":false},
+    {"type":"checkbox","id":"rhythm_has","label":"Rhythm has this","default":true}
+  ]}],
+  "presets":[{"name":"Comparison table","blocks":[
+    {"type":"row","settings":{"feature":"Sugar-response insights","other_has":false,"rhythm_has":true}},
+    {"type":"row","settings":{"feature":"Personalised food profile (AI-learned)","other_has":false,"rhythm_has":true}},
+    {"type":"row","settings":{"feature":"AI health conversation","other_has":false,"rhythm_has":true}},
+    {"type":"row","settings":{"feature":"24/7 heart & HRV","other_has":true,"rhythm_has":true}},
+    {"type":"row","settings":{"feature":"Sleep staging","other_has":true,"rhythm_has":true}},
+    {"type":"row","settings":{"feature":"Screenless, no notifications","other_has":false,"rhythm_has":true}}
+  ]}]
+}
+{% endschema %}

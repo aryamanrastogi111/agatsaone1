@@ -1,0 +1,26 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Rhythm Band Pro",
+    "theme_version": "1.0.0",
+    "theme_author": "Agatsa",
+    "theme_documentation_url": "https://agatsa.com",
+    "theme_support_url": "https://agatsa.com/support"
+  },
+  {
+    "name": "Branding",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "text",
+        "id": "shop_name",
+        "label": "Store name",
+        "default": "Rhythm Band"
+      }
+    ]
+  }
+]

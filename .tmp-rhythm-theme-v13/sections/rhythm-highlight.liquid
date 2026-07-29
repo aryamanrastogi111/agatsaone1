@@ -1,0 +1,22 @@
+<section class="section-pad-lg section-border">
+  <div class="container">
+    <div class="highlight fade-up">
+      <div class="highlight-inner">
+        {%- if section.settings.pill != blank -%}<span class="pill">{{ section.settings.pill }}</span>{%- endif -%}
+        <h3>{{ section.settings.title }}</h3>
+        {%- if section.settings.footnote != blank -%}<p class="foot">{{ section.settings.footnote }}</p>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Large highlight banner",
+  "settings":[
+    {"type":"text","id":"pill","label":"Pill label","default":"No more food journaling"},
+    {"type":"html","id":"title","label":"Title","default":"<span class=\"strike\">Gone are the days of logging every bite.</span><br><span class=\"gradient-text\">Your band spots the spike.</span><br><span class=\"text-white\">You just name the meal.</span>"},
+    {"type":"text","id":"footnote","label":"Footnote","default":"Automatic spike detection · Nera AI meal classification"}
+  ],
+  "presets":[{"name":"Large highlight banner"}]
+}
+{% endschema %}

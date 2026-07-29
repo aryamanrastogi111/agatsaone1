@@ -1,0 +1,32 @@
+<section class="section-pad-lg section-border">
+  <div class="split">
+    <div class="fade-up">
+      <h2 class="heading">{{ section.settings.title }}</h2>
+      {%- if section.settings.copy != blank -%}<p class="copy">{{ section.settings.copy }}</p>{%- endif -%}
+    </div>
+    <div class="fade-up">
+      <div class="phone-frame">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.image_alt }}
+        {%- else -%}
+          <img src="{{ section.settings.fallback_asset | default: 'rhythm-app-metabolic.jpg' | asset_url }}" alt="{{ section.settings.image_alt | escape }}" loading="lazy">
+        {%- endif -%}
+      </div>
+      {%- if section.settings.caption != blank -%}<p class="phone-caption">{{ section.settings.caption }}</p>{%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"App showcase",
+  "settings":[
+    {"type":"html","id":"title","label":"Title","default":"Your body already knows.<br><span class=\"accent\">You just can't see it.</span>"},
+    {"type":"textarea","id":"copy","label":"Copy","default":"Rhythm Band listens 24/7. Nera AI translates the signal. One quiet notification is all it takes."},
+    {"type":"image_picker","id":"image","label":"App/image visual"},
+    {"type":"text","id":"fallback_asset","label":"Fallback asset filename","default":"rhythm-app-metabolic.jpg","info":"Advanced: keep blank unless using a bundled asset file."},
+    {"type":"text","id":"image_alt","label":"Image alt text","default":"Nera AI metabolic zone chart"},
+    {"type":"text","id":"caption","label":"Caption","default":"Actual Nera AI screen · your day, decoded"}
+  ],
+  "presets":[{"name":"App showcase"}]
+}
+{% endschema %}

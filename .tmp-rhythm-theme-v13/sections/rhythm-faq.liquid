@@ -1,0 +1,27 @@
+<section id="faq" class="section-pad-lg section-border">
+  <div class="container-sm">
+    <h2 class="h2 smaller fade-up">{{ section.settings.title }}</h2>
+    <div class="faq fade-up">
+      {%- for block in section.blocks -%}
+        <details {{ block.shopify_attributes }}><summary>{{ block.settings.question }}</summary><p>{{ block.settings.answer }}</p></details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"FAQ accordion",
+  "settings":[{"type":"text","id":"title","label":"Title","default":"Questions."}],
+  "blocks":[{"type":"faq","name":"Question","settings":[
+    {"type":"text","id":"question","label":"Question","default":"Is this a CGM?"},
+    {"type":"textarea","id":"answer","label":"Answer","default":"No. Rhythm Band is non-invasive. Nera AI learns your personal sugar-response patterns from your heart, sleep, temperature, movement and meal timing — no needles, no strips."}
+  ]}],
+  "presets":[{"name":"FAQ accordion","blocks":[
+    {"type":"faq","settings":{"question":"Is this a CGM?","answer":"No. Rhythm Band is non-invasive. Nera AI learns your personal sugar-response patterns from your heart, sleep, temperature, movement and meal timing — no needles, no strips."}},
+    {"type":"faq","settings":{"question":"How does it discover which foods spike my sugar?","answer":"Every meal you log is matched against how your body actually responded — HRV, resting heart rate, energy dips, sleep quality that night. Nera AI turns that into a personal Food Profile that gets more accurate the longer you wear it."}},
+    {"type":"faq","settings":{"question":"Is this a smartwatch?","answer":"No screen. No notifications. Nothing to check. The band reads your body 24/7 in silence — the answers live in the app, once a day."}},
+    {"type":"faq","settings":{"question":"Battery?","answer":"Up to 7 days on a single charge. Magnetic charging in under 90 minutes."}},
+    {"type":"faq","settings":{"question":"Water?","answer":"IP67. Sweat, rain and handwashing are fine. Skip the pool for now."}}
+  ]}]
+}
+{% endschema %}

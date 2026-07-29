@@ -1,0 +1,37 @@
+<section class="section-pad-lg section-border">
+  <div class="container-md">
+    <h2 class="h2 fade-up">{{ section.settings.title }}</h2>
+    {%- if section.settings.subtitle != blank -%}<p class="subhead fade-up">{{ section.settings.subtitle }}</p>{%- endif -%}
+    <div class="timeline">
+      {%- for block in section.blocks -%}
+        <div class="item fade-up" {{ block.shopify_attributes }}>
+          <div class="dot"></div>
+          <div class="col-a"><div class="time">{{ block.settings.time }}</div><div class="label">{{ block.settings.title }}</div><div class="note">{{ block.settings.note }}</div></div>
+          <div class="col-b"></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Day timeline",
+  "settings":[
+    {"type":"text","id":"title","label":"Title","default":"A day in your body."},
+    {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Every hour tells Nera AI something. By tomorrow morning, you'll know more about yourself than you did today."}
+  ],
+  "blocks":[{"type":"event","name":"Timeline event","settings":[
+    {"type":"text","id":"time","label":"Time","default":"07:12"},
+    {"type":"text","id":"title","label":"Title","default":"Wake up"},
+    {"type":"text","id":"note","label":"Note","default":"Recovery Score 82"}
+  ]}],
+  "presets":[{"name":"Day timeline","blocks":[
+    {"type":"event","settings":{"time":"07:12","title":"Wake up","note":"Recovery Score 82"}},
+    {"type":"event","settings":{"time":"08:30","title":"Breakfast","note":"Sugar-response logged"}},
+    {"type":"event","settings":{"time":"11:00","title":"Deep work","note":"Stress rising"}},
+    {"type":"event","settings":{"time":"13:45","title":"Lunch walk","note":"Response improves"}},
+    {"type":"event","settings":{"time":"19:30","title":"Dinner","note":"Meal impact recorded"}},
+    {"type":"event","settings":{"time":"23:10","title":"Sleep","note":"Tomorrow's Body Score forming"}}
+  ]}]
+}
+{% endschema %}

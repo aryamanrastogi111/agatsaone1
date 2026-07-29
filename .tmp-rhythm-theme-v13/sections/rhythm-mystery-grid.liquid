@@ -1,0 +1,37 @@
+<section class="section-pad-lg section-border">
+  <div class="container">
+    <h2 class="h2 fade-up">{{ section.settings.title }}</h2>
+    {%- if section.settings.subtitle != blank -%}<p class="subhead fade-up">{{ section.settings.subtitle }}</p>{%- endif -%}
+    <div class="mystery-grid">
+      {%- for block in section.blocks -%}
+        <div class="glass mystery-card fade-up" {{ block.shopify_attributes }}>
+          <div class="emoji">{{ block.settings.icon }}</div>
+          <div class="label">{{ block.settings.label }}</div>
+          {%- if block.settings.show_question -%}<div class="q">?</div>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Food mystery grid",
+  "settings":[
+    {"type":"html","id":"title","label":"Title","default":"Which one spikes <span class=\"accent\">YOUR</span> sugar?"},
+    {"type":"text","id":"subtitle","label":"Subtitle","default":"You won't find the answer here. You'll find it on your wrist."}
+  ],
+  "blocks":[{"type":"food","name":"Food card","settings":[
+    {"type":"text","id":"icon","label":"Icon/emoji","default":"🍚"},
+    {"type":"text","id":"label","label":"Label","default":"Rice"},
+    {"type":"checkbox","id":"show_question","label":"Show question mark","default":true}
+  ]}],
+  "presets":[{"name":"Food mystery grid","blocks":[
+    {"type":"food","settings":{"icon":"🍚","label":"Rice"}},
+    {"type":"food","settings":{"icon":"🥭","label":"Mango"}},
+    {"type":"food","settings":{"icon":"🍕","label":"Pizza"}},
+    {"type":"food","settings":{"icon":"☕","label":"Chai"}},
+    {"type":"food","settings":{"icon":"🍌","label":"Banana"}},
+    {"type":"food","settings":{"icon":"🍦","label":"Ice cream"}}
+  ]}]
+}
+{% endschema %}

@@ -1,0 +1,58 @@
+{%- liquid
+  assign selected_product = section.settings.product
+  if selected_product == blank
+    assign selected_product = all_products['rhythm-band']
+  endif
+  if selected_product == blank
+    assign selected_product = collections.all.products.first
+  endif
+  assign hero_image = section.settings.hero_image
+-%}
+<section class="hero rhythm-section-{{ section.id }}">
+  <div class="glow"></div>
+  <div class="content">
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow fade-up">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h1 class="hero-title fade-up">
+      {{ section.settings.title_before }} <span class="accent">{{ section.settings.title_accent }}</span> {{ section.settings.title_after }}
+    </h1>
+    {%- if section.settings.subheading != blank -%}<p class="hero-sub fade-up">{{ section.settings.subheading | newline_to_br }}</p>{%- endif -%}
+    <div class="hero-cta fade-up">
+      <a href="{{ section.settings.primary_link | default: '#buy' }}" class="btn btn-emerald btn-lg">
+        {{ section.settings.primary_label }}{%- if section.settings.show_price and selected_product != blank -%} — {{ selected_product.price | money }}{%- endif -%}
+      </a>
+      {%- if section.settings.secondary_label != blank -%}<a href="{{ section.settings.secondary_link | default: '#proof-video' }}" class="link">{{ section.settings.secondary_label }} →</a>{%- endif -%}
+    </div>
+    <div class="hero-image-wrap fade-up">
+      {%- if hero_image != blank -%}
+        {{ hero_image | image_url: width: 1400 | image_tag: loading: 'eager', alt: section.settings.hero_image_alt }}
+      {%- else -%}
+        <img src="{{ 'band-olive-hero.png' | asset_url }}" alt="{{ section.settings.hero_image_alt | escape }}" loading="eager">
+      {%- endif -%}
+    </div>
+    {%- if section.settings.caption != blank -%}<p class="hero-avail fade-up">{{ section.settings.caption }}</p>{%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Rhythm hero",
+  "tag": "section",
+  "class": "shopify-section-rhythm-hero",
+  "settings": [
+    {"type":"product","id":"product","label":"Product for price/CTA"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Introducing EasyTouch Rhythm Band"},
+    {"type":"text","id":"title_before","label":"Headline before highlight","default":"Discover which foods spike"},
+    {"type":"text","id":"title_accent","label":"Highlighted word","default":"YOUR"},
+    {"type":"text","id":"title_after","label":"Headline after highlight","default":"sugar."},
+    {"type":"textarea","id":"subheading","label":"Subheading","default":"Not your friend's. Not your family's. Yours. Rhythm Band and Nera AI reveal the foods that create larger sugar-response patterns for your body — while tracking your sleep, recovery, stress and heart every day."},
+    {"type":"image_picker","id":"hero_image","label":"Hero image"},
+    {"type":"text","id":"hero_image_alt","label":"Hero image alt text","default":"EasyTouch Rhythm Band"},
+    {"type":"text","id":"caption","label":"Caption below hero image","default":"Available in 6 colours."},
+    {"type":"text","id":"primary_label","label":"Primary button label","default":"Get yours"},
+    {"type":"url","id":"primary_link","label":"Primary button link"},
+    {"type":"checkbox","id":"show_price","label":"Show product price in button","default":true},
+    {"type":"text","id":"secondary_label","label":"Secondary link label","default":"See how it works"},
+    {"type":"url","id":"secondary_link","label":"Secondary link"}
+  ],
+  "presets": [{"name":"Rhythm hero"}]
+}
+{% endschema %}

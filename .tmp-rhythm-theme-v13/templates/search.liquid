@@ -1,0 +1,6 @@
+<section style="padding:60px 20px;max-width:960px;margin:0 auto">
+  <h1 style="font-size:32px;font-weight:600">Search</h1>
+  {% if search.performed %}
+    <p>{{ search.results_count }} results for "{{ search.terms | escape }}"</p>
+  {% endif %}
+</section>

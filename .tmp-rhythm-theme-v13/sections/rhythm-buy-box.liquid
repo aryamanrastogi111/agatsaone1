@@ -1,0 +1,127 @@
+{%- liquid
+  assign p = section.settings.product
+  if p == blank
+    assign p = all_products['rhythm-band']
+  endif
+  if p == blank
+    assign p = collections.all.products.first
+  endif
+-%}
+<section id="buy" class="section-pad-lg section-border" style="overflow:hidden;position:relative">
+  <div class="buy-glow"></div>
+  <div class="container-md" style="text-align:center">
+    <h2 class="h2 fade-up" style="font-size:44px">{{ section.settings.title }}</h2>
+    {%- if section.settings.subtitle != blank -%}<p class="subhead fade-up">{{ section.settings.subtitle }}</p>{%- endif -%}
+    <div class="glass buy-card fade-up" data-rhythm-buy>
+      {%- if p != blank -%}
+        <form action="/cart/add" method="post" enctype="multipart/form-data" data-ajax-cart>
+          <div class="buy-head">
+            <div><div class="label">{{ p.title }}</div><div class="color-name-inline" data-buy-color>{{ section.settings.default_colour | default: 'Choose colour' }}</div><div class="sub">{{ section.settings.included_text }}</div></div>
+            <div><div class="price">{{ p.price | money }}</div><div class="price-sub">{{ section.settings.shipping_text }}</div></div>
+          </div>
+          {%- if section.settings.show_stock_bar -%}
+            {%- liquid
+              assign stock_qty = section.settings.fallback_stock_count
+              if p.selected_or_first_available_variant.inventory_management != blank and p.selected_or_first_available_variant.inventory_quantity > 0 and p.selected_or_first_available_variant.inventory_quantity < section.settings.fallback_stock_count
+                assign stock_qty = p.selected_or_first_available_variant.inventory_quantity
+              endif
+            -%}
+            <div class="stock-urgency" data-stock-urgency data-stock-qty="{{ stock_qty }}">
+              <div class="stock-row">
+                <span class="stock-label">{{ section.settings.stock_text | replace: '[count]', stock_qty }}</span>
+                <span class="stock-tag">{{ section.settings.stock_badge }}</span>
+              </div>
+              <div class="stock-track"><div class="stock-fill" data-stock-fill style="width:24%"></div></div>
+            </div>
+          {%- endif -%}
+          <select name="id" data-variant-select style="display:none">
+            {%- for v in p.variants -%}<option value="{{ v.id }}">{{ v.title }}</option>{%- endfor -%}
+          </select>
+          <div class="buy-swatches">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'colour' -%}
+              {%- liquid
+                assign variant_id = ''
+                assign block_name_down = block.settings.name | downcase
+                for v in p.variants
+                  assign vt = v.title | downcase
+                  if vt contains block_name_down
+                    assign variant_id = v.id
+                  endif
+                endfor
+                assign fallback = 'band-olive.png'
+                if forloop.index == 2
+                  assign fallback = 'band-graphite.png'
+                elsif forloop.index == 3
+                  assign fallback = 'band-khaki.png'
+                elsif forloop.index == 4
+                  assign fallback = 'band-slate.png'
+                elsif forloop.index == 5
+                  assign fallback = 'band-rosewood.png'
+                elsif forloop.index == 6
+                  assign fallback = 'band-teal.png'
+                elsif forloop.index == 7
+                  assign fallback = 'band-black.png'
+                endif
+              -%}
+              <button type="button" class="buy-swatch color-thumb {% if forloop.first %}active{% endif %}" data-color-thumb data-name="{{ block.settings.name | escape }}" data-hex="{{ block.settings.swatch }}" data-variant-id="{{ variant_id }}" style="background:{{ block.settings.swatch }}22" aria-label="{{ block.settings.name | escape }}" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}<img src="{{ block.settings.image | image_url: width: 200 }}" alt="{{ block.settings.name | escape }}" loading="lazy">{%- else -%}<img src="{{ fallback | asset_url }}" alt="{{ block.settings.name | escape }}" loading="lazy">{%- endif -%}
+              </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          <div class="buy-actions">
+            <button type="submit" class="btn btn-outline btn-block">{{ section.settings.add_label }}</button>
+            <button type="submit" class="btn btn-emerald btn-block" data-buy-now>{{ section.settings.buy_label }}</button>
+          </div>
+          <div class="buy-benefits">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'benefit' -%}<span {{ block.shopify_attributes }}>✓ {{ block.settings.text }}</span>{%- endif -%}
+            {%- endfor -%}
+          </div>
+        </form>
+      {%- else -%}
+        <p style="text-align:center;color:rgba(255,255,255,0.6)">Assign a product to this section in the theme editor.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Buy box",
+  "settings":[
+    {"type":"product","id":"product","label":"Product"},
+    {"type":"html","id":"title","label":"Title","default":"Stop guessing.<br><span class=\"accent\">Start discovering.</span>"},
+    {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Most people know what they eat. Almost nobody knows how their body actually responds to it. It's your turn."},
+    {"type":"text","id":"included_text","label":"Included text","default":"Includes free Nera AI access"},
+    {"type":"text","id":"shipping_text","label":"Shipping text","default":"Free shipping · India"},
+    {"type":"text","id":"default_colour","label":"Default selected colour label","default":"Olive"},
+    {"type":"checkbox","id":"show_stock_bar","label":"Show urgency stock bar","default":true},
+    {"type":"range","id":"fallback_stock_count","label":"Fallback stock count","min":3,"max":25,"step":1,"default":12},
+    {"type":"text","id":"stock_text","label":"Stock text","default":"🔥 Selling fast — only [count] left in stock"},
+    {"type":"text","id":"stock_badge","label":"Stock badge","default":"Almost gone"},
+    {"type":"text","id":"add_label","label":"Add to cart label","default":"Add to cart"},
+    {"type":"text","id":"buy_label","label":"Buy now label","default":"Buy now"}
+  ],
+  "blocks":[
+    {"type":"colour","name":"Colour swatch","settings":[
+      {"type":"text","id":"name","label":"Colour name","default":"Olive"},
+      {"type":"color","id":"swatch","label":"Swatch colour","default":"#6B7A3A"},
+      {"type":"image_picker","id":"image","label":"Swatch image"}
+    ]},
+    {"type":"benefit","name":"Benefit","settings":[{"type":"text","id":"text","label":"Text","default":"Free Nera AI"}]}
+  ],
+  "presets":[{"name":"Buy box","blocks":[
+    {"type":"colour","settings":{"name":"Olive","swatch":"#6B7A3A"}},
+    {"type":"colour","settings":{"name":"Graphite","swatch":"#2E2E2E"}},
+    {"type":"colour","settings":{"name":"Khaki","swatch":"#B8A55C"}},
+    {"type":"colour","settings":{"name":"Slate","swatch":"#7A7A9E"}},
+    {"type":"colour","settings":{"name":"Rosewood","swatch":"#8E3B4E"}},
+    {"type":"colour","settings":{"name":"Teal","swatch":"#1F6F86"}},
+    {"type":"colour","settings":{"name":"Black","swatch":"#0A0A0A"}},
+    {"type":"benefit","settings":{"text":"Free Nera AI"}},
+    {"type":"benefit","settings":{"text":"1-year warranty"}},
+    {"type":"benefit","settings":{"text":"Easy returns"}}
+  ]}]
+}
+{% endschema %}
