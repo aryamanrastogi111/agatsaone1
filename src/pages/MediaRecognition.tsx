@@ -11,6 +11,14 @@ import awardIgp from "@/assets/award-igp.webp";
 import awardMashelkar from "@/assets/award-anjani-mashelkar.webp";
 import awardMbillionth from "@/assets/award-mbillionth-new.png";
 
+import pdfNidhi from "@/assets/pdfs/75-Promising-Startups-NIDHI-Seed-Support-Program.pdf.asset.json";
+import pdfWomenpreneurs from "@/assets/pdfs/CTB-75-womenpreneurs-of-India.pdf.asset.json";
+import pdfIJE from "@/assets/pdfs/Indian_Journal_of_Electrocardilogy.pdf.asset.json";
+import pdfSpringer2016 from "@/assets/pdfs/s40064-016-1932-z.pdf.asset.json";
+import pdfSciRep2024 from "@/assets/pdfs/s41598-024-84265-8.pdf.asset.json";
+import pdfPublications1Pager from "@/assets/pdfs/sanketlife-publications-1pager.pdf.asset.json";
+
+
 const fade = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
@@ -34,13 +42,14 @@ const featuredAwards = [
 ];
 
 const governmentRecognition = [
-  { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2 },
-  { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star },
+  { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2, pdf: pdfNidhi.url },
+  { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star, pdf: pdfWomenpreneurs.url },
   { title: "Startup India — DPIIT Recognition", body: "Recognised startup under Startup India by Govt. of India.", icon: Building2 },
   { title: "BIRAC BIG Grant", body: "Biotechnology Industry Research Assistance Council grant recipient.", icon: Building2 },
   { title: "Make in India Champion", body: "Indigenous medical device design & manufacture.", icon: Globe },
   { title: "NASSCOM Emerge 50", body: "Recognised among India's most promising emerging tech startups.", icon: Trophy },
 ];
+
 
 const publications = [
   {
@@ -66,13 +75,23 @@ const publications = [
     title: "Smart Phone ECG — Bridging the Gap",
     journal: "Journal of Advanced Research in Medical Science & Technology · ADR Journals",
     body: "Agatsa's foundational accuracy study. 6-lead ECG intervals validated against a traditional ECG — the first published clinical evidence for SanketLife.",
+    pdf: pdfSpringer2016.url,
   },
   {
     year: "2024",
     title: "Indian Journal of Electrocardiology — Featured",
     journal: "Indian Society of Electrocardiology · Vol. 1, February 2024",
     body: "Editorial coverage referencing SanketLife in the official journal of the Indian Society of Electrocardiology (Editors: Dr. Joy Thomas, Dr. Aparna Jaswal).",
+    pdf: pdfIJE.url,
   },
+  {
+    year: "2024",
+    title: "Scientific Reports — Nature Portfolio Publication",
+    journal: "Scientific Reports · Nature Portfolio (Open Access)",
+    body: "Peer-reviewed publication featuring SanketLife's clinical performance data in the Nature Portfolio's Scientific Reports journal.",
+    pdf: pdfSciRep2024.url,
+  },
+
   {
     year: "2020",
     title: "Patient Satisfaction in Community ECG Screening",
@@ -177,18 +196,30 @@ export default function MediaRecognition() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {governmentRecognition.map((r, i) => (
-              <motion.div
-                key={r.title}
-                {...fade}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all"
-              >
-                <r.icon className="h-6 w-6 text-primary mb-3" />
-                <h3 className="font-bold text-foreground">{r.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{r.body}</p>
-              </motion.div>
-            ))}
+            {governmentRecognition.map((r: any, i) => {
+              const Wrapper: any = r.pdf ? motion.a : motion.div;
+              const wrapperProps = r.pdf
+                ? { href: r.pdf, target: "_blank", rel: "noopener noreferrer" }
+                : {};
+              return (
+                <Wrapper
+                  key={r.title}
+                  {...wrapperProps}
+                  {...fade}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${r.pdf ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <r.icon className="h-6 w-6 text-primary mb-3" />
+                    {r.pdf && <FileText className="h-4 w-4 text-primary/60" />}
+                  </div>
+                  <h3 className="font-bold text-foreground">{r.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{r.body}</p>
+                  {r.pdf && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1">View PDF <ExternalLink className="h-3 w-3" /></p>}
+                </Wrapper>
+              );
+            })}
+
           </div>
         </div>
       </section>
@@ -216,21 +247,28 @@ export default function MediaRecognition() {
           </div>
 
           <div className="space-y-4">
-            {publications.map((p, i) => (
-              <motion.article
-                key={p.title}
-                {...fade}
-                transition={{ duration: 0.4, delay: i * 0.04 }}
-                className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
-                  <h3 className="font-bold text-foreground text-lg">{p.title}</h3>
-                  <span className="text-xs font-semibold text-primary whitespace-nowrap">{p.year}</span>
-                </div>
-                <p className="text-sm text-primary/80 font-medium">{p.journal}</p>
-                <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.body}</p>
-              </motion.article>
-            ))}
+            {publications.map((p: any, i) => {
+              const Wrapper: any = p.pdf ? motion.a : motion.article;
+              const wrapperProps = p.pdf ? { href: p.pdf, target: "_blank", rel: "noopener noreferrer" } : {};
+              return (
+                <Wrapper
+                  key={p.title}
+                  {...wrapperProps}
+                  {...fade}
+                  transition={{ duration: 0.4, delay: i * 0.04 }}
+                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${p.pdf ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                    <h3 className="font-bold text-foreground text-lg">{p.title}</h3>
+                    <span className="text-xs font-semibold text-primary whitespace-nowrap">{p.year}</span>
+                  </div>
+                  <p className="text-sm text-primary/80 font-medium">{p.journal}</p>
+                  <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.body}</p>
+                  {p.pdf && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1"><FileText className="h-3 w-3" /> Read full PDF <ExternalLink className="h-3 w-3" /></p>}
+                </Wrapper>
+              );
+            })}
+
           </div>
 
           {/* Global journal coverage */}
@@ -305,12 +343,23 @@ export default function MediaRecognition() {
           <p className="mt-3 opacity-90">
             Download our media kit, request interviews or brand assets. For press enquiries and story collaborations, reach our communications team.
           </p>
-          <a
-            href="mailto:info@agatsa.com?subject=Media%20%26%20Recognition%20Enquiry"
-            className="inline-flex items-center gap-2 mt-6 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-8 py-3 transition-colors"
-          >
-            <ExternalLink className="h-4 w-4" /> info@agatsa.com
-          </a>
+          <div className="flex flex-wrap justify-center gap-3 mt-6">
+            <a
+              href={pdfPublications1Pager.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-6 py-3 transition-colors"
+            >
+              <FileText className="h-4 w-4" /> Download Publications 1-Pager
+            </a>
+            <a
+              href="mailto:info@agatsa.com?subject=Media%20%26%20Recognition%20Enquiry"
+              className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 border border-white/40 text-primary-foreground hover:bg-primary-foreground/20 font-semibold px-6 py-3 transition-colors"
+            >
+              <ExternalLink className="h-4 w-4" /> info@agatsa.com
+            </a>
+          </div>
+
         </motion.div>
       </section>
     </SiteLayout>
