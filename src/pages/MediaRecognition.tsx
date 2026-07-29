@@ -50,9 +50,9 @@ const featuredAwards = [
   { name: "mBillionth Award South Asia", year: "2019", org: "DEF & IAMAI", image: awardMbillionth },
 ];
 
-const governmentRecognition = [
-  { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2, pdf: pdfLinks.nidhi },
-  { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star, pdf: pdfLinks.womenpreneurs },
+const governmentRecognition: Array<{ title: string; body: string; icon: typeof Building2; pdfKey: PdfKey }> = [
+  { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2, pdfKey: "nidhi" },
+  { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star, pdfKey: "womenpreneurs" },
 ];
 
 
