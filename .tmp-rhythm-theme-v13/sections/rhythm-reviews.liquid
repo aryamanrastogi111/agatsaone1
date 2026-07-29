@@ -4,6 +4,7 @@
       {%- if section.settings.eyebrow != blank -%}<div class="tiny-eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
       <h2 class="h2 smaller" style="margin-top:16px">{{ section.settings.title }}</h2>
       {%- if section.settings.subtitle != blank -%}<p class="subhead">{{ section.settings.subtitle }}</p>{%- endif -%}
+      {%- if section.blocks.size > 0 -%}
       <div class="rv-summary">
         <div class="rv-score">{{ section.settings.score }}</div>
         <div>
@@ -13,8 +14,10 @@
           <div class="rv-count">{{ section.settings.summary_text }}</div>
         </div>
       </div>
+      {%- endif -%}
     </div>
 
+    {%- if section.blocks.size > 0 -%}
     <div class="rv-grid fade-up">
       {%- for block in section.blocks -%}
         <article class="rv-card" {{ block.shopify_attributes }}>
@@ -38,6 +41,9 @@
         </article>
       {%- endfor -%}
     </div>
+    {%- else -%}
+      <div class="rv-empty fade-up">No reviews yet. Add genuine customer reviews from the theme editor once they come in.</div>
+    {%- endif -%}
 
     {%- if section.settings.bottom_note != blank -%}<p class="rv-note fade-up">{{ section.settings.bottom_note }}</p>{%- endif -%}
   </div>
@@ -50,9 +56,9 @@
     {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Customer voice"},
     {"type":"html","id":"title","label":"Title","default":"Real feedback. <span class=\"accent\">No fake comments.</span>"},
     {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Use these editable cards for genuine Rhythm Band customer feedback. Replace, add, remove or hide any review from the theme editor."},
-    {"type":"text","id":"score","label":"Displayed score","default":"4.8"},
-    {"type":"text","id":"summary_text","label":"Summary text","default":"Add your genuine reviews here"},
-    {"type":"checkbox","id":"show_verified_badge","label":"Show verified buyer badge","default":true},
+    {"type":"text","id":"score","label":"Displayed score","default":""},
+    {"type":"text","id":"summary_text","label":"Summary text","default":"Based on genuine customer reviews"},
+    {"type":"checkbox","id":"show_verified_badge","label":"Show verified buyer badge","default":false},
     {"type":"text","id":"bottom_note","label":"Bottom note","default":"Tip: connect a Shopify reviews app later to automatically pull verified post-purchase reviews."}
   ],
   "blocks":[
@@ -65,10 +71,6 @@
       {"type":"textarea","id":"body","label":"Review body","default":"Replace this with genuine feedback collected from a customer."}
     ]}
   ],
-  "presets":[{"name":"Customer reviews","blocks":[
-    {"type":"review","settings":{"name":"Customer","location":"India","rating":5,"title":"Add your first real review","body":"Replace this card with a genuine customer review from Shopify, WhatsApp or email."}},
-    {"type":"review","settings":{"name":"Customer","location":"India","rating":5,"title":"Share real product feedback","body":"Use only authentic customer comments. You can duplicate this block when more reviews come in."}},
-    {"type":"review","settings":{"name":"Customer","location":"India","rating":4,"title":"Editable review block","body":"This section is now wired into the home, product and Rhythm landing templates by default."}}
-  ]}]
+  "presets":[{"name":"Customer reviews"}]
 }
 {% endschema %}

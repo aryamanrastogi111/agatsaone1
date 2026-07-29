@@ -1,0 +1,45 @@
+<section data-rhythm-activity-section>
+  <div class="rp-popup" data-rp-popup aria-live="polite" role="status" data-interval="{{ section.settings.interval_seconds | times: 1000 }}">
+    <div class="rp-av" data-rp-av>R</div>
+    <div class="rp-body">
+      <div class="rp-line" data-rp-line>{{ section.settings.generic_line_1 }}</div>
+      <div class="rp-line-sm" data-rp-line-sm>{{ section.settings.generic_line_2 }}</div>
+      <div class="rp-time"><span class="rp-dot"></span><span data-rp-time>{{ section.settings.generic_tag }}</span></div>
+    </div>
+    <button class="rp-close" data-rp-close aria-label="Close">×</button>
+  </div>
+
+  <script type="application/json" data-rp-orders>
+    [
+      {%- for block in section.blocks -%}
+        {
+          "name": {{ block.settings.name | json }},
+          "city": {{ block.settings.city | json }},
+          "item": {{ block.settings.item | json }},
+          "time": {{ block.settings.time | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  </script>
+</section>
+
+{% schema %}
+{
+  "name":"Activity popup",
+  "settings":[
+    {"type":"range","id":"interval_seconds","label":"Popup interval","min":8,"max":30,"step":1,"default":10},
+    {"type":"text","id":"generic_line_1","label":"Generic popup line 1","default":"Rhythm Band is ready to ship"},
+    {"type":"text","id":"generic_line_2","label":"Generic popup line 2","default":"Choose Black, Olive, Graphite and more colours at checkout."},
+    {"type":"text","id":"generic_tag","label":"Generic popup tag","default":"Secure Shopify checkout"}
+  ],
+  "blocks":[
+    {"type":"order","name":"Real recent order","settings":[
+      {"type":"text","id":"name","label":"Customer first name","default":""},
+      {"type":"text","id":"city","label":"City","default":""},
+      {"type":"text","id":"item","label":"Purchased item","default":"EasyTouch Rhythm Band"},
+      {"type":"text","id":"time","label":"Time label","default":"Recently"}
+    ]}
+  ],
+  "presets":[{"name":"Activity popup"}]
+}
+{% endschema %}
