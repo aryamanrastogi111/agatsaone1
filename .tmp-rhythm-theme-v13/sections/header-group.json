@@ -1,0 +1,42 @@
+{
+  "type": "header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "brand_name": "Rhythm"
+      },
+      "blocks": {
+        "link_home": {
+          "type": "link",
+          "settings": {
+            "label": "Home",
+            "link": "shopify://"
+          }
+        },
+        "link_shop": {
+          "type": "link",
+          "settings": {
+            "label": "Shop",
+            "link": "shopify://collections/all"
+          }
+        },
+        "link_faq": {
+          "type": "link",
+          "settings": {
+            "label": "FAQ",
+            "link": "shopify://"
+          }
+        }
+      },
+      "block_order": [
+        "link_home",
+        "link_shop",
+        "link_faq"
+      ]
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

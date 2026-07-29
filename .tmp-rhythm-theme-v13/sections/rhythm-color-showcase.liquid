@@ -1,0 +1,83 @@
+<section class="section-pad-lg section-border" style="overflow:hidden">
+  <div class="design-glow" data-design-glow></div>
+  <div class="container">
+    <div class="fade-up" style="text-align:center;max-width:720px;margin:0 auto 64px">
+      {%- if section.settings.eyebrow != blank -%}<div class="tiny-eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      <h2 class="h2 smaller" style="margin-top:16px">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="subhead">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+    <div class="hero-band fade-up">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign fallback = 'band-olive.png'
+          if forloop.index == 2
+            assign fallback = 'band-graphite.png'
+          elsif forloop.index == 3
+            assign fallback = 'band-khaki.png'
+          elsif forloop.index == 4
+            assign fallback = 'band-slate.png'
+          elsif forloop.index == 5
+            assign fallback = 'band-rosewood.png'
+          elsif forloop.index == 6
+            assign fallback = 'band-teal.png'
+          elsif forloop.index == 7
+            assign fallback = 'band-black.png'
+          endif
+        -%}
+        {%- if block.settings.image != blank -%}
+          <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="Rhythm Band in {{ block.settings.name | escape }}" data-hero-band data-name="{{ block.settings.name | escape }}" {% if forloop.first %}class="active"{% endif %} loading="lazy" {{ block.shopify_attributes }}>
+        {%- else -%}
+          <img src="{{ fallback | asset_url }}" alt="Rhythm Band in {{ block.settings.name | escape }}" data-hero-band data-name="{{ block.settings.name | escape }}" {% if forloop.first %}class="active"{% endif %} loading="lazy" {{ block.shopify_attributes }}>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="color-name fade-up"><div class="name" data-color-name>{{ section.blocks.first.settings.name | default: 'Olive' }}</div><div class="idx" data-color-idx>1 of {{ section.blocks.size }} colours</div></div>
+    <div class="color-thumbs fade-up">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign fallback = 'band-olive.png'
+          if forloop.index == 2
+            assign fallback = 'band-graphite.png'
+          elsif forloop.index == 3
+            assign fallback = 'band-khaki.png'
+          elsif forloop.index == 4
+            assign fallback = 'band-slate.png'
+          elsif forloop.index == 5
+            assign fallback = 'band-rosewood.png'
+          elsif forloop.index == 6
+            assign fallback = 'band-teal.png'
+          elsif forloop.index == 7
+            assign fallback = 'band-black.png'
+          endif
+        -%}
+        <button class="color-thumb {% if forloop.first %}active{% endif %}" data-color-thumb data-name="{{ block.settings.name | escape }}" data-hex="{{ block.settings.swatch }}" aria-label="{{ block.settings.name | escape }}" style="background:{{ block.settings.swatch }}22" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}<img src="{{ block.settings.image | image_url: width: 200 }}" alt="{{ block.settings.name | escape }}" loading="lazy">{%- else -%}<img src="{{ fallback | asset_url }}" alt="{{ block.settings.name | escape }}" loading="lazy">{%- endif -%}
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Editable colour showcase",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Design"},
+    {"type":"html","id":"title","label":"Title","default":"Screenless.<br><span class=\"muted\">By design.</span>"},
+    {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Nothing to check. Nothing to notify. The band listens quietly. Nera AI does the talking — once a day, on your phone."}
+  ],
+  "blocks":[{"type":"colour","name":"Colour image","settings":[
+    {"type":"text","id":"name","label":"Colour name","default":"Olive"},
+    {"type":"color","id":"swatch","label":"Glow/swatch colour","default":"#6B7A3A"},
+    {"type":"image_picker","id":"image","label":"Band colour image"}
+  ]}],
+  "presets":[{"name":"Editable colour showcase","blocks":[
+    {"type":"colour","settings":{"name":"Olive","swatch":"#6B7A3A"}},
+    {"type":"colour","settings":{"name":"Graphite","swatch":"#2E2E2E"}},
+    {"type":"colour","settings":{"name":"Khaki","swatch":"#B8A55C"}},
+    {"type":"colour","settings":{"name":"Slate","swatch":"#7A7A9E"}},
+    {"type":"colour","settings":{"name":"Rosewood","swatch":"#8E3B4E"}},
+    {"type":"colour","settings":{"name":"Teal","swatch":"#1F6F86"}},
+    {"type":"colour","settings":{"name":"Black","swatch":"#0A0A0A"}}
+  ]}]
+}
+{% endschema %}

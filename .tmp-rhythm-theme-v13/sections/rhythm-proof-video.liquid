@@ -1,0 +1,37 @@
+<section id="proof-video" class="section-pad-lg section-border">
+  <div class="container">
+    <div class="proof fade-up">
+      <div class="head">
+        {%- if section.settings.pill != blank -%}<span class="pill"><span class="live-dot"></span>{{ section.settings.pill }}</span>{%- endif -%}
+        <h3>{{ section.settings.title }}</h3>
+        {%- if section.settings.description != blank -%}<p class="desc">{{ section.settings.description }}</p>{%- endif -%}
+      </div>
+      <div style="position:relative;max-width:400px;margin:0 auto">
+        <div class="iphone">
+          <div class="notch"></div>
+          {%- if section.settings.shopify_video != blank -%}
+            {{ section.settings.shopify_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata' }}
+          {%- else -%}
+            <video src="{{ 'rhythm-spike-demo.mp4' | asset_url }}" autoplay muted loop playsinline preload="metadata"></video>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.badge != blank -%}<span class="live-badge"><span class="live-dot"></span>{{ section.settings.badge }}</span>{%- endif -%}
+      </div>
+      {%- if section.settings.footnote != blank -%}<p class="proof-foot">{{ section.settings.footnote }}</p>{%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Proof video",
+  "settings":[
+    {"type":"text","id":"pill","label":"Pill label","default":"Real recording · Zero edits"},
+    {"type":"text","id":"title","label":"Title","default":"Watch a real spike get caught. Live."},
+    {"type":"textarea","id":"description","label":"Description","default":"This is the actual Rhythm app on a real user's phone — the band detected the sugar-response event and logged it automatically. No typing. No CGM patch."},
+    {"type":"video","id":"shopify_video","label":"Upload/choose Shopify-hosted video"},
+    {"type":"text","id":"badge","label":"Floating badge","default":"Recorded on band"},
+    {"type":"text","id":"footnote","label":"Footnote","default":"No manual entry · No CGM patch · No blood pricks"}
+  ],
+  "presets":[{"name":"Proof video"}]
+}
+{% endschema %}

@@ -1,0 +1,410 @@
+{%- assign p = all_products['rhythm-band'] -%}
+{%- if p == blank or p.handle == blank -%}{%- assign p = collections.all.products.first -%}{%- endif -%}
+{%- if p == blank or p.handle == blank -%}
+  {%- assign p = product -%}
+{%- endif -%}
+{%- if p == blank or p.handle == blank -%}
+  {%- assign p = collections.all.products.first -%}
+{%- endif -%}
+
+<style>
+  :root { --rhythm-emerald: #10b981; }
+</style>
+
+{%- comment -%} 1. HERO {%- endcomment -%}
+<section class="hero">
+  <div class="glow"></div>
+  <div class="content">
+    <p class="eyebrow fade-up">{{ 'Introducing EasyTouch Rhythm Band' }}</p>
+    <h1 class="hero-title fade-up">
+      {{ 'Discover which foods spike' }} <span class="accent">{{ 'YOUR' }}</span> {{ 'sugar.' }}
+    </h1>
+    <p class="hero-sub fade-up">
+      {{ "Not your friend's. Not your family's. Yours. Rhythm Band and Nera AI reveal the foods that create larger sugar-response patterns for your body — while tracking your sleep, recovery, stress and heart every day." | newline_to_br }}
+    </p>
+    <div class="hero-cta fade-up">
+      <a href="#buy" class="btn btn-emerald btn-lg">{{ 'Get yours' }} — {% if p != blank %}{{ p.price | money }}{% else %}Shop now{% endif %}</a>
+      <a href="#proof-video" class="link">See how it works →</a>
+    </div>
+    <div class="hero-image-wrap fade-up">
+      <img src="{{ 'band-olive-hero.png' | asset_url }}" alt="EasyTouch Rhythm Band">
+    </div>
+    <p class="hero-avail fade-up">Available in <span class="num">6 colours</span>.</p>
+  </div>
+</section>
+
+{%- comment -%} 2. MYSTERY {%- endcomment -%}
+<section class="section-pad-lg">
+  <div class="container">
+    <h2 class="h2 fade-up">Which one spikes <span class="accent">YOUR</span> sugar?</h2>
+    <p class="subhead fade-up">You won't find the answer here. You'll find it on your wrist.</p>
+    <div class="mystery-grid">
+      {%- assign foods = 'Rice|🍚,Mango|🥭,Pizza|🍕,Chai|☕,Banana|🍌,Ice cream|🍦' | split: ',' -%}
+      {%- for f in foods -%}
+        {%- assign parts = f | split: '|' -%}
+        <div class="glass mystery-card fade-up">
+          <div class="emoji">{{ parts[1] }}</div>
+          <div class="label">{{ parts[0] }}</div>
+          <div class="q">?</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} 3. SAME FOOD DIFFERENT BODIES {%- endcomment -%}
+<section class="section-pad-lg section-border">
+  <div class="container">
+    <h2 class="h2 fade-up">The same food.<br><span class="muted">Different bodies.</span></h2>
+    <p class="subhead fade-up">Nobody reacts to food exactly the same way.</p>
+    <div class="portraits">
+      {%- assign persons = 'Rohan, 41|rhythm-portrait-1.jpg|high|Sharp spike\, slow return,Aditi, 28|rhythm-portrait-2.jpg|mid|Moderate rise,Mr. Menon, 65|rhythm-portrait-3.jpg|low|Barely a ripple' | split: ',' -%}
+      {%- for row in persons -%}
+        {%- assign parts = row | split: '|' -%}
+        <div class="glass portrait-card fade-up">
+          <div class="img"><img src="{{ parts[1] | asset_url }}" alt="{{ parts[0] }}"></div>
+          <div class="body">
+            <div class="tag">🍕 Same pizza</div>
+            <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+              {%- if parts[2] == 'high' -%}
+                <path d="M0 50 C 40 50, 60 5, 100 8 C 140 12, 160 45, 200 48" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+              {%- elsif parts[2] == 'mid' -%}
+                <path d="M0 45 C 40 45, 70 22, 110 25 C 150 28, 170 42, 200 44" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+              {%- else -%}
+                <path d="M0 40 C 60 40, 100 32, 140 35 C 170 37, 185 40, 200 40" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+              {%- endif -%}
+            </svg>
+            <div class="meta">
+              <span class="name">{{ parts[0] }}</span>
+              <span class="note">{{ parts[3] }}</span>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} 4. YOUR BODY ALREADY KNOWS {%- endcomment -%}
+<section class="section-pad-lg section-border">
+  <div class="split">
+    <div class="fade-up">
+      <h2 class="heading">Your body already knows.<br><span class="accent">You just can't see it.</span></h2>
+      <p class="copy">Rhythm Band listens 24/7. Nera AI translates the signal. One quiet notification is all it takes.</p>
+    </div>
+    <div class="fade-up">
+      <div class="phone-frame">
+        <img src="{{ 'rhythm-app-metabolic.jpg' | asset_url }}" alt="Nera AI metabolic zone chart">
+      </div>
+      <p class="phone-caption">Actual Nera AI screen · your day, decoded</p>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} 5. PERSONAL FOOD PROFILE {%- endcomment -%}
+<section class="section-pad-lg section-border">
+  <div class="container">
+    <p class="tiny-eyebrow fade-up">Week after week</p>
+    <h2 class="h2 fade-up" style="margin-top:24px">Your Personal Food Profile.</h2>
+    <p class="subhead fade-up">Not calorie counting. Not a generic diet chart. Nera AI learns <span class="text-white">your</span> body.</p>
+
+    <div class="split" style="max-width:960px">
+      <div class="fade-up glass food-profile">
+        {%- assign profile = 'Pizza|🍕|high|Larger response,Rice|🍚|mid|Moderate,Paneer|🧀|low|Smaller,Tea|☕|low|Smaller,Mango|🥭|mid|Moderate,Ice cream|🍦|high|Larger response' | split: ',' -%}
+        {%- for row in profile -%}
+          {%- assign p2 = row | split: '|' -%}
+          {%- if p2[2] == 'high' -%}{% assign w = '90%' %}{% assign col = '#ef4444' %}
+          {%- elsif p2[2] == 'mid' -%}{% assign w = '55%' %}{% assign col = '#f59e0b' %}
+          {%- else -%}{% assign w = '25%' %}{% assign col = '#10b981' %}{% endif -%}
+          <div class="food-row">
+            <div class="emoji">{{ p2[1] }}</div>
+            <div class="name">
+              <div class="label">{{ p2[0] }}</div>
+              <div class="note">{{ p2[3] }}</div>
+            </div>
+            <div class="bar"><div class="fill" style="width:{{ w }};background:{{ col }}"></div></div>
+            <span class="dot" style="background:{{ col }};box-shadow:0 0 12px {{ col }}"></span>
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="fade-up">
+        <div class="phone-frame">
+          <img src="{{ 'rhythm-app-meals.jpg' | asset_url }}" alt="Meal responses in Nera AI">
+        </div>
+        <p class="phone-caption">Tag your meals · Nera learns faster every day</p>
+      </div>
+    </div>
+
+    <div class="highlight fade-up">
+      <div class="highlight-inner">
+        <span class="pill">No more food journaling</span>
+        <h3>
+          <span class="strike">Gone are the days of logging every bite.</span><br>
+          <span class="gradient-text">Your band spots the spike.</span><br>
+          <span class="text-white">You just name the meal.</span>
+        </h3>
+        <p class="foot">Automatic spike detection · Nera AI meal classification</p>
+      </div>
+    </div>
+
+    {%- comment -%} PROOF VIDEO {%- endcomment -%}
+    <div id="proof-video" class="proof fade-up">
+      <div class="head">
+        <span class="pill"><span class="live-dot"></span>Real recording · Zero edits</span>
+        <h3>Watch a real spike get caught. Live.</h3>
+        <p class="desc">This is the actual Rhythm app on a real user's phone — the band detected the sugar-response event and logged it automatically. No typing. No CGM patch.</p>
+      </div>
+      <div style="position:relative;max-width:400px;margin:0 auto">
+        <div class="iphone">
+          <div class="notch"></div>
+          <video src="{{ 'rhythm-spike-demo.mp4' | asset_url }}" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <span class="live-badge"><span class="live-dot"></span>Recorded on band</span>
+      </div>
+      <p class="proof-foot">No manual entry · No CGM patch · No blood pricks</p>
+    </div>
+
+    {%- comment -%} AUTO CALLOUT {%- endcomment -%}
+    <div class="glass auto-callout fade-up">
+      <span class="pill">Fully Automatic</span>
+      <h3>Just wear the band. Nera AI does the rest.</h3>
+      <p>No logging spikes. No manual tracking. The band silently detects every sugar-response event through the day — each spike is automatically recorded and shown to you on the app as an <span class="text-white">insulin spike event</span>, with the exact time and intensity already filled in. All you do is add what food it was — a quick tap like "dal-rice" or "cold coffee" — and Nera AI instantly classifies it as a <span style="color:#f87171">high-spike</span>, <span style="color:#fbbf24">moderate</span> or <span class="accent">friendly</span> meal for <span class="text-white">your</span> body.</p>
+      <div class="steps">
+        <div class="step"><div class="n">Step 1</div><div class="t">Wear it</div><div class="d">Band auto-detects spikes 24/7.</div></div>
+        <div class="step"><div class="n">Step 2</div><div class="t">Tap your meal</div><div class="d">One tap — dal-rice, dosa, biryani, fruit.</div></div>
+        <div class="step"><div class="n">Step 3</div><div class="t">Nera classifies</div><div class="d">Instantly tagged as high, moderate or safe for you.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} 6. CAPABILITIES {%- endcomment -%}
+<section class="section-pad-lg section-border">
+  <div class="container">
+    <p class="tiny-eyebrow fade-up">And that's just the beginning</p>
+    <h2 class="h2 fade-up" style="margin-top:24px">One band.<br><span class="muted">Your whole body.</span></h2>
+    <p class="subhead fade-up">HRV, heart rate, temperature, sleep, stress, SpO₂, activity — one silent band, one daily answer.</p>
+
+    <div class="caps-hero fade-up">
+      <div class="frame">
+        <img src="{{ 'rhythm-app-wearable.png' | asset_url }}" alt="Rhythm dashboard">
+      </div>
+    </div>
+
+    <div class="caps">
+      {%- assign caps = 'Heart|Continuous heart insights. Resting HR\, rhythm patterns\, cardiac load.,HRV & Readiness|Overnight HRV\, autonomic balance and morning readiness score.,Sleep|Deep · REM · Light · Sleep Score · Sleep Trends.,Recovery|Recovery Score · Strain · Morning Recovery · Trend graphs.,Stress|Stress · Calm · Breathing · Recovery windows.,Skin Temperature|24/7 wrist temperature — early illness and cycle signals.,Activity & Movement|Steps\, active minutes\, calories and daily movement load.,Food Intelligence|Sugar-response patterns · Personal Food Profile · Meal discoveries.,Nera AI|Daily insights · Weekly reports · Health coach · Predictions.' | split: ',' -%}
+      {%- for c in caps -%}
+        {%- assign cparts = c | split: '|' -%}
+        <div class="glass cap fade-up">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <div class="t">{{ cparts[0] }}</div>
+          <p class="d">{{ cparts[1] }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} 7. TIMELINE {%- endcomment -%}
+<section class="section-pad-lg section-border">
+  <div class="container-md">
+    <h2 class="h2 fade-up">A day in your body.</h2>
+    <p class="subhead fade-up">Every hour tells Nera AI something. By tomorrow morning, you'll know more about yourself than you did today.</p>
+    <div class="timeline">
+      {%- assign timeline = '07:12|Wake up|Recovery Score 82,08:30|Breakfast|Sugar-response logged,11:00|Deep work|Stress rising,13:45|Lunch walk|Response improves,19:30|Dinner|Meal impact recorded,23:10|Sleep|Tomorrow'"'"'s Body Score forming' | split: ',' -%}
+      {%- for t in timeline -%}
+        {%- assign tp = t | split: '|' -%}
+        <div class="item fade-up">
+          <div class="dot"></div>
+          <div class="col-a">
+            <div class="time">{{ tp[0] }}</div>
+            <div class="label">{{ tp[1] }}</div>
+            <div class="note">{{ tp[2] }}</div>
+          </div>
+          <div class="col-b"></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} 8. COMPARE {%- endcomment -%}
+<section class="section-pad-lg section-border">
+  <div class="container-md">
+    <h2 class="h2 smaller fade-up">Everyone else counts steps.<br><span class="accent">Rhythm reads you.</span></h2>
+    <div class="glass compare fade-up">
+      <div class="compare-grid">
+        <div class="h feature">Feature</div>
+        <div class="h other">Other bands</div>
+        <div class="h ours">Rhythm</div>
+        {%- assign compare = 'Sugar-response insights|0|1,Personalised food profile (AI-learned)|0|1,AI health conversation|0|1,24/7 heart & HRV|1|1,Sleep staging|1|1,Recovery / strain|1|1,Screenless\, no notifications|0|1,No subscription lock-in|0|1' | split: ',' -%}
+        {%- for r in compare -%}
+          {%- assign rp = r | split: '|' -%}
+          <div class="row">{{ rp[0] }}</div>
+          <div class="cell">
+            {%- if rp[1] == '1' -%}<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            {%- else -%}<svg class="x-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>{%- endif -%}
+          </div>
+          <div class="cell">
+            {%- if rp[2] == '1' -%}<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            {%- else -%}<svg class="x-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>{%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} 9. DESIGN + COLORS {%- endcomment -%}
+{%- assign colors = 'olive|Olive|#6B7A3A|band-olive.png,graphite|Graphite|#2E2E2E|band-graphite.png,khaki|Khaki|#B8A55C|band-khaki.png,slate|Slate|#7A7A9E|band-slate.png,rosewood|Rosewood|#8E3B4E|band-rosewood.png,teal|Teal|#1F6F86|band-teal.png' | split: ',' -%}
+
+<section class="section-pad-lg section-border" style="overflow:hidden">
+  <div class="design-glow" data-design-glow></div>
+  <div class="container">
+    <div class="fade-up" style="text-align:center;max-width:720px;margin:0 auto 64px">
+      <div class="tiny-eyebrow">Design</div>
+      <h2 class="h2 smaller" style="margin-top:16px">Screenless.<br><span class="muted">By design.</span></h2>
+      <p class="subhead">Nothing to check. Nothing to notify. The band listens quietly. Nera AI does the talking — once a day, on your phone.</p>
+    </div>
+    <div class="hero-band fade-up">
+      {%- for c in colors -%}
+        {%- assign cp = c | split: '|' -%}
+        <img src="{{ cp[3] | asset_url }}" alt="Rhythm Band in {{ cp[1] }}" data-hero-band data-name="{{ cp[1] }}" {% if forloop.first %}class="active"{% endif %}>
+      {%- endfor -%}
+    </div>
+    <div class="color-name fade-up">
+      <div class="name" data-color-name>Olive</div>
+      <div class="idx" data-color-idx>1 of 6 colours</div>
+    </div>
+    <div class="color-thumbs fade-up">
+      {%- for c in colors -%}
+        {%- assign cp = c | split: '|' -%}
+        {%- assign variant_id = '' -%}
+        {%- if p != blank -%}
+          {%- for v in p.variants -%}
+            {%- assign vt = v.title | downcase -%}
+            {%- assign nn = cp[1] | downcase -%}
+            {%- if vt contains nn -%}{%- assign variant_id = v.id -%}{%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+        <button class="color-thumb {% if forloop.first %}active{% endif %}" data-color-thumb data-name="{{ cp[1] }}" data-hex="{{ cp[2] }}" data-variant-id="{{ variant_id }}" aria-label="{{ cp[1] }}" style="background:{{ cp[2] }}22">
+          <img src="{{ cp[3] | asset_url }}" alt="{{ cp[1] }}">
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} 10. FAQ {%- endcomment -%}
+<section class="section-pad-lg section-border">
+  <div class="container-sm">
+    <h2 class="h2 smaller fade-up">Questions.</h2>
+    <div class="faq fade-up">
+      <details><summary>Is this a CGM?</summary><p>No. Rhythm Band is non-invasive. Nera AI learns your personal sugar-response patterns from your heart, sleep, temperature, movement and meal timing — no needles, no strips.</p></details>
+      <details><summary>How does it discover which foods spike my sugar?</summary><p>Every meal you log is matched against how your body actually responded — HRV, resting heart rate, energy dips, sleep quality that night. Nera AI turns that into a personal Food Profile that gets more accurate the longer you wear it.</p></details>
+      <details><summary>Is this a smartwatch?</summary><p>No screen. No notifications. Nothing to check. The band reads your body 24/7 in silence — the answers live in the app, once a day.</p></details>
+      <details><summary>Battery?</summary><p>Up to 7 days on a single charge. Magnetic charging in under 90 minutes.</p></details>
+      <details><summary>Water?</summary><p>IP67. Sweat, rain and handwashing are fine. Skip the pool for now.</p></details>
+      <details><summary>What's in the box?</summary><p>Rhythm Band, magnetic charger, quick-start card, and free access to Nera AI — no subscription needed for now.</p></details>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} 11. BUY {%- endcomment -%}
+<section id="buy" class="section-pad-lg section-border" style="overflow:hidden;position:relative">
+  <div class="buy-glow"></div>
+  <div class="container-md" style="text-align:center">
+    <h2 class="h2 fade-up" style="font-size:44px">Stop guessing.<br><span class="accent">Start discovering.</span></h2>
+    <p class="subhead fade-up">Most people know what they eat. Almost nobody knows how their body actually responds to it. It's your turn.</p>
+
+    <div class="glass buy-card fade-up" data-rhythm-buy>
+      {%- if p != blank -%}
+      <form action="/cart/add" method="post" enctype="multipart/form-data" data-ajax-cart data-redirect-cart>
+        <div class="buy-head">
+          <div>
+            <div class="label">EasyTouch Rhythm Band</div>
+            <div class="color-name-inline" data-buy-color>Olive</div>
+            <div class="sub">Includes free Nera AI access</div>
+          </div>
+          <div>
+            <div class="price">{{ p.price | money }}</div>
+            <div class="price-sub">Free shipping · India</div>
+          </div>
+        </div>
+
+        {%- assign _stock = 12 -%}
+        <div class="stock-urgency">
+          <div class="stock-row">
+            <span class="stock-label">🔥 Selling fast — only <b data-stock-qty>{{ _stock }}</b> left in stock</span>
+            <span class="stock-tag">Almost gone</span>
+          </div>
+          <div class="stock-track"><div class="stock-fill" data-stock-fill style="width:24%"></div></div>
+        </div>
+        <style>
+        .stock-urgency{margin:16px 0 4px}
+        .stock-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+        .stock-label{font-size:13px;font-weight:600;color:#fbbf24}
+        .stock-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#ef4444;animation:rpPulse 1.5s infinite}
+        .stock-track{height:6px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden}
+        .stock-fill{height:100%;background:linear-gradient(90deg,#f59e0b,#ef4444);border-radius:999px;transition:width .7s}
+        </style>
+        <script>
+        (function(){
+          var q = document.querySelector('[data-stock-qty]');
+          var f = document.querySelector('[data-stock-fill]');
+          if(!q||!f) return;
+          var start = 8 + Math.floor(Math.random()*8); // 8-15
+          q.textContent = start;
+          f.style.width = Math.max(10, Math.min(40, start*2)) + '%';
+          var iv = setInterval(function(){
+            var n = parseInt(q.textContent,10);
+            if(n<=3){clearInterval(iv);return;}
+            if(Math.random()<0.4){ n -= 1; q.textContent = n; f.style.width = Math.max(8, n*2) + '%'; }
+          }, 45000);
+        })();
+        </script>
+
+
+
+        <select name="id" data-variant-select style="display:none">
+          {%- for v in p.variants -%}
+            <option value="{{ v.id }}">{{ v.title }}</option>
+          {%- endfor -%}
+        </select>
+
+        <div class="buy-swatches">
+          {%- for c in colors -%}
+            {%- assign cp = c | split: '|' -%}
+            {%- assign vid = '' -%}
+            {%- for v in p.variants -%}
+              {%- assign vt = v.title | downcase -%}{%- assign nn = cp[1] | downcase -%}
+              {%- if vt contains nn -%}{%- assign vid = v.id -%}{%- endif -%}
+            {%- endfor -%}
+            <button type="button" class="buy-swatch {% if forloop.first %}active{% endif %} color-thumb" data-color-thumb data-name="{{ cp[1] }}" data-hex="{{ cp[2] }}" data-variant-id="{{ vid }}" style="background:{{ cp[2] }}22" aria-label="{{ cp[1] }}">
+              <img src="{{ cp[3] | asset_url }}" alt="{{ cp[1] }}">
+            </button>
+          {%- endfor -%}
+        </div>
+
+        <div class="buy-actions">
+          <button type="submit" class="btn btn-outline btn-block">Add to cart</button>
+          <a href="#" onclick="var f=this.closest('form');f.setAttribute('data-redirect-cart','1');f.requestSubmit();return false;" class="btn btn-emerald btn-block">Buy now</a>
+        </div>
+        <div class="buy-benefits">
+          <span>✓ Free Nera AI</span>
+          <span>✓ 1-year warranty</span>
+          <span>✓ Easy returns</span>
+        </div>
+      </form>
+      {%- else -%}
+        <p style="text-align:center;color:rgba(255,255,255,0.6)">Assign a product to this section in the theme editor.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Reviews + Recent purchase popup {%- endcomment -%}
+{% section 'rhythm-reviews' %}
+{% section 'rhythm-recent-purchase' %}

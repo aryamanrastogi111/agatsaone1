@@ -1,0 +1,66 @@
+<section class="section-pad-lg section-border">
+  <div class="container">
+    {%- if section.settings.eyebrow != blank -%}<p class="tiny-eyebrow fade-up">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h2 class="h2 fade-up" style="margin-top:24px">{{ section.settings.title }}</h2>
+    {%- if section.settings.subtitle != blank -%}<p class="subhead fade-up">{{ section.settings.subtitle }}</p>{%- endif -%}
+    <div class="split" style="max-width:960px">
+      <div class="fade-up glass food-profile">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign w = block.settings.intensity | append: '%'
+            assign col = '#10b981'
+            if block.settings.level == 'high'
+              assign col = '#ef4444'
+            elsif block.settings.level == 'medium'
+              assign col = '#f59e0b'
+            endif
+          -%}
+          <div class="food-row" {{ block.shopify_attributes }}>
+            <div class="emoji">{{ block.settings.icon }}</div>
+            <div class="name"><div class="label">{{ block.settings.label }}</div><div class="note">{{ block.settings.note }}</div></div>
+            <div class="bar"><div class="fill" style="width:{{ w }};background:{{ col }}"></div></div>
+            <span class="dot" style="background:{{ col }};box-shadow:0 0 12px {{ col }}"></span>
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="fade-up">
+        <div class="phone-frame">
+          {%- if section.settings.image != blank -%}
+            {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.image_alt }}
+          {%- else -%}
+            <img src="{{ 'rhythm-app-meals.jpg' | asset_url }}" alt="{{ section.settings.image_alt | escape }}" loading="lazy">
+          {%- endif -%}
+        </div>
+        {%- if section.settings.caption != blank -%}<p class="phone-caption">{{ section.settings.caption }}</p>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Personal food profile",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Week after week"},
+    {"type":"html","id":"title","label":"Title","default":"Your Personal Food Profile."},
+    {"type":"html","id":"subtitle","label":"Subtitle","default":"Not calorie counting. Not a generic diet chart. Nera AI learns <span class=\"text-white\">your</span> body."},
+    {"type":"image_picker","id":"image","label":"App visual image"},
+    {"type":"text","id":"image_alt","label":"Image alt text","default":"Meal responses in Nera AI"},
+    {"type":"text","id":"caption","label":"Caption","default":"Tag your meals · Nera learns faster every day"}
+  ],
+  "blocks":[{"type":"food","name":"Food row","settings":[
+    {"type":"text","id":"icon","label":"Icon/emoji","default":"🍕"},
+    {"type":"text","id":"label","label":"Food label","default":"Pizza"},
+    {"type":"text","id":"note","label":"Note","default":"Larger response"},
+    {"type":"select","id":"level","label":"Level","default":"high","options":[{"value":"high","label":"High"},{"value":"medium","label":"Moderate"},{"value":"low","label":"Low"}]},
+    {"type":"range","id":"intensity","label":"Bar intensity","min":10,"max":100,"step":5,"default":90}
+  ]}],
+  "presets":[{"name":"Personal food profile","blocks":[
+    {"type":"food","settings":{"icon":"🍕","label":"Pizza","level":"high","intensity":90,"note":"Larger response"}},
+    {"type":"food","settings":{"icon":"🍚","label":"Rice","level":"medium","intensity":55,"note":"Moderate"}},
+    {"type":"food","settings":{"icon":"🧀","label":"Paneer","level":"low","intensity":25,"note":"Smaller"}},
+    {"type":"food","settings":{"icon":"☕","label":"Tea","level":"low","intensity":25,"note":"Smaller"}},
+    {"type":"food","settings":{"icon":"🥭","label":"Mango","level":"medium","intensity":55,"note":"Moderate"}},
+    {"type":"food","settings":{"icon":"🍦","label":"Ice cream","level":"high","intensity":90,"note":"Larger response"}}
+  ]}]
+}
+{% endschema %}

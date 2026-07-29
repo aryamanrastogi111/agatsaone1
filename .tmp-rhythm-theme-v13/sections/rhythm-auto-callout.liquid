@@ -1,0 +1,34 @@
+<section class="section-pad-lg section-border">
+  <div class="container">
+    <div class="glass auto-callout fade-up">
+      {%- if section.settings.pill != blank -%}<span class="pill">{{ section.settings.pill }}</span>{%- endif -%}
+      <h3>{{ section.settings.title }}</h3>
+      {%- if section.settings.copy != blank -%}<p>{{ section.settings.copy }}</p>{%- endif -%}
+      <div class="steps">
+        {%- for block in section.blocks -%}
+          <div class="step" {{ block.shopify_attributes }}><div class="n">{{ block.settings.kicker }}</div><div class="t">{{ block.settings.title }}</div><div class="d">{{ block.settings.copy }}</div></div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Automatic callout",
+  "settings":[
+    {"type":"text","id":"pill","label":"Pill label","default":"Fully Automatic"},
+    {"type":"text","id":"title","label":"Title","default":"Just wear the band. Nera AI does the rest."},
+    {"type":"textarea","id":"copy","label":"Copy","default":"No logging spikes. No manual tracking. The band silently detects every sugar-response event through the day — each spike is automatically recorded and shown to you on the app with the exact time and intensity already filled in."}
+  ],
+  "blocks":[{"type":"step","name":"Step","settings":[
+    {"type":"text","id":"kicker","label":"Kicker","default":"Step 1"},
+    {"type":"text","id":"title","label":"Title","default":"Wear it"},
+    {"type":"text","id":"copy","label":"Copy","default":"Band auto-detects spikes 24/7."}
+  ]}],
+  "presets":[{"name":"Automatic callout","blocks":[
+    {"type":"step","settings":{"kicker":"Step 1","title":"Wear it","copy":"Band auto-detects spikes 24/7."}},
+    {"type":"step","settings":{"kicker":"Step 2","title":"Tap your meal","copy":"One tap — dal-rice, dosa, biryani, fruit."}},
+    {"type":"step","settings":{"kicker":"Step 3","title":"Nera classifies","copy":"Instantly tagged as high, moderate or safe for you."}}
+  ]}]
+}
+{% endschema %}

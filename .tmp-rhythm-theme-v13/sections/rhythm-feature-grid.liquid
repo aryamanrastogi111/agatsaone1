@@ -1,0 +1,49 @@
+<section class="section-pad-lg section-border">
+  <div class="container">
+    {%- if section.settings.eyebrow != blank -%}<p class="tiny-eyebrow fade-up">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h2 class="h2 fade-up" style="margin-top:24px">{{ section.settings.title }}</h2>
+    {%- if section.settings.subtitle != blank -%}<p class="subhead fade-up">{{ section.settings.subtitle }}</p>{%- endif -%}
+    <div class="caps-hero fade-up">
+      <div class="frame">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.image_alt }}
+        {%- else -%}
+          <img src="{{ 'rhythm-app-wearable.png' | asset_url }}" alt="{{ section.settings.image_alt | escape }}" loading="lazy">
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="caps">
+      {%- for block in section.blocks -%}
+        <div class="glass cap fade-up" {{ block.shopify_attributes }}>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div class="t">{{ block.settings.title }}</div>
+          <p class="d">{{ block.settings.copy }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Feature grid",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"And that's just the beginning"},
+    {"type":"html","id":"title","label":"Title","default":"One band.<br><span class=\"muted\">Your whole body.</span>"},
+    {"type":"text","id":"subtitle","label":"Subtitle","default":"HRV, heart rate, temperature, sleep, stress, SpO₂, activity — one silent band, one daily answer."},
+    {"type":"image_picker","id":"image","label":"Top app image"},
+    {"type":"text","id":"image_alt","label":"Image alt text","default":"Rhythm dashboard"}
+  ],
+  "blocks":[{"type":"feature","name":"Feature","settings":[
+    {"type":"text","id":"title","label":"Title","default":"Heart"},
+    {"type":"textarea","id":"copy","label":"Copy","default":"Continuous heart insights. Resting HR, rhythm patterns, cardiac load."}
+  ]}],
+  "presets":[{"name":"Feature grid","blocks":[
+    {"type":"feature","settings":{"title":"Heart","copy":"Continuous heart insights. Resting HR, rhythm patterns, cardiac load."}},
+    {"type":"feature","settings":{"title":"HRV & Readiness","copy":"Overnight HRV, autonomic balance and morning readiness score."}},
+    {"type":"feature","settings":{"title":"Sleep","copy":"Deep · REM · Light · Sleep Score · Sleep Trends."}},
+    {"type":"feature","settings":{"title":"Recovery","copy":"Recovery Score · Strain · Morning Recovery · Trend graphs."}},
+    {"type":"feature","settings":{"title":"Stress","copy":"Stress · Calm · Breathing · Recovery windows."}},
+    {"type":"feature","settings":{"title":"Food Intelligence","copy":"Sugar-response patterns · Personal Food Profile · Meal discoveries."}}
+  ]}]
+}
+{% endschema %}
