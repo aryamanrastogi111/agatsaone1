@@ -148,11 +148,78 @@
   bindForms(document);
 })();
 
+// Stock urgency bars — cosmetic only; uses real variant inventory when Shopify exposes it, otherwise stable urgency copy.
+(function(){
+  function initStock(scope){
+    var bars = (scope || document).querySelectorAll('[data-stock-urgency]');
+    bars.forEach(function(bar){
+      if(bar.__bound) return; bar.__bound = true;
+      var qtyEl = bar.querySelector('[data-stock-qty]');
+      var fillEl = bar.querySelector('[data-stock-fill]');
+      if(!qtyEl || !fillEl) return;
+      var qty = parseInt(bar.getAttribute('data-stock-qty') || qtyEl.textContent || '12', 10);
+      if(!Number.isFinite(qty) || qty < 1) qty = 12;
+      qtyEl.textContent = qty;
+      fillEl.style.width = Math.max(8, Math.min(42, qty * 3)) + '%';
+    });
+  }
+  window.__rhythmInitStock = initStock;
+  document.addEventListener('DOMContentLoaded', function(){ initStock(document); });
+  initStock(document);
+})();
+
+// Activity popup — defaults to a generic store activity message unless real recent-order blocks are added in Customize.
+(function(){
+  function initPopup(scope){
+    var popups = (scope || document).querySelectorAll('[data-rp-popup]');
+    popups.forEach(function(pop){
+      if(pop.__bound) return; pop.__bound = true;
+      var section = pop.closest('[data-rhythm-activity-section]') || document;
+      var closeBtn = pop.querySelector('[data-rp-close]');
+      var avEl = pop.querySelector('[data-rp-av]');
+      var lineEl = pop.querySelector('[data-rp-line]');
+      var lineSmEl = pop.querySelector('[data-rp-line-sm]');
+      var timeEl = pop.querySelector('[data-rp-time]');
+      var jsonEl = section.querySelector('[data-rp-orders]');
+      var dismissed = false;
+      var orders = [];
+      try { orders = JSON.parse((jsonEl && jsonEl.textContent) || '[]').filter(function(o){ return o && o.name && o.city; }); } catch(_) { orders = []; }
+      if(closeBtn) closeBtn.addEventListener('click',function(){ dismissed = true; pop.classList.remove('show'); });
+      function pick(a){return a[Math.floor(Math.random()*a.length)];}
+      function show(){
+        if(dismissed) return;
+        if(orders.length){
+          var o = pick(orders);
+          if(lineEl) lineEl.innerHTML = '<b>'+String(o.name).replace(/[&<>]/g,'')+'</b> from '+String(o.city).replace(/[&<>]/g,'');
+          if(lineSmEl) lineSmEl.innerHTML = 'purchased <b>'+String(o.item || 'EasyTouch Rhythm Band').replace(/[&<>]/g,'')+'</b>';
+          if(timeEl) timeEl.textContent = o.time || 'Recently';
+          if(avEl) avEl.textContent = String(o.name || 'R').charAt(0).toUpperCase();
+        } else {
+          if(avEl) avEl.textContent = 'R';
+        }
+        pop.classList.remove('show');
+        void pop.offsetWidth;
+        pop.classList.add('show');
+        setTimeout(function(){ pop.classList.remove('show'); }, 6000);
+      }
+      var interval = parseInt(pop.getAttribute('data-interval') || '10000', 10);
+      if(!Number.isFinite(interval) || interval < 8000) interval = 10000;
+      setTimeout(show, 2500);
+      pop.__timer = setInterval(show, interval);
+    });
+  }
+  window.__rhythmInitPopup = initPopup;
+  document.addEventListener('DOMContentLoaded', function(){ initPopup(document); });
+  initPopup(document);
+})();
+
 // Re-init on Shopify Customizer section load / block change
 document.addEventListener('shopify:section:load', function(e){
   try { window.__rhythmReveal && window.__rhythmReveal(e.target); } catch(_){}
   try { window.__rhythmInitColor && window.__rhythmInitColor(e.target); } catch(_){}
   try { window.__rhythmBindForms && window.__rhythmBindForms(e.target); } catch(_){}
+  try { window.__rhythmInitStock && window.__rhythmInitStock(e.target); } catch(_){}
+  try { window.__rhythmInitPopup && window.__rhythmInitPopup(e.target); } catch(_){}
 });
 document.addEventListener('shopify:block:select', function(e){
   var t = e.target.querySelector && e.target.querySelector('[data-color-thumb]');
