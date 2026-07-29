@@ -46,6 +46,7 @@ const Partner = lazy(() => import("./pages/Partner"));
 const PartnerWithUs = lazy(() => import("./pages/PartnerWithUs"));
 const PartnerSegment = lazy(() => import("./pages/PartnerSegment"));
 const SdkPartners = lazy(() => import("./pages/SdkPartners"));
+const MediaRecognition = lazy(() => import("./pages/MediaRecognition"));
 const Demo = lazy(() => import("./pages/Demo"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const CheckoutPage = lazy(() => import("./pages/Checkout"));
@@ -160,6 +161,8 @@ function AppWithPricing() {
               <Route path="/partner-with-us" element={<PartnerWithUs />} />
               <Route path="/partner/segments/:slug" element={<PartnerSegment />} />
               <Route path="/partners" element={<SdkPartners />} />
+              <Route path="/media-recognition" element={<MediaRecognition />} />
+              <Route path="/media" element={<Navigate to="/media-recognition" replace />} />
               <Route path="/demo" element={<Demo />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="/checkout" element={<CheckoutPage />} />
