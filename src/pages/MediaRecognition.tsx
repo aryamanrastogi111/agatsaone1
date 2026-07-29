@@ -44,11 +44,8 @@ const featuredAwards = [
 const governmentRecognition = [
   { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2, pdf: pdfNidhi.url },
   { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star, pdf: pdfWomenpreneurs.url },
-  { title: "Startup India — DPIIT Recognition", body: "Recognised startup under Startup India by Govt. of India.", icon: Building2 },
-  { title: "BIRAC BIG Grant", body: "Biotechnology Industry Research Assistance Council grant recipient.", icon: Building2 },
-  { title: "Make in India Champion", body: "Indigenous medical device design & manufacture.", icon: Globe },
-  { title: "NASSCOM Emerge 50", body: "Recognised among India's most promising emerging tech startups.", icon: Trophy },
 ];
+
 
 
 const publications = [
