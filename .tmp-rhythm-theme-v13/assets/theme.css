@@ -325,3 +325,6 @@ h1.hero-title{font-size:44px;line-height:1.02;font-weight:600;letter-spacing:-0.
 .text-white{color:#fff}.text-muted{color:rgba(255,255,255,0.5)}
 .accent{color:#10b981}
 .strike-emerald{color:rgba(255,255,255,0.4);text-decoration:line-through}
+
+.rv-hidden{display:none}
+.rv-more-wrap{text-align:center;margin-top:28px}
