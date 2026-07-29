@@ -1,0 +1,74 @@
+<section id="reviews" class="section-pad-lg section-border" data-rhythm-reviews>
+  <div class="container">
+    <div class="fade-up" style="text-align:center;max-width:720px;margin:0 auto 48px">
+      {%- if section.settings.eyebrow != blank -%}<div class="tiny-eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      <h2 class="h2 smaller" style="margin-top:16px">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="subhead">{{ section.settings.subtitle }}</p>{%- endif -%}
+      <div class="rv-summary">
+        <div class="rv-score">{{ section.settings.score }}</div>
+        <div>
+          <div class="rv-stars" aria-label="{{ section.settings.score }} out of 5">
+            {%- for i in (1..5) -%}<span>★</span>{%- endfor -%}
+          </div>
+          <div class="rv-count">{{ section.settings.summary_text }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rv-grid fade-up">
+      {%- for block in section.blocks -%}
+        <article class="rv-card" {{ block.shopify_attributes }}>
+          <div class="rv-head">
+            <div class="rv-who">
+              <div class="rv-av">{{ block.settings.name | slice: 0, 1 }}</div>
+              <div>
+                <div class="rv-name">{{ block.settings.name }}</div>
+                <div class="rv-meta">{{ block.settings.location }}{%- if block.settings.date != blank -%} · {{ block.settings.date }}{%- endif -%}</div>
+              </div>
+            </div>
+            <div class="rv-stars-sm" aria-label="{{ block.settings.rating }} out of 5">
+              {%- for i in (1..5) -%}
+                {%- if i <= block.settings.rating -%}★{%- else -%}☆{%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+          <div class="rv-title">{{ block.settings.title }}</div>
+          <div class="rv-body">{{ block.settings.body }}</div>
+          {%- if section.settings.show_verified_badge -%}<div class="rv-verified">✓ Verified buyer</div>{%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.bottom_note != blank -%}<p class="rv-note fade-up">{{ section.settings.bottom_note }}</p>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name":"Customer reviews",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Customer voice"},
+    {"type":"html","id":"title","label":"Title","default":"Real feedback. <span class=\"accent\">No fake comments.</span>"},
+    {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Use these editable cards for genuine Rhythm Band customer feedback. Replace, add, remove or hide any review from the theme editor."},
+    {"type":"text","id":"score","label":"Displayed score","default":"4.8"},
+    {"type":"text","id":"summary_text","label":"Summary text","default":"Add your genuine reviews here"},
+    {"type":"checkbox","id":"show_verified_badge","label":"Show verified buyer badge","default":true},
+    {"type":"text","id":"bottom_note","label":"Bottom note","default":"Tip: connect a Shopify reviews app later to automatically pull verified post-purchase reviews."}
+  ],
+  "blocks":[
+    {"type":"review","name":"Review","settings":[
+      {"type":"text","id":"name","label":"Customer name","default":"Customer"},
+      {"type":"text","id":"location","label":"Location","default":"India"},
+      {"type":"text","id":"date","label":"Date","default":""},
+      {"type":"range","id":"rating","label":"Rating","min":1,"max":5,"step":1,"default":5},
+      {"type":"text","id":"title","label":"Review title","default":"Add a real customer headline"},
+      {"type":"textarea","id":"body","label":"Review body","default":"Replace this with genuine feedback collected from a customer."}
+    ]}
+  ],
+  "presets":[{"name":"Customer reviews","blocks":[
+    {"type":"review","settings":{"name":"Customer","location":"India","rating":5,"title":"Add your first real review","body":"Replace this card with a genuine customer review from Shopify, WhatsApp or email."}},
+    {"type":"review","settings":{"name":"Customer","location":"India","rating":5,"title":"Share real product feedback","body":"Use only authentic customer comments. You can duplicate this block when more reviews come in."}},
+    {"type":"review","settings":{"name":"Customer","location":"India","rating":4,"title":"Editable review block","body":"This section is now wired into the home, product and Rhythm landing templates by default."}}
+  ]}]
+}
+{% endschema %}
