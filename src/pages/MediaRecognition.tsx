@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Award, BookOpen, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star, Globe } from "lucide-react";
 import { VideoCard } from "@/components/VideoCard";
 import type { VideoItem } from "@/components/VideoCard";
-import { supabase } from "@/integrations/supabase/client";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
@@ -139,29 +137,16 @@ export default function MediaRecognition() {
       "Awards, media features, expert videos and 14+ peer-reviewed clinical publications recognising Agatsa's SanketLife ECG and health devices. Featured by Govt. of India, Forbes, AIIMS and more.",
   });
 
-  const [pdfLinks, setPdfLinks] = useState<Partial<Record<PdfKey, string>>>({});
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const entries = Object.entries(PDF_FILES) as Array<[PdfKey, string]>;
-      const results = await Promise.all(
-        entries.map(async ([key, filename]) => {
-          const { data } = await supabase.storage
-            .from("media-recognition")
-            .createSignedUrl(filename, 60 * 60 * 24 * 365); // 1-year signed URL
-          return [key, data?.signedUrl] as const;
-        })
-      );
-      if (cancelled) return;
-      const map: Partial<Record<PdfKey, string>> = {};
-      for (const [key, url] of results) if (url) map[key] = url;
-      setPdfLinks(map);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  // Serve PDFs from same-origin /public path. Cross-domain URLs (Supabase, Lovable CDN)
+  // get flagged by Chrome/uBlock ad-blockers as ERR_BLOCKED_BY_CLIENT.
+  const pdfLinks: Record<PdfKey, string> = {
+    nidhi: `/media-recognition/${PDF_FILES.nidhi}`,
+    womenpreneurs: `/media-recognition/${PDF_FILES.womenpreneurs}`,
+    ije: `/media-recognition/${PDF_FILES.ije}`,
+    springer2016: `/media-recognition/${PDF_FILES.springer2016}`,
+    sciRep2024: `/media-recognition/${PDF_FILES.sciRep2024}`,
+    publications1Pager: `/media-recognition/${PDF_FILES.publications1Pager}`,
+  };
 
   return (
     <SiteLayout>
