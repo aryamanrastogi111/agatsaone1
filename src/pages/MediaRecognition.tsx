@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Award, BookOpen, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star, Globe } from "lucide-react";
 import { VideoCard } from "@/components/VideoCard";
 import type { VideoItem } from "@/components/VideoCard";
+import { supabase } from "@/integrations/supabase/client";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
@@ -11,14 +13,19 @@ import awardIgp from "@/assets/award-igp.webp";
 import awardMashelkar from "@/assets/award-anjani-mashelkar.webp";
 import awardMbillionth from "@/assets/award-mbillionth-new.png";
 
-const pdfLinks = {
-  nidhi: "/media-recognition/75-Promising-Startups-NIDHI-Seed-Support-Program.pdf",
-  womenpreneurs: "/media-recognition/CTB-75-womenpreneurs-of-India.pdf",
-  ije: "/media-recognition/Indian_Journal_of_Electrocardilogy.pdf",
-  springer2016: "/media-recognition/s40064-016-1932-z.pdf",
-  sciRep2024: "/media-recognition/s41598-024-84265-8.pdf",
-  publications1Pager: "/media-recognition/sanketlife-publications-1pager.pdf",
-};
+// PDFs live in Supabase Storage (bucket: media-recognition) and are opened via
+// signed URLs minted on mount. This avoids ad-blocker false positives that hit
+// the Lovable CDN path (`/__l5e/…`) and the `public/` folder size limits on hosting.
+const PDF_FILES = {
+  nidhi: "75-Promising-Startups-NIDHI-Seed-Support-Program.pdf",
+  womenpreneurs: "CTB-75-womenpreneurs-of-India.pdf",
+  ije: "Indian_Journal_of_Electrocardilogy.pdf",
+  springer2016: "s40064-016-1932-z.pdf",
+  sciRep2024: "s41598-024-84265-8.pdf",
+  publications1Pager: "sanketlife-publications-1pager.pdf",
+} as const;
+
+type PdfKey = keyof typeof PDF_FILES;
 
 
 const fade = {
@@ -43,9 +50,9 @@ const featuredAwards = [
   { name: "mBillionth Award South Asia", year: "2019", org: "DEF & IAMAI", image: awardMbillionth },
 ];
 
-const governmentRecognition = [
-  { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2, pdf: pdfLinks.nidhi },
-  { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star, pdf: pdfLinks.womenpreneurs },
+const governmentRecognition: Array<{ title: string; body: string; icon: typeof Building2; pdfKey: PdfKey }> = [
+  { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2, pdfKey: "nidhi" },
+  { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star, pdfKey: "womenpreneurs" },
 ];
 
 
@@ -74,21 +81,21 @@ const publications = [
     title: "Smart Phone ECG — Bridging the Gap",
     journal: "Journal of Advanced Research in Medical Science & Technology · ADR Journals",
     body: "Agatsa's foundational accuracy study. 6-lead ECG intervals validated against a traditional ECG — the first published clinical evidence for SanketLife.",
-    pdf: pdfLinks.springer2016,
+    pdfKey: "springer2016" as PdfKey,
   },
   {
     year: "2024",
     title: "Indian Journal of Electrocardiology — Featured",
     journal: "Indian Society of Electrocardiology · Vol. 1, February 2024",
     body: "Editorial coverage referencing SanketLife in the official journal of the Indian Society of Electrocardiology (Editors: Dr. Joy Thomas, Dr. Aparna Jaswal).",
-    pdf: pdfLinks.ije,
+    pdfKey: "ije" as PdfKey,
   },
   {
     year: "2024",
     title: "Scientific Reports — Nature Portfolio Publication",
     journal: "Scientific Reports · Nature Portfolio (Open Access)",
     body: "Peer-reviewed publication featuring SanketLife's clinical performance data in the Nature Portfolio's Scientific Reports journal.",
-    pdf: pdfLinks.sciRep2024,
+    pdfKey: "sciRep2024" as PdfKey,
   },
 
   {
@@ -131,6 +138,30 @@ export default function MediaRecognition() {
     description:
       "Awards, media features, expert videos and 14+ peer-reviewed clinical publications recognising Agatsa's SanketLife ECG and health devices. Featured by Govt. of India, Forbes, AIIMS and more.",
   });
+
+  const [pdfLinks, setPdfLinks] = useState<Partial<Record<PdfKey, string>>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const entries = Object.entries(PDF_FILES) as Array<[PdfKey, string]>;
+      const results = await Promise.all(
+        entries.map(async ([key, filename]) => {
+          const { data } = await supabase.storage
+            .from("media-recognition")
+            .createSignedUrl(filename, 60 * 60 * 24 * 365); // 1-year signed URL
+          return [key, data?.signedUrl] as const;
+        })
+      );
+      if (cancelled) return;
+      const map: Partial<Record<PdfKey, string>> = {};
+      for (const [key, url] of results) if (url) map[key] = url;
+      setPdfLinks(map);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <SiteLayout>
@@ -195,23 +226,27 @@ export default function MediaRecognition() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {governmentRecognition.map((r: any) => (
-              <a
-                key={r.title}
-                href={r.pdf}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-card border border-border rounded-2xl p-6 transition-all block hover:border-primary hover:shadow-md cursor-pointer"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <r.icon className="h-6 w-6 text-primary mb-3" />
-                  <FileText className="h-4 w-4 text-primary/60" />
-                </div>
-                <h3 className="font-bold text-foreground">{r.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{r.body}</p>
-                <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1">View PDF <ExternalLink className="h-3 w-3" /></p>
-              </a>
-            ))}
+            {governmentRecognition.map((r) => {
+              const href = pdfLinks[r.pdfKey];
+              return (
+                <a
+                  key={r.title}
+                  href={href || "#"}
+                  onClick={(e) => { if (!href) e.preventDefault(); }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${href ? "hover:border-primary hover:shadow-md cursor-pointer" : "opacity-70 cursor-wait"}`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <r.icon className="h-6 w-6 text-primary mb-3" />
+                    <FileText className="h-4 w-4 text-primary/60" />
+                  </div>
+                  <h3 className="font-bold text-foreground">{r.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{r.body}</p>
+                  <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1">View PDF <ExternalLink className="h-3 w-3" /></p>
+                </a>
+              );
+            })}
 
 
           </div>
@@ -242,13 +277,14 @@ export default function MediaRecognition() {
 
           <div className="space-y-4">
             {publications.map((p: any) => {
-              const Tag: any = p.pdf ? "a" : "article";
-              const extra = p.pdf ? { href: p.pdf, target: "_blank", rel: "noopener noreferrer" } : {};
+              const href: string | undefined = p.pdfKey ? pdfLinks[p.pdfKey as PdfKey] : undefined;
+              const Tag: any = href ? "a" : "article";
+              const extra = href ? { href, target: "_blank", rel: "noopener noreferrer" } : {};
               return (
                 <Tag
                   key={p.title}
                   {...extra}
-                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${p.pdf ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
+                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${href ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
                     <h3 className="font-bold text-foreground text-lg">{p.title}</h3>
@@ -256,7 +292,7 @@ export default function MediaRecognition() {
                   </div>
                   <p className="text-sm text-primary/80 font-medium">{p.journal}</p>
                   <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.body}</p>
-                  {p.pdf && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1"><FileText className="h-3 w-3" /> Read full PDF <ExternalLink className="h-3 w-3" /></p>}
+                  {href && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1"><FileText className="h-3 w-3" /> Read full PDF <ExternalLink className="h-3 w-3" /></p>}
                 </Tag>
               );
             })}
@@ -338,7 +374,8 @@ export default function MediaRecognition() {
           </p>
           <div className="flex flex-wrap justify-center gap-3 mt-6">
             <a
-              href={pdfLinks.publications1Pager}
+              href={pdfLinks.publications1Pager || "#"}
+              onClick={(e) => { if (!pdfLinks.publications1Pager) e.preventDefault(); }}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-6 py-3 transition-colors"
