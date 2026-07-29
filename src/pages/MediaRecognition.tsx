@@ -11,12 +11,14 @@ import awardIgp from "@/assets/award-igp.webp";
 import awardMashelkar from "@/assets/award-anjani-mashelkar.webp";
 import awardMbillionth from "@/assets/award-mbillionth-new.png";
 
-import pdfNidhi from "@/assets/pdfs/75-Promising-Startups-NIDHI-Seed-Support-Program.pdf.asset.json";
-import pdfWomenpreneurs from "@/assets/pdfs/CTB-75-womenpreneurs-of-India.pdf.asset.json";
-import pdfIJE from "@/assets/pdfs/Indian_Journal_of_Electrocardilogy.pdf.asset.json";
-import pdfSpringer2016 from "@/assets/pdfs/s40064-016-1932-z.pdf.asset.json";
-import pdfSciRep2024 from "@/assets/pdfs/s41598-024-84265-8.pdf.asset.json";
-import pdfPublications1Pager from "@/assets/pdfs/sanketlife-publications-1pager.pdf.asset.json";
+const pdfLinks = {
+  nidhi: "/media-recognition/75-Promising-Startups-NIDHI-Seed-Support-Program.pdf",
+  womenpreneurs: "/media-recognition/CTB-75-womenpreneurs-of-India.pdf",
+  ije: "/media-recognition/Indian_Journal_of_Electrocardilogy.pdf",
+  springer2016: "/media-recognition/s40064-016-1932-z.pdf",
+  sciRep2024: "/media-recognition/s41598-024-84265-8.pdf",
+  publications1Pager: "/media-recognition/sanketlife-publications-1pager.pdf",
+};
 
 
 const fade = {
@@ -42,8 +44,8 @@ const featuredAwards = [
 ];
 
 const governmentRecognition = [
-  { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2, pdf: pdfNidhi.url },
-  { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star, pdf: pdfWomenpreneurs.url },
+  { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2, pdf: pdfLinks.nidhi },
+  { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star, pdf: pdfLinks.womenpreneurs },
 ];
 
 
@@ -72,21 +74,21 @@ const publications = [
     title: "Smart Phone ECG — Bridging the Gap",
     journal: "Journal of Advanced Research in Medical Science & Technology · ADR Journals",
     body: "Agatsa's foundational accuracy study. 6-lead ECG intervals validated against a traditional ECG — the first published clinical evidence for SanketLife.",
-    pdf: pdfSpringer2016.url,
+    pdf: pdfLinks.springer2016,
   },
   {
     year: "2024",
     title: "Indian Journal of Electrocardiology — Featured",
     journal: "Indian Society of Electrocardiology · Vol. 1, February 2024",
     body: "Editorial coverage referencing SanketLife in the official journal of the Indian Society of Electrocardiology (Editors: Dr. Joy Thomas, Dr. Aparna Jaswal).",
-    pdf: pdfIJE.url,
+    pdf: pdfLinks.ije,
   },
   {
     year: "2024",
     title: "Scientific Reports — Nature Portfolio Publication",
     journal: "Scientific Reports · Nature Portfolio (Open Access)",
     body: "Peer-reviewed publication featuring SanketLife's clinical performance data in the Nature Portfolio's Scientific Reports journal.",
-    pdf: pdfSciRep2024.url,
+    pdf: pdfLinks.sciRep2024,
   },
 
   {
@@ -336,7 +338,7 @@ export default function MediaRecognition() {
           </p>
           <div className="flex flex-wrap justify-center gap-3 mt-6">
             <a
-              href={pdfPublications1Pager.url}
+              href={pdfLinks.publications1Pager}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-6 py-3 transition-colors"
