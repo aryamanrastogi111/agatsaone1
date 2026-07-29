@@ -75,13 +75,23 @@ const publications = [
     title: "Smart Phone ECG — Bridging the Gap",
     journal: "Journal of Advanced Research in Medical Science & Technology · ADR Journals",
     body: "Agatsa's foundational accuracy study. 6-lead ECG intervals validated against a traditional ECG — the first published clinical evidence for SanketLife.",
+    pdf: pdfSpringer2016.url,
   },
   {
     year: "2024",
     title: "Indian Journal of Electrocardiology — Featured",
     journal: "Indian Society of Electrocardiology · Vol. 1, February 2024",
     body: "Editorial coverage referencing SanketLife in the official journal of the Indian Society of Electrocardiology (Editors: Dr. Joy Thomas, Dr. Aparna Jaswal).",
+    pdf: pdfIJE.url,
   },
+  {
+    year: "2024",
+    title: "Scientific Reports — Nature Portfolio Publication",
+    journal: "Scientific Reports · Nature Portfolio (Open Access)",
+    body: "Peer-reviewed publication featuring SanketLife's clinical performance data in the Nature Portfolio's Scientific Reports journal.",
+    pdf: pdfSciRep2024.url,
+  },
+
   {
     year: "2020",
     title: "Patient Satisfaction in Community ECG Screening",
