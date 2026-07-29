@@ -247,21 +247,28 @@ export default function MediaRecognition() {
           </div>
 
           <div className="space-y-4">
-            {publications.map((p, i) => (
-              <motion.article
-                key={p.title}
-                {...fade}
-                transition={{ duration: 0.4, delay: i * 0.04 }}
-                className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
-                  <h3 className="font-bold text-foreground text-lg">{p.title}</h3>
-                  <span className="text-xs font-semibold text-primary whitespace-nowrap">{p.year}</span>
-                </div>
-                <p className="text-sm text-primary/80 font-medium">{p.journal}</p>
-                <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.body}</p>
-              </motion.article>
-            ))}
+            {publications.map((p: any, i) => {
+              const Wrapper: any = p.pdf ? motion.a : motion.article;
+              const wrapperProps = p.pdf ? { href: p.pdf, target: "_blank", rel: "noopener noreferrer" } : {};
+              return (
+                <Wrapper
+                  key={p.title}
+                  {...wrapperProps}
+                  {...fade}
+                  transition={{ duration: 0.4, delay: i * 0.04 }}
+                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${p.pdf ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                    <h3 className="font-bold text-foreground text-lg">{p.title}</h3>
+                    <span className="text-xs font-semibold text-primary whitespace-nowrap">{p.year}</span>
+                  </div>
+                  <p className="text-sm text-primary/80 font-medium">{p.journal}</p>
+                  <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.body}</p>
+                  {p.pdf && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1"><FileText className="h-3 w-3" /> Read full PDF <ExternalLink className="h-3 w-3" /></p>}
+                </Wrapper>
+              );
+            })}
+
           </div>
 
           {/* Global journal coverage */}
