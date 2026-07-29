@@ -44,11 +44,8 @@ const featuredAwards = [
 const governmentRecognition = [
   { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2, pdf: pdfNidhi.url },
   { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star, pdf: pdfWomenpreneurs.url },
-  { title: "Startup India — DPIIT Recognition", body: "Recognised startup under Startup India by Govt. of India.", icon: Building2 },
-  { title: "BIRAC BIG Grant", body: "Biotechnology Industry Research Assistance Council grant recipient.", icon: Building2 },
-  { title: "Make in India Champion", body: "Indigenous medical device design & manufacture.", icon: Globe },
-  { title: "NASSCOM Emerge 50", body: "Recognised among India's most promising emerging tech startups.", icon: Trophy },
 ];
+
 
 
 const publications = [
@@ -196,29 +193,24 @@ export default function MediaRecognition() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {governmentRecognition.map((r: any, i) => {
-              const Wrapper: any = r.pdf ? motion.a : motion.div;
-              const wrapperProps = r.pdf
-                ? { href: r.pdf, target: "_blank", rel: "noopener noreferrer" }
-                : {};
-              return (
-                <Wrapper
-                  key={r.title}
-                  {...wrapperProps}
-                  {...fade}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${r.pdf ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <r.icon className="h-6 w-6 text-primary mb-3" />
-                    {r.pdf && <FileText className="h-4 w-4 text-primary/60" />}
-                  </div>
-                  <h3 className="font-bold text-foreground">{r.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{r.body}</p>
-                  {r.pdf && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1">View PDF <ExternalLink className="h-3 w-3" /></p>}
-                </Wrapper>
-              );
-            })}
+            {governmentRecognition.map((r: any) => (
+              <a
+                key={r.title}
+                href={r.pdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-card border border-border rounded-2xl p-6 transition-all block hover:border-primary hover:shadow-md cursor-pointer"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <r.icon className="h-6 w-6 text-primary mb-3" />
+                  <FileText className="h-4 w-4 text-primary/60" />
+                </div>
+                <h3 className="font-bold text-foreground">{r.title}</h3>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{r.body}</p>
+                <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1">View PDF <ExternalLink className="h-3 w-3" /></p>
+              </a>
+            ))}
+
 
           </div>
         </div>
@@ -247,15 +239,13 @@ export default function MediaRecognition() {
           </div>
 
           <div className="space-y-4">
-            {publications.map((p: any, i) => {
-              const Wrapper: any = p.pdf ? motion.a : motion.article;
-              const wrapperProps = p.pdf ? { href: p.pdf, target: "_blank", rel: "noopener noreferrer" } : {};
+            {publications.map((p: any) => {
+              const Tag: any = p.pdf ? "a" : "article";
+              const extra = p.pdf ? { href: p.pdf, target: "_blank", rel: "noopener noreferrer" } : {};
               return (
-                <Wrapper
+                <Tag
                   key={p.title}
-                  {...wrapperProps}
-                  {...fade}
-                  transition={{ duration: 0.4, delay: i * 0.04 }}
+                  {...extra}
                   className={`bg-card border border-border rounded-2xl p-6 transition-all block ${p.pdf ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
@@ -265,9 +255,10 @@ export default function MediaRecognition() {
                   <p className="text-sm text-primary/80 font-medium">{p.journal}</p>
                   <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.body}</p>
                   {p.pdf && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1"><FileText className="h-3 w-3" /> Read full PDF <ExternalLink className="h-3 w-3" /></p>}
-                </Wrapper>
+                </Tag>
               );
             })}
+
 
           </div>
 
