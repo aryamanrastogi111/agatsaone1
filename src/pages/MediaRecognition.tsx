@@ -239,15 +239,13 @@ export default function MediaRecognition() {
           </div>
 
           <div className="space-y-4">
-            {publications.map((p: any, i) => {
-              const Wrapper: any = p.pdf ? motion.a : motion.article;
-              const wrapperProps = p.pdf ? { href: p.pdf, target: "_blank", rel: "noopener noreferrer" } : {};
+            {publications.map((p: any) => {
+              const Tag: any = p.pdf ? "a" : "article";
+              const extra = p.pdf ? { href: p.pdf, target: "_blank", rel: "noopener noreferrer" } : {};
               return (
-                <Wrapper
+                <Tag
                   key={p.title}
-                  {...wrapperProps}
-                  {...fade}
-                  transition={{ duration: 0.4, delay: i * 0.04 }}
+                  {...extra}
                   className={`bg-card border border-border rounded-2xl p-6 transition-all block ${p.pdf ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
@@ -257,9 +255,10 @@ export default function MediaRecognition() {
                   <p className="text-sm text-primary/80 font-medium">{p.journal}</p>
                   <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.body}</p>
                   {p.pdf && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1"><FileText className="h-3 w-3" /> Read full PDF <ExternalLink className="h-3 w-3" /></p>}
-                </Wrapper>
+                </Tag>
               );
             })}
+
 
           </div>
 
