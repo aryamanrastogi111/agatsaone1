@@ -263,6 +263,48 @@ h1.hero-title{font-size:44px;line-height:1.02;font-weight:600;letter-spacing:-0.
 @media(min-width:640px){.buy-actions{grid-template-columns:1fr 1fr}}
 .buy-benefits{margin-top:16px;display:flex;justify-content:center;gap:24px;font-size:12px;color:rgba(255,255,255,0.4)}
 
+/* Stock urgency */
+.stock-urgency{margin:16px 0 4px}
+.stock-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px}
+.stock-label{font-size:13px;font-weight:600;color:#fbbf24}
+.stock-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#ef4444;animation:rpPulse 1.5s infinite;white-space:nowrap}
+.stock-track{height:6px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden}
+.stock-fill{height:100%;background:linear-gradient(90deg,#f59e0b,#ef4444);border-radius:999px;transition:width .7s}
+
+/* Reviews */
+.rv-summary{display:inline-flex;align-items:center;gap:16px;margin-top:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:16px 24px;border-radius:16px}
+.rv-score{font-size:44px;font-weight:700;color:#10b981;line-height:1}
+.rv-stars{color:#fbbf24;font-size:18px;letter-spacing:2px}
+.rv-count{color:rgba(255,255,255,0.5);font-size:13px;margin-top:2px}
+.rv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.rv-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px}
+.rv-card .rv-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.rv-card .rv-who{display:flex;align-items:center;gap:10px;min-width:0}
+.rv-card .rv-av{width:36px;height:36px;border-radius:999px;background:linear-gradient(135deg,#10b981,#065f46);display:flex;align-items:center;justify-content:center;font-weight:700;color:#000;font-size:14px;flex:0 0 auto}
+.rv-card .rv-name{font-weight:600;font-size:14px}
+.rv-card .rv-meta{color:rgba(255,255,255,0.45);font-size:12px}
+.rv-card .rv-stars-sm{color:#fbbf24;font-size:13px;letter-spacing:1px;white-space:nowrap}
+.rv-card .rv-title{font-weight:600;font-size:15px;margin:8px 0 4px}
+.rv-card .rv-body{color:rgba(255,255,255,0.7);font-size:14px;line-height:1.55}
+.rv-card .rv-verified{display:inline-flex;align-items:center;gap:4px;color:#10b981;font-size:11px;margin-top:10px;font-weight:600}
+.rv-note,.rv-empty{text-align:center;color:rgba(255,255,255,0.48);font-size:13px;margin:28px auto 0;max-width:620px}
+.rv-empty{border:1px dashed rgba(255,255,255,0.16);border-radius:16px;padding:28px;background:rgba(255,255,255,0.02)}
+
+/* Activity popup */
+.rp-popup{position:fixed;left:16px;bottom:16px;z-index:60;display:none;align-items:center;gap:12px;background:rgba(15,15,20,0.95);backdrop-filter:blur(20px);border:1px solid rgba(16,185,129,0.3);border-radius:14px;padding:12px 40px 12px 12px;max-width:330px;box-shadow:0 20px 40px rgba(0,0,0,0.5);animation:rpIn .5s cubic-bezier(0.22,1,0.36,1)}
+.rp-popup.show{display:flex}
+@keyframes rpIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.rp-av{width:40px;height:40px;border-radius:999px;background:linear-gradient(135deg,#10b981,#065f46);display:flex;align-items:center;justify-content:center;font-weight:700;color:#000;font-size:16px;flex:0 0 auto}
+.rp-body{flex:1;min-width:0}
+.rp-line{font-size:13px;color:#fff;line-height:1.3}
+.rp-line-sm{font-size:12px;color:rgba(255,255,255,0.7);line-height:1.3;margin-top:2px}
+.rp-time{font-size:11px;color:#10b981;margin-top:4px;display:flex;align-items:center;gap:5px}
+.rp-dot{width:6px;height:6px;border-radius:999px;background:#10b981;animation:rpPulse 1.5s infinite}
+@keyframes rpPulse{0%,100%{opacity:1}50%{opacity:.4}}
+.rp-close{position:absolute;top:6px;right:8px;color:rgba(255,255,255,0.4);font-size:20px;line-height:1;padding:4px}
+.rp-close:hover{color:#fff}
+@media(max-width:520px){.rp-popup{left:10px;right:10px;max-width:none;bottom:80px}.rv-summary{width:100%;justify-content:center}.stock-row{align-items:flex-start;flex-direction:column}}
+
 /* Cart page */
 .cart-page{padding:80px 24px;max-width:960px;margin:0 auto}
 .cart-page h1{font-size:36px;font-weight:600;margin:0 0 32px}
