@@ -11,6 +11,14 @@ import awardIgp from "@/assets/award-igp.webp";
 import awardMashelkar from "@/assets/award-anjani-mashelkar.webp";
 import awardMbillionth from "@/assets/award-mbillionth-new.png";
 
+import pdfNidhi from "@/assets/pdfs/75-Promising-Startups-NIDHI-Seed-Support-Program.pdf.asset.json";
+import pdfWomenpreneurs from "@/assets/pdfs/CTB-75-womenpreneurs-of-India.pdf.asset.json";
+import pdfIJE from "@/assets/pdfs/Indian_Journal_of_Electrocardilogy.pdf.asset.json";
+import pdfSpringer2016 from "@/assets/pdfs/s40064-016-1932-z.pdf.asset.json";
+import pdfSciRep2024 from "@/assets/pdfs/s41598-024-84265-8.pdf.asset.json";
+import pdfPublications1Pager from "@/assets/pdfs/sanketlife-publications-1pager.pdf.asset.json";
+
+
 const fade = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
