@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Award, BookOpen, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star, Globe } from "lucide-react";
 import { VideoCard } from "@/components/VideoCard";
 import type { VideoItem } from "@/components/VideoCard";
-import { supabase } from "@/integrations/supabase/client";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
