@@ -217,6 +217,29 @@ ${waLink ? `WhatsApp: ${waLink}` : ""}`;
       )
     );
 
+    // Fire-and-forget: post the hot lead to the external Agatsa One API so
+    // the sales team's external admin panel can trigger WhatsApp / call.
+    fetch("https://agatsa-one-api-651017108992.asia-south1.run.app/v1/leads/website/hot-lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId: sessionId || null,
+        trigger: trigger || "phone_captured",
+        stage: stage || null,
+        name: name || null,
+        email: email || null,
+        phone: phone || null,
+        dialCode: dialCode || null,
+        city: city || null,
+        state: state || null,
+        country: country || null,
+        subtotalPaise: subtotalPaise || 0,
+        itemCount: itemCount || 0,
+        items: items || [],
+        capturedAt: new Date().toISOString(),
+      }),
+    }).catch((err) => console.error("hot-lead external post failed:", err));
+
     const anySuccess = results.some((r) => r.success);
     await supabase.from("email_send_log").insert(
       TEAM_RECIPIENTS.map((recipient, i) => ({
@@ -228,6 +251,7 @@ ${waLink ? `WhatsApp: ${waLink}` : ""}`;
         metadata: { session_id: sessionId, trigger, phone: phone || null },
       }))
     );
+
 
     return new Response(JSON.stringify({ success: anySuccess, results }), {
       status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
