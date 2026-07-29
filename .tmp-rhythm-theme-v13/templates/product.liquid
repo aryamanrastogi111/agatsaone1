@@ -258,7 +258,7 @@
 </section>
 
 {%- comment -%} 9. DESIGN + COLORS {%- endcomment -%}
-{%- assign colors = 'olive|Olive|#6B7A3A|band-olive.png,graphite|Graphite|#2E2E2E|band-graphite.png,khaki|Khaki|#B8A55C|band-khaki.png,slate|Slate|#7A7A9E|band-slate.png,rosewood|Rosewood|#8E3B4E|band-rosewood.png,teal|Teal|#1F6F86|band-teal.png' | split: ',' -%}
+{%- assign colors = 'olive|Olive|#6B7A3A|band-olive.png,graphite|Graphite|#2E2E2E|band-graphite.png,khaki|Khaki|#B8A55C|band-khaki.png,slate|Slate|#7A7A9E|band-slate.png,rosewood|Rosewood|#8E3B4E|band-rosewood.png,teal|Teal|#1F6F86|band-teal.png,black|Black|#0A0A0A|band-black.png' | split: ',' -%}
 
 <section class="section-pad-lg section-border" style="overflow:hidden">
   <div class="design-glow" data-design-glow></div>
@@ -276,7 +276,7 @@
     </div>
     <div class="color-name fade-up">
       <div class="name" data-color-name>Olive</div>
-      <div class="idx" data-color-idx>1 of 6 colours</div>
+      <div class="idx" data-color-idx>1 of 7 colours</div>
     </div>
     <div class="color-thumbs fade-up">
       {%- for c in colors -%}
@@ -298,7 +298,7 @@
 </section>
 
 {%- comment -%} 10. FAQ {%- endcomment -%}
-<section class="section-pad-lg section-border">
+<section id="faq" class="section-pad-lg section-border">
   <div class="container-sm">
     <h2 class="h2 smaller fade-up">Questions.</h2>
     <div class="faq fade-up">
@@ -334,40 +334,19 @@
           </div>
         </div>
 
-        {%- assign _stock = 12 -%}
-        <div class="stock-urgency">
+        {%- liquid
+          assign _stock = 12
+          if p.selected_or_first_available_variant.inventory_management != blank and p.selected_or_first_available_variant.inventory_quantity > 0 and p.selected_or_first_available_variant.inventory_quantity < 12
+            assign _stock = p.selected_or_first_available_variant.inventory_quantity
+          endif
+        -%}
+        <div class="stock-urgency" data-stock-urgency data-stock-qty="{{ _stock }}">
           <div class="stock-row">
             <span class="stock-label">🔥 Selling fast — only <b data-stock-qty>{{ _stock }}</b> left in stock</span>
             <span class="stock-tag">Almost gone</span>
           </div>
           <div class="stock-track"><div class="stock-fill" data-stock-fill style="width:24%"></div></div>
         </div>
-        <style>
-        .stock-urgency{margin:16px 0 4px}
-        .stock-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-        .stock-label{font-size:13px;font-weight:600;color:#fbbf24}
-        .stock-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#ef4444;animation:rpPulse 1.5s infinite}
-        .stock-track{height:6px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden}
-        .stock-fill{height:100%;background:linear-gradient(90deg,#f59e0b,#ef4444);border-radius:999px;transition:width .7s}
-        </style>
-        <script>
-        (function(){
-          var q = document.querySelector('[data-stock-qty]');
-          var f = document.querySelector('[data-stock-fill]');
-          if(!q||!f) return;
-          var start = 8 + Math.floor(Math.random()*8); // 8-15
-          q.textContent = start;
-          f.style.width = Math.max(10, Math.min(40, start*2)) + '%';
-          var iv = setInterval(function(){
-            var n = parseInt(q.textContent,10);
-            if(n<=3){clearInterval(iv);return;}
-            if(Math.random()<0.4){ n -= 1; q.textContent = n; f.style.width = Math.max(8, n*2) + '%'; }
-          }, 45000);
-        })();
-        </script>
-
-
-
         <select name="id" data-variant-select style="display:none">
           {%- for v in p.variants -%}
             <option value="{{ v.id }}">{{ v.title }}</option>
