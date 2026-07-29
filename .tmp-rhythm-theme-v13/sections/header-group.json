@@ -11,7 +11,7 @@
           "type": "link",
           "settings": {
             "label": "Home",
-            "link": "shopify://"
+            "link": "/"
           }
         },
         "link_shop": {
@@ -21,17 +21,25 @@
             "link": "shopify://collections/all"
           }
         },
+        "link_reviews": {
+          "type": "link",
+          "settings": {
+            "label": "Reviews",
+            "link": "#reviews"
+          }
+        },
         "link_faq": {
           "type": "link",
           "settings": {
             "label": "FAQ",
-            "link": "shopify://"
+            "link": "#faq"
           }
         }
       },
       "block_order": [
         "link_home",
         "link_shop",
+        "link_reviews",
         "link_faq"
       ]
     }
