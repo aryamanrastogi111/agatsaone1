@@ -225,3 +225,16 @@ document.addEventListener('shopify:block:select', function(e){
   var t = e.target.querySelector && e.target.querySelector('[data-color-thumb]');
   if(t) t.click();
 });
+
+/* Reviews load-more */
+document.addEventListener('click',function(e){
+  var btn=e.target.closest('[data-rv-more]');
+  if(!btn)return;
+  var sec=btn.closest('[data-rhythm-reviews]');
+  if(!sec)return;
+  var step=parseInt(btn.getAttribute('data-step'),10)||12;
+  var hidden=sec.querySelectorAll('.rv-card.rv-hidden');
+  for(var i=0;i<step&&i<hidden.length;i++){hidden[i].classList.remove('rv-hidden');}
+  var left=sec.querySelectorAll('.rv-card.rv-hidden').length;
+  if(left>0){btn.textContent='Load more reviews ('+left+')';}else{btn.remove();}
+});

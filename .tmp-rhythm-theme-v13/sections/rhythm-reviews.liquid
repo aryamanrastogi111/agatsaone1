@@ -5,22 +5,26 @@
       <h2 class="h2 smaller" style="margin-top:16px">{{ section.settings.title }}</h2>
       {%- if section.settings.subtitle != blank -%}<p class="subhead">{{ section.settings.subtitle }}</p>{%- endif -%}
       {%- if section.blocks.size > 0 -%}
+      {%- assign rv_total = 0 -%}
+      {%- for block in section.blocks -%}{%- assign rv_total = rv_total | plus: block.settings.rating -%}{%- endfor -%}
+      {%- assign rv_avg = rv_total | times: 1.0 | divided_by: section.blocks.size | round: 1 -%}
       <div class="rv-summary">
-        <div class="rv-score">{{ section.settings.score }}</div>
+        <div class="rv-score">{% if section.settings.score != blank %}{{ section.settings.score }}{% else %}{{ rv_avg }}{% endif %}</div>
         <div>
-          <div class="rv-stars" aria-label="{{ section.settings.score }} out of 5">
+          <div class="rv-stars" aria-label="{{ rv_avg }} out of 5">
             {%- for i in (1..5) -%}<span>★</span>{%- endfor -%}
           </div>
-          <div class="rv-count">{{ section.settings.summary_text }}</div>
+          <div class="rv-count">{{ section.settings.summary_text }} · {{ section.blocks.size }} review{% if section.blocks.size != 1 %}s{% endif %}</div>
         </div>
       </div>
       {%- endif -%}
     </div>
 
     {%- if section.blocks.size > 0 -%}
-    <div class="rv-grid fade-up">
+    {%- assign rv_initial = section.settings.initial_count | default: 12 -%}
+    <div class="rv-grid fade-up" data-rv-grid>
       {%- for block in section.blocks -%}
-        <article class="rv-card" {{ block.shopify_attributes }}>
+        <article class="rv-card{% if forloop.index > rv_initial %} rv-hidden{% endif %}" data-rv-card {{ block.shopify_attributes }}>
           <div class="rv-head">
             <div class="rv-who">
               <div class="rv-av">{{ block.settings.name | slice: 0, 1 }}</div>
@@ -41,6 +45,11 @@
         </article>
       {%- endfor -%}
     </div>
+    {%- if section.blocks.size > rv_initial -%}
+      <div class="rv-more-wrap fade-up">
+        <button type="button" class="btn btn-ghost" data-rv-more data-step="{{ rv_initial }}">Load more reviews ({{ section.blocks.size | minus: rv_initial }})</button>
+      </div>
+    {%- endif -%}
     {%- else -%}
       <div class="rv-empty fade-up">No reviews yet. Add genuine customer reviews from the theme editor once they come in.</div>
     {%- endif -%}
@@ -56,7 +65,8 @@
     {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Customer voice"},
     {"type":"html","id":"title","label":"Title","default":"Real feedback. <span class=\"accent\">No fake comments.</span>"},
     {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Use these editable cards for genuine Rhythm Band customer feedback. Replace, add, remove or hide any review from the theme editor."},
-    {"type":"text","id":"score","label":"Displayed score","default":""},
+    {"type":"text","id":"score","label":"Displayed score (blank = auto average)","default":""},
+    {"type":"range","id":"initial_count","label":"Reviews shown before Load more","min":3,"max":30,"step":3,"default":12},
     {"type":"text","id":"summary_text","label":"Summary text","default":"Based on genuine customer reviews"},
     {"type":"checkbox","id":"show_verified_badge","label":"Show verified buyer badge","default":false},
     {"type":"text","id":"bottom_note","label":"Bottom note","default":"Tip: connect a Shopify reviews app later to automatically pull verified post-purchase reviews."}
