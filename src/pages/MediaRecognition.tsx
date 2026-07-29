@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
 import { Award, BookOpen, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star, Globe } from "lucide-react";
 import { VideoCard } from "@/components/VideoCard";
 import type { VideoItem } from "@/components/VideoCard";
+import { supabase } from "@/integrations/supabase/client";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
@@ -11,14 +13,19 @@ import awardIgp from "@/assets/award-igp.webp";
 import awardMashelkar from "@/assets/award-anjani-mashelkar.webp";
 import awardMbillionth from "@/assets/award-mbillionth-new.png";
 
-const pdfLinks = {
-  nidhi: "/media-recognition/75-Promising-Startups-NIDHI-Seed-Support-Program.pdf",
-  womenpreneurs: "/media-recognition/CTB-75-womenpreneurs-of-India.pdf",
-  ije: "/media-recognition/Indian_Journal_of_Electrocardilogy.pdf",
-  springer2016: "/media-recognition/s40064-016-1932-z.pdf",
-  sciRep2024: "/media-recognition/s41598-024-84265-8.pdf",
-  publications1Pager: "/media-recognition/sanketlife-publications-1pager.pdf",
-};
+// PDFs live in Supabase Storage (bucket: media-recognition) and are opened via
+// signed URLs minted on mount. This avoids ad-blocker false positives that hit
+// the Lovable CDN path (`/__l5e/…`) and the `public/` folder size limits on hosting.
+const PDF_FILES = {
+  nidhi: "75-Promising-Startups-NIDHI-Seed-Support-Program.pdf",
+  womenpreneurs: "CTB-75-womenpreneurs-of-India.pdf",
+  ije: "Indian_Journal_of_Electrocardilogy.pdf",
+  springer2016: "s40064-016-1932-z.pdf",
+  sciRep2024: "s41598-024-84265-8.pdf",
+  publications1Pager: "sanketlife-publications-1pager.pdf",
+} as const;
+
+type PdfKey = keyof typeof PDF_FILES;
 
 
 const fade = {
