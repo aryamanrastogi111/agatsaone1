@@ -106,7 +106,7 @@ const TIMELINE = [
 ];
 
 const FAQS = [
-  { q: "Is this a CGM?", a: "No. Rhythm Band is non-invasive. Nera AI learns your personal sugar-response patterns from your heart, sleep, temperature, movement and meal timing — no needles, no strips. Pair with a CGM or Agatsa EasyTouch later for even sharper insight." },
+  { q: "Is this a CGM?", a: "No. Rhythm Band learns your personal sugar-response patterns through our patented algorithm — no needles, no strips, completely non-invasive." },
   { q: "How does it discover which foods spike my sugar?", a: "Every meal you log is matched against how your body actually responded — HRV, resting heart rate, energy dips, sleep quality that night. Nera AI turns that into a personal Food Profile that gets more accurate the longer you wear it." },
   { q: "Is this a smartwatch?", a: "No screen. No notifications. Nothing to check. The band reads your body 24/7 in silence — the answers live in the app, once a day." },
   { q: "Battery?", a: "Up to 7 days on a single charge. Magnetic charging in under 90 minutes." },
