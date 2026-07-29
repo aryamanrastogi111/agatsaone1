@@ -139,6 +139,30 @@ export default function MediaRecognition() {
       "Awards, media features, expert videos and 14+ peer-reviewed clinical publications recognising Agatsa's SanketLife ECG and health devices. Featured by Govt. of India, Forbes, AIIMS and more.",
   });
 
+  const [pdfLinks, setPdfLinks] = useState<Partial<Record<PdfKey, string>>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const entries = Object.entries(PDF_FILES) as Array<[PdfKey, string]>;
+      const results = await Promise.all(
+        entries.map(async ([key, filename]) => {
+          const { data } = await supabase.storage
+            .from("media-recognition")
+            .createSignedUrl(filename, 60 * 60 * 24 * 365); // 1-year signed URL
+          return [key, data?.signedUrl] as const;
+        })
+      );
+      if (cancelled) return;
+      const map: Partial<Record<PdfKey, string>> = {};
+      for (const [key, url] of results) if (url) map[key] = url;
+      setPdfLinks(map);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <SiteLayout>
       {/* Hero */}
@@ -202,23 +226,27 @@ export default function MediaRecognition() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {governmentRecognition.map((r: any) => (
-              <a
-                key={r.title}
-                href={r.pdf}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-card border border-border rounded-2xl p-6 transition-all block hover:border-primary hover:shadow-md cursor-pointer"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <r.icon className="h-6 w-6 text-primary mb-3" />
-                  <FileText className="h-4 w-4 text-primary/60" />
-                </div>
-                <h3 className="font-bold text-foreground">{r.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{r.body}</p>
-                <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1">View PDF <ExternalLink className="h-3 w-3" /></p>
-              </a>
-            ))}
+            {governmentRecognition.map((r) => {
+              const href = pdfLinks[r.pdfKey];
+              return (
+                <a
+                  key={r.title}
+                  href={href || "#"}
+                  onClick={(e) => { if (!href) e.preventDefault(); }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${href ? "hover:border-primary hover:shadow-md cursor-pointer" : "opacity-70 cursor-wait"}`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <r.icon className="h-6 w-6 text-primary mb-3" />
+                    <FileText className="h-4 w-4 text-primary/60" />
+                  </div>
+                  <h3 className="font-bold text-foreground">{r.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{r.body}</p>
+                  <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1">View PDF <ExternalLink className="h-3 w-3" /></p>
+                </a>
+              );
+            })}
 
 
           </div>
@@ -249,13 +277,14 @@ export default function MediaRecognition() {
 
           <div className="space-y-4">
             {publications.map((p: any) => {
-              const Tag: any = p.pdf ? "a" : "article";
-              const extra = p.pdf ? { href: p.pdf, target: "_blank", rel: "noopener noreferrer" } : {};
+              const href: string | undefined = p.pdfKey ? pdfLinks[p.pdfKey as PdfKey] : undefined;
+              const Tag: any = href ? "a" : "article";
+              const extra = href ? { href, target: "_blank", rel: "noopener noreferrer" } : {};
               return (
                 <Tag
                   key={p.title}
                   {...extra}
-                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${p.pdf ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
+                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${href ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
                     <h3 className="font-bold text-foreground text-lg">{p.title}</h3>
@@ -263,7 +292,7 @@ export default function MediaRecognition() {
                   </div>
                   <p className="text-sm text-primary/80 font-medium">{p.journal}</p>
                   <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.body}</p>
-                  {p.pdf && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1"><FileText className="h-3 w-3" /> Read full PDF <ExternalLink className="h-3 w-3" /></p>}
+                  {href && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1"><FileText className="h-3 w-3" /> Read full PDF <ExternalLink className="h-3 w-3" /></p>}
                 </Tag>
               );
             })}
@@ -345,7 +374,8 @@ export default function MediaRecognition() {
           </p>
           <div className="flex flex-wrap justify-center gap-3 mt-6">
             <a
-              href={pdfLinks.publications1Pager}
+              href={pdfLinks.publications1Pager || "#"}
+              onClick={(e) => { if (!pdfLinks.publications1Pager) e.preventDefault(); }}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-white text-primary hover:bg-white/90 font-semibold px-6 py-3 transition-colors"
