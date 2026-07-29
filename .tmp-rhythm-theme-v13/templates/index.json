@@ -450,6 +450,13 @@
             "name": "Teal",
             "swatch": "#1F6F86"
           }
+        },
+        "black": {
+          "type": "colour",
+          "settings": {
+            "name": "Black",
+            "swatch": "#0A0A0A"
+          }
         }
       },
       "block_order": [
@@ -458,7 +465,8 @@
         "khaki",
         "slate",
         "rosewood",
-        "teal"
+        "teal",
+        "black"
       ]
     },
     "faq": {
@@ -547,6 +555,13 @@
             "swatch": "#1F6F86"
           }
         },
+        "black": {
+          "type": "colour",
+          "settings": {
+            "name": "Black",
+            "swatch": "#0A0A0A"
+          }
+        },
         "b1": {
           "type": "benefit",
           "settings": {
@@ -573,10 +588,19 @@
         "slate",
         "rosewood",
         "teal",
+        "black",
         "b1",
         "b2",
         "b3"
       ]
+    },
+    "reviews": {
+      "type": "rhythm-reviews",
+      "settings": {}
+    },
+    "activity_popup": {
+      "type": "rhythm-recent-purchase",
+      "settings": {}
     }
   },
   "order": [
@@ -593,6 +617,8 @@
     "comparison",
     "colors",
     "faq",
-    "buy"
+    "buy",
+    "reviews",
+    "activity_popup"
   ]
 }
