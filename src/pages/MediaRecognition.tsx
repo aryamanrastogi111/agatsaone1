@@ -196,18 +196,30 @@ export default function MediaRecognition() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {governmentRecognition.map((r, i) => (
-              <motion.div
-                key={r.title}
-                {...fade}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all"
-              >
-                <r.icon className="h-6 w-6 text-primary mb-3" />
-                <h3 className="font-bold text-foreground">{r.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{r.body}</p>
-              </motion.div>
-            ))}
+            {governmentRecognition.map((r: any, i) => {
+              const Wrapper: any = r.pdf ? motion.a : motion.div;
+              const wrapperProps = r.pdf
+                ? { href: r.pdf, target: "_blank", rel: "noopener noreferrer" }
+                : {};
+              return (
+                <Wrapper
+                  key={r.title}
+                  {...wrapperProps}
+                  {...fade}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${r.pdf ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <r.icon className="h-6 w-6 text-primary mb-3" />
+                    {r.pdf && <FileText className="h-4 w-4 text-primary/60" />}
+                  </div>
+                  <h3 className="font-bold text-foreground">{r.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{r.body}</p>
+                  {r.pdf && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1">View PDF <ExternalLink className="h-3 w-3" /></p>}
+                </Wrapper>
+              );
+            })}
+
           </div>
         </div>
       </section>
