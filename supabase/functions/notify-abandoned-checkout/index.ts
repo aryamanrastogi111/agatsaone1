@@ -211,11 +211,17 @@ ${waLink ? `WhatsApp: ${waLink}` : ""}`;
     const subject = `🔥 ${label} · ${name || phone || email} · ${subtotalPaise ? formatINR(subtotalPaise) : "cart"}`;
     const from = "Agatsa Alerts <orders@agatsa.in>";
 
-    const results = await Promise.all(
-      TEAM_RECIPIENTS.map((to) =>
-        sendViaResend({ to, from, subject, html, text, resendApiKey: RESEND_API_KEY })
-      )
-    );
+    // Email alerts are disabled: hot leads go to the admin panel + external API only.
+    const EMAIL_ALERTS_ENABLED = false;
+
+    const results = EMAIL_ALERTS_ENABLED
+      ? await Promise.all(
+          TEAM_RECIPIENTS.map((to) =>
+            sendViaResend({ to, from, subject, html, text, resendApiKey: RESEND_API_KEY })
+          )
+        )
+      : TEAM_RECIPIENTS.map(() => ({ success: false, error: "email alerts disabled" }));
+
 
     // Fire-and-forget: post the hot lead to the external Agatsa One API so
     // the sales team's external admin panel can trigger WhatsApp / call.
