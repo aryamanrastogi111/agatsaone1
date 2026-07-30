@@ -247,19 +247,21 @@ ${waLink ? `WhatsApp: ${waLink}` : ""}`;
     }).catch((err) => console.error("hot-lead external post failed:", err));
 
     const anySuccess = results.some((r) => r.success);
-    await supabase.from("email_send_log").insert(
-      TEAM_RECIPIENTS.map((recipient, i) => ({
-        message_id: crypto.randomUUID(),
-        template_name: "abandoned_checkout_hot_lead",
-        recipient_email: recipient,
-        status: results[i].success ? "sent" : "failed",
-        error_message: results[i].error || null,
-        metadata: { session_id: sessionId, trigger, phone: phone || null },
-      }))
-    );
+    if (EMAIL_ALERTS_ENABLED) {
+      await supabase.from("email_send_log").insert(
+        TEAM_RECIPIENTS.map((recipient, i) => ({
+          message_id: crypto.randomUUID(),
+          template_name: "abandoned_checkout_hot_lead",
+          recipient_email: recipient,
+          status: results[i].success ? "sent" : "failed",
+          error_message: results[i].error || null,
+          metadata: { session_id: sessionId, trigger, phone: phone || null },
+        }))
+      );
+    }
 
+    return new Response(JSON.stringify({ success: true, emailAlerts: EMAIL_ALERTS_ENABLED, anySuccess }), {
 
-    return new Response(JSON.stringify({ success: anySuccess, results }), {
       status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {
