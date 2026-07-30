@@ -211,11 +211,17 @@ ${waLink ? `WhatsApp: ${waLink}` : ""}`;
     const subject = `🔥 ${label} · ${name || phone || email} · ${subtotalPaise ? formatINR(subtotalPaise) : "cart"}`;
     const from = "Agatsa Alerts <orders@agatsa.in>";
 
-    const results = await Promise.all(
-      TEAM_RECIPIENTS.map((to) =>
-        sendViaResend({ to, from, subject, html, text, resendApiKey: RESEND_API_KEY })
-      )
-    );
+    // Email alerts are disabled: hot leads go to the admin panel + external API only.
+    const EMAIL_ALERTS_ENABLED = false;
+
+    const results = EMAIL_ALERTS_ENABLED
+      ? await Promise.all(
+          TEAM_RECIPIENTS.map((to) =>
+            sendViaResend({ to, from, subject, html, text, resendApiKey: RESEND_API_KEY })
+          )
+        )
+      : TEAM_RECIPIENTS.map(() => ({ success: false, error: "email alerts disabled" }));
+
 
     // Fire-and-forget: post the hot lead to the external Agatsa One API so
     // the sales team's external admin panel can trigger WhatsApp / call.
@@ -241,19 +247,21 @@ ${waLink ? `WhatsApp: ${waLink}` : ""}`;
     }).catch((err) => console.error("hot-lead external post failed:", err));
 
     const anySuccess = results.some((r) => r.success);
-    await supabase.from("email_send_log").insert(
-      TEAM_RECIPIENTS.map((recipient, i) => ({
-        message_id: crypto.randomUUID(),
-        template_name: "abandoned_checkout_hot_lead",
-        recipient_email: recipient,
-        status: results[i].success ? "sent" : "failed",
-        error_message: results[i].error || null,
-        metadata: { session_id: sessionId, trigger, phone: phone || null },
-      }))
-    );
+    if (EMAIL_ALERTS_ENABLED) {
+      await supabase.from("email_send_log").insert(
+        TEAM_RECIPIENTS.map((recipient, i) => ({
+          message_id: crypto.randomUUID(),
+          template_name: "abandoned_checkout_hot_lead",
+          recipient_email: recipient,
+          status: results[i].success ? "sent" : "failed",
+          error_message: results[i].error || null,
+          metadata: { session_id: sessionId, trigger, phone: phone || null },
+        }))
+      );
+    }
 
+    return new Response(JSON.stringify({ success: true, emailAlerts: EMAIL_ALERTS_ENABLED, anySuccess }), {
 
-    return new Response(JSON.stringify({ success: anySuccess, results }), {
       status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {
