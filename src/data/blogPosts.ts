@@ -22,6 +22,7 @@ import sanketlife2Product from "@/assets/sanketlife-2-product-new.webp";
 import blogMetabolicHealth from "@/assets/blog-metabolic-health-trends.jpg";
 import blogEcgPreventive from "@/assets/blog-ecg-preventive-heart.jpg";
 import rhythmBand from "@/assets/easytouch-rhythm-band.webp";
+import blogSequentialEcg from "@/assets/blog-sequential-vs-simultaneous-ecg.png.asset.json";
 
 export const blogPosts: BlogPost[] = [
   {
