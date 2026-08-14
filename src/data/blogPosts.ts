@@ -858,5 +858,97 @@ export const blogPosts: BlogPost[] = [
     ],
     ctaText: "Track Sleep & Recovery with EasyTouch Rhythm Band",
     ctaLink: "/devices/rhythm-band"
+  },
+  {
+    slug: "sequential-vs-simultaneous-12-lead-ecg",
+    image: blogSequentialEcg.url,
+    title: "For Decades, 12-Lead ECG Meant Simultaneous Recording. Agatsa Asked: Why don't we remove the leads and make it sequential",
+    excerpt: "Traditional 12-lead ECG machines capture all leads simultaneously through a tangle of cables and electrodes. Agatsa reimagined this with a sequential approach — recording the same electrical views one after another using a single-lead device held against different body positions. Here's how that works, and why it changes what's possible.",
+    date: "2026-08-14",
+    readTime: "8 min read",
+    sections: [
+      {
+        type: "paragraph",
+        content: "Walk into any hospital cardiac unit and the 12-lead ECG looks the same as it has for decades: a patient lying still, ten electrodes stuck across the chest and limbs, and a cluster of cables feeding into a bedside machine. Within a few seconds, twelve electrical views of the heart are captured at the same instant, printed onto a strip of paper, and read by a clinician. It is a system that works. It is also a system that has barely changed."
+      },
+      {
+        type: "paragraph",
+        content: "That rigidity is what made us ask a different question. Instead of accepting that a 12-lead ECG requires ten electrodes wired to a machine, what if we could capture the same twelve electrical views of the heart using a small, portable device — recording each lead one after another rather than all at once?"
+      },
+      {
+        type: "heading",
+        content: "What 'Simultaneous' Actually Means"
+      },
+      {
+        type: "paragraph",
+        content: "In a conventional 12-lead ECG, all twelve leads are derived from electrical signals picked up at the same moment. The electrodes are placed on specific anatomical positions — the limbs and across the chest wall in the precordial V1 to V6 positions — and the machine samples every channel in parallel. Because every lead is recorded against the same time base, the clinician can compare, for example, the ST segment in lead V5 at the exact same cardiac cycle as in lead II. That temporal alignment is what makes the traditional simultaneous recording the clinical reference standard."
+      },
+      {
+        type: "paragraph",
+        content: "The trade-off is that this simultaneity is locked to a fixed, wired setup. The electrodes must stay in place, the patient must hold still, and the equipment is stationary. It is accurate, but it is not portable, not repeatable at home, and not practical for anyone trying to understand their heart rhythm over days and weeks rather than during a single hospital visit."
+      },
+      {
+        type: "heading",
+        content: "The Sequential Idea"
+      },
+      {
+        type: "paragraph",
+        content: "A sequential 12-lead ECG takes a different path. Instead of wiring ten electrodes and sampling everything in parallel, it records the standard limb and augmented limb leads first, then moves to the precordial positions one at a time, capturing each chest lead in sequence. The same electrical views of the heart are obtained — Lead I, II, III, aVR, aVL, aVF and V1 through V6 — but they are gathered across a short window of time rather than in the same instant."
+      },
+      {
+        type: "paragraph",
+        content: "Practically, this means a single-lead device can be repositioned against the body at each of the standard precordial locations, building a full 12-lead recording without the cables, without a bedside machine, and without needing to remain wired to a hospital cart. The recording takes a little longer, because each lead is acquired in turn, but the patient is free of the wire harness that has defined ECG for generations."
+      },
+      {
+        type: "heading",
+        content: "Does The Time Gap Matter?"
+      },
+      {
+        type: "paragraph",
+        content: "This is the question clinicians ask first, and it is the right one. The honest answer is that the time gap is a real technical difference, and it has a specific consequence. Because each lead is captured over a span of seconds rather than the same heartbeat, the recording represents a series of consecutive heartbeats assembled into a twelve-lead picture, rather than twelve leads drawn from one identical cardiac cycle."
+      },
+      {
+        type: "paragraph",
+        content: "For detecting a heart attack, rhythm disorders, conduction abnormalities, and gross ischaemic changes, a well-recorded sequential 12-lead remains clinically useful — which is why this approach has been validated and published in peer-reviewed work. But it is not a like-for-like substitute for a simultaneous bedside machine in every edge case, particularly where beat-to-beat temporal alignment across leads is itself the diagnostic question. The two methods are different tools with different strengths."
+      },
+      {
+        type: "heading",
+        content: "Why Sequential Changes What's Possible"
+      },
+      {
+        type: "paragraph",
+        content: "The reason to pursue a sequential approach is not to replace the hospital machine. It is to make a 12-lead ECG possible in places and moments where a simultaneous wired setup simply cannot go — at home, during travel, between clinic visits, or when someone wants to record their heart repeatedly over weeks to see how their cardiac picture changes. A device you can hold in your hand and reposition yourself turns the 12-lead from a rare, stationary event into something that can be done again and again."
+      },
+      {
+        type: "paragraph",
+        content: "That repeatability is where the value compounds. A single hospital ECG is a snapshot. A sequence of recordings over time, all captured with the same portable method, begins to show trends — how the heart responds after exertion, how rhythm behaves at different times of day, whether a borderline finding is stable or evolving. None of that is visible from one simultaneous recording taken every few years."
+      },
+      {
+        type: "heading",
+        content: "Removing The Leads"
+      },
+      {
+        type: "paragraph",
+        content: "The deeper point of going sequential is that it frees the 12-lead ECG from the lead harness entirely. Once the requirement for ten simultaneously wired electrodes is removed, the device can shrink to a handheld form, run on its own power, store recordings digitally, and send them for analysis. The chest leads are still placed in their correct anatomical positions, but only one at a time, guided by the device itself. What disappears is the cable clutter, the bedside console, and the assumption that a 12-lead recording must happen inside a hospital."
+      },
+      {
+        type: "paragraph",
+        content: "That is the shift Agatsa set out to make. By recording sequentially with a single-lead device, SanketLife makes a full 12-lead ECG something a person can carry, perform themselves, and repeat — capturing the same twelve electrical views the hospital obtains, in a form that fits in the hand."
+      },
+      {
+        type: "heading",
+        content: "A Different Question"
+      },
+      {
+        type: "paragraph",
+        content: "For most of cardiology's history, the 12-lead ECG was defined by how it was captured: simultaneously, wired, and stationary. The sequential approach asks whether the twelve views themselves are what matter, rather than the single moment they share. If they are — and for a large share of everyday cardiac screening, they are — then a portable, repeatable, cable-free 12-lead becomes a practical reality."
+      },
+      {
+        type: "paragraph",
+        content: "It does not make simultaneous recording obsolete. Nothing matches a wired bedside machine for a single-instant, perfectly aligned twelve-lead trace. But it does make the 12-lead available where it never was before — and that availability, repeated over time, may be what matters most for catching heart disease before it becomes an emergency."
+      }
+    ],
+    ctaText: "Capture a 12-Lead ECG Anywhere with SanketLife",
+    ctaLink: "/devices/sanketlife-ecg"
   }
 ];
