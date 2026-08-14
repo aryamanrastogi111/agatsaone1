@@ -118,7 +118,7 @@ export const blogPosts: BlogPost[] = [
       { type: "paragraph", content: "This article is intended for educational and technical information and should not be interpreted as medical advice. The clinical use and interpretation of any ECG device should follow its approved intended use, applicable regulatory requirements and professional medical guidance." },
     ],
     ctaText: "See how SanketLife brings 12-lead ECG insights to your pocket",
-    ctaLink: "/products/sanketlife-ecg",
+    ctaLink: "/devices/sanketlife-ecg",
   },
   {
     slug: "can-ecg-detect-heart-disease-before-symptoms-appear",
