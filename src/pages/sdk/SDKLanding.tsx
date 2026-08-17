@@ -92,10 +92,10 @@ import {
                  Build Health-Tech Apps with{' '}
                  <span className="text-primary">Agatsa SDK</span>
                </h1>
-               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                 Integrate medical-grade ECG, body composition analysis, and comprehensive 
-                 health tracking into your applications with our easy-to-use SDKs.
-               </p>
+                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  Integrate medical-grade ECG, body composition analysis, and continuous 
+                  metabolic & heart-rate intelligence into your applications with our easy-to-use SDKs.
+                </p>
                <div className="flex flex-col sm:flex-row gap-4 justify-center">
                  <Button asChild size="lg" className="text-lg px-8">
                    <Link to="/sdk/auth?mode=register">
