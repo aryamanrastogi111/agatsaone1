@@ -21,20 +21,20 @@ import {
  import agatsaLogo from '@/assets/agatsa-logo.webp';
  
  const sdkProducts = [
-   {
-     id: 'sanketlife',
-     name: 'SanketLife SDK',
-     description: 'Integrate medical-grade 12-lead ECG capabilities into your health applications.',
-     icon: Heart,
-     features: [
-       '12-lead ECG recording',
-       'Real-time heart rate monitoring',
-       'Arrhythmia detection alerts',
-       'ECG report generation',
-     ],
-     color: 'text-red-500',
-     bgColor: 'bg-red-500/10',
-   },
+    {
+      id: 'sanketlife',
+      name: 'SanketLife SDK',
+      description: 'Integrate medical-grade 12-lead ECG — leadless and lead-based — with AI disease detection and cardiologist review into your health applications.',
+      icon: Heart,
+      features: [
+        '12-lead medical-grade ECG — leadless & lead-based',
+        'Mobile PDF reports on-device',
+        'AI disease detection — STEMI, arrhythmia, ischemia',
+        'Cardiologist review panel',
+      ],
+      color: 'text-red-500',
+      bgColor: 'bg-red-500/10',
+    },
    {
      id: 'corebalance',
      name: 'CoreBalance SDK',
