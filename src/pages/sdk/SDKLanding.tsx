@@ -2,20 +2,20 @@
  import { Button } from '@/components/ui/button';
  import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
  import { Badge } from '@/components/ui/badge';
- import { 
-   Heart, 
-   Activity, 
-   Scale, 
-   ArrowRight, 
-   Shield, 
-   Code, 
-   Smartphone, 
-   CheckCircle,
-   Zap,
-   Users,
-   Clock,
-   Settings
- } from 'lucide-react';
+import {
+  Heart,
+  Scale,
+  ArrowRight,
+  Shield,
+  Code,
+  Smartphone,
+  CheckCircle,
+  Zap,
+  Users,
+  Clock,
+  Settings,
+  Watch
+} from 'lucide-react';
  import { Header } from '@/components/layout/Header';
  import { Footer } from '@/components/layout/Footer';
  import agatsaLogo from '@/assets/agatsa-logo.webp';
@@ -49,21 +49,21 @@
      color: 'text-blue-500',
      bgColor: 'bg-blue-500/10',
    },
-   {
-     id: 'health360',
-     name: 'Health 360 SDK',
-     description: 'Complete health monitoring solution with multi-device integration support.',
-     icon: Activity,
-     features: [
-       'Unified health dashboard',
-       'Multi-device data sync',
-       'Trend analysis',
-       'Custom health reports',
-     ],
-     color: 'text-green-500',
-     bgColor: 'bg-green-500/10',
-   },
- ];
+    {
+      id: 'easytouch-rhythm',
+      name: 'EasyTouch Rhythm SDK',
+      description: 'Embed continuous metabolic & heart-rate intelligence, ECG spot-checks and glucose-trend insights from the Rhythm Band into your apps.',
+      icon: Watch,
+      features: [
+        'Continuous heart-rate & metabolic load',
+        'Single-lead ECG spot capture',
+        'Glucose trend & diet-impact nudges',
+        'SpO2, stress & sleep analytics',
+      ],
+      color: 'text-green-500',
+      bgColor: 'bg-green-500/10',
+    },
+  ];
  
  const stats = [
    { value: '500+', label: 'Devices Deployed', icon: Smartphone },
@@ -91,10 +91,10 @@
                  Build Health-Tech Apps with{' '}
                  <span className="text-primary">Agatsa SDK</span>
                </h1>
-               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                 Integrate medical-grade ECG, body composition analysis, and comprehensive 
-                 health tracking into your applications with our easy-to-use SDKs.
-               </p>
+                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  Integrate medical-grade ECG, body composition analysis, and continuous 
+                  metabolic & heart-rate intelligence into your applications with our easy-to-use SDKs.
+                </p>
                <div className="flex flex-col sm:flex-row gap-4 justify-center">
                  <Button asChild size="lg" className="text-lg px-8">
                    <Link to="/sdk/auth?mode=register">
