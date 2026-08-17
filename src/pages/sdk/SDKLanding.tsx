@@ -2,20 +2,21 @@
  import { Button } from '@/components/ui/button';
  import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
  import { Badge } from '@/components/ui/badge';
- import { 
-   Heart, 
-   Activity, 
-   Scale, 
-   ArrowRight, 
-   Shield, 
-   Code, 
-   Smartphone, 
-   CheckCircle,
-   Zap,
-   Users,
-   Clock,
-   Settings
- } from 'lucide-react';
+import {
+  Heart,
+  Activity,
+  Scale,
+  ArrowRight,
+  Shield,
+  Code,
+  Smartphone,
+  CheckCircle,
+  Zap,
+  Users,
+  Clock,
+  Settings,
+  Watch
+} from 'lucide-react';
  import { Header } from '@/components/layout/Header';
  import { Footer } from '@/components/layout/Footer';
  import agatsaLogo from '@/assets/agatsa-logo.webp';
