@@ -1,5 +1,8 @@
 // Creates a Razorpay order for the SanketLife SDK Developer Kit (₹18,999).
-// Inserts a pending row into `orders` so razorpay-verify-payment can flip it
+// Routes through the same backend API as other SKUs:
+//   POST {API_BASE}/v1/orders/website/create  with  items: [{ sku: "sdk_devkit", qty: 1 }]
+// The backend returns a Razorpay order id + website order id + total amount.
+// We then insert a pending `orders` row so razorpay-verify-payment can flip it
 // to paid on success — same lifecycle as the main checkout.
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -11,22 +14,18 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const DEV_KIT_SKU = "sdk_dev_kit_v1";
+const API_BASE = "https://agatsa-one-api-651017108992.asia-south1.run.app";
+
+const DEV_KIT_SKU = "sdk_devkit";
 const DEV_KIT_NAME = "SanketLife SDK Developer Kit";
-const DEV_KIT_PRICE_PAISE = 1899900; // ₹18,999
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID");
-    const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET");
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-
-    if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
-      throw new Error("Razorpay credentials not configured");
-    }
+    const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID");
 
     const body = await req.json();
     const {
@@ -47,46 +46,46 @@ serve(async (req) => {
       throw new Error("Name and email are required");
     }
 
-    const amount = DEV_KIT_PRICE_PAISE;
-
-    // 1. Create Razorpay order directly
-    const auth = btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`);
-    const receipt = `sdkkit_${Date.now()}`.slice(0, 40);
-    const rzpRes = await fetch("https://api.razorpay.com/v1/orders", {
+    // 1. Forward to backend for item pricing + order creation (same API as checkout)
+    const createRes = await fetch(`${API_BASE}/v1/orders/website/create`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Basic ${auth}` },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount,
-        currency: "INR",
-        receipt,
-        notes: {
-          product: DEV_KIT_NAME,
-          sku: DEV_KIT_SKU,
-          customer_email: customerEmail,
-          company: company || "",
-          use_case: useCase || "",
-          expected_volume: expectedVolume || "",
-        },
+        items: [{ sku: DEV_KIT_SKU, qty: 1 }],
+        recipientName: customerName,
+        recipientPhone: customerPhone || "",
+        recipientEmail: customerEmail,
+        addressLine1: shippingAddress || "",
+        addressLine2: "",
+        city: shippingCity || "",
+        state: shippingState || "",
+        pincode: shippingPincode || "",
       }),
     });
-    const rzpData = await rzpRes.json();
-    if (!rzpRes.ok || !rzpData.id) {
-      console.error("Razorpay order create failed:", rzpData);
-      throw new Error(rzpData?.error?.description || "Failed to create Razorpay order");
+
+    const createData = await createRes.json();
+    if (!createRes.ok) {
+      throw new Error(createData.error || createData.message || `Backend error (${createRes.status})`);
     }
 
-    // 2. Insert pending order row so razorpay-verify-payment can update it
+    let { razorpayOrderId, websiteOrderId, totalAmountPaise, keyId } = createData;
+
+    if (!razorpayOrderId || !totalAmountPaise) {
+      throw new Error("Backend did not return a Razorpay order id / amount");
+    }
+
+    // 2. Save pending order to DB so razorpay-verify-payment can flip it to paid
     if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
       await supabase.from("orders").insert({
-        razorpay_order_id: rzpData.id,
-        amount: amount / 100,
+        razorpay_order_id: razorpayOrderId,
+        amount: totalAmountPaise / 100,
         currency: "INR",
         status: "created",
         customer_name: customerName,
         customer_email: customerEmail,
         customer_phone: customerPhone || null,
-        items: [{ sku: DEV_KIT_SKU, name: DEV_KIT_NAME, qty: 1, price: amount / 100 }],
+        items: [{ sku: DEV_KIT_SKU, name: DEV_KIT_NAME, qty: 1, price: totalAmountPaise / 100 }],
         shipping_address: shippingAddress || null,
         shipping_city: shippingCity || null,
         shipping_state: shippingState || null,
@@ -98,12 +97,13 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({
-        orderId: rzpData.id,
-        razorpayOrderId: rzpData.id,
-        amount,
-        totalAmountPaise: amount,
+        orderId: razorpayOrderId,
+        razorpayOrderId,
+        websiteOrderId,
+        amount: totalAmountPaise,
+        totalAmountPaise,
         currency: "INR",
-        keyId: RAZORPAY_KEY_ID,
+        keyId: keyId || RAZORPAY_KEY_ID,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
