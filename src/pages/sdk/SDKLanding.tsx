@@ -52,13 +52,13 @@ import {
     {
       id: 'easytouch-rhythm',
       name: 'EasyTouch Rhythm SDK',
-      description: 'Embed continuous metabolic & heart-rate intelligence, ECG spot-checks and glucose-trend insights from the Rhythm Band into your apps.',
+      description: 'Embed continuous metabolic & heart-rate intelligence, glucose-trend insights and body-vital analytics from the Rhythm Band into your apps.',
       icon: Watch,
       features: [
         'Continuous heart-rate & metabolic load',
-        'Single-lead ECG spot capture',
         'Glucose trend & diet-impact nudges',
-        'SpO2, stress & sleep analytics',
+        'Sleep, steps, HRV & stress',
+        'SpO2 & activity analytics',
       ],
       color: 'text-green-500',
       bgColor: 'bg-green-500/10',
