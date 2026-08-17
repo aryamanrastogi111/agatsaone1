@@ -4,7 +4,6 @@
  import { Badge } from '@/components/ui/badge';
 import {
   Heart,
-  Activity,
   Scale,
   ArrowRight,
   Shield,
