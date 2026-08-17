@@ -257,7 +257,7 @@ function DevKitPurchase() {
                   razorpay_signature: response.razorpay_signature,
                   customerEmail: form.email.trim(),
                   customerName: form.name.trim(),
-                  items: [{ sku: "", name: "SanketLife SDK Developer Kit", qty: 1, price: amount / 100 }],
+                  items: [{ sku: "sdk_devkit", name: "SanketLife SDK Developer Kit", qty: 1, price: amount / 100 }],
                   total: amount / 100,
                   shippingAddress: form.address.trim(),
                   shippingCity: form.city.trim(),
