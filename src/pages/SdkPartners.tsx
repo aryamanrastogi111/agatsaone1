@@ -266,6 +266,31 @@ function DevKitPurchase() {
                 },
               });
 
+              // Register the sale with the Agatsa backend — this creates the order,
+              // emails the invoice, issues the SDK starter keys (100 ECGs) and
+              // triggers dispatch. Idempotent on razorpay_payment_id.
+              try {
+                await fetch(`${API_BASE}/v1/orders/website/complete`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    items: [{ sku: "sdk_devkit", qty: 1 }],
+                    recipientName: form.name.trim(),
+                    recipientPhone: form.phone.trim(),
+                    recipientEmail: form.email.trim(),
+                    addressLine1: form.address.trim(),
+                    city: form.city.trim(),
+                    state: form.state.trim(),
+                    pincode: form.pincode.trim(),
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_signature: response.razorpay_signature,
+                  }),
+                });
+              } catch (e) {
+                console.error("Agatsa order registration failed:", e);
+              }
+
               // 4. Log to /admin/partnerships as SDK enquiry with payment ref
               await logSdkEnquiry({
                 intent: "dev_kit_purchase",
