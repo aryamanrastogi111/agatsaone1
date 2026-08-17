@@ -50,21 +50,21 @@ import {
      color: 'text-blue-500',
      bgColor: 'bg-blue-500/10',
    },
-   {
-     id: 'health360',
-     name: 'Health 360 SDK',
-     description: 'Complete health monitoring solution with multi-device integration support.',
-     icon: Activity,
-     features: [
-       'Unified health dashboard',
-       'Multi-device data sync',
-       'Trend analysis',
-       'Custom health reports',
-     ],
-     color: 'text-green-500',
-     bgColor: 'bg-green-500/10',
-   },
- ];
+    {
+      id: 'easytouch-rhythm',
+      name: 'EasyTouch Rhythm SDK',
+      description: 'Embed continuous metabolic & heart-rate intelligence, ECG spot-checks and glucose-trend insights from the Rhythm Band into your apps.',
+      icon: Watch,
+      features: [
+        'Continuous heart-rate & metabolic load',
+        'Single-lead ECG spot capture',
+        'Glucose trend & diet-impact nudges',
+        'SpO2, stress & sleep analytics',
+      ],
+      color: 'text-green-500',
+      bgColor: 'bg-green-500/10',
+    },
+  ];
  
  const stats = [
    { value: '500+', label: 'Devices Deployed', icon: Smartphone },
