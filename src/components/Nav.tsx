@@ -6,9 +6,14 @@ import agatsaLogo from "@/assets/agatsa-logo.webp";
 import { isMyEasyTouchHost } from "@/hooks/useIsMyEasyTouch";
 
 const navLinks = [
-  { label: "Devices", href: "/devices" },
-  { label: "Agatsa Bundle", href: "/complete-health-kit" },
-  { label: "Rhythm", href: "/rhythm" },
+  {
+    label: "Shop",
+    children: [
+      { label: "All Devices", href: "/devices" },
+      { label: "Agatsa Bundle", href: "/complete-health-kit" },
+      { label: "Rhythm Band", href: "/rhythm" },
+    ],
+  },
   { label: "NERA AI", href: "/nera-ai" },
   {
     label: "Programmes",
@@ -27,10 +32,23 @@ const navLinks = [
       { label: "For Corporates", href: "/for-corporates" },
     ],
   },
-  { label: "Partner with Us", href: "/partner-with-us" },
-  { label: "Media & Recognition", href: "/media-recognition" },
-  { label: "About", href: "/about" },
+  {
+    label: "Developers",
+    children: [
+      { label: "SDK Integration", href: "/partners" },
+      { label: "Developer Console", href: "/sdk" },
+    ],
+  },
+  {
+    label: "Company",
+    children: [
+      { label: "About Us", href: "/about" },
+      { label: "Media & Recognition", href: "/media-recognition" },
+      { label: "Partner with Us", href: "/partner-with-us" },
+    ],
+  },
 ];
+
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
