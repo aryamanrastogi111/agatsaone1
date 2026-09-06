@@ -271,7 +271,7 @@ export default function EasyTouchWellnessProduct() {
             {[
               { stat: "No needle", sub1: "Daily check-in", sub2: "No blood, no prep" },
               { stat: "15 sec", sub1: "Per reading", sub2: "Faster than any prick" },
-              { stat: "98.56%", sub1: "Validation accuracy", sub2: "Medanta, Gurugram" },
+              { stat: "98.56%", sub1: "Validation accuracy", sub2: "Clinically validated" },
               { stat: "8 vitals", sub1: "One scan", sub2: "Light-based · No strips" },
             ].map((s) => (
               <div key={s.stat} className="text-center md:text-left">
