@@ -267,11 +267,13 @@ export default function EasyTouchWellnessProduct() {
 
         {/* SECTION 2 — STATS BAR */}
         <section className="py-8" style={{ backgroundColor: HEADING }}>
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-white">
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-5 gap-6 text-white">
             {[
               { stat: "No needle", sub1: "Daily check-in", sub2: "No blood, no prep" },
               { stat: "15 sec", sub1: "Per reading", sub2: "Faster than any prick" },
-              { stat: "Optical", sub1: "Blood Glucose trends", sub2: "Metabolic load · No strips" },
+              { stat: "Optical", sub1: "Blood Glucose trends", sub2: "Metabolic load" },
+              { stat: "₹0", sub1: "Recurring cost", sub2: "No strips, no lancets" },
+              { stat: "7 Days", sub1: "Nera AI Premium", sub2: "Free with device" },
             ].map((s) => (
               <div key={s.stat} className="text-center md:text-left">
                 <div className="text-2xl md:text-3xl font-bold">{s.stat}</div>
