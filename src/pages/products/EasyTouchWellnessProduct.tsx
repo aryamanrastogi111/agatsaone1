@@ -61,7 +61,7 @@ export default function EasyTouchWellnessProduct() {
   const PRICE_FMT = fmt(PRICE);
   useSEO({
     title:
-      "EasyTouch Wellness — Prick Less. Know More. | Light-Based Daily Diabetes Check-in | Agatsa One",
+      "EasyTouch Wellness — Prick Less. Know More. | Daily Metabolic Wellness Insights for People Managing Blood Sugar | Agatsa One",
     description:
       "Daily diabetes check-in without finger pricks. Light through blood — reads body signals in 15 seconds. Snap meals, track trends, predict HbA1c.",
   });
