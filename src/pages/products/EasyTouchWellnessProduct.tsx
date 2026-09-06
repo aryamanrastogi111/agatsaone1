@@ -561,6 +561,40 @@ export default function EasyTouchWellnessProduct() {
           </div>
         </section>
 
+        {/* SECTION 5.1 — BEYOND THE GLUCOMETER */}
+        <section className="bg-white py-20">
+          <motion.div
+            {...fadeUp}
+            className="max-w-3xl mx-auto px-6 text-center"
+          >
+            <p
+              className="text-xs font-bold uppercase tracking-widest mb-4"
+              style={{ color: ACCENT }}
+            >
+              Beyond Your Glucometer
+            </p>
+            <h2
+              className="font-bold"
+              style={{ color: HEADING, fontSize: "clamp(26px, 3.5vw, 38px)", lineHeight: 1.2 }}
+            >
+              Your glucometer tells you a number.
+              <br />
+              EasyTouch tells you a direction.
+            </h2>
+            <p
+              className="mt-6 max-w-2xl mx-auto"
+              style={{ color: BODY, fontSize: 18, lineHeight: 1.8 }}
+            >
+              Most diabetics skip readings because pricking hurts. EasyTouch gives
+              you a daily health check-in with no pain at all. Combined with the
+              Snap meal feature and 30-day trend in the Agatsa One app, you get
+              something your glucometer can't give: your body's direction over
+              time. Is your management actually working? Are you getting better
+              or worse between blood tests? That's what EasyTouch tells you.
+            </p>
+          </motion.div>
+        </section>
+
         {/* SECTION 5.5 — INSIDE THE APP (real screenshots) */}
         <section className="py-20" style={{ backgroundColor: LIGHT_BG }}>
           <div className="max-w-6xl mx-auto px-6">
