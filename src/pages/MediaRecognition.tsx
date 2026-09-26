@@ -1,9 +1,11 @@
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
-import { Award, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star } from "lucide-react";
+import { Award, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star, Sparkles } from "lucide-react";
 import { VideoCard } from "@/components/VideoCard";
 import type { VideoItem } from "@/components/VideoCard";
+
+import sanketlifeHero from "@/assets/sanketlife-hero-new.webp";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
@@ -68,7 +70,7 @@ const expertVideos: VideoItem[] = [
 const mediaMentions = [
   { outlet: "The Better India", title: "How SanketLife Helps Prevent Heart Attacks & Detect Cardiac Symptoms", year: "2021", link: "https://thebetterindia.com/317906/how-to-prevent-heart-attack-detect-cardiac-symptoms-ecg-device-sanketlife-rahul-neha-rastogi-noida/" },
   { outlet: "Forbes India", title: "20 Most Audacious Women in Business", year: "2020" },
-  { outlet: "Forbes India", title: "Self-Made Women list", year: "2020" },
+  { outlet: "Forbes India", title: "Self-Made Women: Neha Rastogi — Monitoring Heart Rates with a Keychain", year: "2020", link: "https://www.forbesindia.com/article/self-made-women-2020/neha-rastogi-monitoring-heart-rates-with-a-keychain/58069/1", featured: true },
   { outlet: "Outlook Magazine", title: "Women Leaders Trailblazer", year: "—" },
   { outlet: "NEWS9 Live", title: "Agatsa's Life-Saving SanketLife 2.0", year: "—" },
   { outlet: "ET Now", title: "Rise with India Award feature", year: "—" },
@@ -207,15 +209,27 @@ export default function MediaRecognition() {
                     href={m.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block bg-card border border-border rounded-xl p-5 hover:border-primary hover:shadow-md transition-all group"
+                    className={`block bg-card border rounded-xl overflow-hidden hover:shadow-lg transition-all group relative ${("featured" in m && m.featured) ? "border-primary/50 ring-2 ring-primary/20 shadow-md" : "border-border hover:border-primary"}`}
                   >
-                    <p className="text-xs font-semibold uppercase tracking-wider text-primary">{m.outlet}</p>
-                    <p className="text-sm font-medium text-foreground mt-2 leading-snug">{m.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1 inline-flex items-center gap-1">
-                      {m.year !== "—" && <span>{m.year}</span>}
-                      {m.year !== "—" && " · "}
-                      <span className="text-primary font-semibold inline-flex items-center gap-1">Read article <ExternalLink className="h-3 w-3" /></span>
-                    </p>
+                    {("featured" in m && m.featured) && (
+                      <>
+                        <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-primary/10 to-primary/5">
+                          <img src={sanketlifeHero} alt={m.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <div className="absolute top-2 right-2 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full flex items-center gap-1">
+                            <Sparkles className="h-3 w-3" /> Featured
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    <div className="p-5">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-primary">{m.outlet}</p>
+                      <p className="text-sm font-medium text-foreground mt-2 leading-snug">{m.title}</p>
+                      <p className="text-xs text-muted-foreground mt-1 inline-flex items-center gap-1">
+                        {m.year !== "—" && <span>{m.year}</span>}
+                        {m.year !== "—" && " · "}
+                        <span className="text-primary font-semibold inline-flex items-center gap-1">Read article <ExternalLink className="h-3 w-3" /></span>
+                      </p>
+                    </div>
                   </a>
                 ) : (
                   <div className="bg-card border border-border rounded-xl p-5">
