@@ -48,6 +48,18 @@ const publications = [
     finding: "High concordance with hospital-grade ECG across diverse patient groups.",
     pdf: "/media-recognition/s40064-016-1932-z.pdf",
   },
+  {
+    title:
+      "Acceptance and Feasibility of Handheld Tele-ECG for Community Cardiac Screening in Urban Slum Populations",
+    journal: "Indian Journal of Community Health",
+    year: "2020",
+    description:
+      "A six-month, 410-patient field study at an urban health training centre attached to a tertiary care teaching hospital, evaluating SanketLife handheld Tele-ECG as a screening tool for walk-in patients and attenders.",
+    finding:
+      "97.5% of respondents were satisfied with handheld Tele-ECG, with abnormal readings (LVH 15.4%) confirmed by standard 12-lead ECG at the referral hospital — demonstrating 95% correlation and reliable community screening.",
+    pdf: "/media-recognition/Acceptance_and_feasibility_for_handheld_Tele-ECG.pdf",
+    link: "https://www.iaph.org.in/index.php/iaph/article/view/786",
+  },
 ];
 
 const institutions = [
@@ -91,7 +103,7 @@ export default function Publications() {
           {[
             { stat: "98.15%", label: "ECG Sensitivity" },
             { stat: "100%", label: "ECG Specificity" },
-            { stat: "4", label: "Peer-Reviewed Papers" },
+            { stat: "5", label: "Peer-Reviewed Papers" },
             { stat: "1.5 Cr+", label: "Health Records Analysed" },
           ].map((s, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.1 }}>
