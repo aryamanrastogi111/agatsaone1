@@ -14,6 +14,7 @@ import aniNewsAgatsa from "@/assets/ani-news-agatsa.jpg";
 import yourstoryMaricoAward from "@/assets/yourstory-marico-award.jpg";
 import anjaniMashelkarPrize2025 from "@/assets/anjani-mashelkar-prize-2025.jpg";
 import pniNewsKhg from "@/assets/pni-news-khg.jpg";
+import aimHealthcareDigiBook from "@/assets/pdfs/AIM-Healthcare-Innovations-for-You.pdf.asset.json";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
@@ -27,6 +28,7 @@ import awardMbillionth from "@/assets/award-mbillionth-new.png";
 const PDF_FILES = {
   nidhi: "75-Promising-Startups-NIDHI-Seed-Support-Program.pdf",
   womenpreneurs: "CTB-75-womenpreneurs-of-India.pdf",
+  aimHealthcare: "AIM-Healthcare-Innovations-for-You.pdf",
   ije: "Indian_Journal_of_Electrocardilogy.pdf",
   springer2016: "s40064-016-1932-z.pdf",
   sciRep2024: "s41598-024-84265-8.pdf",
@@ -61,6 +63,7 @@ const featuredAwards = [
 const governmentRecognition: Array<{ title: string; body: string; icon: typeof Building2; pdfKey: PdfKey }> = [
   { title: "75 Promising Startups — NIDHI Seed Support Program", body: "Featured by Department of Science & Technology, Govt. of India (Vigyan Prasar, 2022).", icon: Building2, pdfKey: "nidhi" },
   { title: "75 Womenpreneurs of India", body: "Founder Neha Rastogi featured among India's top 75 women entrepreneurs.", icon: Star, pdfKey: "womenpreneurs" },
+  { title: "Innovations for You — Healthcare", body: "SanketLife featured among promising healthcare startups in NITI Aayog's Atal Innovation Mission Digi-Book (2021).", icon: Building2, pdfKey: "aimHealthcare" },
 ];
 
 
@@ -98,6 +101,7 @@ export default function MediaRecognition() {
   const pdfLinks: Record<PdfKey, string> = {
     nidhi: `/media-recognition/${PDF_FILES.nidhi}`,
     womenpreneurs: `/media-recognition/${PDF_FILES.womenpreneurs}`,
+    aimHealthcare: aimHealthcareDigiBook.url,
     ije: `/media-recognition/${PDF_FILES.ije}`,
     springer2016: `/media-recognition/${PDF_FILES.springer2016}`,
     sciRep2024: `/media-recognition/${PDF_FILES.sciRep2024}`,
