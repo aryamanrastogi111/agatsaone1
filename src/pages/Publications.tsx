@@ -8,13 +8,35 @@ const fade = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }
 
 const publications = [
   {
-    title: "Validation of a Pocket-Size 12-Lead ECG Device for Ambulatory Cardiac Screening",
-    journal: "Indian Journal of Electrocardiology",
+    title:
+      "Assessment of Diagnostic Accuracy of SanketLife — A Wireless, Pocket-Sized ECG Biosensor — in Comparison to Standard 12-Lead ECG in the Detection of Cardiovascular Diseases in a Tertiary Care Setting",
+    journal: "Indian Pacing and Electrophysiology Journal",
+    year: "2019",
+    description:
+      "A prospective diagnostic accuracy trial at Sri Jayadeva Institute of Cardiovascular Sciences & Research, Bengaluru, comparing SanketLife against the hospital-grade GE-2000 12-lead ECG across 100 cardiology OPD patients.",
+    finding: "98.15% sensitivity and 100% specificity in diagnosing major cardiovascular conditions (Major Minnesota codes).",
+    pdf: "/media-recognition/Indian_Journal_of_Electrocardilogy.pdf",
+    link: "https://pubmed.ncbi.nlm.nih.gov/31866552/",
+  },
+  {
+    title:
+      "Identifying the Prevalence of the Life-Threatening Atrial Fibrillation Using a Smartphone-Based Wireless Electrocardiography Device: An Observational Study",
+    journal: "Journal of the Practice of Cardiovascular Sciences",
+    year: "2019",
+    description:
+      "An observational study by Agatsa's R&D team evaluating SanketLife's 12-lead and single-lead recordings across homes, diagnostic labs and hospital OPDs, with every report verified by a certified ECG expert and cardiologist.",
+    finding: "SanketLife effectively captured atrial fibrillation cases across every care setting — from home self-monitoring to tertiary care.",
+    link: "https://journals.lww.com/jpcs/fulltext/2019/05030/identifying_the_prevalence_of_the_life_threatening.11.aspx",
+  },
+  {
+    title:
+      "Cross-Sectional Study to Find Out the Prevalence of Cardiovascular Diseases Through Detection of ECG Abnormalities in Undiagnosed Population Using a Handheld ECG Device, SanketLife Pro Plus",
+    journal: "Indian Journal of Clinical Practice",
     year: "2024",
     description:
-      "A clinical validation study of SanketLife's leadless, sequential 12-lead ECG technology against hospital-grade simultaneous ECG systems, conducted at Sri Jayadeva Institute of Cardiovascular Sciences & Research, Bengaluru.",
-    finding: "98.15% ECG sensitivity for arrhythmia detection in ambulatory patients.",
-    pdf: "/__l5e/assets-v1/e76847be-3971-4209-b354-11e3771063cc/Indian_Journal_of_Electrocardilogy.pdf",
+      "A cross-sectional screening study conducted at a free ECG camp in the OPD of Indraprastha Apollo Hospitals, New Delhi, assessing ECG findings in 100 general OPD patients not previously diagnosed with any cardiovascular disease.",
+    finding: "Detected silent ischemia signals (ST depression, T-wave inversions) in an undiagnosed population — evidence for mass ECG screening.",
+    link: "https://ojs.ijcp.in/index.php/IJCP/article/view/946",
   },
   {
     title: "Accuracy of Smartphone-Connected ECG Devices in Remote Cardiac Monitoring",
@@ -23,7 +45,7 @@ const publications = [
     description:
       "Peer-reviewed evaluation of smartphone-connected ECG acquisition, demonstrating high concordance with standard 12-lead hospital equipment across a diverse patient population.",
     finding: "High concordance with hospital-grade ECG across diverse patient groups.",
-    pdf: "/__l5e/assets-v1/4928c199-0b6a-4b76-b725-fb0b302b8cb8/s40064-016-1932-z.pdf",
+    pdf: "/media-recognition/s40064-016-1932-z.pdf",
   },
   {
     title: "Feasibility of Handheld ECG Technology for Early Detection of Cardiac Abnormalities",
@@ -32,7 +54,7 @@ const publications = [
     description:
       "Published research examining the feasibility and diagnostic reliability of handheld, leadless ECG technology for early detection of cardiac abnormalities in real-world settings.",
     finding: "Handheld ECG showed clinically acceptable diagnostic reliability for early detection.",
-    pdf: "/__l5e/assets-v1/245bc160-1394-4543-abe1-b3de0248f6ad/s41598-024-84265-8.pdf",
+    pdf: "/media-recognition/s41598-024-84265-8.pdf",
   },
 ];
 
