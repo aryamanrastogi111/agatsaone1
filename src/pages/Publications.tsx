@@ -284,26 +284,25 @@ export default function Publications() {
             </div>
           </motion.div>
 
-          <motion.div
-            {...fade}
-            className="bg-card border border-dashed border-border rounded-2xl p-8 md:p-10 text-center"
-          >
-            <FlaskConical className="h-8 w-8 text-primary mx-auto mb-4" />
-            <h3 className="text-lg font-bold text-foreground">Research In Progress</h3>
-            <p className="text-sm text-muted-foreground mt-3 max-w-xl mx-auto leading-relaxed">
-              The Rhythm Band is the newest addition to the Agatsa platform, delivering non-invasive
-              blood-glucose trend monitoring and metabolic-load insights powered by Nera AI.
-              Clinical validation studies are currently underway and peer-reviewed publications will
-              be added to this section as they are accepted.
-            </p>
-            <p className="text-sm text-muted-foreground mt-4">
-              For research collaborations or early-access enquiries, write to{" "}
-              <a href="mailto:info@agatsa.com" className="text-primary font-medium">
-                info@agatsa.com
-              </a>
-              .
-            </p>
-          </motion.div>
+          <div className="space-y-6">
+            {metabolicPublications.map((p, i) => (
+              <PublicationCard key={i} p={p} i={i} />
+            ))}
+            <motion.div
+              {...fade}
+              className="bg-card border border-dashed border-border rounded-2xl p-6 md:p-8 text-center"
+            >
+              <FlaskConical className="h-7 w-7 text-primary mx-auto mb-3" />
+              <p className="text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                Additional peer-reviewed metabolic-trend validation studies are underway. For
+                research collaborations or early-access enquiries, write to{" "}
+                <a href="mailto:info@agatsa.com" className="text-primary font-medium">
+                  info@agatsa.com
+                </a>
+                .
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
