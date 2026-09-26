@@ -6,6 +6,7 @@ import { VideoCard } from "@/components/VideoCard";
 import type { VideoItem } from "@/components/VideoCard";
 
 import sanketlifeHero from "@/assets/sanketlife-hero-new.webp";
+import forbesNehaRastogi from "@/assets/forbes-neha-rastogi.jpg";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
@@ -214,7 +215,7 @@ export default function MediaRecognition() {
                     {("featured" in m && m.featured) && (
                       <>
                         <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-primary/10 to-primary/5">
-                          <img src={sanketlifeHero} alt={m.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <img src={forbesNehaRastogi} alt="Neha Rastogi — Forbes India Self-Made Women 2020" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                           <div className="absolute top-2 right-2 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full flex items-center gap-1">
                             <Sparkles className="h-3 w-3" /> Featured
                           </div>
