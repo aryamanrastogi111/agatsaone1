@@ -83,6 +83,7 @@ const mediaMentions = [
   { outlet: "YourStory", title: "Agatsa Software — Marico Innovation for India Awards", year: "2020", link: "https://yourstory.com/2020/10/problem-product-innovation-marico-awards", featured: true, img: yourstoryMaricoAward, imgAlt: "Neha Rastogi holding Marico Innovation Foundation Award — YourStory" },
   { outlet: "Indian Express", title: "EasyTouch Plus: Non-Invasive Blood Sugar Monitoring Device — Agatsa Wins Anjani Mashelkar Prize 2025", year: "2025", link: "https://indianexpress.com/article/cities/pune/easytouch-plus-non-invasive-blood-sugar-monitoring-device-agatsa-wins-anjani-mashelkar-prize-2025-10370865/", featured: true, img: anjaniMashelkarPrize2025, imgAlt: "Agatsa team receiving the Anjani Mashelkar Prize 2025 on stage — Indian Express" },
   { outlet: "PNI News", title: "Four KHG-Backed Startups Set to Redefine Affordable Treatment in India", year: "2026", link: "https://www.pninews.com/amp/four-khg-backed-startups-set-to-redefine-affordable-treatment-in-india/", featured: true, img: pniNewsKhg, imgAlt: "KHG Foundation cohort — Agatsa among selected health-tech startups, PNI News" },
+  { outlet: "ANI News", title: "Made in India: Agatsa Launches EasyTouch — India's First Smart Prickless Glucose Meter, CDSCO Approved, Trusted by Over 6000 Users", year: "2025", link: "https://www.aninews.in/news/business/made-in-india-agatsa-launches-easytouch-indias-first-smart-prickless-glucose-meter-cdsco-approved-trusted-by-over-6000-users20250820104046/", featured: false },
 ];
 
 export default function MediaRecognition() {
