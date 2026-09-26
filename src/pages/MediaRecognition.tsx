@@ -66,6 +66,7 @@ const expertVideos: VideoItem[] = [
 ];
 
 const mediaMentions = [
+  { outlet: "The Better India", title: "How SanketLife Helps Prevent Heart Attacks & Detect Cardiac Symptoms", year: "2021", link: "https://thebetterindia.com/317906/how-to-prevent-heart-attack-detect-cardiac-symptoms-ecg-device-sanketlife-rahul-neha-rastogi-noida/" },
   { outlet: "Forbes India", title: "20 Most Audacious Women in Business", year: "2020" },
   { outlet: "Forbes India", title: "Self-Made Women list", year: "2020" },
   { outlet: "Outlook Magazine", title: "Women Leaders Trailblazer", year: "—" },
@@ -200,11 +201,29 @@ export default function MediaRecognition() {
                 key={i}
                 {...fade}
                 transition={{ duration: 0.35, delay: i * 0.04 }}
-                className="bg-card border border-border rounded-xl p-5"
               >
-                <p className="text-xs font-semibold uppercase tracking-wider text-primary">{m.outlet}</p>
-                <p className="text-sm font-medium text-foreground mt-2 leading-snug">{m.title}</p>
-                {m.year !== "—" && <p className="text-xs text-muted-foreground mt-1">{m.year}</p>}
+                {"link" in m && m.link ? (
+                  <a
+                    href={m.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block bg-card border border-border rounded-xl p-5 hover:border-primary hover:shadow-md transition-all group"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-wider text-primary">{m.outlet}</p>
+                    <p className="text-sm font-medium text-foreground mt-2 leading-snug">{m.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1 inline-flex items-center gap-1">
+                      {m.year !== "—" && <span>{m.year}</span>}
+                      {m.year !== "—" && " · "}
+                      <span className="text-primary font-semibold inline-flex items-center gap-1">Read article <ExternalLink className="h-3 w-3" /></span>
+                    </p>
+                  </a>
+                ) : (
+                  <div className="bg-card border border-border rounded-xl p-5">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-primary">{m.outlet}</p>
+                    <p className="text-sm font-medium text-foreground mt-2 leading-snug">{m.title}</p>
+                    {m.year !== "—" && <p className="text-xs text-muted-foreground mt-1">{m.year}</p>}
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
