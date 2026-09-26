@@ -60,6 +60,18 @@ const publications = [
     pdf: "/media-recognition/Acceptance_and_feasibility_for_handheld_Tele-ECG.pdf",
     link: "https://www.iaph.org.in/index.php/iaph/article/view/786",
   },
+  {
+    title:
+      "Mass HCQ Prophylaxis in India's Urban Slums during COVID-19",
+    journal: "BMJ Opinion",
+    year: "2020",
+    description:
+      "A commentary published in BMJ Opinion during India's nationwide COVID-19 lockdown, examining the Brihanmumbai Municipal Corporation's seven-week mass chloroquine/hydroxychloroquine (CQ/HCQ) prophylaxis rollout for Dharavi and Mumbai's urban slums, and the ethical and epidemiological concerns of community-wide HCQ administration without rigorous monitoring or ethical approval.",
+    finding:
+      "Calls for an ethically approved randomised controlled trial (ring-vaccination design) before mass HCQ prophylaxis, alongside environmental sewage surveillance, self-collected gargle-and-spit testing, and dignified community quarantine — rather than police-led enforcement of unproven prophylaxis in marginalised slum populations.",
+    pdf: "/media-recognition/Lancet_publications_1.pdf",
+    link: "https://www.bmj.com/",
+  },
 ];
 
 const institutions = [
@@ -103,7 +115,7 @@ export default function Publications() {
           {[
             { stat: "98.15%", label: "ECG Sensitivity" },
             { stat: "100%", label: "ECG Specificity" },
-            { stat: "5", label: "Peer-Reviewed Papers" },
+            { stat: "6", label: "Peer-Reviewed Papers" },
             { stat: "1.5 Cr+", label: "Health Records Analysed" },
           ].map((s, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.1 }}>
