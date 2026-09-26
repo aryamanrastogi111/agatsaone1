@@ -10,6 +10,7 @@ import forbesNehaRastogi from "@/assets/forbes-neha-rastogi.jpg";
 import aegisGrahamBellAward from "@/assets/aegis-graham-bell-award.webp";
 import betterindiaSanketlife from "@/assets/betterindia-sanketlife.webp";
 import entrepreneurAgatsa from "@/assets/entrepreneur-india-agatsa.jpg";
+import aniNewsAgatsa from "@/assets/ani-news-agatsa.jpg";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
