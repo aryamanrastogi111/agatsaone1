@@ -96,7 +96,30 @@ const ecgPublications = [
   },
 ];
 
-const metabolicPublications: typeof ecgPublications = [];
+const metabolicPublications: typeof ecgPublications = [
+  {
+    title:
+      "Physiological Directional Concordance of a Wearable-Derived Sugar-Trend Algorithm Using EasyTouch Rhythm Band Data and Logged Meals",
+    journal: "Agatsa One — Retrospective Observational Feasibility Study",
+    year: "2026",
+    description:
+      "A retrospective observational feasibility analysis of the Agatsa One sugar-trend algorithm applied to EasyTouch Rhythm Band data — 83,090 observations from 128 real-world users and 3,190 logged meals — testing bidirectional transitions, meal-anchored directional response, post-peak recovery, timing-shift sensitivity and an orthogonal fasting-to-postprandial reference check.",
+    finding:
+      "Across 78,475 consecutive transitions the rise:fall ratio was 0.986; 66.2% of evaluable meal events showed an upward excursion; 78.0% of post-peak trajectories subsequently declined; and 20/21 participants (95.2%) showed higher median post-meal than fasting reference values (+26 mg/dL) — supporting physiological directional responsiveness, not numerical blood-glucose accuracy.",
+    pdf: "/media-recognition/AgatsaOne_Rhythm_Band_SugarTrend_Study.pdf",
+  },
+  {
+    title:
+      "Cross-Device Reproducibility of Physiological Directional Concordance in a Wearable-Derived Sugar-Trend Algorithm",
+    journal: "Agatsa One — Retrospective Multi-Cohort Reproducibility Study",
+    year: "2026",
+    description:
+      "A standalone retrospective multi-cohort study testing whether the Agatsa One sugar-trend algorithm exhibits reproducible bidirectional, meal-associated, recovery and physiological-state behavior across three distinct wearable ecosystems — Apple Watch (19,379 observations, 145 users), Samsung Galaxy Watch (2,939 observations, 28 users) and EasyTouch Rhythm Band (83,090 observations, 128 users).",
+    finding:
+      "Near-unity rise:fall ratios were reproduced across all three devices (1.006, 0.978, 0.986); meal-associated directionality, post-peak recovery and orthogonal fasting-to-postprandial ordering were present in every cohort — convergent evidence for device-spanning physiological directional responsiveness, distinct from numerical glucose validation.",
+    pdf: "/media-recognition/AgatsaOne_CrossDevice_Reproducibility_Study.pdf",
+  },
+];
 
 const institutions = [
   "Sri Jayadeva Institute of Cardiovascular Sciences & Research, Bengaluru",
