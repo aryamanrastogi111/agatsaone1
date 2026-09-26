@@ -1,9 +1,11 @@
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
-import { Award, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star } from "lucide-react";
+import { Award, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star, Sparkles } from "lucide-react";
 import { VideoCard } from "@/components/VideoCard";
 import type { VideoItem } from "@/components/VideoCard";
+
+import sanketlifeHero from "@/assets/sanketlife-hero-new.webp";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
