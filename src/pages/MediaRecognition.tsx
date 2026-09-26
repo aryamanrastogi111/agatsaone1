@@ -66,6 +66,7 @@ const expertVideos: VideoItem[] = [
 ];
 
 const mediaMentions = [
+  { outlet: "The Better India", title: "How SanketLife Helps Prevent Heart Attacks & Detect Cardiac Symptoms", year: "2021", link: "https://thebetterindia.com/317906/how-to-prevent-heart-attack-detect-cardiac-symptoms-ecg-device-sanketlife-rahul-neha-rastogi-noida/" },
   { outlet: "Forbes India", title: "20 Most Audacious Women in Business", year: "2020" },
   { outlet: "Forbes India", title: "Self-Made Women list", year: "2020" },
   { outlet: "Outlook Magazine", title: "Women Leaders Trailblazer", year: "—" },
