@@ -26,7 +26,7 @@ const publications = [
     description:
       "An observational study by Agatsa's R&D team evaluating SanketLife's 12-lead and single-lead recordings across homes, diagnostic labs and hospital OPDs, with every report verified by a certified ECG expert and cardiologist.",
     finding: "SanketLife effectively captured atrial fibrillation cases across every care setting — from home self-monitoring to tertiary care.",
-    pdf: "/media-recognition/Identifying_the_Prevalence_of_the_Life-threatening.pdf",
+    pdf: "/media-recognition/Identifying_the_Prevalence_of_the_Life-threatening-2.pdf",
     link: "https://journals.lww.com/jpcs/fulltext/2019/05030/identifying_the_prevalence_of_the_life_threatening.11.aspx",
   },
   {
