@@ -78,13 +78,10 @@ const mediaMentions = [
   { outlet: "The Better India", title: "How SanketLife Helps Prevent Heart Attacks & Detect Cardiac Symptoms", year: "2021", link: "https://thebetterindia.com/317906/how-to-prevent-heart-attack-detect-cardiac-symptoms-ecg-device-sanketlife-rahul-neha-rastogi-noida/", featured: true, img: betterindiaSanketlife, imgAlt: "Rahul and Neha Rastogi — Agatsa founders, The Better India" },
   { outlet: "Forbes India", title: "Self-Made Women: Neha Rastogi — Monitoring Heart Rates with a Keychain", year: "2020", link: "https://www.forbesindia.com/article/self-made-women-2020/neha-rastogi-monitoring-heart-rates-with-a-keychain/58069/1", featured: true, img: forbesNehaRastogi, imgAlt: "Neha Rastogi — Forbes India Self-Made Women 2020" },
   { outlet: "ANI News", title: "Agatsa Wins Aegis Graham Bell Award for Smallest ECG Device — SanketLife", year: "2022", link: "https://www.aninews.in/news/business/business/agatsa-wins-aegis-graham-bell-award-for-smallest-ecg-device-sanket-life20220308101813/", featured: true, img: aniNewsAgatsa, imgAlt: "Agatsa founders — Aegis Graham Bell Award, ANI News" },
-  { outlet: "NEWS9 Live", title: "Agatsa's Life-Saving SanketLife 2.0", year: "—" },
-  { outlet: "ET Now", title: "Rise with India Award feature", year: "—" },
   { outlet: "Entrepreneur India", title: "Portable ECG Maker Agatsa Raises INR 125 Million", year: "2022", link: "https://india.entrepreneur.com/news-and-trends/portable-ecg-maker-agatsa-raises-inr-125-million/427643", featured: true, img: entrepreneurAgatsa, imgAlt: "Agatsa founders — We Democratise Heart Health, Entrepreneur India" },
   { outlet: "YourStory", title: "Agatsa Software — Marico Innovation for India Awards", year: "2020", link: "https://yourstory.com/2020/10/problem-product-innovation-marico-awards", featured: true, img: yourstoryMaricoAward, imgAlt: "Neha Rastogi holding Marico Innovation Foundation Award — YourStory" },
   { outlet: "Indian Express", title: "EasyTouch Plus: Non-Invasive Blood Sugar Monitoring Device — Agatsa Wins Anjani Mashelkar Prize 2025", year: "2025", link: "https://indianexpress.com/article/cities/pune/easytouch-plus-non-invasive-blood-sugar-monitoring-device-agatsa-wins-anjani-mashelkar-prize-2025-10370865/", featured: true, img: anjaniMashelkarPrize2025, imgAlt: "Agatsa team receiving the Anjani Mashelkar Prize 2025 on stage — Indian Express" },
-  { outlet: "Express Healthcare", title: "Healthcare Innovation Award feature", year: "—" },
-  { outlet: "India SME Forum", title: "India SME 100 recognition", year: "—" },
+  { outlet: "PNI News", title: "Four KHG-Backed Startups Set to Redefine Affordable Treatment in India", year: "2026", link: "https://www.pninews.com/amp/four-khg-backed-startups-set-to-redefine-affordable-treatment-in-india/" },
 ];
 
 export default function MediaRecognition() {
