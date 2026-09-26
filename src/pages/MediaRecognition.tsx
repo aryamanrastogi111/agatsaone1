@@ -80,7 +80,7 @@ const mediaMentions = [
   { outlet: "NEWS9 Live", title: "Agatsa's Life-Saving SanketLife 2.0", year: "—" },
   { outlet: "ET Now", title: "Rise with India Award feature", year: "—" },
   { outlet: "Entrepreneur India", title: "Portable ECG Maker Agatsa Raises INR 125 Million", year: "2022", link: "https://india.entrepreneur.com/news-and-trends/portable-ecg-maker-agatsa-raises-inr-125-million/427643", featured: true, img: entrepreneurAgatsa, imgAlt: "Agatsa founders — We Democratise Heart Health, Entrepreneur India" },
-  { outlet: "YourStory", title: "Agatsa Software — Marico Innovation for India Awards", year: "2020", link: "https://yourstory.com/2020/10/problem-product-innovation-marico-awards" },
+  { outlet: "YourStory", title: "Agatsa Software — Marico Innovation for India Awards", year: "2020", link: "https://yourstory.com/2020/10/problem-product-innovation-marico-awards", featured: true, img: yourstoryMaricoAward, imgAlt: "Neha Rastogi holding Marico Innovation Foundation Award — YourStory" },
   { outlet: "Express Healthcare", title: "Healthcare Innovation Award feature", year: "—" },
   { outlet: "India SME Forum", title: "India SME 100 recognition", year: "—" },
 ];
