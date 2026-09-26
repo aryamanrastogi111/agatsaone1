@@ -1,12 +1,12 @@
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
-import { FileText, Download, BookOpen, FlaskConical, Award } from "lucide-react";
+import { FileText, Download, BookOpen, FlaskConical, Award, HeartPulse, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const fade = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
-const publications = [
+const ecgPublications = [
   {
     title:
       "Assessment of Diagnostic Accuracy of SanketLife — A Wireless, Pocket-Sized ECG Biosensor — in Comparison to Standard 12-Lead ECG in the Detection of Cardiovascular Diseases in a Tertiary Care Setting",
@@ -96,11 +96,56 @@ const publications = [
   },
 ];
 
+const metabolicPublications: typeof ecgPublications = [];
+
 const institutions = [
   "Sri Jayadeva Institute of Cardiovascular Sciences & Research, Bengaluru",
   "Narayana Health, Bengaluru",
   "Multiple multi-centre field deployments across India",
 ];
+
+function PublicationCard({ p, i }: { p: (typeof ecgPublications)[number]; i: number }) {
+  return (
+    <motion.article
+      {...fade}
+      transition={{ duration: 0.5, delay: i * 0.08 }}
+      className="bg-card border border-border rounded-2xl p-6 md:p-8"
+    >
+      <div className="flex items-start gap-4">
+        <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+          <FileText className="h-6 w-6 text-primary" />
+        </div>
+        <div className="flex-1">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+            {p.journal} · {p.year}
+          </p>
+          <h2 className="text-xl font-bold text-foreground mt-1">{p.title}</h2>
+          <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{p.description}</p>
+          <p className="text-sm font-medium text-foreground mt-3 flex items-start gap-2">
+            <FlaskConical className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+            {p.finding}
+          </p>
+          <div className="flex flex-wrap gap-3 mt-4">
+            {p.pdf && (
+              <a href={p.pdf} target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="rounded-full">
+                  <Download className="h-4 w-4 mr-2" /> Read Full Paper (PDF)
+                </Button>
+              </a>
+            )}
+            {p.link && (
+              <a href={p.link} target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="rounded-full">
+                  <BookOpen className="h-4 w-4 mr-2" /> View on Journal Site
+                </Button>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
 
 export default function Publications() {
   useSEO({
@@ -148,87 +193,99 @@ export default function Publications() {
         </div>
       </section>
 
-      {/* Publications list */}
+      {/* Section 1 — SanketLife ECG */}
       <section className="py-16 bg-muted/30">
-        <div className="max-w-4xl mx-auto px-4 space-y-6">
-          {publications.map((p, i) => (
+        <div className="max-w-4xl mx-auto px-4">
+          <motion.div {...fade} className="flex items-center gap-3 mb-8">
+            <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <HeartPulse className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-primary">Section 01</p>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-foreground">SanketLife ECG Clinical Research</h2>
+            </div>
+          </motion.div>
+
+          <div className="space-y-6">
+            {ecgPublications.map((p, i) => (
+              <PublicationCard key={i} p={p} i={i} />
+            ))}
+
+            {/* 1-pager */}
             <motion.article
-              key={i}
               {...fade}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="bg-card border border-border rounded-2xl p-6 md:p-8"
+              className="bg-primary text-primary-foreground rounded-2xl p-6 md:p-8"
             >
               <div className="flex items-start gap-4">
-                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <FileText className="h-6 w-6 text-primary" />
+                <div className="h-12 w-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+                  <BookOpen className="h-6 w-6" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-                    {p.journal} · {p.year}
+                  <p className="text-xs font-semibold uppercase tracking-wider opacity-80">
+                    Summary Document
                   </p>
-                  <h2 className="text-xl font-bold text-foreground mt-1">{p.title}</h2>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{p.description}</p>
-                  <p className="text-sm font-medium text-foreground mt-3 flex items-start gap-2">
-                    <FlaskConical className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                    {p.finding}
+                  <h2 className="text-xl font-bold mt-1">SanketLife Publications — One-Page Overview</h2>
+                  <p className="text-sm opacity-90 mt-2 leading-relaxed">
+                    A concise one-page summary of all clinical validations and publications covering
+                    the SanketLife ECG platform — ideal for clinicians, partners and researchers.
                   </p>
-                  <div className="flex flex-wrap gap-3 mt-4">
-                    {p.pdf && (
-                      <a href={p.pdf} target="_blank" rel="noopener noreferrer">
-                        <Button variant="outline" className="rounded-full">
-                          <Download className="h-4 w-4 mr-2" /> Read Full Paper (PDF)
-                        </Button>
-                      </a>
-                    )}
-                    {p.link && (
-                      <a href={p.link} target="_blank" rel="noopener noreferrer">
-                        <Button variant="outline" className="rounded-full">
-                          <BookOpen className="h-4 w-4 mr-2" /> View on Journal Site
-                        </Button>
-                      </a>
-                    )}
-                  </div>
+                  <a
+                    href="/media-recognition/sanketlife-publications-1pager.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-4"
+                  >
+                    <Button className="rounded-full bg-white text-primary hover:bg-white/90 font-semibold">
+                      <Download className="h-4 w-4 mr-2" /> Download Overview (PDF)
+                    </Button>
+                  </a>
                 </div>
               </div>
             </motion.article>
-          ))}
+          </div>
+        </div>
+      </section>
 
-          {/* 1-pager */}
-          <motion.article
-            {...fade}
-            className="bg-primary text-primary-foreground rounded-2xl p-6 md:p-8"
-          >
-            <div className="flex items-start gap-4">
-              <div className="h-12 w-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
-                <BookOpen className="h-6 w-6" />
-              </div>
-              <div className="flex-1">
-                <p className="text-xs font-semibold uppercase tracking-wider opacity-80">
-                  Summary Document
-                </p>
-                <h2 className="text-xl font-bold mt-1">SanketLife Publications — One-Page Overview</h2>
-                <p className="text-sm opacity-90 mt-2 leading-relaxed">
-                  A concise one-page summary of all clinical validations and publications covering
-                  the SanketLife ECG platform — ideal for clinicians, partners and researchers.
-                </p>
-                <a
-                  href="/media-recognition/sanketlife-publications-1pager.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-4"
-                >
-                  <Button className="rounded-full bg-white text-primary hover:bg-white/90 font-semibold">
-                    <Download className="h-4 w-4 mr-2" /> Download Overview (PDF)
-                  </Button>
-                </a>
-              </div>
+      {/* Section 2 — Non-Invasive Blood Glucose / Metabolic Trends (Rhythm Band) */}
+      <section className="py-16 bg-background">
+        <div className="max-w-4xl mx-auto px-4">
+          <motion.div {...fade} className="flex items-center gap-3 mb-8">
+            <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <Activity className="h-6 w-6 text-primary" />
             </div>
-          </motion.article>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-primary">Section 02</p>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-foreground">
+                Non-Invasive Blood Glucose & Metabolic Trends — Rhythm Band
+              </h2>
+            </div>
+          </motion.div>
+
+          <motion.div
+            {...fade}
+            className="bg-card border border-dashed border-border rounded-2xl p-8 md:p-10 text-center"
+          >
+            <FlaskConical className="h-8 w-8 text-primary mx-auto mb-4" />
+            <h3 className="text-lg font-bold text-foreground">Research In Progress</h3>
+            <p className="text-sm text-muted-foreground mt-3 max-w-xl mx-auto leading-relaxed">
+              The Rhythm Band is the newest addition to the Agatsa platform, delivering non-invasive
+              blood-glucose trend monitoring and metabolic-load insights powered by Nera AI.
+              Clinical validation studies are currently underway and peer-reviewed publications will
+              be added to this section as they are accepted.
+            </p>
+            <p className="text-sm text-muted-foreground mt-4">
+              For research collaborations or early-access enquiries, write to{" "}
+              <a href="mailto:info@agatsa.com" className="text-primary font-medium">
+                info@agatsa.com
+              </a>
+              .
+            </p>
+          </motion.div>
         </div>
       </section>
 
       {/* Validating institutions */}
-      <section className="py-16 bg-background">
+      <section className="py-16 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div {...fade}>
             <Award className="h-8 w-8 text-primary mx-auto mb-4" />
