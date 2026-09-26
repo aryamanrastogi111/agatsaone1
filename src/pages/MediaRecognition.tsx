@@ -209,15 +209,27 @@ export default function MediaRecognition() {
                     href={m.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block bg-card border border-border rounded-xl p-5 hover:border-primary hover:shadow-md transition-all group"
+                    className={`block bg-card border rounded-xl overflow-hidden hover:shadow-lg transition-all group relative ${("featured" in m && m.featured) ? "border-primary/50 ring-2 ring-primary/20 shadow-md" : "border-border hover:border-primary"}`}
                   >
-                    <p className="text-xs font-semibold uppercase tracking-wider text-primary">{m.outlet}</p>
-                    <p className="text-sm font-medium text-foreground mt-2 leading-snug">{m.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1 inline-flex items-center gap-1">
-                      {m.year !== "—" && <span>{m.year}</span>}
-                      {m.year !== "—" && " · "}
-                      <span className="text-primary font-semibold inline-flex items-center gap-1">Read article <ExternalLink className="h-3 w-3" /></span>
-                    </p>
+                    {("featured" in m && m.featured) && (
+                      <>
+                        <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-primary/10 to-primary/5">
+                          <img src={sanketlifeHero} alt={m.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <div className="absolute top-2 right-2 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full flex items-center gap-1">
+                            <Sparkles className="h-3 w-3" /> Featured
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    <div className="p-5">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-primary">{m.outlet}</p>
+                      <p className="text-sm font-medium text-foreground mt-2 leading-snug">{m.title}</p>
+                      <p className="text-xs text-muted-foreground mt-1 inline-flex items-center gap-1">
+                        {m.year !== "—" && <span>{m.year}</span>}
+                        {m.year !== "—" && " · "}
+                        <span className="text-primary font-semibold inline-flex items-center gap-1">Read article <ExternalLink className="h-3 w-3" /></span>
+                      </p>
+                    </div>
                   </a>
                 ) : (
                   <div className="bg-card border border-border rounded-xl p-5">
