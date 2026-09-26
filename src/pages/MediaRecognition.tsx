@@ -13,6 +13,7 @@ import entrepreneurAgatsa from "@/assets/entrepreneur-india-agatsa.jpg";
 import aniNewsAgatsa from "@/assets/ani-news-agatsa.jpg";
 import yourstoryMaricoAward from "@/assets/yourstory-marico-award.jpg";
 import anjaniMashelkarPrize2025 from "@/assets/anjani-mashelkar-prize-2025.jpg";
+import pniNewsKhg from "@/assets/pni-news-khg.jpg";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
@@ -81,7 +82,7 @@ const mediaMentions = [
   { outlet: "Entrepreneur India", title: "Portable ECG Maker Agatsa Raises INR 125 Million", year: "2022", link: "https://india.entrepreneur.com/news-and-trends/portable-ecg-maker-agatsa-raises-inr-125-million/427643", featured: true, img: entrepreneurAgatsa, imgAlt: "Agatsa founders — We Democratise Heart Health, Entrepreneur India" },
   { outlet: "YourStory", title: "Agatsa Software — Marico Innovation for India Awards", year: "2020", link: "https://yourstory.com/2020/10/problem-product-innovation-marico-awards", featured: true, img: yourstoryMaricoAward, imgAlt: "Neha Rastogi holding Marico Innovation Foundation Award — YourStory" },
   { outlet: "Indian Express", title: "EasyTouch Plus: Non-Invasive Blood Sugar Monitoring Device — Agatsa Wins Anjani Mashelkar Prize 2025", year: "2025", link: "https://indianexpress.com/article/cities/pune/easytouch-plus-non-invasive-blood-sugar-monitoring-device-agatsa-wins-anjani-mashelkar-prize-2025-10370865/", featured: true, img: anjaniMashelkarPrize2025, imgAlt: "Agatsa team receiving the Anjani Mashelkar Prize 2025 on stage — Indian Express" },
-  { outlet: "PNI News", title: "Four KHG-Backed Startups Set to Redefine Affordable Treatment in India", year: "2026", link: "https://www.pninews.com/amp/four-khg-backed-startups-set-to-redefine-affordable-treatment-in-india/" },
+  { outlet: "PNI News", title: "Four KHG-Backed Startups Set to Redefine Affordable Treatment in India", year: "2026", link: "https://www.pninews.com/amp/four-khg-backed-startups-set-to-redefine-affordable-treatment-in-india/", featured: true, img: pniNewsKhg, imgAlt: "KHG Foundation cohort — Agatsa among selected health-tech startups, PNI News" },
 ];
 
 export default function MediaRecognition() {
