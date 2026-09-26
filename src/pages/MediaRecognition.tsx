@@ -1,7 +1,7 @@
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
-import { Award, BookOpen, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star, Globe } from "lucide-react";
+import { Award, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star } from "lucide-react";
 import { VideoCard } from "@/components/VideoCard";
 import type { VideoItem } from "@/components/VideoCard";
 
@@ -55,60 +55,6 @@ const governmentRecognition: Array<{ title: string; body: string; icon: typeof B
 
 
 
-const publications = [
-  {
-    year: "2020",
-    title: "Assessment of Diagnostic Accuracy of SanketLife",
-    journal: "Indian Pacing & Electrophysiology Journal (Elsevier · PubMed Indexed)",
-    body: "Prospective trial of 100 patients at Sri Jayadeva Institute, Bangalore. Matched gold-standard GE-2000 with 98.15% sensitivity and 100% specificity for LBBB, RBBB, ST-segment changes and AV blocks. Co-authored with Emory University & Texas A&M.",
-  },
-  {
-    year: "2019",
-    title: "Identifying Prevalence of Life-Threatening Atrial Fibrillation",
-    journal: "Journal of Practical Cardiovascular Sciences · Medknow / Wolters Kluwer",
-    body: "Analysed 8,005 SanketLife ECG reports over 2 months across home, OPD and PHC settings. First large-scale real-world SanketLife dataset, confirming feasibility for continuous AFib monitoring across all care levels.",
-  },
-  {
-    year: "2018",
-    title: "Wireless, Pocket-Sized ECG Monitor: A Potential Tool in CVD Detection",
-    journal: "Journal of Practical Cardiovascular Sciences · AIIMS New Delhi, Dept. of Cardiology",
-    body: "AIIMS-led evaluation of SanketLife's diagnostic reliability as a wireless pocket ECG in cardiovascular disease detection.",
-  },
-  {
-    year: "2016",
-    title: "Smart Phone ECG — Bridging the Gap",
-    journal: "Journal of Advanced Research in Medical Science & Technology · ADR Journals",
-    body: "Agatsa's foundational accuracy study. 6-lead ECG intervals validated against a traditional ECG — the first published clinical evidence for SanketLife.",
-    pdfKey: "springer2016" as PdfKey,
-  },
-  {
-    year: "2024",
-    title: "Indian Journal of Electrocardiology — Featured",
-    journal: "Indian Society of Electrocardiology · Vol. 1, February 2024",
-    body: "Editorial coverage referencing SanketLife in the official journal of the Indian Society of Electrocardiology (Editors: Dr. Joy Thomas, Dr. Aparna Jaswal).",
-    pdfKey: "ije" as PdfKey,
-  },
-  {
-    year: "2024",
-    title: "Scientific Reports — Nature Portfolio Publication",
-    journal: "Scientific Reports · Nature Portfolio (Open Access)",
-    body: "Peer-reviewed publication featuring SanketLife's clinical performance data in the Nature Portfolio's Scientific Reports journal.",
-    pdfKey: "sciRep2024" as PdfKey,
-  },
-
-  {
-    year: "2020",
-    title: "Patient Satisfaction in Community ECG Screening",
-    journal: "Indian Journal of Community Health · 97.5% satisfaction",
-    body: "Community-level screening study using SanketLife, reporting 97.5% patient satisfaction across camp deployments.",
-  },
-];
-
-const globalCoverage = [
-  { region: "India", detail: "IPEJ · IJCH · JPCS · AIIMS · ISECON · IoT Journal · BMJ India" },
-  { region: "Indonesia", detail: "Indonesian Journal of Cardiology · COVID-19 ECG protocols" },
-  { region: "South Korea", detail: "KISTI ScienceON National DB (200M+ records) · GOLD Open Access" },
-];
 
 const expertVideos: VideoItem[] = [
   { id: "u26lsahqY8k", title: "Dr. Sanjeev Gera Recommends SanketLife ECG" },
