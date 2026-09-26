@@ -5,6 +5,7 @@ import { FileText, Download, BookOpen, FlaskConical, Award, HeartPulse, Activity
 import { Button } from "@/components/ui/button";
 import rhythmBandSugarTrendPdf from "@/assets/publications/rhythm-band-sugar-trend-study.pdf";
 import crossDeviceReproducibilityPdf from "@/assets/publications/cross-device-reproducibility-study.pdf";
+import galaxyWatchSugarTrendPdf from "@/assets/publications/galaxy-watch-sugar-trend-study.pdf";
 
 const fade = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
