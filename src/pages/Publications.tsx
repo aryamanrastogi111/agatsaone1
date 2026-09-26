@@ -15,7 +15,7 @@ const publications = [
     description:
       "A prospective diagnostic accuracy trial at Sri Jayadeva Institute of Cardiovascular Sciences & Research, Bengaluru, comparing SanketLife against the hospital-grade GE-2000 12-lead ECG across 100 cardiology OPD patients.",
     finding: "98.15% sensitivity and 100% specificity in diagnosing major cardiovascular conditions (Major Minnesota codes).",
-    pdf: "/media-recognition/Indian_Journal_of_Electrocardilogy.pdf",
+    pdf: "/media-recognition/Assessment_of_diagnostic_accuracy_of_SanketLife.pdf",
     link: "https://pubmed.ncbi.nlm.nih.gov/31866552/",
   },
   {
