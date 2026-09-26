@@ -48,15 +48,6 @@ const publications = [
     finding: "High concordance with hospital-grade ECG across diverse patient groups.",
     pdf: "/media-recognition/s40064-016-1932-z.pdf",
   },
-  {
-    title: "Feasibility of Handheld ECG Technology for Early Detection of Cardiac Abnormalities",
-    journal: "Scientific Reports (Nature Portfolio)",
-    year: "2024",
-    description:
-      "Published research examining the feasibility and diagnostic reliability of handheld, leadless ECG technology for early detection of cardiac abnormalities in real-world settings.",
-    finding: "Handheld ECG showed clinically acceptable diagnostic reliability for early detection.",
-    pdf: "/media-recognition/s41598-024-84265-8.pdf",
-  },
 ];
 
 const institutions = [
@@ -100,7 +91,7 @@ export default function Publications() {
           {[
             { stat: "98.15%", label: "ECG Sensitivity" },
             { stat: "100%", label: "ECG Specificity" },
-            { stat: "5", label: "Peer-Reviewed Papers" },
+            { stat: "4", label: "Peer-Reviewed Papers" },
             { stat: "1.5 Cr+", label: "Health Records Analysed" },
           ].map((s, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.1 }}>
