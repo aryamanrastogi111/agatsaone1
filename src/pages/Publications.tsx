@@ -5,6 +5,7 @@ import { FileText, Download, BookOpen, FlaskConical, Award, HeartPulse, Activity
 import { Button } from "@/components/ui/button";
 import rhythmBandSugarTrendPdf from "@/assets/publications/rhythm-band-sugar-trend-study.pdf";
 import crossDeviceReproducibilityPdf from "@/assets/publications/cross-device-reproducibility-study.pdf";
+import galaxyWatchSugarTrendPdf from "@/assets/publications/galaxy-watch-sugar-trend-study.pdf";
 
 const fade = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } };
 
@@ -121,6 +122,17 @@ const metabolicPublications: typeof ecgPublications = [
       "Near-unity rise:fall ratios were reproduced across all three devices (1.006, 0.978, 0.986); meal-associated directionality, post-peak recovery and orthogonal fasting-to-postprandial ordering were present in every cohort — convergent evidence for device-spanning physiological directional responsiveness, distinct from numerical glucose validation.",
     pdf: crossDeviceReproducibilityPdf,
   },
+  {
+    title:
+      "Physiological Directional Concordance of a Wearable-Derived Sugar-Trend Algorithm Using Samsung Galaxy Watch Data and Logged Meals",
+    journal: "Agatsa One — Retrospective Observational Feasibility Study",
+    year: "2026",
+    description:
+      "A retrospective observational feasibility analysis of the Agatsa One sugar-trend algorithm applied to Samsung Galaxy Watch data — 2,939 stored observations from 28 users and 837 logged meals — testing bidirectional transitions, meal-anchored directional response, post-peak recovery, timing-shift sensitivity and an orthogonal fasting-to-postprandial reference check.",
+    finding:
+      "Across 2,524 consecutive watch transitions the rise:fall ratio was 0.978 (24.3% rises, 24.9% falls); 63.9% of post-peak trajectories subsequently declined; and all 10/10 participants with paired fasting and post-meal reference measurements showed higher median post-meal values (+42 mg/dL) — supporting physiological directional responsiveness, not numerical blood-glucose accuracy.",
+    pdf: galaxyWatchSugarTrendPdf,
+  },
 ];
 
 const institutions = [
@@ -207,7 +219,7 @@ export default function Publications() {
           {[
             { stat: "98.15%", label: "ECG Sensitivity" },
             { stat: "100%", label: "ECG Specificity" },
-            { stat: "10", label: "Peer-Reviewed Papers" },
+            { stat: "11", label: "Peer-Reviewed Papers" },
             { stat: "1.5 Cr+", label: "Health Records Analysed" },
           ].map((s, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.1 }}>
