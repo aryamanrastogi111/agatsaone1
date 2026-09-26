@@ -218,93 +218,96 @@ export default function Publications() {
         </div>
       </section>
 
-      {/* Section 1 — SanketLife ECG */}
+      {/* Two-column sections: SanketLife ECG | Rhythm Band */}
       <section className="py-16 bg-muted/30">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.div {...fade} className="flex items-center gap-3 mb-8">
-            <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <HeartPulse className="h-6 w-6 text-primary" />
-            </div>
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div {...fade} className="grid md:grid-cols-2 gap-8 lg:gap-10 items-start">
+            {/* Column 1 — SanketLife ECG */}
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-primary">Section 01</p>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-foreground">SanketLife ECG Clinical Research</h2>
-            </div>
-          </motion.div>
-
-          <div className="space-y-6">
-            {ecgPublications.map((p, i) => (
-              <PublicationCard key={i} p={p} i={i} />
-            ))}
-
-            {/* 1-pager */}
-            <motion.article
-              {...fade}
-              className="bg-primary text-primary-foreground rounded-2xl p-6 md:p-8"
-            >
-              <div className="flex items-start gap-4">
-                <div className="h-12 w-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
-                  <BookOpen className="h-6 w-6" />
+              <div className="flex items-center gap-3 mb-8">
+                <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <HeartPulse className="h-6 w-6 text-primary" />
                 </div>
-                <div className="flex-1">
-                  <p className="text-xs font-semibold uppercase tracking-wider opacity-80">
-                    Summary Document
-                  </p>
-                  <h2 className="text-xl font-bold mt-1">SanketLife Publications — One-Page Overview</h2>
-                  <p className="text-sm opacity-90 mt-2 leading-relaxed">
-                    A concise one-page summary of all clinical validations and publications covering
-                    the SanketLife ECG platform — ideal for clinicians, partners and researchers.
-                  </p>
-                  <a
-                    href="/media-recognition/sanketlife-publications-1pager.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-4"
-                  >
-                    <Button className="rounded-full bg-white text-primary hover:bg-white/90 font-semibold">
-                      <Download className="h-4 w-4 mr-2" /> Download Overview (PDF)
-                    </Button>
-                  </a>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-primary">Section 01</p>
+                  <h2 className="text-2xl md:text-3xl font-extrabold text-foreground">SanketLife ECG Clinical Research</h2>
                 </div>
               </div>
-            </motion.article>
-          </div>
-        </div>
-      </section>
 
-      {/* Section 2 — Non-Invasive Blood Glucose / Metabolic Trends (Rhythm Band) */}
-      <section className="py-16 bg-background">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.div {...fade} className="flex items-center gap-3 mb-8">
-            <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <Activity className="h-6 w-6 text-primary" />
+              <div className="space-y-6">
+                {ecgPublications.map((p, i) => (
+                  <PublicationCard key={i} p={p} i={i} />
+                ))}
+
+                {/* 1-pager */}
+                <motion.article
+                  {...fade}
+                  className="bg-primary text-primary-foreground rounded-2xl p-6 md:p-8"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="h-12 w-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+                      <BookOpen className="h-6 w-6" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs font-semibold uppercase tracking-wider opacity-80">
+                        Summary Document
+                      </p>
+                      <h2 className="text-xl font-bold mt-1">SanketLife Publications — One-Page Overview</h2>
+                      <p className="text-sm opacity-90 mt-2 leading-relaxed">
+                        A concise one-page summary of all clinical validations and publications covering
+                        the SanketLife ECG platform — ideal for clinicians, partners and researchers.
+                      </p>
+                      <a
+                        href="/media-recognition/sanketlife-publications-1pager.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-4"
+                      >
+                        <Button className="rounded-full bg-white text-primary hover:bg-white/90 font-semibold">
+                          <Download className="h-4 w-4 mr-2" /> Download Overview (PDF)
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                </motion.article>
+              </div>
             </div>
+
+            {/* Column 2 — Non-Invasive Blood Glucose / Metabolic Trends (Rhythm Band) */}
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-primary">Section 02</p>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-foreground">
-                Non-Invasive Blood Glucose & Metabolic Trends — Rhythm Band
-              </h2>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <Activity className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-primary">Section 02</p>
+                  <h2 className="text-2xl md:text-3xl font-extrabold text-foreground">
+                    Non-Invasive Blood Glucose & Metabolic Trends — Rhythm Band
+                  </h2>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                {metabolicPublications.map((p, i) => (
+                  <PublicationCard key={i} p={p} i={i} />
+                ))}
+                <motion.div
+                  {...fade}
+                  className="bg-card border border-dashed border-border rounded-2xl p-6 md:p-8 text-center"
+                >
+                  <FlaskConical className="h-7 w-7 text-primary mx-auto mb-3" />
+                  <p className="text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                    Additional peer-reviewed metabolic-trend validation studies are underway. For
+                    research collaborations or early-access enquiries, write to{" "}
+                    <a href="mailto:info@agatsa.com" className="text-primary font-medium">
+                      info@agatsa.com
+                    </a>
+                    .
+                  </p>
+                </motion.div>
+              </div>
             </div>
           </motion.div>
-
-          <div className="space-y-6">
-            {metabolicPublications.map((p, i) => (
-              <PublicationCard key={i} p={p} i={i} />
-            ))}
-            <motion.div
-              {...fade}
-              className="bg-card border border-dashed border-border rounded-2xl p-6 md:p-8 text-center"
-            >
-              <FlaskConical className="h-7 w-7 text-primary mx-auto mb-3" />
-              <p className="text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
-                Additional peer-reviewed metabolic-trend validation studies are underway. For
-                research collaborations or early-access enquiries, write to{" "}
-                <a href="mailto:info@agatsa.com" className="text-primary font-medium">
-                  info@agatsa.com
-                </a>
-                .
-              </p>
-            </motion.div>
-          </div>
         </div>
       </section>
 
