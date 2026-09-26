@@ -6,6 +6,7 @@ import { VideoCard } from "@/components/VideoCard";
 import type { VideoItem } from "@/components/VideoCard";
 
 import sanketlifeHero from "@/assets/sanketlife-hero-new.webp";
+import forbesNehaRastogi from "@/assets/forbes-neha-rastogi.jpg";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
