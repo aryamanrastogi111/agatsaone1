@@ -247,7 +247,7 @@ export default function Publications() {
           {[
             { stat: "98.15%", label: "ECG Sensitivity" },
             { stat: "100%", label: "ECG Specificity" },
-            { stat: "12", label: "Peer-Reviewed Papers" },
+            { stat: "13", label: "Peer-Reviewed Papers" },
             { stat: "1.5 Cr+", label: "Health Records Analysed" },
           ].map((s, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.1 }}>
