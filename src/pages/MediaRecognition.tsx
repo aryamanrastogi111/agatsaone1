@@ -71,9 +71,8 @@ const expertVideos: VideoItem[] = [
 
 const mediaMentions = [
   { outlet: "The Better India", title: "How SanketLife Helps Prevent Heart Attacks & Detect Cardiac Symptoms", year: "2021", link: "https://thebetterindia.com/317906/how-to-prevent-heart-attack-detect-cardiac-symptoms-ecg-device-sanketlife-rahul-neha-rastogi-noida/" },
-  { outlet: "Forbes India", title: "20 Most Audacious Women in Business", year: "2020" },
-  { outlet: "Forbes India", title: "Self-Made Women: Neha Rastogi — Monitoring Heart Rates with a Keychain", year: "2020", link: "https://www.forbesindia.com/article/self-made-women-2020/neha-rastogi-monitoring-heart-rates-with-a-keychain/58069/1", featured: true },
-  { outlet: "Outlook Magazine", title: "Women Leaders Trailblazer", year: "—" },
+  { outlet: "Forbes India", title: "Self-Made Women: Neha Rastogi — Monitoring Heart Rates with a Keychain", year: "2020", link: "https://www.forbesindia.com/article/self-made-women-2020/neha-rastogi-monitoring-heart-rates-with-a-keychain/58069/1", featured: true, img: forbesNehaRastogi, imgAlt: "Neha Rastogi — Forbes India Self-Made Women 2020" },
+  { outlet: "ANI News", title: "Agatsa Wins Aegis Graham Bell Award for Smallest ECG Device — SanketLife", year: "2022", link: "https://www.aninews.in/news/business/business/agatsa-wins-aegis-graham-bell-award-for-smallest-ecg-device-sanket-life20220308101813/", featured: true, img: aegisGrahamBellAward, imgAlt: "Agatsa wins Aegis Graham Bell Award for SanketLife" },
   { outlet: "NEWS9 Live", title: "Agatsa's Life-Saving SanketLife 2.0", year: "—" },
   { outlet: "ET Now", title: "Rise with India Award feature", year: "—" },
   { outlet: "Entrepreneur India", title: "Entrepreneur India Award coverage", year: "—" },
