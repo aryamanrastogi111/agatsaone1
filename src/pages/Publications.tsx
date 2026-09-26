@@ -20,6 +20,15 @@ const ecgPublications = [
     finding: "98.15% sensitivity and 100% specificity in diagnosing major cardiovascular conditions (Major Minnesota codes).",
     pdf: "/media-recognition/Assessment_of_diagnostic_accuracy_of_SanketLife.pdf",
     link: "https://pubmed.ncbi.nlm.nih.gov/31866552/",
+  },
+  {
+    title:
+      "Diagnostic Accuracy of SanketLife Wireless ECG Biosensor vs Standard 12-Lead ECG — ResearchGate Repository",
+    journal: "ResearchGate",
+    year: "2019",
+    description:
+      "The same Sri Jayadeva Institute diagnostic accuracy trial, hosted on ResearchGate — the academic research network — providing open access to the full manuscript, figures and citation data for the international research community.",
+    finding: "98.15% sensitivity and 100% specificity in diagnosing major cardiovascular conditions (Major Minnesota codes).",
     researchgate: "https://www.researchgate.net/publication/341072588",
   },
   {
@@ -238,7 +247,7 @@ export default function Publications() {
           {[
             { stat: "98.15%", label: "ECG Sensitivity" },
             { stat: "100%", label: "ECG Specificity" },
-            { stat: "12", label: "Peer-Reviewed Papers" },
+            { stat: "13", label: "Peer-Reviewed Papers" },
             { stat: "1.5 Cr+", label: "Health Records Analysed" },
           ].map((s, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.1 }}>
