@@ -72,6 +72,28 @@ const publications = [
     pdf: "/media-recognition/Lancet_publications_1.pdf",
     link: "https://www.bmj.com/",
   },
+  {
+    title:
+      "Assessment of Diagnostic Accuracy of SanketLife: A Wireless Portable ECG Biosensor in Comparison to Standard 12-Lead ECG in the Detection of Cardiovascular Diseases in a Tertiary Care Setting",
+    journal: "Journal of the American College of Cardiology (JACC)",
+    year: "2020",
+    description:
+      "A peer-reviewed abstract published in JACC — the flagship journal of the American College of Cardiology, USA — presenting the Sri Jayadeva Institute diagnostic accuracy trial of SanketLife against the standard 12-lead ECG, with co-authors from Texas A&M Health Science Center and Emory University, USA.",
+    finding:
+      "SanketLife demonstrated high diagnostic agreement with standard 12-lead ECG for major cardiovascular conditions, presented on the world's largest cardiology research platform.",
+    link: "https://www.jacc.org/doi/10.1016/S0735-1097(20)30677-5",
+  },
+  {
+    title:
+      "Minimal or No Touch Electrocardiography Recording and Remote Heart Rhythm Monitoring during COVID-19 Pandemic Era",
+    journal: "Indonesian Journal of Cardiology",
+    year: "2020",
+    description:
+      "A review by cardiologists at Mohammad Hoesin General Hospital, Palembang, Indonesia, examining wireless, minimal/no-touch ECG technologies — including SanketLife — for remote heart rhythm monitoring of COVID-19 patients without risking viral transmission through electrode contact.",
+    finding:
+      "Wireless touch-based ECG devices enable safe remote cardiac monitoring of COVID-19 patients while protecting healthcare workers from exposure.",
+    link: "https://www.ijconline.id/index.php/ijc/article/view/1010/548",
+  },
 ];
 
 const institutions = [
@@ -115,7 +137,7 @@ export default function Publications() {
           {[
             { stat: "98.15%", label: "ECG Sensitivity" },
             { stat: "100%", label: "ECG Specificity" },
-            { stat: "6", label: "Peer-Reviewed Papers" },
+            { stat: "8", label: "Peer-Reviewed Papers" },
             { stat: "1.5 Cr+", label: "Health Records Analysed" },
           ].map((s, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.1 }}>
