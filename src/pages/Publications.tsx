@@ -20,6 +20,18 @@ const ecgPublications = [
     finding: "98.15% sensitivity and 100% specificity in diagnosing major cardiovascular conditions (Major Minnesota codes).",
     pdf: "/media-recognition/Assessment_of_diagnostic_accuracy_of_SanketLife.pdf",
     link: "https://pubmed.ncbi.nlm.nih.gov/31866552/",
+    researchgate: "https://www.researchgate.net/publication/341072588",
+  },
+  {
+    title:
+      "Wireless, Pocket-Sized ECG Monitor: A Potential Tool used in the Detection of Cardiovascular Disease",
+    journal: "Journal of Advanced Research in Medical Science and Technology",
+    year: "2016",
+    description:
+      "A peer-reviewed study by Agatsa's founding team evaluating the accuracy of a pocket-sized, leadless, Bluetooth-connected 6-lead ECG monitor — the precursor to SanketLife — against a traditional hospital ECG machine, with sensitivity and specificity measured across field-tested patient interviews.",
+    finding:
+      "Demonstrated reliable remote cardiac monitoring with high concordance to standard ECG, establishing the feasibility of smartphone-connected, pocket-sized ECG for everyday cardiac care.",
+    link: "http://paper.researchbib.com/view/paper/71855",
   },
   {
     title:
@@ -219,7 +231,7 @@ export default function Publications() {
           {[
             { stat: "98.15%", label: "ECG Sensitivity" },
             { stat: "100%", label: "ECG Specificity" },
-            { stat: "11", label: "Peer-Reviewed Papers" },
+            { stat: "12", label: "Peer-Reviewed Papers" },
             { stat: "1.5 Cr+", label: "Health Records Analysed" },
           ].map((s, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.1 }}>
