@@ -11,6 +11,7 @@ import aegisGrahamBellAward from "@/assets/aegis-graham-bell-award.webp";
 import betterindiaSanketlife from "@/assets/betterindia-sanketlife.webp";
 import entrepreneurAgatsa from "@/assets/entrepreneur-india-agatsa.jpg";
 import aniNewsAgatsa from "@/assets/ani-news-agatsa.jpg";
+import yourstoryMaricoAward from "@/assets/yourstory-marico-award.jpg";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
