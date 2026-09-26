@@ -9,6 +9,7 @@ import sanketlifeHero from "@/assets/sanketlife-hero-new.webp";
 import forbesNehaRastogi from "@/assets/forbes-neha-rastogi.jpg";
 import aegisGrahamBellAward from "@/assets/aegis-graham-bell-award.webp";
 import betterindiaSanketlife from "@/assets/betterindia-sanketlife.webp";
+import entrepreneurAgatsa from "@/assets/entrepreneur-india-agatsa.jpg";
 
 import awardAegis from "@/assets/award-aegis-grahambell.webp";
 import awardBioIndia from "@/assets/award-bio-india.webp";
@@ -76,7 +77,7 @@ const mediaMentions = [
   { outlet: "ANI News", title: "Agatsa Wins Aegis Graham Bell Award for Smallest ECG Device — SanketLife", year: "2022", link: "https://www.aninews.in/news/business/business/agatsa-wins-aegis-graham-bell-award-for-smallest-ecg-device-sanket-life20220308101813/", featured: true, img: aegisGrahamBellAward, imgAlt: "Agatsa wins Aegis Graham Bell Award for SanketLife" },
   { outlet: "NEWS9 Live", title: "Agatsa's Life-Saving SanketLife 2.0", year: "—" },
   { outlet: "ET Now", title: "Rise with India Award feature", year: "—" },
-  { outlet: "Entrepreneur India", title: "Entrepreneur India Award coverage", year: "—" },
+  { outlet: "Entrepreneur India", title: "Portable ECG Maker Agatsa Raises INR 125 Million", year: "2022", link: "https://india.entrepreneur.com/news-and-trends/portable-ecg-maker-agatsa-raises-inr-125-million/427643", featured: true, img: entrepreneurAgatsa, imgAlt: "Neha Rastogi — Agatsa raises INR 125 million, Entrepreneur India" },
   { outlet: "Express Healthcare", title: "Healthcare Innovation Award feature", year: "—" },
   { outlet: "India SME Forum", title: "India SME 100 recognition", year: "—" },
 ];
