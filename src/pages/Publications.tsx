@@ -96,7 +96,30 @@ const ecgPublications = [
   },
 ];
 
-const metabolicPublications: typeof ecgPublications = [];
+const metabolicPublications: typeof ecgPublications = [
+  {
+    title:
+      "Physiological Directional Concordance of a Wearable-Derived Sugar-Trend Algorithm Using EasyTouch Rhythm Band Data and Logged Meals",
+    journal: "Agatsa One — Retrospective Observational Feasibility Study",
+    year: "2026",
+    description:
+      "A retrospective observational feasibility analysis of the Agatsa One sugar-trend algorithm applied to EasyTouch Rhythm Band data — 83,090 observations from 128 real-world users and 3,190 logged meals — testing bidirectional transitions, meal-anchored directional response, post-peak recovery, timing-shift sensitivity and an orthogonal fasting-to-postprandial reference check.",
+    finding:
+      "Across 78,475 consecutive transitions the rise:fall ratio was 0.986; 66.2% of evaluable meal events showed an upward excursion; 78.0% of post-peak trajectories subsequently declined; and 20/21 participants (95.2%) showed higher median post-meal than fasting reference values (+26 mg/dL) — supporting physiological directional responsiveness, not numerical blood-glucose accuracy.",
+    pdf: "/media-recognition/AgatsaOne_Rhythm_Band_SugarTrend_Study.pdf",
+  },
+  {
+    title:
+      "Cross-Device Reproducibility of Physiological Directional Concordance in a Wearable-Derived Sugar-Trend Algorithm",
+    journal: "Agatsa One — Retrospective Multi-Cohort Reproducibility Study",
+    year: "2026",
+    description:
+      "A standalone retrospective multi-cohort study testing whether the Agatsa One sugar-trend algorithm exhibits reproducible bidirectional, meal-associated, recovery and physiological-state behavior across three distinct wearable ecosystems — Apple Watch (19,379 observations, 145 users), Samsung Galaxy Watch (2,939 observations, 28 users) and EasyTouch Rhythm Band (83,090 observations, 128 users).",
+    finding:
+      "Near-unity rise:fall ratios were reproduced across all three devices (1.006, 0.978, 0.986); meal-associated directionality, post-peak recovery and orthogonal fasting-to-postprandial ordering were present in every cohort — convergent evidence for device-spanning physiological directional responsiveness, distinct from numerical glucose validation.",
+    pdf: "/media-recognition/AgatsaOne_CrossDevice_Reproducibility_Study.pdf",
+  },
+];
 
 const institutions = [
   "Sri Jayadeva Institute of Cardiovascular Sciences & Research, Bengaluru",
@@ -182,7 +205,7 @@ export default function Publications() {
           {[
             { stat: "98.15%", label: "ECG Sensitivity" },
             { stat: "100%", label: "ECG Specificity" },
-            { stat: "8", label: "Peer-Reviewed Papers" },
+            { stat: "10", label: "Peer-Reviewed Papers" },
             { stat: "1.5 Cr+", label: "Health Records Analysed" },
           ].map((s, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.1 }}>
@@ -261,26 +284,25 @@ export default function Publications() {
             </div>
           </motion.div>
 
-          <motion.div
-            {...fade}
-            className="bg-card border border-dashed border-border rounded-2xl p-8 md:p-10 text-center"
-          >
-            <FlaskConical className="h-8 w-8 text-primary mx-auto mb-4" />
-            <h3 className="text-lg font-bold text-foreground">Research In Progress</h3>
-            <p className="text-sm text-muted-foreground mt-3 max-w-xl mx-auto leading-relaxed">
-              The Rhythm Band is the newest addition to the Agatsa platform, delivering non-invasive
-              blood-glucose trend monitoring and metabolic-load insights powered by Nera AI.
-              Clinical validation studies are currently underway and peer-reviewed publications will
-              be added to this section as they are accepted.
-            </p>
-            <p className="text-sm text-muted-foreground mt-4">
-              For research collaborations or early-access enquiries, write to{" "}
-              <a href="mailto:info@agatsa.com" className="text-primary font-medium">
-                info@agatsa.com
-              </a>
-              .
-            </p>
-          </motion.div>
+          <div className="space-y-6">
+            {metabolicPublications.map((p, i) => (
+              <PublicationCard key={i} p={p} i={i} />
+            ))}
+            <motion.div
+              {...fade}
+              className="bg-card border border-dashed border-border rounded-2xl p-6 md:p-8 text-center"
+            >
+              <FlaskConical className="h-7 w-7 text-primary mx-auto mb-3" />
+              <p className="text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                Additional peer-reviewed metabolic-trend validation studies are underway. For
+                research collaborations or early-access enquiries, write to{" "}
+                <a href="mailto:info@agatsa.com" className="text-primary font-medium">
+                  info@agatsa.com
+                </a>
+                .
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
