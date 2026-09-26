@@ -1,7 +1,7 @@
 import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import { motion } from "framer-motion";
-import { Award, BookOpen, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star, Globe } from "lucide-react";
+import { Award, Trophy, Newspaper, PlayCircle, ExternalLink, FileText, Building2, Star } from "lucide-react";
 import { VideoCard } from "@/components/VideoCard";
 import type { VideoItem } from "@/components/VideoCard";
 
@@ -55,60 +55,6 @@ const governmentRecognition: Array<{ title: string; body: string; icon: typeof B
 
 
 
-const publications = [
-  {
-    year: "2020",
-    title: "Assessment of Diagnostic Accuracy of SanketLife",
-    journal: "Indian Pacing & Electrophysiology Journal (Elsevier · PubMed Indexed)",
-    body: "Prospective trial of 100 patients at Sri Jayadeva Institute, Bangalore. Matched gold-standard GE-2000 with 98.15% sensitivity and 100% specificity for LBBB, RBBB, ST-segment changes and AV blocks. Co-authored with Emory University & Texas A&M.",
-  },
-  {
-    year: "2019",
-    title: "Identifying Prevalence of Life-Threatening Atrial Fibrillation",
-    journal: "Journal of Practical Cardiovascular Sciences · Medknow / Wolters Kluwer",
-    body: "Analysed 8,005 SanketLife ECG reports over 2 months across home, OPD and PHC settings. First large-scale real-world SanketLife dataset, confirming feasibility for continuous AFib monitoring across all care levels.",
-  },
-  {
-    year: "2018",
-    title: "Wireless, Pocket-Sized ECG Monitor: A Potential Tool in CVD Detection",
-    journal: "Journal of Practical Cardiovascular Sciences · AIIMS New Delhi, Dept. of Cardiology",
-    body: "AIIMS-led evaluation of SanketLife's diagnostic reliability as a wireless pocket ECG in cardiovascular disease detection.",
-  },
-  {
-    year: "2016",
-    title: "Smart Phone ECG — Bridging the Gap",
-    journal: "Journal of Advanced Research in Medical Science & Technology · ADR Journals",
-    body: "Agatsa's foundational accuracy study. 6-lead ECG intervals validated against a traditional ECG — the first published clinical evidence for SanketLife.",
-    pdfKey: "springer2016" as PdfKey,
-  },
-  {
-    year: "2024",
-    title: "Indian Journal of Electrocardiology — Featured",
-    journal: "Indian Society of Electrocardiology · Vol. 1, February 2024",
-    body: "Editorial coverage referencing SanketLife in the official journal of the Indian Society of Electrocardiology (Editors: Dr. Joy Thomas, Dr. Aparna Jaswal).",
-    pdfKey: "ije" as PdfKey,
-  },
-  {
-    year: "2024",
-    title: "Scientific Reports — Nature Portfolio Publication",
-    journal: "Scientific Reports · Nature Portfolio (Open Access)",
-    body: "Peer-reviewed publication featuring SanketLife's clinical performance data in the Nature Portfolio's Scientific Reports journal.",
-    pdfKey: "sciRep2024" as PdfKey,
-  },
-
-  {
-    year: "2020",
-    title: "Patient Satisfaction in Community ECG Screening",
-    journal: "Indian Journal of Community Health · 97.5% satisfaction",
-    body: "Community-level screening study using SanketLife, reporting 97.5% patient satisfaction across camp deployments.",
-  },
-];
-
-const globalCoverage = [
-  { region: "India", detail: "IPEJ · IJCH · JPCS · AIIMS · ISECON · IoT Journal · BMJ India" },
-  { region: "Indonesia", detail: "Indonesian Journal of Cardiology · COVID-19 ECG protocols" },
-  { region: "South Korea", detail: "KISTI ScienceON National DB (200M+ records) · GOLD Open Access" },
-];
 
 const expertVideos: VideoItem[] = [
   { id: "u26lsahqY8k", title: "Dr. Sanjeev Gera Recommends SanketLife ECG" },
@@ -238,70 +184,6 @@ export default function MediaRecognition() {
         </div>
       </section>
 
-      {/* Clinical Publications */}
-      <section className="py-16 md:py-20 bg-background">
-        <div className="max-w-5xl mx-auto px-4">
-          <motion.div {...fade} className="text-center mb-12">
-            <BookOpen className="h-8 w-8 text-primary mx-auto mb-3" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Clinical Publications & Peer-Reviewed Research</h2>
-            <p className="text-muted-foreground mt-3">14+ peer-reviewed journals, clinical studies and industry reports · 2016–2025</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-4 mb-10">
-            {[
-              { v: "98.15%", l: "Clinical sensitivity vs standard 12-lead ECG (IPEJ, Elsevier · 2020)" },
-              { v: "100%", l: "Specificity — zero false positives (Sri Jayadeva Institute, Bangalore)" },
-              { v: "8,005", l: "Real-world ECG scans analysed for AFib prevalence (JPCS · 2019)" },
-            ].map((k) => (
-              <div key={k.v} className="bg-primary/5 border border-primary/20 rounded-2xl p-6 text-center">
-                <p className="text-3xl font-extrabold text-primary">{k.v}</p>
-                <p className="text-xs text-muted-foreground mt-2 leading-relaxed">{k.l}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="space-y-4">
-            {publications.map((p: any) => {
-              const href: string | undefined = p.pdfKey ? pdfLinks[p.pdfKey as PdfKey] : undefined;
-              const Tag: any = href ? "a" : "article";
-              const extra = href ? { href, target: "_blank", rel: "noopener noreferrer" } : {};
-              return (
-                <Tag
-                  key={p.title}
-                  {...extra}
-                  className={`bg-card border border-border rounded-2xl p-6 transition-all block ${href ? "hover:border-primary hover:shadow-md cursor-pointer" : "hover:border-primary/30"}`}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
-                    <h3 className="font-bold text-foreground text-lg">{p.title}</h3>
-                    <span className="text-xs font-semibold text-primary whitespace-nowrap">{p.year}</span>
-                  </div>
-                  <p className="text-sm text-primary/80 font-medium">{p.journal}</p>
-                  <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.body}</p>
-                  {href && <p className="text-xs text-primary font-semibold mt-3 inline-flex items-center gap-1"><FileText className="h-3 w-3" /> Read full PDF <ExternalLink className="h-3 w-3" /></p>}
-                </Tag>
-              );
-            })}
-
-
-          </div>
-
-          {/* Global journal coverage */}
-          <motion.div {...fade} className="mt-12 bg-card border border-border rounded-2xl p-6 md:p-8">
-            <div className="flex items-center gap-3 mb-4">
-              <Globe className="h-6 w-6 text-primary" />
-              <h3 className="font-bold text-foreground text-lg">Global Journal Coverage</h3>
-            </div>
-            <div className="grid md:grid-cols-3 gap-4">
-              {globalCoverage.map((g) => (
-                <div key={g.region} className="border border-border/60 rounded-xl p-4">
-                  <p className="text-sm font-semibold text-foreground">{g.region}</p>
-                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{g.detail}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Media Mentions */}
       <section className="py-16 md:py-20 bg-muted/30">
