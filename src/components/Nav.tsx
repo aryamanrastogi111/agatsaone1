@@ -43,6 +43,7 @@ const navLinks = [
     label: "Company",
     children: [
       { label: "About Us", href: "/about" },
+      { label: "Clinical Research", href: "/publications" },
       { label: "Media & Recognition", href: "/media-recognition" },
       { label: "Partner with Us", href: "/partner-with-us" },
     ],
