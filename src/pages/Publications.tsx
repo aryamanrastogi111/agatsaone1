@@ -189,6 +189,13 @@ function PublicationCard({ p, i }: { p: (typeof ecgPublications)[number]; i: num
                 </Button>
               </a>
             )}
+            {p.researchgate && (
+              <a href={p.researchgate} target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="rounded-full">
+                  <BookOpen className="h-4 w-4 mr-2" /> View on ResearchGate
+                </Button>
+              </a>
+            )}
           </div>
         </div>
       </div>
