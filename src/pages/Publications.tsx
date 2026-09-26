@@ -98,8 +98,8 @@ export default function Publications() {
         <div className="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             { stat: "98.15%", label: "ECG Sensitivity" },
-            { stat: "3+", label: "Peer-Reviewed Papers" },
-            { stat: "2", label: "Top Cardiac Institutes" },
+            { stat: "100%", label: "ECG Specificity" },
+            { stat: "5", label: "Peer-Reviewed Papers" },
             { stat: "1.5 Cr+", label: "Health Records Analysed" },
           ].map((s, i) => (
             <motion.div key={i} {...fade} transition={{ duration: 0.4, delay: i * 0.1 }}>
@@ -134,11 +134,22 @@ export default function Publications() {
                     <FlaskConical className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                     {p.finding}
                   </p>
-                  <a href={p.pdf} target="_blank" rel="noopener noreferrer" className="inline-block mt-4">
-                    <Button variant="outline" className="rounded-full">
-                      <Download className="h-4 w-4 mr-2" /> Read Full Paper (PDF)
-                    </Button>
-                  </a>
+                  <div className="flex flex-wrap gap-3 mt-4">
+                    {p.pdf && (
+                      <a href={p.pdf} target="_blank" rel="noopener noreferrer">
+                        <Button variant="outline" className="rounded-full">
+                          <Download className="h-4 w-4 mr-2" /> Read Full Paper (PDF)
+                        </Button>
+                      </a>
+                    )}
+                    {p.link && (
+                      <a href={p.link} target="_blank" rel="noopener noreferrer">
+                        <Button variant="outline" className="rounded-full">
+                          <BookOpen className="h-4 w-4 mr-2" /> View on Journal Site
+                        </Button>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.article>
@@ -163,7 +174,7 @@ export default function Publications() {
                   the SanketLife ECG platform — ideal for clinicians, partners and researchers.
                 </p>
                 <a
-                  href="/__l5e/assets-v1/db0cfb04-1b0a-4fd0-86fb-195ced4b3e49/sanketlife-publications-1pager.pdf"
+                  href="/media-recognition/sanketlife-publications-1pager.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block mt-4"
