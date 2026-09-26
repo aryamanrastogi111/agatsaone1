@@ -26,9 +26,6 @@ const ecgPublications = [
       "Diagnostic Accuracy of SanketLife Wireless ECG Biosensor vs Standard 12-Lead ECG — ResearchGate Repository",
     journal: "ResearchGate",
     year: "2019",
-    description:
-      "The same Sri Jayadeva Institute diagnostic accuracy trial, hosted on ResearchGate — the academic research network — providing open access to the full manuscript, figures and citation data for the international research community.",
-    finding: "98.15% sensitivity and 100% specificity in diagnosing major cardiovascular conditions (Major Minnesota codes).",
     researchgate: "https://www.researchgate.net/publication/341072588",
   },
   {
