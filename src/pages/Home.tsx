@@ -11,7 +11,7 @@ import {
   ProvidersSection,
   TestimonialsSection,
   FinalCTASection,
-  HeartGuardTeaserSection,
+  // HeartGuardTeaserSection, // hidden for now
 } from "@/components/home-new";
 import { VideoShowcaseSection } from "@/components/home/VideoShowcaseSection";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
@@ -30,7 +30,7 @@ export default function HomePage() {
       <DeviceShowcaseSection />
       <VideoShowcaseSection />
       <ClinicalProofSection />
-      <HeartGuardTeaserSection />
+      {/* HeartGuardTeaserSection hidden for now */}
       <ProvidersSection />
       <TestimonialsSection />
       <TrustVideosSection />
