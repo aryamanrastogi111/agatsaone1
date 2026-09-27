@@ -30,7 +30,7 @@ export default function HomePage() {
       <DeviceShowcaseSection />
       <VideoShowcaseSection />
       <ClinicalProofSection />
-      <HeartGuardTeaserSection />
+      {/* HeartGuardTeaserSection hidden for now */}
       <ProvidersSection />
       <TestimonialsSection />
       <TrustVideosSection />
