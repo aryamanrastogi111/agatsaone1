@@ -15,14 +15,15 @@ const navLinks = [
     ],
   },
   { label: "NERA AI", href: "/nera-ai" },
-  {
-    label: "Programmes",
-    children: [
-      { label: "All Programmes", href: "/programmes" },
-      { label: "Lose Belly 90", href: "/lose-belly" },
-      { label: "Wake Up Like 25", href: "/wake-up-like-25" },
-    ],
-  },
+  // Programmes tab hidden for now — restore by uncommenting
+  // {
+  //   label: "Programmes",
+  //   children: [
+  //     { label: "All Programmes", href: "/programmes" },
+  //     { label: "Lose Belly 90", href: "/lose-belly" },
+  //     { label: "Wake Up Like 25", href: "/wake-up-like-25" },
+  //   ],
+  // },
   {
     label: "For Providers",
     children: [
