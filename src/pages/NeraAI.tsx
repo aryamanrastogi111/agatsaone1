@@ -61,12 +61,12 @@ function Section({
   return (
     <section
       id={id}
-      className={`relative py-20 md:py-28 ${
+      className={`relative py-12 md:py-16 ${
         dark ? "bg-[hsl(var(--dark-bg))] text-white" : "bg-background text-foreground"
       }`}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div {...fadeUp} className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
+        <motion.div {...fadeUp} className="max-w-3xl mx-auto text-center mb-8 md:mb-10">
           {eyebrow && (
             <div
               className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase mb-4 ${
@@ -88,7 +88,7 @@ function Section({
           </h2>
           {subtitle && (
             <p
-              className={`mt-5 text-base md:text-lg leading-relaxed ${
+              className={`mt-3 text-base md:text-lg leading-relaxed ${
                 dark ? "text-white/70" : "text-muted-foreground"
               }`}
             >
@@ -142,7 +142,7 @@ function HeroSection() {
         />
       </div>
 
-      <div className="container relative mx-auto px-4 md:px-6 py-20 md:py-28">
+      <div className="container relative mx-auto px-4 md:px-6 py-14 md:py-20">
         <motion.div {...fadeUp} className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 mb-5">
             <img src={agatsaLogo} alt="Agatsa" className="h-6 w-6 object-contain" />
@@ -179,7 +179,7 @@ function HeroSection() {
         </motion.div>
 
         {/* NERA AI App Screenshot */}
-        <motion.div {...fadeUp} className="mt-12 md:mt-16 max-w-xs mx-auto">
+        <motion.div {...fadeUp} className="mt-10 md:mt-12 max-w-xs mx-auto">
           <div className="relative mx-auto w-[260px] md:w-[280px]">
             {/* Phone frame */}
             <div className="rounded-[2.5rem] border-[6px] border-white/15 bg-white/5 p-2 shadow-2xl shadow-primary/20 backdrop-blur-sm">
@@ -207,7 +207,7 @@ function HeroSection() {
         </motion.div>
 
         {/* Devices → Brain → Outputs diagram */}
-        <motion.div {...fadeUp} className="mt-16 md:mt-20 max-w-5xl mx-auto">
+        <motion.div {...fadeUp} className="mt-10 md:mt-12 max-w-5xl mx-auto">
           <div className="grid md:grid-cols-[1fr_auto_1fr] gap-6 md:gap-10 items-center">
             {/* Devices */}
             <div className="grid gap-3">
@@ -362,7 +362,7 @@ function DeviceInsightSection({
   reverse?: boolean;
 }) {
   return (
-    <section className="py-20 md:py-28 border-t border-border">
+    <section className="py-12 md:py-16 border-t border-border">
       <div className="container mx-auto px-4 md:px-6">
         <div
           className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${
@@ -841,7 +841,7 @@ function WhySubscribe() {
 
 function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-[hsl(var(--dark-bg))] text-white py-24 md:py-32">
+    <section className="relative overflow-hidden bg-[hsl(var(--dark-bg))] text-white py-14 md:py-20">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/20 blur-[180px]" />
       </div>
@@ -953,7 +953,7 @@ function ChapterShell({
 function PriyaReportStory() {
   const TOTAL = 6;
   return (
-    <section className="relative bg-[hsl(var(--dark-bg))] text-white py-20 md:py-28 overflow-hidden">
+    <section className="relative bg-[hsl(var(--dark-bg))] text-white py-12 md:py-16 overflow-hidden">
       {/* Ambient */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-40 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/15 blur-[160px]" />
@@ -962,7 +962,7 @@ function PriyaReportStory() {
 
       <div className="container relative mx-auto px-4 md:px-6">
         {/* Section intro */}
-        <motion.div {...fadeUp} className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
+        <motion.div {...fadeUp} className="max-w-3xl mx-auto text-center mb-10 md:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold uppercase tracking-wider mb-5">
             <Sparkles className="w-3 h-3" />
             A Real NERA Report
