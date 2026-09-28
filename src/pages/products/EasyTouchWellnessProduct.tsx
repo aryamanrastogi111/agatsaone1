@@ -137,14 +137,16 @@ export default function EasyTouchWellnessProduct() {
               </p>
             </div>
             <div className="flex md:justify-end">
-              <Link
-                to="/devices/rhythm-band"
+              <a
+                href="https://agatsaone.com/rhythm"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full px-7 py-4 font-bold text-base transition hover:opacity-90"
                 style={{ backgroundColor: "#fff", color: PRIMARY, boxShadow: "0 10px 30px rgba(0,0,0,0.25)" }}
               >
                 Explore EasyTouch Rhythm Band
                 <ArrowRight className="w-4 h-4" />
-              </Link>
+              </a>
             </div>
           </motion.div>
         </section>
