@@ -93,6 +93,62 @@ export default function EasyTouchWellnessProduct() {
   return (
     <SiteLayout>
       <div style={{ color: BODY, fontFamily: "Inter, system-ui, sans-serif" }}>
+        {/* SECTION 0 — RHYTHM BAND TOP BANNER (conversion highlight) */}
+        <section
+          className="relative overflow-hidden"
+          style={{
+            background: `linear-gradient(120deg, ${PRIMARY} 0%, #5B3DF5 55%, ${ACCENT} 100%)`,
+          }}
+        >
+          <div
+            className="absolute inset-0 opacity-20 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(600px 300px at 85% 20%, rgba(255,255,255,0.6), transparent 70%)",
+            }}
+          />
+          <motion.div
+            {...fadeUp}
+            className="relative max-w-7xl mx-auto px-6 py-8 md:py-10 grid md:grid-cols-[1.6fr_1fr] gap-6 items-center"
+          >
+            <div className="text-white">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/20 border border-white/30 px-3 py-1 text-xs font-bold uppercase tracking-wider mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse" />
+                Prefer continuous, effortless sugar trend tracking?
+              </span>
+              <h2
+                className="font-black tracking-tight"
+                style={{
+                  color: "#fff",
+                  fontSize: "clamp(24px, 3.2vw, 36px)",
+                  lineHeight: 1.15,
+                }}
+              >
+                Discover the EasyTouch Rhythm Band
+              </h2>
+              <p className="mt-3 text-white/90" style={{ fontSize: 16, lineHeight: 1.7, maxWidth: 640 }}>
+                A non-invasive wearable that tracks sugar trends continuously
+                through the day — no needles, no finger pricks, no repeated
+                manual checks. See how your sugar trends change with meals,
+                activity, rest and daily routines — simply by wearing the band.
+              </p>
+              <p className="mt-2 font-semibold text-white" style={{ fontSize: 15 }}>
+                Continuous. Non-invasive. Effortless.
+              </p>
+            </div>
+            <div className="flex md:justify-end">
+              <Link
+                to="/devices/rhythm-band"
+                className="inline-flex items-center gap-2 rounded-full px-7 py-4 font-bold text-base transition hover:opacity-90"
+                style={{ backgroundColor: "#fff", color: PRIMARY, boxShadow: "0 10px 30px rgba(0,0,0,0.25)" }}
+              >
+                Explore EasyTouch Rhythm Band
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </motion.div>
+        </section>
+
         {/* SECTION 1 — HERO */}
         <section
           className="relative overflow-hidden"
@@ -592,56 +648,6 @@ export default function EasyTouchWellnessProduct() {
               time. Is your management actually working? Are you getting better
               or worse between blood tests? That's what EasyTouch tells you.
             </p>
-          </motion.div>
-        </section>
-
-        {/* SECTION 5.2 — RHYTHM BAND CROSS-SELL */}
-        <section className="py-20" style={{ background: `linear-gradient(135deg, ${LIGHT_BG} 0%, #EEF6FF 100%)` }}>
-          <motion.div
-            {...fadeUp}
-            className="max-w-3xl mx-auto px-6 text-center"
-          >
-            <p
-              className="text-xs font-bold uppercase tracking-widest mb-4"
-              style={{ color: ACCENT }}
-            >
-              Prefer continuous, effortless sugar trend tracking?
-            </p>
-            <h2
-              className="font-bold"
-              style={{ color: HEADING, fontSize: "clamp(26px, 3.5vw, 38px)", lineHeight: 1.2 }}
-            >
-              Discover the EasyTouch Rhythm Band
-            </h2>
-            <p
-              className="mt-6"
-              style={{ color: BODY, fontSize: 18, lineHeight: 1.8 }}
-            >
-              A non-invasive wearable designed to track sugar trends
-              continuously through the day, without needles, finger pricks or
-              repeated manual checks.
-            </p>
-            <p
-              className="mt-4"
-              style={{ color: BODY, fontSize: 18, lineHeight: 1.8 }}
-            >
-              See how your sugar trends change with meals, activity, rest and
-              daily routines — simply by wearing the band.
-            </p>
-            <p
-              className="mt-6 font-semibold"
-              style={{ color: HEADING, fontSize: 18 }}
-            >
-              Continuous. Non-invasive. Effortless.
-            </p>
-            <Link
-              to="/devices/rhythm-band"
-              className="inline-flex items-center gap-2 mt-8 rounded-full px-8 py-4 text-white font-semibold hover:opacity-90 transition"
-              style={{ backgroundColor: ACCENT, boxShadow: `0 8px 24px ${ACCENT}40` }}
-            >
-              Explore EasyTouch Rhythm Band
-              <ArrowRight className="w-4 h-4" />
-            </Link>
           </motion.div>
         </section>
 
