@@ -12,6 +12,7 @@ import { Star, ArrowRight, Package, Scale, TrendingDown, Users, Heart, ShoppingC
 import { SiteLayout } from "@/components/SiteLayout";
 import { EmiLine, TrustBar } from "@/components/EmiLine";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
+import { useInventory } from "@/hooks/useInventory";
 import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import scaleHero from "@/assets/corebalance-hero.webp";
 import { Button } from "@/components/ui/button";
@@ -100,6 +101,8 @@ export default function SmartScaleProduct() {
   const [adding, setAdding] = useState(false);
   const { prices, fmt } = usePricing();
   const scalePrice = prices.scale_sub;
+  const { isOutOfStock } = useInventory();
+  const soldOut = isOutOfStock("corebalance");
   useMetaPixelViewContent("SMART_SCALE", "Agatsa Smart Scale", 1999);
   const handleAddToCart = (qtyOrEvent?: number | React.MouseEvent) => {
     const qty = typeof qtyOrEvent === "number" ? qtyOrEvent : 1;
@@ -130,7 +133,14 @@ export default function SmartScaleProduct() {
               <div className="mt-6">
                 <StrikePrice sku="scale_sub" price={scalePrice} />
                 <EmiLine price={scalePrice} />
-                <StockUrgencyBar productKey="corebalance" className="mt-3" />
+                {soldOut ? (
+                  <div className="mt-3 inline-flex items-center gap-2 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-lg px-3 py-2">
+                    <span className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
+                    <span className="text-sm font-semibold text-red-700 dark:text-red-400">Currently Out of Stock</span>
+                  </div>
+                ) : (
+                  <StockUrgencyBar productKey="corebalance" className="mt-3" />
+                )}
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
                   <span>📦</span>
                   <span><span className="font-semibold text-green-600">{shipDateLabel()}</span> · {deliveryDateLabel()}</span>
@@ -146,9 +156,15 @@ export default function SmartScaleProduct() {
                 <span className="text-sm text-muted-foreground ml-1">4.7/5 (423 reviews)</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                <Button onClick={handleAddToCart} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
-                  <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart — {fmt(scalePrice)}
-                </Button>
+                {soldOut ? (
+                  <Button disabled className="rounded-full px-8 py-4 text-base bg-muted text-muted-foreground cursor-not-allowed">
+                    Out of Stock — Check Back Soon
+                  </Button>
+                ) : (
+                  <Button onClick={handleAddToCart} disabled={adding} className="rounded-full px-8 py-4 text-base shadow-[0_8px_32px_hsl(var(--primary)/0.4)]">
+                    <ShoppingCart className="h-4 w-4 mr-2" />Add to Cart — {fmt(scalePrice)}
+                  </Button>
+                )}
               </div>
               <TrustBar />
             </motion.div>
