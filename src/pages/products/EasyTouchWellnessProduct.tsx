@@ -595,6 +595,56 @@ export default function EasyTouchWellnessProduct() {
           </motion.div>
         </section>
 
+        {/* SECTION 5.2 — RHYTHM BAND CROSS-SELL */}
+        <section className="py-20" style={{ background: `linear-gradient(135deg, ${LIGHT_BG} 0%, #EEF6FF 100%)` }}>
+          <motion.div
+            {...fadeUp}
+            className="max-w-3xl mx-auto px-6 text-center"
+          >
+            <p
+              className="text-xs font-bold uppercase tracking-widest mb-4"
+              style={{ color: ACCENT }}
+            >
+              Prefer continuous, effortless sugar trend tracking?
+            </p>
+            <h2
+              className="font-bold"
+              style={{ color: HEADING, fontSize: "clamp(26px, 3.5vw, 38px)", lineHeight: 1.2 }}
+            >
+              Discover the EasyTouch Rhythm Band
+            </h2>
+            <p
+              className="mt-6"
+              style={{ color: BODY, fontSize: 18, lineHeight: 1.8 }}
+            >
+              A non-invasive wearable designed to track sugar trends
+              continuously through the day, without needles, finger pricks or
+              repeated manual checks.
+            </p>
+            <p
+              className="mt-4"
+              style={{ color: BODY, fontSize: 18, lineHeight: 1.8 }}
+            >
+              See how your sugar trends change with meals, activity, rest and
+              daily routines — simply by wearing the band.
+            </p>
+            <p
+              className="mt-6 font-semibold"
+              style={{ color: HEADING, fontSize: 18 }}
+            >
+              Continuous. Non-invasive. Effortless.
+            </p>
+            <Link
+              to="/devices/rhythm-band"
+              className="inline-flex items-center gap-2 mt-8 rounded-full px-8 py-4 text-white font-semibold hover:opacity-90 transition"
+              style={{ backgroundColor: ACCENT, boxShadow: `0 8px 24px ${ACCENT}40` }}
+            >
+              Explore EasyTouch Rhythm Band
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </motion.div>
+        </section>
+
         {/* SECTION 5.5 — INSIDE THE APP (real screenshots) */}
         <section className="py-20" style={{ backgroundColor: LIGHT_BG }}>
           <div className="max-w-6xl mx-auto px-6">
