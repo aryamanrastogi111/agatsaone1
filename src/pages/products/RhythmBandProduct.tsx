@@ -48,8 +48,14 @@ const faqs = [
 ];
 
 export default function RhythmBandProduct() {
-  const [scrolled, setScrolled] = useState(false);
-  const { prices, fmt } = usePricing();
+  const topReviews = useMemo(
+    () =>
+      easytouchRhythmReviews
+        .filter((r) => r.rating === 5)
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 20),
+    []
+  );
   const bandPrice = prices.band_sub;
   useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 3999);
 
