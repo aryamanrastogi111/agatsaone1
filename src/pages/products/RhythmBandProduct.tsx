@@ -9,8 +9,6 @@ import { Sparkles, Moon, HeartPulse, Activity, ShieldCheck, Stethoscope, Zap, Ba
 import { SiteLayout } from "@/components/SiteLayout";
 import { VideoCard, YouTubeChannelLink } from "@/components/VideoCard";
 import { StrikePrice } from "@/components/StrikePrice";
-import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
-import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
 import { AwardsTrustSection } from "@/components/AwardsTrustSection";
 import rhythmHero from "@/assets/easytouch-rhythm-new.webp";
 import neraScreen from "@/assets/app-screen-nera.webp";
@@ -48,14 +46,6 @@ const faqs = [
 ];
 
 export default function RhythmBandProduct() {
-  const topReviews = useMemo(
-    () =>
-      easytouchRhythmReviews
-        .filter((r) => r.rating === 5)
-        .sort((a, b) => b.date.localeCompare(a.date))
-        .slice(0, 20),
-    []
-  );
   const { prices, fmt } = usePricing();
   const [scrolled, setScrolled] = useState(false);
   const bandPrice = prices.band_sub;
@@ -937,7 +927,7 @@ export default function RhythmBandProduct() {
       </section>
 
       <AwardsTrustSection />
-      <ProductReviewsSection reviews={topReviews} heading="What Rhythm Band users are saying" />
+
 
       <StickyAddToCart
         productName="EasyTouch Rhythm Band"
