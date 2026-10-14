@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { usePricing } from "@/hooks/useDevicePricing";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
@@ -48,8 +48,16 @@ const faqs = [
 ];
 
 export default function RhythmBandProduct() {
-  const [scrolled, setScrolled] = useState(false);
+  const topReviews = useMemo(
+    () =>
+      easytouchRhythmReviews
+        .filter((r) => r.rating === 5)
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 20),
+    []
+  );
   const { prices, fmt } = usePricing();
+  const [scrolled, setScrolled] = useState(false);
   const bandPrice = prices.band_sub;
   useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 3999);
 
@@ -929,7 +937,7 @@ export default function RhythmBandProduct() {
       </section>
 
       <AwardsTrustSection />
-      <ProductReviewsSection reviews={easytouchRhythmReviews} />
+      <ProductReviewsSection reviews={topReviews} heading="What Rhythm Band users are saying" />
 
       <StickyAddToCart
         productName="EasyTouch Rhythm Band"
