@@ -935,7 +935,7 @@ export default function RhythmBandProduct() {
       </section>
 
       <AwardsTrustSection />
-      <ProductReviewsSection reviews={easytouchRhythmReviews} />
+      <ProductReviewsSection reviews={topReviews} heading="What Rhythm Band users are saying" />
 
       <StickyAddToCart
         productName="EasyTouch Rhythm Band"
