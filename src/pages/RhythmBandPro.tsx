@@ -153,14 +153,16 @@ export default function RhythmBandPro() {
   const price = prices.band_sub;
   const [selectedColor, setSelectedColor] = useState(COLORS[0]);
 
-  const topReviews = useMemo(
-    () =>
+  const topReviews = useMemo(() => {
+    const pick = (rating: number, n: number) =>
       easytouchRhythmReviews
-        .filter((r) => r.rating === 5)
+        .filter((r) => r.rating === rating)
         .sort((a, b) => b.date.localeCompare(a.date))
-        .slice(0, 20),
-    []
-  );
+        .slice(0, n);
+    return [...pick(5, 15), ...pick(4, 3), ...pick(3, 2)]
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, 20);
+  }, []);
 
   useSEO({
     title: "Discover Which Foods Spike YOUR Sugar — EasyTouch Rhythm Band",
