@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { encodeVariantsParam, BAND_SKU } from "@/lib/bandColors";
@@ -10,8 +10,6 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { RecentPurchasePopup } from "@/components/products/RecentPurchasePopup";
-import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
-import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
 import { Button } from "@/components/ui/button";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
@@ -148,14 +146,6 @@ function ToneDot({ tone }: { tone: "low" | "mid" | "high" }) {
 /* ------------------------------------------------------------------ */
 
 export default function RhythmBandPro() {
-  const topReviews = useMemo(
-    () =>
-      easytouchRhythmReviews
-        .filter((r) => r.rating === 5)
-        .sort((a, b) => b.date.localeCompare(a.date))
-        .slice(0, 20),
-    []
-  );
   const { prices, fmt } = usePricing();
   const navigate = useNavigate();
   const price = prices.band_sub;
@@ -894,8 +884,6 @@ export default function RhythmBandPro() {
             </motion.div>
           </div>
         </section>
-
-        <ProductReviewsSection reviews={topReviews} heading="What Rhythm Band users are saying" />
       </div>
       <StickyAddToCart
         productName={`EasyTouch Rhythm Band · ${selectedColor.name}`}
