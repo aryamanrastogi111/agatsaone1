@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { encodeVariantsParam, BAND_SKU } from "@/lib/bandColors";
@@ -19,6 +19,8 @@ import { useCartStore } from "@/stores/cartStore";
 import { useSEO } from "@/hooks/useSEO";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
 import { toast } from "sonner";
+import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
+import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
 
 
 import rhythmPortrait1 from "@/assets/rhythm-portrait-1.jpg";
@@ -150,6 +152,15 @@ export default function RhythmBandPro() {
   const navigate = useNavigate();
   const price = prices.band_sub;
   const [selectedColor, setSelectedColor] = useState(COLORS[0]);
+
+  const topReviews = useMemo(
+    () =>
+      easytouchRhythmReviews
+        .filter((r) => r.rating === 5)
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 20),
+    []
+  );
 
   useSEO({
     title: "Discover Which Foods Spike YOUR Sugar — EasyTouch Rhythm Band",
@@ -804,6 +815,11 @@ export default function RhythmBandPro() {
               </Accordion>
             </motion.div>
           </div>
+        </section>
+
+        {/* 10.5. REVIEWS -------------------------------------------- */}
+        <section className="border-t border-white/5">
+          <ProductReviewsSection reviews={topReviews} heading="What Rhythm Band users are saying" />
         </section>
 
         {/* 11. FINAL CTA / BUY --------------------------------------- */}
