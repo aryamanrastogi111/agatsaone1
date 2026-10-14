@@ -56,6 +56,8 @@ export default function RhythmBandProduct() {
         .slice(0, 20),
     []
   );
+  const { prices, fmt } = usePricing();
+  const [scrolled, setScrolled] = useState(false);
   const bandPrice = prices.band_sub;
   useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", 3999);
 
