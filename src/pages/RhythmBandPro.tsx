@@ -894,6 +894,8 @@ export default function RhythmBandPro() {
             </motion.div>
           </div>
         </section>
+
+        <ProductReviewsSection reviews={topReviews} heading="What Rhythm Band users are saying" />
       </div>
       <StickyAddToCart
         productName={`EasyTouch Rhythm Band · ${selectedColor.name}`}
