@@ -148,6 +148,14 @@ function ToneDot({ tone }: { tone: "low" | "mid" | "high" }) {
 /* ------------------------------------------------------------------ */
 
 export default function RhythmBandPro() {
+  const topReviews = useMemo(
+    () =>
+      easytouchRhythmReviews
+        .filter((r) => r.rating === 5)
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 20),
+    []
+  );
   const { prices, fmt } = usePricing();
   const navigate = useNavigate();
   const price = prices.band_sub;
