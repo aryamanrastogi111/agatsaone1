@@ -1,927 +1,171 @@
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { encodeVariantsParam, BAND_SKU } from "@/lib/bandColors";
-import {
-  Check, X, ArrowRight, HeartPulse, MoonStar, Flame, Activity, Wind, Sparkles,
-  Thermometer, Waves, Footprints,
-} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ArrowRight, Check, HeartPulse, MoonStar, Footprints, Waves, Wind, NotebookPen, Activity, Utensils, Minus, Plus, ShoppingCart, Play } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
-import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
-import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
-import { RecentPurchasePopup } from "@/components/products/RecentPurchasePopup";
 import { Button } from "@/components/ui/button";
-import {
-  Accordion, AccordionContent, AccordionItem, AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
+import { StickyAddToCart } from "@/components/shop/StickyAddToCart";
+import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
+import { RhythmResearch } from "@/components/rhythm/RhythmResearch";
+import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
+import { RHYTHM_CAMPAIGNS, getRhythmAngle, selectRhythmAngle, recordRhythmInteraction, type RhythmAngle } from "@/lib/rhythmCampaign";
+import { encodeVariantsParam, BAND_SKU } from "@/lib/bandColors";
+import { getNeraAiIncludedLine } from "@/lib/neraAiPlan";
 import { usePricing } from "@/hooks/useDevicePricing";
-import { useCartStore } from "@/stores/cartStore";
 import { useSEO } from "@/hooks/useSEO";
 import { useMetaPixelViewContent } from "@/hooks/useMetaPixelViewContent";
+import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
-import { ProductReviewsSection } from "@/components/products/ProductReviewsSection";
-import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
-
-
-import rhythmPortrait1 from "@/assets/rhythm-portrait-1.jpg";
-import rhythmPortrait2 from "@/assets/rhythm-portrait-2.jpg";
-import rhythmPortrait3 from "@/assets/rhythm-portrait-3.jpg";
-import rhythmPortrait4 from "@/assets/rhythm-portrait-4.jpg";
+import portrait1 from "@/assets/rhythm-portrait-1.jpg";
+import portrait2 from "@/assets/rhythm-portrait-2.jpg";
+import portrait3 from "@/assets/rhythm-portrait-3.jpg";
 import appWearable from "@/assets/rhythm-app-wearable.png.asset.json";
 import appMeals from "@/assets/rhythm-app-meals.jpg.asset.json";
 import appMetabolic from "@/assets/rhythm-app-metabolic.jpg.asset.json";
 import spikeDemo from "@/assets/rhythm-spike-demo.mp4.asset.json";
-
 import bandOlive from "@/assets/bands/band-olive.png.asset.json";
 import bandOliveHero from "@/assets/bands/band-olive-hero.png.asset.json";
 import bandGraphite from "@/assets/bands/band-graphite.png.asset.json";
 import bandKhaki from "@/assets/bands/band-khaki.png.asset.json";
 import bandSlate from "@/assets/bands/band-slate.png.asset.json";
 import bandRosewood from "@/assets/bands/band-rosewood.png.asset.json";
-
 import bandTeal from "@/assets/bands/band-teal.png.asset.json";
 
-/* ------------------------------------------------------------------ */
-/* Theme: Black + Emerald. Apple keynote pacing.                       */
-/* ------------------------------------------------------------------ */
-
-const EMERALD = "#10b981";
-
 const COLORS = [
-  { id: "olive",      name: "Olive",      hex: "#6B7A3A", photo: bandOlive.url },
-  { id: "graphite",   name: "Graphite",   hex: "#2E2E2E", photo: bandGraphite.url },
-  { id: "khaki",      name: "Khaki",      hex: "#B8A55C", photo: bandKhaki.url },
-  { id: "slate",      name: "Slate",      hex: "#7A7A9E", photo: bandSlate.url },
-  { id: "rosewood",   name: "Rosewood",   hex: "#8E3B4E", photo: bandRosewood.url },
-  
-  { id: "teal",       name: "Teal",       hex: "#1F6F86", photo: bandTeal.url },
+  { id: "olive", name: "Olive", photo: bandOlive.url },
+  { id: "graphite", name: "Graphite", photo: bandGraphite.url },
+  { id: "khaki", name: "Khaki", photo: bandKhaki.url },
+  { id: "slate", name: "Slate", photo: bandSlate.url },
+  { id: "rosewood", name: "Rosewood", photo: bandRosewood.url },
+  { id: "teal", name: "Teal", photo: bandTeal.url },
 ];
-
-const MYSTERY_FOODS = [
-  { emoji: "🍚", label: "Rice" },
-  { emoji: "🥭", label: "Mango" },
-  { emoji: "🍕", label: "Pizza" },
-  { emoji: "☕", label: "Chai" },
-  { emoji: "🍌", label: "Banana" },
-  { emoji: "🍦", label: "Ice cream" },
-];
-
-const FOOD_PROFILE = [
-  { emoji: "🍕", label: "Pizza",     tone: "high",  note: "Larger response" },
-  { emoji: "🍚", label: "Rice",      tone: "mid",   note: "Moderate" },
-  { emoji: "🧀", label: "Paneer",    tone: "low",   note: "Smaller" },
-  { emoji: "☕", label: "Tea",       tone: "low",   note: "Smaller" },
-  { emoji: "🥭", label: "Mango",     tone: "mid",   note: "Moderate" },
-  { emoji: "🍦", label: "Ice cream", tone: "high",  note: "Larger response" },
-];
-
 const CAPABILITIES = [
-  { icon: HeartPulse,  title: "Heart",             copy: "Continuous heart insights. Resting HR, rhythm patterns, cardiac load." },
-  { icon: Waves,       title: "HRV & Readiness",   copy: "Overnight HRV, autonomic balance and morning readiness score." },
-  { icon: MoonStar,    title: "Sleep",             copy: "Deep · REM · Light · Sleep Score · Sleep Trends." },
-  { icon: Sparkles,    title: "Recovery",          copy: "Recovery Score · Strain · Morning Recovery · Trend graphs." },
-  { icon: Wind,        title: "Stress",            copy: "Stress · Calm · Breathing · Recovery windows." },
-  { icon: Thermometer, title: "Skin Temperature",  copy: "24/7 wrist temperature — early illness and cycle signals." },
-  { icon: Footprints,  title: "Activity & Movement", copy: "Steps, active minutes, calories and daily movement load." },
-  { icon: Flame,       title: "Food Intelligence", copy: "Sugar-response patterns · Personal Food Profile · Meal discoveries." },
-  { icon: Activity,    title: "Nera AI",           copy: "Daily insights · Weekly reports · Health coach · Predictions." },
+  { icon: HeartPulse, title: "Heart rate", copy: "Follow resting heart rate and everyday heart-rate trends." },
+  { icon: Waves, title: "HRV & readiness", copy: "Look at changes in heart-rate variability alongside your daily routine." },
+  { icon: MoonStar, title: "Sleep", copy: "Review sleep stages and the patterns in your nights." },
+  { icon: Activity, title: "Recovery", copy: "Put rest, activity and recovery insights side by side." },
+  { icon: Wind, title: "Stress", copy: "Explore lifestyle and recovery insights in NERA." },
+  { icon: Footprints, title: "Activity & movement", copy: "Keep track of steps and everyday movement." },
+  { icon: Utensils, title: "Food intelligence", copy: "Add meal context to explore inferred metabolic-response patterns, not measured sugar levels." },
+  { icon: NotebookPen, title: "NERA guidance", copy: "Bring your available wellness signals together in the Agatsa One app." },
 ];
-
-const COMPARE = [
-  { row: "Sugar-response insights",              others: false, ours: true },
-  { row: "Personalised food profile (AI-learned)", others: false, ours: true },
-  { row: "AI health conversation",               others: false, ours: true },
-  { row: "24/7 heart & HRV",                     others: true,  ours: true },
-  { row: "Sleep staging",                        others: true,  ours: true },
-  { row: "Recovery / strain",                    others: true,  ours: true },
-  { row: "Screenless, no notifications",         others: false, ours: true },
-  { row: "No subscription lock-in",              others: false, ours: true },
+const STEPS = [
+  { icon: NotebookPen, title: "Log Your Meal", copy: "Add what you ate. A little context helps you look back at your food habits." },
+  { icon: Activity, title: "Track With Rhythm Band", copy: "Wear the band to follow supported activity, sleep and wellness signals." },
+  { icon: Waves, title: "Understand Your Patterns", copy: "Review meals alongside your available wearable insights over time." },
+  { icon: Footprints, title: "Make Better Choices", copy: "Try a small change to portions, food combinations, movement or routines." },
 ];
-
-const TIMELINE = [
-  { time: "07:12", label: "Wake up",       note: "Recovery Score 82" },
-  { time: "08:30", label: "Breakfast",     note: "Sugar-response logged" },
-  { time: "11:00", label: "Deep work",     note: "Stress rising" },
-  { time: "13:45", label: "Lunch walk",    note: "Response improves" },
-  { time: "19:30", label: "Dinner",        note: "Meal impact recorded" },
-  { time: "23:10", label: "Sleep",         note: "Tomorrow's Body Score forming" },
-];
-
 const FAQS = [
-  { q: "Is this a CGM?", a: "No. Rhythm Band learns your personal sugar-response patterns through our patented algorithm — no needles, no strips, completely non-invasive." },
-  { q: "How does it discover which foods spike my sugar?", a: "Every meal you log is matched against how your body actually responded — HRV, resting heart rate, energy dips, sleep quality that night. Nera AI turns that into a personal Food Profile that gets more accurate the longer you wear it." },
-  { q: "Is this a smartwatch?", a: "No screen. No notifications. Nothing to check. The band reads your body 24/7 in silence — the answers live in the app, once a day." },
-  { q: "Battery?", a: "Up to 7 days on a single charge. Magnetic charging in under 90 minutes." },
-  { q: "Water?", a: "IP67. Sweat, rain and handwashing are fine. Skip the pool for now." },
-  { q: "What's in the box?", a: "Rhythm Band, magnetic charger, quick-start card, and free access to Nera AI — no subscription needed for now." },
+  { q: "How can Rhythm Band help me build healthier eating habits?", a: "Meal logging adds context to the wellness trends in Agatsa One. Looking back at meals, activity and sleep together can help you notice habits and make practical changes. Inferred trends do not establish exact sugar responses to a food." },
+  { q: "Does it help with weight management?", a: "Rhythm Band supports awareness of food and activity habits. Weight changes depend on many factors; the band does not guarantee weight loss or prescribe a diet." },
+  { q: "Does Rhythm Band measure blood sugar?", a: "No. It collects wearable wellness signals and uses an algorithm to infer metabolic-response trends. These are not direct or clinically established sugar measurements. They must not be used to diagnose a condition or change medication." },
+  { q: "Is this a replacement for a CGM or glucometer?", a: "No. Continue using the measurement device and medical advice recommended by your clinician. Rhythm Band does not replace a CGM, glucometer or ECG." },
+  { q: "What does NERA show me?", a: "The Agatsa One app brings available wearable information, such as heart rate, HRV, activity, sleep and recovery, together with meal context. The metabolic trend feature is an inferred wellness signal, not a measured sugar reading." },
+  { q: "Do I need to photograph every meal?", a: "This page uses meal logging rather than promising photo analysis. Meal-photo analysis has not been confirmed for the released Rhythm experience. Add meal context when it is useful to you." },
+  { q: "What happens if I forget to log a meal?", a: "The wearable can still collect supported wellness signals. An unlogged meal provides no meal context for your review; do not assume the band knows exactly what you ate." },
+  { q: "Is this a smartwatch?", a: "No. Rhythm Band is screenless, with no notifications on your wrist. Review your information on your phone in Agatsa One." },
+  { q: "What is included with the band?", a: "Rhythm Band, magnetic charger, quick-start card and seven days of Nera AI Premium. The trial activates when you pair the device in Agatsa One." },
+  { q: "Is there a subscription after purchase?", a: "Seven days of Nera AI Premium are included, not unlimited free Premium access. Refer to the current NERA plans in the app for access and pricing after the trial; no ongoing free subscription is promised here." },
+  { q: "Which phones are compatible?", a: "Agatsa One is intended for Android and iOS devices released from 2018 onwards. Pair the band with the app through Bluetooth." },
+  { q: "How long does the battery last?", a: "The existing product specification lists up to seven days per charge. Actual battery life varies with use. A magnetic charger is included." },
+  { q: "Can I wear it in water?", a: "The existing specification is IP67. Sweat, rain and handwashing are supported; avoid swimming." },
+  { q: "What is the warranty and return policy?", a: "The existing offer includes a one-year warranty. Returns must be requested within seven days of delivery and are accepted for verified manufacturing defects, subject to inspection and original packaging. Read the return policy for complete conditions." },
+  { q: "What about shipping?", a: "Shipping in India is free. International shipping is a flat ₹3,000 per order. Delivery estimates vary by destination; see the shipping policy for details." },
 ];
 
-/* ------------------------------------------------------------------ */
-/* Small components                                                    */
-/* ------------------------------------------------------------------ */
-
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.3 },
-  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
-};
-
-function GlassCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div
-      className={`rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl ${className}`}
-      style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), 0 30px 80px -40px rgba(16,185,129,0.25)" }}
-    >
-      {children}
-    </div>
-  );
+function ColorSelector({ selected, onChange }: { selected: string; onChange: (color: typeof COLORS[number]) => void }) {
+  return <div className="flex flex-wrap gap-3" aria-label="Band colours">{COLORS.map(color => <Button key={color.id} size="icon" variant="outline" aria-label={color.name} title={color.name} aria-pressed={selected === color.id} onClick={() => onChange(color)} className={`h-11 w-11 rounded-full p-1 ${selected === color.id ? "border-primary ring-1 ring-ring" : "border-border"}`}><span className={`rhythm-swatch-${color.id} flex h-full w-full items-center justify-center rounded-full`}>{selected === color.id && <Check className="h-4 w-4 text-primary-foreground" />}</span></Button>)}</div>;
 }
-
-function ToneDot({ tone }: { tone: "low" | "mid" | "high" }) {
-  const color = tone === "low" ? "#10b981" : tone === "mid" ? "#f59e0b" : "#ef4444";
-  return <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: color, boxShadow: `0 0 12px ${color}` }} />;
-}
-
-/* ------------------------------------------------------------------ */
-/* Page                                                                */
-/* ------------------------------------------------------------------ */
 
 export default function RhythmBandPro() {
   const { prices, fmt } = usePricing();
   const navigate = useNavigate();
-  const price = prices.band_sub;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const search = `?${searchParams.toString()}`;
+  const angle = getRhythmAngle(search);
+  const campaign = angle ? RHYTHM_CAMPAIGNS[angle] : null;
   const [selectedColor, setSelectedColor] = useState(COLORS[0]);
-
+  const [quantity, setQuantity] = useState(1);
+  const cartHasItems = useCartStore(state => state.items.length > 0);
+  const price = prices.band_sub;
   const topReviews = useMemo(() => {
-    const pick = (rating: number, n: number) =>
-      easytouchRhythmReviews
-        .filter((r) => r.rating === rating)
-        .sort((a, b) => b.date.localeCompare(a.date))
-        .slice(0, n);
-    return [...pick(5, 15), ...pick(4, 3), ...pick(3, 2)]
-      .sort((a, b) => b.date.localeCompare(a.date))
-      .slice(0, 20);
+    const pick = (rating: number, count: number) => easytouchRhythmReviews.filter(review => review.rating === rating).sort((a,b) => b.date.localeCompare(a.date)).slice(0,count);
+    return [...pick(5,15), ...pick(4,3), ...pick(3,2)].sort((a,b) => b.date.localeCompare(a.date));
   }, []);
-
-  useSEO({
-    title: "Discover Which Foods Spike YOUR Sugar — EasyTouch Rhythm Band",
-    description:
-      "Most people know what they eat. Almost nobody knows how their body responds to it. EasyTouch Rhythm Band and Nera AI reveal your personal sugar-response, sleep, recovery and heart patterns.",
-  });
+  useSEO({ title: "EasyTouch Rhythm Band — Food, Sleep & Daily Wellness | Agatsa One", description: "Explore your food habits, activity, sleep and inferred metabolic trends with EasyTouch Rhythm Band and NERA. Includes a seven-day Nera AI Premium trial." });
   useMetaPixelViewContent("RHYTHM_BAND", "EasyTouch Rhythm Band", price);
+  useEffect(() => { recordRhythmInteraction("landing_view", window.location.search); }, []);
 
-  const addToCart = () => {
-    useCartStore.getState().addItem({
-      productId: "band_sub",
-      productName: "EasyTouch Rhythm Band",
-      variantTitle: selectedColor.name,
-      price,
-      quantity: 1,
-    });
+  const addToCart = (qty: number) => {
+    useCartStore.getState().addItem({ productId: BAND_SKU, productName: "EasyTouch Rhythm Band", variantTitle: selectedColor.name, price, quantity: qty });
+    recordRhythmInteraction("add_to_cart", search);
     toast.success(`Rhythm Band · ${selectedColor.name} added`, { position: "top-center" });
-    if (typeof window !== "undefined" && (window as any).fbq) {
-      try {
-        (window as any).fbq("track", "AddToCart", {
-          content_ids: ["band_sub"],
-          content_name: `EasyTouch Rhythm Band (${selectedColor.name})`,
-          content_type: "product",
-          value: price,
-          currency: "INR",
-        });
-      } catch {}
-    }
+    try {
+      if (window.fbq) window.fbq("track", "AddToCart", { content_ids: [BAND_SKU], content_name: "EasyTouch Rhythm Band", content_type: "product", value: price * qty, currency: "INR" });
+    } catch { /* An existing advertising tag must not block checkout. */ }
   };
-
-  const buyNow = () => {
-    addToCart();
-    const variants = encodeVariantsParam({ [BAND_SKU]: selectedColor.name });
-    navigate(`/checkout?sku=${BAND_SKU}${variants ? `&variants=${variants}` : ""}`);
-  };
-
-  const buyNowWithQuantity = (qty: number) => {
-    useCartStore.getState().addItem({
-      productId: "band_sub",
-      productName: "EasyTouch Rhythm Band",
-      variantTitle: selectedColor.name,
-      price,
-      quantity: qty,
-    });
+  const buyNow = (qty: number) => {
+    addToCart(qty);
+    recordRhythmInteraction("buy_now", search);
     const variants = encodeVariantsParam({ [BAND_SKU]: selectedColor.name });
     const sku = Array.from({ length: qty }, () => BAND_SKU).join(",");
-    navigate(`/checkout?sku=${sku}${variants ? `&variants=${variants}` : ""}`);
+    navigate(`/checkout?sku=${sku}&variants=${variants}`);
+  };
+  const selectGoal = (goal: RhythmAngle) => {
+    const next = selectRhythmAngle(search, goal);
+    recordRhythmInteraction("goal_selection", next);
+    setSearchParams(new URLSearchParams(next), { replace: true });
   };
 
-  return (
-    <SiteLayout>
-      <div className="bg-black text-white selection:bg-emerald-400 selection:text-black [&_h1]:text-white [&_h2]:text-white [&_h3]:text-white [&_h4]:text-white">
-
-        {/* 1. HERO ---------------------------------------------------- */}
-        <section className="relative overflow-hidden">
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(1200px 700px at 50% -10%, rgba(16,185,129,0.35), transparent 60%), radial-gradient(600px 400px at 80% 90%, rgba(16,185,129,0.15), transparent 70%)",
-            }}
-          />
-          <div className="relative max-w-6xl mx-auto px-6 pt-28 pb-24 md:pt-40 md:pb-32 text-center">
-            <motion.p
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}
-              className="text-[11px] md:text-xs tracking-[0.32em] uppercase text-emerald-400/80 mb-8"
-            >
-              Introducing EasyTouch Rhythm Band
-            </motion.p>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="font-semibold tracking-tight text-white text-[44px] leading-[1.02] md:text-[88px] md:leading-[0.98]"
-            >
-              Discover which foods spike{" "}
-              <span
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(120deg,#6ee7b7,#10b981 50%,#059669)" }}
-              >
-                YOUR
-              </span>{" "}
-              sugar.
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.15 }}
-              className="mt-8 max-w-2xl mx-auto text-white/70 text-lg md:text-xl leading-relaxed"
-            >
-              Not your friend's. Not your family's. <span className="text-white">Yours.</span>
-              <br className="hidden md:block" />
-              Rhythm Band and Nera AI reveal the foods that create larger sugar-response patterns for your body —
-              while tracking your sleep, recovery, stress and heart every day.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.3 }}
-              className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4"
-            >
-              <a href="#buy">
-                <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-full px-8 h-12">
-                  Get yours — {fmt(price)}
-                </Button>
-              </a>
-              <a href="#proof-video" className="text-white/70 hover:text-white text-sm inline-flex items-center gap-2">
-                See how it works <ArrowRight className="h-4 w-4" />
-              </a>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, delay: 0.4 }}
-              className="mt-20 relative mx-auto max-w-3xl"
-            >
-              <div className="absolute inset-0 -z-10 blur-3xl opacity-60"
-                style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.5), transparent)" }} />
-              <img src={bandOliveHero.url} alt="EasyTouch Rhythm Band in Olive" className="w-full h-auto object-contain drop-shadow-2xl" />
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.55 }}
-              className="mt-10 text-center text-xl md:text-2xl font-semibold tracking-tight text-white"
-            >
-              Available in <span className="text-emerald-400">{COLORS.length} colours</span>.
-            </motion.p>
-
-          </div>
-        </section>
-
-        {/* 2. MYSTERY ------------------------------------------------- */}
-        <section id="discover" className="relative py-32 md:py-48">
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.h2 {...fadeUp}
-              className="text-center font-semibold tracking-tight text-white text-[36px] leading-[1.05] md:text-[72px]"
-            >
-              Which one spikes{" "}
-              <span className="text-emerald-400">YOUR</span> sugar?
-            </motion.h2>
-            <motion.p {...fadeUp} className="mt-6 text-center text-white/50 max-w-xl mx-auto">
-              You won't find the answer here. You'll find it on your wrist.
-            </motion.p>
-
-            <div className="mt-20 grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6">
-              {MYSTERY_FOODS.map((f, i) => (
-                <motion.div
-                  key={f.label}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.06 }}
-                >
-                  <GlassCard className="aspect-square flex flex-col items-center justify-center gap-3 relative">
-                    <div className="text-5xl md:text-6xl">{f.emoji}</div>
-                    <div className="text-white/60 text-sm">{f.label}</div>
-                    <div className="absolute top-3 right-4 text-emerald-400/70 text-lg font-light">?</div>
-                  </GlassCard>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 3. SAME FOOD, DIFFERENT BODIES ---------------------------- */}
-        <section className="relative py-32 md:py-48 border-t border-white/5">
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.h2 {...fadeUp}
-              className="text-center font-semibold tracking-tight text-[40px] leading-[1.05] md:text-[80px]"
-            >
-              The same food.
-              <br />
-              <span className="text-white/50">Different bodies.</span>
-            </motion.h2>
-            <motion.p {...fadeUp} className="mt-8 text-center text-white/60 max-w-lg mx-auto text-lg">
-              Nobody reacts to food exactly the same way.
-            </motion.p>
-
-            <div className="mt-20 grid md:grid-cols-3 gap-6">
-              {[
-                { name: "Rohan, 41",  img: rhythmPortrait1, curve: "high", note: "Sharp spike, slow return" },
-                { name: "Aditi, 28",  img: rhythmPortrait2, curve: "mid",  note: "Moderate rise" },
-                { name: "Mr. Menon, 65",  img: rhythmPortrait3, curve: "low",  note: "Barely a ripple" },
-              ].map((p, i) => (
-                <motion.div key={p.name}
-                  initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ duration: 0.7, delay: i * 0.1 }}
-                >
-                  <GlassCard className="overflow-hidden">
-                    <div className="aspect-[4/5] overflow-hidden">
-                      <img src={p.img} alt={p.name} className="w-full h-full object-cover opacity-90" />
-                    </div>
-                    <div className="p-6">
-                      <div className="text-xs uppercase tracking-widest text-white/40 mb-3">🍕 Same pizza</div>
-                      <svg viewBox="0 0 200 60" className="w-full h-16">
-                        <path
-                          d={
-                            p.curve === "high"
-                              ? "M0 50 C 40 50, 60 5, 100 8 C 140 12, 160 45, 200 48"
-                              : p.curve === "mid"
-                              ? "M0 45 C 40 45, 70 22, 110 25 C 150 28, 170 42, 200 44"
-                              : "M0 40 C 60 40, 100 32, 140 35 C 170 37, 185 40, 200 40"
-                          }
-                          fill="none"
-                          stroke={EMERALD}
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                      <div className="mt-4 flex items-center justify-between">
-                        <span className="text-white font-medium">{p.name}</span>
-                        <span className="text-white/50 text-sm">{p.note}</span>
-                      </div>
-                    </div>
-                  </GlassCard>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 4. YOUR BODY ALREADY KNOWS -------------------------------- */}
-        <section className="relative py-32 md:py-48 border-t border-white/5 overflow-hidden">
-          <div className="absolute inset-0 -z-10"
-            style={{ background: "radial-gradient(700px 500px at 50% 50%, rgba(16,185,129,0.12), transparent 70%)" }} />
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-            <motion.div {...fadeUp}>
-              <h2 className="font-semibold tracking-tight text-[40px] leading-[1.05] md:text-[72px]">
-                Your body already knows.
-                <br />
-                <span className="text-emerald-400">You just can't see it.</span>
-              </h2>
-              <p className="mt-8 text-white/60 text-lg max-w-md">
-                Rhythm Band listens 24/7. Nera AI translates the signal. One quiet notification is all it takes.
-              </p>
-            </motion.div>
-
-            <motion.div {...fadeUp} className="relative">
-              <div className="absolute -inset-6 -z-10 rounded-[3rem] blur-3xl opacity-40"
-                style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.5), transparent)" }} />
-              <div className="mx-auto max-w-[340px] rounded-[2.2rem] border border-white/10 bg-white/[0.02] p-2 shadow-2xl">
-                <img
-                  src={appMetabolic.url}
-                  alt="Nera AI metabolic zone chart — sugar-response visualised through the day"
-                  className="w-full h-auto rounded-[1.9rem]"
-                  loading="lazy"
-                />
-              </div>
-              <p className="mt-6 text-center text-xs text-white/40">Actual Nera AI screen · your day, decoded</p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* 5. NERA STARTS LEARNING ----------------------------------- */}
-        <section className="relative py-32 md:py-48 border-t border-white/5">
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.p {...fadeUp} className="text-center text-emerald-400 text-xs tracking-[0.3em] uppercase">Week after week</motion.p>
-            <motion.h2 {...fadeUp}
-              className="mt-6 text-center font-semibold tracking-tight text-[40px] leading-[1.05] md:text-[72px]"
-            >
-              Your Personal Food Profile.
-            </motion.h2>
-            <motion.p {...fadeUp} className="mt-6 text-center text-white/55 max-w-xl mx-auto text-lg">
-              Not calorie counting. Not a generic diet chart. Nera AI learns <span className="text-white">your</span> body.
-            </motion.p>
-
-            <div className="mt-16 grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-              <motion.div {...fadeUp} className="relative order-2 md:order-1">
-                <GlassCard className="divide-y divide-white/5">
-                  {FOOD_PROFILE.map(f => (
-                    <div key={f.label} className="flex items-center gap-5 p-5">
-                      <div className="text-3xl">{f.emoji}</div>
-                      <div className="flex-1">
-                        <div className="text-white font-medium">{f.label}</div>
-                        <div className="text-xs text-white/40">{f.note}</div>
-                      </div>
-                      <div className="w-24 h-1.5 rounded-full bg-white/5 overflow-hidden">
-                        <div
-                          className="h-full rounded-full"
-                          style={{
-                            width: f.tone === "high" ? "90%" : f.tone === "mid" ? "55%" : "25%",
-                            background: f.tone === "high" ? "#ef4444" : f.tone === "mid" ? "#f59e0b" : EMERALD,
-                          }}
-                        />
-                      </div>
-                      <ToneDot tone={f.tone as any} />
-                    </div>
-                  ))}
-                </GlassCard>
-              </motion.div>
-
-              <motion.div {...fadeUp} className="relative order-1 md:order-2">
-                <div className="absolute -inset-6 -z-10 rounded-[3rem] blur-3xl opacity-40"
-                  style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.4), transparent)" }} />
-                <div className="mx-auto max-w-[320px] rounded-[2.2rem] border border-white/10 bg-white/[0.02] p-2 shadow-2xl">
-                  <img
-                    src={appMeals.url}
-                    alt="Today's meal responses — metabolic spikes detected by Nera AI"
-                    className="w-full h-auto rounded-[1.9rem]"
-                    loading="lazy"
-                  />
-                </div>
-                <p className="mt-6 text-center text-xs text-white/40">Tag your meals · Nera learns faster every day</p>
-              </motion.div>
-            </div>
-
-            {/* Highlight banner — no more manual logging */}
-            <motion.div {...fadeUp} className="mt-24 relative">
-              <div className="absolute inset-0 -z-10 rounded-[2.5rem] blur-3xl opacity-60"
-                style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.28), transparent 70%)" }} />
-              <div className="relative overflow-hidden rounded-[2.5rem] border border-emerald-400/20 bg-gradient-to-b from-emerald-500/[0.06] to-transparent px-6 py-16 md:py-24 text-center">
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/5 px-3 py-1 text-[11px] tracking-[0.3em] uppercase text-emerald-300">
-                  No more food journaling
-                </div>
-                <h3 className="mt-8 font-semibold tracking-tight text-[34px] leading-[1.1] md:text-[64px] md:leading-[1.05] max-w-4xl mx-auto">
-                  <span className="text-white/40 line-through decoration-white/20 decoration-[3px]">
-                    Gone are the days of logging every bite.
-                  </span>
-                  <br />
-                  <span className="bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">
-                    Your band spots the spike.
-                  </span>
-                  <br />
-                  <span className="text-white">You just name the meal.</span>
-                </h3>
-                <p className="mt-8 text-white/50 text-sm tracking-[0.2em] uppercase">
-                  Automatic spike detection · Nera AI meal classification
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Real spike video — proof */}
-            <motion.div id="proof-video" {...fadeUp} className="mt-24 md:mt-32 scroll-mt-24">
-              <div className="text-center max-w-3xl mx-auto mb-10 md:mb-14">
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/5 px-3 py-1 text-[11px] tracking-[0.3em] uppercase text-emerald-300">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-                  </span>
-                  Real recording · Zero edits
-                </div>
-                <h3 className="mt-6 font-semibold tracking-tight text-[28px] md:text-[44px] leading-[1.1] text-white">
-                  Watch a real spike get caught. Live.
-                </h3>
-                <p className="mt-4 text-white/55 md:text-lg">
-                  This is the actual Rhythm app on a real user's phone — the band detected the sugar-response event and logged it automatically. No typing. No CGM patch.
-                </p>
-              </div>
-
-              <div className="relative mx-auto max-w-[340px] md:max-w-[400px]">
-                {/* Emerald glow */}
-                <div className="absolute inset-0 -z-10 blur-[120px] opacity-70 rounded-full"
-                  style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.55), transparent 70%)" }} />
-
-                {/* iPhone-style mockup frame */}
-                <div className="relative rounded-[3rem] border-[10px] border-neutral-800 bg-neutral-900 shadow-[0_40px_120px_-20px_rgba(16,185,129,0.35)] overflow-hidden">
-                  {/* Notch */}
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 h-6 w-28 rounded-full bg-black" />
-                  <video
-                    src={spikeDemo.url}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    className="block w-full h-auto rounded-[2.2rem]"
-                  />
-                </div>
-
-                {/* Floating LIVE badge */}
-                <div className="absolute -top-3 -right-3 md:-top-4 md:-right-6 z-20 rounded-full bg-black border border-emerald-400/40 px-3 py-1.5 text-[10px] tracking-[0.25em] uppercase text-emerald-300 shadow-xl backdrop-blur">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 mr-1.5 align-middle animate-pulse" />
-                  Recorded on band
-                </div>
-              </div>
-
-              <p className="mt-8 text-center text-xs md:text-sm text-white/40 tracking-wide">
-                No manual entry · No CGM patch · No blood pricks
-              </p>
-            </motion.div>
-
-
-            {/* Automatic detection callout */}
-            <motion.div {...fadeUp} className="mt-20 max-w-4xl mx-auto">
-
-              <GlassCard className="p-8 md:p-12 text-center">
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/5 px-3 py-1 text-[11px] tracking-[0.25em] uppercase text-emerald-300">
-                  Fully Automatic
-                </div>
-                <h3 className="mt-5 font-semibold tracking-tight text-[26px] md:text-[36px] leading-tight">
-                  Just wear the band. Nera AI does the rest.
-                </h3>
-                <p className="mt-5 text-white/60 md:text-lg leading-relaxed max-w-2xl mx-auto">
-                  No logging spikes. No manual tracking. The band silently detects every sugar-response event through the day —
-                  each spike is automatically recorded by the band and shown to you on the app as an
-                  <span className="text-white"> insulin spike event</span>, with the exact time and intensity already filled in.
-                  All you do is add what food it was — a quick tap like "dal-rice" or "cold coffee" — and Nera AI instantly classifies it as a
-                  <span className="text-red-400"> high-spike</span>,
-                  <span className="text-amber-400"> moderate</span> or
-                  <span className="text-emerald-400"> friendly</span> meal for <span className="text-white">your</span> body.
-                </p>
-                <div className="mt-8 grid sm:grid-cols-3 gap-4 text-left">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                    <div className="text-emerald-400 text-xs tracking-widest uppercase">Step 1</div>
-                    <div className="mt-2 text-white font-medium">Wear it</div>
-                    <div className="mt-1 text-sm text-white/50">Band auto-detects spikes 24/7.</div>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                    <div className="text-emerald-400 text-xs tracking-widest uppercase">Step 2</div>
-                    <div className="mt-2 text-white font-medium">Tap your meal</div>
-                    <div className="mt-1 text-sm text-white/50">One tap — dal-rice, dosa, biryani, fruit.</div>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                    <div className="text-emerald-400 text-xs tracking-widest uppercase">Step 3</div>
-                    <div className="mt-2 text-white font-medium">Nera classifies</div>
-                    <div className="mt-1 text-sm text-white/50">Instantly tagged as high, moderate or safe for you.</div>
-                  </div>
-                </div>
-              </GlassCard>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* 6. AND THAT'S JUST THE BEGINNING - CAPABILITIES ----------- */}
-        <section className="relative py-32 md:py-48 border-t border-white/5">
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.p {...fadeUp} className="text-center text-emerald-400 text-xs tracking-[0.3em] uppercase">And that's just the beginning</motion.p>
-            <motion.h2 {...fadeUp}
-              className="mt-6 text-center font-semibold tracking-tight text-[40px] leading-[1.05] md:text-[72px]"
-            >
-              One band.
-              <br />
-              <span className="text-white/50">Your whole body.</span>
-            </motion.h2>
-            <motion.p {...fadeUp} className="mt-6 text-center text-white/55 max-w-xl mx-auto text-lg">
-              HRV, heart rate, temperature, sleep, stress, SpO₂, activity — one silent band, one daily answer.
-            </motion.p>
-
-            <motion.div {...fadeUp} className="mt-16 relative mx-auto max-w-[340px]">
-              <div className="absolute -inset-8 -z-10 rounded-[3rem] blur-3xl opacity-50"
-                style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.55), transparent)" }} />
-              <div className="rounded-[2.2rem] border border-white/10 bg-white/[0.02] p-2 shadow-2xl">
-                <img
-                  src={appWearable.url}
-                  alt="Rhythm Band wearable dashboard — HRV, live HR, SpO₂, temperature, sleep"
-                  className="w-full h-auto rounded-[1.9rem]"
-                  loading="lazy"
-                />
-              </div>
-            </motion.div>
-
-
-            <div className="mt-20 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {CAPABILITIES.map((c, i) => (
-                <motion.div key={c.title}
-                  initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.05 }}
-                >
-                  <GlassCard className="p-8 h-full">
-                    <div className="h-11 w-11 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6">
-                      <c.icon className="h-5 w-5 text-emerald-400" />
-                    </div>
-                    <div className="text-xl font-semibold text-white">{c.title}</div>
-                    <p className="mt-3 text-white/55 text-sm leading-relaxed">{c.copy}</p>
-                  </GlassCard>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 7. DAY IN YOUR LIFE --------------------------------------- */}
-        <section className="relative py-32 md:py-48 border-t border-white/5 overflow-hidden">
-          <div className="max-w-4xl mx-auto px-6">
-            <motion.h2 {...fadeUp}
-              className="text-center font-semibold tracking-tight text-[40px] leading-[1.05] md:text-[72px]"
-            >
-              A day in your body.
-            </motion.h2>
-            <motion.p {...fadeUp} className="mt-6 text-center text-white/55 max-w-lg mx-auto">
-              Every hour tells Nera AI something. By tomorrow morning, you'll know more about yourself than you did today.
-            </motion.p>
-
-            <div className="mt-20 relative">
-              <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-emerald-500/40 to-transparent" />
-              <div className="space-y-10">
-                {TIMELINE.map((t, i) => (
-                  <motion.div
-                    key={t.time}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: i * 0.08 }}
-                    className={`relative pl-16 md:pl-0 md:grid md:grid-cols-2 md:gap-16 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
-                  >
-                    <div className={`${i % 2 ? "md:text-left" : "md:text-right"}`}>
-                      <div className="text-emerald-400 text-sm font-mono">{t.time}</div>
-                      <div className="mt-1 text-2xl md:text-3xl font-semibold">{t.label}</div>
-                      <div className="mt-2 text-white/50 text-sm">{t.note}</div>
-                    </div>
-                    <div className="hidden md:block" />
-                    <div className="absolute left-6 md:left-1/2 top-2 -translate-x-1/2 h-3 w-3 rounded-full bg-emerald-400" style={{ boxShadow: "0 0 20px #10b981" }} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 8. COMPARE ------------------------------------------------- */}
-        <section className="relative py-32 md:py-48 border-t border-white/5">
-          <div className="max-w-4xl mx-auto px-6">
-            <motion.h2 {...fadeUp}
-              className="text-center font-semibold tracking-tight text-[36px] leading-[1.05] md:text-[64px]"
-            >
-              Everyone else counts steps.
-              <br />
-              <span className="text-emerald-400">Rhythm reads you.</span>
-            </motion.h2>
-
-            <motion.div {...fadeUp} className="mt-16">
-              <GlassCard className="overflow-hidden">
-                <div className="grid grid-cols-[1fr_auto_auto] text-sm">
-                  <div className="p-5 text-white/50 text-xs uppercase tracking-widest">Feature</div>
-                  <div className="p-5 text-center text-white/50 text-xs uppercase tracking-widest w-32">Other bands</div>
-                  <div className="p-5 text-center text-emerald-400 text-xs uppercase tracking-widest w-32">Rhythm</div>
-
-                  {COMPARE.map(r => (
-                    <div key={r.row} className="contents">
-                      <div className="p-5 border-t border-white/5 text-white">{r.row}</div>
-                      <div className="p-5 border-t border-white/5 flex justify-center">
-                        {r.others ? <Check className="h-4 w-4 text-white/40" /> : <X className="h-4 w-4 text-white/20" />}
-                      </div>
-                      <div className="p-5 border-t border-white/5 flex justify-center">
-                        {r.ours ? <Check className="h-4 w-4 text-emerald-400" /> : <X className="h-4 w-4 text-white/20" />}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </GlassCard>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* 9. DESIGN + COLORS ---------------------------------------- */}
-        <section className="relative py-32 md:py-48 border-t border-white/5 overflow-hidden">
-          {/* soft glow that tints to the selected color */}
-          <div
-            className="absolute inset-0 -z-10 transition-colors duration-700"
-            style={{ background: `radial-gradient(1000px 600px at 50% 40%, ${selectedColor.hex}22, transparent 70%)` }}
-          />
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-              <div className="text-xs uppercase tracking-[0.28em] text-emerald-400 mb-4">Design</div>
-              <h2 className="font-semibold tracking-tight text-[36px] leading-[1.05] md:text-[64px]">
-                Screenless.
-                <br />
-                <span className="text-white/50">By design.</span>
-              </h2>
-              <p className="mt-6 text-white/60 text-lg">
-                Nothing to check. Nothing to notify. The band listens quietly. Nera AI does the talking — once a day, on your phone.
-              </p>
-            </motion.div>
-
-            {/* Big hero band photo that cross-fades on color change */}
-            <motion.div {...fadeUp} className="relative mx-auto aspect-square w-full max-w-[720px]">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={selectedColor.id}
-                  src={selectedColor.photo}
-                  alt={`EasyTouch Rhythm Band in ${selectedColor.name}`}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.02 }}
-                  transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
-                  className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.5)]"
-                  loading="lazy"
-                />
-              </AnimatePresence>
-            </motion.div>
-
-            {/* Selected name in large type */}
-            <motion.div {...fadeUp} className="mt-8 text-center">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={selectedColor.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-3xl md:text-5xl font-semibold tracking-tight"
-                >
-                  {selectedColor.name}
-                </motion.div>
-              </AnimatePresence>
-              <div className="mt-2 text-xs uppercase tracking-[0.28em] text-white/40">
-                {COLORS.findIndex(c => c.id === selectedColor.id) + 1} of {COLORS.length} colours
-              </div>
-            </motion.div>
-
-            {/* Thumbnail selector */}
-            <motion.div {...fadeUp} className="mt-10 flex flex-wrap justify-center gap-3 md:gap-4">
-              {COLORS.map(c => {
-                const active = selectedColor.id === c.id;
-                return (
-                  <button
-                    key={c.id}
-                    onClick={() => setSelectedColor(c)}
-                    aria-label={c.name}
-                    aria-pressed={active}
-                    className={`group relative h-16 w-16 md:h-20 md:w-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
-                      active
-                        ? "border-emerald-400 scale-110 shadow-[0_0_20px_rgba(16,185,129,0.35)]"
-                        : "border-white/10 hover:border-white/30 hover:scale-105"
-                    }`}
-                    style={{ background: `${c.hex}22` }}
-                  >
-                    <img
-                      src={c.photo}
-                      alt={c.name}
-                      className="absolute inset-0 h-full w-full object-cover scale-[1.6]"
-                      loading="lazy"
-                    />
-                  </button>
-                );
-              })}
-            </motion.div>
-          </div>
-        </section>
-
-
-        {/* 10. FAQ --------------------------------------------------- */}
-        <section className="relative py-32 md:py-40 border-t border-white/5">
-          <div className="max-w-3xl mx-auto px-6">
-            <motion.h2 {...fadeUp}
-              className="text-center font-semibold tracking-tight text-[36px] leading-[1.05] md:text-[56px]"
-            >
-              Questions.
-            </motion.h2>
-
-            <motion.div {...fadeUp} className="mt-12">
-              <Accordion type="single" collapsible className="w-full">
-                {FAQS.map((f, i) => (
-                  <AccordionItem key={i} value={`i-${i}`} className="border-white/10">
-                    <AccordionTrigger className="text-left text-white hover:text-emerald-400 py-5">
-                      {f.q}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-white/60 leading-relaxed">
-                      {f.a}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* 10.5. REVIEWS -------------------------------------------- */}
-        <section className="border-t border-white/5">
-          <ProductReviewsSection reviews={topReviews} heading="What Rhythm Band users are saying" />
-        </section>
-
-        {/* 11. FINAL CTA / BUY --------------------------------------- */}
-        <section id="buy" className="relative py-32 md:py-48 border-t border-white/5 overflow-hidden">
-          <div className="absolute inset-0 -z-10"
-            style={{ background: "radial-gradient(900px 500px at 50% 50%, rgba(16,185,129,0.25), transparent 70%)" }} />
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <motion.h2 {...fadeUp}
-              className="font-semibold tracking-tight text-[44px] leading-[1.02] md:text-[88px]"
-            >
-              Stop guessing.
-              <br />
-              <span className="text-emerald-400">Start discovering.</span>
-            </motion.h2>
-            <motion.p {...fadeUp} className="mt-8 text-white/60 text-lg max-w-xl mx-auto">
-              Most people know what they eat. Almost nobody knows how their body actually responds to it. It's your turn.
-            </motion.p>
-
-            <motion.div {...fadeUp} className="mt-16">
-              <GlassCard className="p-8 md:p-10 text-left max-w-xl mx-auto">
-                <div className="flex items-start justify-between gap-6">
-                  <div>
-                    <div className="text-xs uppercase tracking-widest text-emerald-400">EasyTouch Rhythm Band</div>
-                    <div className="mt-2 text-2xl md:text-3xl font-semibold">{selectedColor.name}</div>
-                    <div className="mt-1 text-white/50 text-sm">Includes free Nera AI access</div>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <div className="text-3xl md:text-4xl font-semibold">{fmt(price)}</div>
-                    <div className="text-xs text-white/40 mt-1">Free shipping · India</div>
-                  </div>
-                </div>
-
-                <div className="mt-6 [&_.text-xs]:text-white/70">
-                  <StockUrgencyBar productKey="easytouch-rhythm" />
-                </div>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {COLORS.map(c => {
-                    const active = selectedColor.id === c.id;
-                    return (
-                      <button
-                        key={c.id}
-                        onClick={() => setSelectedColor(c)}
-                        aria-label={c.name}
-                        className={`relative h-11 w-11 rounded-xl overflow-hidden border-2 transition ${active ? "border-emerald-400 scale-110" : "border-white/15 hover:border-white/40"}`}
-                        style={{ background: `${c.hex}22` }}
-                      >
-                        <img src={c.photo} alt={c.name} className="absolute inset-0 h-full w-full object-cover scale-[1.6]" loading="lazy" />
-                      </button>
-                    );
-                  })}
-                </div>
-
-
-                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <Button
-                    onClick={addToCart}
-                    size="lg"
-                    variant="outline"
-                    className="w-full border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-full h-12"
-                  >
-                    Add to cart
-                  </Button>
-                  <Button
-                    onClick={buyNow}
-                    size="lg"
-                    className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-full h-12"
-                  >
-                    Buy now · {selectedColor.name}
-                  </Button>
-                </div>
-                <div className="mt-4 flex items-center justify-center gap-6 text-xs text-white/40">
-                  <span>✓ Free Nera AI</span>
-                  <span>✓ 1-year warranty</span>
-                  <span>✓ Easy returns</span>
-                </div>
-              </GlassCard>
-            </motion.div>
-          </div>
-        </section>
+  return <SiteLayout><div className="rhythm-page">
+    <section className="overflow-hidden">
+      <div className="rhythm-container pb-5 pt-5 text-center md:pt-12">
+        <p className="rhythm-eyebrow">AGATSA ONE / EASYTOUCH RHYTHM BAND</p>
+        <h1 className={`mx-auto max-w-4xl font-semibold leading-[1.1] ${campaign ? "text-[34px] md:text-[52px]" : "text-[38px] md:text-[60px]"}`}>{campaign?.headline || <>Discover which foods spike <span className="text-primary">YOUR</span> sugar.</>}</h1>
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">{campaign?.copy || "Not your friend's. Not your family's. Yours. Rhythm Band and Nera AI reveal the foods that create larger sugar-response patterns for your body — while tracking your sleep, recovery, stress and heart every day."}</p>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-2 md:gap-4">
+          <Button asChild size="lg" className="h-12 px-7"><a href="#buy" onClick={() => recordRhythmInteraction("hero_cta", search)}>{campaign ? "Get Started" : "Get yours"} — {fmt(price)} <ArrowRight className="ml-2 h-4 w-4" /></a></Button>
+          <Button asChild variant="link" className="text-foreground"><a href="#proof-video">See how it works <Play className="ml-2 h-4 w-4" /></a></Button>
+        </div>
+        <p className="mt-4 text-xs text-muted-foreground">{getNeraAiIncludedLine(BAND_SKU)} · Free shipping in India</p>
+        <img src={bandOliveHero.url} alt="EasyTouch Rhythm Band in Olive" fetchPriority="high" className="mx-auto mt-3 h-[175px] w-full max-w-2xl object-contain md:h-[285px]" />
+        <p className="mt-3 text-sm text-muted-foreground">Screenless. By design. <span className="text-foreground">Available in six colours.</span></p>
+        {!campaign && <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">Food-response patterns are inferred wellness trends, not direct sugar measurements or proof that a food causes a measured spike.</p>}
       </div>
-      <StickyAddToCart
-        productName={`EasyTouch Rhythm Band · ${selectedColor.name}`}
-        price={`₹${price.toLocaleString("en-IN")}`}
-        unitPrice={price}
-        onBuyNow={buyNowWithQuantity}
-        onAddToCart={(qty) => {
-          useCartStore.getState().addItem({
-            productId: "band_sub",
-            productName: "EasyTouch Rhythm Band",
-            variantTitle: selectedColor.name,
-            price,
-            quantity: qty,
-          });
-          toast.success(`Rhythm Band · ${selectedColor.name} added`, { position: "top-center" });
-        }}
-        themeColor="emerald"
-      />
-      <RecentPurchasePopup productName="EasyTouch Rhythm Band" />
-    </SiteLayout>
-
-  );
+    </section>
+    <section className="border-t border-border bg-muted py-7">
+      <div className="rhythm-container"><h2 className="text-lg font-semibold">What would you like to understand better?</h2>
+        <div className="mt-4 grid gap-2 md:grid-cols-3">{(Object.keys(RHYTHM_CAMPAIGNS) as RhythmAngle[]).map(goal => <Button key={goal} variant={angle === goal ? "default" : "outline"} aria-pressed={angle === goal} onClick={() => selectGoal(goal)} className="h-auto min-h-12 justify-between whitespace-normal px-4 py-3 text-left">{RHYTHM_CAMPAIGNS[goal].goal}<ArrowRight className="ml-2 h-4 w-4 shrink-0" /></Button>)}</div>
+        <p className="mt-3 min-h-5 text-sm text-muted-foreground" aria-live="polite">{campaign?.explanation || "Food, movement and sleep. Start with what matters to you."}</p>
+      </div>
+    </section>
+    <section id="discover" className="rhythm-section"><div className="rhythm-container">
+      <p className="rhythm-eyebrow">Everyday food. Personal patterns.</p><h2 className="rhythm-heading">Which food fits your day?</h2><p className="rhythm-copy mt-5 max-w-2xl">Rice, mango, pizza, chai, banana or ice cream. The food is familiar. Portions, timing, movement and your own routine make the context personal.</p>
+      <div className="mt-8 grid grid-cols-3 gap-4 border-y border-border py-6 md:grid-cols-6">{["Rice", "Mango", "Pizza", "Chai", "Banana", "Ice cream"].map((food,i) => <div key={food} className="flex flex-col gap-3"><span className="text-xs text-primary">0{i+1}</span><span className="text-base font-medium">{food}</span><span className="text-xs text-muted-foreground">What's your pattern?</span></div>)}</div>
+    </div></section>
+    <section className="rhythm-section bg-muted"><div className="rhythm-container">
+      <p className="rhythm-eyebrow">One meal isn't the whole story</p><h2 className="rhythm-heading">The same food.<br /><span className="text-muted-foreground">Different bodies.</span></h2><p className="rhythm-copy mt-5 max-w-2xl">Nobody responds to food in exactly the same way. Your portions, daily movement and sleep are part of the picture.</p>
+      <div className="mt-8 grid gap-6 md:grid-cols-3">{[{name:"Rohan, 41", img:portrait1, note:"A desk day and a late lunch."},{name:"Aditi, 28",img:portrait2,note:"The same meal after an active morning."},{name:"Mr. Menon, 65",img:portrait3,note:"A smaller portion and a walk afterwards."}].map(person => <figure key={person.name}><img src={person.img} alt={`${person.name} — illustrative portrait`} loading="lazy" className="aspect-[4/3] w-full rounded-lg object-cover" /><figcaption className="mt-4"><h3 className="text-base">{person.name}</h3><p className="mt-1 text-sm text-muted-foreground">{person.note}</p></figcaption></figure>)}</div>
+      <p className="mt-6 text-xs text-muted-foreground">Illustrative people and routines — not verified customers, measured food responses or personal medical outcomes.</p>
+    </div></section>
+    <RhythmResearch />
+    <section className="rhythm-section bg-muted"><div className="rhythm-container">
+      <p className="rhythm-eyebrow">A routine, not a rulebook</p><h2 className="rhythm-heading">Small Changes.<br />Better Daily Habits.</h2>
+      <div className="mt-8 grid gap-8 md:grid-cols-4">{[{title:"Your lunch",copy:"Rice, dal, sabzi and roti. Look at the meal and your portions."},{title:"Your afternoon",copy:"Notice how much you've moved. Consider a short walk."},{title:"Your evening",copy:"Look back at the day's habits, activity and sleep routine."},{title:"Your next day",copy:"Choose one small, practical improvement. Then keep going."}].map((item,i) => <div key={item.title}><span className="text-sm text-primary">0{i+1}</span><h3 className="mt-4 text-lg">{item.title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.copy}</p></div>)}</div>
+    </div></section>
+    <section className="rhythm-section"><div className="rhythm-container">
+      <p className="rhythm-eyebrow">Your Personal Food Profile</p><h2 className="rhythm-heading max-w-3xl">Learn about your meals.<br />Not somebody else's.</h2><p className="rhythm-copy mt-5 max-w-2xl">Add meal context and review the patterns over time. NERA brings food, rest and movement together — without turning an inferred trend into an exact sugar reading.</p>
+      <div className="mt-10 grid gap-10 md:grid-cols-2"><figure><img src={appMeals.url} alt="Actual Agatsa One meal-response screen" loading="lazy" className="mx-auto h-[440px] w-full max-w-xs object-contain" /><figcaption className="mt-4 text-center text-xs text-muted-foreground">Actual app screen · meal context and inferred trends</figcaption></figure><figure><img src={appMetabolic.url} alt="Actual NERA metabolic trend screen" loading="lazy" className="mx-auto h-[440px] w-full max-w-xs object-contain" /><figcaption className="mt-4 text-center text-xs text-muted-foreground">Actual app screen · not a direct sugar measurement</figcaption></figure></div>
+    </div></section>
+    <section id="how-it-works" className="rhythm-section bg-muted"><div className="rhythm-container"><p className="rhythm-eyebrow">How it works</p><h2 className="rhythm-heading">A little context.<br />A clearer daily picture.</h2><div className="mt-10 grid gap-8 md:grid-cols-4">{STEPS.map((step,i) => <div key={step.title}><step.icon className="h-7 w-7 text-primary" /><p className="mt-5 text-xs text-muted-foreground">0{i+1}</p><h3 className="mt-2 text-lg">{step.title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.copy}</p></div>)}</div></div></section>
+    <section id="proof-video" className="rhythm-section scroll-mt-24"><div className="rhythm-container grid items-center gap-10 md:grid-cols-2"><div><p className="rhythm-eyebrow">The actual app</p><h2 className="rhythm-heading">See the experience.<br />Not a mock-up.</h2><p className="rhythm-copy mt-5">The original app recording shows the interface and its recorded trend labels. Those labels are not evidence of insulin detection, clinical accuracy or a measured sugar spike.</p><p className="mt-5 text-sm text-muted-foreground">An app demonstration, not a clinical validation study.</p></div><video src={spikeDemo.url} controls muted playsInline preload="metadata" className="mx-auto max-h-[520px] w-full max-w-xs rounded-lg bg-muted" aria-label="Original Rhythm app demonstration" /></div></section>
+    <section className="rhythm-section bg-muted"><div className="rhythm-container"><p className="rhythm-eyebrow">More than meals</p><h2 className="rhythm-heading">One band.<br /><span className="text-muted-foreground">Your everyday wellness.</span></h2><div className="mt-10 grid items-start gap-12 md:grid-cols-[1fr_2fr]"><figure><img src={appWearable.url} alt="Actual Rhythm wearable dashboard with heart rate, HRV, sleep and activity" loading="lazy" className="mx-auto h-[490px] w-full max-w-xs object-contain" /><figcaption className="mt-3 text-center text-xs text-muted-foreground">Actual Agatsa One wearable screen</figcaption></figure><div className="grid gap-x-8 gap-y-6 sm:grid-cols-2">{CAPABILITIES.map(item => <div key={item.title} className="border-t border-border pt-5"><item.icon className="h-5 w-5 text-primary" /><h3 className="mt-3 text-base">{item.title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.copy}</p></div>)}</div></div></div></section>
+    <section className="rhythm-section"><div className="rhythm-container"><p className="rhythm-eyebrow">A day in your body</p><h2 className="rhythm-heading">Your routine, seen together.</h2><div className="mt-8 grid gap-5 border-y border-border py-7 md:grid-cols-6">{[{time:"07:12",title:"Wake up",note:"Review last night's rest"},{time:"08:30",title:"Breakfast",note:"Add meal context"},{time:"11:00",title:"Deep work",note:"Notice your routine"},{time:"13:45",title:"Lunch walk",note:"Make room for movement"},{time:"19:30",title:"Dinner",note:"Look back at your meals"},{time:"23:10",title:"Sleep",note:"Give rest its place"}].map(item => <div key={item.time}><p className="text-sm text-primary">{item.time}</p><h3 className="mt-3 text-base">{item.title}</h3><p className="mt-2 text-xs leading-relaxed text-muted-foreground">{item.note}</p></div>)}</div><p className="mt-4 text-xs text-muted-foreground">Illustrative routine, not recorded customer data.</p></div></section>
+    <section className="rhythm-section bg-muted"><div className="rhythm-container"><h2 className="rhythm-heading">Not just a step count.</h2><div className="mt-8 overflow-x-auto"><table className="w-full min-w-[310px] text-left text-sm"><thead><tr className="border-b border-border"><th className="py-4 font-medium">What you want to explore</th><th className="py-4 font-medium">Rhythm Band</th></tr></thead><tbody>{["Heart rate, HRV and activity", "Sleep and recovery patterns", "Meal context and inferred metabolic trends", "NERA guidance in Agatsa One", "Screenless wear, without wrist notifications", "Seven days of Nera AI Premium included"].map(feature => <tr key={feature} className="border-b border-border"><td className="py-4 pr-5">{feature}</td><td className="py-4"><Check aria-label="Included" className="h-4 w-4 text-primary" /></td></tr>)}</tbody></table></div><p className="mt-4 text-xs text-muted-foreground">Features vary across other wearables. No blanket competitor claim or medical equivalence is implied.</p></div></section>
+    <section id="buy" className="rhythm-section scroll-mt-24"><div className="rhythm-container"><p className="rhythm-eyebrow">EasyTouch Rhythm Band</p><h2 className="rhythm-heading">Screenless. By design.</h2><div className="mt-6 grid items-center gap-10 md:grid-cols-2"><img src={selectedColor.photo} alt={`EasyTouch Rhythm Band in ${selectedColor.name}`} loading="lazy" className="aspect-square w-full max-w-lg object-contain" /><div><h3 className="text-2xl">Your band. Your colour.</h3><p className="mt-3 text-muted-foreground">Nothing to check on your wrist. Your answers live on your phone.</p><p className="mt-6 text-sm font-medium">{selectedColor.name} · {COLORS.findIndex(color => color.id === selectedColor.id)+1} of 6 colours</p><div className="mt-3"><ColorSelector selected={selectedColor.id} onChange={setSelectedColor} /></div><p className="mt-7 text-3xl font-semibold">{fmt(price)}</p><p className="mt-2 text-sm text-muted-foreground">{getNeraAiIncludedLine(BAND_SKU)}</p><p className="mt-1 text-sm text-muted-foreground">Free shipping in India</p><div className="mt-5"><StockUrgencyBar productKey="easytouch-rhythm" /></div><div className="mt-5 inline-flex items-center rounded-lg border border-border"><Button aria-label="Decrease purchase quantity" title="Decrease quantity" variant="ghost" size="icon" onClick={() => setQuantity(q => Math.max(1,q-1))}><Minus className="h-4 w-4" /></Button><span className="w-8 text-center text-sm" aria-label="Purchase quantity">{quantity}</span><Button aria-label="Increase purchase quantity" title="Increase quantity" variant="ghost" size="icon" onClick={() => setQuantity(q => Math.min(5,q+1))}><Plus className="h-4 w-4" /></Button></div><div className="mt-5 grid gap-3 sm:grid-cols-2"><Button variant="outline" size="lg" onClick={() => addToCart(quantity)}><ShoppingCart className="mr-2 h-4 w-4" />Add to cart</Button><Button size="lg" onClick={() => buyNow(quantity)}>Buy now · {selectedColor.name}<ArrowRight className="ml-2 h-4 w-4" /></Button></div><p className="mt-4 text-xs text-muted-foreground">One-year warranty · Defect returns subject to inspection</p><div className="mt-4 flex gap-5 text-xs"><a href="/return-policy" className="underline underline-offset-4">Return policy</a><a href="/shipping-policy" className="underline underline-offset-4">Shipping policy</a></div></div></div></div></section>
+    <section className="rhythm-section bg-muted"><div className="rhythm-container max-w-3xl"><p className="rhythm-eyebrow">A few things worth knowing</p><h2 className="rhythm-heading">Questions.</h2><Accordion type="single" collapsible className="mt-6">{FAQS.map((faq,i) => <AccordionItem key={faq.q} value={`faq-${i}`}><AccordionTrigger className="text-left">{faq.q}</AccordionTrigger><AccordionContent className="leading-relaxed text-muted-foreground">{faq.a}</AccordionContent></AccordionItem>)}</Accordion></div></section>
+    <ProductReviewsSection reviews={topReviews} heading="Rhythm Band review examples" sampleReviews />
+    {!cartHasItems && <StickyAddToCart productName={`EasyTouch Rhythm Band · ${selectedColor.name}`} price={fmt(price)} unitPrice={price} onBuyNow={buyNow} onAddToCart={addToCart} />}
+  </div></SiteLayout>;
 }

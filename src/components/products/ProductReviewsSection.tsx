@@ -19,19 +19,19 @@ export interface ProductReview {
 const StarRow = ({ rating }: { rating: number }) => (
   <div className="flex gap-0.5">
     {[1, 2, 3, 4, 5].map(s => (
-      <Star key={s} className={`h-3.5 w-3.5 ${s <= rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30"}`} />
+      <Star key={s} className={`h-3.5 w-3.5 ${s <= rating ? "fill-warning text-warning" : "text-muted-foreground/30"}`} />
     ))}
   </div>
 );
 
-const ReviewCard = ({ review }: { review: ProductReview }) => {
+const ReviewCard = ({ review, sample = false }: { review: ProductReview; sample?: boolean }) => {
   const initials = review.name.split(" ").map(w => w[0]).join("").slice(0, 2);
   const dateLabel = new Date(review.date).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 flex flex-col gap-3">
+    <div className="bg-card border border-border rounded-lg p-5 flex flex-col gap-3">
       <div className="flex items-center gap-3">
-        {review.hasAvatar && review.avatarUrl ? (
+        {!sample && review.hasAvatar && review.avatarUrl ? (
           <img src={review.avatarUrl} alt={review.name} className="w-9 h-9 rounded-full object-cover" loading="lazy" />
         ) : (
           <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">
@@ -48,7 +48,7 @@ const ReviewCard = ({ review }: { review: ProductReview }) => {
       <p className="text-sm font-medium text-foreground">{review.title}</p>
       <p className="text-sm text-muted-foreground leading-relaxed">{review.body}</p>
       <div className="flex items-center gap-1 mt-1">
-        <span className="text-[10px] text-green-600 font-medium">✓ Verified Purchase</span>
+        <span className="text-[10px] text-primary font-medium">{sample ? "Illustrative sample — not a verified purchase" : "✓ Verified Purchase"}</span>
       </div>
     </div>
   );
@@ -59,9 +59,10 @@ type Filter = "all" | 5 | 4 | 3;
 interface ProductReviewsSectionProps {
   reviews: ProductReview[];
   heading?: string;
+  sampleReviews?: boolean;
 }
 
-export function ProductReviewsSection({ reviews, heading = "What users are saying" }: ProductReviewsSectionProps) {
+export function ProductReviewsSection({ reviews, heading = "What users are saying", sampleReviews = false }: ProductReviewsSectionProps) {
   const [filter, setFilter] = useState<Filter>("all");
   const [showAll, setShowAll] = useState(false);
 
@@ -84,10 +85,11 @@ export function ProductReviewsSection({ reviews, heading = "What users are sayin
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <motion.div {...fadeUp} className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">{heading}</h2>
+          {sampleReviews && <p className="mt-3 text-sm text-muted-foreground">These are sample review drafts, not verified customer testimonials. The ratings and dates below are illustrative.</p>}
           <div className="flex items-center justify-center gap-2 mt-4">
             <StarRow rating={Math.round(Number(avgRating))} />
             <span className="text-lg font-bold text-foreground">{avgRating}</span>
-            <span className="text-sm text-muted-foreground">based on {totalCount} reviews</span>
+            <span className="text-sm text-muted-foreground">based on {totalCount} {sampleReviews ? "sample reviews" : "reviews"}</span>
           </div>
         </motion.div>
 
@@ -96,7 +98,7 @@ export function ProductReviewsSection({ reviews, heading = "What users are sayin
             <div key={star} className="flex items-center gap-2 text-xs">
               <span className="w-8 text-right text-muted-foreground">{star}★</span>
               <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-                <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${(ratingCounts[star] / totalCount) * 100}%` }} />
+                <div className="h-full bg-warning rounded-full" style={{ width: `${(ratingCounts[star] / totalCount) * 100}%` }} />
               </div>
               <span className="w-6 text-muted-foreground">{ratingCounts[star]}</span>
             </div>
@@ -105,17 +107,17 @@ export function ProductReviewsSection({ reviews, heading = "What users are sayin
 
         <div className="flex gap-2 justify-center mt-8 flex-wrap">
           {(["all", 5, 4, 3] as Filter[]).map(f => (
-            <button key={String(f)} onClick={() => { setFilter(f); setShowAll(false); }}
+            <Button variant="ghost" size="sm" key={String(f)} onClick={() => { setFilter(f); setShowAll(false); }}
               className={`text-xs px-4 py-1.5 rounded-full font-medium transition-colors ${filter === f ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}>
               {f === "all" ? "All" : `${f} Star`}
-            </button>
+            </Button>
           ))}
         </div>
 
         <div className="grid md:grid-cols-2 gap-4 mt-8">
           {filtered.map((review, i) => (
             <motion.div key={review.name + review.date} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.3) }}>
-              <ReviewCard review={review} />
+              <ReviewCard review={review} sample={sampleReviews} />
             </motion.div>
           ))}
         </div>
