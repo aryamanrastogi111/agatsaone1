@@ -1,6 +1,6 @@
 # Rhythm Band enhancement
 
-- [ ] Review the three supplied wearable manuscripts and update the Agatsa research story, sourced results and validation limits; verify the unpublished preview.
+- [x] Review the three supplied wearable manuscripts and update the Agatsa research story, sourced results and validation limits; verify the unpublished preview.
 
 - [x] Replace repeated upper goal-card images with three distinct, relevant lifestyle scenes and check all selections.
 
