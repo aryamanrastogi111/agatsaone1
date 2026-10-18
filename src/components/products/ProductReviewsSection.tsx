@@ -31,7 +31,7 @@ const ReviewCard = ({ review, sample = false }: { review: ProductReview; sample?
   return (
     <div className="bg-card border border-border rounded-lg p-5 flex flex-col gap-3">
       <div className="flex items-center gap-3">
-        {review.hasAvatar && review.avatarUrl ? (
+        {!sample && review.hasAvatar && review.avatarUrl ? (
           <img src={review.avatarUrl} alt={review.name} className="w-9 h-9 rounded-full object-cover" loading="lazy" />
         ) : (
           <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">

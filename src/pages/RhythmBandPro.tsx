@@ -87,6 +87,7 @@ export default function RhythmBandPro() {
   const campaign = angle ? RHYTHM_CAMPAIGNS[angle] : null;
   const [selectedColor, setSelectedColor] = useState(COLORS[0]);
   const [quantity, setQuantity] = useState(1);
+  const cartHasItems = useCartStore(state => state.items.length > 0);
   const price = prices.band_sub;
   const topReviews = useMemo(() => {
     const pick = (rating: number, count: number) => easytouchRhythmReviews.filter(review => review.rating === rating).sort((a,b) => b.date.localeCompare(a.date)).slice(0,count);
@@ -100,7 +101,9 @@ export default function RhythmBandPro() {
     useCartStore.getState().addItem({ productId: BAND_SKU, productName: "EasyTouch Rhythm Band", variantTitle: selectedColor.name, price, quantity: qty });
     recordRhythmInteraction("add_to_cart", search);
     toast.success(`Rhythm Band · ${selectedColor.name} added`, { position: "top-center" });
-    if (window.fbq) window.fbq("track", "AddToCart", { content_ids: [BAND_SKU], content_name: "EasyTouch Rhythm Band", content_type: "product", value: price * qty, currency: "INR" });
+    try {
+      if (window.fbq) window.fbq("track", "AddToCart", { content_ids: [BAND_SKU], content_name: "EasyTouch Rhythm Band", content_type: "product", value: price * qty, currency: "INR" });
+    } catch { /* An existing advertising tag must not block checkout. */ }
   };
   const buyNow = (qty: number) => {
     addToCart(qty);
@@ -117,16 +120,16 @@ export default function RhythmBandPro() {
 
   return <SiteLayout><div className="rhythm-page">
     <section className="overflow-hidden">
-      <div className="rhythm-container pb-8 pt-10 text-center md:pt-12">
+      <div className="rhythm-container pb-5 pt-5 text-center md:pt-12">
         <p className="rhythm-eyebrow">AGATSA ONE / EASYTOUCH RHYTHM BAND</p>
         <h1 className={`mx-auto max-w-4xl font-semibold leading-[1.1] ${campaign ? "text-[34px] md:text-[52px]" : "text-[38px] md:text-[60px]"}`}>{campaign?.headline || <>Discover which foods spike <span className="text-primary">YOUR</span> sugar.</>}</h1>
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">{campaign?.copy || "Not your friend's. Not your family's. Yours. Rhythm Band and Nera AI reveal personal food-response patterns — alongside your sleep, recovery, stress and heart."}</p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">{campaign?.copy || "Not your friend's. Not your family's. Yours. Rhythm Band and Nera AI reveal the foods that create larger sugar-response patterns for your body — while tracking your sleep, recovery, stress and heart every day."}</p>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-2 md:gap-4">
           <Button asChild size="lg" className="h-12 px-7"><a href="#buy" onClick={() => recordRhythmInteraction("hero_cta", search)}>{campaign ? "Get Started" : "Get yours"} — {fmt(price)} <ArrowRight className="ml-2 h-4 w-4" /></a></Button>
           <Button asChild variant="link" className="text-foreground"><a href="#proof-video">See how it works <Play className="ml-2 h-4 w-4" /></a></Button>
         </div>
         <p className="mt-4 text-xs text-muted-foreground">{getNeraAiIncludedLine(BAND_SKU)} · Free shipping in India</p>
-        <img src={bandOliveHero.url} alt="EasyTouch Rhythm Band in Olive" fetchPriority="high" className="mx-auto mt-5 h-[210px] w-full max-w-2xl object-contain md:h-[285px]" />
+        <img src={bandOliveHero.url} alt="EasyTouch Rhythm Band in Olive" fetchPriority="high" className="mx-auto mt-3 h-[175px] w-full max-w-2xl object-contain md:h-[285px]" />
         <p className="mt-3 text-sm text-muted-foreground">Screenless. By design. <span className="text-foreground">Available in six colours.</span></p>
         {!campaign && <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">Food-response patterns are inferred wellness trends, not direct sugar measurements or proof that a food causes a measured spike.</p>}
       </div>
@@ -163,6 +166,6 @@ export default function RhythmBandPro() {
     <section id="buy" className="rhythm-section scroll-mt-24"><div className="rhythm-container"><p className="rhythm-eyebrow">EasyTouch Rhythm Band</p><h2 className="rhythm-heading">Screenless. By design.</h2><div className="mt-6 grid items-center gap-10 md:grid-cols-2"><img src={selectedColor.photo} alt={`EasyTouch Rhythm Band in ${selectedColor.name}`} loading="lazy" className="aspect-square w-full max-w-lg object-contain" /><div><h3 className="text-2xl">Your band. Your colour.</h3><p className="mt-3 text-muted-foreground">Nothing to check on your wrist. Your answers live on your phone.</p><p className="mt-6 text-sm font-medium">{selectedColor.name} · {COLORS.findIndex(color => color.id === selectedColor.id)+1} of 6 colours</p><div className="mt-3"><ColorSelector selected={selectedColor.id} onChange={setSelectedColor} /></div><p className="mt-7 text-3xl font-semibold">{fmt(price)}</p><p className="mt-2 text-sm text-muted-foreground">{getNeraAiIncludedLine(BAND_SKU)}</p><p className="mt-1 text-sm text-muted-foreground">Free shipping in India</p><div className="mt-5"><StockUrgencyBar productKey="easytouch-rhythm" /></div><div className="mt-5 inline-flex items-center rounded-lg border border-border"><Button aria-label="Decrease purchase quantity" title="Decrease quantity" variant="ghost" size="icon" onClick={() => setQuantity(q => Math.max(1,q-1))}><Minus className="h-4 w-4" /></Button><span className="w-8 text-center text-sm" aria-label="Purchase quantity">{quantity}</span><Button aria-label="Increase purchase quantity" title="Increase quantity" variant="ghost" size="icon" onClick={() => setQuantity(q => Math.min(5,q+1))}><Plus className="h-4 w-4" /></Button></div><div className="mt-5 grid gap-3 sm:grid-cols-2"><Button variant="outline" size="lg" onClick={() => addToCart(quantity)}><ShoppingCart className="mr-2 h-4 w-4" />Add to cart</Button><Button size="lg" onClick={() => buyNow(quantity)}>Buy now · {selectedColor.name}<ArrowRight className="ml-2 h-4 w-4" /></Button></div><p className="mt-4 text-xs text-muted-foreground">One-year warranty · Defect returns subject to inspection</p><div className="mt-4 flex gap-5 text-xs"><a href="/return-policy" className="underline underline-offset-4">Return policy</a><a href="/shipping-policy" className="underline underline-offset-4">Shipping policy</a></div></div></div></div></section>
     <section className="rhythm-section bg-muted"><div className="rhythm-container max-w-3xl"><p className="rhythm-eyebrow">A few things worth knowing</p><h2 className="rhythm-heading">Questions.</h2><Accordion type="single" collapsible className="mt-6">{FAQS.map((faq,i) => <AccordionItem key={faq.q} value={`faq-${i}`}><AccordionTrigger className="text-left">{faq.q}</AccordionTrigger><AccordionContent className="leading-relaxed text-muted-foreground">{faq.a}</AccordionContent></AccordionItem>)}</Accordion></div></section>
     <ProductReviewsSection reviews={topReviews} heading="Rhythm Band review examples" sampleReviews />
-    <StickyAddToCart productName={`EasyTouch Rhythm Band · ${selectedColor.name}`} price={fmt(price)} unitPrice={price} onBuyNow={buyNow} onAddToCart={addToCart} />
+    {!cartHasItems && <StickyAddToCart productName={`EasyTouch Rhythm Band · ${selectedColor.name}`} price={fmt(price)} unitPrice={price} onBuyNow={buyNow} onAddToCart={addToCart} />}
   </div></SiteLayout>;
 }
