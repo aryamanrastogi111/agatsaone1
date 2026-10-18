@@ -146,7 +146,7 @@ export default function RhythmBandPro() {
     <section className="rhythm-section"><div className="rhythm-container grid items-center gap-10 md:grid-cols-2">
       <div>
         <p className="rhythm-eyebrow">Automatic spike detection</p>
-        <h2 className="rhythm-heading">Your spikes, detected on their own.</h2>
+        <h2 className="rhythm-heading">Your spikes, detected on their own —<br /><span className="text-muted-foreground">by Rhythm Band.</span></h2>
         <p className="rhythm-copy mt-5">Wear the band and NERA keeps watching through the day. When a metabolic spike rises after a meal and settles back down, the band and app detect it automatically — no finger pricks, no strips, no manual checks.</p>
         <p className="rhythm-copy mt-4">You simply log what you ate. Agatsa One recognizes the food and files it into your food profile — roti, rice, chai, a restaurant meal — and links the detected response to that meal, so you can see how your body handled it.</p>
       </div>
