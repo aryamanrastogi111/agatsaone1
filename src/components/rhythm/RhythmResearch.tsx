@@ -1,7 +1,6 @@
-import { ArrowUpRight, FileText } from "lucide-react";
+import { ArrowUpRight, BrainCircuit, Smartphone, Watch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RHYTHM_COHORTS, RHYTHM_PAPERS } from "@/data/rhythmResearch";
-import crossDeviceStudy from "@/assets/publications/cross-device-reproducibility-study.pdf";
 import { RhythmCohortChart } from "./RhythmCohortChart";
 
 export function RhythmResearch() {
@@ -27,24 +26,36 @@ export function RhythmResearch() {
     <section className="rhythm-section" id="agatsa-research">
       <div className="rhythm-container">
         <p className="rhythm-eyebrow">Agatsa research / 02</p>
-        <h2 className="rhythm-heading max-w-3xl">Researching Food-Response Patterns Across Wearables</h2>
-        <p className="rhythm-copy mt-5 max-w-2xl">We studied real-world wearable data to understand whether similar meal-related patterns could be identified across different devices.</p>
-        <div className="mt-10 grid gap-8 border-y border-border py-8 md:grid-cols-3">
-          {RHYTHM_COHORTS.map(cohort => <div key={cohort.device} className="rounded-lg border border-border bg-muted p-6">
+        <h2 className="rhythm-heading max-w-3xl">One Agatsa Algorithm.<br />Three Wearable Platforms.</h2>
+        <p className="rhythm-copy mt-5 max-w-3xl">We built NERA AI, brought it into Agatsa One, and connected the experience to Apple Watch, EasyTouch Rhythm Band and Samsung Galaxy Watch. Our research asks a practical question: can wearable-derived sugar trends show meal-linked rises and subsequent falls in everyday life?</p>
+        <div className="mt-8 grid gap-6 border-y border-border py-7 md:grid-cols-3">
+          {[{ icon: BrainCircuit, title: "NERA AI", copy: "Agatsa’s proprietary algorithm interprets wearable signals as inferred metabolic trends." }, { icon: Smartphone, title: "Agatsa One", copy: "The app brings those trends together with time-stamped meal logs and meal context." }, { icon: Watch, title: "Three wearable platforms", copy: "Separate retrospective studies examined Apple Watch, Rhythm Band and Galaxy Watch records." }].map(item => <div key={item.title}><item.icon className="h-6 w-6 text-primary" /><h3 className="mt-4 text-lg font-semibold">{item.title}</h3><p className="mt-3 text-sm leading-relaxed">{item.copy}</p></div>)}
+        </div>
+        <div className="mt-8 flex flex-wrap gap-x-12 gap-y-6">
+          <div><p className="text-3xl font-semibold">105,408</p><p className="mt-2 text-sm">stored wearable observations</p></div>
+          <div><p className="text-3xl font-semibold">7,428</p><p className="mt-2 text-sm">logged meals across the cohorts</p></div>
+          <div><p className="text-3xl font-semibold">~3 months</p><p className="mt-2 text-sm">late May to early September 2026</p></div>
+        </div>
+        <p className="mt-5 text-sm leading-relaxed">These are three retrospective feasibility studies of ordinary app use, not a three-month trial for every participant. Cohorts may overlap; user counts are not combined into a unique participant total.</p>
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {RHYTHM_COHORTS.map(cohort => <article key={cohort.device} className="flex flex-col rounded-lg border border-border bg-card p-6">
             <h3 className="text-base font-semibold">{cohort.device}</h3>
-            <p className="mt-4 text-3xl font-semibold">{cohort.observations.toLocaleString("en-IN")}</p>
-            <p className="mt-1 text-sm text-muted-foreground">observations · {cohort.users} users in this cohort</p>
-          </div>)}
+            <p className="mt-2 text-xs">{cohort.period}</p>
+            <p className="mt-4 text-sm">{cohort.users} users · {cohort.observations.toLocaleString("en-IN")} observations<br />{cohort.meals.toLocaleString("en-IN")} logged meals</p>
+            <dl className="mt-6 space-y-5 border-t border-border pt-5">
+              <div><dt className="text-sm">Upward trend after a meal</dt><dd className="mt-2 text-3xl font-semibold text-primary">{cohort.mealRise.percent.toFixed(1)}%</dd><dd className="mt-1 text-xs">{cohort.mealRise.positive.toLocaleString("en-IN")} / {cohort.mealRise.total.toLocaleString("en-IN")} evaluable meal events · primary window</dd></div>
+              <div><dt className="text-sm">Downward trend after a peak</dt><dd className="mt-2 text-2xl font-semibold">{cohort.recovery.percent.toFixed(1)}%</dd><dd className="mt-1 text-xs">{cohort.recovery.positive.toLocaleString("en-IN")} / {cohort.recovery.total.toLocaleString("en-IN")} evaluable post-peak trajectories</dd></div>
+            </dl>
+            <p className="mt-5 text-sm leading-relaxed">{cohort.interpretation}</p>
+            <p className="mt-auto pt-5 text-xs leading-relaxed">Source: {cohort.source}. Percentages describe observed events, not measurement accuracy.</p>
+          </article>)}
         </div>
         <RhythmCohortChart />
-        <div className="mt-8 grid gap-6 md:grid-cols-[1fr_2fr]">
-          <div><p className="text-3xl font-semibold text-primary">105,408</p><p className="mt-1 text-sm text-muted-foreground">observations across three separate cohorts</p></div>
-          <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
-            <p>Our retrospective analysis observed meal-related rise and recovery patterns across the wearable platforms. Cohorts were analysed separately and may overlap; the user counts are not a total of unique participants.</p>
-            <p>This analysis did not include synchronised CGM-matched reference measurements. It does not establish sugar measurement accuracy, diagnostic performance or equivalence to a CGM or glucometer. The supplied report is an Agatsa research manuscript, not an independently verified peer-reviewed publication.</p>
-            <Button asChild variant="outline"><a href={crossDeviceStudy} target="_blank" rel="noopener noreferrer"><FileText className="mr-2 h-4 w-4" />Read the research manuscript <ArrowUpRight className="ml-2 h-4 w-4" /></a></Button>
-          </div>
+        <div className="mt-8 grid gap-8 border-t border-border pt-8 md:grid-cols-2">
+          <div><h3 className="text-xl font-semibold">Why this matters</h3><p className="mt-4 text-sm leading-relaxed">The innovation is a way to evaluate inferred metabolic trends using real-world events: meal timing, movement in both directions, and decline after a peak. All three datasets contained rises and falls. Apple Watch and Rhythm Band showed more consistent meal-linked results; Galaxy Watch highlighted the importance of timing and data density.</p></div>
+          <div><h3 className="text-xl font-semibold">What meal content tells us</h3><p className="mt-4 text-sm leading-relaxed">Meal descriptions and estimated nutrients were included, but carbohydrate content had weak or no linear association with trend size (Apple Watch r = −0.18; Rhythm Band r = 0.03; Galaxy Watch r ≈ 0). These studies do not establish that the algorithm can predict an exact response to a particular food or portion.</p></div>
         </div>
+        <div className="mt-8 border-t border-border pt-6 text-sm leading-relaxed"><h3 className="font-semibold">Evidence stage: retrospective feasibility</h3><p className="mt-3">Results are reported in three supplied Agatsa manuscripts; peer-reviewed publication has not been established. Wearable outputs were not paired with synchronised CGM or meter readings, so these findings do not establish sugar-measurement accuracy or CGM equivalence. Separate manual/photo reference readings provided physiological context only. Meal timing, estimated nutrients and roughly 30-minute sampling limit interpretation; prospective paired-reference testing is the next validation step.</p></div>
       </div>
     </section>
   </>;
