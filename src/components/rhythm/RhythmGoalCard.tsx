@@ -14,7 +14,6 @@ export function RhythmGoalCard({ angle }: { angle: RhythmAngle }) {
     <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
       <figure className="relative min-w-0">
         <img src={PHOTOS[angle]} alt={goal.photoAlt} loading="lazy" width={1024} height={1280} className="h-80 w-full object-cover md:h-full md:max-h-[560px]" />
-        <figcaption className="absolute bottom-0 w-full bg-card/95 px-4 py-2 text-xs">Illustrative AI-generated photograph · not a customer outcome</figcaption>
       </figure>
       <div className="min-w-0 p-6 md:p-8">
         <p className="rhythm-eyebrow">Your focus · {goal.label}</p>
