@@ -15,8 +15,9 @@ import foodChai from "@/assets/rhythm-food-chai.jpg";
 import foodBanana from "@/assets/rhythm-food-banana.jpg";
 import foodIcecream from "@/assets/rhythm-food-icecream.jpg";
 import { RhythmResearch } from "@/components/rhythm/RhythmResearch";
+import { RhythmGoalCard } from "@/components/rhythm/RhythmGoalCard";
 import { easytouchRhythmReviews } from "@/data/easytouchRhythmReviews";
-import { RHYTHM_CAMPAIGNS, getRhythmAngle, selectRhythmAngle, recordRhythmInteraction, type RhythmAngle } from "@/lib/rhythmCampaign";
+import { RHYTHM_CAMPAIGNS, getRhythmExperience, selectRhythmAngle, recordRhythmInteraction, type RhythmAngle } from "@/lib/rhythmCampaign";
 import { encodeVariantsParam, BAND_SKU } from "@/lib/bandColors";
 import { getNeraAiIncludedLine } from "@/lib/neraAiPlan";
 import { usePricing } from "@/hooks/useDevicePricing";
@@ -90,7 +91,7 @@ export default function RhythmBandPro() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const search = `?${searchParams.toString()}`;
-  const angle = getRhythmAngle(search);
+  const { hero, selectedGoal: angle } = getRhythmExperience(search);
   const campaign = angle ? RHYTHM_CAMPAIGNS[angle] : null;
   const [selectedColor, setSelectedColor] = useState(COLORS[0]);
   const [quantity, setQuantity] = useState(1);
@@ -129,22 +130,23 @@ export default function RhythmBandPro() {
     <section className="overflow-hidden">
       <div className="rhythm-container pb-5 pt-5 text-center md:pt-12">
         <p className="rhythm-eyebrow">AGATSA ONE / EASYTOUCH RHYTHM BAND</p>
-        <h1 className={`mx-auto max-w-4xl font-semibold leading-[1.1] ${campaign ? "text-[34px] md:text-[52px]" : "text-[38px] md:text-[60px]"}`}>{campaign?.headline || <>Discover which foods spike <span className="text-primary">YOUR</span> sugar.</>}</h1>
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">{campaign?.copy || "Not your friend's. Not your family's. Yours. Rhythm Band and Nera AI reveal the foods that create larger sugar-response patterns for your body — while tracking your sleep, recovery, stress and heart every day."}</p>
+        <h1 className="mx-auto max-w-4xl text-[38px] font-semibold leading-[1.1] md:text-[60px]">{hero.headline}</h1>
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">{hero.copy}</p>
         <div className="mt-5 flex flex-wrap items-center justify-center gap-2 md:gap-4">
-          <Button asChild size="lg" className="h-12 px-7"><a href="#buy" onClick={() => recordRhythmInteraction("hero_cta", search)}>{campaign ? "Get Started" : "Get yours"} — {fmt(price)} <ArrowRight className="ml-2 h-4 w-4" /></a></Button>
+          <Button asChild size="lg" className="h-12 px-7"><a href="#buy" onClick={() => recordRhythmInteraction("hero_cta", search)}>Get yours — {fmt(price)} <ArrowRight className="ml-2 h-4 w-4" /></a></Button>
           <Button asChild variant="link" className="text-foreground"><a href="#proof-video">See how it works <Play className="ml-2 h-4 w-4" /></a></Button>
         </div>
         <p className="mt-4 text-xs text-muted-foreground">{getNeraAiIncludedLine(BAND_SKU)} · Free shipping in India</p>
         <img src={bandOliveHero.url} alt="EasyTouch Rhythm Band in Olive" fetchPriority="high" className="mx-auto mt-3 h-[175px] w-full max-w-2xl object-contain md:h-[285px]" />
         <p className="mt-3 text-sm text-muted-foreground">Screenless. By design. <span className="text-foreground">Available in six colours.</span></p>
-        {!campaign && <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">Food-response patterns are inferred wellness trends, not direct sugar measurements or proof that a food causes a measured spike.</p>}
+        <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">Food-response patterns are inferred wellness trends, not direct sugar measurements or proof that a food causes a measured spike.</p>
       </div>
     </section>
     <section className="border-t border-border bg-muted py-7">
       <div className="rhythm-container"><h2 className="text-lg font-semibold">What would you like to understand better?</h2>
         <div className="mt-4 grid gap-2 md:grid-cols-3">{(Object.keys(RHYTHM_CAMPAIGNS) as RhythmAngle[]).map(goal => <Button key={goal} variant={angle === goal ? "default" : "outline"} aria-pressed={angle === goal} onClick={() => selectGoal(goal)} className="h-auto min-h-12 justify-between whitespace-normal px-4 py-3 text-left">{RHYTHM_CAMPAIGNS[goal].goal}<ArrowRight className="ml-2 h-4 w-4 shrink-0" /></Button>)}</div>
         <p className="mt-3 min-h-5 text-sm text-muted-foreground" aria-live="polite">{campaign?.explanation || "Food, movement and sleep. Start with what matters to you."}</p>
+        <div aria-live="polite" aria-atomic="true">{angle && <RhythmGoalCard angle={angle} />}</div>
       </div>
     </section>
     <RhythmScrollNav />

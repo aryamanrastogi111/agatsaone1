@@ -1,5 +1,14 @@
 export type RhythmAngle = "weight" | "food" | "sugar";
 
+export const RHYTHM_DEFAULT_HERO = {
+  headline: "Discover your food and daily wellness patterns.",
+  copy: "Your meals. Your movement. Your rest. Rhythm Band and NERA bring your everyday habits and available wellness insights together, so you can explore what matters to you.",
+};
+
+export function getRhythmExperience(search: string) {
+  return { hero: RHYTHM_DEFAULT_HERO, selectedGoal: getRhythmAngle(search) };
+}
+
 export const RHYTHM_CAMPAIGNS = {
   weight: { code: "r01", headline: "Weight Loss Shuru Karo Apni Plate Se.", copy: "Apne meals samjho. Rhythm Band se daily activity track karo. NERA ke saath better food aur lifestyle habits banao.", goal: "Manage My Weight", explanation: "Build better food and activity habits." },
   food: { code: "r02", headline: "Roti, Chawal, Mithai — Kya Aur Kitna Khana Hai?", copy: "Understand your meals, portions and daily food habits. Discover simple changes that can make everyday eating better.", goal: "Understand My Food", explanation: "Make more informed everyday food choices." },

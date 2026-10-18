@@ -1,8 +1,20 @@
 /// <reference types="bun" />
 import { describe, expect, test } from "bun:test";
-import { getRhythmAngle, selectRhythmAngle, getRhythmAttribution, RHYTHM_CAMPAIGNS } from "./rhythmCampaign";
+import { getRhythmAngle, selectRhythmAngle, getRhythmAttribution, RHYTHM_CAMPAIGNS, getRhythmExperience } from "./rhythmCampaign";
 
 describe("Rhythm campaign rules", () => {
+  test("the default hero stays fixed for every selected goal and campaign link", () => {
+    const initial = getRhythmExperience("");
+    expect(initial.selectedGoal).toBeNull();
+    for (const angle of ["weight", "food", "sugar"] as const) {
+      const direct = getRhythmExperience(`?angle=${angle}`);
+      const selected = getRhythmExperience(selectRhythmAngle("?utm_source=facebook", angle));
+      expect(direct.hero).toBe(initial.hero);
+      expect(selected.hero).toBe(initial.hero);
+      expect(selected.selectedGoal).toBe(angle);
+    }
+    expect(getRhythmExperience("?angle=invalid").selectedGoal).toBeNull();
+  });
   test("only the three requested angles select a campaign", () => {
     expect(["weight", "food", "sugar"].map(angle => getRhythmAngle(`?angle=${angle}`))).toEqual(["weight", "food", "sugar"]);
     expect(getRhythmAngle("?angle=other")).toBeNull();
