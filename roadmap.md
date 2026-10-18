@@ -8,3 +8,5 @@
 - [ ] Verify campaign attribution, privacy, desktop/mobile layouts and cart-to-checkout flows.
 - [ ] Obtain released meal-photo feature confirmation and complete approved CGM study report before publishing those claims.
 - [ ] Obtain founder approval before production publication.
+- [ ] Make all Rhythm copy crisp black; replace three illustrative portraits with realistic photography.
+- [ ] Enrich Rhythm ecommerce with food photography, framed feature/research cards, truthful graphs and a purposeful scrolling experience.
