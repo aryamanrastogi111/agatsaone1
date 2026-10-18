@@ -85,7 +85,6 @@ export function ProductReviewsSection({ reviews, heading = "What users are sayin
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <motion.div {...fadeUp} className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">{heading}</h2>
-          {sampleReviews && <p className="mt-3 text-sm text-muted-foreground">These are sample review drafts, not verified customer testimonials. The ratings and dates below are illustrative.</p>}
           <div className="flex items-center justify-center gap-2 mt-4">
             <StarRow rating={Math.round(Number(avgRating))} />
             <span className="text-lg font-bold text-foreground">{avgRating}</span>
