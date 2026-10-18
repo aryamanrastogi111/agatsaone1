@@ -17,3 +17,4 @@
 - [x] Make all Rhythm copy crisp black; replace three illustrative portraits with realistic, visibly illustrative photography.
 - [x] Enrich Rhythm ecommerce with food photography, framed feature/research cards, a sourced dataset graph and a purposeful scrolling experience.
 - [ ] Verify original video's playback; local browser received the source but could not load its metadata.
+- [x] Remove the "Illustrative sample — not a verified purchase" label from all review cards; keep "✓ Verified Purchase" on verified reviews only.
