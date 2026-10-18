@@ -130,7 +130,7 @@
 .rhythm-food-card { border:1px solid hsl(var(--border)); border-radius:8px; overflow:hidden; background:hsl(var(--card)); box-shadow:var(--rhythm-card-shadow); }
 .rhythm-food-card img { transition:transform .5s ease; }
 .rhythm-food-card:hover img { transform:scale(1.05); }
-.rhythm-reveal { opacity:.25; transform:translateY(24px); transition:opacity .65s ease,transform .65s ease; }
+.rhythm-reveal { opacity:1; transform:translateY(24px); transition:transform .65s ease; }
 .rhythm-revealed { opacity:1; transform:translateY(0); }
 .rhythm-phone-stage { background:hsl(var(--muted)); border:1px solid hsl(var(--border)); border-radius:8px; padding:28px; box-shadow:var(--rhythm-card-shadow); }
 @media(min-width:768px) { .rhythm-scroll-nav { top:68px; } }
