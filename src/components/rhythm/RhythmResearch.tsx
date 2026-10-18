@@ -2,6 +2,7 @@ import { ArrowUpRight, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RHYTHM_COHORTS, RHYTHM_PAPERS } from "@/data/rhythmResearch";
 import crossDeviceStudy from "@/assets/publications/cross-device-reproducibility-study.pdf";
+import { RhythmCohortChart } from "./RhythmCohortChart";
 
 export function RhythmResearch() {
   return <>
@@ -30,12 +31,13 @@ export function RhythmResearch() {
         <h2 className="rhythm-heading max-w-3xl">Researching Food-Response Patterns Across Wearables</h2>
         <p className="rhythm-copy mt-5 max-w-2xl">We studied real-world wearable data to understand whether similar meal-related patterns could be identified across different devices.</p>
         <div className="mt-10 grid gap-8 border-y border-border py-8 md:grid-cols-3">
-          {RHYTHM_COHORTS.map(cohort => <div key={cohort.device}>
+          {RHYTHM_COHORTS.map(cohort => <div key={cohort.device} className="rounded-lg border border-border bg-muted p-6">
             <h3 className="text-base font-semibold">{cohort.device}</h3>
             <p className="mt-4 text-3xl font-semibold">{cohort.observations.toLocaleString("en-IN")}</p>
             <p className="mt-1 text-sm text-muted-foreground">observations · {cohort.users} users in this cohort</p>
           </div>)}
         </div>
+        <RhythmCohortChart />
         <div className="mt-8 grid gap-6 md:grid-cols-[1fr_2fr]">
           <div><p className="text-3xl font-semibold text-primary">105,408</p><p className="mt-1 text-sm text-muted-foreground">observations across three separate cohorts</p></div>
           <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
