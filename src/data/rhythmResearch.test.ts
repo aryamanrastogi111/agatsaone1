@@ -3,13 +3,13 @@ import { expect, test } from "bun:test";
 import { RHYTHM_COHORTS } from "./rhythmResearch";
 
 test("cross-device counts match the supplied research, without combining unique users", () => {
-  expect(RHYTHM_COHORTS.map(({ users, observations }) => [users, observations])).toEqual([[145, 19379], [128, 83090], [28, 2939]]);
-  expect(RHYTHM_COHORTS.reduce((sum, item) => sum + item.observations, 0)).toBe(105408);
+  expect(RHYTHM_COHORTS.map(({ users, observations }) => [users, observations])).toEqual([[145, 19379], [128, 83090]]);
+  expect(RHYTHM_COHORTS.reduce((sum, item) => sum + item.observations, 0)).toBe(102469);
 });
 
-test("meal counts match all three supplied manuscripts", () => {
-  expect(RHYTHM_COHORTS.map(cohort => cohort.meals)).toEqual([3401, 3190, 837]);
-  expect(RHYTHM_COHORTS.reduce((sum, cohort) => sum + cohort.meals, 0)).toBe(7428);
+test("meal counts match the supplied manuscripts", () => {
+  expect(RHYTHM_COHORTS.map(cohort => cohort.meals)).toEqual([3401, 3190]);
+  expect(RHYTHM_COHORTS.reduce((sum, cohort) => sum + cohort.meals, 0)).toBe(6591);
 });
 
 test("primary meal-rise results use the reported primary denominators", () => {

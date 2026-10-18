@@ -26,18 +26,18 @@ export function RhythmResearch() {
     <section className="rhythm-section" id="agatsa-research">
       <div className="rhythm-container">
         <p className="rhythm-eyebrow">Agatsa research / 02</p>
-        <h2 className="rhythm-heading max-w-3xl">One Agatsa Algorithm.<br />Three Wearable Platforms.</h2>
-        <p className="rhythm-copy mt-5 max-w-3xl">We built NERA AI, brought it into Agatsa One, and connected the experience to Apple Watch, EasyTouch Rhythm Band and Samsung Galaxy Watch. Our research asks a practical question: can wearable-derived sugar trends show meal-linked rises and subsequent falls in everyday life?</p>
+        <h2 className="rhythm-heading max-w-3xl">One Agatsa Algorithm.<br />Two Wearable Platforms.</h2>
+        <p className="rhythm-copy mt-5 max-w-3xl">We built NERA AI, brought it into Agatsa One, and connected the experience to Apple Watch and EasyTouch Rhythm Band. Our research asks a practical question: can wearable-derived sugar trends show meal-linked rises and subsequent falls in everyday life?</p>
         <div className="mt-8 grid gap-6 border-y border-border py-7 md:grid-cols-3">
-          {[{ icon: BrainCircuit, title: "NERA AI", copy: "Agatsa’s proprietary algorithm interprets wearable signals as inferred metabolic trends." }, { icon: Smartphone, title: "Agatsa One", copy: "The app brings those trends together with time-stamped meal logs and meal context." }, { icon: Watch, title: "Three wearable platforms", copy: "Separate retrospective studies examined Apple Watch, Rhythm Band and Galaxy Watch records." }].map(item => <div key={item.title}><item.icon className="h-6 w-6 text-primary" /><h3 className="mt-4 text-lg font-semibold">{item.title}</h3><p className="mt-3 text-sm leading-relaxed">{item.copy}</p></div>)}
+          {[{ icon: BrainCircuit, title: "NERA AI", copy: "Agatsa’s proprietary algorithm interprets wearable signals as inferred metabolic trends." }, { icon: Smartphone, title: "Agatsa One", copy: "The app brings those trends together with time-stamped meal logs and meal context." }, { icon: Watch, title: "Two wearable platforms", copy: "Separate retrospective studies examined Apple Watch and Rhythm Band records." }].map(item => <div key={item.title}><item.icon className="h-6 w-6 text-primary" /><h3 className="mt-4 text-lg font-semibold">{item.title}</h3><p className="mt-3 text-sm leading-relaxed">{item.copy}</p></div>)}
         </div>
         <div className="mt-8 flex flex-wrap gap-x-12 gap-y-6">
-          <div><p className="text-3xl font-semibold">105,408</p><p className="mt-2 text-sm">stored wearable observations</p></div>
-          <div><p className="text-3xl font-semibold">7,428</p><p className="mt-2 text-sm">logged meals across the cohorts</p></div>
+          <div><p className="text-3xl font-semibold">102,469</p><p className="mt-2 text-sm">stored wearable observations</p></div>
+          <div><p className="text-3xl font-semibold">6,591</p><p className="mt-2 text-sm">logged meals across the cohorts</p></div>
           <div><p className="text-3xl font-semibold">~3 months</p><p className="mt-2 text-sm">late May to early September 2026</p></div>
         </div>
-        <p className="mt-5 text-sm leading-relaxed">These are three retrospective feasibility studies of ordinary app use, not a three-month trial for every participant. Cohorts may overlap; user counts are not combined into a unique participant total.</p>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <p className="mt-5 text-sm leading-relaxed">These are retrospective feasibility studies of ordinary app use, not a three-month trial for every participant. Cohorts may overlap; user counts are not combined into a unique participant total.</p>
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
           {RHYTHM_COHORTS.map(cohort => <article key={cohort.device} className="flex flex-col rounded-lg border border-border bg-card p-6">
             <h3 className="text-base font-semibold">{cohort.device}</h3>
             <p className="mt-2 text-xs">{cohort.period}</p>
@@ -47,15 +47,15 @@ export function RhythmResearch() {
               <div><dt className="text-sm">Downward trend after a peak</dt><dd className="mt-2 text-2xl font-semibold">{cohort.recovery.percent.toFixed(1)}%</dd><dd className="mt-1 text-xs">{cohort.recovery.positive.toLocaleString("en-IN")} / {cohort.recovery.total.toLocaleString("en-IN")} evaluable post-peak trajectories</dd></div>
             </dl>
             <p className="mt-5 text-sm leading-relaxed">{cohort.interpretation}</p>
-            <p className="mt-auto pt-5 text-xs leading-relaxed">Source: {cohort.source}. Percentages describe observed events, not measurement accuracy.</p>
+            <p className="mt-auto pt-5 text-xs leading-relaxed">Source: {cohort.source}. Percentages describe observed events.</p>
           </article>)}
         </div>
         <RhythmCohortChart />
         <div className="mt-8 grid gap-8 border-t border-border pt-8 md:grid-cols-2">
-          <div><h3 className="text-xl font-semibold">Why this matters</h3><p className="mt-4 text-sm leading-relaxed">The innovation is a way to evaluate inferred metabolic trends using real-world events: meal timing, movement in both directions, and decline after a peak. All three datasets contained rises and falls. Apple Watch and Rhythm Band showed more consistent meal-linked results; Galaxy Watch highlighted the importance of timing and data density.</p></div>
-          <div><h3 className="text-xl font-semibold">What meal content tells us</h3><p className="mt-4 text-sm leading-relaxed">Meal descriptions and estimated nutrients were included, but carbohydrate content had weak or no linear association with trend size (Apple Watch r = −0.18; Rhythm Band r = 0.03; Galaxy Watch r ≈ 0). These studies do not establish that the algorithm can predict an exact response to a particular food or portion.</p></div>
+          <div><h3 className="text-xl font-semibold">Why this matters</h3><p className="mt-4 text-sm leading-relaxed">The innovation is a way to evaluate inferred metabolic trends using real-world events: meal timing, movement in both directions, and decline after a peak. Both datasets showed consistent meal-linked rises and post-peak falls.</p></div>
+          <div><h3 className="text-xl font-semibold">What meal content tells us</h3><p className="mt-4 text-sm leading-relaxed">Meal descriptions and estimated nutrients were included, but carbohydrate content had weak or no linear association with trend size (Apple Watch r = −0.18; Rhythm Band r = 0.03). These studies do not establish that the algorithm can predict an exact response to a particular food or portion.</p></div>
         </div>
-        <div className="mt-8 border-t border-border pt-6 text-sm leading-relaxed"><h3 className="font-semibold">Evidence stage: retrospective feasibility</h3><p className="mt-3">Results are reported in three supplied Agatsa manuscripts; peer-reviewed publication has not been established. Wearable outputs were not paired with synchronised CGM or meter readings, so these findings do not establish sugar-measurement accuracy or CGM equivalence. Separate manual/photo reference readings provided physiological context only. Meal timing, estimated nutrients and roughly 30-minute sampling limit interpretation; prospective paired-reference testing is the next validation step.</p></div>
+        <div className="mt-8 border-t border-border pt-6 text-sm leading-relaxed"><h3 className="font-semibold">Evidence stage: retrospective feasibility</h3><p className="mt-3">Results are reported in Agatsa manuscripts; peer-reviewed publication has not been established. Meal timing, estimated nutrients and roughly 30-minute sampling limit interpretation; prospective paired-reference testing is the next step.</p></div>
       </div>
     </section>
   </>;

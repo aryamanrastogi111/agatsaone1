@@ -29,15 +29,4 @@ export const RHYTHM_COHORTS = [
     carbohydrateCorrelation: 0.03,
     interpretation: "A majority of evaluable meals showed an upward trend in both alignments: 66.2% initially and 63.5% after a 30-minute shift.",
   },
-  {
-    device: "Samsung Galaxy Watch", users: 28, observations: 2939, meals: 837,
-    period: "2 June – 4 September 2026",
-    source: "Galaxy Watch manuscript · Structured Abstract, Results and Discussion",
-    mealRise: { positive: 36, total: 67, percent: 53.7 },
-    recovery: { positive: 39, total: 61, percent: 63.9 },
-    shiftedMealRise: { positive: 23, total: 77, percent: 29.9 },
-    transitions: { rise: 614, fall: 628, stable: 1282, total: 2524 },
-    carbohydrateCorrelation: 0,
-    interpretation: "This smaller dataset was timing-sensitive: meal-rise events changed from 53.7% to 29.9% after a 30-minute shift.",
-  },
 ] as const;
