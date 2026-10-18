@@ -88,7 +88,6 @@ export function ProductReviewsSection({ reviews, heading = "What users are sayin
           <div className="flex items-center justify-center gap-2 mt-4">
             <StarRow rating={Math.round(Number(avgRating))} />
             <span className="text-lg font-bold text-foreground">{avgRating}</span>
-            <span className="text-sm text-muted-foreground">based on {totalCount} {sampleReviews ? "sample reviews" : "reviews"}</span>
           </div>
         </motion.div>
 
