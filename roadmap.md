@@ -1,5 +1,6 @@
 # Rhythm Band enhancement
 
+- [ ] Discuss and approve a fixed default hero with a separate personalized goal card immediately below the selector; implementation awaits user approval.
 - [x] Audit the existing Rhythm page, commerce, tracking, product claims and research sources.
 - [x] Prepare an implementation plan for approval; keep production unchanged.
 - [x] Implement campaign heroes, goal selector and approved ecommerce refinements.
