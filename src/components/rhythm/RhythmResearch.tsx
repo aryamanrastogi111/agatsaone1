@@ -55,7 +55,6 @@ export function RhythmResearch() {
           <div><h3 className="text-xl font-semibold">Why this matters</h3><p className="mt-4 text-sm leading-relaxed">The innovation is a way to evaluate inferred metabolic trends using real-world events: meal timing, movement in both directions, and decline after a peak. Both datasets showed consistent meal-linked rises and post-peak falls.</p></div>
           <div><h3 className="text-xl font-semibold">What meal content tells us</h3><p className="mt-4 text-sm leading-relaxed">Meal descriptions and estimated nutrients were included, but carbohydrate content had weak or no linear association with trend size (Apple Watch r = −0.18; Rhythm Band r = 0.03). These studies do not establish that the algorithm can predict an exact response to a particular food or portion.</p></div>
         </div>
-        <div className="mt-8 border-t border-border pt-6 text-sm leading-relaxed"><h3 className="font-semibold">Evidence stage: retrospective feasibility</h3><p className="mt-3">Results are reported in Agatsa manuscripts; peer-reviewed publication has not been established. Meal timing, estimated nutrients and roughly 30-minute sampling limit interpretation; prospective paired-reference testing is the next step.</p></div>
       </div>
     </section>
   </>;

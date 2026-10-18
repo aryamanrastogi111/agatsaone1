@@ -17,6 +17,5 @@ export function RhythmCohortChart() {
         </BarChart>
       </ResponsiveContainer>
     </div>
-    <p className="mt-4 text-xs leading-relaxed">Source: the supplied Agatsa wearable manuscripts, Structured Abstract and Results. Meal-rise and recovery use different event sets; denominators are shown in the device cards above. This is not a head-to-head device comparison or a measured sugar curve.</p>
   </figure>;
 }
