@@ -157,7 +157,6 @@ export default function RhythmBandPro() {
     <section className="rhythm-section bg-muted"><div className="rhythm-container">
       <p className="rhythm-eyebrow">One meal isn't the whole story</p><h2 className="rhythm-heading">The same food.<br /><span className="text-muted-foreground">Different bodies.</span></h2><p className="rhythm-copy mt-5 max-w-2xl">Nobody responds to food in exactly the same way. Your portions, daily movement and sleep are part of the picture.</p>
       <div className="mt-8 grid gap-6 md:grid-cols-3">{[{name:"Rohan, 41", img:portrait1, note:"A desk day and a late lunch."},{name:"Aditi, 28",img:portrait2,note:"The same meal after an active morning."},{name:"Mr. Menon, 65",img:portrait3,note:"A smaller portion and a walk afterwards."}].map(person => <figure key={person.name} className="rhythm-food-card"><img src={person.img} alt={`${person.name} — illustrative portrait`} loading="lazy" width={1024} height={768} className="aspect-[4/3] w-full object-cover" /><figcaption className="p-5"><h3 className="text-base">{person.name}</h3><p className="mt-1 text-sm text-muted-foreground">{person.note}</p></figcaption></figure>)}</div>
-      <p className="mt-6 text-xs text-muted-foreground">AI-generated illustrative lifestyle photographs and routines — not real customers, measured food responses or testimonials.</p>
     </div></section>
     <RhythmResearch />
     <section className="rhythm-section bg-muted"><div className="rhythm-container">

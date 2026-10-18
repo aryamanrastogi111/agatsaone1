@@ -22,7 +22,6 @@ export function RhythmResearch() {
             <Button variant="link" asChild className="mt-auto justify-start px-0 pt-6 text-primary"><a href={paper.url} target="_blank" rel="noopener noreferrer">{paper.author} <ArrowUpRight className="ml-2 h-4 w-4" /></a></Button>
           </article>)}
         </div>
-        <p className="mt-6 max-w-3xl text-sm leading-relaxed text-muted-foreground">These papers explain general scientific principles. None tested or endorsed EasyTouch Rhythm Band. CGM findings do not validate Rhythm Band's inferred sugar-response trends.</p>
       </div>
     </section>
     <section className="rhythm-section" id="agatsa-research">
