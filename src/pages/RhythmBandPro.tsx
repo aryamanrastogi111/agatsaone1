@@ -31,7 +31,7 @@ import portrait3 from "@/assets/rhythm-real-menon.jpg";
 import appWearable from "@/assets/rhythm-app-wearable.png.asset.json";
 import appMeals from "@/assets/rhythm-meals-compatible.jpg.asset.json";
 import appMetabolic from "@/assets/rhythm-metabolic-compatible.jpg.asset.json";
-import appSpike from "@/assets/rhythm-app-spike-detection.png.asset.json";
+import appMealResponse from "@/assets/rhythm-app-meal-response.png.asset.json";
 import spikeDemo from "@/assets/rhythm-spike-demo.mp4.asset.json";
 import bandOlive from "@/assets/bands/band-olive.png.asset.json";
 import bandOliveHero from "@/assets/bands/band-olive-hero.png.asset.json";
@@ -143,14 +143,7 @@ export default function RhythmBandPro() {
         <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-muted-foreground">Food-response patterns are inferred wellness trends, not direct sugar measurements or proof that a food causes a measured spike.</p>
       </div>
     </section>
-    <section className="border-t border-border bg-muted py-7">
-      <div className="rhythm-container"><h2 className="text-lg font-semibold">What would you like to understand better?</h2>
-        <div className="mt-4 grid gap-2 md:grid-cols-3">{(Object.keys(RHYTHM_CAMPAIGNS) as RhythmAngle[]).map(goal => <Button key={goal} variant={angle === goal ? "default" : "outline"} aria-pressed={angle === goal} onClick={() => selectGoal(goal)} className="h-auto min-h-12 justify-between whitespace-normal px-4 py-3 text-left">{RHYTHM_CAMPAIGNS[goal].goal}<ArrowRight className="ml-2 h-4 w-4 shrink-0" /></Button>)}</div>
-        <p className="mt-3 min-h-5 text-sm text-muted-foreground" aria-live="polite">{campaign?.explanation || "Food, movement and sleep. Start with what matters to you."}</p>
-        <div aria-live="polite" aria-atomic="true">{angle && <RhythmGoalCard angle={angle} />}</div>
-      </div>
-    </section>
-    <section className="rhythm-section bg-muted"><div className="rhythm-container grid items-center gap-10 md:grid-cols-2">
+    <section className="rhythm-section"><div className="rhythm-container grid items-center gap-10 md:grid-cols-2">
       <div>
         <p className="rhythm-eyebrow">Automatic spike detection</p>
         <h2 className="rhythm-heading">Your spikes, detected on their own.</h2>
@@ -158,10 +151,17 @@ export default function RhythmBandPro() {
         <p className="rhythm-copy mt-4">You simply log what you ate. Agatsa One recognizes the food and files it into your food profile — roti, rice, chai, a restaurant meal — and links the detected response to that meal, so you can see how your body handled it.</p>
       </div>
       <figure className="rhythm-phone-stage">
-        <img src={appSpike.url} alt="Agatsa One screen showing NERA checking the body's response to roti after a detected meal spike" loading="lazy" className="mx-auto h-[520px] w-full max-w-xs object-contain" />
+        <img src={appMealResponse.url} alt="Agatsa One screen showing NERA watching the response to roti and paneer curry, measured from the Rhythm Band" loading="lazy" className="mx-auto h-[520px] w-full max-w-xs object-contain" />
         <figcaption className="mt-4 text-center text-xs text-muted-foreground">Actual Agatsa One screen · NERA watching a meal response</figcaption>
       </figure>
     </div></section>
+    <section className="border-t border-border bg-muted py-7">
+      <div className="rhythm-container"><h2 className="text-lg font-semibold">What would you like to understand better?</h2>
+        <div className="mt-4 grid gap-2 md:grid-cols-3">{(Object.keys(RHYTHM_CAMPAIGNS) as RhythmAngle[]).map(goal => <Button key={goal} variant={angle === goal ? "default" : "outline"} aria-pressed={angle === goal} onClick={() => selectGoal(goal)} className="h-auto min-h-12 justify-between whitespace-normal px-4 py-3 text-left">{RHYTHM_CAMPAIGNS[goal].goal}<ArrowRight className="ml-2 h-4 w-4 shrink-0" /></Button>)}</div>
+        <p className="mt-3 min-h-5 text-sm text-muted-foreground" aria-live="polite">{campaign?.explanation || "Food, movement and sleep. Start with what matters to you."}</p>
+        <div aria-live="polite" aria-atomic="true">{angle && <RhythmGoalCard angle={angle} />}</div>
+      </div>
+    </section>
     <RhythmScrollNav />
     <section id="discover" className="rhythm-section"><div className="rhythm-container">
       <p className="rhythm-eyebrow">Everyday food. Personal patterns.</p><h2 className="rhythm-heading">Which food fits your day?</h2><p className="rhythm-copy mt-5 max-w-2xl">Rice, mango, pizza, chai, banana or ice cream. The food is familiar. Portions, timing, movement and your own routine make the context personal.</p>
