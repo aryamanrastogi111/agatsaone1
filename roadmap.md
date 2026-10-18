@@ -1,6 +1,6 @@
 # Rhythm Band enhancement
 
-- [ ] Replace repeated upper goal-card images with three distinct, relevant lifestyle scenes and check all selections.
+- [x] Replace repeated upper goal-card images with three distinct, relevant lifestyle scenes and check all selections.
 
 - [x] Discuss, approve and implement a fixed hero with a separate personalized goal card immediately below the selector.
 - [x] Independently check goal-specific papers and include simple sourced findings in each card; verify all three selections on desktop/mobile.
