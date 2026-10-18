@@ -130,6 +130,11 @@
 .rhythm-food-card { border:1px solid hsl(var(--border)); border-radius:8px; overflow:hidden; background:hsl(var(--card)); box-shadow:var(--rhythm-card-shadow); }
 .rhythm-food-card img { transition:transform .5s ease; }
 .rhythm-food-card:hover img { transform:scale(1.05); }
+.rhythm-goal-card { box-shadow:var(--rhythm-card-shadow); }
+@media(prefers-reduced-motion:no-preference) {
+ .rhythm-goal-card { animation:rhythm-goal-enter .3s ease both; }
+ @keyframes rhythm-goal-enter { from { transform:translateY(8px); } to { transform:translateY(0); } }
+}
 .rhythm-reveal { opacity:1; transform:translateY(24px); transition:transform .65s ease; }
 .rhythm-revealed { opacity:1; transform:translateY(0); }
 .rhythm-phone-stage { background:hsl(var(--muted)); border:1px solid hsl(var(--border)); border-radius:8px; padding:28px; box-shadow:var(--rhythm-card-shadow); }
