@@ -29,7 +29,6 @@ export function RhythmGoalCard({ angle }: { angle: RhythmAngle }) {
       <p className="mt-3 text-base font-semibold">{goal.science.summary}</p>
       <p className="mt-2 text-sm leading-relaxed">{goal.science.context}</p>
       <a href={goal.science.url} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary underline underline-offset-4">{goal.science.citation}<ArrowRight className="h-3 w-3" /></a>
-      <p className="mt-3 text-xs leading-relaxed">{goal.science.limit}</p>
     </div>
   </article>;
 }
