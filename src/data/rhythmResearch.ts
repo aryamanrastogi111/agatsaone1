@@ -7,7 +7,37 @@ export const RHYTHM_PAPERS = [
 ] as const;
 
 export const RHYTHM_COHORTS = [
-  { device: "Apple Watch", users: 145, observations: 19379 },
-  { device: "EasyTouch Rhythm Band", users: 128, observations: 83090 },
-  { device: "Samsung Galaxy Watch", users: 28, observations: 2939 },
+  {
+    device: "Apple Watch", users: 145, observations: 19379, meals: 3401,
+    period: "30 May – 3 September 2026",
+    source: "Apple Watch manuscript · Structured Abstract, Results and Discussion",
+    mealRise: { positive: 206, total: 333, percent: 61.9 },
+    recovery: { positive: 272, total: 298, percent: 91.3 },
+    shiftedMealRise: { positive: 200, total: 323, percent: 61.9 },
+    transitions: { rise: 5747, fall: 5715, stable: 5694, total: 17156 },
+    carbohydrateCorrelation: -0.18,
+    interpretation: "The meal-rise proportion stayed at 61.9% when alignment was shifted by 30 minutes.",
+  },
+  {
+    device: "EasyTouch Rhythm Band", users: 128, observations: 83090, meals: 3190,
+    period: "31 May – 4 September 2026",
+    source: "Rhythm Band manuscript · Structured Abstract, Results and Discussion",
+    mealRise: { positive: 1395, total: 2108, percent: 66.2 },
+    recovery: { positive: 1596, total: 2046, percent: 78.0 },
+    shiftedMealRise: { positive: 1349, total: 2124, percent: 63.5 },
+    transitions: { rise: 23539, fall: 23864, stable: 31072, total: 78475 },
+    carbohydrateCorrelation: 0.03,
+    interpretation: "A majority of evaluable meals showed an upward trend in both alignments: 66.2% initially and 63.5% after a 30-minute shift.",
+  },
+  {
+    device: "Samsung Galaxy Watch", users: 28, observations: 2939, meals: 837,
+    period: "2 June – 4 September 2026",
+    source: "Galaxy Watch manuscript · Structured Abstract, Results and Discussion",
+    mealRise: { positive: 36, total: 67, percent: 53.7 },
+    recovery: { positive: 39, total: 61, percent: 63.9 },
+    shiftedMealRise: { positive: 23, total: 77, percent: 29.9 },
+    transitions: { rise: 614, fall: 628, stable: 1282, total: 2524 },
+    carbohydrateCorrelation: 0,
+    interpretation: "This smaller dataset was timing-sensitive: meal-rise events changed from 53.7% to 29.9% after a 30-minute shift.",
+  },
 ] as const;
