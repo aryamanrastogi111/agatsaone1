@@ -19,3 +19,4 @@
 - [ ] Verify original video's playback; local browser received the source but could not load its metadata.
 - [x] Remove the "Illustrative sample — not a verified purchase" label from all review cards; keep "✓ Verified Purchase" on verified reviews only.
 - [x] Remove the three goal-card science disclaimer notes; each card ends with its study citation link.
+- [x] Remove the CDSCO Class B Medical Device line from the shared footer; shipping notes retained and verified on /rhythm.
