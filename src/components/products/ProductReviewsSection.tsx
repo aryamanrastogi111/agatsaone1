@@ -47,9 +47,11 @@ const ReviewCard = ({ review, sample = false }: { review: ProductReview; sample?
       <StarRow rating={review.rating} />
       <p className="text-sm font-medium text-foreground">{review.title}</p>
       <p className="text-sm text-muted-foreground leading-relaxed">{review.body}</p>
-      <div className="flex items-center gap-1 mt-1">
-        <span className="text-[10px] text-primary font-medium">{sample ? "Illustrative sample — not a verified purchase" : "✓ Verified Purchase"}</span>
-      </div>
+      {!sample && (
+        <div className="flex items-center gap-1 mt-1">
+          <span className="text-[10px] text-primary font-medium">✓ Verified Purchase</span>
+        </div>
+      )}
     </div>
   );
 };
