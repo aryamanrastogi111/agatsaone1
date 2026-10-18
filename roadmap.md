@@ -20,3 +20,4 @@
 - [x] Remove the "Illustrative sample — not a verified purchase" label from all review cards; keep "✓ Verified Purchase" on verified reviews only.
 - [x] Remove the three goal-card science disclaimer notes; each card ends with its study citation link.
 - [x] Remove the CDSCO Class B Medical Device line from the shared footer; shipping notes retained and verified on /rhythm.
+- [x] Move the automatic spike-detection card directly below the hero, above the goal selector, and show the supplied Agatsa One meal-response screenshot in it; section order and image rendering verified.
