@@ -2,9 +2,9 @@ import { ArrowRight, Check, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RHYTHM_GOALS } from "@/data/rhythmGoals";
 import type { RhythmAngle } from "@/lib/rhythmCampaign";
-import weightPhoto from "@/assets/rhythm-real-aditi.jpg";
-import foodPhoto from "@/assets/rhythm-food-rice.jpg";
-import habitsPhoto from "@/assets/rhythm-real-menon.jpg";
+import weightPhoto from "@/assets/rhythm-goal-weight-walk.jpg";
+import foodPhoto from "@/assets/rhythm-goal-food-thali.jpg";
+import habitsPhoto from "@/assets/rhythm-goal-sugar-aftermeal.jpg";
 
 const PHOTOS = { weight: weightPhoto, food: foodPhoto, sugar: habitsPhoto };
 
@@ -13,7 +13,7 @@ export function RhythmGoalCard({ angle }: { angle: RhythmAngle }) {
   return <article key={angle} className="rhythm-goal-card mt-6 overflow-hidden rounded-lg border border-border bg-card" aria-labelledby={`goal-${angle}`}>
     <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
       <figure className="relative min-w-0">
-        <img src={PHOTOS[angle]} alt={goal.photoAlt} className="h-56 w-full object-cover md:h-full md:max-h-[560px]" />
+        <img src={PHOTOS[angle]} alt={goal.photoAlt} loading="lazy" width={1024} height={1280} className="h-80 w-full object-cover md:h-full md:max-h-[560px]" />
         <figcaption className="absolute bottom-0 w-full bg-card/95 px-4 py-2 text-xs">Illustrative AI-generated photograph · not a customer outcome</figcaption>
       </figure>
       <div className="min-w-0 p-6 md:p-8">
