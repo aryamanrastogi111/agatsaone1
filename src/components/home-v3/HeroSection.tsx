@@ -45,9 +45,6 @@ export function HeroSection() {
           <motion.div {...fade(4)} className="mt-12 max-w-md">
             <EcgLine className="h-10 w-full" />
           </motion.div>
-          <motion.p {...fade(5)} className="mt-6 text-xs text-muted-foreground/70 max-w-md">
-            For wellness purposes only — not intended for clinical or diagnostic use.
-          </motion.p>
         </div>
 
         <motion.div {...fade(2)} className="relative mx-auto w-full max-w-[560px] aspect-[1/1]">

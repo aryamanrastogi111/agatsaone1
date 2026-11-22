@@ -7,7 +7,7 @@ import easytouchImg from "@/assets/easytouch-meal-lifestyle.webp";
 import rhythmImg from "@/assets/luxe-hero-night.jpg";
 import { Reveal } from "./Reveal";
 
-const items: { eyebrow: string; name: string; sku: DeviceSku; title: string; body: string; trial: string; link: string; image: string }[] = [
+const items: { eyebrow: string; name: string; sku: DeviceSku; title: string; body: string; trial: string; link: string; image: string; wellnessOnly?: boolean }[] = [
   {
     eyebrow: "Heart",
     name: "SanketLife 2.0",
@@ -27,6 +27,7 @@ const items: { eyebrow: string; name: string; sku: DeviceSku; title: string; bod
     trial: "Includes 7 days of NERA AI",
     link: "/devices/easytouch-wellness",
     image: easytouchImg,
+    wellnessOnly: true,
   },
   {
     eyebrow: "Wearable",
@@ -37,6 +38,7 @@ const items: { eyebrow: string; name: string; sku: DeviceSku; title: string; bod
     trial: "Includes 7 days of NERA AI",
     link: "/rhythm",
     image: rhythmImg,
+    wellnessOnly: true,
   },
 ];
 
@@ -63,6 +65,9 @@ export function ProductEditorialSection() {
                 <h3 className="font-display text-3xl md:text-4xl font-bold leading-tight">{it.title}</h3>
                 <p className="mt-5 text-muted-foreground text-lg leading-relaxed">{it.body}</p>
                 <p className="mt-4 text-sm font-medium text-primary-glow">{it.trial}</p>
+                {it.wellnessOnly && (
+                  <p className="mt-3 text-xs text-muted-foreground/70">For wellness purposes only — not intended for clinical or diagnostic use.</p>
+                )}
                 <div className="mt-8 flex flex-wrap items-center gap-5">
                   {loading ? <span className="h-7 w-24 bg-muted animate-pulse rounded" /> : <StrikePrice sku={it.sku} price={prices[it.sku]} size="sm" showLabel={false} />}
                   <Link to={it.link} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground">
