@@ -2,6 +2,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { SiteLayout } from "@/components/SiteLayout";
 import {
   HeroSection,
+  AudienceSection,
   ProductEditorialSection,
   NeraConnectedSection,
   EvidenceSection,
@@ -15,6 +16,7 @@ export default function HomePage() {
   return (
     <SiteLayout theme="luxe">
       <HeroSection />
+      <AudienceSection />
       <ProductEditorialSection />
       <NeraConnectedSection />
       <EvidenceSection />
