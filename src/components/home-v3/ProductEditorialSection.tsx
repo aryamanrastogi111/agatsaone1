@@ -3,8 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { StrikePrice } from "@/components/StrikePrice";
 import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
 import sanketlifeImg from "@/assets/sanketlife-hand-new.webp";
-import easytouchImg from "@/assets/easytouch-meal-lifestyle.webp";
-import rhythmImg from "@/assets/luxe-hero-night.jpg";
+import easytouchImg from "@/assets/easytouch-meal-bg.webp";
+import rhythmImg from "@/assets/rhythm-band-lifestyle.png.asset.json";
 import { Reveal } from "./Reveal";
 
 const items: { eyebrow: string; name: string; sku: DeviceSku; title: string; body: string; trial: string; link: string; image: string; wellnessOnly?: boolean }[] = [
@@ -37,7 +37,7 @@ const items: { eyebrow: string; name: string; sku: DeviceSku; title: string; bod
     body: "Wear it through the day. Rhythm Band notices post-meal spikes automatically — you log the food and it is filed into your personal food profile.",
     trial: "Includes 7 days of NERA AI",
     link: "/rhythm",
-    image: rhythmImg,
+    image: rhythmImg.url,
     wellnessOnly: true,
   },
 ];
