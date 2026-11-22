@@ -5,11 +5,12 @@ import { TodayOnlyOfferBar, TodayOnlyOfferPopup } from "@/components/sale";
 
 interface SiteLayoutProps {
   children: React.ReactNode;
+  theme?: "default" | "luxe";
 }
 
-export function SiteLayout({ children }: SiteLayoutProps) {
+export function SiteLayout({ children, theme = "default" }: SiteLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className={`flex min-h-screen flex-col ${theme === "luxe" ? "luxe-theme" : ""}`}>
       <TodayOnlyOfferBar />
       <Nav />
       <main className="flex-1 pt-[60px] md:pt-[68px]">{children}</main>

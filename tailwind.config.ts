@@ -14,6 +14,8 @@ export default {
     },
     extend: {
       colors: {
+        signal: "hsl(var(--signal, 188 94% 48%))",
+        "primary-glow": "hsl(var(--primary-glow, 270 95% 75%))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

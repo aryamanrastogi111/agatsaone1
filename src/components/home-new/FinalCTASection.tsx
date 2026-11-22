@@ -29,7 +29,7 @@ export function FinalCTASection() {
               href={iosUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-white text-foreground rounded-full px-8 py-4 font-semibold hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-3 bg-primary text-primary-foreground rounded-full px-8 py-4 shadow-[0_0_40px_-8px_hsl(var(--primary))] font-semibold hover:opacity-90 transition-opacity"
             >
               <Apple className="h-5 w-5" />
               Download for iOS

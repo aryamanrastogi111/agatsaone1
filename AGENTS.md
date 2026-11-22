@@ -6,4 +6,4 @@
 - Keep published nutrition context and Agatsa research separate in the Rhythm research module; store device-specific manuscript counts, event denominators and timing sensitivity in the research data module so charts and summaries share sourced values and validation limits. Do not expose submission drafts or proprietary materials as downloads without explicit approval.
 - Scope Rhythm editorial colors in `.rhythm-page` CSS variables so the shared Agatsa design is unchanged.
 - Use supplied study counts for research graphs and original app recordings/screens for trend visuals; never invent customer measurement curves.
-- Global marketing design tokens live in `src/index.css` ("clinical calm": warm off-white, near-black ink, Agatsa purple for actions, deep navy for dark/B2B sections); headlines use Manrope via the `font-display` utility, body uses Inter — hardcoded colors bypass theming.
+- Global marketing design tokens live in `src/index.css`; the dark luxury theme is scoped via `.luxe-theme` (SiteLayout `theme="luxe"`, homepage first) so unconverted pages with fixed colors keep working. Hardcoded colors bypass theming.

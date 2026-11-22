@@ -316,63 +316,6 @@ export function NeraAISection() {
         </div>
       </div>
 
-      {/* ─── BLOCK 5 — BODY + WEIGHT ─── */}
-      <div className="py-10 md:py-14 px-4 border-t border-white/5">
-        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-          <motion.div {...fadeUp}>
-            <Scale className="h-6 w-6 text-primary mb-3" />
-            <h3 className="text-2xl font-bold mb-2 text-white">
-              Weight is a <span className="text-white/80">number</span>.
-            </h3>
-            <p className="text-xl font-bold text-primary mb-3">Direction is insight.</p>
-            <p className="text-sm text-white/80 leading-relaxed">
-              Nera AI tracks your body composition trends — not just weight — and connects changes
-              to your cardiac and metabolic data for a complete picture.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="bg-white/10 border border-white/10 rounded-2xl p-5"
-          >
-            <p className="text-xs text-white/70 mb-3">Body Composition · 90 Days</p>
-            <div className="space-y-3">
-              {[
-                { label: "Weight", val: "72.1 kg", pct: 68, color: "bg-primary" },
-                { label: "Muscle", val: "34%", pct: 55, color: "bg-blue-500" },
-                { label: "Body Fat", val: "22%", pct: 40, color: "bg-amber-500" },
-                { label: "BMR", val: "1,640", pct: 72, color: "bg-emerald-500" },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + i * 0.1 }}
-                >
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-white/80">{item.label}</span>
-                    <span className="text-white/70 font-medium">{item.val}</span>
-                  </div>
-                  <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                    <motion.div
-                      className={`h-full ${item.color} rounded-full`}
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${item.pct}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.5 + i * 0.1 }}
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
       {/* ─── BLOCK 6 — DAILY PATTERNS ─── */}
       <div className="py-10 md:py-14 px-4 border-t border-white/5">
         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center">
