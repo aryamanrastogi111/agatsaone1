@@ -1,15 +1,12 @@
-# Premium homepage rebuild (navy / teal / mint)
+# Premium homepage rebuild (current black look)
 
-Replaces the current dark luxury homepage with the light editorial direction in your brief. Only the homepage, the shared header and the shared footer change.
+Rebuilds the homepage structure from your brief while keeping the current dark luxury look. Only the homepage, the shared header and the shared footer change.
 
 ## Look
-- Colours: deep navy #0F233D, teal #12A8A1, soft mint #DFF5F0, off-white #F7F9FB, white canvas. Scoped to the homepage theme so other pages stay as they are.
-- Manrope headings, Inter body (already loaded).
-- Generous whitespace, editorial alternating layouts, real Agatsa device photos and app screenshots already in the project.
-- Subtle motion: fade/slide section reveals, a thin animated ECG line in the hero and NERA section, gentle hover lifts. No gradients-heavy glass, no cartoons, no stock doctors.
+- Keep the current premium black look exactly as it is: same dark luxury colours, glows, fonts and styling. Only the layout and content of the sections below change.
 
 ## Sections
-1. Header: transparent over hero, turns white on scroll. Logo, Devices, NERA AI, Healthcare, Science, About, Support, plus "Shop Devices" button and cart. Mobile: full-screen menu with large tap targets and the Shop button pinned.
+1. Header: transparent over hero, turns solid black on scroll. Logo, Devices, NERA AI, Healthcare, Science, About, Support, plus "Shop Devices" button and cart. Mobile: full-screen menu with large tap targets and the Shop button pinned.
 2. Hero (full screen): "Your Health. A Bigger Picture." + supporting line, buttons Explore Devices / Partner With Us. Right side: composition of SanketLife, EasyTouch and Rhythm Band photos with a real Agatsa One screenshot. (This replaces "Leading the way in AI-powered personal health.")
 3. Editorial showcase: three large alternating image/text blocks — SanketLife, EasyTouch Wellness, Rhythm Band — each with price, trial note (14-day / 7-day Nera AI) and Buy / Learn more.
 4. "Connected by NERA AI" (dark navy): real app trend screens + three short points on how the intelligence layer works.
@@ -23,6 +20,6 @@ Replaces the current dark luxury homepage with the light editorial direction in 
 - No CDSCO/BIS, no "glucose", no Smart Scale.
 
 ## Technical
-- New components under `src/components/home-v3/`, new `theme="clinical"` scope in `src/index.css`; Home.tsx swaps to them. Old home sections kept on disk.
+- New components under `src/components/home-v3/`; reuses the existing `luxe` theme; Home.tsx swaps to them. Old home sections kept on disk.
 - Header/footer updated in shared Nav and SiteFooter (affects all pages' header/footer only).
 - Verify desktop + phone with screenshots.
