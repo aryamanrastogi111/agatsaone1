@@ -53,7 +53,7 @@ export function HeroSection() {
 
             <motion.h1
               {...stagger(1)}
-              className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-normal"
+              className="font-display text-4xl md:text-5xl lg:text-[3.75rem] font-extrabold leading-[1.06] tracking-tight"
             >
               <span className="text-foreground">Agatsa</span>
               <br />
@@ -139,17 +139,17 @@ export function HeroSection() {
             <motion.div {...stagger(5)} className="flex flex-wrap gap-3 pt-2">
               <Link
                 to="/devices"
-                className="inline-flex items-center gap-2 bg-foreground text-background rounded-md px-6 py-3 font-semibold hover:bg-foreground/90 transition-colors text-sm md:text-base"
+                className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-6 py-3 font-semibold hover:bg-foreground/90 transition-colors text-sm md:text-base"
               >
                 Explore Devices
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <a
-                href="#how-it-works"
-                className="inline-flex items-center gap-2 bg-background text-foreground border border-border rounded-md px-6 py-3 font-semibold hover:border-foreground/40 transition-colors text-sm md:text-base"
+              <Link
+                to="/partner-with-us"
+                className="inline-flex items-center gap-2 bg-background text-foreground border border-border rounded-full px-6 py-3 font-semibold hover:border-foreground/40 transition-colors text-sm md:text-base"
               >
-                See How It Works
-              </a>
+                For healthcare & partners
+              </Link>
             </motion.div>
 
             <motion.div
@@ -175,7 +175,7 @@ export function HeroSection() {
           >
             <div className="grid grid-cols-6 grid-rows-6 gap-3 md:gap-4 h-[520px] md:h-[600px]">
               {/* Phone — Nera AI insights (large, left) */}
-              <div className="col-span-3 row-span-6 relative rounded-2xl overflow-hidden bg-gradient-to-br from-muted to-background border border-border shadow-sm">
+              <div className="col-span-3 row-span-6 relative rounded-2xl overflow-hidden bg-muted border border-border shadow-sm">
                 <div className="absolute inset-0 flex items-center justify-center p-4">
                   <div className="relative w-full max-w-[220px] aspect-[9/19]">
                     <div className="absolute inset-0 rounded-[2rem] bg-[#1a1a1e] shadow-xl" />
@@ -211,7 +211,7 @@ export function HeroSection() {
               </div>
 
               {/* SanketLife ECG */}
-              <div className="col-span-3 row-span-3 relative rounded-2xl overflow-hidden border border-border bg-gradient-to-br from-muted to-background">
+              <div className="col-span-3 row-span-3 relative rounded-2xl overflow-hidden border border-border bg-muted">
                 <img
                   src={sanketDevice}
                   alt="SanketLife pocket ECG device"
@@ -231,7 +231,7 @@ export function HeroSection() {
               </div>
 
               {/* EasyTouch Wellness */}
-              <div className="col-span-2 row-span-3 relative rounded-2xl overflow-hidden border border-border bg-gradient-to-br from-muted to-background">
+              <div className="col-span-2 row-span-3 relative rounded-2xl overflow-hidden border border-border bg-muted">
                 <img
                   src={easytouchDevice}
                   alt="EasyTouch Wellness device"
@@ -246,7 +246,7 @@ export function HeroSection() {
               </div>
 
               {/* Zlu sleep aid */}
-              <div className="col-span-1 row-span-3 relative rounded-2xl overflow-hidden border border-border bg-gradient-to-br from-muted to-background">
+              <div className="col-span-1 row-span-3 relative rounded-2xl overflow-hidden border border-border bg-muted">
                 <img
                   src={zluDevice}
                   alt="Zlu sleep aid device"

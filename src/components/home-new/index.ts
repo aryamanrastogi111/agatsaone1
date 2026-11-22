@@ -11,3 +11,8 @@ export { ProvidersSection } from "./ProvidersSection";
 export { TestimonialsSection } from "./TestimonialsSection";
 export { FinalCTASection } from "./FinalCTASection";
 export { HeartGuardTeaserSection } from "./HeartGuardTeaserSection";
+export { AudienceSplitSection } from "./AudienceSplitSection";
+export { ProofStripSection } from "./ProofStripSection";
+export { FeaturedSpotlightSection } from "./FeaturedSpotlightSection";
+export { B2BBandSection } from "./B2BBandSection";
+export { JournalSection } from "./JournalSection";

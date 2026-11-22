@@ -4,28 +4,28 @@
 
 @layer base {
   :root {
-    /* Agatsa One Design System */
-    --background: 0 0% 100%;
-    --foreground: 240 33% 14%;          /* #1A1A2E */
+    /* Agatsa Design System — "Clinical calm" */
+    --background: 40 30% 98%;           /* warm off-white #FAF8F5 */
+    --foreground: 240 15% 12%;          /* near-black ink */
 
     --card: 0 0% 100%;
-    --card-foreground: 240 33% 14%;
+    --card-foreground: 240 15% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 33% 14%;
+    --popover-foreground: 240 15% 12%;
 
-    /* Primary Purple #7C4DFF */
+    /* Primary Agatsa Purple #7C4DFF — actions only */
     --primary: 256 100% 65%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary Blue #1A73E8 */
-    --secondary: 217 82% 51%;
+    /* Deep navy — B2B / dark sections */
+    --secondary: 222 45% 16%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 264 100% 98%;             /* #F8F4FF */
-    --muted-foreground: 237 18% 35%;   /* #4A4A68 */
+    --muted: 40 18% 95%;               /* warm neutral surface */
+    --muted-foreground: 240 6% 34%;    /* AA-readable warm grey */
 
-    --accent: 264 100% 98%;
+    --accent: 256 60% 96%;
     --accent-foreground: 256 100% 65%;
 
     --destructive: 0 100% 64%;         /* #FF4B4B */
@@ -34,15 +34,15 @@
     --success: 152 100% 39%;           /* #00C853 */
     --warning: 26 100% 50%;            /* #FF6D00 */
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
+    --border: 30 12% 88%;
+    --input: 30 12% 88%;
     --ring: 256 100% 65%;
 
     --radius: 0.75rem;
 
     /* Custom tokens */
     --purple-shadow: 0 4px 24px rgba(124,77,255,0.12);
-    --dark-bg: 240 33% 14%;           /* #1A1A2E */
+    --dark-bg: 222 45% 16%;           /* deep navy, matches secondary */
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 33% 14%;
@@ -80,6 +80,23 @@
 }
 
 @layer components {
+  /* Shared redesign primitives */
+  .section-shell {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-primary;
+  }
+
+  .section-title {
+    @apply font-display font-bold text-foreground tracking-tight;
+  }
+
+  .quiet-card {
+    @apply bg-card border border-border rounded-2xl transition-shadow duration-300 hover:shadow-lg;
+  }
+
   .hover-lift {
     @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg;
   }

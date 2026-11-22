@@ -68,6 +68,7 @@ export default {
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Manrope", "Inter", "system-ui", "sans-serif"],
       },
       boxShadow: {
         purple: "0 4px 24px rgba(124,77,255,0.12)",

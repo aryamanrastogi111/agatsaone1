@@ -4,14 +4,15 @@ import { ArrowRight } from "lucide-react";
 import { StockUrgencyBar } from "@/components/shop/StockUrgencyBar";
 import { StrikePrice } from "@/components/StrikePrice";
 import { shipDateLabel } from "@/lib/shipDate";
-import { usePricing } from "@/hooks/useDevicePricing";
+import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
 import sanketlifeImg from "@/assets/sanketlife-hero-new.webp";
 import easytouchImg from "@/assets/easytouch-wellness-device.webp";
+import rhythmImg from "@/assets/easytouch-rhythm-band.webp";
 import zluImg from "@/assets/zlu-device-new.webp";
 
 interface DeviceDef {
   name: string;
-  sku?: "ecg_bundle" | "wellness_sub" | "multivital";
+  sku?: DeviceSku;
   badge: string | null;
   tagline: string;
   stat: string;
@@ -22,7 +23,7 @@ interface DeviceDef {
 
 const deviceDefs: DeviceDef[] = [
   {
-    name: "SanketLife ECG",
+    name: "SanketLife 2.0",
     sku: "ecg_bundle",
     badge: "Clinically validated",
     tagline: "12-lead hospital-grade ECG in your pocket",
@@ -30,14 +31,6 @@ const deviceDefs: DeviceDef[] = [
     link: "/devices/sanketlife-ecg",
     slug: "sanketlife",
     image: sanketlifeImg,
-  },
-  {
-    name: "MultiVital",
-    badge: "All-in-one",
-    tagline: "Everyday vital-sign monitoring in one device",
-    stat: "Multiple vitals, one reading",
-    link: "/devices",
-    slug: "multivital",
   },
   {
     name: "EasyTouch Wellness",
@@ -50,6 +43,16 @@ const deviceDefs: DeviceDef[] = [
     image: easytouchImg,
   },
   {
+    name: "Rhythm Band",
+    sku: "band_sub",
+    badge: "Wearable",
+    tagline: "Everyday metabolic trends, detected on their own",
+    stat: "Automatic spike detection",
+    link: "/rhythm",
+    slug: "rhythm",
+    image: rhythmImg,
+  },
+  {
     name: "Zlu",
     sku: "multivital",
     badge: null,
@@ -59,49 +62,55 @@ const deviceDefs: DeviceDef[] = [
     slug: "zlu",
     image: zluImg,
   },
+  {
+    name: "MultiVital",
+    badge: "All-in-one",
+    tagline: "Everyday vital-sign monitoring in one device",
+    stat: "Multiple vitals, one reading",
+    link: "/devices",
+    slug: "multivital",
+  },
 ];
 
 export function DeviceShowcaseSection() {
-  const { prices, fmt, emi, loading } = usePricing();
+  const { prices, emi, loading } = usePricing();
 
   return (
-    <section id="how-it-works" className="py-16 md:py-24 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="devices" className="py-16 md:py-24 bg-background">
+      <div className="section-shell">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="max-w-2xl mb-14"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
-            This Is Where Agatsa Comes In
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <p className="section-eyebrow mb-3">The ecosystem</p>
+          <h2 className="section-title text-3xl md:text-4xl mb-4">
             AI-enabled personal health monitoring devices, built for home.
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Every Agatsa device is designed to work seamlessly with the Agatsa One app and Nera AI.
-            Clinically validated. Pair in minutes. Monitor for life.
+          <p className="text-muted-foreground leading-relaxed">
+            Every Agatsa device pairs with the Agatsa One app in minutes, where Nera AI
+            turns your readings into clear, personal insights. Clinically validated. Monitored for life.
           </p>
         </motion.div>
 
-        {/* Cards — horizontal scroll on mobile, 4-col grid on desktop */}
-        <div className="flex gap-5 overflow-x-auto pb-4 md:grid md:grid-cols-4 md:overflow-visible scrollbar-hide">
+        {/* Cards — horizontal scroll on mobile, 5-col grid on desktop */}
+        <div className="flex gap-5 overflow-x-auto pb-4 lg:grid lg:grid-cols-5 lg:overflow-visible scrollbar-hide">
           {deviceDefs.map((device, i) => (
             <motion.div
               key={device.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="min-w-[260px] md:min-w-0 flex flex-col bg-card rounded-3xl border border-border p-6 hover:shadow-purple transition-shadow duration-300"
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="min-w-[240px] lg:min-w-0 flex flex-col quiet-card p-5"
             >
-              <div className="aspect-[3/2] bg-muted rounded-2xl flex items-center justify-center mb-4 overflow-hidden">
+              <div className="aspect-[3/2] bg-muted rounded-xl flex items-center justify-center mb-4 overflow-hidden">
                 {device.image ? (
-                  <img src={device.image} alt={device.name} className="w-full h-full object-contain p-4" />
+                  <img src={device.image} alt={device.name} className="w-full h-full object-contain p-4" loading="lazy" decoding="async" />
                 ) : (
-                  <span className="text-4xl font-extrabold text-primary/30">{device.name}</span>
+                  <span className="font-display text-2xl font-extrabold text-foreground/20">{device.name}</span>
                 )}
               </div>
 
@@ -111,7 +120,7 @@ export function DeviceShowcaseSection() {
                 </span>
               )}
 
-              <h3 className="text-base font-bold text-foreground mb-1">{device.name}</h3>
+              <h3 className="font-display text-base font-bold text-foreground mb-1">{device.name}</h3>
               <p className="text-sm text-muted-foreground mb-2">{device.tagline}</p>
               <p className="text-xs font-medium text-primary mb-3">{device.stat}</p>
 
@@ -137,7 +146,7 @@ export function DeviceShowcaseSection() {
                 {device.sku && (
                   <div className="flex items-center justify-between text-xs mt-0.5">
                     <p className="text-primary font-medium">{emi(prices[device.sku])}</p>
-                    <span className="font-semibold text-green-600">📦 {shipDateLabel()}</span>
+                    <span className="font-semibold text-success">📦 {shipDateLabel()}</span>
                   </div>
                 )}
               </div>
