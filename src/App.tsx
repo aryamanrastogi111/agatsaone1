@@ -29,6 +29,7 @@ const EasyTouchWellnessProduct = lazy(() => import("./pages/products/EasyTouchWe
 const RhythmBandProduct = lazy(() => import("./pages/products/RhythmBandProduct"));
 const RhythmBandPro = lazy(() => import("./pages/RhythmBandPro"));
 const SmartScaleProduct = lazy(() => import("./pages/products/SmartScaleProduct"));
+const ZluProduct = lazy(() => import("./pages/products/ZluProduct"));
 const DeviceActivation = lazy(() => import("./pages/DeviceActivation"));
 const ReferralPage = lazy(() => import("./pages/Referral"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -140,6 +141,7 @@ function AppWithPricing() {
               <Route path="/devices/rhythm-band" element={<RhythmBandProduct />} />
               <Route path="/rhythm" element={<RhythmBandPro />} />
               <Route path="/devices/smart-scale" element={<SmartScaleProduct />} />
+              <Route path="/devices/zlu" element={<ZluProduct />} />
               <Route path="/programmes" element={<ProgrammesPage />} />
               <Route path="/pricing" element={isMyEasyTouchHost() ? <Navigate to="/" replace /> : <PricingPage />} />
               <Route path="/about" element={<About />} />

@@ -18,7 +18,7 @@ import { AwardsTrustSection } from "@/components/AwardsTrustSection";
 import { TrustVideosSection } from "@/components/TrustVideosSection";
 
 export default function HomePage() {
-  useSEO({ title: "Agatsa One — AI Health Monitoring Powered by Nera AI | ECG, Metabolic Health, BP", description: "Agatsa One connects to medical-grade ECG, metabolic health, BP, and wellness devices — then uses Nera AI to give you weekly health reports, early warnings, and a voice health assistant. 2.1 Lac+ users. CDSCO certified. Download free." });
+  useSEO({ title: "Agatsa — Leading AI-Powered Personal Health Devices | SanketLife ECG, MultiVital, EasyTouch, Zlu", description: "Agatsa leads the way in AI-powered personal health. SanketLife ECG, MultiVital, EasyTouch Wellness and Zlu connect to Agatsa One, where Nera AI turns your readings into clear, personal health insights. 2.1 Lac+ users. Download free." });
 
   return (
     <SiteLayout>

@@ -20,7 +20,7 @@ export function FinalCTASection() {
             <br className="hidden md:block" /> It's a daily conversation.
           </h2>
           <p className="text-white/80 max-w-2xl mx-auto">
-            Start monitoring with Agatsa One today. Free download. Free basic monitoring.
+            Pair your Agatsa device with Agatsa One today. Free download. Free basic monitoring.
             AI insights from ₹599/month. Your Nera AI health companion is ready.
           </p>
 

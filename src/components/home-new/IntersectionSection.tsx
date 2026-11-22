@@ -20,7 +20,7 @@ const pillars = [
     icon: Stethoscope,
     tag: "Medical-grade accuracy",
     title: "Hospital-level precision",
-    desc: "CDSCO Class B certified devices, 98.15% ECG accuracy, validated against hospital equipment. The same signals your cardiologist trusts.",
+    desc: "Clinically validated devices with 98.15% ECG accuracy, checked against hospital equipment. The same signals your cardiologist trusts.",
   },
   {
     icon: Brain,
@@ -39,9 +39,9 @@ export function IntersectionSection() {
             What Agatsa Actually Is
           </p>
           <h2 className="text-3xl md:text-5xl font-extrabold text-foreground leading-[1.1] tracking-tight mb-5">
-            The intersection of{" "}
+            A leader in{" "}
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              wearables, medical devices and AI.
+              AI-enabled personal health devices.
             </span>
           </h2>
           <p className="text-base md:text-lg text-muted-foreground leading-relaxed">

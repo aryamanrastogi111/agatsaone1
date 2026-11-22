@@ -7,14 +7,24 @@ import { shipDateLabel } from "@/lib/shipDate";
 import { usePricing } from "@/hooks/useDevicePricing";
 import sanketlifeImg from "@/assets/sanketlife-hero-new.webp";
 import easytouchImg from "@/assets/easytouch-wellness-device.webp";
-import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
-import scaleImg from "@/assets/core-balance.webp";
+import zluImg from "@/assets/zlu-device-new.webp";
 
-const deviceDefs = [
+interface DeviceDef {
+  name: string;
+  sku?: "ecg_bundle" | "wellness_sub" | "multivital";
+  badge: string | null;
+  tagline: string;
+  stat: string;
+  link: string;
+  slug: string;
+  image?: string;
+}
+
+const deviceDefs: DeviceDef[] = [
   {
     name: "SanketLife ECG",
-    sku: "ecg_bundle" as const,
-    badge: "CDSCO Certified",
+    sku: "ecg_bundle",
+    badge: "Clinically validated",
     tagline: "12-lead hospital-grade ECG in your pocket",
     stat: "98.15% sensitivity",
     link: "/devices/sanketlife-ecg",
@@ -22,34 +32,32 @@ const deviceDefs = [
     image: sanketlifeImg,
   },
   {
+    name: "MultiVital",
+    badge: "All-in-one",
+    tagline: "Everyday vital-sign monitoring in one device",
+    stat: "Multiple vitals, one reading",
+    link: "/devices",
+    slug: "multivital",
+  },
+  {
     name: "EasyTouch Wellness",
-    sku: "wellness_sub" as const,
+    sku: "wellness_sub",
     badge: null,
-    tagline: "Non-invasive blood glucose trends, no pricks",
+    tagline: "Non-invasive metabolic wellness trends, no pricks",
     stat: "8 vitals in 60 seconds",
     link: "/devices/easytouch-wellness",
     slug: "easytouch-wellness",
     image: easytouchImg,
   },
   {
-    name: "EasyTouch Rhythm Band",
-    sku: "band_sub" as const,
+    name: "Zlu",
+    sku: "multivital",
     badge: null,
-    tagline: "24/7 wellness monitoring on your wrist",
-    stat: "Sleep, HRV, steps, SpO2",
-    link: "/devices/rhythm-band",
-    slug: "easytouch-rhythm",
-    image: rhythmImg,
-  },
-  {
-    name: "Agatsa Smart Scale",
-    sku: "scale_sub" as const,
-    badge: null,
-    tagline: "14 body metrics. One step. One app.",
-    stat: "BMI, body fat, muscle mass",
-    link: "/devices/smart-scale",
-    slug: "corebalance",
-    image: scaleImg,
+    tagline: "Natural sleep support, without medication",
+    stat: "Calm, restful sleep",
+    link: "/devices/zlu",
+    slug: "zlu",
+    image: zluImg,
   },
 ];
 
@@ -70,7 +78,7 @@ export function DeviceShowcaseSection() {
             This Is Where Agatsa Comes In
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Simple, easy-to-use devices to track your health regularly from home.
+            AI-enabled personal health monitoring devices, built for home.
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Every Agatsa device is designed to work seamlessly with the Agatsa One app and Nera AI.
@@ -90,7 +98,11 @@ export function DeviceShowcaseSection() {
               className="min-w-[260px] md:min-w-0 flex flex-col bg-card rounded-3xl border border-border p-6 hover:shadow-purple transition-shadow duration-300"
             >
               <div className="aspect-[3/2] bg-muted rounded-2xl flex items-center justify-center mb-4 overflow-hidden">
-                <img src={device.image} alt={device.name} className="w-full h-full object-contain p-4" />
+                {device.image ? (
+                  <img src={device.image} alt={device.name} className="w-full h-full object-contain p-4" />
+                ) : (
+                  <span className="text-4xl font-extrabold text-primary/30">{device.name}</span>
+                )}
               </div>
 
               {device.badge && (
@@ -106,10 +118,14 @@ export function DeviceShowcaseSection() {
               <div className="mt-auto space-y-2">
                 <StockUrgencyBar productKey={device.slug} />
                 <div className="flex items-center justify-between gap-2">
-                  {loading ? (
-                    <span className="h-6 w-16 bg-muted animate-pulse rounded" />
+                  {device.sku ? (
+                    loading ? (
+                      <span className="h-6 w-16 bg-muted animate-pulse rounded" />
+                    ) : (
+                      <StrikePrice sku={device.sku} price={prices[device.sku]} size="sm" showLabel={false} />
+                    )
                   ) : (
-                    <StrikePrice sku={device.sku} price={prices[device.sku]} size="sm" showLabel={false} />
+                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Coming soon</span>
                   )}
                   <Link
                     to={device.link}
@@ -118,10 +134,12 @@ export function DeviceShowcaseSection() {
                     Learn more <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
-                <div className="flex items-center justify-between text-xs mt-0.5">
-                  <p className="text-primary font-medium">{emi(prices[device.sku])}</p>
-                  <span className="font-semibold text-green-600">📦 {shipDateLabel()}</span>
-                </div>
+                {device.sku && (
+                  <div className="flex items-center justify-between text-xs mt-0.5">
+                    <p className="text-primary font-medium">{emi(prices[device.sku])}</p>
+                    <span className="font-semibold text-green-600">📦 {shipDateLabel()}</span>
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}
