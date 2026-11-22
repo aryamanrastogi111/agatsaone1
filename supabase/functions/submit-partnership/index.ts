@@ -239,7 +239,7 @@ Deno.serve(async (req: Request) => {
             <li>We'll share relevant case studies, pricing, and next steps.</li>
           </ol>
           <p style="color:#666; font-size:13px; line-height:1.6; margin-top:24px;">For any updates, write to <a href="mailto:info@agatsa.com" style="color:#7C4DFF;">info@agatsa.com</a> with your enquiry number <strong>${esc(enquiryNo)}</strong>.</p>
-          <p style="color:#888; font-size:12px; margin-top:32px; padding-top:16px; border-top:1px solid #eee;">Agatsa Software Pvt Ltd · FUTURE IS NEAR</p>
+          <p style="color:#888; font-size:12px; margin-top:32px; padding-top:16px; border-top:1px solid #eee;">Agatsa · FUTURE IS NEAR</p>
         </div>
       </div>`;
 

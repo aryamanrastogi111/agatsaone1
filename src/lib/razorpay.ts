@@ -157,7 +157,7 @@ export function openRazorpayCheckout(
     key: orderData.keyId,
     amount: orderData.amount,
     currency: orderData.currency,
-    name: "Agatsa Software Pvt Ltd",
+    name: "Agatsa",
     description: itemNames,
     order_id: orderData.orderId,
     handler: onSuccess,

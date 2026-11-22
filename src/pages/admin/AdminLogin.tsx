@@ -114,7 +114,7 @@ export default function AdminLogin() {
         </form>
 
         <p className="text-center text-xs text-gray-300 mt-6">
-          © {new Date().getFullYear()} Agatsa Software
+          © {new Date().getFullYear()} Agatsa
         </p>
       </div>
     </div>

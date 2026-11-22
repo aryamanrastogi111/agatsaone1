@@ -163,7 +163,7 @@ Deno.serve(async (req: Request) => {
             <div style="color:#1A1A2E; white-space:pre-wrap;">${esc(ticket.issue_summary)}</div>
           </div>
           <p style="color:#666; font-size:13px; line-height:1.6;">You can reply directly to this email to add more details to your ticket, or write to <a href="mailto:info@agatsa.com" style="color:#7C4DFF;">info@agatsa.com</a> with your ticket number <strong>${esc(ticketNo)}</strong>.</p>
-          <p style="color:#888; font-size:12px; margin-top:32px; padding-top:16px; border-top:1px solid #eee;">Agatsa Software Pvt Ltd · FUTURE IS NEAR</p>
+          <p style="color:#888; font-size:12px; margin-top:32px; padding-top:16px; border-top:1px solid #eee;">Agatsa · FUTURE IS NEAR</p>
         </div>
       </div>`;
 

@@ -116,7 +116,7 @@ serve(async (req) => {
     const teamRecipients = _testTeamEmail
       ? [_testTeamEmail]
       : ["info@agatsa.com", "munfungaming@gmail.com", "rahul.amu2@gmail.com", "agr.neha@gmail.com"];
-    const customerFrom = "Agatsa Software <orders@agatsa.in>";
+    const customerFrom = "Agatsa <orders@agatsa.in>";
     const teamFrom = "Agatsa Orders <orders@agatsa.in>";
 
     if (!customerEmail || !orderId) {
@@ -236,7 +236,7 @@ serve(async (req) => {
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
           <tr>
             <td style="background:linear-gradient(135deg,#0ea5e9 0%,#0284c7 100%);padding:32px 40px;text-align:center;">
-              <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;letter-spacing:-0.3px;">Agatsa Software Pvt Ltd</h1>
+              <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;letter-spacing:-0.3px;">Agatsa</h1>
               <p style="color:#bae6fd;margin:6px 0 0;font-size:13px;letter-spacing:0.3px;">FUTURE IS NEAR</p>
             </td>
           </tr>
@@ -346,7 +346,7 @@ serve(async (req) => {
           </tr>
           <tr>
             <td style="background:#f8fafc;padding:24px 40px;text-align:center;border-top:1px solid #e2e8f0;">
-              <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;font-weight:600;">2025 Agatsa Software Pvt. Ltd.</p>
+              <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;font-weight:600;">2025 Agatsa</p>
               <p style="margin:0;font-size:11px;color:#cbd5e1;">Bengaluru, India · <a href="https://agatsa.com" style="color:#94a3b8;text-decoration:none;">agatsa.com</a></p>
             </td>
           </tr>
@@ -462,7 +462,7 @@ serve(async (req) => {
           </tr>
           <tr>
             <td style="background:#f8fafc;padding:16px 32px;text-align:center;border-top:1px solid #e2e8f0;">
-              <p style="margin:0;font-size:11px;color:#94a3b8;">Agatsa Software · Internal Use Only</p>
+              <p style="margin:0;font-size:11px;color:#94a3b8;">Agatsa · Internal Use Only</p>
             </td>
           </tr>
         </table>

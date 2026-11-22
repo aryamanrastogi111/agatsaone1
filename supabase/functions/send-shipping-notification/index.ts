@@ -86,7 +86,7 @@ serve(async (req) => {
           <!-- Header -->
           <tr>
             <td style="background:linear-gradient(135deg,#0ea5e9 0%,#0284c7 100%);padding:32px 40px;text-align:center;">
-              <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;">Agatsa Software Pvt Ltd</h1>
+              <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;">Agatsa</h1>
               <p style="color:#bae6fd;margin:6px 0 0;font-size:13px;letter-spacing:0.3px;">FUTURE IS NEAR</p>
             </td>
           </tr>
@@ -179,7 +179,7 @@ serve(async (req) => {
           <!-- Footer -->
           <tr>
             <td style="background:#f8fafc;padding:20px 40px;text-align:center;border-top:1px solid #e2e8f0;">
-              <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;font-weight:600;">© 2025 Agatsa Software Pvt Ltd</p>
+              <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;font-weight:600;">© 2025 Agatsa</p>
               <p style="margin:0;font-size:11px;color:#cbd5e1;">Bengaluru, India · <a href="https://agatsa.com" style="color:#94a3b8;text-decoration:none;">agatsa.com</a></p>
             </td>
           </tr>
@@ -200,7 +200,7 @@ serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Agatsa Software Pvt Ltd <orders@agatsa.in>",
+        from: "Agatsa <orders@agatsa.in>",
         to: [customerEmail],
         subject: `🚚 Your Order Has Shipped – ${orderId} | Agatsa`,
         html,

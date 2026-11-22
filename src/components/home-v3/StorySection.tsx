@@ -17,7 +17,7 @@ export function StorySection() {
         <Reveal className="max-w-2xl">
           <p className="section-eyebrow mb-4">Our story</p>
           <h2 className="section-title text-4xl md:text-5xl">Future is near.</h2>
-          <p className="mt-5 text-muted-foreground text-lg leading-relaxed">Agatsa Software Pvt Ltd builds connected health devices in India, with one goal: help people understand their health earlier.</p>
+          <p className="mt-5 text-muted-foreground text-lg leading-relaxed">Agatsa builds connected health devices in India, with one goal: help people understand their health earlier.</p>
         </Reveal>
         <ol className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {milestones.map((m, i) => (

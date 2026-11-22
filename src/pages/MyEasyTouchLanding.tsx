@@ -378,10 +378,10 @@ export default function MyEasyTouchLanding() {
         <div className="max-w-5xl mx-auto px-4 text-center space-y-3">
           <div className="flex items-baseline justify-center gap-2">
             <span className="text-lg font-bold">EasyTouch</span>
-            <span className="text-[10px] uppercase tracking-widest opacity-70">by Agatsa Software Pvt Ltd</span>
+            <span className="text-[10px] uppercase tracking-widest opacity-70">by Agatsa</span>
           </div>
           <p className="text-xs opacity-70">
-            © {new Date().getFullYear()} Agatsa Software Pvt Ltd. All rights reserved.
+            © {new Date().getFullYear()} Agatsa. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs opacity-80">
             <a href="https://agatsaone.com/privacy-policy" className="hover:opacity-100">Privacy</a>

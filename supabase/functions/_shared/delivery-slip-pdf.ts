@@ -108,7 +108,7 @@ export async function buildDeliverySlipPdf(data: DeliverySlipData): Promise<Uint
   page.drawText("Shipped By", { x: m + 8, y: sy, font: bold, size: 12, color: black });
   page.drawText("(If undelivered, return to)", { x: m + 82, y: sy, font: regular, size: 9, color: gray });
   sy -= 18;
-  page.drawText("Agatsa Software Pvt Ltd", { x: m + 8, y: sy, font: bold, size: 12, color: black });
+  page.drawText("Agatsa", { x: m + 8, y: sy, font: bold, size: 12, color: black });
   sy -= 16;
   page.drawText("A-270, Sector 69", { x: m + 8, y: sy, font: regular, size: 11, color: black });
   sy -= 15;

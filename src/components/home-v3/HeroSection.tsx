@@ -19,7 +19,7 @@ export function HeroSection() {
       <div className="luxe-glow absolute -top-40 right-[-10%] h-[620px] w-[620px] -z-10 opacity-70" />
       <div className="section-shell w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
         <div className="max-w-2xl">
-          <motion.p {...fade(0)} className="section-eyebrow mb-6">Agatsa · Personal health</motion.p>
+          <motion.p {...fade(0)} className="section-eyebrow mb-6">Leading the way in AI-powered personal health</motion.p>
           <motion.h1 {...fade(1)} className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.02] tracking-tight">
             Your Health.
             <br />

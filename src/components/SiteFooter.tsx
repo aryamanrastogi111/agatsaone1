@@ -61,7 +61,7 @@ export function SiteFooter() {
               AI health monitoring, powered by Nera AI.
             </p>
             <p className="text-sm text-white/60">
-              FUTURE IS NEAR · Agatsa Software Pvt Ltd
+              FUTURE IS NEAR · Agatsa
             </p>
             <a href="mailto:info@agatsa.com" className="text-sm text-white/80 hover:text-white">info@agatsa.com</a>
             <AppStoreBadges variant="stacked" className="mt-4" />
@@ -125,7 +125,7 @@ export function SiteFooter() {
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
-          <p>© 2026 Agatsa Software Pvt. Ltd.</p>
+          <p>© 2026 Agatsa</p>
           <p className="text-center">
             Free shipping in India · ₹3,000 flat international shipping
           </p>
