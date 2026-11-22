@@ -67,7 +67,7 @@ export function HeroSection() {
               className="text-lg md:text-xl max-w-[580px] leading-relaxed"
             >
               <span className="text-foreground/80">
-                A leading consumer medical device company.
+                Leading the way in AI-powered personal health.
               </span>
               <br />
               <span className="text-primary font-bold text-xl md:text-2xl">
