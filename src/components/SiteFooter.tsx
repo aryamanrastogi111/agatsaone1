@@ -5,7 +5,10 @@ import { isMyEasyTouchHost } from "@/hooks/useIsMyEasyTouch";
 
 const productLinks = [
   { label: "Devices", href: "/devices" },
-  { label: "Care Programmes", href: "/programmes" },
+  { label: "SanketLife 2.0", href: "/devices/sanketlife-ecg" },
+  { label: "EasyTouch Wellness", href: "/devices/easytouch-wellness" },
+  { label: "Rhythm Band", href: "/rhythm" },
+  { label: "Zlu", href: "/devices/zlu" },
   ...(isMyEasyTouchHost() ? [] : [{ label: "Pricing", href: "/pricing" }]),
   { label: "Download App", href: "/app" },
   { label: "Referral Programme", href: "/app" },
@@ -15,7 +18,7 @@ const providerLinks = [
   { label: "For Doctors", href: "/for-doctors" },
   { label: "For Hospitals", href: "/for-hospitals" },
   { label: "For Corporates", href: "/for-corporates" },
-  { label: "Partner with Us", href: "/partner" },
+  { label: "Partner with Us", href: "/partner-with-us" },
   { label: "Email Us", href: "/demo" },
 ];
 
@@ -58,8 +61,9 @@ export function SiteFooter() {
               AI health monitoring, powered by Nera AI.
             </p>
             <p className="text-sm text-white/60">
-              India's most trusted cardiac monitoring app.
+              FUTURE IS NEAR · Agatsa Software Pvt Ltd
             </p>
+            <a href="mailto:info@agatsa.com" className="text-sm text-white/80 hover:text-white">info@agatsa.com</a>
             <AppStoreBadges variant="stacked" className="mt-4" />
             <p className="text-xs text-white/40 mt-2">
               Available free. Premium plans from ₹599/mo.

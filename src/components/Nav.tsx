@@ -19,7 +19,7 @@ interface NavGroup {
 
 const navLinks: NavGroup[] = [
   {
-    label: "Products",
+    label: "Devices",
     children: [
       { label: "All Devices", href: "/devices", desc: "Compare the full range" },
       { label: "SanketLife 2.0", href: "/devices/sanketlife-ecg", desc: "Personal 12-lead ECG" },
@@ -32,20 +32,12 @@ const navLinks: NavGroup[] = [
   },
   { label: "NERA AI", href: "/nera-ai" },
   {
-    label: "For Healthcare",
+    label: "Healthcare",
     children: [
       { label: "Doctors & Clinics", href: "/for-doctors", desc: "Remote patient monitoring" },
       { label: "Hospitals & Telehealth", href: "/for-hospitals", desc: "Deploy at scale" },
       { label: "Corporates", href: "/for-corporates", desc: "Workforce health programmes" },
       { label: "Clinical Evidence", href: "/publications", desc: "Studies and validation" },
-    ],
-  },
-  {
-    label: "Partners",
-    children: [
-      { label: "Partner with Us", href: "/partner-with-us", desc: "Distributors & OEM" },
-      { label: "SDK & API", href: "/partners", desc: "Build with Agatsa devices" },
-      { label: "Developer Console", href: "/sdk", desc: "Docs and integration" },
     ],
   },
   {
@@ -56,11 +48,20 @@ const navLinks: NavGroup[] = [
     ],
   },
   {
-    label: "Company",
+    label: "About",
     children: [
       { label: "About Us", href: "/about" },
+      { label: "Partner with Us", href: "/partner-with-us", desc: "Distributors & OEM" },
+      { label: "SDK & API", href: "/partners", desc: "Build with Agatsa devices" },
       { label: "Journal", href: "/blog" },
       { label: "Careers", href: "/careers" },
+    ],
+  },
+  {
+    label: "Support",
+    children: [
+      { label: "Help Center", href: "/support" },
+      { label: "Device Activation", href: "/d/activate" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -194,9 +195,9 @@ export function Nav() {
             </Link>
             <Link
               to="/devices"
-              className="hidden lg:inline-flex bg-foreground text-background rounded-full px-5 py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
+              className="hidden lg:inline-flex bg-primary text-primary-foreground rounded-full px-5 py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
             >
-              Buy
+              Shop Devices
             </Link>
             <button
               className="lg:hidden p-2 text-foreground"
@@ -296,7 +297,7 @@ export function Nav() {
                 to="/devices"
                 className="block mt-6 bg-foreground text-background rounded-full px-5 py-3.5 text-sm font-semibold text-center"
               >
-                Explore Devices
+                Shop Devices
               </Link>
               <Link
                 to="/app"
