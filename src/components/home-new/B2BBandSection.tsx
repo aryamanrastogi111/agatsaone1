@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Store, Factory, Code2, FlaskConical } from "lucide-react";
+import aspirationalImg from "@/assets/sanketlife-hand-new.jpg";
 
 const paths = [
   { icon: Store, label: "Distributors", desc: "Bring Agatsa devices to your region" },
@@ -12,20 +13,27 @@ const paths = [
 export function B2BBandSection() {
   return (
     <section className="relative overflow-hidden bg-dark-bg text-white py-16 md:py-24">
-      {/* Aspirational backdrop — purple aurora glows + faint grid, all token-based */}
+      {/* Aspirational backdrop — real photography under a navy gradient + aurora glow */}
+      <img
+        src={aspirationalImg}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+      />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 85% 0%, hsl(var(--primary) / 0.35), transparent 70%), radial-gradient(ellipse 50% 40% at 0% 100%, hsl(var(--primary) / 0.18), transparent 70%)",
+            "linear-gradient(100deg, hsl(var(--dark-bg)) 25%, hsl(var(--dark-bg) / 0.88) 55%, hsl(var(--dark-bg) / 0.55) 100%)",
         }}
       />
       <div
-        className="absolute inset-0 opacity-[0.05] pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage:
-            "linear-gradient(to right, hsl(var(--primary-foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--primary-foreground)) 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
+          background:
+            "radial-gradient(ellipse 55% 45% at 80% 10%, hsl(var(--primary) / 0.45), transparent 70%), radial-gradient(ellipse 45% 40% at 5% 95%, hsl(var(--primary) / 0.3), transparent 70%)",
         }}
       />
 
