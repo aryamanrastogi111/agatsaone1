@@ -1,5 +1,9 @@
 # Rhythm Band enhancement
 
+## Current requests
+- [x] Check Lovable Cloud resource pressure and explain optimization versus Mini costs; resize cancelled before execution.
+- [x] Update the homepage hero to position Agatsa as a leading consumer medical device company featuring SanketLife ECG, MultiVital, EasyTouch Wellness and Zlu; verified desktop/mobile photos, layout and device navigation.
+
 - [x] Review the three supplied wearable manuscripts and update the Agatsa research story, sourced results and validation limits; verify the unpublished preview.
 
 - [x] Replace repeated upper goal-card images with three distinct, relevant lifestyle scenes and check all selections.

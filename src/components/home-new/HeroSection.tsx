@@ -7,8 +7,8 @@ import appScreen2 from "@/assets/app-screen-2.webp";
 import appScreen3 from "@/assets/app-screen-3.webp";
 import appScreenNera from "@/assets/app-screen-nera.webp";
 import sanketDevice from "@/assets/sanketlife-card.webp";
-import easytouchDevice from "@/assets/easytouch-rhythm-new.webp";
-import coreBalanceDevice from "@/assets/corebalance-card.webp";
+import easytouchDevice from "@/assets/easytouch-wellness-device.webp";
+import zluDevice from "@/assets/zlu-device-new.webp";
 import lifestyleImage from "@/assets/easytouch-meal-lifestyle.webp";
 import sanketHandImage from "@/assets/sanketlife-hand-new.jpg";
 
@@ -42,7 +42,7 @@ export function HeroSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full relative">
         <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
-          {/* Left — copy (unchanged) */}
+          {/* Agatsa-led company and product positioning */}
           <div className="space-y-6">
             <motion.div {...stagger(0)}>
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-border bg-muted/60 text-xs font-semibold text-foreground/80 tracking-wide">
@@ -53,14 +53,12 @@ export function HeroSection() {
 
             <motion.h1
               {...stagger(1)}
-              className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-tight"
+              className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-normal"
             >
-              <span className="text-foreground">Most health problems</span>
+              <span className="text-foreground">Agatsa</span>
               <br />
-              <span className="text-foreground">don't announce</span>
-              <br />
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                themselves.
+              <span className="text-primary">
+                Personal health.<br />Powered by AI.
               </span>
             </motion.h1>
 
@@ -69,11 +67,11 @@ export function HeroSection() {
               className="text-lg md:text-xl max-w-[580px] leading-relaxed"
             >
               <span className="text-foreground/80">
-                They build quietly — in your heart, your metabolism, your nervous system.
+                A leading consumer medical device company.
               </span>
               <br />
               <span className="text-primary font-bold text-xl md:text-2xl">
-                Agatsa helps you catch them early.
+                Advanced devices. Everyday simplicity.
               </span>
             </motion.p>
 
@@ -81,17 +79,18 @@ export function HeroSection() {
               {...stagger(3)}
               className="text-sm md:text-base text-muted-foreground max-w-[540px] leading-relaxed"
             >
-              Agatsa devices help you track your health at home, while{" "}
-              <span className="text-foreground font-semibold">Nera AI</span> understands your health,
-              spots risks early, and guides you every day.{" "}
-              <span className="text-primary font-semibold">Not just data. Intelligence.</span>
+              From personal health monitoring to everyday wellness, discover{" "}
+              <span className="text-foreground font-semibold">SanketLife ECG, MultiVital, EasyTouch Wellness and Zlu.</span>{" "}
+              Connected monitoring devices bring your readings into Agatsa One, where{" "}
+              <span className="text-foreground font-semibold">Nera AI</span> turns them into clear, personal health insights.
             </motion.p>
 
             <motion.ul {...stagger(4)} className="space-y-2.5 text-sm md:text-base">
               {[
-                "Track ECG, BP, metabolic wellness, SpO₂ and more — from home",
-                "See how your health changes over time",
-                "Get simple insights, not confusing reports",
+                "SanketLife ECG — heart monitoring at home",
+                "MultiVital — everyday vital-sign monitoring",
+                "EasyTouch Wellness — understand your metabolic wellness",
+                "Zlu — support for better sleep",
               ].map((text) => (
                 <li key={text} className="flex items-start gap-3 text-foreground/80">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
@@ -159,7 +158,7 @@ export function HeroSection() {
             >
               <span className="pt-4 font-semibold text-foreground">98.15% ECG accuracy</span>
               <span className="pt-4 hidden md:inline text-border">·</span>
-              <span className="pt-4">CDSCO Class B certified</span>
+              <span className="pt-4">Nera AI health insights</span>
               <span className="pt-4 hidden md:inline text-border">·</span>
               <span className="pt-4">Ships in 24h</span>
               <span className="pt-4 hidden md:inline text-border">·</span>
@@ -206,7 +205,7 @@ export function HeroSection() {
                 </div>
                 <div className="absolute bottom-3 left-3 right-3 bg-background/95 backdrop-blur border border-border rounded-lg p-3">
                   <p className="text-[11px] font-semibold text-foreground leading-snug">
-                    "Your metabolic load trended 12% lower this week — keep the morning walks going."
+                    Your readings, trends and Nera AI insights — together in Agatsa One.
                   </p>
                 </div>
               </div>
@@ -231,27 +230,27 @@ export function HeroSection() {
                 </div>
               </div>
 
-              {/* EasyTouch Rhythm */}
+              {/* EasyTouch Wellness */}
               <div className="col-span-2 row-span-3 relative rounded-2xl overflow-hidden border border-border bg-gradient-to-br from-muted to-background">
                 <img
                   src={easytouchDevice}
-                  alt="EasyTouch Rhythm wearable"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  alt="EasyTouch Wellness device"
+                  className="absolute inset-0 w-full h-full object-contain"
                   loading="eager"
                 />
                 <div className="absolute bottom-2 left-2">
                   <p className="text-[10px] font-bold text-foreground bg-background/90 backdrop-blur px-1.5 py-0.5 rounded">
-                    Rhythm
+                    EasyTouch Wellness
                   </p>
                 </div>
               </div>
 
-              {/* Core Balance */}
+              {/* Zlu sleep aid */}
               <div className="col-span-1 row-span-3 relative rounded-2xl overflow-hidden border border-border bg-gradient-to-br from-muted to-background">
                 <img
-                  src={coreBalanceDevice}
-                  alt="Core Balance smart scale"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  src={zluDevice}
+                  alt="Zlu sleep aid device"
+                  className="absolute inset-0 w-full h-full object-contain"
                   loading="eager"
                 />
               </div>
@@ -260,7 +259,7 @@ export function HeroSection() {
             {/* Caption strip */}
             <div className="mt-4 flex items-center justify-between text-[11px] text-muted-foreground font-medium">
               <span className="inline-flex items-center gap-1.5">
-                <Activity className="h-3 w-3" /> 4 medical-grade devices · 1 intelligent app
+                <Activity className="h-3 w-3 shrink-0" /> Personal health devices · Nera AI intelligence
               </span>
               <span className="font-mono">Agatsa One</span>
             </div>
