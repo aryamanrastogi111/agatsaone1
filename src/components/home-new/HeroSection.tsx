@@ -36,13 +36,13 @@ export function HeroSection() {
           </motion.span>
 
           <motion.h1 {...fade(1)} className="font-display text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.02] tracking-tight">
-            Know your body.
+            Leading the way in
             <br />
-            <span className="luxe-text-gradient">Before it tells you.</span>
+            <span className="luxe-text-gradient">AI-powered personal health.</span>
           </motion.h1>
 
           <motion.p {...fade(2)} className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
-            SanketLife ECG, EasyTouch Wellness, Rhythm Band and Zlu — personal health devices that feed Nera AI, so every reading becomes a clear next step.
+            Pioneering AI-enabled personal health and wearable devices — SanketLife ECG, EasyTouch Wellness, Rhythm Band and Zlu — built for your everyday health, trusted by professionals.
           </motion.p>
 
           <motion.div {...fade(3)} className="flex flex-wrap gap-3">

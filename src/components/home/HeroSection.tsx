@@ -83,11 +83,11 @@ export function HeroSection() {
             className="text-center mb-6"
           >
             <h1 className="text-3xl font-bold text-foreground leading-tight mb-3">
-              Health monitoring,{" "}
-              <span className="text-primary">reimagined.</span>
+              Leading the way in{" "}
+              <span className="text-primary">AI-powered personal health.</span>
             </h1>
             <p className="text-muted-foreground text-sm">
-              Professional monitoring. Zero hassle.
+              Pioneering AI-enabled wearables — for you, and for professionals.
             </p>
           </motion.div>
 
@@ -221,12 +221,12 @@ export function HeroSection() {
                 </span>
                 
                 <h1 className="text-5xl xl:text-6xl font-bold text-foreground leading-[1.1]">
-                  Health monitoring,{" "}
-                  <span className="text-primary">reimagined.</span>
+                  Leading the way in{" "}
+                  <span className="text-primary">AI-powered personal health.</span>
                 </h1>
                 
                 <p className="text-lg text-muted-foreground max-w-lg">
-                  Track ECG, metabolic response, sleep quality, and body composition with devices trusted by doctors and designed for you.
+                  Pioneering AI-enabled personal health and wearable devices — built for your everyday health, trusted by professionals.
                 </p>
               </motion.div>
 
