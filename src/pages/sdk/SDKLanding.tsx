@@ -4,7 +4,6 @@
  import { Badge } from '@/components/ui/badge';
 import {
   Heart,
-  Scale,
   ArrowRight,
   Shield,
   Code,
@@ -35,20 +34,6 @@ import {
       color: 'text-red-500',
       bgColor: 'bg-red-500/10',
     },
-   {
-     id: 'corebalance',
-     name: 'CoreBalance SDK',
-     description: 'Add comprehensive body composition analysis to your fitness and wellness apps.',
-     icon: Scale,
-     features: [
-       '10+ body composition metrics',
-       'BMI & BMR calculations',
-       'Muscle mass analysis',
-       'Body fat percentage',
-     ],
-     color: 'text-blue-500',
-     bgColor: 'bg-blue-500/10',
-   },
     {
       id: 'easytouch-rhythm',
       name: 'EasyTouch Rhythm SDK',

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Moon, Scale, Activity, Home, Heart, ShoppingCart, Code2, Stethoscope } from "lucide-react";
+import { Menu, X, Moon, Activity, Home, Heart, ShoppingCart, Code2, Stethoscope } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -55,14 +55,6 @@ export function Header() {
               <Link to="/devices">
                 <Moon className="h-3.5 w-3.5" />
                 Zlu
-              </Link>
-            </Button>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-            <Button asChild variant="ghost" size="sm" className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 gap-1.5">
-              <Link to="/devices/smart-scale">
-                <Scale className="h-3.5 w-3.5" />
-                CoreBalance
               </Link>
             </Button>
           </motion.div>
@@ -235,20 +227,6 @@ export function Header() {
                   >
                     <Moon className="h-4 w-4" />
                     Zlu – Sleep Aid
-                  </Link>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <Link
-                    to="/devices/smart-scale"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 text-sm font-medium py-3 px-4 rounded-lg text-emerald-600 hover:bg-emerald-50 transition-colors"
-                  >
-                    <Scale className="h-4 w-4" />
-                    CoreBalance BMI
                   </Link>
                 </motion.div>
                 <motion.div

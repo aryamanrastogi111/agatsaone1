@@ -46,7 +46,7 @@
                    <h3>Prerequisites</h3>
                    <ul>
                      <li>An Agatsa developer account (register at the SDK Portal)</li>
-                     <li>A registered Agatsa device (SanketLife, CoreBalance, or Health 360)</li>
+                     <li>A registered Agatsa device (SanketLife or Health 360)</li>
                      <li>Android Studio 4.0+ or Xcode 12+</li>
                    </ul>
  
@@ -221,14 +221,6 @@
                          Begin ECG recording session. Streams real-time data via callback.
                        </p>
                        <Badge variant="outline">SanketLife</Badge>
-                     </div>
- 
-                     <div>
-                       <h4 className="font-semibold mb-2">getBodyComposition()</h4>
-                       <p className="text-sm text-muted-foreground mb-2">
-                         Get body composition metrics from CoreBalance device.
-                       </p>
-                       <Badge variant="outline">CoreBalance</Badge>
                      </div>
  
                      <div>

@@ -17,7 +17,6 @@
    Filter, 
    Activity,
    Heart,
-   Scale,
    RefreshCw,
    Plus,
    Loader2
@@ -43,13 +42,7 @@
      color: 'text-red-500', 
      bgColor: 'bg-red-500/10' 
    },
-   corebalance: { 
-     label: 'CoreBalance', 
-     icon: Scale, 
-     color: 'text-blue-500', 
-     bgColor: 'bg-blue-500/10' 
-   },
-   health360: { 
+   health360: {
      label: 'Health 360', 
      icon: Activity, 
      color: 'text-green-500', 
@@ -166,7 +159,6 @@
                  <SelectContent>
                    <SelectItem value="all">All Products</SelectItem>
                    <SelectItem value="sanketlife">SanketLife</SelectItem>
-                   <SelectItem value="corebalance">CoreBalance</SelectItem>
                    <SelectItem value="health360">Health 360</SelectItem>
                  </SelectContent>
                </Select>

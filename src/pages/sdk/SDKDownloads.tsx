@@ -6,7 +6,6 @@
  import { 
    Download, 
    Heart, 
-   Scale, 
    Activity,
    FileText,
    Code,
@@ -46,38 +45,7 @@
      },
    },
    {
-     id: 'corebalance',
-     name: 'CoreBalance SDK',
-     description: 'Body composition analysis',
-     icon: Scale,
-     color: 'text-blue-500',
-     bgColor: 'bg-blue-500/10',
-     version: '2.1.0',
-     lastUpdated: '2025-01-20',
-     downloads: {
-       android: {
-         label: 'Android SDK',
-         file: 'corebalance-sdk-android-2.1.0.aar',
-         size: '3.1 MB',
-       },
-       ios: {
-         label: 'iOS SDK',
-         file: 'CoreBalanceSDK.xcframework',
-         size: '4.2 MB',
-       },
-       docs: {
-         label: 'API Documentation',
-         file: 'corebalance-api-docs.pdf',
-         size: '800 KB',
-       },
-       sample: {
-         label: 'Sample Project',
-         url: '#',
-       },
-     },
-   },
-   {
-     id: 'health360',
+      id: 'health360',
      name: 'Health 360 SDK',
      description: 'Comprehensive health tracking',
      icon: Activity,

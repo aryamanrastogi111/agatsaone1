@@ -263,49 +263,6 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
     ],
   },
   {
-    id: "smart-scale",
-    label: "Smart Scale",
-    blurb: "Body composition scale with multi-user support",
-    issues: [
-      {
-        id: "ss-weight-inconsistent",
-        title: "Weight reading is inconsistent between scans",
-        priority: "medium",
-        questionnaire: [
-          "Is the scale on a hard, flat surface (not carpet)?",
-          "Are you barefoot and standing still until the reading locks?",
-          "Did you weigh at the same time of day for a fair comparison?",
-        ],
-      },
-      {
-        id: "ss-body-comp-missing",
-        title: "Body composition (fat %, water, etc.) not showing",
-        priority: "medium",
-        questionnaire: [
-          "Are you barefoot with dry feet covering all 4 electrodes on the scale?",
-          "Have you completed your profile (age, height, sex) in the app?",
-        ],
-      },
-      {
-        id: "ss-wifi-bt",
-        title: "Wi-Fi / Bluetooth not connecting",
-        priority: "medium",
-        questionnaire: [
-          "Is your Wi-Fi 2.4 GHz (most smart scales don't support 5 GHz)?",
-          "Did you grant the app Bluetooth and Location permissions?",
-        ],
-      },
-      {
-        id: "ss-multi-user",
-        title: "Scale not auto-switching between family members",
-        priority: "low",
-        questionnaire: [
-          "Are all users' profiles set up with distinct weight ranges in the app?",
-        ],
-      },
-    ],
-  },
-  {
     id: "nera-ai",
     label: "Nera AI / Agatsa One App",
     blurb: "The Agatsa One app + your free Nera AI trial",

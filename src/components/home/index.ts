@@ -5,7 +5,6 @@ export { ProductsPortfolioSection } from "./ProductsPortfolioSection";
 export { ProductHighlightSanketLife } from "./ProductHighlightSanketLife";
 export { ProductHighlightEasyTouch } from "./ProductHighlightEasyTouch";
 export { ProductHighlightZlu } from "./ProductHighlightZlu";
-export { ProductHighlightCoreBalance } from "./ProductHighlightCoreBalance";
 export { WhyAgatsaSection } from "./WhyAgatsaSection";
 export { TrustProofSection } from "./TrustProofSection";
 export { FinalCTASection } from "./FinalCTASection";

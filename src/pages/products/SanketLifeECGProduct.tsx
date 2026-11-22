@@ -739,11 +739,10 @@ export default function SanketLifeECGProduct() {
       <section className="py-10 bg-background">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-2xl font-bold text-foreground text-center mb-8">Complete your health monitoring</h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {[
               { name: "EasyTouch Wellness", desc: "BP, SpO₂, metabolic health — pairs with ECG for a complete picture", link: "/devices/easytouch-wellness" },
               { name: "EasyTouch Rhythm Band", desc: "24/7 continuous HR, HRV, sleep — between-reading monitoring", link: "/devices/rhythm-band" },
-              { name: "Agatsa Smart Scale", desc: "14 body metrics including visceral fat and BMI", link: "/devices/smart-scale" },
             ].map((d) => (
               <Link key={d.name} to={d.link} className="bg-card rounded-2xl border border-border p-6 hover:shadow-lg hover:border-primary/20 transition-all group">
                 <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">{d.name}</h3>

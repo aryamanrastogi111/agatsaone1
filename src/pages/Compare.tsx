@@ -6,12 +6,12 @@ import { Layout } from "@/components/layout";
 import { products } from "@/data/products";
 
 const comparisonFeatures = [
-  { name: "Medical-grade accuracy", products: { sanketlife: true, "easytouch-rhythm": true, zlu: false, corebalance: true } },
-  { name: "Daily monitoring", products: { sanketlife: true, "easytouch-rhythm": true, zlu: true, corebalance: true } },
-  { name: "Wearable design", products: { sanketlife: false, "easytouch-rhythm": true, zlu: false, corebalance: false } },
-  { name: "App connectivity", products: { sanketlife: true, "easytouch-rhythm": true, zlu: false, corebalance: true } },
-  { name: "PDF reports", products: { sanketlife: true, "easytouch-rhythm": true, zlu: false, corebalance: true } },
-  { name: "Multi-user profiles", products: { sanketlife: true, "easytouch-rhythm": false, zlu: false, corebalance: true } },
+  { name: "Medical-grade accuracy", products: { sanketlife: true, "easytouch-rhythm": true, zlu: false } },
+  { name: "Daily monitoring", products: { sanketlife: true, "easytouch-rhythm": true, zlu: true } },
+  { name: "Wearable design", products: { sanketlife: false, "easytouch-rhythm": true, zlu: false } },
+  { name: "App connectivity", products: { sanketlife: true, "easytouch-rhythm": true, zlu: false } },
+  { name: "PDF reports", products: { sanketlife: true, "easytouch-rhythm": true, zlu: false } },
+  { name: "Multi-user profiles", products: { sanketlife: true, "easytouch-rhythm": false, zlu: false } },
 ];
 
 const Compare = () => {
@@ -29,7 +29,7 @@ const Compare = () => {
       <section className="py-8 bg-background overflow-x-auto">
         <div className="container">
           <div className="min-w-[800px]">
-            <div className="grid grid-cols-5 gap-4 mb-6">
+            <div className="grid grid-cols-4 gap-4 mb-6">
               <div></div>
               {products.map((p) => (
                 <div key={p.id} className="text-center">
@@ -41,7 +41,7 @@ const Compare = () => {
             </div>
             
             {comparisonFeatures.map((feature, i) => (
-              <div key={i} className={`grid grid-cols-5 gap-4 py-4 ${i % 2 === 0 ? 'bg-muted/30' : ''} rounded-lg`}>
+              <div key={i} className={`grid grid-cols-4 gap-4 py-4 ${i % 2 === 0 ? 'bg-muted/30' : ''} rounded-lg`}>
                 <div className="px-4 font-medium text-foreground">{feature.name}</div>
                 {products.map((p) => (
                   <div key={p.id} className="text-center">
@@ -55,7 +55,7 @@ const Compare = () => {
               </div>
             ))}
             
-            <div className="grid grid-cols-5 gap-4 mt-8">
+            <div className="grid grid-cols-4 gap-4 mt-8">
               <div></div>
               {products.map((p) => (
                 <div key={p.id} className="text-center">

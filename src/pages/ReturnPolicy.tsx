@@ -52,7 +52,7 @@ const ReturnPolicy = () => {
                 </div>
                 <div className="bg-card border border-border rounded-xl p-6">
                   <p className="text-muted-foreground">
-                    Returns are accepted within <strong className="text-foreground">7 days</strong> of delivery for all Agatsa products, including CoreBalance BMI, EasyTouch Rhythm, SanketLife, and Zlu Sleep Aid.
+                    Returns are accepted within <strong className="text-foreground">7 days</strong> of delivery for all Agatsa products, including EasyTouch Rhythm, SanketLife, and Zlu Sleep Aid.
                   </p>
                 </div>
               </motion.div>

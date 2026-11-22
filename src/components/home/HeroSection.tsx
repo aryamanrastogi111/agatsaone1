@@ -8,11 +8,10 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { ArrowRight, Heart, Activity, Moon, Scale, Check, ChevronRight } from "lucide-react";
+import { ArrowRight, Heart, Activity, Moon, Check, ChevronRight } from "lucide-react";
 import { RepublicDaySaleBadge, isSaleActive } from "@/components/sale";
 
 import zluHeroImg from "@/assets/zlu-hero.webp";
-import corebalanceHeroImg from "@/assets/corebalance-hero.webp";
 import sanketlifeHeroImg from "@/assets/sanketlife-hero.webp";
 import easytouchHeroImg from "@/assets/easytouch-hero.webp";
 
@@ -46,16 +45,6 @@ const heroProducts = [
     icon: Moon,
     accent: "from-indigo-500/20 to-violet-500/5",
     route: "/devices",
-  },
-  {
-    id: "corebalance",
-    name: "CoreBalance",
-    image: corebalanceHeroImg,
-    tagline: "Smart Scale",
-    benefit: "Know your body metrics",
-    icon: Scale,
-    accent: "from-emerald-500/20 to-teal-500/5",
-    route: "/devices/smart-scale",
   },
 ];
 

@@ -12,7 +12,6 @@ const PRODUCT_CART_MAP: Record<string, { productId: string; price: number; varia
   sanketlife: { productId: "sanketlife", price: 3999, variantTitle: "Default Title" },
   "easytouch-rhythm": { productId: "easytouch-rhythm", price: 3999, variantTitle: "Default Title" },
   zlu: { productId: "zlu", price: 4999, variantTitle: "Default Title" },
-  corebalance: { productId: "corebalance", price: 1999, variantTitle: "Default Title" },
 };
 
 export function CartCrossSell() {

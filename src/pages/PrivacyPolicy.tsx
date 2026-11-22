@@ -46,7 +46,7 @@ const PrivacyPolicy = () => {
               >
                 <div className="bg-card border border-border rounded-xl p-6">
                   <p className="text-muted-foreground mb-4">
-                    This Privacy Policy applies to all Agatsa websites, mobile applications, and devices—including CoreBalance BMI, EasyTouch Rhythm, SanketLife, and Zlu Sleep Aid.
+                    This Privacy Policy applies to all Agatsa websites, mobile applications, and devices—including EasyTouch Rhythm, SanketLife, and Zlu Sleep Aid.
                   </p>
                   <p className="text-muted-foreground">
                     At Agatsa, we are committed to protecting your privacy and ensuring the security of your personal and health-related information. This policy explains what data we collect, how we use it, and your rights regarding that data.

@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Heart,
   Activity,
-  Scale,
   Shield,
   Bell,
   Eye,
@@ -267,14 +266,6 @@ export default function Doctors() {
                 desc: "Worn like a fitness band. Continuously tracks HRV, optical blood pressure, SpO2, and 8-hour sleep staging every night.",
                 color: "text-primary",
                 bg: "bg-primary/10",
-              },
-              {
-                icon: Scale,
-                name: "Smart Scale",
-                tagline: "26 body metrics in one step",
-                desc: "Bioelectrical impedance analysis. Visceral fat, muscle mass, bone density, metabolic rate — weekly trend reports.",
-                color: "text-emerald-500",
-                bg: "bg-emerald-500/10",
               },
             ].map((d, i) => (
               <motion.div

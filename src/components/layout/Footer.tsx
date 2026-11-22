@@ -7,7 +7,6 @@ const productLinks = [
   { label: "SanketLife ECG", href: "/devices/sanketlife-ecg" },
   { label: "EasyTouch Wellness", href: "/devices/easytouch-wellness" },
   { label: "Rhythm Band", href: "/devices/rhythm-band" },
-  { label: "Smart Scale", href: "/devices/smart-scale" },
 ];
 
 const companyLinks = [

@@ -1154,7 +1154,7 @@ export default function EasyTouchWellnessProduct() {
             >
               Complete your diabetes monitoring setup
             </h2>
-            <div className="grid md:grid-cols-3 gap-5">
+            <div className="grid md:grid-cols-2 gap-5 max-w-3xl">
               {[
                 {
                   name: "SanketLife ECG",
@@ -1165,11 +1165,6 @@ export default function EasyTouchWellnessProduct() {
                   name: "EasyTouch Rhythm Band",
                   desc: "Add 24/7 continuous monitoring between finger scans",
                   link: "/devices/rhythm-band",
-                },
-                {
-                  name: "Agatsa Smart Scale",
-                  desc: "Add body composition for the full metabolic picture",
-                  link: "/devices/smart-scale",
                 },
               ].map((p) => (
                 <Link

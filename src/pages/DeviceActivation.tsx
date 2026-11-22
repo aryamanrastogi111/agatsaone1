@@ -40,16 +40,6 @@ const DEVICE_CONFIG: Record<string, { name: string; headline: string; copy: stri
       'Tap "Add Device" and select Rhythm Band',
     ],
   },
-  scale: {
-    name: "Agatsa Smart Scale",
-    headline: "Your Agatsa Smart Scale is ready to activate",
-    copy: "Download Agatsa One to activate your Smart Scale and track 14 body composition metrics — weight, BMI, body fat, muscle mass, and more.",
-    steps: [
-      "Download Agatsa One (free) using the button below",
-      "Create your account or sign in",
-      "Stand on the scale barefoot — it syncs automatically",
-    ],
-  },
   multivital: {
     name: "MultiVital Monitor",
     headline: "Your MultiVital Monitor is ready to activate",

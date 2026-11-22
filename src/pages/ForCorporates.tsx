@@ -14,7 +14,7 @@ const stats = [
 const features = [
   { icon: Monitor, title: "Biometric screening camps", body: "On-site ECG and vitals screening for your entire workforce. No equipment purchase required. Agatsa deploys everything." },
   { icon: BarChart3, title: "Anonymous aggregate dashboard", body: "See your organisation's health risk profile without individual data. Risk distribution, programme adherence, improvement metrics." },
-  { icon: Smartphone, title: "Employee app and devices", body: "Device bundles available for your employees at standard pricing — ECG, wellness monitor, band, or smart scale. Bulk order pricing available for 50+ units. Contact us for bulk quotes." },
+  { icon: Smartphone, title: "Employee app and devices", body: "Device bundles available for your employees at standard pricing — ECG, wellness monitor, or band. Bulk order pricing available for 50+ units. Contact us for bulk quotes." },
   { icon: ClipboardList, title: "Care programme enrolment", body: "Structured 8-week Corporate Wellness Programme for eligible employees — daily tasks, AI nudges, HR reporting." },
   { icon: FileText, title: "HR reporting", body: "Monthly aggregate reports: risk distribution, programme adherence, improvement metrics. Fully anonymised. DPDP Act compliant." },
   { icon: ShieldCheck, title: "Aggregate health insights", body: "Monthly anonymised aggregate reports showing risk distribution and programme adherence across your workforce. Useful for HR planning and occupational health reviews." },

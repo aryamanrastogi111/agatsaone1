@@ -6,6 +6,9 @@
 - [x] Homepage rebuild per approved wireframe (hero, audience split, device rail, Nera AI, proof strip, evidence, spotlight, testimonials, B2B band, Journal, CTA)
 - [ ] Step 4: Healthcare, Partners and Science hub pages; SanketLife Pro+ enquiry page
 - [ ] Step 5: Re-skin device pages to the new system (commerce logic untouched)
+- [x] Remove Smart Scale site-wide: routes, Devices, Compare, cross-sell, SDK pages, legal pages, support data, product pages, legacy home; scale pages/data files deleted
+- [ ] Smart Scale in Complete Health Kit bundle — awaiting founder decision (question asked)
+- [ ] Smart Scale in Lose Belly 90 programme (+ Programmes page card) — awaiting founder decision (question asked)
 - [x] Remove Smart Scale from homepage lineup (founder decision); CoreBalance dropped for now
 - [x] SanketLife Pro+ is enquiry only (founder decision) — nav entry routes to demo/enquiry; dedicated page in step 4
 - [x] MultiVital and Zlu stay in the homepage device lineup (founder decision)

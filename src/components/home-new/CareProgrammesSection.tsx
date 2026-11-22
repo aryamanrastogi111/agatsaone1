@@ -24,7 +24,7 @@ const programmes = [
     name: "Obesity Reversal Programme",
     duration: "12 weeks",
     audience: "For individuals with BMI > 27.5 targeting sustainable weight loss",
-    description: "Smart scale + band integration. Daily calorie guidance. Body composition tracking. Weekly progress milestones.",
+    description: "Band integration. Daily calorie guidance. Progress tracking. Weekly progress milestones.",
     link: "/programmes#obesity-reversal",
   },
   {

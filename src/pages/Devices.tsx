@@ -16,7 +16,6 @@ import { toast } from "sonner";
 import sanketlifeImg from "@/assets/sanketlife-device-app.webp";
 import easytouchImg from "@/assets/easytouch-wellness-hero.webp";
 import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
-import scaleImg from "@/assets/corebalance-hero.webp";
 
 interface DeviceData {
   id: string;
@@ -119,42 +118,6 @@ const devices: DeviceData[] = [
     ],
     link: "/devices/rhythm-band",
     checkoutSku: "band_sub",
-  },
-  {
-    id: "corebalance",
-    image: scaleImg,
-    name: "Agatsa Smart Scale",
-    tagline: "14 body metrics. One step. One app.",
-    keyStat: "BMI, body fat, muscle mass — 14 metrics in 5 seconds",
-    sku: "scale_sub",
-    rating: "4.7",
-    reviews: "423",
-    measures: [
-      "Body weight (kg/lbs)",
-      "BMI (Body Mass Index)",
-      "Body fat percentage",
-      "Visceral fat level",
-      "Skeletal muscle mass",
-      "Bone mineral density",
-      "Body water percentage",
-      "Basal metabolic rate (BMR)",
-      "Metabolic age",
-      "Protein percentage",
-      "Subcutaneous fat",
-      "Lean body mass",
-      "Body shape index (ABSI)",
-      "Physique rating",
-    ],
-    appFeatures: [
-      "Weight and body composition trend in Nera AI",
-      "Weight loss programme integration",
-      "Visceral fat trend — the dangerous fat, tracked",
-      "Syncs via Bluetooth in under 10 seconds",
-      "Up to 10 family members on one scale",
-      "Compatible with Obesity Reversal Programme",
-    ],
-    link: "/devices/smart-scale",
-    checkoutSku: "scale_sub",
   },
 ];
 
@@ -274,7 +237,7 @@ function DeviceCard({ device, index }: { device: DeviceData; index: number }) {
 }
 
 export default function DevicesPage() {
-  useSEO({ title: "Health Monitoring Devices — SanketLife ECG, EasyTouch, Rhythm Band | Agatsa One", description: "Medical-grade ECG, metabolic health monitor, wellness band, and smart scale. All CDSCO-approved, clinically validated, and integrated with Nera AI. Shop now from ₹1,899." });
+  useSEO({ title: "Health Monitoring Devices — SanketLife ECG, EasyTouch, Rhythm Band | Agatsa One", description: "Medical-grade ECG, metabolic health monitor and wellness band. Clinically validated and integrated with Nera AI. Shop now from ₹1,899." });
 
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).fbq) {
@@ -342,7 +305,7 @@ export default function DevicesPage() {
       {/* Urgency bar */}
       <div className="bg-primary py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-primary-foreground text-sm font-medium text-center">
-          <span>🎁 Free Nera AI trial with every device — 14 days Premium on SanketLife, 7 days on EasyTouch / Rhythm / Smart Scale</span>
+          <span>🎁 Free Nera AI trial with every device — 14 days Premium on SanketLife, 7 days on EasyTouch / Rhythm</span>
           <span className="hidden sm:block text-primary-foreground/40">|</span>
           <span>🚚 Ships within 24 hours</span>
           <span className="hidden sm:block text-primary-foreground/40">|</span>

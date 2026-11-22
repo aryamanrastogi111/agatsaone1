@@ -52,7 +52,7 @@ const ShippingPolicy = () => {
                 </div>
                 <div className="bg-card border border-border rounded-xl p-6">
                   <p className="text-muted-foreground mb-4">
-                    Agatsa ships its range of health monitoring devices—including CoreBalance BMI, EasyTouch Rhythm, SanketLife, and Zlu Sleep Aid—across India and to selected international destinations.
+                    Agatsa ships its range of health monitoring devices—including EasyTouch Rhythm, SanketLife, and Zlu Sleep Aid—across India and to selected international destinations.
                   </p>
                   <ul className="space-y-2 text-muted-foreground">
                     <li className="flex items-start gap-2">

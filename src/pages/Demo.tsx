@@ -7,7 +7,7 @@ const fade = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }
 
 const demoIncludes = [
   "Live walkthrough of the Agatsa Provider Portal",
-  "Device demonstration — ECG, EasyTouch, Rhythm Band, Smart Scale",
+  "Device demonstration — ECG, EasyTouch, Rhythm Band",
   "Nera AI capabilities and Care Programme overview",
   "Pricing and deployment options for your use case",
   "Q&A with our partnerships team",

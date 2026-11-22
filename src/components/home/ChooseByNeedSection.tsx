@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart, Activity, Moon, Scale, ArrowRight } from "lucide-react";
+import { Heart, Activity, Moon, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const categories = [
@@ -33,16 +33,6 @@ const categories = [
     color: "text-indigo-500",
     bgColor: "bg-indigo-50",
     hoverBg: "group-hover:bg-indigo-100",
-  },
-  {
-    icon: Scale,
-    title: "Body Composition",
-    description: "Understand your body beyond just weight with advanced analysis",
-    link: "/devices/smart-scale",
-    product: "CoreBalance BMI",
-    color: "text-emerald-500",
-    bgColor: "bg-emerald-50",
-    hoverBg: "group-hover:bg-emerald-100",
   },
 ];
 

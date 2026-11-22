@@ -47,7 +47,7 @@ const TermsOfService = () => {
                 <h2 className="text-2xl font-bold text-foreground mb-4">Introduction</h2>
                 <div className="bg-card border border-border rounded-xl p-6">
                   <p className="text-muted-foreground mb-4">
-                    These Terms of Service ("Terms") govern your use of all Agatsa websites, mobile applications, devices, and related services. This includes all Agatsa products such as CoreBalance BMI, EasyTouch Rhythm, SanketLife, and Zlu Sleep Aid.
+                    These Terms of Service ("Terms") govern your use of all Agatsa websites, mobile applications, devices, and related services. This includes all Agatsa products such as EasyTouch Rhythm, SanketLife, and Zlu Sleep Aid.
                   </p>
                   <p className="text-muted-foreground">
                     By accessing or using any Agatsa product or service, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our products or services.
@@ -128,7 +128,7 @@ const TermsOfService = () => {
                 <div className="bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 rounded-xl p-6">
                   <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                     <span className="w-2 h-2 bg-amber-500 rounded-full"></span>
-                    Wellness Devices – CoreBalance BMI, EasyTouch Rhythm, Zlu Sleep Aid
+                    Wellness Devices – EasyTouch Rhythm, Zlu Sleep Aid
                   </h3>
                   <p className="text-muted-foreground mb-3">
                     The following products are <strong className="text-foreground">wellness devices</strong> intended for health awareness and monitoring purposes only:
@@ -136,7 +136,6 @@ const TermsOfService = () => {
                   <ul className="space-y-2 text-muted-foreground mb-4">
                     <li className="flex items-start gap-2">
                       <span className="text-amber-500 mt-1">•</span>
-                      <span><strong>CoreBalance BMI</strong> – Body composition and BMI tracking</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-amber-500 mt-1">•</span>

@@ -6,7 +6,6 @@ import {
   ProductHighlightSanketLife,
   ProductHighlightEasyTouch,
   ProductHighlightZlu,
-  ProductHighlightCoreBalance,
   WhyAgatsaSection,
   AwardsSection,
   TrustProofSection,
@@ -22,7 +21,6 @@ const Index = () => {
       <ProductHighlightSanketLife />
       <ProductHighlightEasyTouch />
       <ProductHighlightZlu />
-      <ProductHighlightCoreBalance />
       <WhyAgatsaSection />
       <AwardsSection />
       <TrustProofSection />

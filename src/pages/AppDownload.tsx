@@ -43,7 +43,7 @@ const faqs = [
   },
   {
     q: "Which devices are compatible?",
-    a: "Agatsa One works with all Agatsa devices: SanketLife ECG, EasyTouch Wellness Monitor, EasyTouch Rhythm Band, and Agatsa Smart Scale. You can also log manual readings from any device.",
+    a: "Agatsa One works with all Agatsa devices: SanketLife ECG, EasyTouch Wellness Monitor, and EasyTouch Rhythm Band. You can also log manual readings from any device.",
   },
   {
     q: "Is my health data secure?",
@@ -89,18 +89,6 @@ const deviceConfigs: Record<
       "Create your account or sign in with your phone number",
       "Tap 'Add Device' and select EasyTouch Rhythm Band from the list",
       "Your band syncs and begins monitoring your vitals continuously within minutes",
-    ],
-  },
-  scale: {
-    h1: "You have an Agatsa Smart Scale",
-    sub: "Download Agatsa One to activate your Smart Scale and start tracking 14 body composition metrics including BMI, body fat percentage, muscle mass, and hydration.",
-    highlight:
-      "Agatsa Smart Scale · 14 Body Metrics · Bluetooth Sync · Family Profiles",
-    steps: [
-      "Download Agatsa One using the button below — it's free",
-      "Create your account or sign in with your phone number",
-      "Tap 'Add Device' and select Agatsa Smart Scale from the list",
-      "Step on the scale. Your first reading syncs to Nera AI in seconds.",
     ],
   },
 };
