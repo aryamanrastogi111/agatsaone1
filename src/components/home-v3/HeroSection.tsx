@@ -19,13 +19,19 @@ export function HeroSection() {
       <div className="luxe-glow absolute -top-40 right-[-10%] h-[620px] w-[620px] -z-10 opacity-70" />
       <div className="section-shell w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
         <div className="max-w-2xl">
-          <motion.p {...fade(0)} className="section-eyebrow mb-6">Leading the way in AI-powered personal health</motion.p>
+          <motion.p {...fade(0)} className="section-eyebrow mb-6">Agatsa · Personal health, powered by AI</motion.p>
           <motion.h1 {...fade(1)} className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.02] tracking-tight">
             Your Health.
             <br />
             <span className="luxe-text-gradient">A Bigger Picture.</span>
           </motion.h1>
-          <motion.p {...fade(2)} className="mt-7 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
+          <motion.p {...fade(2)} className="mt-7 font-display text-2xl sm:text-3xl md:text-4xl font-bold leading-snug tracking-tight max-w-xl">
+            Leading the way in <span className="luxe-text-gradient">AI-powered</span> personal health.
+          </motion.p>
+          <motion.p {...fade(2)} className="mt-4 font-display text-xl sm:text-2xl md:text-3xl font-semibold leading-snug tracking-tight text-primary-glow max-w-xl">
+            Blood Glucose Spikes, detected on their own.
+          </motion.p>
+          <motion.p {...fade(2)} className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
             From heart monitoring to everyday wellness, explore connected devices and intelligent insights designed to help you understand your health.
           </motion.p>
           <motion.div {...fade(3)} className="mt-9 flex flex-col sm:flex-row gap-3">
@@ -39,6 +45,9 @@ export function HeroSection() {
           <motion.div {...fade(4)} className="mt-12 max-w-md">
             <EcgLine className="h-10 w-full" />
           </motion.div>
+          <motion.p {...fade(5)} className="mt-6 text-xs text-muted-foreground/70 max-w-md">
+            For wellness purposes only — not intended for clinical or diagnostic use.
+          </motion.p>
         </div>
 
         <motion.div {...fade(2)} className="relative mx-auto w-full max-w-[560px] aspect-[1/1]">

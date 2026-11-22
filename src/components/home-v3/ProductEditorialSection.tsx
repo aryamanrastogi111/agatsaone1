@@ -4,7 +4,7 @@ import { StrikePrice } from "@/components/StrikePrice";
 import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
 import sanketlifeImg from "@/assets/sanketlife-hand-new.webp";
 import easytouchImg from "@/assets/easytouch-meal-lifestyle.webp";
-import rhythmImg from "@/assets/easytouch-rhythm-new.webp";
+import rhythmImg from "@/assets/luxe-hero-night.jpg";
 import { Reveal } from "./Reveal";
 
 const items: { eyebrow: string; name: string; sku: DeviceSku; title: string; body: string; trial: string; link: string; image: string }[] = [
@@ -58,7 +58,8 @@ export function ProductEditorialSection() {
                 </div>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="section-eyebrow mb-4">{it.eyebrow} · {it.name}</p>
+                <p className="section-eyebrow mb-3">{it.eyebrow}</p>
+                <p className="font-display text-2xl md:text-3xl font-extrabold tracking-tight luxe-text-gradient mb-4">{it.name}</p>
                 <h3 className="font-display text-3xl md:text-4xl font-bold leading-tight">{it.title}</h3>
                 <p className="mt-5 text-muted-foreground text-lg leading-relaxed">{it.body}</p>
                 <p className="mt-4 text-sm font-medium text-primary-glow">{it.trial}</p>
