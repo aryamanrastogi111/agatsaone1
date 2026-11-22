@@ -1,9 +1,11 @@
 # Roadmap
 
 ## Corporate redesign (approved proposal, in progress)
-- [ ] New design system: tokens in index.css, typography, shared section primitives (Apple/Withings/Oura-inspired, own identity)
-- [ ] New navigation: Products / Solutions (B2B) / Science / Company menus + mobile strategy
-- [ ] Homepage rebuild per approved wireframe (hero, ecosystem, Nera AI, science, testimonials, B2B split, CTA)
+- [x] New design system: tokens in index.css, typography, shared section primitives (Apple/Withings/Oura-inspired, own identity)
+- [x] New navigation: Products / NERA AI / For Healthcare / Partners / Science / Company menus + mobile sheet with "I'm here for…" shortcuts
+- [x] Homepage rebuild per approved wireframe (hero, audience split, device rail, Nera AI, proof strip, evidence, spotlight, testimonials, B2B band, Journal, CTA)
+- [ ] Step 4: Healthcare, Partners and Science hub pages; SanketLife Pro+ enquiry page
+- [ ] Step 5: Re-skin device pages to the new system (commerce logic untouched)
 - [x] Remove Smart Scale from homepage lineup (founder decision); CoreBalance dropped for now
 - [x] SanketLife Pro+ is enquiry only (founder decision) — nav entry routes to demo/enquiry; dedicated page in step 4
 - [x] MultiVital and Zlu stay in the homepage device lineup (founder decision)
