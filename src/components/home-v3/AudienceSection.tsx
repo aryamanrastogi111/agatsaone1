@@ -28,7 +28,7 @@ const audiences = [
     icon: FlaskConical,
     title: "For research & strategic partners",
     desc: "Collaborate on real-world health research built on one of India's largest connected-health datasets and our published studies.",
-    link: "/science",
+    link: "/publications",
     cta: "See the science",
   },
 ];
