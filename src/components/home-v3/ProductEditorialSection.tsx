@@ -5,9 +5,11 @@ import { usePricing, type DeviceSku } from "@/hooks/useDevicePricing";
 import sanketlifeImg from "@/assets/sanketlife-hand-new.webp";
 import easytouchImg from "@/assets/easytouch-meal-bg.webp";
 import rhythmImg from "@/assets/rhythm-band-lifestyle.png.asset.json";
+import zluImg from "@/assets/zlu-lifestyle.webp";
+import multivitalImg from "@/assets/multivital-device.jpg";
 import { Reveal } from "./Reveal";
 
-const items: { eyebrow: string; name: string; sku: DeviceSku; title: string; body: string; trial: string; link: string; image: string; wellnessOnly?: boolean }[] = [
+const items: { eyebrow: string; name: string; sku?: DeviceSku; title: string; body: string; trial?: string; link: string; image: string; wellnessOnly?: boolean; comingSoon?: boolean }[] = [
   {
     eyebrow: "Heart",
     name: "SanketLife 2.0",
@@ -40,6 +42,24 @@ const items: { eyebrow: string; name: string; sku: DeviceSku; title: string; bod
     image: rhythmImg.url,
     wellnessOnly: true,
   },
+  {
+    eyebrow: "Sleep",
+    name: "Zlu",
+    sku: "multivital",
+    title: "Rest better, naturally.",
+    body: "A non-invasive sleep aid that helps you drift into deeper, more restful sleep — no medication, no noise, just a calmer night.",
+    link: "/devices/zlu",
+    image: zluImg,
+  },
+  {
+    eyebrow: "All-in-one",
+    name: "Agatsa MultiVital",
+    title: "Every vital sign. One device.",
+    body: "Heart rate, SpO2, temperature and blood pressure in a single handheld reading — the complete picture of your everyday vitals, synced to Agatsa One.",
+    link: "/devices",
+    image: multivitalImg,
+    comingSoon: true,
+  },
 ];
 
 export function ProductEditorialSection() {
@@ -49,7 +69,7 @@ export function ProductEditorialSection() {
       <div className="section-shell">
         <Reveal className="max-w-2xl mb-16 md:mb-24">
           <p className="section-eyebrow mb-4">The devices</p>
-          <h2 className="section-title text-4xl md:text-5xl">Three ways to see more of yourself.</h2>
+          <h2 className="section-title text-4xl md:text-5xl">Five ways to see more of yourself.</h2>
         </Reveal>
         <div className="space-y-20 md:space-y-32">
           {items.map((it, i) => (
@@ -64,14 +84,18 @@ export function ProductEditorialSection() {
                 <p className="font-display text-2xl md:text-3xl font-extrabold tracking-tight luxe-text-gradient mb-4">{it.name}</p>
                 <h3 className="font-display text-3xl md:text-4xl font-bold leading-tight">{it.title}</h3>
                 <p className="mt-5 text-muted-foreground text-lg leading-relaxed">{it.body}</p>
-                <p className="mt-4 text-sm font-medium text-primary-glow">{it.trial}</p>
+                {it.trial && <p className="mt-4 text-sm font-medium text-primary-glow">{it.trial}</p>}
                 {it.wellnessOnly && (
                   <p className="mt-3 text-xs text-muted-foreground/70">For wellness purposes only — not intended for clinical or diagnostic use.</p>
                 )}
                 <div className="mt-8 flex flex-wrap items-center gap-5">
-                  {loading ? <span className="h-7 w-24 bg-muted animate-pulse rounded" /> : <StrikePrice sku={it.sku} price={prices[it.sku]} size="sm" showLabel={false} />}
+                  {it.comingSoon ? (
+                    <span className="inline-flex items-center rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary-glow">Coming soon</span>
+                  ) : (
+                    it.sku && (loading ? <span className="h-7 w-24 bg-muted animate-pulse rounded" /> : <StrikePrice sku={it.sku} price={prices[it.sku]} size="sm" showLabel={false} />)
+                  )}
                   <Link to={it.link} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground">
-                    Buy / Learn more <ArrowRight className="h-4 w-4" />
+                    {it.comingSoon ? "Learn more" : "Buy / Learn more"} <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
               </Reveal>

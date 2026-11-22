@@ -16,8 +16,8 @@ export default function HomePage() {
   return (
     <SiteLayout theme="luxe">
       <HeroSection />
-      <AudienceSection />
       <ProductEditorialSection />
+      <AudienceSection />
       <NeraConnectedSection />
       <EvidenceSection />
       <StorySection />
